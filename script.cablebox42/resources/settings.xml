@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32000">
+        <setting id="commercials_path" type="folder" label="32001" source="video" default=""/>
+        <setting id="bumps_path" type="folder" label="32002" source="video" default=""/>
+        <setting id="breaks_per_slot" type="labelenum" label="32005" values="0|1|2|3|4" default="2"/>
+        <setting id="guide_music_path" type="folder" label="32003" source="music" default=""/>
+        <setting id="guide_title" type="text" label="32004" default="CableBox 42 Program Guide"/>
+        <setting id="share_mode" type="enum" label="32039" lvalues="32040|32041|32042" default="0"/>
+        <setting id="shorts_mode" type="enum" label="32044" lvalues="32045|32046|32047" default="0"/>
+        <setting id="av1_mode" type="enum" label="32035" lvalues="32036|32037|32038" default="0"/>
+        <setting id="horizon_hours" type="labelenum" label="32006" values="6|12|24" default="12"/>
+    </category>
+    <category label="32010">
+        <setting id="start_channel" type="number" label="32011" default="0"/>
+        <setting id="banner_secs" type="labelenum" label="32012" values="3|6|10" default="6"/>
+        <setting id="static_effect" type="bool" label="32013" default="true"/>
+        <setting id="static_sound" type="bool" label="32014" default="true" enable="eq(-1,true)"/>
+        <setting id="crt_mode" type="enum" label="32031" lvalues="32032|32033|32034" default="0"/>
+        <setting id="keep_progress" type="bool" label="32043" default="true"/>
+        <setting id="confirm_exit" type="bool" label="32015" default="true"/>
+        <setting id="skip_menu" type="bool" label="32016" default="false"/>
+        <setting id="autostart" type="bool" label="32017" default="false"/>
+        <setting id="sleep_cec" type="bool" label="32018" default="false"/>
+    </category>
+    <category label="32020">
+        <setting id="weather_source" type="enum" label="32021" lvalues="32026|32027|32028" default="0"/>
+        <setting id="weather_location" type="text" label="32022" default=""/>
+        <setting id="weather_units" type="enum" label="32023" lvalues="32026|32029|32030" default="0"/>
+        <setting id="weather_title" type="text" label="32024" default="Your Local Forecast"/>
+        <setting id="weather_music_path" type="folder" label="32025" source="music" default=""/>
+    </category>
+    <category label="32057">
+        <setting id="seasons_on" type="bool" label="32058" default="true"/>
+        <setting id="season_intensity" type="enum" label="32059" lvalues="32060|32061|32062" default="1" enable="eq(-1,true)"/>
+        <setting label="32063" type="lsep"/>
+        <setting id="halloween_on" type="bool" label="32066" default="true" enable="eq(-3,true)"/>
+        <setting id="halloween_tags" type="text" label="32071" default="halloween, spooky, horror" enable="eq(-4,true)+eq(-1,true)"/>
+        <setting id="halloween_genres" type="text" label="32072" default="Horror, Mystery" enable="eq(-5,true)+eq(-2,true)"/>
+        <setting id="halloween_commercials" type="folder" label="32067" source="video" default="" enable="eq(-6,true)+eq(-3,true)"/>
+        <setting id="halloween_bumps" type="folder" label="32068" source="video" default="" enable="eq(-7,true)+eq(-4,true)"/>
+        <setting label="32064" type="lsep"/>
+        <setting id="thanksgiving_on" type="bool" label="32066" default="true" enable="eq(-9,true)"/>
+        <setting id="thanksgiving_tags" type="text" label="32071" default="thanksgiving" enable="eq(-10,true)+eq(-1,true)"/>
+        <setting id="thanksgiving_genres" type="text" label="32072" default="" enable="eq(-11,true)+eq(-2,true)"/>
+        <setting id="thanksgiving_commercials" type="folder" label="32067" source="video" default="" enable="eq(-12,true)+eq(-3,true)"/>
+        <setting id="thanksgiving_bumps" type="folder" label="32068" source="video" default="" enable="eq(-13,true)+eq(-4,true)"/>
+        <setting label="32065" type="lsep"/>
+        <setting id="christmas_on" type="bool" label="32066" default="true" enable="eq(-15,true)"/>
+        <setting id="christmas_tags" type="text" label="32071" default="christmas, xmas, holiday" enable="eq(-16,true)+eq(-1,true)"/>
+        <setting id="christmas_genres" type="text" label="32072" default="Christmas, Holiday" enable="eq(-17,true)+eq(-2,true)"/>
+        <setting id="christmas_commercials" type="folder" label="32067" source="video" default="" enable="eq(-18,true)+eq(-3,true)"/>
+        <setting id="christmas_bumps" type="folder" label="32068" source="video" default="" enable="eq(-19,true)+eq(-4,true)"/>
+        <setting label="32070" type="lsep"/>
+        <setting id="season_hold" type="bool" label="32069" default="true" enable="eq(-21,true)"/>
+    </category>
+    <category label="32048">
+        <setting label="32049" type="lsep"/>
+        <setting id="tool_wizard" type="action" label="32050" action="RunScript(script.cablebox42,tool,wizard)" option="close"/>
+        <setting id="tool_quick" type="action" label="32051" action="RunScript(script.cablebox42,tool,quick)" option="close"/>
+        <setting id="tool_shows" type="action" label="32052" action="RunScript(script.cablebox42,tool,shows)" option="close"/>
+        <setting label="32053" type="lsep"/>
+        <setting id="tool_fillers" type="action" label="32054" action="RunScript(script.cablebox42,tool,fillers)" option="close"/>
+        <setting id="tool_progress" type="action" label="32055" action="RunScript(script.cablebox42,tool,progress)" option="close"/>
+        <setting id="tool_rebuild" type="action" label="32056" action="RunScript(script.cablebox42,tool,rebuild)" option="close"/>
+    </category>
+</settings>

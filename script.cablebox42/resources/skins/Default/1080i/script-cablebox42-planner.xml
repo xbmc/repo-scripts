@@ -1,0 +1,1557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CableBox 42 weekly planner: generated grid, driven by window properties from planner.py -->
+<window>
+    <defaultcontrol>9000</defaultcontrol>
+    <backgroundcolor>FF000000</backgroundcolor>
+    <controls>
+        <control type="image">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <texture>planner_bg.jpg</texture>
+        </control>
+        <control type="label">
+            <left>40</left><top>24</top><width>1200</width><height>70</height>
+            <font>font45</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor>
+            <label>$INFO[Window.Property(title)]</label>
+        </control>
+        <control type="label">
+            <left>1180</left><top>30</top><width>700</width><height>60</height>
+            <align>right</align><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(hint)]</label>
+        </control>
+        <control type="label">
+            <left>40</left><top>104</top><width>1840</width><height>56</height>
+            <font>font27</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor>
+            <label>$INFO[Window.Property(detail)]</label>
+        </control>
+        <control type="label">
+            <left>170</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(D0)]</label>
+            <visible>!String.IsEqual(Window.Property(col),0)</visible>
+        </control>
+        <control type="label">
+            <left>170</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
+            <label>[B]$INFO[Window.Property(D0)][/B]</label>
+            <visible>String.IsEqual(Window.Property(col),0)</visible>
+        </control>
+        <control type="label">
+            <left>417</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(D1)]</label>
+            <visible>!String.IsEqual(Window.Property(col),1)</visible>
+        </control>
+        <control type="label">
+            <left>417</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
+            <label>[B]$INFO[Window.Property(D1)][/B]</label>
+            <visible>String.IsEqual(Window.Property(col),1)</visible>
+        </control>
+        <control type="label">
+            <left>664</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(D2)]</label>
+            <visible>!String.IsEqual(Window.Property(col),2)</visible>
+        </control>
+        <control type="label">
+            <left>664</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
+            <label>[B]$INFO[Window.Property(D2)][/B]</label>
+            <visible>String.IsEqual(Window.Property(col),2)</visible>
+        </control>
+        <control type="label">
+            <left>911</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(D3)]</label>
+            <visible>!String.IsEqual(Window.Property(col),3)</visible>
+        </control>
+        <control type="label">
+            <left>911</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
+            <label>[B]$INFO[Window.Property(D3)][/B]</label>
+            <visible>String.IsEqual(Window.Property(col),3)</visible>
+        </control>
+        <control type="label">
+            <left>1158</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(D4)]</label>
+            <visible>!String.IsEqual(Window.Property(col),4)</visible>
+        </control>
+        <control type="label">
+            <left>1158</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
+            <label>[B]$INFO[Window.Property(D4)][/B]</label>
+            <visible>String.IsEqual(Window.Property(col),4)</visible>
+        </control>
+        <control type="label">
+            <left>1405</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(D5)]</label>
+            <visible>!String.IsEqual(Window.Property(col),5)</visible>
+        </control>
+        <control type="label">
+            <left>1405</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
+            <label>[B]$INFO[Window.Property(D5)][/B]</label>
+            <visible>String.IsEqual(Window.Property(col),5)</visible>
+        </control>
+        <control type="label">
+            <left>1652</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(D6)]</label>
+            <visible>!String.IsEqual(Window.Property(col),6)</visible>
+        </control>
+        <control type="label">
+            <left>1652</left><top>172</top><width>241</width><height>50</height>
+            <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
+            <label>[B]$INFO[Window.Property(D6)][/B]</label>
+            <visible>String.IsEqual(Window.Property(col),6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>232</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T0)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>232</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B0_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>232</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L0_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>229</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),0_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>232</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B0_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>232</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L0_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>229</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),0_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>232</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B0_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>232</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L0_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>229</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),0_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>232</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B0_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>232</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L0_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>229</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),0_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>232</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B0_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>232</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L0_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>229</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),0_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>232</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B0_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>232</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L0_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>229</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),0_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>232</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B0_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>232</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L0_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>229</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),0_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>290</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T1)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>290</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B1_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>290</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L1_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>287</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),1_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>290</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B1_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>290</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L1_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>287</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),1_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>290</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B1_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>290</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L1_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>287</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),1_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>290</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B1_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>290</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L1_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>287</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),1_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>290</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B1_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>290</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L1_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>287</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),1_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>290</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B1_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>290</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L1_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>287</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),1_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>290</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B1_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>290</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L1_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>287</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),1_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>348</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T2)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>348</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B2_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>348</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L2_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>345</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),2_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>348</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B2_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>348</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L2_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>345</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),2_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>348</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B2_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>348</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L2_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>345</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),2_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>348</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B2_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>348</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L2_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>345</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),2_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>348</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B2_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>348</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L2_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>345</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),2_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>348</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B2_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>348</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L2_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>345</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),2_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>348</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B2_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>348</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L2_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>345</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),2_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>406</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T3)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>406</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B3_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>406</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L3_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>403</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),3_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>406</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B3_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>406</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L3_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>403</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),3_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>406</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B3_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>406</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L3_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>403</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),3_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>406</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B3_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>406</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L3_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>403</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),3_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>406</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B3_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>406</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L3_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>403</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),3_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>406</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B3_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>406</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L3_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>403</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),3_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>406</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B3_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>406</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L3_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>403</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),3_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>464</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T4)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>464</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B4_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>464</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L4_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>461</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),4_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>464</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B4_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>464</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L4_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>461</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),4_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>464</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B4_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>464</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L4_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>461</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),4_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>464</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B4_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>464</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L4_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>461</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),4_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>464</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B4_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>464</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L4_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>461</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),4_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>464</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B4_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>464</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L4_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>461</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),4_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>464</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B4_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>464</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L4_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>461</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),4_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>522</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T5)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>522</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B5_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>522</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L5_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>519</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),5_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>522</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B5_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>522</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L5_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>519</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),5_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>522</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B5_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>522</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L5_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>519</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),5_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>522</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B5_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>522</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L5_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>519</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),5_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>522</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B5_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>522</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L5_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>519</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),5_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>522</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B5_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>522</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L5_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>519</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),5_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>522</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B5_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>522</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L5_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>519</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),5_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>580</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T6)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>580</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B6_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>580</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L6_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>577</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),6_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>580</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B6_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>580</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L6_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>577</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),6_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>580</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B6_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>580</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L6_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>577</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),6_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>580</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B6_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>580</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L6_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>577</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),6_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>580</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B6_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>580</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L6_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>577</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),6_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>580</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B6_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>580</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L6_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>577</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),6_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>580</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B6_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>580</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L6_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>577</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),6_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>638</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T7)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>638</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B7_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>638</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L7_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>635</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),7_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>638</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B7_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>638</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L7_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>635</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),7_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>638</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B7_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>638</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L7_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>635</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),7_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>638</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B7_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>638</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L7_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>635</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),7_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>638</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B7_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>638</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L7_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>635</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),7_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>638</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B7_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>638</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L7_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>635</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),7_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>638</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B7_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>638</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L7_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>635</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),7_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>696</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T8)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>696</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B8_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>696</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L8_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>693</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),8_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>696</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B8_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>696</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L8_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>693</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),8_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>696</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B8_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>696</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L8_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>693</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),8_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>696</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B8_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>696</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L8_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>693</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),8_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>696</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B8_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>696</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L8_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>693</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),8_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>696</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B8_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>696</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L8_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>693</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),8_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>696</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B8_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>696</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L8_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>693</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),8_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>754</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T9)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>754</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B9_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>754</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L9_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>751</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),9_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>754</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B9_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>754</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L9_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>751</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),9_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>754</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B9_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>754</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L9_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>751</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),9_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>754</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B9_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>754</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L9_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>751</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),9_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>754</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B9_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>754</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L9_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>751</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),9_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>754</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B9_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>754</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L9_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>751</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),9_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>754</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B9_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>754</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L9_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>751</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),9_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>812</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T10)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>812</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B10_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>812</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L10_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>809</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),10_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>812</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B10_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>812</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L10_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>809</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),10_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>812</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B10_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>812</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L10_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>809</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),10_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>812</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B10_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>812</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L10_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>809</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),10_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>812</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B10_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>812</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L10_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>809</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),10_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>812</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B10_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>812</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L10_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>809</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),10_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>812</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B10_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>812</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L10_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>809</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),10_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>870</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T11)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>870</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B11_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>870</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L11_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>867</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),11_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>870</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B11_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>870</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L11_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>867</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),11_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>870</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B11_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>870</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L11_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>867</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),11_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>870</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B11_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>870</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L11_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>867</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),11_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>870</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B11_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>870</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L11_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>867</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),11_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>870</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B11_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>870</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L11_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>867</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),11_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>870</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B11_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>870</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L11_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>867</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),11_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>928</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T12)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>928</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B12_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>928</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L12_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>925</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),12_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>928</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B12_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>928</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L12_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>925</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),12_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>928</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B12_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>928</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L12_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>925</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),12_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>928</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B12_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>928</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L12_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>925</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),12_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>928</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B12_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>928</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L12_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>925</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),12_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>928</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B12_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>928</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L12_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>925</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),12_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>928</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B12_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>928</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L12_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>925</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),12_6)</visible>
+        </control>
+        <control type="label">
+            <left>40</left><top>986</top><width>114</width><height>54</height>
+            <align>right</align><aligny>center</aligny><font>font12</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(T13)]</label>
+        </control>
+        <control type="image">
+            <left>170</left><top>986</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B13_0)]</texture>
+        </control>
+        <control type="label">
+            <left>184</left><top>986</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L13_0)]</label>
+        </control>
+        <control type="image">
+            <left>167</left><top>983</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),13_0)</visible>
+        </control>
+        <control type="image">
+            <left>417</left><top>986</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B13_1)]</texture>
+        </control>
+        <control type="label">
+            <left>431</left><top>986</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L13_1)]</label>
+        </control>
+        <control type="image">
+            <left>414</left><top>983</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),13_1)</visible>
+        </control>
+        <control type="image">
+            <left>664</left><top>986</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B13_2)]</texture>
+        </control>
+        <control type="label">
+            <left>678</left><top>986</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L13_2)]</label>
+        </control>
+        <control type="image">
+            <left>661</left><top>983</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),13_2)</visible>
+        </control>
+        <control type="image">
+            <left>911</left><top>986</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B13_3)]</texture>
+        </control>
+        <control type="label">
+            <left>925</left><top>986</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L13_3)]</label>
+        </control>
+        <control type="image">
+            <left>908</left><top>983</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),13_3)</visible>
+        </control>
+        <control type="image">
+            <left>1158</left><top>986</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B13_4)]</texture>
+        </control>
+        <control type="label">
+            <left>1172</left><top>986</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L13_4)]</label>
+        </control>
+        <control type="image">
+            <left>1155</left><top>983</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),13_4)</visible>
+        </control>
+        <control type="image">
+            <left>1405</left><top>986</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B13_5)]</texture>
+        </control>
+        <control type="label">
+            <left>1419</left><top>986</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L13_5)]</label>
+        </control>
+        <control type="image">
+            <left>1402</left><top>983</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),13_5)</visible>
+        </control>
+        <control type="image">
+            <left>1652</left><top>986</top><width>241</width><height>54</height>
+            <texture border="6">$INFO[Window.Property(B13_6)]</texture>
+        </control>
+        <control type="label">
+            <left>1666</left><top>986</top><width>213</width><height>54</height>
+            <aligny>center</aligny><font>font12</font><textcolor>FFFFFFFF</textcolor>
+            <label>$INFO[Window.Property(L13_6)]</label>
+        </control>
+        <control type="image">
+            <left>1649</left><top>983</top><width>247</width><height>60</height>
+            <texture border="6">planner_cursor.png</texture>
+            <visible>String.IsEqual(Window.Property(cur),13_6)</visible>
+        </control>
+        <control type="button" id="9000">
+            <left>-100</left><top>-100</top><width>1</width><height>1</height>
+            <texturefocus /><texturenofocus />
+        </control>
+    </controls>
+</window>
