@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Sinhala\n"
+"Language: si_lk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "හැඳින්වීම සහ නාමාවලිය මඟ හැරීමේ බොත්තම"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "හැඳින්වීම සහ නාමාවලිය අතරතුර මඟ හැරීමේ බොත්තමක් පෙන්වයි. වීඩියෝ ගොනු අසල ඇති .skiptro.json ගොනු වලින් කාල දත්ත කියවයි."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "සංවාද කවුළුව"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "සංවාද කවුළුව ස්වයංක්‍රීයව වැසෙන කාලය (තත්පර)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "හැඳින්වීම් ස්වයංක්‍රීයව මඟ හරින්න"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "හැඳින්වීම මඟ හරින්න"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "නාමාවලිය මඟ හරින්න"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "නාමාවලියෙන් පසු දර්ශනයට යන්න"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "මඟ හැරීමේ දත්ත කියවිය නොහැක. ගොනු අවසර පරීක්ෂා කරන්න."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "මඟ හැරීමේ දත්ත කියවිය නොහැක. Android සැකසීම් තුළ Kodi සඳහා “සියලු ගොනු වෙත ප්‍රවේශය” සක්‍රිය කරන්න."

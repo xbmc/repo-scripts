@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Silesian\n"
+"Language: szl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Knefel do przeskakowanio intro/napisōw kōńcowych"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Pokazuje knefel do przeskakowanio w czasie intro i napisōw kōńcowych. Czytŏ dane ô czasie z plikōw .skiptro.json, co leżōm kole plikōw wideo."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Ôkno dialogowe"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Automatycznie zawiyrej ôkno po (sekundach)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Automatycznie przeskakuj intro"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Przeskocz intro"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Przeskocz napisy kōńcowe"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Skocz do sceny po napisach"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Niy idzie przeczytać danych do przeskakowanio. Sprawdź uprawniynia pliku."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Niy idzie przeczytać danych do przeskakowanio. Załōncz „Dostymp do wszyjskich plikōw” dlŏ Kodi w sztelōnkach Androida."

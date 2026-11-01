@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="service.skiptro" name="Skiptro" version="0.3.4" provider-name="Skiptro">
+<addon id="service.skiptro" name="Skiptro" version="0.3.5" provider-name="Skiptro">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
     <extension point="xbmc.service" library="service.py"/>
     <extension point="xbmc.addon.metadata">
-        <summary lang="en_GB">Skip intro/credits button</summary>
-        <description lang="en_GB">Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files.</description>
         <platform>all</platform>
         <license>GPL-2.0-or-later</license>
         <source>https://github.com/MikeSiLVO/service.skiptro</source>
@@ -15,10 +13,161 @@
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>
         </assets>
-        <news>v0.3.4
-- Initial Kodi repo release
-- Skip intro button during playback
-- Reads .skiptro.json files next to video files
-- Configurable auto-dismiss timeout</news>
+        <news>v0.3.5
+- Notification when a .skiptro.json file can't be read, pointing Android users to "All files access"
+- Rounded skip buttons
+- Translations for all Kodi languages</news>
+        <summary lang="af_ZA">Knoppie om intro/aftiteling oor te slaan</summary>
+        <summary lang="am_ET">የመግቢያ/ክሬዲቶች መዝለያ አዝራር</summary>
+        <summary lang="ar_SA">زر لتخطي المقدمة/شارة النهاية</summary>
+        <summary lang="ast_ES">Botón pa saltar la intro/los creitos</summary>
+        <summary lang="az_AZ">İntro/titrləri keçmə düyməsi</summary>
+        <summary lang="be_BY">Кнопка пропуску застаўкі/тытраў</summary>
+        <summary lang="bg_BG">Бутон за пропускане на интро/надписи</summary>
+        <summary lang="bs_BA">Dugme za preskakanje uvoda/odjavne špice</summary>
+        <summary lang="ca_ES">Botó per ometre la introducció i els crèdits</summary>
+        <summary lang="cs_CZ">Tlačítko pro přeskočení úvodu/titulků</summary>
+        <summary lang="cy_GB">Botwm hepgor y cyflwyniad/credydau</summary>
+        <summary lang="da_DK">Knap til at springe intro/rulletekster over</summary>
+        <summary lang="de_DE">Schaltfläche zum Überspringen von Intro/Abspann</summary>
+        <summary lang="el_GR">Κουμπί παράλειψης εισαγωγής/τίτλων τέλους</summary>
+        <summary lang="en_GB">Skip intro/credits button</summary>
+        <summary lang="eo">Butono por transsalti enkondukon/fintitolojn</summary>
+        <summary lang="es_AR">Botón para saltar intro/créditos</summary>
+        <summary lang="es_ES">Botón para saltar la intro y los créditos</summary>
+        <summary lang="es_MX">Botón para omitir intro y créditos</summary>
+        <summary lang="et_EE">Sissejuhatuse/lõputiitrite vahelejätmise nupp</summary>
+        <summary lang="eu_ES">Sarrera/kredituak saltatzeko botoia</summary>
+        <summary lang="fa_AF">دکمهٔ رد کردن مقدمه/تیتراژ پایانی</summary>
+        <summary lang="fa_IR">دکمهٔ رد کردن تیتراژ ابتدایی/پایانی</summary>
+        <summary lang="fi_FI">Intron ja lopputekstien ohituspainike</summary>
+        <summary lang="fil">Button para laktawan ang intro/credits</summary>
+        <summary lang="fo_FO">Knøttur at loypa um intro/rulltekstir</summary>
+        <summary lang="fr_CA">Bouton pour passer l&apos;intro et le générique</summary>
+        <summary lang="fr_FR">Bouton pour passer l&apos;intro/le générique</summary>
+        <summary lang="ga_IE">Cnaipe chun an réamhrá/na creidiúintí a scipeáil</summary>
+        <summary lang="gl_ES">Botón para saltar a intro/os créditos</summary>
+        <summary lang="he_IL">כפתור דילוג על פתיח/כתוביות סיום</summary>
+        <summary lang="hi_IN">इंट्रो/क्रेडिट्स स्किप करने का बटन</summary>
+        <summary lang="hr_HR">Gumb za preskakanje uvoda/odjavne špice</summary>
+        <summary lang="hu_HU">Intró és stáblista átugrása gomb</summary>
+        <summary lang="hy_AM">Ներածությունը և տիտրերը բաց թողնելու կոճակ</summary>
+        <summary lang="id_ID">Tombol lewati intro/kredit</summary>
+        <summary lang="is_IS">Hnappur til að sleppa kynningu/kreditlista</summary>
+        <summary lang="it_IT">Pulsante per saltare intro/titoli di coda</summary>
+        <summary lang="ja_JP">イントロ/クレジットのスキップボタン</summary>
+        <summary lang="kn_IN">ಇಂಟ್ರೋ/ಕ್ರೆಡಿಟ್ಸ್ ಸ್ಕಿಪ್ ಬಟನ್</summary>
+        <summary lang="ko_KR">인트로/크레딧 건너뛰기 버튼</summary>
+        <summary lang="lt_LT">Įžangos / titrų praleidimo mygtukas</summary>
+        <summary lang="lv_LV">Ievada un titru izlaišanas poga</summary>
+        <summary lang="mi">Pātene hei peke i te whakataki/ngā whakamihi</summary>
+        <summary lang="mk_MK">Копче за прескокнување на вовед/одјавна шпица</summary>
+        <summary lang="ml_IN">ഇൻട്രോ/ക്രെഡിറ്റ്സ് ഒഴിവാക്കാനുള്ള ബട്ടൺ</summary>
+        <summary lang="mn_MN">Интро/титр алгасах товч</summary>
+        <summary lang="ms_MY">Butang langkau intro/kredit</summary>
+        <summary lang="mt_MT">Buttuna biex taqbeż l-intro/il-krediti</summary>
+        <summary lang="my_MM">အစပိုင်း/ခရက်ဒစ် ကျော်ရန် ခလုတ်</summary>
+        <summary lang="nb_NO">Knapp for å hoppe over intro og rulletekst</summary>
+        <summary lang="nl_NL">Knop om intro/aftiteling over te slaan</summary>
+        <summary lang="os_OS">Интро/титртӕ ауадзыны кнопкӕ</summary>
+        <summary lang="pl_PL">Przycisk pomijania czołówki/napisów końcowych</summary>
+        <summary lang="pt_BR">Botão para pular abertura/créditos</summary>
+        <summary lang="pt_PT">Botão para saltar a introdução/genérico</summary>
+        <summary lang="ro_RO">Buton pentru omiterea introducerii/genericului</summary>
+        <summary lang="ru_RU">Кнопка пропуска заставки и титров</summary>
+        <summary lang="si_LK">හැඳින්වීම සහ නාමාවලිය මඟ හැරීමේ බොත්තම</summary>
+        <summary lang="sk_SK">Tlačidlo na preskočenie úvodu/titulkov</summary>
+        <summary lang="sl_SI">Gumb za preskok uvoda/odjavne špice</summary>
+        <summary lang="sq_AL">Buton për kapërcimin e hyrjes/jenerikut</summary>
+        <summary lang="sr_RS">Дугме за прескакање уводне/одјавне шпице</summary>
+        <summary lang="sr_RS@latin">Dugme za preskakanje uvoda/odjavne špice</summary>
+        <summary lang="sv_SE">Knapp för att hoppa över intro/eftertexter</summary>
+        <summary lang="szl">Knefel do przeskakowanio intro/napisōw kōńcowych</summary>
+        <summary lang="ta_IN">அறிமுகம் மற்றும் கிரெடிட்ஸைத் தவிர்க்கும் பொத்தான்</summary>
+        <summary lang="te_IN">ఇంట్రో/క్రెడిట్‌లను దాటవేసే బటన్</summary>
+        <summary lang="tg_TJ">Тугмаи гузаштан аз муқаддима/титрҳо</summary>
+        <summary lang="th_TH">ปุ่มข้ามอินโทร/เครดิต</summary>
+        <summary lang="tr_TR">Giriş/jenerik atlama düğmesi</summary>
+        <summary lang="uk_UA">Кнопка пропуску заставки/титрів</summary>
+        <summary lang="uz_UZ">Intro/titrlarni oʻtkazib yuborish tugmasi</summary>
+        <summary lang="vi_VN">Nút bỏ qua phần giới thiệu/danh đề</summary>
+        <summary lang="zh_CN">跳过片头/片尾按钮</summary>
+        <summary lang="zh_TW">略過片頭/片尾按鈕</summary>
+        <description lang="af_ZA">Wys &apos;n oorslaanknoppie tydens die intro en aftiteling. Lees tydsdata uit .skiptro.json-lêers langs die videolêers.</description>
+        <description lang="am_ET">በመግቢያ እና በክሬዲቶች ክፍሎች ወቅት የመዝለያ አዝራር ያሳያል። የጊዜ መረጃን ከቪዲዮ ፋይሎች አጠገብ ካሉ .skiptro.json ፋይሎች ያነባል።</description>
+        <description lang="ar_SA">يعرض زر تخطٍّ أثناء المقدمة وشارة النهاية. يقرأ بيانات التوقيت من ملفات .skiptro.json الموجودة بجانب ملفات الفيديو.</description>
+        <description lang="ast_ES">Amuesa un botón pa saltar la intro y los creitos. Llee los datos de tiempu de los ficheros .skiptro.json que tán xunto a los ficheros de videu.</description>
+        <description lang="az_AZ">İntro və son titrlər zamanı keçmə düyməsini göstərir. Vaxt məlumatlarını video fayllarının yanındakı .skiptro.json fayllarından oxuyur.</description>
+        <description lang="be_BY">Паказвае кнопку пропуску падчас застаўкі і фінальных тытраў. Чытае звесткі пра час з файлаў .skiptro.json побач з відэафайламі.</description>
+        <description lang="bg_BG">Показва бутон за пропускане по време на интрото и финалните надписи. Чете данни за времената от файловете .skiptro.json до видеофайловете.</description>
+        <description lang="bs_BA">Prikazuje dugme za preskakanje tokom uvodne i odjavne špice. Čita podatke o vremenu iz .skiptro.json datoteka koje se nalaze pored video datoteka.</description>
+        <description lang="ca_ES">Mostra un botó per ometre la introducció i els crèdits finals. Llegeix les dades de temps dels fitxers .skiptro.json situats al costat dels fitxers de vídeo.</description>
+        <description lang="cs_CZ">Během úvodu a závěrečných titulků zobrazí tlačítko pro přeskočení. Načítá časové údaje ze souborů .skiptro.json uložených vedle videosouborů.</description>
+        <description lang="cy_GB">Yn dangos botwm hepgor yn ystod y cyflwyniad a&apos;r credydau. Yn darllen data amseru o ffeiliau .skiptro.json wrth ymyl y ffeiliau fideo.</description>
+        <description lang="da_DK">Viser en knap til at springe over under intro og rulletekster. Læser tidsdata fra .skiptro.json-filer ved siden af videofilerne.</description>
+        <description lang="de_DE">Zeigt während Intro und Abspann eine Schaltfläche zum Überspringen an. Liest Zeitdaten aus .skiptro.json-Dateien neben den Videodateien.</description>
+        <description lang="el_GR">Εμφανίζει ένα κουμπί παράλειψης κατά την εισαγωγή και τους τίτλους τέλους. Διαβάζει δεδομένα χρονισμού από αρχεία .skiptro.json δίπλα στα αρχεία βίντεο.</description>
+        <description lang="en_GB">Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files.</description>
+        <description lang="eo">Montras butonon por transsalti dum la enkonduko kaj la fintitoloj. Legas tempajn datumojn el dosieroj .skiptro.json apud la videodosieroj.</description>
+        <description lang="es_AR">Muestra un botón para saltar durante la intro y los créditos. Lee los datos de tiempo de los archivos .skiptro.json ubicados junto a los archivos de video.</description>
+        <description lang="es_ES">Muestra un botón para saltar durante la intro y los créditos. Lee los datos de tiempo de los archivos .skiptro.json situados junto a los archivos de vídeo.</description>
+        <description lang="es_MX">Muestra un botón para omitir la intro y los créditos. Lee los datos de tiempo de los archivos .skiptro.json ubicados junto a los archivos de video.</description>
+        <description lang="et_EE">Kuvab sissejuhatuse ja lõputiitrite ajal vahelejätmise nupu. Loeb ajastusandmeid videofailide kõrval asuvatest .skiptro.json failidest.</description>
+        <description lang="eu_ES">Saltatzeko botoi bat erakusten du sarreran eta amaierako kredituetan. Denbora-datuak bideo-fitxategien ondoko .skiptro.json fitxategietatik irakurtzen ditu.</description>
+        <description lang="fa_AF">در جریان مقدمه و تیتراژ پایانی یک دکمه برای رد کردن نشان می‌دهد. معلومات زمان‌بندی را از فایل‌های .skiptro.json که در کنار فایل‌های ویدیو قرار دارند می‌خواند.</description>
+        <description lang="fa_IR">هنگام پخش تیتراژ ابتدایی و پایانی، دکمهٔ رد کردن را نمایش می‌دهد. داده‌های زمان‌بندی را از فایل‌های .skiptro.json کنار فایل‌های ویدیویی می‌خواند.</description>
+        <description lang="fi_FI">Näyttää ohituspainikkeen intron ja lopputekstien aikana. Lukee ajoitustiedot videotiedostojen vieressä olevista .skiptro.json-tiedostoista.</description>
+        <description lang="fil">Nagpapakita ng button para lumaktaw habang nagpe-play ang intro at credits. Binabasa ang timing data mula sa mga file na .skiptro.json na katabi ng mga video file.</description>
+        <description lang="fo_FO">Vísir ein knøtt til at loypa um, meðan intro og rulltekstir verða vístir. Lesur tíðarupplýsingar úr .skiptro.json fílum, sum liggja við síðuna av videofílunum.</description>
+        <description lang="fr_CA">Affiche un bouton pour passer l&apos;intro et le générique de fin. Lit les données de minutage dans les fichiers .skiptro.json placés à côté des fichiers vidéo.</description>
+        <description lang="fr_FR">Affiche un bouton pour passer l&apos;intro et le générique de fin. Lit les données de minutage dans les fichiers .skiptro.json placés à côté des fichiers vidéo.</description>
+        <description lang="ga_IE">Taispeánann sé cnaipe scipeála le linn an réamhrá agus na gcreidiúintí. Léann sé sonraí uainithe ó chomhaid .skiptro.json in aice leis na comhaid físe.</description>
+        <description lang="gl_ES">Mostra un botón para saltar a intro e os créditos. Le os datos de tempo dos ficheiros .skiptro.json situados xunto aos ficheiros de vídeo.</description>
+        <description lang="he_IL">מציג כפתור דילוג במהלך הפתיח וכתוביות הסיום. קורא נתוני תזמון מקובצי .skiptro.json שנמצאים ליד קובצי הווידאו.</description>
+        <description lang="hi_IN">इंट्रो और क्रेडिट्स के दौरान स्किप बटन दिखाता है। वीडियो फ़ाइलों के पास रखी .skiptro.json फ़ाइलों से समय का डेटा पढ़ता है।</description>
+        <description lang="hr_HR">Prikazuje gumb za preskakanje tijekom uvodne i odjavne špice. Čita podatke o vremenu iz datoteka .skiptro.json koje se nalaze pokraj video datoteka.</description>
+        <description lang="hu_HU">Átugrás gombot jelenít meg az intró és a stáblista alatt. Az időzítési adatokat a videofájlok mellett található .skiptro.json fájlokból olvassa be.</description>
+        <description lang="hy_AM">Ցուցադրում է բաց թողնելու կոճակ ներածության և տիտրերի ընթացքում։ Կարդում է ժամանակային տվյալները տեսաֆայլերի կողքին գտնվող .skiptro.json ֆայլերից։</description>
+        <description lang="id_ID">Menampilkan tombol lewati saat intro dan kredit penutup. Membaca data waktu dari file .skiptro.json yang berada di samping file video.</description>
+        <description lang="is_IS">Sýnir sleppihnapp meðan á kynningu og kreditlista stendur. Les tímasetningargögn úr .skiptro.json-skrám við hlið myndskránna.</description>
+        <description lang="it_IT">Mostra un pulsante per saltare l&apos;intro e i titoli di coda. Legge i dati temporali dai file .skiptro.json presenti accanto ai file video.</description>
+        <description lang="ja_JP">イントロとエンドクレジットの間にスキップボタンを表示します。動画ファイルと同じ場所にある .skiptro.json ファイルからタイミング情報を読み込みます。</description>
+        <description lang="kn_IN">ಇಂಟ್ರೋ ಮತ್ತು ಕ್ರೆಡಿಟ್ಸ್ ಸಮಯದಲ್ಲಿ ಸ್ಕಿಪ್ ಬಟನ್ ತೋರಿಸುತ್ತದೆ. ವೀಡಿಯೊ ಫೈಲ್‌ಗಳ ಪಕ್ಕದಲ್ಲಿರುವ .skiptro.json ಫೈಲ್‌ಗಳಿಂದ ಸಮಯದ ಮಾಹಿತಿಯನ್ನು ಓದುತ್ತದೆ.</description>
+        <description lang="ko_KR">인트로와 크레딧이 나오는 동안 건너뛰기 버튼을 표시합니다. 비디오 파일 옆에 있는 .skiptro.json 파일에서 구간 정보를 읽습니다.</description>
+        <description lang="lt_LT">Rodo praleidimo mygtuką įžangos ir titrų metu. Laiko duomenis nuskaito iš .skiptro.json failų, esančių šalia vaizdo failų.</description>
+        <description lang="lv_LV">Ievada un titru laikā rāda izlaišanas pogu. Nolasa laika datus no .skiptro.json failiem, kas atrodas blakus video failiem.</description>
+        <description lang="mi">Ka whakaatu i tētahi pātene peke i te wā o te whakataki me ngā whakamihi. Ka pānui i ngā raraunga wā mai i ngā kōnae .skiptro.json kei te taha o ngā kōnae ataata.</description>
+        <description lang="mk_MK">Прикажува копче за прескокнување за време на воведот и одјавната шпица. Ги чита податоците за времето од датотеките .skiptro.json покрај видео датотеките.</description>
+        <description lang="ml_IN">ഇൻട്രോ, ക്രെഡിറ്റ്സ് ഭാഗങ്ങളിൽ അവ ഒഴിവാക്കാനുള്ള ഒരു ബട്ടൺ കാണിക്കുന്നു. വീഡിയോ ഫയലുകൾക്ക് അടുത്തുള്ള .skiptro.json ഫയലുകളിൽ നിന്ന് സമയ വിവരങ്ങൾ വായിക്കുന്നു.</description>
+        <description lang="mn_MN">Интро болон төгсгөлийн титрийн үед алгасах товч харуулна. Видео файлын хажууд байрлах .skiptro.json файлаас хугацааны мэдээллийг уншина.</description>
+        <description lang="ms_MY">Memaparkan butang langkau semasa intro dan kredit penutup. Membaca data masa daripada fail .skiptro.json di sebelah fail video.</description>
+        <description lang="mt_MT">Turi buttuna biex taqbeż waqt l-intro u l-krediti. Taqra d-data tal-ħin mill-fajls .skiptro.json li jinsabu ħdejn il-fajls tal-vidjo.</description>
+        <description lang="my_MM">အစပိုင်းနှင့် ခရက်ဒစ် ပြသနေစဉ် ကျော်ရန် ခလုတ်ကို ပြသပေးသည်။ ဗီဒီယိုဖိုင်များ၏ ဘေးရှိ .skiptro.json ဖိုင်များမှ အချိန်ဒေတာကို ဖတ်ယူသည်။</description>
+        <description lang="nb_NO">Viser en knapp for å hoppe over intro og rulletekst. Leser tidsdata fra .skiptro.json-filer som ligger ved siden av videofilene.</description>
+        <description lang="nl_NL">Toont een knop om de intro en de aftiteling over te slaan. Leest tijdsgegevens uit .skiptro.json-bestanden naast de videobestanden.</description>
+        <description lang="os_OS">Интро ӕмӕ кӕроны титрты рӕстӕг ӕвдисы ауадзыны кнопкӕ. Рӕстӕджы бӕрӕггӕнӕнтӕ кӕсы видеофайлты фарсмӕ ӕвӕрд .skiptro.json файлтӕй.</description>
+        <description lang="pl_PL">Wyświetla przycisk pomijania podczas czołówki i napisów końcowych. Odczytuje dane o czasie z plików .skiptro.json umieszczonych obok plików wideo.</description>
+        <description lang="pt_BR">Exibe um botão para pular durante a abertura e os créditos. Lê os dados de tempo dos arquivos .skiptro.json ao lado dos arquivos de vídeo.</description>
+        <description lang="pt_PT">Mostra um botão para saltar durante a introdução e o genérico final. Lê os dados de tempo dos ficheiros .skiptro.json junto aos ficheiros de vídeo.</description>
+        <description lang="ro_RO">Afișează un buton de omitere în timpul introducerii și al genericului de final. Citește datele de sincronizare din fișierele .skiptro.json aflate lângă fișierele video.</description>
+        <description lang="ru_RU">Показывает кнопку пропуска во время заставки и титров. Считывает данные о времени из файлов .skiptro.json, расположенных рядом с видеофайлами.</description>
+        <description lang="si_LK">හැඳින්වීම සහ නාමාවලිය අතරතුර මඟ හැරීමේ බොත්තමක් පෙන්වයි. වීඩියෝ ගොනු අසල ඇති .skiptro.json ගොනු වලින් කාල දත්ත කියවයි.</description>
+        <description lang="sk_SK">Počas úvodu a záverečných titulkov zobrazí tlačidlo na preskočenie. Načítava časové údaje zo súborov .skiptro.json uložených vedľa videosúborov.</description>
+        <description lang="sl_SI">Med uvodom in odjavno špico prikaže gumb za preskok. Podatke o časih prebere iz datotek .skiptro.json, ki so poleg video datotek.</description>
+        <description lang="sq_AL">Shfaq një buton kapërcimi gjatë hyrjes dhe jenerikut të fundit. Lexon të dhënat kohore nga skedarët .skiptro.json pranë skedarëve video.</description>
+        <description lang="sr_RS">Приказује дугме за прескакање током уводне и одјавне шпице. Чита податке о времену из .skiptro.json датотека поред видео датотека.</description>
+        <description lang="sr_RS@latin">Prikazuje dugme za preskakanje tokom uvoda i odjavne špice. Čita podatke o vremenu iz .skiptro.json datoteka pored video datoteka.</description>
+        <description lang="sv_SE">Visar en knapp för att hoppa över intro och eftertexter. Läser tidsdata från .skiptro.json-filer som ligger bredvid videofilerna.</description>
+        <description lang="szl">Pokazuje knefel do przeskakowanio w czasie intro i napisōw kōńcowych. Czytŏ dane ô czasie z plikōw .skiptro.json, co leżōm kole plikōw wideo.</description>
+        <description lang="ta_IN">அறிமுகம் மற்றும் கிரெடிட்ஸ் ஓடும்போது தவிர்க்கும் பொத்தானைக் காட்டுகிறது. வீடியோ கோப்புகளுக்கு அருகில் உள்ள .skiptro.json கோப்புகளிலிருந்து நேரத் தரவைப் படிக்கிறது.</description>
+        <description lang="te_IN">ఇంట్రో, క్రెడిట్‌ల సమయంలో దాటవేసే బటన్‌ను చూపిస్తుంది. వీడియో ఫైల్‌ల పక్కన ఉన్న .skiptro.json ఫైల్‌ల నుండి సమయ డేటాను చదువుతుంది.</description>
+        <description lang="tg_TJ">Ҳангоми муқаддима ва титрҳои охир тугмаи гузаштанро нишон медиҳад. Маълумоти вақтро аз файлҳои .skiptro.json, ки дар паҳлӯи файлҳои видео ҷойгиранд, мехонад.</description>
+        <description lang="th_TH">แสดงปุ่มข้ามระหว่างช่วงอินโทรและเครดิตท้ายเรื่อง อ่านข้อมูลเวลาจากไฟล์ .skiptro.json ที่อยู่ข้างไฟล์วิดีโอ</description>
+        <description lang="tr_TR">Giriş ve jenerik bölümlerinde bir atlama düğmesi gösterir. Zamanlama verilerini video dosyalarının yanındaki .skiptro.json dosyalarından okur.</description>
+        <description lang="uk_UA">Показує кнопку пропуску під час заставки та фінальних титрів. Зчитує дані про час із файлів .skiptro.json поруч із відеофайлами.</description>
+        <description lang="uz_UZ">Intro va yakuniy titrlar paytida oʻtkazib yuborish tugmasini koʻrsatadi. Vaqt maʼlumotlarini video fayllar yonidagi .skiptro.json fayllaridan oʻqiydi.</description>
+        <description lang="vi_VN">Hiển thị nút bỏ qua trong phần giới thiệu và phần danh đề cuối phim. Đọc dữ liệu thời gian từ các tệp .skiptro.json nằm cạnh tệp video.</description>
+        <description lang="zh_CN">在片头和片尾期间显示跳过按钮。从视频文件旁的 .skiptro.json 文件读取时间数据。</description>
+        <description lang="zh_TW">在片頭與片尾播放期間顯示略過按鈕。從影片檔案旁的 .skiptro.json 檔案讀取時間資料。</description>
     </extension>
 </addon>

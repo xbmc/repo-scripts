@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: none\n"
+"Language: he_il\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && n % 10 == 0) ? 2 : 3));\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "כפתור דילוג על פתיח/כתוביות סיום"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "מציג כפתור דילוג במהלך הפתיח וכתוביות הסיום. קורא נתוני תזמון מקובצי .skiptro.json שנמצאים ליד קובצי הווידאו."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "תיבת דו-שיח"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "סגירה אוטומטית של תיבת הדו-שיח לאחר (שניות)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "דילוג אוטומטי על פתיחים"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "דלג על הפתיח"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "דלג על כתוביות הסיום"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "דלג לסצנה שאחרי הכתוביות"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "לא ניתן לקרוא את נתוני הדילוג. יש לבדוק את הרשאות הקובץ."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "לא ניתן לקרוא את נתוני הדילוג. יש להפעיל את \"גישה לכל הקבצים\" עבור Kodi בהגדרות אנדרואיד."
