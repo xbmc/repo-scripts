@@ -1,0 +1,61 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: https://github.com/lj0014/kodi_thunder_subtitles/issues\n"
+"Last-Translator: taxigps\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+
+msgctxt "#32001"
+msgid "Text subtitles save as UTF-8"
+msgstr "文本字幕保存为UTF-8编码"
+
+msgctxt "#32002"
+msgid "Simplified and Traditional conversion"
+msgstr "文本字幕简繁转换"
+
+msgctxt "#32003"
+msgid "disable"
+msgstr "禁用"
+
+msgctxt "#32004"
+msgid "Simplified"
+msgstr "简体"
+
+msgctxt "#32005"
+msgid "Traditional"
+msgstr "繁体"
+
+msgctxt "#32006"
+msgid "Choose subtitle file"
+msgstr "请选择要使用的字幕文件"
+
+msgctxt "#32010"
+msgid "No subtitles found"
+msgstr "没有找到匹配的字幕"
+
+msgctxt "#32011"
+msgid "Search subtitles by name"
+msgstr "输入片名搜索字幕（可加年份）"
+
+msgctxt "#32012"
+msgid "Subtitle operation failed. See the Kodi log."
+msgstr "字幕操作失败，请查看 Kodi 日志"
+
+msgctxt "#32013"
+msgid "Cannot read or seek the playing file"
+msgstr "无法读取或定位当前播放文件"
+
+msgctxt "#32014"
+msgid "Thunder service unavailable. Please try again later."
+msgstr "迅雷字幕服务暂时不可用，请稍后重试"
+
+msgctxt "#32015"
+msgid "Cannot download subtitle (invalid file, unsupported archive or size limit)"
+msgstr "字幕下载失败：文件无效、压缩格式不支持或超出大小限制"
+
+msgctxt "#32016"
+msgid "Cannot decode subtitle; disable UTF-8 conversion to keep the original"
+msgstr "无法识别字幕编码，可关闭 UTF-8 转换保留原文件"
+
