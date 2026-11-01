@@ -64,10 +64,6 @@ msgctxt "#32011"
 msgid "Couldn't open the manual"
 msgstr ""
 
-msgctxt "#32012"
-msgid "Select to zoom in, the bumpers turn the page"
-msgstr ""
-
 msgctxt "#32013"
 msgid "Try another provider, or get more"
 msgstr ""
@@ -102,10 +98,6 @@ msgstr ""
 
 msgctxt "#32021"
 msgid "Size"
-msgstr ""
-
-msgctxt "#32022"
-msgid "Ask another"
 msgstr ""
 
 msgctxt "#32023"

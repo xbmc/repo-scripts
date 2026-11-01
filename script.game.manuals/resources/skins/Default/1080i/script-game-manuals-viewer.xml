@@ -24,7 +24,7 @@
 			<right>30</right>
 			<bottom>30</bottom>
 			<width>760</width>
-			<height>100</height>
+			<height>60</height>
 			<control type="image">
 				<texture colordiffuse="C0000000">white.png</texture>
 			</control>
@@ -36,16 +36,6 @@
 				<font>font13</font>
 				<align>right</align>
 				<label>$INFO[Window.Property(page)]</label>
-			</control>
-			<control type="label">
-				<left>20</left>
-				<top>50</top>
-				<width>720</width>
-				<height>36</height>
-				<font>font12</font>
-				<textcolor>FFAAAAAA</textcolor>
-				<align>right</align>
-				<label>$ADDON[script.game.manuals 32012]</label>
 			</control>
 		</control>
 	</controls>

@@ -516,7 +516,7 @@
 					<width>460</width>
 					<height>80</height>
 					<font>font12</font>
-					<label>$ADDON[script.game.manuals 32022]</label>
+					<label>$ADDON[script.game.manuals 32009]</label>
 					<label2>$INFO[Window.Property(provider)]</label2>
 					<textoffsetx>30</textoffsetx>
 					<texturefocus border="16" colordiffuse="FF12A0C7">button.png</texturefocus>
