@@ -1,0 +1,37 @@
+Thunder subtitle add-on
+======================
+
+Distributed under GNU General Public License version 2 only. See LICENSE.txt.
+This is an independent add-on, not an official Xunlei or Kodi product.
+
+Origins and bundled code
+------------------------
+The original add-on structure was adapted from taxigps's Shooter subtitle
+add-on, whose metadata declares GPL version 2:
+https://github.com/taxigps/service.subtitles.shooter/tree/1a53164b9738d774e22ef9f4486cd1cb9a170db8/service.subtitles.shooter
+
+resources/lib/langconv.py and resources/lib/zh_wiki.py derive from skydark's
+nstools zhtools. Its distribution includes the GNU GPL version 2 text:
+https://github.com/skydark/nstools/tree/687cef6185e6b63804888b360ce5f9e81d2cc5ff/zhtools
+https://github.com/skydark/nstools/blob/687cef6185e6b63804888b360ce5f9e81d2cc5ff/LICENSE.txt
+The dictionary's upstream header attributes its data to Wikipedia.
+Local changes include Python 3 compatibility and dictionary corrections.
+Version 0.3.1 removes obsolete psyco support and the unused Python 2 CLI.
+
+The CID algorithm and Thunder service behaviour were studied using:
+https://github.com/weaming/thunder-subtitle
+This is a reference credit, not a claim of a licence grant from that project.
+The current search and download modules are maintained in this repository.
+
+Artwork
+-------
+icon.png and resources/media/fanart.jpg are original geometric artwork for
+this add-on, distributed under the same GPL version 2 licence. They contain
+no third-party logos, fonts, photos or screenshots. Reproduction source is
+tools/artwork.py in the project repository. Previous inherited artwork and
+screenshots are not included in this distribution.
+
+External dependencies
+---------------------
+requests (Apache-2.0) and chardet (LGPL-2.1-or-later) are supplied separately
+through the Kodi repository. Their source is not bundled in this add-on.
