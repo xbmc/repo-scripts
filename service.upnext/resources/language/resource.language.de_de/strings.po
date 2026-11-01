@@ -137,6 +137,10 @@ msgctxt "#30505"
 msgid "Show a \"Stop\" button instead of a \"Close\" button"
 msgstr "\"Stopp\"-Button statt \"Schließen\"-Button anzeigen"
 
+msgctxt "#30507"
+msgid "Use OK/Select for playback controls"
+msgstr ""
+
 msgctxt "#30600"
 msgid "Behaviour"
 msgstr "Verhalten"

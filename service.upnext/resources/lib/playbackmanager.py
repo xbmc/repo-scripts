@@ -15,6 +15,7 @@ from utils import addon_path, calculate_progress_steps, clear_property, event, g
 
 class PlaybackManager:
     _shared_state = {}
+    popup_shown = False  # whether the last launch_up_next() actually showed a popup
 
     def __init__(self):
         self.__dict__ = self._shared_state
@@ -41,6 +42,7 @@ class PlaybackManager:
 
     def launch_up_next(self):
         """Show the popup and act on it. Returns True if other playback replaced the episode while the popup was open"""
+        self.popup_shown = False
         enable_playlist = get_setting_bool('enablePlaylist')
         episode, source = self.play_item.get_next()
         self.log('Playlist setting: %s' % enable_playlist)
@@ -191,11 +193,13 @@ class PlaybackManager:
             self.log('showing next up page as played in a row is %s' % self.state.played_in_a_row, 2)
             next_up_page.set_credits_countdown(int(ceil(credits_duration)) if credits_deadline is not None else None)
             next_up_page.show()
+            self.popup_shown = True
             set_property('service.upnext.dialog', 'true')
             showing_next_up_page = True
         else:
             self.log('showing still watching page as played in a row %s' % self.state.played_in_a_row, 2)
             still_watching_page.show()
+            self.popup_shown = True
             set_property('service.upnext.dialog', 'true')
             showing_still_watching_page = True
         while (self.player.isPlaying() and (total_time - play_time > 1)
@@ -214,6 +218,7 @@ class PlaybackManager:
             play_time, total_time = position
 
             remaining = total_time - play_time
+            next_up_page.restore_after_playback_controls()
             if not self.state.pause:
                 if showing_next_up_page:
                     if credits_deadline is not None:

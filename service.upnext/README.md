@@ -15,6 +15,7 @@ A lot of existing add-ons already integrate with this service out-of-the-box.
 The add-on has various settings to fine-tune the experience, however the default settings should be fine for most.
 
   * Simple or fancy mode (defaults to fancy mode, but a more simple interface is possible)
+  * Optional OK/Select access to playback controls alongside the next-episode popup. Press an arrow first to select Watch now or Close; press Up to return to playback-control focus. If Kodi hides the popup while controls are open, it is restored when the controls close. Normal episode-end advancement remains active.
   * The notification time can be adjusted (defaults to 30 seconds before the end)
   * A credits delay can advance early when the provider supplies a credits offset (disabled by default). Back cancels the countdown and keeps the current episode playing; Pause freezes it with the video.
   * The default action can be configured, i.e. should it advance to the next episode (default) when the user does not respond, or stop
@@ -27,6 +28,11 @@ Credits autoplay uses the provider's absolute `notification_offset`; it does not
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
 
 ## Releases
+
+### v1.3.1 (2026-11-01)
+- Optionally let OK/Select open Kodi's playback controls alongside the next-episode popup in both styles, including existing skin overrides. Arrow navigation enters its normal buttons, and Up returns to playback-control focus. Restore a popup hidden by Kodi after the playback controls close; preserve normal episode-end advancement, Stop, Back and Still Watching behavior (@Drahy)
+- Fix the popup not appearing for an episode an add-on starts with Player.play, when Kodi briefly reported it with the previous episode's position and duration (@im85288)
+- Update Simplified Chinese translation (@wabisabi926)
 
 ### v1.3.0 (2026-10-24)
 - Show a Skip intro / Skip recap button when an add-on marks those ranges in a new `skip_segments` field of `upnext_data`, with optional automatic skipping (@im85288)

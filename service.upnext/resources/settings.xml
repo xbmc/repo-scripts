@@ -3,6 +3,7 @@
     <category label="30500"> <!-- Interface -->
         <setting label="30503" type="enum" id="simpleMode" lvalues="30038|30039" default="1"/>
         <setting label="30505" type="bool" id="stopAfterClose" default="false"/>
+        <setting label="30507" type="bool" id="selectOpensPlaybackControls" default="false"/>
     </category>
     <category label="30600"> <!-- Behaviour -->
         <setting label="30603" type="enum" id="autoPlayMode" lvalues="30040|30041" default="0"/>

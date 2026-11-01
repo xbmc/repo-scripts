@@ -11,8 +11,15 @@ from skip import Skipper
 from utils import clear_property, decode_json, get_property, get_setting_bool, log as ulog
 
 
+# How long to wait for a new file's own timing before accepting what Kodi reports (seconds)
+STALE_TIMING_WAIT = 10
+
+
 class UpNextMonitor(Monitor):
     """Service monitor for Kodi"""
+    _timing = None  # (file, total time, play time) last seen while tracking
+    _stale_waits = 0
+    _handled_without_data = None  # file marked as handled before any add-on data arrived
 
     def __init__(self):
         """Constructor for Monitor"""
@@ -100,6 +107,10 @@ class UpNextMonitor(Monitor):
                 self.wait_for_player('player.getTime()')
                 continue
 
+            if self.stale_timing(current_file, total_time, play_time):
+                self.wait_for_player("the new file's own position and duration")
+                continue
+
             self._waiting_for = None
             try:
                 self.skipper.update(self.api.data, play_time)
@@ -112,6 +123,7 @@ class UpNextMonitor(Monitor):
                 continue
 
             self.player.set_last_file(current_file)
+            had_addon_data = bool(self.api.data)
             self.log('Show notification as episode (of length %d secs) ends in %d secs' % (total_time, notification_time), 2)
             # The popup holds this loop until it closes, so the Skip button
             # could no longer follow playback: close it first.
@@ -123,6 +135,8 @@ class UpNextMonitor(Monitor):
                 self.log('Up Next failed for %s:\n%s' % (current_file, format_exc()), 0)
                 clear_property('service.upnext.dialog')
                 replaced = False
+            # Only an attempt that showed nothing because the add-on data hadn't arrived yet gets retried
+            self._handled_without_data = None if had_addon_data or self.playback_manager.popup_shown else current_file
             if replaced:
                 # Another file replaced this episode while the popup was open, keep tracking it
                 self.log('Playback was replaced while the popup was open, tracking continues', 2)
@@ -132,6 +146,33 @@ class UpNextMonitor(Monitor):
             self.remember_playback()
 
         self.log('Service stopped', 0)
+
+    def stale_timing(self, current_file, total_time, play_time):
+        """Whether Kodi still reports the previous file's position and duration for a new file.
+
+        Right after another file starts (e.g. an add-on calling Player.play), Kodi can report the
+        new file while its position and duration are still the previous file's, near the end."""
+        if self._timing:
+            filename, previous_total, previous_time = self._timing
+            if filename != current_file and total_time == previous_total and play_time >= previous_time:
+                self._stale_waits += 1
+                if self._stale_waits <= STALE_TIMING_WAIT:
+                    return True
+                # A different file of exactly the same length, resumed further in: accept it
+        self._stale_waits = 0
+        self._timing = (current_file, total_time, play_time)
+        return False
+
+    def forget_file_handled_without_data(self):
+        """Give the playing file another look when it was handled before its add-on data arrived"""
+        try:
+            playing_file = self.player.getPlayingFile()
+        except RuntimeError:
+            return
+        if playing_file and playing_file == self._handled_without_data == self.player.get_last_file():
+            self.log('Add-on data arrived for %s after it was handled without it, checking it again' % playing_file, 2)
+            self.player.set_last_file(None)
+        self._handled_without_data = None
 
     def wait_for_player(self, reason):
         if self._waiting_for != reason:
@@ -224,6 +265,7 @@ class UpNextMonitor(Monitor):
         self.playback_manager.handle_demo()
         decoded_data.update(id='%s_play_action' % sender.replace('.SIGNAL', ''))
         self.api.addon_data_received(decoded_data, encoding=encoding)
+        self.forget_file_handled_without_data()
         self.player.enable_tracking()
         self.player.reset_queue()
         self.remember_playback()
