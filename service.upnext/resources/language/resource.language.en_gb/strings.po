@@ -136,6 +136,10 @@ msgctxt "#30505"
 msgid "Show a \"Stop\" button instead of a \"Close\" button"
 msgstr ""
 
+msgctxt "#30507"
+msgid "Use OK/Select for playback controls"
+msgstr ""
+
 msgctxt "#30600"
 msgid "Behaviour"
 msgstr ""
@@ -206,6 +210,22 @@ msgstr ""
 
 msgctxt "#30633"
 msgid "Skip recaps automatically"
+msgstr ""
+
+msgctxt "#30635"
+msgid "Ask if still watching after (minutes, 0 disables)"
+msgstr ""
+
+msgctxt "#30637"
+msgid "Ask if still watching after bedtime"
+msgstr ""
+
+msgctxt "#30639"
+msgid "Bedtime hour"
+msgstr ""
+
+msgctxt "#30641"
+msgid "Bedtime minute"
 msgstr ""
 
 msgctxt "#30700"

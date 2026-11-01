@@ -136,6 +136,10 @@ msgctxt "#30505"
 msgid "Show a \"Stop\" button instead of a \"Close\" button"
 msgstr "\"그만\" 버튼 대신 \"중지\" 버튼을 보여줍니다."
 
+msgctxt "#30507"
+msgid "Use OK/Select for playback controls"
+msgstr ""
+
 msgctxt "#30600"
 msgid "Behaviour"
 msgstr "동작설정"
