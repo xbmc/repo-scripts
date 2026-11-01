@@ -1,4 +1,4 @@
-#  Copyright (C) 2023 Team-Kodi
+#  Copyright (C) 2026 Team-Kodi
 #
 #  This file is part of script.kodi.windows.update
 #
@@ -6,78 +6,61 @@
 #  See LICENSES/README.md for more information.
 #
 # -*- coding: utf-8 -*-
+from default import *
 
-import platform, traceback, json, sys
-from kodi_six import xbmc, xbmcaddon, xbmcplugin, xbmcgui, xbmcvfs
-
-# Plugin Info
-ADDON_ID      = 'script.kodi.windows.update'
-REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
-ADDON_NAME    = REAL_SETTINGS.getAddonInfo('name')
-ADDON_VERSION = REAL_SETTINGS.getAddonInfo('version')
-ICON          = REAL_SETTINGS.getAddonInfo('icon')
-LANGUAGE      = REAL_SETTINGS.getLocalizedString
-
-## GLOBALS ##
-DEBUG         = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
-CLEAN         = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
-CACHE         = REAL_SETTINGS.getSetting('Disable_Cache') == 'false'
-VER_QUERY     = '{"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["version"]},"id":1}'
-
-def log(msg, level=xbmc.LOGDEBUG):
-    if DEBUG == False and level != xbmc.LOGERROR: return
-    if level == xbmc.LOGERROR: msg += ' ,' + traceback.format_exc()
-    xbmc.log(ADDON_ID + '-' + ADDON_VERSION + '-' + (msg), level)
+PATH  = REAL_SETTINGS.getSetting("LastPath")
+CACHE = REAL_SETTINGS.getSetting('Disable_Cache') == 'false'
+CLEAN = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 
 class Service(object):
+    myMonitor = xbmc.Monitor()
+    
     def __init__(self):
-        self.myMonitor = xbmc.Monitor()
-        self.setSettings()
-        lastPath = REAL_SETTINGS.getSetting("LastPath") # CACHE = Keep last download, CLEAN = Remove all downloads
-        if not CACHE and CLEAN and xbmcvfs.exists(lastPath): self.deleteLast(lastPath)
+        self.getBuild()
+        self.getPlatform()
+        self.getVersion()
+        self.chkLastFile()
         
                 
-    def deleteLast(self, lastPath):
-        log('deleteLast')
-        #some file systems don't release the file lock instantly.
-        for count in range(3):
-            if self.myMonitor.waitForAbort(1): return 
-            try: 
-                if xbmcvfs.delete(lastPath): return
-            except: pass
-                
-
-    def setSettings(self):
-        log('setSettings')
-        [func() for func in [self.getBuild,self.getPlatform,self.getVersion]]
-              
-              
     def getBuild(self):
-        log('getBuild')
-        REAL_SETTINGS.setSetting("Build",json.dumps(json.loads(xbmc.executeJSONRPC(VER_QUERY) or '').get('result',{}).get('version',{})))
-        
-        
-    def getPlatform(self): 
-        log('getPlatform')
-        count = 0
         try:
-            while not self.myMonitor.abortRequested() and count < 15:
-                count += 1 
+            build = json.dumps(json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Application.GetProperties","params":{"properties":["version"]},"id":1}') or '').get('result',{}).get('version',{}))
+            REAL_SETTINGS.setSetting("Build",build)
+            log(f'Service: getBuild = {build}')
+        except Exception as e: log(f"Service: getBuild failed!\n{e}", xbmc.LOGERROR)
+            
+            
+    def getPlatform(self): 
+        try:
+            for count in range(15):
+                machine = platform.machine()
+                if len(machine) > 0: 
+                    REAL_SETTINGS.setSetting("Platform",machine)
+                    log(f'Service: getPlatform = {machine}')
+                    return
                 if self.myMonitor.waitForAbort(1): return
-                build = platform.machine()
-                if len(build) > 0: return REAL_SETTINGS.setSetting("Platform",build)
-        except Exception as e: log("getVersion Failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: log(f"Service: getPlatform failed!\n{e}", xbmc.LOGERROR)
         
         
     def getVersion(self):
-        log('getVersion')
-        count = 0
         try:
-            while not self.myMonitor.abortRequested() and count < 15:
-                count += 1 
+            for count in range(15):
+                version = (xbmc.getInfoLabel('System.OSVersionInfo') or 'busy')
+                if version.lower() != 'busy': 
+                    REAL_SETTINGS.setSetting("Version",str(version))
+                    log(f'Service: getVersion = {version}')
+                    return
                 if self.myMonitor.waitForAbort(1): return
-                build = (xbmc.getInfoLabel('System.OSVersionInfo') or 'busy')
-                if build.lower() != 'busy': return REAL_SETTINGS.setSetting("Version",str(build))
-        except Exception as e: log("getVersion Failed! " + str(e), xbmc.LOGERROR)
+        except Exception as e: log(f"Service: getVersion failed!\n{e}", xbmc.LOGERROR)
+              
+              
+    def chkLastFile(self):
+        # CACHE = Keep last download, CLEAN = Remove all downloads
+        if xbmcvfs.exists(PATH):
+            if not CACHE and CLEAN:
+                log(f'Service: chkLastFile = {PATH}')
+                deleteFile(PATH)
+                xbmcgui.Dialog().notification(ADDON_NAME, LANGUAGE(30007), ICON, 4000)
+              
               
 if __name__ == '__main__': Service()

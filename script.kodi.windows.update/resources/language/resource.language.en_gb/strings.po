@@ -21,7 +21,7 @@ msgid "Download and Install Kodi packages."
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Download and Install Kodi window executables; select from  Nightlies, Releases, Snapshots and Test-builds."
+msgid "Download and Install Kodi Windows executables; select from  Nightlies, Releases, Snapshots and Test-builds."
 msgstr ""
 
 msgctxt "Addon Disclaimer"
@@ -122,4 +122,8 @@ msgstr ""
 
 msgctxt "#30025"
 msgid " | [B]ETA:[/B]"
+msgstr ""
+
+msgctxt "#30027"
+msgid "Kodi will close in %s seconds to start the installation.\nSelect Cancel to keep Kodi running."
 msgstr ""
