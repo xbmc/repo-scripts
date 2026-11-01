@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+    <defaultcontrol always="true">10070</defaultcontrol>
+    <controls>
+        <animation effect="fade" start="0" end="100" time="200">Visible</animation>
+        <animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+        <control type="group" id="10072">
+        	<!-- this hides the menu until it's done with setup -->
+		    <left>-10000</left>
+		    <right>-10000</right>
+            <control type="image" id="10073">
+                <width>558</width>
+                <fadetime>100</fadetime>
+                <texture colordiffuse="$VAR[BackgroundColor]" border="30" fallback="white.png">elements/poster-mask.png</texture>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="label" id="10071">
+            	<top>10</top>
+            	<left>24</left>
+            	<width>512</width>
+            	<height>50</height>
+            	<align>center</align>
+            	<aligny>center</aligny>
+            	<font>MediumViewFont</font>
+            	<label></label>
+            </control>
+            <control type="grouplist" id="10070">
+                <left>24</left>
+                <top>70</top>
+                <width>512</width>
+                <itemgap>0</itemgap>
+                <control type="button" id="10080">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10081">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10082">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10083">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10084">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10085">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10086">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10087">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10088">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+                <control type="button" id="10089">
+                    <width>512</width>
+                    <scroll>false</scroll>
+                    <label></label>
+                </control>
+            </control>
+
+        </control>
+    </controls>
+</window>

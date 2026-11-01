@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="150" end="100" center="960,540" time="250" tween="cubic" easing="out" />
+		<effect type="fade" end="100" time="100" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="fade" start="100" end="0" time="100" delay="100" />
+		<effect type="zoom" start="100" end="130" center="960,540" time="250" tween="cubic" easing="in" />
+	</animation>
+	<controls>
+		<control type="group" id="10072">
+			<width>600</width>
+			<control type="image">
+				<width>585</width>
+				<height>30</height>
+				<texture border="30,20,30,2">dialog_top2.png</texture>
+			</control>
+			<control type="image">
+				<top>30</top>
+				<width>585</width>
+				<height>50</height>
+				<texture border="35,2,35,2">button_shutdown_nofocus.png</texture>			    
+			</control>
+			<control type="label" id="10071">
+				<top>20</top>
+				<left>50</left>
+	            <width>473</width>
+				<height>60</height>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<font>font14_bold</font>
+				<label></label>
+			</control>
+			<control type="group" id="10073">
+				<width>585</width>
+				<height>30</height>
+				<control type="image">
+					<texture border="30,2,30,20">dialog_bottom2.png</texture>
+				</control>
+			</control>
+			<control type="panel" id="10070">
+				<top>80</top>
+				<width>600</width>
+				<onleft>10070</onleft>
+				<onright>10070</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<align>center</align>
+				<itemlayout height="60" width="600">
+				    <control type="image">
+						<width>585</width>
+						<height>60</height>
+						<texture border="35,2,35,2">button_shutdown_nofocus.png</texture>			    
+				    </control>
+					<control type="label">
+						<left>50</left>
+						<width>473</width>
+						<height>60</height>
+						<textcolor>grey2</textcolor>
+						<font>font14</font>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="60" width="600">
+				    <control type="image">
+						<width>585</width>
+						<height>60</height>
+						<texture colordiffuse="$VAR[HighlightBarColor]" border="35,2,35,2">button_shutdown_focus.png</texture>
+				    </control>
+					<control type="label">
+						<left>50</left>
+						<width>585</width>
+						<height>60</height>
+						<textcolor>white</textcolor>
+						<font>font14</font>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>

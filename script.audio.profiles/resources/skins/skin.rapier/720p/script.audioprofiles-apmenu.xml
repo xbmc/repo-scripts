@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="11112">
+	<defaultcontrol>10070</defaultcontrol>
+	<controls>
+		<animation type="WindowOpen">
+			<effect type="fade" end="100" time="225"/>
+			<effect type="slide" start="0,-15" time="300" tween="cubic" easing="out"/>
+		</animation>
+		<animation type="WindowClose">
+			<effect type="fade" end="0" time="325" />
+			<effect type="slide" end="0,-15" time="400" tween="cubic" easing="out"/>
+		</animation>		
+		<control type="group" id="10072">
+			<!-- this hides the menu until it's done with setup -->
+		    <left>-10000</left>
+		    <right>-10000</right>
+		    <width>400</width>
+			<control type="image">
+				<height>32</height>
+				<texture border="40,30,40,0">gui/context-menu-top.png</texture>
+			</control>
+			<control type="image">
+			    <top>32</top>
+				<height>37</height>
+				x<texture border="40,2,40,2">gui/context-menu-middle.png</texture>
+			</control>
+			<control type="label" id="10071">
+			    <top>32</top>
+				<height>37</height>
+				<align>center</align>
+				<aligny>center</aligny>
+				<font>SettingsCatFont</font>
+				<textcolor>ffffffff</textcolor>
+				<label></label>
+			</control>
+			<control type="group" id="10073">
+				<control type="image">
+					<height>32</height>
+					<texture flipy="true" border="40,30,40,0">gui/context-menu-top.png</texture>
+				</control>
+			</control>
+			<control type="panel" id="10070">
+			    <top>69</top>
+			    <width>400</width>
+				<onleft>close</onleft>
+				<onright>close</onright>
+				<onup>10070</onup>
+				<ondown>10070</ondown>
+				<scrolltime tween="sine" easing="inout">280</scrolltime>
+				<itemlayout height="37">
+					<control type="image">
+						<texture border="40,2,40,2">gui/context-menu-middle.png</texture>
+					</control>
+					<control type="button">
+						<left>32</left>
+						<width>336</width>
+					</control>
+					<control type="label">
+						<left>32</left>
+						<width>336</width>
+						<font>DialogMediaInfoFont</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textcolor>SettingsCatColor</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="37">
+					<control type="image">
+						<texture border="40,2,40,2">gui/context-menu-middle.png</texture>
+					</control>
+					<control type="button">
+						<left>32</left>
+						<width>336</width>
+					</control>
+					<control type="label">
+						<left>32</left>
+						<width>336</width>
+						<font>DialogMediaInfoFont</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textcolor>SelectedColor</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+	</controls>
+</window>
