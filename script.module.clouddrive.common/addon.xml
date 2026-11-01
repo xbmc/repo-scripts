@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.clouddrive.common" name="Cloud Drive Common Module" version="1.5.11" provider-name="Carlos Guzman (cguZZman)">
+<addon id="script.module.clouddrive.common" name="Cloud Drive Common Module" version="1.5.18" provider-name="Carlos Guzman (cguZZman)">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.dateutil"/>
@@ -19,29 +19,34 @@
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
-		<news>v1.5.11 released Oct 24, 2026:
+		<news>v1.5.18 released Oct 31, 2026:
+- Browsing shows the plot, cast and artwork of the .nfo files and pictures next to each video (requested in plugin.googledrive#301)
+
+v1.5.17 released Oct 31, 2026:
+- When an account's sign-in is no longer valid, the add-ons ask again to sign in, instead of showing an empty folder
+
+v1.5.16 released Oct 31, 2026:
+- Every drive opens the same menu (Files, its own folders, Exports and Search), also in Dropbox
+
+v1.5.15 released Oct 30, 2026:
+- Exports of removed accounts can be removed: Exports of removed accounts, in the add-on's main screen
+- Dropbox shows a drive's exports after its files
+
+v1.5.14 released Oct 30, 2026:
+- Exports whose account was removed are skipped with one notice, instead of an "Unknown error" every minute
+
+v1.5.13 released Oct 30, 2026:
+- Big folders open a page at a time (Items per page in each add-on's Advanced settings), and going back to a folder doesn't load it again for a few minutes
+- Auto-refreshed slideshow: shows every picture of the folder, and notices replaced pictures
+
+v1.5.12 released Oct 30, 2026:
+- Music folders can also be sorted by track number and by file name
+
+v1.5.11 released Oct 24, 2026:
 - The remove dialog only warns that other Kodi devices are signed out where revoking does that (Google Drive, not Dropbox)
 
 v1.5.10 released Oct 24, 2026:
-- Removing an account can also revoke the add-on's access at the provider (Google Drive, Dropbox); this signs out your other Kodi devices using that account too
-
-v1.5.9 released Oct 17, 2026:
-- Videos and music start and seek faster: connections to Google Drive, OneDrive and Dropbox are kept open between requests
-
-v1.5.8 released Oct 17, 2026:
-- Subtitle and picture names no longer show %20-style codes in Kodi
-
-v1.5.7 released Oct 16, 2026:
-- Use as a source: files open through the add-on's local download service, so Google Drive and Dropbox files play (they need a token a redirect can't carry), and OneDrive's links stay out of the Kodi log
-- Use as a source: folder names with spaces or other special characters work
-
-v1.5.6 released Oct 16, 2026:
-- Faster library exports for add-ons that can list a whole folder tree at once (Google Drive, Dropbox)
-- Using an add-on as a source no longer fails on pages requested twice
-- Database retries stop when Kodi shuts down
-
-v1.5.5 released Oct 14, 2026:
-- Requests to the sign-in server report the add-on, Kodi and Python versions, for its anonymous usage statistics</news>
+- Removing an account can also revoke the add-on's access at the provider (Google Drive, Dropbox); this signs out your other Kodi devices using that account too</news>
 		<disclaimer lang="en_GB">
 This cloud drive addon uses a third-party authentication mechanism commonly known as OAuth 2.0.
 If you want to know more about OAuth 2.0 you can visit the following pages:
