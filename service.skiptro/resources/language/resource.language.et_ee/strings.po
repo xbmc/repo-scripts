@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Estonian\n"
+"Language: et_EE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Sissejuhatuse/lõputiitrite vahelejätmise nupp"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Kuvab sissejuhatuse ja lõputiitrite ajal vahelejätmise nupu. Loeb ajastusandmeid videofailide kõrval asuvatest .skiptro.json failidest."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Dialoog"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Sulge dialoog automaatselt pärast (sekundit)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Jäta sissejuhatused automaatselt vahele"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Jäta sissejuhatus vahele"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Jäta lõputiitrid vahele"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Hüppa lisastseenile"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Vahelejätmise andmeid ei saa lugeda. Kontrolli failiõigusi."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Vahelejätmise andmeid ei saa lugeda. Lülita Androidi seadetes Kodi jaoks sisse „Juurdepääs kõigile failidele“."
