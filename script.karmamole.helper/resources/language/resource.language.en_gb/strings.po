@@ -11,3 +11,7 @@ msgstr ""
 msgctxt "#32001"
 msgid "Play a shuffled mix"
 msgstr ""
+
+msgctxt "#32002"
+msgid "Only part of this folder is in the mix: it is too large to walk in full"
+msgstr ""

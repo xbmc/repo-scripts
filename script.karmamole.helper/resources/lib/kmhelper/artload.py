@@ -5,6 +5,7 @@
 1) Kodi's texture cache (Thumbnails/<h>/<crc>.jpg|png; hash of the unwrapped and of the wrapped URL) - the usual hit,
    because the art is on screen when we ask; 2) the URL through the VFS; 3) a VFS copy into our profile folder."""
 import os
+import uuid
 from urllib.parse import unquote
 
 import xbmc
@@ -52,7 +53,8 @@ def load(url):
         data = _read(path)
         if data:
             return data, '%s|%d' % (url, len(data))
-    tmp = os.path.join(PROFILE, 'art.tmp')
+    # one temp file per call: the spine worker and the browse loop can both be here at once
+    tmp = os.path.join(PROFILE, 'art.%s.tmp' % uuid.uuid4().hex)
     try:
         if not os.path.isdir(PROFILE):
             os.makedirs(PROFILE, exist_ok=True)
@@ -63,6 +65,8 @@ def load(url):
     except Exception as e:  # noqa: BLE001
         log('copy failed %s: %s' % (url, e))
     finally:
-        if os.path.exists(tmp):
+        try:
             os.remove(tmp)
+        except OSError:  # never created (copy failed) or already gone
+            pass
     return b'', ''

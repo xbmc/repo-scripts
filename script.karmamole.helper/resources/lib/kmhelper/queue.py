@@ -39,6 +39,9 @@ def move(src, dst):
         log('queue_move ignored: from=%s to=%s' % (src, dst), xbmc.LOGWARNING)
         return False
     cur, size = _current()
+    if cur < 0:  # music stopped before the action ran: offsets have no anchor, touch nothing
+        log('queue_move ignored: no music playing (from=%d to=%d)' % (src, dst), xbmc.LOGWARNING)
+        return False
     a, b = cur + src, cur + dst
     if a >= size or b >= size:
         log('queue_move out of range: from=%d to=%d (playing %d of %d)' % (src, dst, cur, size), xbmc.LOGWARNING)
@@ -56,6 +59,9 @@ def remove(offset):
     if off is None or off < 1:
         return False
     cur, size = _current()
+    if cur < 0:  # music stopped before the action ran: offset 1 would be the first song of the queue
+        log('queue_remove ignored: no music playing (offset=%d)' % off, xbmc.LOGWARNING)
+        return False
     pos = cur + off
     if pos >= size:
         return False

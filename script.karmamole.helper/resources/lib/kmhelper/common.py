@@ -4,6 +4,8 @@
 """Shared Kodi plumbing: logging, JSON-RPC, paths, Window(Home) properties, atomic file writes."""
 import json
 import os
+import threading
+import time
 
 import xbmc
 import xbmcaddon
@@ -38,6 +40,7 @@ def log(msg, level=xbmc.LOGDEBUG):
 # xbmc/addons/AddonInstaller.cpp). Keep this table in step with strings.po.
 STRINGS_EN = {
     32001: 'Play a shuffled mix',
+    32002: 'Only part of this folder is in the mix: it is too large to walk in full',
 }
 
 
@@ -51,7 +54,22 @@ def localize(string_id):
 
 
 def info(label):
+    """One infolabel via xbmc.getInfoLabel. Not for ListItem.* / Container(id).ListItem.* / Player.* in a loop:
+    use infos()."""
     return xbmc.getInfoLabel(label)
+
+
+def infos(*labels):
+    """Infolabels evaluated ON KODI'S GUI THREAD: {label: value}, {} on failure.
+
+    xbmc.getInfoLabel runs on the calling (Python) thread and takes no GUI lock (Kodi 21 ModuleXbmc.cpp; only
+    getCondVisibility locks). A ListItem.* read walks the active window's view control while the GUI thread may be
+    swapping it (Container.SetViewMode, a dialog loading): Kodi 21.2 crashed with an access violation in
+    CGUIControlLookup::GetControl <- CGUIViewControl::GetSelectedItem <- GetCurrentListItem <- getInfoLabel, six times
+    on the PC bench in Groove (2026-10-29). JSON-RPC XBMC.GetInfoLabels hands the labels to the GUI thread
+    (TMSG_GUI_INFOLABEL) and waits, so the read can never overlap a view switch."""
+    res = rpc('XBMC.GetInfoLabels', {'labels': list(labels)})
+    return res if isinstance(res, dict) else {}
 
 
 def cond(expr):
@@ -98,10 +116,22 @@ def mkdirs(path):
 def write_atomic(path, data):
     """Write bytes via a temp file + rename, so a reader (Kodi or another add-on process) never sees half a file."""
     mkdirs(os.path.dirname(path))
-    tmp = '%s.%d.tmp' % (path, os.getpid())
+    # pid + thread id: every add-on call runs inside the one Kodi process, so the pid alone collides
+    tmp = '%s.%d.%d.tmp' % (path, os.getpid(), threading.get_ident())
     with open(tmp, 'wb') as f:
         f.write(data)
-    os.replace(tmp, path)
+    for attempt in range(5):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:  # Windows: a reader still has the target open
+            if attempt == 4:
+                try:
+                    os.remove(tmp)
+                except OSError:
+                    pass
+                raise
+            time.sleep(0.05)
 
 
 def read_json(path, default=None):
