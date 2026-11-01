@@ -1,0 +1,89 @@
+# Kodi Media Center language file
+# Addon id: service.refract
+msgid ""
+msgstr ""
+"Project-Id-Version: service.refract\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+
+msgctxt "#32001"
+msgid "Account"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Connected account"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Connect your Refract account"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Disconnect"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Marking as watched"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Mark episodes"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Mark movies"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Mark as watched after"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Show a notification"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Connect to Refract"
+msgstr ""
+
+msgctxt "#32021"
+msgid "On your phone or computer, open {0} and enter this code:"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Waiting for your approval…"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Connected as {0}"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Connection failed"
+msgstr ""
+
+msgctxt "#32025"
+msgid "The code expired. Try again."
+msgstr ""
+
+msgctxt "#32026"
+msgid "Disconnected from Refract"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Marked as watched: {0}"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Refract could not find {0}"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Not connected"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Connect your Refract account again in the add-on settings"
+msgstr ""
