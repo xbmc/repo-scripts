@@ -7,12 +7,30 @@
     <!-- Set to "true" by api.py when the server rejects the token (HTTP 401/403);
          is_authenticated() then returns False so the service forces a re-login. -->
     <setting id="auth_invalid" type="bool" label="Auth invalid" default="false" visible="false" />
+    <setting type="action" label="Connect to WeTrakr" action="RunScript(script.wetrakr, login)" option="close" />
   </category>
 
   <category label="Scrobbling">
     <setting id="track_watched" type="bool" label="Mark as watched" default="true" />
     <setting id="track_playing" type="bool" label="Send 'now playing' event" default="true" />
     <setting id="scrobble_threshold" type="number" label="Scrobble threshold (%)" default="80" />
+  </category>
+
+  <category label="Library sync">
+    <setting id="sync_enabled" type="bool" label="Sync the Kodi library with WeTrakr" default="true" />
+    <setting id="sync_upload" type="bool" label="Send watched, ratings and progress to WeTrakr" default="true" enable="eq(-1,true)" />
+    <setting id="sync_download" type="bool" label="Apply WeTrakr watched, ratings and progress to Kodi" default="true" enable="eq(-2,true)" />
+    <setting id="sync_watchlist_tag" type="bool" label="Tag Plan to Watch titles as 'WeTrakr Watchlist'" default="true" enable="eq(-3,true)" />
+    <setting id="sync_exclude_plugin" type="bool" label="Skip add-on sources (Jellyfin, Plex...)" default="true" enable="eq(-4,true)" />
+    <setting id="resume_from_wetrakr" type="bool" label="Resume add-on streams where WeTrakr left off" default="true" />
+    <setting type="action" label="Sync now" action="RunScript(script.wetrakr, sync)" option="close" enable="eq(-6,true)" />
+    <setting type="action" label="Reset sync state" action="RunScript(script.wetrakr, sync_reset)" option="close" enable="eq(-7,true)" />
+  </category>
+
+  <category label="Widgets">
+    <setting type="lsep" label="Add 'WeTrakr Scrobbler > Next Episodes' as a widget from your skin settings" />
+    <setting id="widget_library_only" type="bool" label="Next Episodes: only episodes in the Kodi library" default="false" />
+    <setting id="widget_tmdb_helper" type="bool" label="Play the other episodes with TMDb Helper" default="true" enable="eq(-1,false)" />
   </category>
 
   <category label="Rating">

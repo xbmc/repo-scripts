@@ -7,6 +7,23 @@ Player.GetItem / VideoLibrary.GetTVShowDetails for external IDs.
 
 import json
 import xbmc
+import xbmcaddon
+
+try:
+    from urllib.parse import urlsplit, parse_qs
+except ImportError:
+    # Python 2 fallback (Kodi 18 Leia and earlier)
+    from urlparse import urlsplit, parse_qs
+
+
+def user_agent():
+    """'WeTrakr-Kodi/<version>' with the installed add-on version, so the server
+    can tell which versions are out there (the string used to be hardcoded)."""
+    try:
+        version = xbmcaddon.Addon("script.wetrakr").getAddonInfo("version")
+    except Exception:
+        version = "unknown"
+    return "WeTrakr-Kodi/{}".format(version)
 
 
 def get_json_rpc(method, params):
@@ -37,7 +54,7 @@ def get_playing_item(player_id):
         "properties": [
             "title", "showtitle", "season", "episode", "year",
             "tvshowid", "uniqueid", "imdbnumber", "file", "type",
-            "firstaired"
+            "firstaired", "originaltitle", "premiered", "runtime"
         ]
     }).get("item", {})
 
@@ -65,6 +82,52 @@ def get_player_uniqueids():
     if imdb and not imdb.startswith('tt'):
         imdb = None
     return {"tmdb": tmdb, "imdb": imdb, "tvdb": tvdb}
+
+
+# Query parameters that video add-ons put in their plugin:// play URLs.
+# Umbrella: action=play_Item&title=..&year=..&imdb=tt..&tmdb=..
+# Fen Light / POV: mode=playback.media&media_type=movie&tmdb_id=..
+_URL_ID_PARAMS = {
+    "tmdb": ("tmdb", "tmdb_id", "tmdbid"),
+    "imdb": ("imdb", "imdb_id", "imdbid"),
+    "tvdb": ("tvdb", "tvdb_id", "tvdbid"),
+}
+
+
+def extract_ids_from_url(file_url):
+    """IDs from the plugin:// URL of the playing item.
+
+    The resolved stream usually carries no uniqueid, but the ORIGINAL plugin
+    URL (what Player.GetItem returns as `file`) names the title by id in most
+    video add-ons. Only whitelisted parameters are read and only the ids leave
+    the device: the URL itself can embed debrid links with tokens.
+    """
+    empty = {"tmdb": None, "imdb": None, "tvdb": None}
+    if not file_url or not str(file_url).startswith("plugin://"):
+        return empty
+    try:
+        params = parse_qs(urlsplit(str(file_url)).query, keep_blank_values=False)
+    except Exception:
+        return empty
+    ids = dict(empty)
+    for key, names in _URL_ID_PARAMS.items():
+        for name in names:
+            values = params.get(name)
+            if not values:
+                continue
+            value = str(values[0]).strip()
+            if key == "imdb":
+                if value.startswith("tt") and value[2:].isdigit():
+                    ids[key] = value
+            else:
+                ids[key] = _parse_int(value)
+            if ids[key]:
+                break
+    return ids
+
+
+def _has_ids(ids):
+    return bool(ids.get("tmdb") or ids.get("imdb") or ids.get("tvdb"))
 
 
 def extract_ids(item):
@@ -129,7 +192,13 @@ def _aired_date(value):
     return None
 
 
-def build_payload(event, item, show_item=None, progress=0.0):
+def _original_title(item):
+    value = item.get("originaltitle") or xbmc.getInfoLabel("VideoPlayer.OriginalTitle") or ""
+    value = str(value).strip()
+    return value if value and value != str(item.get("title") or "").strip() else None
+
+
+def build_payload(event, item, show_item=None, progress=0.0, runtime=0):
     """
     Build the JSON payload to send to WeTrakr API.
 
@@ -138,17 +207,35 @@ def build_payload(event, item, show_item=None, progress=0.0):
         item: Kodi JSON-RPC item dict
         show_item: TV show details dict (for episodes)
         progress: Playback progress percentage (0-100)
+        runtime: real duration of the playing file in seconds (Player.getTotalTime)
 
     Returns: dict matching the WeTrakr Kodi webhook contract
     """
     item_type = item.get("type", "unknown")
     ids = extract_ids(item)
+    ids_source = "library"
 
     # Add-on sources (Jellyfin for Kodi, Plex Kodi Connect, ...) bypass Kodi's
     # VideoLibrary and JSON-RPC returns an empty uniqueid dict for them. Pull
-    # the IDs straight from the running player via infolabels as a fallback.
-    if not ids["tmdb"] and not ids["imdb"] and not ids["tvdb"]:
+    # the IDs straight from the running player via infolabels as a fallback,
+    # and after that from the add-on's own plugin:// URL.
+    if not _has_ids(ids):
         ids = get_player_uniqueids()
+        ids_source = "player"
+    if not _has_ids(ids):
+        ids = extract_ids_from_url(item.get("file"))
+        ids_source = "url"
+    if not _has_ids(ids):
+        ids_source = None
+
+    # Without ids the server falls back to the title: the real file duration,
+    # the original title and the release date break ties between homonyms.
+    try:
+        runtime = int(round(float(runtime or 0)))
+    except (TypeError, ValueError):
+        runtime = 0
+    if runtime <= 0:
+        runtime = _parse_int(item.get("runtime")) or 0
 
     if item_type == "episode":
         # We send the episode payload even when show_item is missing
@@ -178,10 +265,14 @@ def build_payload(event, item, show_item=None, progress=0.0):
         aired = _aired_date(item.get("firstaired"))
         if aired:
             payload["aired"] = aired
+        if ids_source:
+            payload["ids_source"] = ids_source
+        if runtime:
+            payload["runtime"] = runtime
         return payload
 
     if item_type == "movie":
-        return {
+        payload = {
             "event": event,
             "media_type": "movie",
             "title": item.get("title", ""),
@@ -189,6 +280,17 @@ def build_payload(event, item, show_item=None, progress=0.0):
             "ids": ids,
             "progress": round(progress, 1)
         }
+        if ids_source:
+            payload["ids_source"] = ids_source
+        if runtime:
+            payload["runtime"] = runtime
+        original_title = _original_title(item)
+        if original_title:
+            payload["original_title"] = original_title
+        premiered = _aired_date(item.get("premiered"))
+        if premiered:
+            payload["premiered"] = premiered
+        return payload
 
     # Unknown type — return minimal payload for server-side ignore
     return {

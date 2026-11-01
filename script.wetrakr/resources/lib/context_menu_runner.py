@@ -115,7 +115,7 @@ def _handle_mark_watched(api, item, title, ids):
 
 def run():
     if not auth.is_authenticated():
-        _notify("WeTrakr", "Not connected. Go to Settings to connect.", 5000)
+        _notify("WeTrakr", "Not connected. Use Connect in the add-on settings.", 5000)
         return
 
     item = _get_item_info()
