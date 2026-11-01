@@ -136,6 +136,10 @@ msgctxt "#30505"
 msgid "Show a \"Stop\" button instead of a \"Close\" button"
 msgstr "Zobrazit tlačítko \"Zastavení\" místo \"Zavření\""
 
+msgctxt "#30507"
+msgid "Use OK/Select for playback controls"
+msgstr "Tlačítkem OK otevřít ovládání přehrávání"
+
 msgctxt "#30600"
 msgid "Behaviour"
 msgstr "Chování"
@@ -207,6 +211,22 @@ msgstr ""
 msgctxt "#30633"
 msgid "Skip recaps automatically"
 msgstr ""
+
+msgctxt "#30635"
+msgid "Ask if still watching after (minutes, 0 disables)"
+msgstr "Zeptat se, zda stále sleduji, po (minuty; 0 = vypnuto)"
+
+msgctxt "#30637"
+msgid "Ask if still watching after bedtime"
+msgstr "Zeptat se, zda stále sleduji, po večerce"
+
+msgctxt "#30639"
+msgid "Bedtime hour"
+msgstr "Hodina večerky"
+
+msgctxt "#30641"
+msgid "Bedtime minute"
+msgstr "Minuta večerky"
 
 msgctxt "#30700"
 msgid "Expert"

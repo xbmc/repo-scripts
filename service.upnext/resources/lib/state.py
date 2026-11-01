@@ -2,6 +2,7 @@
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
 from utils import get_setting_bool, get_setting_int
+from watchtimer import WatchTimer
 
 
 # keeps track of the state parameters
@@ -21,3 +22,4 @@ class State:
         self.pause = False
         self.queued = False
         self.playing_next = False
+        self.watch_timer = WatchTimer()

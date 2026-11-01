@@ -136,6 +136,10 @@ msgctxt "#30505"
 msgid "Show a \"Stop\" button instead of a \"Close\" button"
 msgstr "Zobraziť tlačidlo \"Zastaviť\" namiesto tlačidla \"Zavrieť\""
 
+msgctxt "#30507"
+msgid "Use OK/Select for playback controls"
+msgstr "Tlačidlom OK otvoriť ovládanie prehrávania"
+
 msgctxt "#30600"
 msgid "Behaviour"
 msgstr "Správanie"
