@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+  <section id="service.refract">
+    <category id="account" label="32001">
+      <group id="1">
+        <setting id="account_name" type="string" label="32002">
+          <level>0</level>
+          <default/>
+          <enable>false</enable>
+          <control type="edit" format="string"/>
+        </setting>
+        <setting id="connect" type="action" label="32003">
+          <level>0</level>
+          <data>RunScript(service.refract,connect)</data>
+          <control type="button" format="action"/>
+        </setting>
+        <setting id="disconnect" type="action" label="32004">
+          <level>0</level>
+          <data>RunScript(service.refract,disconnect)</data>
+          <control type="button" format="action"/>
+        </setting>
+      </group>
+    </category>
+    <category id="scrobbling" label="32010">
+      <group id="1">
+        <setting id="mark_episodes" type="boolean" label="32011">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+        <setting id="mark_movies" type="boolean" label="32012">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+        <setting id="threshold" type="integer" label="32013">
+          <level>0</level>
+          <default>90</default>
+          <constraints>
+            <minimum>50</minimum>
+            <step>5</step>
+            <maximum>100</maximum>
+          </constraints>
+          <control type="slider" format="percentage"/>
+        </setting>
+        <setting id="notify" type="boolean" label="32014">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>
