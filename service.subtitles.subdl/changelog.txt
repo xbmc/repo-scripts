@@ -1,0 +1,8 @@
+1.0.0
+- First release.
+- Searches SubDL by IMDb or TMDB id, by title, season and episode, or by the name of the file being played.
+- Takes an episode's own file out of a season pack.
+- Lists the subtitle made for the playing release first, preferred language first.
+- Converts subtitles saved in an older code page (Persian and Arabic Windows-1256, Cyrillic, Central European and others) to UTF-8, so they no longer show as garbled text.
+- Uses the viewer's own free SubDL API key, with a "Check my API key" button in the settings.
+- Clear messages, with the link https://subdl.com/panel/api, when the key is missing or refused or a daily limit is reached.
