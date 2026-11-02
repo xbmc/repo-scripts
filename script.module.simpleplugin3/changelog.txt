@@ -1,3 +1,5 @@
+3.0.7
+  - Store the memory cache as text, as Kodi 23 stops accepting bytes for window properties.
 3.0.6
   - Add compatibiliti for Python 3.10
 3.0.5

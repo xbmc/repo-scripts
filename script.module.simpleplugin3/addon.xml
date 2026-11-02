@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="script.module.simpleplugin3"
    name="SimplePlugin 3"
-   version="3.0.6+matrix.1"
+   version="3.0.7+matrix.1"
    provider-name="Roman V.M.; vl.maksime">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>

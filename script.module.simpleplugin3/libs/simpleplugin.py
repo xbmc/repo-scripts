@@ -373,18 +373,16 @@ class MemStorage(MutableMapping):
         full_key = py2_encode('{0}__{1}'.format(self._id, key))
         raw_item = self._window.getProperty(full_key)
         if raw_item:
-            try:
-                return pickle.loads(bytes(raw_item))
-            except TypeError as e:
-                return pickle.loads(bytes(raw_item, 'utf-8', errors='surrogateescape'))
+            return pickle.loads(raw_item.encode('latin-1'))
         else:
             raise KeyError(key)
 
     def __setitem__(self, key, value):
         self._check_key(key)
         full_key = py2_encode('{0}__{1}'.format(self._id, key))
-        # protocol=0 is needed for safe string handling in Python 3
-        self._window.setProperty(full_key, pickle.dumps(value, protocol=0))
+        # Window properties hold text, and latin-1 maps each byte of the pickle
+        # to one character and back
+        self._window.setProperty(full_key, pickle.dumps(value, protocol=0).decode('latin-1'))
         if key != '__keys__':
             keys = self['__keys__']
             keys.append(key)
