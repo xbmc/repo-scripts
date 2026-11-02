@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+  <section id="service.subtitles.subdl">
+    <category id="account" label="32100">
+      <group id="1">
+        <setting id="api_key" type="string" label="32101" help="32102">
+          <level>0</level>
+          <default/>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32101</heading>
+          </control>
+        </setting>
+        <setting id="check_key" type="action" label="32103" help="32104">
+          <level>0</level>
+          <!-- Add-ons from a repository always live under special://home/addons. -->
+          <data>RunScript(special://home/addons/service.subtitles.subdl/check_key.py)</data>
+          <control type="button" format="action">
+            <!-- Saves the settings and closes the dialog before the script runs, so a
+                 key typed a moment ago is the one that gets checked. -->
+            <close>true</close>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="search" label="32110">
+      <group id="1">
+        <setting id="hearing_impaired" type="integer" label="32111" help="32112">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32113">0</option>
+              <option label="32114">1</option>
+              <option label="32115">2</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="season_packs" type="boolean" label="32116" help="32117">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>
