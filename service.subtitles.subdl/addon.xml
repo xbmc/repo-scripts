@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.subtitles.subdl"
+       name="SubDL"
+       version="1.0.0"
+       provider-name="SubDL">
+  <requires>
+    <!-- Kodi 19 Matrix is the floor: its first Python 3 release. Standard library only. -->
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module" library="service.py"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Subtitles from SubDL.com</summary>
+    <description lang="en_GB">Search and download subtitles for films and TV episodes from SubDL (subdl.com). The add-on finds the title by its IMDb or TMDB id, by its name, or by the name of the file you are playing. For an episode it can take the right file out of a season pack, and subtitles made for your exact release are listed first. Uses your own free SubDL API key: create one at https://subdl.com/panel/api and enter it in the add-on settings.</description>
+    <disclaimer lang="en_GB">Needs a free SubDL API key from https://subdl.com/panel/api. Free keys have a daily limit on searches and downloads.</disclaimer>
+    <news>1.0.0
+- First release: search by IMDb or TMDB id, title, season and episode, or release name
+- Episodes taken out of season packs, best release match listed first
+- Subtitles in older code pages (for example Persian Windows-1256) converted to UTF-8
+- Clear messages when the API key is missing or a daily limit is reached</news>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://subdl.com</website>
+    <source>https://github.com/subdl-maker/service.subtitles.subdl</source>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
