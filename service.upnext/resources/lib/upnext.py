@@ -92,7 +92,7 @@ class UpNext(Popup):
         self.setProperty('credits_countdown', 'true' if remaining is not None else '')
         self.setProperty('credits_remaining', str(remaining) if remaining is not None else '')
         if remaining is not None:
-            self.setProperty('remaining', '%02d' % remaining)
+            self.set_remaining(remaining)
 
     def set_watch_now(self, watchnow):
         self.watchnow = watchnow

@@ -3,13 +3,28 @@
 """Behaviour shared by the Up Next and Still Watching popups"""
 
 from datetime import datetime, timedelta
+from math import ceil
 from platform import machine
 from xbmcgui import WindowXMLDialog
-from utils import localize_date, localize_time
+from utils import get_global_setting, localize_date, localize_time
 
 ACTION_PLAYER_STOP = 13
 ACTION_NAV_BACK = 92
+RING_STEPS = 30  # media/nextupicons has a countdown ring image for 00 to 30
 OS_MACHINE = machine()
+# Kodi's "Show information for unwatched items" (videolibrary.showunwatchedplots) options
+SHOW_UNWATCHED_MOVIE_PLOT = 0
+SHOW_UNWATCHED_EPISODE_PLOT = 1
+SHOW_UNWATCHED_EPISODE_THUMB = 2
+# Where each popup image comes from, best first: the show's own art, then art an add-on sent
+# without the tvshow. prefix, then the season's
+ART_SOURCES = {
+    'fanart': ('tvshow.fanart', 'fanart', 'season.fanart'),
+    'landscape': ('tvshow.landscape', 'landscape', 'season.landscape'),
+    'clearart': ('tvshow.clearart', 'clearart'),
+    'clearlogo': ('tvshow.clearlogo', 'clearlogo'),
+    'poster': ('tvshow.poster', 'poster', 'season.poster'),
+}
 
 
 class Popup(WindowXMLDialog):
@@ -19,6 +34,7 @@ class Popup(WindowXMLDialog):
     progress_step_size = 0
     current_progress_percent = 100
     progress_control = None
+    countdown_duration = None
 
     def __init__(self, *args, **kwargs):
         self.action_exitkeys_id = [10, 13]
@@ -41,14 +57,11 @@ class Popup(WindowXMLDialog):
         else:
             rating = str(round(float(self.item.get('rating')), 1))
 
-        art = self.item.get('art') or {}
-        self.setProperty('fanart', art.get('tvshow.fanart', ''))
-        self.setProperty('landscape', art.get('tvshow.landscape', ''))
-        self.setProperty('clearart', art.get('tvshow.clearart', ''))
-        self.setProperty('clearlogo', art.get('tvshow.clearlogo', ''))
-        self.setProperty('poster', art.get('tvshow.poster', ''))
-        self.setProperty('thumb', art.get('thumb', ''))
-        self.setProperty('plot', self.item.get('plot', ''))
+        show_plot, show_thumb = spoilers_allowed(self.item)
+        art = popup_art(self.item.get('art') or {}, show_thumb)
+        for art_type in ('fanart', 'landscape', 'clearart', 'clearlogo', 'poster', 'thumb'):
+            self.setProperty(art_type, art[art_type])
+        self.setProperty('plot', self.item.get('plot', '') if show_plot else '')
         self.setProperty('tvshowtitle', self.item.get('showtitle', ''))
         self.setProperty('title', self.item.get('title', ''))
         self.setProperty('season', str(self.item.get('season', '')))
@@ -84,9 +97,18 @@ class Popup(WindowXMLDialog):
             self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member,useless-suppression
 
         if remaining is not None:
-            self.setProperty('remaining', '%02d' % remaining)
+            self.set_remaining(remaining)
         if runtime:
             self.setProperty('endtime', localize_time(datetime.now() + timedelta(seconds=runtime)))
+
+    def set_remaining(self, remaining):
+        """Show the time left before the popup acts, in seconds and as m:ss for popups opened earlier"""
+        remaining = max(0, int(remaining))
+        if self.countdown_duration is None:
+            self.countdown_duration = remaining
+        self.setProperty('remaining', '%02d' % remaining)
+        self.setProperty('remaining_time', format_remaining(remaining))
+        self.setProperty('remaining_icon', '%02d' % ring_step(remaining, self.countdown_duration))
 
     def set_cancel(self, cancel):
         self.cancel = cancel
@@ -126,3 +148,50 @@ class Popup(WindowXMLDialog):
             self.dismissed = True
             self.set_cancel(True)
             self.close()
+
+
+def spoilers_allowed(item):
+    """Return whether the plot and the thumbnail of the next item may be shown, following Kodi's
+       "Show information for unwatched items" setting for items not watched yet"""
+    # Library lookups and add-ons give episodes; playlists can also hold movies and plain files
+    media_type = item.get('type') or 'episode'
+    if item.get('playcount') or media_type not in ('episode', 'movie'):
+        return True, True
+    shown = get_global_setting('videolibrary.showunwatchedplots')
+    if not isinstance(shown, list):  # Not available: Kodi shows everything by default
+        return True, True
+    if media_type == 'movie':
+        # Kodi only hides the thumbnails of episodes
+        return SHOW_UNWATCHED_MOVIE_PLOT in shown, True
+    return SHOW_UNWATCHED_EPISODE_PLOT in shown, SHOW_UNWATCHED_EPISODE_THUMB in shown
+
+
+def popup_art(art, show_thumb=True):
+    """Return the popup's images, each from the first art type the item has"""
+    images = {
+        art_type: next((art[source] for source in sources if art.get(source)), '')
+        for art_type, sources in ART_SOURCES.items()
+    }
+    if show_thumb:
+        images['thumb'] = art.get('thumb', '')
+    else:
+        # Show art in place of the episode's own picture, like Kodi does for hidden thumbnails
+        images['thumb'] = images['landscape'] or images['fanart']
+    return images
+
+
+def format_remaining(seconds):
+    """Return seconds as m:ss, or h:mm:ss from an hour"""
+    minutes, seconds = divmod(int(seconds), 60)
+    hours, minutes = divmod(minutes, 60)
+    if hours:
+        return '%d:%02d:%02d' % (hours, minutes, seconds)
+    return '%d:%02d' % (minutes, seconds)
+
+
+def ring_step(remaining, duration):
+    """Return the countdown ring image for the time left: one per second in the last 30 seconds,
+       or spread over the whole countdown when the popup opened earlier"""
+    if not duration or duration <= RING_STEPS:
+        return min(RING_STEPS, int(remaining))
+    return min(RING_STEPS, int(ceil(RING_STEPS * remaining / duration)))

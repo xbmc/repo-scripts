@@ -39,9 +39,9 @@
                         <itemgap>10</itemgap>
                         <align>left</align>
                         <control type="button" id="10">
-                            <label>    $ADDON[service.upnext 30049]</label>
+                            <label>    $ADDON[service.upnext 30055]</label>
                             <onclick>SendClick(3012)</onclick>
-                            <visible>!String.IsEqual(Window.Property(credits_countdown),true) + Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                            <visible>Integer.IsGreater(Window.Property(remaining),59)</visible>
                             <height>56</height>
                             <width min="50">auto</width>
                             <font>font20_title</font>
@@ -61,7 +61,7 @@
                         <control type="button" id="11">
                             <label>    $ADDON[service.upnext 30037]</label>
                             <onclick>SendClick(3012)</onclick>
-                            <visible>String.IsEqual(Window.Property(credits_countdown),true) | !Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                            <visible>!Integer.IsGreater(Window.Property(remaining),59)</visible>
                             <height>56</height>
                             <width min="50">auto</width>
                             <font>font20_title</font>
@@ -110,25 +110,8 @@
                         <width>46</width>
                         <height>46</height>
                         <aspect>keep</aspect>
-                        <texture colordiffuse="ddffffff">nextupicons/30.png</texture>
+                        <texture colordiffuse="ddffffff">$INFO[Window.Property(remaining_icon),nextupicons/,.png]</texture>
                         <animation effect="slide" end="13,5" time="0" condition="true">Conditional</animation>
-                        <visible>[!String.IsEqual(Window.Property(credits_countdown),true) + Integer.IsGreater(Player.TimeRemaining,30)] | [String.IsEqual(Window.Property(credits_countdown),true) + Integer.IsGreater(Window.Property(credits_remaining),30)]</visible>
-                    </control>
-                    <control type="image">
-                        <width>46</width>
-                        <height>46</height>
-                        <aspect>keep</aspect>
-                        <texture colordiffuse="ddffffff">$INFO[Player.TimeRemaining(ss),nextupicons/,.png]</texture>
-                        <animation effect="slide" end="13,5" time="0" condition="true">Conditional</animation>
-                        <visible>!String.IsEqual(Window.Property(credits_countdown),true) + !Integer.IsGreater(Player.TimeRemaining,30)</visible>
-                    </control>
-                    <control type="image">
-                        <width>46</width>
-                        <height>46</height>
-                        <aspect>keep</aspect>
-                        <texture colordiffuse="ddffffff">$INFO[Window.Property(remaining),nextupicons/,.png]</texture>
-                        <animation effect="slide" end="13,5" time="0" condition="true">Conditional</animation>
-                        <visible>String.IsEqual(Window.Property(credits_countdown),true) + !Integer.IsGreater(Window.Property(credits_remaining),30)</visible>
                     </control>
                 </control>
             </control>

@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from math import ceil
 from xbmc import Monitor
 from xbmcgui import WindowXMLDialog
+from popup import format_remaining, ring_step
 from utils import addon_path, get_setting_bool, localize, localize_time
 
 
@@ -59,8 +60,13 @@ class TestPopup(WindowXMLDialog):
             return
         self.current_progress_percent -= 100 * wait / timeout
         self.progress_control.setPercent(self.current_progress_percent)  # pylint: disable=no-member,useless-suppression
-        self.setProperty('remaining', '%02d' % ceil((timeout / 1000) * (self.current_progress_percent / 100)))
+        self.set_remaining(ceil((timeout / 1000) * (self.current_progress_percent / 100)), timeout / 1000)
         self.setProperty('endtime', localize_time(datetime.now() + timedelta(seconds=50 * 60)))
+
+    def set_remaining(self, remaining, duration):
+        self.setProperty('remaining', '%02d' % remaining)
+        self.setProperty('remaining_time', format_remaining(remaining))
+        self.setProperty('remaining_icon', '%02d' % ring_step(remaining, duration))
 
     def onFocus(self, controlId):  # pylint: disable=invalid-name
         pass
@@ -83,11 +89,12 @@ class TestPopup(WindowXMLDialog):
 
 def test_popup(window):
     popup = TestPopup(window, addon_path(), 'default', '1080i')
-    popup.show()
     step = 0
     wait = 100
     wait_s = wait / 1000
     timeout = 10000
+    popup.set_remaining(timeout / 1000, timeout / 1000)
+    popup.show()
     monitor = Monitor()
     while popup and step < timeout and not monitor.abortRequested():
         if popup.pause:

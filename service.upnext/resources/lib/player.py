@@ -11,6 +11,7 @@ class UpNextPlayer(Player):
     """Service class for playback monitoring"""
     last_file = None
     track = False
+    stop_count = 0  # times the viewer stopped playback, shared by every instance
 
     def __init__(self):
         self.api = Api()
@@ -78,6 +79,7 @@ class UpNextPlayer(Player):
 
     def onPlayBackStopped(self):  # pylint: disable=invalid-name
         """Will be called when user stops playing a file"""
+        UpNextPlayer.stop_count += 1
         self.reset_queue()
         self.api.reset_addon_data()
         self.state = State()  # Reset state

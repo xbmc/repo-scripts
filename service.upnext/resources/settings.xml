@@ -10,6 +10,7 @@
         <setting label="30032" type="bool" id="enablePlaylist" default="false"/>
         <setting label="30605" type="bool" id="includeWatched" default="false"/>
         <setting label="30643" type="bool" id="markWatchedEarly" default="true"/>
+        <setting label="30645" type="bool" id="resumeNextEpisode" default="true"/>
         <setting label="30607" type="slider" id="playedInARow" default="3" range="0,1,15" option="int"/>
         <setting label="30635" type="slider" id="stillWatchingMinutes" default="0" range="0,15,600" option="int"/>
         <setting label="30637" type="bool" id="bedtimeEnabled" default="false"/>

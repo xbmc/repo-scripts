@@ -190,6 +190,12 @@ def jsonrpc(**kwargs):
     return json.loads(executeJSONRPC(json.dumps(kwargs)))
 
 
+def get_global_setting(setting):
+    """Return the value of a Kodi setting, or None when Kodi doesn't have it"""
+    result = jsonrpc(method='Settings.GetSettingValue', params={'setting': setting})
+    return (result.get('result') or {}).get('value')
+
+
 def localize(string_id):
     """Return the translated string from the .po language files"""
 

@@ -18,6 +18,8 @@ from utils import (addon_path, calculate_progress_steps, clear_property, event, 
 WATCHED_CHECK_DELAY = 10
 # How long the next episode may take to start before the previous one is left as Kodi saved it (seconds)
 WATCHED_SWITCH_TIMEOUT = 60
+# Don't seek when the next episode already started this close to its resume point (seconds)
+RESUME_MARGIN = 10
 
 
 class PlaybackManager:
@@ -33,6 +35,7 @@ class PlaybackManager:
         self.demo = DemoOverlay(12005)
         self._watch_limit_check_at = 0
         self._watched_checks = []  # episodes Up Next moved on from, to check once Kodi saved them
+        self._pending_resume = None  # partly watched next episode, to resume once it plays
 
     def log(self, msg, level=2):
         ulog(msg, name=self.__class__.__name__, level=level)
@@ -149,6 +152,7 @@ class PlaybackManager:
         # Signal to trakt previous episode watched
         event(message='NEXTUPWATCHEDSIGNAL', data={'episodeid': self.state.current_episode_id}, encoding='base64')
         self.remember_watched_state(self.state.current_episode_id, source, episode.get('episodeid'))
+        self.remember_resume_point(episode, source)
         if source == 'playlist' or queued:
             # Play playlist media
             if should_play_non_default or next_up_page.is_auto_advance():
@@ -194,6 +198,9 @@ class PlaybackManager:
         next_up_page.set_progress_step_size(progress_step_size)
         still_watching_page.set_item(episode)
         still_watching_page.set_progress_step_size(progress_step_size)
+        # Set the countdown before the popup opens, so the skin never shows an empty or stale time
+        next_up_page.set_remaining(credits_duration if credits_deadline is not None else total_time - play_time)
+        still_watching_page.set_remaining(total_time - play_time)
         played_in_a_row_number = get_setting_int('playedInARow')
         self.log('played in a row settings %s' % played_in_a_row_number, 2)
         self.log('played in a row %s' % self.state.played_in_a_row, 2)
@@ -341,6 +348,49 @@ class PlaybackManager:
                 continue
             self.log('Marking episode %s as watched, as Kodi did not count it when Up Next moved on' % check['episodeid'], 2)
             mark_watched(check['episodeid'], check['playcount'] + 1)
+
+    def remember_resume_point(self, episode, source):
+        """Note where a partly watched library episode was left, so it continues there when Up Next plays it"""
+        self._pending_resume = None
+        if source != 'library' or not get_setting_bool('resumeNextEpisode', default=True):
+            return
+        episodeid = get_int(episode.get('episodeid'), default=0)
+        position = (episode.get('resume') or {}).get('position') or 0
+        if not isinstance(episodeid, int) or episodeid < 1 or position <= 0:
+            return
+        self._pending_resume = {'episodeid': episodeid, 'previous': self.state.current_episode_id,
+                                'position': position, 'started': monotonic(), 'stops': UpNextPlayer.stop_count}
+
+    def resume_next_episode(self):
+        """Seek a partly watched next episode to its resume point once it plays"""
+        # Up Next plays a library episode as a queued playlist item (Watch Now, autoplay or the end of
+        # the file), which doesn't use its resume point, so seek once it plays. If Kodi did resume it,
+        # the position is already there and nothing happens.
+        pending = self._pending_resume
+        if not pending:
+            return
+        if (monotonic() - pending['started'] > WATCHED_SWITCH_TIMEOUT
+                or UpNextPlayer.stop_count != pending['stops']):
+            # The next episode never started, or the viewer stopped playback: leave a later start alone
+            self._pending_resume = None
+            return
+        playing = playing_episode_id()
+        if playing in (None, pending['previous']):
+            return  # still opening, no item details yet, or the previous episode is still reported
+        if playing != pending['episodeid']:
+            self._pending_resume = None  # something else plays instead
+            return
+        try:
+            play_time = self.player.getTime()
+            if play_time > pending['position'] + RESUME_MARGIN:
+                return  # still the previous episode's time, wait for the new one
+            if play_time < pending['position'] - RESUME_MARGIN:
+                self.log('Resuming episode %s at %d secs' % (playing, pending['position']), 2)
+                self.player.seekTime(pending['position'])
+        except RuntimeError as exc:
+            self.log('Waiting to resume the next episode: %s' % exc, 2)
+            return  # try again on the next pass, until the timeout
+        self._pending_resume = None
 
     def extract_play_info(self, next_up_page, showing_next_up_page, showing_still_watching_page, still_watching_page):
         if showing_next_up_page:

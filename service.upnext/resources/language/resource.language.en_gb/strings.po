@@ -110,6 +110,18 @@ msgctxt "#30053"
 msgid "Skip recap"
 msgstr ""
 
+msgctxt "#30054"
+msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr ""
+
+msgctxt "#30055"
+msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr ""
+
+msgctxt "#30056"
+msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr ""
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr ""
@@ -230,6 +242,10 @@ msgstr ""
 
 msgctxt "#30643"
 msgid "Mark an episode as watched when moving to the next one early"
+msgstr ""
+
+msgctxt "#30645"
+msgid "Continue a partly watched next episode where it was left"
 msgstr ""
 
 msgctxt "#30700"
