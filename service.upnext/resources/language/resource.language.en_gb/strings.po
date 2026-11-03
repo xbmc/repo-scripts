@@ -228,6 +228,10 @@ msgctxt "#30641"
 msgid "Bedtime minute"
 msgstr ""
 
+msgctxt "#30643"
+msgid "Mark an episode as watched when moving to the next one early"
+msgstr ""
+
 msgctxt "#30700"
 msgid "Expert"
 msgstr ""

@@ -23,7 +23,7 @@ msgstr "Oglądaj teraz"
 
 msgctxt "#30008"
 msgid "Up Next"
-msgstr "Kolejny"
+msgstr "Następny"
 
 msgctxt "#30009"
 msgid "Ends at: $INFO[Window.Property(endtime)]"
@@ -51,35 +51,35 @@ msgstr "Zamknij"
 
 msgctxt "#30035"
 msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
-msgstr "Kontynuuj oglądanie za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekundy"
+msgstr "Kontynuuj oglądanie za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] s"
 
 msgctxt "#30036"
 msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
-msgstr "Kolejny za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekundy"
+msgstr "Następny za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] s"
 
 msgctxt "#30037"
 msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] seconds"
-msgstr "Następny odcinek za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] sekundy"
+msgstr "Następny odcinek za [COLOR FFFF4081]$INFO[Window.Property(remaining)][/COLOR] s"
 
 msgctxt "#30038"
 msgid "Simple"
-msgstr "Simple"
+msgstr "Prosty"
 
 msgctxt "#30039"
 msgid "Fancy"
-msgstr "Fancy"
+msgstr "Rozbudowany"
 
 msgctxt "#30040"
 msgid "Play next"
-msgstr "Odtwarzaj następny"
+msgstr "Odtwórz następny"
 
 msgctxt "#30041"
 msgid "Stop playing"
-msgstr "Nie odtwarzaj"
+msgstr "Zatrzymaj odtwarzanie"
 
 msgctxt "#30042"
 msgid "None"
-msgstr "Żaden"
+msgstr "Brak"
 
 msgctxt "#30043"
 msgid "Info"
@@ -95,27 +95,27 @@ msgstr "Następny odcinek"
 
 msgctxt "#30050"
 msgid "Next episode in $INFO[Window.Property(credits_remaining)] s"
-msgstr ""
+msgstr "Następny odcinek za $INFO[Window.Property(credits_remaining)] s"
 
 msgctxt "#30051"
 msgid "Back: keep watching"
-msgstr ""
+msgstr "Wstecz: oglądaj dalej"
 
 msgctxt "#30052"
 msgid "Skip intro"
-msgstr ""
+msgstr "Pomiń czołówkę"
 
 msgctxt "#30053"
 msgid "Skip recap"
-msgstr ""
+msgstr "Pomiń podsumowanie"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]TRYB DEMO UP NEXT WŁĄCZONY[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]Odcinki są automatycznie przewijane do końca.[/I]"
 
 
 ### SETTINGS
@@ -129,15 +129,15 @@ msgstr "Funkcje"
 
 msgctxt "#30503"
 msgid "Set the display mode for the notifications"
-msgstr "Ustaw tryb wyświetlania powiadomień"
+msgstr "Tryb wyświetlania powiadomień"
 
 msgctxt "#30505"
 msgid "Show a \"Stop\" button instead of a \"Close\" button"
-msgstr "Pokaż przycisk \"Stop\" zamiast przycisku \"Zamknij\""
+msgstr "Pokaż przycisk \"Zatrzymaj\" zamiast \"Zamknij\""
 
 msgctxt "#30507"
 msgid "Use OK/Select for playback controls"
-msgstr ""
+msgstr "Używaj OK/Wybierz do sterowania odtwarzaniem"
 
 msgctxt "#30600"
 msgid "Behaviour"
@@ -153,19 +153,19 @@ msgstr "Domyślna akcja, gdy nic nie wybrano"
 
 msgctxt "#30605"
 msgid "Include already watched episodes"
-msgstr "Uwzględnij oglądane odcinki"
+msgstr "Uwzględnij obejrzane odcinki"
 
 msgctxt "#30607"
 msgid "Number of episodes before \"Still there?\" query"
-msgstr "Liczba odcinków przed wyświetleniem zapytania \"Ciągle jesteś?\""
+msgstr "Liczba odcinków przed \"Wciąż jesteś?\""
 
 msgctxt "#30609"
 msgid "Duration in seconds for notification to be shown"
-msgstr "Liczba sekund przed końcem, aby wyświetlić powiadomienie"
+msgstr "Czas powiadomienia przed końcem (sekundy)"
 
 msgctxt "#30611"
 msgid "Customize autoplay duration by episode length"
-msgstr "Dostosuj czas trwania autoodtwarzania według długości odcinka"
+msgstr "Osobny czas dla różnej długości odcinków"
 
 msgctxt "#30613"
 msgid "All episodes  [COLOR gray]any length[/COLOR]"
@@ -181,7 +181,7 @@ msgstr "Krótkie odcinki [COLOR gray]> 10 minut[/COLOR]"
 
 msgctxt "#30619"
 msgid "Medium episodes  [COLOR gray]> 20 mins[/COLOR]"
-msgstr "Średnie odcinki [COLOR gray]> 20 min[/COLOR]"
+msgstr "Średnie odcinki [COLOR gray]> 20 minut[/COLOR]"
 
 msgctxt "#30621"
 msgid "Long episodes  [COLOR gray]> 40 mins[/COLOR]"
@@ -193,23 +193,43 @@ msgstr "Bardzo długie odcinki [COLOR gray]> 60 minut[/COLOR]"
 
 msgctxt "#30625"
 msgid "Advance during credits after (seconds, 0 disables)"
-msgstr ""
+msgstr "Następny odcinek po (s napisów, 0 wyłącza)"
 
 msgctxt "#30627"
 msgid "Intros and recaps"
-msgstr ""
+msgstr "Czołówki i podsumowania"
 
 msgctxt "#30629"
 msgid "Show a Skip button when the add-on marks them"
-msgstr ""
+msgstr "Pokazuj przycisk Pomiń, jeśli dodatek poda czasy"
 
 msgctxt "#30631"
 msgid "Skip intros automatically"
-msgstr ""
+msgstr "Automatycznie pomijaj czołówki"
 
 msgctxt "#30633"
 msgid "Skip recaps automatically"
-msgstr ""
+msgstr "Automatycznie pomijaj podsumowania"
+
+msgctxt "#30635"
+msgid "Ask if still watching after (minutes, 0 disables)"
+msgstr "Pytaj, czy nadal oglądasz, po (minuty, 0 wyłącza)"
+
+msgctxt "#30637"
+msgid "Ask if still watching after bedtime"
+msgstr "Pytaj, czy nadal oglądasz, w nocy"
+
+msgctxt "#30639"
+msgid "Bedtime hour"
+msgstr "Od godziny"
+
+msgctxt "#30641"
+msgid "Bedtime minute"
+msgstr "Od minuty"
+
+msgctxt "#30643"
+msgid "Mark an episode as watched when moving to the next one early"
+msgstr "Oznacz jako obejrzany przy wcześniejszym przejściu dalej"
 
 msgctxt "#30700"
 msgid "Expert"
@@ -233,7 +253,7 @@ msgstr "Testuj wygląd interfejsu"
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "Włącz tryb DEMO"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
@@ -249,8 +269,8 @@ msgstr "Pokaż okno StillWatching…"
 
 msgctxt "#30811"
 msgid "Show a StillWatchingSimple pop-up…"
-msgstr "Pokaż okno StillWatchingSimplep…"
+msgstr "Pokaż okno StillWatchingSimple…"
 
 msgctxt "#30813"
 msgid "Test Skip button"
-msgstr ""
+msgstr "Testuj przycisk Pomiń"
