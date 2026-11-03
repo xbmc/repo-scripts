@@ -19,6 +19,8 @@ The add-on has various settings to fine-tune the experience, however the default
   * The notification time can be adjusted (defaults to 30 seconds before the end)
   * A credits delay can advance early when the provider supplies a credits offset (disabled by default). Back cancels the countdown and keeps the current episode playing; Pause freezes it with the video.
   * The default action can be configured, i.e. should it advance to the next episode (default) when the user does not respond, or stop
+  * With "Enable on playlists", videos outside the library (e.g. files started with "Play from here") get the popup for the next playlist item
+  * Library episodes left early with Watch Now or the credits delay are marked as watched (enabled by default)
   * The number of episodes to play automatically before asking the user if they are still there (defaults to 3 episodes)
 
 > NOTE: The add-on settings are found in the Kodi add-ons section, in the *Services* category.
@@ -28,6 +30,16 @@ Credits autoplay uses the provider's absolute `notification_offset`; it does not
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
 
 ## Releases
+
+### v1.3.4 (2026-11-03)
+- Update Simplified Chinese translation (@wabisabi926)
+
+### v1.3.3 (2026-11-02)
+- With "Enable on playlists" on, show the popup for videos that aren't library episodes when they play from a playlist with a next item, e.g. files started with "Play from here" (@im85288)
+- Mark a library episode as watched, and clear its resume point, when Watch Now or the credits delay moves on before Kodi counts it as watched (optional, on by default) (@im85288)
+- Read settings from one cached copy, reloaded when they change, instead of loading them from disk several times a second during playback (@im85288)
+- Allow notification times of up to 300 seconds before the end, for episodes with long credits (@notoco)
+- Update the Polish translation, and shorten labels that didn't fit in the settings dialog (@notoco)
 
 ### v1.3.2 (2026-11-01)
 - Optionally ask whether playback should continue after a chosen amount of active viewing time or during the bedtime window, from the configured time until 06:00, at the next episode transition. Recheck limits while the next-episode popup is open and preserve the timer through sleep, including delayed sleep notifications. Time spent paused, buffering or seeking does not count; confirming the prompt resets the viewing timer and acknowledges bedtime for that night within the current playback session. Both options are disabled by default (@Drahy)

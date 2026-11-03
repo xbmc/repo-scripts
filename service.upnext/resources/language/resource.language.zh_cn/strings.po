@@ -138,7 +138,7 @@ msgstr "显示“停止”按钮而不是“关闭”按钮"
 
 msgctxt "#30507"
 msgid "Use OK/Select for playback controls"
-msgstr ""
+msgstr "确认/选择键可用于播放控制"
 
 msgctxt "#30600"
 msgid "Behaviour"
@@ -211,6 +211,26 @@ msgstr "自动跳过片头"
 msgctxt "#30633"
 msgid "Skip recaps automatically"
 msgstr "自动跳过前情提要"
+
+msgctxt "#30635"
+msgid "Ask if still watching after (minutes, 0 disables)"
+msgstr "连续观看多久后询问是否还在看（单位：分钟，填 0 关闭）"
+
+msgctxt "#30637"
+msgid "Ask if still watching after bedtime"
+msgstr "在就寝时间后询问是否还在看"
+
+msgctxt "#30639"
+msgid "Bedtime hour"
+msgstr "就寝小时"
+
+msgctxt "#30641"
+msgid "Bedtime minute"
+msgstr "就寝分钟"
+
+msgctxt "#30643"
+msgid "Mark an episode as watched when moving to the next one early"
+msgstr "提前切换到下一集时将当前集标记为已观看"
 
 msgctxt "#30700"
 msgid "Expert"

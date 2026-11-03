@@ -56,11 +56,27 @@ def get_int(obj, key=None, default=-1):
         return val if val else default
 
 
+_SETTINGS = {}
+
+
+def settings_addon():
+    """Return the Addon used to read settings, created once and replaced when the settings change"""
+    # Every new Addon() makes Kodi load the settings files again, so reuse one
+    # until the service monitor's onSettingsChanged() calls reload_settings()
+    if 'addon' not in _SETTINGS:
+        _SETTINGS['addon'] = Addon()
+    return _SETTINGS['addon']
+
+
+def reload_settings():
+    """Read the add-on settings again on next use"""
+    _SETTINGS.clear()
+
+
 def get_setting(key, default=None):
     """Get an add-on setting as string"""
-    # We use Addon() here to ensure changes in settings are reflected instantly
     try:
-        value = Addon().getSetting(key)
+        value = settings_addon().getSetting(key)
     except RuntimeError:  # Occurs when the add-on is disabled
         return default
     if value == '' and default is not None:
@@ -71,7 +87,7 @@ def get_setting(key, default=None):
 def get_setting_bool(key, default=None):
     """Get an add-on setting as boolean"""
     try:
-        return Addon().getSettingBool(key)
+        return settings_addon().getSettingBool(key)
     except (AttributeError, TypeError):  # On Krypton or older, or when not a boolean
         value = get_setting(key, default)
         if value not in ('false', 'true'):
@@ -84,7 +100,7 @@ def get_setting_bool(key, default=None):
 def get_setting_int(key, default=None):
     """Get an add-on setting as integer"""
     try:
-        return Addon().getSettingInt(key)
+        return settings_addon().getSettingInt(key)
     except (AttributeError, TypeError):  # On Krypton or older, or when not an integer
         value = get_setting(key, default)
         try:

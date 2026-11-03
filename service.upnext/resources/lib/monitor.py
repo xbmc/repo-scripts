@@ -8,7 +8,7 @@ from api import Api
 from playbackmanager import PlaybackManager
 from player import UpNextPlayer
 from skip import Skipper
-from utils import clear_property, decode_json, get_property, get_setting_bool, get_setting_int, log as ulog
+from utils import clear_property, decode_json, get_property, get_setting_bool, get_setting_int, log as ulog, reload_settings
 
 
 # How long to wait for a new file's own timing before accepting what Kodi reports (seconds)
@@ -48,6 +48,7 @@ class UpNextMonitor(Monitor):
                 break
 
             self.restore_after_wake()
+            self.playback_manager.check_previous_watched()
             if not self.player.is_tracking():
                 self._waiting_for = None
                 self.skipper.reset()
@@ -250,6 +251,10 @@ class UpNextMonitor(Monitor):
             self.player.enable_tracking()
         self.clear_sleep_state()
         self.log('Restored playback tracking after wake', 2)
+
+    def onSettingsChanged(self):  # pylint: disable=invalid-name
+        """Pick up changed settings on the next read"""
+        reload_settings()
 
     def onNotification(self, sender, method, data):  # pylint: disable=invalid-name
         """Notification event handler for accepting data from add-ons"""

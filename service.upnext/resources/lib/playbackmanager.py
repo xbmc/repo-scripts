@@ -4,14 +4,20 @@
 from math import ceil
 from time import monotonic
 from xbmc import sleep
-from api import Api, credits_autoplay_deadline
+from api import Api, credits_autoplay_deadline, get_watched_state, mark_watched, playing_episode_id
 from demo import DemoOverlay
 from player import UpNextPlayer
 from playitem import PlayItem
 from state import State
 from stillwatching import StillWatching
 from upnext import UpNext
-from utils import addon_path, calculate_progress_steps, clear_property, event, get_setting_bool, get_setting_int, log as ulog, set_property
+from utils import (addon_path, calculate_progress_steps, clear_property, event, get_int, get_setting_bool, get_setting_int,
+                   log as ulog, set_property)
+
+# How long to let Kodi save the previous episode's own watched state before checking it (seconds)
+WATCHED_CHECK_DELAY = 10
+# How long the next episode may take to start before the previous one is left as Kodi saved it (seconds)
+WATCHED_SWITCH_TIMEOUT = 60
 
 
 class PlaybackManager:
@@ -26,6 +32,7 @@ class PlaybackManager:
         self.player = UpNextPlayer()
         self.demo = DemoOverlay(12005)
         self._watch_limit_check_at = 0
+        self._watched_checks = []  # episodes Up Next moved on from, to check once Kodi saved them
 
     def log(self, msg, level=2):
         ulog(msg, name=self.__class__.__name__, level=level)
@@ -141,6 +148,7 @@ class PlaybackManager:
         self.log('playing media episode', 2)
         # Signal to trakt previous episode watched
         event(message='NEXTUPWATCHEDSIGNAL', data={'episodeid': self.state.current_episode_id}, encoding='base64')
+        self.remember_watched_state(self.state.current_episode_id, source, episode.get('episodeid'))
         if source == 'playlist' or queued:
             # Play playlist media
             if should_play_non_default or next_up_page.is_auto_advance():
@@ -287,6 +295,52 @@ class PlaybackManager:
         if remaining <= 0:
             # Keep autoplay distinct from Watch Now so Still Watching counts survive.
             page.set_auto_advance()
+
+    def remember_watched_state(self, episodeid, source, next_episodeid=None):
+        """Note a library episode's play count as Up Next moves on, so it can be marked watched if Kodi doesn't"""
+        # Add-on episodes keep their watched state in the add-on, and only library lookups have a library ID
+        if source != 'library' or get_int(episodeid, default=0) < 1 or not get_setting_bool('markWatchedEarly', default=True):
+            return
+        watched = get_watched_state(episodeid)
+        try:
+            playing_file = self.player.getPlayingFile()
+        except RuntimeError:
+            playing_file = None
+        if watched is not None and playing_file:
+            self._watched_checks.append({'episodeid': episodeid, 'playcount': watched[0], 'file': playing_file,
+                                         'next': next_episodeid, 'started': monotonic(), 'switched': None})
+
+    def check_previous_watched(self):
+        """Mark episodes Up Next moved on from as watched when Kodi didn't count them"""
+        # Kodi only counts an episode stopped after playcountminimumpercent (90% by default), so Watch Now or
+        # the credits delay can leave it unwatched with a resume point. Only act once the next episode is
+        # playing, and only after Kodi has saved the previous one: that avoids counting it twice, and Kodi's
+        # resume point overwriting this.
+        if not self._watched_checks:
+            return
+        now = monotonic()
+        try:
+            playing_file = self.player.getPlayingFile()
+        except RuntimeError:
+            playing_file = None
+        for check in list(self._watched_checks):
+            if check['switched'] is None:
+                playing = playing_episode_id() if playing_file and playing_file != check['file'] else None
+                if playing is not None and playing == check['next']:
+                    check['switched'] = now
+                elif playing not in (None, check['episodeid']) or now - check['started'] > WATCHED_SWITCH_TIMEOUT:
+                    # Another episode is playing, or the next one never started: Up Next didn't move on.
+                    # Without item details yet, or for a video that isn't a library episode, keep waiting.
+                    self._watched_checks.remove(check)
+                continue
+            if now < check['switched'] + WATCHED_CHECK_DELAY:
+                continue
+            self._watched_checks.remove(check)
+            watched = get_watched_state(check['episodeid'])
+            if watched is None or watched[0] > check['playcount']:
+                continue
+            self.log('Marking episode %s as watched, as Kodi did not count it when Up Next moved on' % check['episodeid'], 2)
+            mark_watched(check['episodeid'], check['playcount'] + 1)
 
     def extract_play_info(self, next_up_page, showing_next_up_page, showing_still_watching_page, still_watching_page):
         if showing_next_up_page:
