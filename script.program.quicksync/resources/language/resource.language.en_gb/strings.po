@@ -1,0 +1,80 @@
+# Kodi Media Center language file
+# Addon Name: Kodi QuickSync
+# Addon id: script.program.quicksync
+# Addon Provider: airam
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi QuickSync 1.0.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Scan your libraries for new content"
+msgstr "Scan your libraries for new content"
+
+msgctxt "Addon Description"
+msgid "Triggers the video and/or music library scan, the same as Kodi's \"Update library on startup\" option. Only sources with a content type (scraper) set are scanned. When finished, a summary shows how many items were added.[CR][CR]Run it from Add-ons > Program add-ons, or add it to your favourites to launch it from the home screen.[CR][CR]Developed by jairamrb.com"
+msgstr "Triggers the video and/or music library scan, the same as Kodi's \"Update library on startup\" option. Only sources with a content type (scraper) set are scanned. When finished, a summary shows how many items were added.[CR][CR]Run it from Add-ons > Program add-ons, or add it to your favourites to launch it from the home screen.[CR][CR]Developed by jairamrb.com"
+
+msgctxt "#30010"
+msgid "Scan video library"
+msgstr "Scan video library"
+
+msgctxt "#30011"
+msgid "Scan music library"
+msgstr "Scan music library"
+
+msgctxt "#30012"
+msgid "Show summary when finished"
+msgstr "Show summary when finished"
+
+msgctxt "#30013"
+msgid "Libraries"
+msgstr "Libraries"
+
+msgctxt "#30014"
+msgid "Result"
+msgstr "Result"
+
+msgctxt "#30020"
+msgid "No library selected in the add-on settings."
+msgstr "No library selected in the add-on settings."
+
+msgctxt "#30021"
+msgid "A scan is already running"
+msgstr "A scan is already running"
+
+msgctxt "#30022"
+msgid "Scan finished: %d new item(s)"
+msgstr "Scan finished: %d new item(s)"
+
+msgctxt "#30023"
+msgid "No new content"
+msgstr "No new content"
+
+msgctxt "#30024"
+msgid "No new content found."
+msgstr "No new content found."
+
+msgctxt "#30030"
+msgid "Movies"
+msgstr "Movies"
+
+msgctxt "#30031"
+msgid "TV shows"
+msgstr "TV shows"
+
+msgctxt "#30032"
+msgid "Episodes"
+msgstr "Episodes"
+
+msgctxt "#30033"
+msgid "Albums"
+msgstr "Albums"
+
+msgctxt "#30034"
+msgid "Songs"
+msgstr "Songs"
