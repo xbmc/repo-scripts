@@ -39,9 +39,11 @@ class ErrorMessage(object):
 class ErrorMessages(object):
     """Turns an exception into the message shown to the user. No dialogs or other side effects here."""
 
-    def __init__(self, common_addon, signin_server):
+    def __init__(self, common_addon, signin_server, token_url=None):
+        """token_url: the provider's token endpoint, where accounts of the user's own OAuth app are refreshed."""
         self._common_addon = common_addon
         self._signin_server = signin_server
+        self._token_url = token_url
 
     def _text(self, string_id):
         return self._common_addon.getLocalizedString(string_id)
@@ -74,7 +76,8 @@ class ErrorMessages(object):
                 line3 = self._text(32038)
             elif httpex.code >= 400:
                 if drive_selected:
-                    if self._signin_server in rex.request or httpex.code == 401:
+                    signin_request = self._signin_server in rex.request or bool(self._token_url and self._token_url in rex.request)
+                    if signin_request or httpex.code == 401:
                         return ErrorMessage(line1, line2, line3, ask=ErrorMessage.SIGN_IN_AGAIN)
                     elif httpex.code == 403:
                         line1 = self._text(32019)

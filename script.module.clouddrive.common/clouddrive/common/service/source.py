@@ -415,6 +415,7 @@ class SourceService(BaseServerService):
         Cache(addonid, 'page', 0).clear()
         Cache(addonid, 'children', 0).clear()
         Cache(addonid, 'items', 0).clear()
+        Cache(addonid, 'listing', 0).clear()
     
     def get_port(self):
         return int(KodiUtils.get_addon_setting('port_directory_listing'))
