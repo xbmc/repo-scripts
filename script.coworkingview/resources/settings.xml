@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings version="1">
+  <section id="script.coworkingview">
+    <category id="32000" label="32000">
+      <group id="1">
+        <setting id="locale" type="string" label="32001" help="">
+          <level>0</level>
+          <default>en</default>
+          <constraints>
+            <options>
+              <option label="32010">en</option>
+              <option label="32011">es</option>
+              <option label="32012">de</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="currency" type="string" label="32002" help="32004">
+          <level>0</level>
+          <default>local</default>
+          <constraints>
+            <options>
+              <option label="32020">local</option>
+              <option>EUR</option>
+              <option>GBP</option>
+              <option>USD</option>
+              <option>CHF</option>
+              <option>AED</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="city" type="string" label="32003" help="">
+          <level>4</level>
+          <default></default>
+          <visible>false</visible>
+          <control type="edit" format="string"/>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>
