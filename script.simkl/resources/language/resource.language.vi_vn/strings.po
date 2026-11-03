@@ -1,0 +1,661 @@
+# Kodi Media Center language file
+# Addon Name: Simkl TV Tracker
+# Addon id: script.simkl
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Simkl\n"
+"Language-Team: Vietnamese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr "Ghi nhận khi đạt tỷ lệ phần trăm"
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr "Hiển thị thông báo khi đã ghi nhận"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "Độ dài tệp tối thiểu để ghi nhận (phút)"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "Đăng nhập Simkl"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \ncomputer or phone and enter this code"
+msgstr "Vui lòng truy cập {0} trên \nmáy tính hoặc điện thoại và nhập mã này"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr "Đang ghi nhận {0}"
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "Đăng nhập thành công, {0}"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "Không thể đăng nhập"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "Hủy"
+
+msgctxt "#32100"
+msgid "Account"
+msgstr "Tài khoản"
+
+msgctxt "#32101"
+msgid "Simkl keeps track of what you watch. Sign up at simkl.com, then log in here with a code."
+msgstr "Simkl theo dõi những gì bạn xem. Hãy đăng ký tại simkl.com, sau đó đăng nhập tại đây bằng một mã."
+
+msgctxt "#32102"
+msgid "Status"
+msgstr "Trạng thái"
+
+msgctxt "#32103"
+msgid "Log in"
+msgstr "Đăng nhập"
+
+msgctxt "#32104"
+msgid "Shows a code to enter on simkl.com/pin from any phone or computer."
+msgstr "Hiển thị một mã để nhập trên simkl.com/pin từ bất kỳ điện thoại hoặc máy tính nào."
+
+msgctxt "#32105"
+msgid "Log out"
+msgstr "Đăng xuất"
+
+msgctxt "#32106"
+msgid "Forgets the Simkl login on this device."
+msgstr "Xóa thông tin đăng nhập Simkl khỏi thiết bị này."
+
+msgctxt "#32110"
+msgid "Scrobbling"
+msgstr "Ghi nhận lượt xem"
+
+msgctxt "#32111"
+msgid "Track movies"
+msgstr "Theo dõi phim"
+
+msgctxt "#32112"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "Gửi những gì bạn xem lên Simkl ngay khi đang phát. Lượt phát kết thúc khi đã đạt hoặc vượt tỷ lệ phần trăm bên dưới sẽ được đánh dấu là đã xem."
+
+msgctxt "#32113"
+msgid "Track TV shows and anime"
+msgstr "Theo dõi chương trình TV và anime"
+
+msgctxt "#32114"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "Gửi những gì bạn xem lên Simkl ngay khi đang phát. Lượt phát kết thúc khi đã đạt hoặc vượt tỷ lệ phần trăm bên dưới sẽ được đánh dấu là đã xem."
+
+msgctxt "#32115"
+msgid "A playback that stops at or past this point is marked as watched. Below it, Simkl keeps the position so you can continue later."
+msgstr "Lượt phát dừng khi đã đạt hoặc vượt mốc này sẽ được đánh dấu là đã xem. Nếu dừng trước mốc này, Simkl giữ lại vị trí để bạn có thể xem tiếp sau."
+
+msgctxt "#32117"
+msgid "A notification when something is marked as watched on Simkl."
+msgstr "Thông báo khi một nội dung được đánh dấu là đã xem trên Simkl."
+
+msgctxt "#32118"
+msgid "Log rewatches on Simkl (Pro or VIP)"
+msgstr "Lưu lượt xem lại trên Simkl (Pro hoặc VIP)"
+
+msgctxt "#32119"
+msgid "Needs Simkl Pro or VIP (simkl.com/vip). Watching something again opens a new rewatch session on Simkl instead of keeping the first date, once at least 10% of it was really watched (replaying the ending is not a rewatch)."
+msgstr "Cần Simkl Pro hoặc VIP (simkl.com/vip). Xem lại một nội dung sẽ mở một phiên xem lại mới trên Simkl thay vì giữ ngày xem đầu tiên, khi đã thực sự xem ít nhất 10% nội dung đó (phát lại đoạn kết không được tính là xem lại)."
+
+msgctxt "#32121"
+msgid "Send watched marks made in the Kodi library to Simkl"
+msgstr "Gửi các đánh dấu đã xem trong thư viện Kodi lên Simkl"
+
+msgctxt "#32122"
+msgid "Marking a movie, episode, season or show as watched in Kodi marks it on Simkl too. A single unmark removes an episode from the Simkl history; for a movie you are asked whether to remove it (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched, and no answer keeps it. A movie with rewatch sessions on Simkl is never removed. Unmarking a whole season or show is not sent."
+msgstr "Đánh dấu một phim, tập, mùa hoặc chương trình là đã xem trong Kodi cũng sẽ đánh dấu nó trên Simkl. Bỏ đánh dấu riêng một tập sẽ xóa tập đó khỏi lịch sử Simkl; với phim, bạn sẽ được hỏi muốn xóa nó (đánh giá và ghi chú cũng bị xóa), chuyển nó sang Dự định xem (giữ đánh giá và ghi chú, bỏ ngày xem) hay giữ trạng thái đã xem, và nếu không trả lời thì phim được giữ nguyên. Phim có phiên xem lại trên Simkl sẽ không bao giờ bị xóa. Việc bỏ đánh dấu cả mùa hoặc cả chương trình sẽ không được gửi."
+
+msgctxt "#32130"
+msgid "Sync from Simkl"
+msgstr "Đồng bộ từ Simkl"
+
+msgctxt "#32131"
+msgid "Sync updates from Simkl"
+msgstr "Đồng bộ cập nhật từ Simkl"
+
+msgctxt "#32132"
+msgid "Marks in the Kodi library what was watched on Simkl since the last sync. The first run fetches the whole history; a run after new items were added to the library marks them from the kept copy of it. What you unmarked in Kodi stays unwatched until Simkl sees a newer watch of it."
+msgstr "Đánh dấu trong thư viện Kodi những gì đã xem trên Simkl kể từ lần đồng bộ gần nhất. Lần chạy đầu tiên tải toàn bộ lịch sử; lần chạy sau khi có mục mới được thêm vào thư viện sẽ đánh dấu chúng dựa trên bản sao lịch sử được giữ lại. Những gì bạn bỏ đánh dấu trong Kodi sẽ vẫn ở trạng thái chưa xem cho đến khi Simkl có một lượt xem mới hơn của nội dung đó."
+
+msgctxt "#32133"
+msgid "Reset and sync everything again"
+msgstr "Đặt lại và đồng bộ lại toàn bộ"
+
+msgctxt "#32134"
+msgid "Forgets what was synced and goes through the whole Simkl history again. Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "Quên những gì đã đồng bộ và duyệt lại toàn bộ lịch sử Simkl. Các mục đã xem trong Kodi vẫn giữ đánh dấu; ngày xem của chúng được làm mới từ Simkl."
+
+msgctxt "#32135"
+msgid "Automatically sync updates from Simkl"
+msgstr "Tự động đồng bộ cập nhật từ Simkl"
+
+msgctxt "#32136"
+msgid "Checks Simkl at the interval below and marks what is new, whenever Kodi is running but nothing is playing; a device nobody used since the last check (no key press, no playback, no change of the library) waits for the next use. With a library shared by several Kodi devices, switch this on for one device only."
+msgstr "Kiểm tra Simkl theo khoảng thời gian bên dưới và đánh dấu những gì mới, mỗi khi Kodi đang chạy nhưng không phát gì; thiết bị không ai dùng kể từ lần kiểm tra trước (không bấm phím, không phát, không thay đổi thư viện) sẽ chờ đến lần sử dụng tiếp theo. Nếu thư viện được dùng chung bởi nhiều thiết bị Kodi, chỉ bật tùy chọn này trên một thiết bị."
+
+msgctxt "#32137"
+msgid "Check every"
+msgstr "Kiểm tra mỗi"
+
+msgctxt "#32138"
+msgid "How often the automatic sync checks Simkl for new history."
+msgstr "Tần suất đồng bộ tự động kiểm tra Simkl để tìm lịch sử mới."
+
+msgctxt "#32139"
+msgid "1 hour"
+msgstr "1 giờ"
+
+msgctxt "#32140"
+msgid "3 hours"
+msgstr "3 giờ"
+
+msgctxt "#32141"
+msgid "6 hours"
+msgstr "6 giờ"
+
+msgctxt "#32142"
+msgid "12 hours"
+msgstr "12 giờ"
+
+msgctxt "#32143"
+msgid "24 hours"
+msgstr "24 giờ"
+
+msgctxt "#32144"
+msgid "Once a week"
+msgstr "Mỗi tuần một lần"
+
+msgctxt "#32145"
+msgid "Continue watching: sync resume positions from Simkl"
+msgstr "Tiếp tục xem: đồng bộ điểm tiếp tục từ Simkl"
+
+msgctxt "#32146"
+msgid "Where you paused in another Simkl app becomes a resume point in Kodi. Applied to items not yet watched in Kodi, and only when the Simkl pause is newer than Kodi's own last play."
+msgstr "Vị trí bạn tạm dừng trong một ứng dụng Simkl khác sẽ trở thành điểm tiếp tục trong Kodi. Áp dụng cho các mục chưa xem trong Kodi, và chỉ khi lần tạm dừng trên Simkl mới hơn lần phát gần nhất của chính Kodi."
+
+msgctxt "#32147"
+msgid "Last sync"
+msgstr "Lần đồng bộ gần nhất"
+
+msgctxt "#32148"
+msgid "The result of the last sync."
+msgstr "Kết quả của lần đồng bộ gần nhất."
+
+msgctxt "#32149"
+msgid "Start over"
+msgstr "Bắt đầu lại"
+
+msgctxt "#32150"
+msgid "Exclusions"
+msgstr "Loại trừ"
+
+msgctxt "#32151"
+msgid "Don't track Live TV"
+msgstr "Không theo dõi TV trực tiếp"
+
+msgctxt "#32152"
+msgid "Nothing played from a PVR (pvr://) is sent to Simkl."
+msgstr "Không gửi lên Simkl bất cứ nội dung nào phát từ PVR (pvr://)."
+
+msgctxt "#32153"
+msgid "Don't track HTTP streams"
+msgstr "Không theo dõi luồng HTTP"
+
+msgctxt "#32154"
+msgid "Nothing played from an http:// or https:// address is sent to Simkl."
+msgstr "Không gửi lên Simkl bất cứ nội dung nào phát từ địa chỉ http:// hoặc https://."
+
+msgctxt "#32155"
+msgid "Don't track videos played through add-ons"
+msgstr "Không theo dõi video phát qua tiện ích"
+
+msgctxt "#32156"
+msgid "Nothing played from a plugin:// path is sent to Simkl."
+msgstr "Không gửi lên Simkl bất cứ nội dung nào phát từ đường dẫn plugin://."
+
+msgctxt "#32157"
+msgid "Exclude folder 1"
+msgstr "Loại trừ thư mục 1"
+
+msgctxt "#32158"
+msgid "Exclude folder 2"
+msgstr "Loại trừ thư mục 2"
+
+msgctxt "#32159"
+msgid "Exclude folder 3"
+msgstr "Loại trừ thư mục 3"
+
+msgctxt "#32160"
+msgid "Exclude folder 4"
+msgstr "Loại trừ thư mục 4"
+
+msgctxt "#32161"
+msgid "Exclude folder 5"
+msgstr "Loại trừ thư mục 5"
+
+msgctxt "#32162"
+msgid "Folder"
+msgstr "Thư mục"
+
+msgctxt "#32163"
+msgid "Nothing played from this folder (or a folder inside it) is sent to Simkl, and marks made on its items are not sent either."
+msgstr "Không gửi lên Simkl bất cứ nội dung nào phát từ thư mục này (hoặc từ thư mục con bên trong), và các đánh dấu trên các mục trong đó cũng không được gửi."
+
+msgctxt "#32170"
+msgid "Advanced"
+msgstr "Nâng cao"
+
+msgctxt "#32171"
+msgid "Debug logging"
+msgstr "Ghi nhật ký gỡ lỗi"
+
+msgctxt "#32172"
+msgid "Writes what the add-on does to the Kodi log, without Kodi's own debug mode."
+msgstr "Ghi các hoạt động của tiện ích vào nhật ký Kodi mà không cần bật chế độ gỡ lỗi của Kodi."
+
+msgctxt "#32200"
+msgid "The code expires in {0}"
+msgstr "Mã sẽ hết hạn sau {0}"
+
+msgctxt "#32203"
+msgid "Log in from the add-on settings to start tracking what you watch"
+msgstr "Hãy đăng nhập trong cài đặt tiện ích để bắt đầu theo dõi những gì bạn xem"
+
+msgctxt "#32210"
+msgid "Simkl is not reachable right now, try again later"
+msgstr "Hiện không thể kết nối tới Simkl, hãy thử lại sau"
+
+msgctxt "#32211"
+msgid "Logged out of Simkl"
+msgstr "Đã đăng xuất khỏi Simkl"
+
+msgctxt "#32212"
+msgid "Please reconnect in the add-on settings (Account) to keep tracking when the old sign-in is retired"
+msgstr "Vui lòng kết nối lại trong cài đặt tiện ích (Tài khoản) để tiếp tục theo dõi khi phương thức đăng nhập cũ ngừng hoạt động"
+
+msgctxt "#32213"
+msgid "Simkl rejected the stored login, please log in again in the add-on settings"
+msgstr "Simkl đã từ chối thông tin đăng nhập đã lưu, vui lòng đăng nhập lại trong cài đặt tiện ích"
+
+msgctxt "#32214"
+msgid "Logging rewatches needs Simkl Pro or VIP, the option was switched off"
+msgstr "Lưu lượt xem lại cần Simkl Pro hoặc VIP, tùy chọn này đã bị tắt"
+
+msgctxt "#32215"
+msgid "Not connected"
+msgstr "Chưa kết nối"
+
+msgctxt "#32216"
+msgid "Connected to Simkl as {0}"
+msgstr "Đã kết nối với Simkl dưới tên {0}"
+
+msgctxt "#32217"
+msgid "Connected to Simkl as {0} ({1})"
+msgstr "Đã kết nối với Simkl dưới tên {0} ({1})"
+
+msgctxt "#32224"
+msgid "Log in to Simkl first"
+msgstr "Hãy đăng nhập Simkl trước"
+
+msgctxt "#32225"
+msgid "A sync is already running"
+msgstr "Đã có một lượt đồng bộ đang chạy"
+
+msgctxt "#32226"
+msgid "The code expired before the login was completed, start again"
+msgstr "Mã đã hết hạn trước khi hoàn tất đăng nhập, hãy bắt đầu lại"
+
+msgctxt "#32227"
+msgid "The login was denied on Simkl"
+msgstr "Đăng nhập đã bị từ chối trên Simkl"
+
+msgctxt "#32228"
+msgid "A sync ran a moment ago, try again in two minutes"
+msgstr "Vừa có một lượt đồng bộ, hãy thử lại sau hai phút"
+
+msgctxt "#32229"
+msgid "Nothing new on Simkl since the last sync."
+msgstr "Không có gì mới trên Simkl kể từ lần đồng bộ gần nhất."
+
+msgctxt "#32230"
+msgid "Marked {0} movies and {1} episodes as watched, {2} already watched."
+msgstr "Đã đánh dấu {0} phim và {1} tập là đã xem, {2} mục đã xem từ trước."
+
+msgctxt "#32231"
+msgid "Sync failed: {0}"
+msgstr "Đồng bộ thất bại: {0}"
+
+msgctxt "#32232"
+msgid "Syncing from Simkl..."
+msgstr "Đang đồng bộ từ Simkl..."
+
+msgctxt "#32233"
+msgid "Reading the Kodi library..."
+msgstr "Đang đọc thư viện Kodi..."
+
+msgctxt "#32234"
+msgid "Fetching the Simkl history..."
+msgstr "Đang tải lịch sử Simkl..."
+
+msgctxt "#32235"
+msgid "Updating the library..."
+msgstr "Đang cập nhật thư viện..."
+
+msgctxt "#32236"
+msgid "Connected to Simkl"
+msgstr "Đã kết nối với Simkl"
+
+msgctxt "#32237"
+msgid "{0} minutes"
+msgstr "{0} phút"
+
+msgctxt "#32238"
+msgid "{0} seconds"
+msgstr "{0} giây"
+
+msgctxt "#32239"
+msgid "A Simkl login is already in progress"
+msgstr "Đã có một lượt đăng nhập Simkl đang diễn ra"
+
+msgctxt "#32240"
+msgid "Couldn't start the Simkl login"
+msgstr "Không thể bắt đầu đăng nhập Simkl"
+
+msgctxt "#32241"
+msgid "Watch history is sent again once Simkl is reachable"
+msgstr "Lịch sử xem sẽ được gửi lại khi kết nối được tới Simkl"
+
+msgctxt "#32242"
+msgid "Connected as {0} with the old sign-in: press Reconnect"
+msgstr "Đã kết nối dưới tên {0} bằng phương thức đăng nhập cũ: hãy nhấn Kết nối lại"
+
+msgctxt "#32243"
+msgid "{0} resume positions updated."
+msgstr "Đã cập nhật {0} điểm tiếp tục."
+
+msgctxt "#32244"
+msgid "Simkl refused the request: this history is too large for one call"
+msgstr "Simkl đã từ chối yêu cầu: lịch sử này quá lớn cho một lần gọi"
+
+msgctxt "#32245"
+msgid "Simkl is rate limiting requests, try again later"
+msgstr "Simkl đang giới hạn tần suất yêu cầu, hãy thử lại sau"
+
+msgctxt "#32246"
+msgid "Simkl did not answer (unreachable or timed out)"
+msgstr "Simkl không phản hồi (không thể kết nối hoặc hết thời gian chờ)"
+
+msgctxt "#32247"
+msgid "Simkl answered HTTP {0}"
+msgstr "Simkl phản hồi HTTP {0}"
+
+msgctxt "#32248"
+msgid "Everything synced again."
+msgstr "Đã đồng bộ lại toàn bộ."
+
+msgctxt "#32250"
+msgid "Mark as watched on Simkl"
+msgstr "Đánh dấu đã xem trên Simkl"
+
+msgctxt "#32251"
+msgid "Remove from Simkl history"
+msgstr "Xóa khỏi lịch sử Simkl"
+
+msgctxt "#32252"
+msgid "Add to Plan to watch on Simkl"
+msgstr "Thêm vào Dự định xem trên Simkl"
+
+msgctxt "#32253"
+msgid "Sync updates from Simkl"
+msgstr "Đồng bộ cập nhật từ Simkl"
+
+msgctxt "#32254"
+msgid "Added to Plan to watch: {0}"
+msgstr "Đã thêm vào Dự định xem: {0}"
+
+msgctxt "#32255"
+msgid "Marked as watched on Simkl: {0}"
+msgstr "Đã đánh dấu là đã xem trên Simkl: {0}"
+
+msgctxt "#32256"
+msgid "Removed from the Simkl history: {0}"
+msgstr "Đã xóa khỏi lịch sử Simkl: {0}"
+
+msgctxt "#32257"
+msgid "Nothing to send: Simkl needs ids that Kodi does not have for this item"
+msgstr "Không có gì để gửi: Simkl cần các ID mà Kodi không có cho mục này"
+
+msgctxt "#32259"
+msgid "{0} watch dates refreshed from Simkl."
+msgstr "Đã làm mới {0} ngày xem từ Simkl."
+
+msgctxt "#32260"
+msgid "Forget what was synced and go through the whole Simkl history again? Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "Quên những gì đã đồng bộ và duyệt lại toàn bộ lịch sử Simkl? Các mục đã xem trong Kodi vẫn giữ đánh dấu; ngày xem của chúng được làm mới từ Simkl."
+
+msgctxt "#32261"
+msgid "Log out of Simkl on this device? Watch history that could not be sent yet is discarded."
+msgstr "Đăng xuất khỏi Simkl trên thiết bị này? Lịch sử xem chưa gửi được sẽ bị hủy bỏ."
+
+msgctxt "#32262"
+msgid "{0} episodes"
+msgstr "{0} tập"
+
+msgctxt "#32263"
+msgid "Simkl does not know {0}"
+msgstr "Simkl không nhận ra {0}"
+
+msgctxt "#32264"
+msgid "Simkl refused the request: {0}"
+msgstr "Simkl đã từ chối yêu cầu: {0}"
+
+msgctxt "#32265"
+msgid "the Simkl login was rejected, log in again"
+msgstr "thông tin đăng nhập Simkl bị từ chối, hãy đăng nhập lại"
+
+msgctxt "#32266"
+msgid "Kodi is shutting down"
+msgstr "Kodi đang tắt"
+
+msgctxt "#32267"
+msgid "{0} library writes failed, the sync runs again next time"
+msgstr "{0} lần ghi vào thư viện thất bại, lần sau sẽ đồng bộ lại"
+
+msgctxt "#32268"
+msgid "{0} items changed in Kodi during the sync were left alone."
+msgstr "{0} mục bị thay đổi trong Kodi khi đang đồng bộ đã được giữ nguyên."
+
+msgctxt "#32269"
+msgid "the Kodi library could not be read"
+msgstr "không thể đọc thư viện Kodi"
+
+msgctxt "#32270"
+msgid "A whole show or season can be marked only when it is in the Kodi library; use Add to Plan to watch for a show from an add-on"
+msgstr "Chỉ có thể đánh dấu cả chương trình hoặc cả mùa khi nó nằm trong thư viện Kodi; với chương trình từ tiện ích, hãy dùng Thêm vào Dự định xem"
+
+msgctxt "#32271"
+msgid "An episode from an add-on can be marked only when the add-on provides the show's ids"
+msgstr "Chỉ có thể đánh dấu tập từ tiện ích khi tiện ích cung cấp ID của chương trình"
+
+msgctxt "#32273"
+msgid "Reconnect with the new sign-in"
+msgstr "Kết nối lại bằng phương thức đăng nhập mới"
+
+msgctxt "#32274"
+msgid "The old sign-in is being retired. Shows a code to enter on simkl.com/pin; the account stays the same."
+msgstr "Phương thức đăng nhập cũ sắp ngừng hoạt động. Hiển thị một mã để nhập trên simkl.com/pin; tài khoản vẫn giữ nguyên."
+
+msgctxt "#32275"
+msgid "Rate on Simkl"
+msgstr "Đánh giá trên Simkl"
+
+msgctxt "#32276"
+msgid "Remove the rating"
+msgstr "Xóa đánh giá"
+
+msgctxt "#32277"
+msgid "Rated {0} {1}/10 on Simkl"
+msgstr "Đã đánh giá {0} {1}/10 trên Simkl"
+
+msgctxt "#32278"
+msgid "Rating removed on Simkl: {0}"
+msgstr "Đã xóa đánh giá trên Simkl: {0}"
+
+msgctxt "#32279"
+msgid "Not in the Kodi library"
+msgstr "Không có trong thư viện Kodi"
+
+msgctxt "#32280"
+msgid "{0} movies, {1} shows, {2} episodes"
+msgstr "{0} phim, {1} chương trình, {2} tập"
+
+msgctxt "#32281"
+msgid "What the last sync found watched on Simkl but could not place in the Kodi library."
+msgstr "Những gì lần đồng bộ gần nhất tìm thấy là đã xem trên Simkl nhưng không thể khớp với mục nào trong thư viện Kodi."
+
+msgctxt "#32282"
+msgid "Scan with your phone"
+msgstr "Quét bằng điện thoại của bạn"
+
+msgctxt "#32283"
+msgid "{0} episodes, {1} movies marked"
+msgstr "Đã đánh dấu {0} tập, {1} phim"
+
+msgctxt "#32284"
+msgid "{0} dates refreshed"
+msgstr "Đã làm mới {0} ngày xem"
+
+msgctxt "#32285"
+msgid "{0} resume points"
+msgstr "{0} điểm tiếp tục"
+
+msgctxt "#32286"
+msgid "Show the Simkl log"
+msgstr "Hiển thị nhật ký Simkl"
+
+msgctxt "#32287"
+msgid "The Kodi log, Simkl lines only (switch debug logging on first for the details). What is shown is also saved as simkl.log next to the add-on's settings, ready for a bug report."
+msgstr "Nhật ký Kodi, chỉ gồm các dòng của Simkl (hãy bật ghi nhật ký gỡ lỗi trước để có chi tiết). Nội dung hiển thị cũng được lưu thành simkl.log cạnh tệp cài đặt của tiện ích, sẵn sàng cho báo cáo lỗi."
+
+msgctxt "#32288"
+msgid "Kodi log"
+msgstr "Nhật ký Kodi"
+
+msgctxt "#32289"
+msgid "Simkl log"
+msgstr "Nhật ký Simkl"
+
+msgctxt "#32290"
+msgid "Saved to {0}"
+msgstr "Đã lưu vào {0}"
+
+msgctxt "#32291"
+msgid "No Simkl lines in the Kodi log yet"
+msgstr "Chưa có dòng Simkl nào trong nhật ký Kodi"
+
+msgctxt "#32292"
+msgid "Ask for a rating after a movie"
+msgstr "Hỏi đánh giá sau khi xem phim"
+
+msgctxt "#32294"
+msgid "Send ratings made in Kodi to Simkl"
+msgstr "Gửi đánh giá trong Kodi lên Simkl"
+
+msgctxt "#32295"
+msgid "A rating set in Kodi's information dialog for a movie or a show goes to Simkl (1-10, 0 removes it). Episodes are not sent, nor the rating of a movie Kodi has as unwatched: Simkl files a rated movie as watched."
+msgstr "Đánh giá đặt trong hộp thoại thông tin của Kodi cho phim hoặc chương trình sẽ được gửi lên Simkl (1-10, 0 để xóa). Đánh giá của tập không được gửi, đánh giá của phim mà Kodi ghi là chưa xem cũng vậy: Simkl coi phim đã được đánh giá là đã xem."
+
+msgctxt "#32296"
+msgid "Bring Simkl ratings into Kodi"
+msgstr "Đưa đánh giá Simkl vào Kodi"
+
+msgctxt "#32297"
+msgid "Your Simkl rating of a movie or a show becomes the Kodi library's user rating (1-10). Nothing is removed in Kodi; episodes have no ratings on Simkl."
+msgstr "Đánh giá của bạn trên Simkl cho phim hoặc chương trình sẽ trở thành đánh giá của người dùng trong thư viện Kodi (1-10). Không có gì bị xóa trong Kodi; tập không có đánh giá trên Simkl."
+
+msgctxt "#32298"
+msgid "{0} ratings updated."
+msgstr "Đã cập nhật {0} đánh giá."
+
+msgctxt "#32299"
+msgid "Simkl would mark {0} as watched: rate it once you have watched it"
+msgstr "Simkl sẽ đánh dấu {0} là đã xem: hãy đánh giá sau khi bạn đã xem"
+
+msgctxt "#32300"
+msgid "Not now"
+msgstr "Để sau"
+
+msgctxt "#32301"
+msgid "That is another Simkl account ({0}); log out first to switch"
+msgstr "Đó là một tài khoản Simkl khác ({0}); hãy đăng xuất trước để chuyển"
+
+msgctxt "#32302"
+msgid "{0} unmarked in Kodi, left unwatched."
+msgstr "{0} mục đã bỏ đánh dấu trong Kodi, vẫn giữ trạng thái chưa xem."
+
+msgctxt "#32303"
+msgid "Watches sent to Simkl: {0}"
+msgstr "Số lượt xem đã gửi lên Simkl: {0}"
+
+msgctxt "#32304"
+msgid "Shorter add-on streams and files named by Simkl's file search (trailers, clips) are ignored. Items of the Kodi library are always tracked."
+msgstr "Các luồng từ tiện ích và các tệp được nhận diện bằng tính năng tìm kiếm tệp của Simkl có độ dài ngắn hơn mức này (trailer, clip) sẽ bị bỏ qua. Các mục trong thư viện Kodi luôn được theo dõi."
+
+msgctxt "#32305"
+msgid "{0} is unwatched in Kodi now. On Simkl: remove it from your history (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched?"
+msgstr "{0} hiện đang ở trạng thái chưa xem trong Kodi. Trên Simkl: xóa khỏi lịch sử của bạn (đánh giá và ghi chú cũng bị xóa), chuyển sang Dự định xem (giữ đánh giá và ghi chú, bỏ ngày xem) hay giữ trạng thái đã xem?"
+
+msgctxt "#32306"
+msgid "Remove"
+msgstr "Xóa"
+
+msgctxt "#32307"
+msgid "Plan to watch"
+msgstr "Dự định xem"
+
+msgctxt "#32308"
+msgid "Keep watched"
+msgstr "Giữ đã xem"
+
+msgctxt "#32309"
+msgid "Kept on Simkl, it has rewatch sessions there: {0}"
+msgstr "Đã giữ trên Simkl vì có phiên xem lại ở đó: {0}"
+
+msgctxt "#32310"
+msgid "Not in your Simkl history, nothing to change: {0}"
+msgstr "Không có trong lịch sử Simkl của bạn, không có gì để thay đổi: {0}"
+
+msgctxt "#32311"
+msgid "{0} unsent Simkl updates older than 30 days were dropped"
+msgstr "Đã bỏ {0} bản cập nhật Simkl chưa gửi cũ hơn 30 ngày"
+
+msgctxt "#32312"
+msgid "When a movie ends at or past the percentage, a 1-10 pick appears and goes to Simkl. A movie you rated in Kodi or watched before is not asked, nor are shows and episodes."
+msgstr "Khi một phim kết thúc lúc đã đạt hoặc vượt tỷ lệ phần trăm đã đặt, một bảng chọn điểm 1-10 sẽ hiện ra và điểm được chọn sẽ được gửi lên Simkl. Phim bạn đã đánh giá trong Kodi hoặc đã xem trước đó sẽ không được hỏi, chương trình và tập cũng vậy."
+
+msgctxt "#32313"
+msgid "the kept copy of the Simkl history could not be saved"
+msgstr "không thể lưu bản sao lịch sử Simkl được giữ lại"
+
+msgctxt "#32314"
+msgid "{0} is already watched in Kodi, so it was not moved to Plan to watch"
+msgstr "{0} đã ở trạng thái đã xem trong Kodi, nên không được chuyển sang Dự định xem"
