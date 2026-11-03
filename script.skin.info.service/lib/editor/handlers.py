@@ -1,45 +1,50 @@
 """Field type handlers for metadata editor."""
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Callable, TypeVar, Final
 
 import xbmc
 import xbmcgui
 
 from lib.infrastructure.dialogs import show_select, show_yesno
 from lib.kodi.client import ADDON
+from lib.kodi.formatters import format_rating
 from lib.editor.config import TVSHOW_STATUS_VALUES
 from lib.editor.operations import fetch_library_values_for_field
 from lib.editor.utilities import (
     format_duration_for_edit,
     format_runtime_for_edit,
     parse_duration_from_edit,
+    parse_rating,
     parse_runtime_from_edit,
     normalize_date,
     validate_date,
+    validate_duration,
     validate_rating,
     validate_runtime,
     validate_top250,
     validate_year,
 )
 
-# `xbmc.Keyboard` truncates the pre-filled `default` text past 100 chars (verified).
-# We warn the user before opening the keyboard so long fields aren't silently clipped.
-MAX_KEYBOARD_DEFAULT_LEN = 100
+# xbmc.Keyboard truncates the pre-filled default past 100 chars
+MAX_KEYBOARD_DEFAULT_LEN: Final = 100
+
+_T = TypeVar("_T")
 
 
 def _edit_heading(field_name: str) -> str:
+    """Get the localized edit dialog heading for a field."""
     return ADDON.getLocalizedString(32557).format(field_name)
 
 
 def handle_text(
     field_name: str, current_value: str | None
 ) -> tuple[str | None, bool]:
-    """Handle text input."""
+    """Handle text input, newlines shown as [CR] in the keyboard."""
     heading = _edit_heading(field_name)
     default = current_value or ""
 
-    # xbmc.Keyboard can't handle actual newlines - use [CR] placeholder
+    # xbmc.Keyboard can't take newlines
     default_display = default.replace('\r\n', '[CR]').replace('\n', '[CR]').replace('\r', '[CR]')
 
     if len(default_display) > MAX_KEYBOARD_DEFAULT_LEN:
@@ -56,14 +61,12 @@ def handle_text(
     if not kb.isConfirmed():
         return None, True
 
-    # Convert [CR] back to newlines
     result = kb.getText().replace('[CR]', '\n')
     return result, False
 
 
 _INTEGER_VALIDATORS = {
     "year": validate_year,
-    "runtime": validate_runtime,
     "top250": validate_top250,
 }
 
@@ -71,116 +74,94 @@ _INTEGER_VALIDATORS = {
 def handle_integer(
     field_name: str, current_value: int | None, validator: str | None = None
 ) -> tuple[int | None, bool]:
-    """Handle integer input."""
-    heading = _edit_heading(field_name)
-    default = str(current_value) if current_value else ""
-
-    result = xbmcgui.Dialog().input(heading, default, type=xbmcgui.INPUT_NUMERIC)
-
-    if not result:
-        return None, True
-
-    try:
-        value = int(result)
-    except ValueError:
-        return None, True
-
+    """Handle integer input, checked by the field's validator when it has one."""
     validator_fn = _INTEGER_VALIDATORS.get(validator) if validator else None
-    if validator_fn:
-        valid, error = validator_fn(value)
-        if not valid:
-            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32254), error)
-            return None, True
+    return _prompt_until_valid(
+        _edit_heading(field_name), str(current_value) if current_value else "", int,
+        validator_fn or (lambda _value: (True, "")), 32254, xbmcgui.INPUT_NUMERIC)
 
-    return value, False
+
+def _handle_seconds(
+    field_name: str, current_value: int | None, *, unit: str, fmt, parse, validate,
+    input_type: int = xbmcgui.INPUT_ALPHANUM,
+) -> tuple[int | None, bool]:
+    """Prompt for a seconds-backed field in its display unit, storing the parsed seconds."""
+    heading = f"{_edit_heading(field_name)} ({unit})"
+    return _prompt_until_valid(
+        heading, fmt(current_value or 0), parse, validate, 32254, input_type)
 
 
 def handle_runtime(
     field_name: str, current_value: int | None
 ) -> tuple[int | None, bool]:
     """Handle runtime input (edit in minutes, store in seconds)."""
-    heading = f"{_edit_heading(field_name)} (minutes)"
-    default = format_runtime_for_edit(current_value or 0)
-
-    result = xbmcgui.Dialog().input(heading, default, type=xbmcgui.INPUT_NUMERIC)
-
-    if not result:
-        return None, True
-
-    seconds = parse_runtime_from_edit(result)
-
-    valid, error = validate_runtime(seconds)
-    if not valid:
-        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32254), error)
-        return None, True
-
-    return seconds, False
+    return _handle_seconds(
+        field_name, current_value, unit="minutes", fmt=format_runtime_for_edit,
+        parse=parse_runtime_from_edit, validate=validate_runtime,
+        input_type=xbmcgui.INPUT_NUMERIC)
 
 
 def handle_duration(
     field_name: str, current_value: int | None
 ) -> tuple[int | None, bool]:
     """Handle duration input (edit in MM:SS format, store in seconds)."""
-    heading = f"{_edit_heading(field_name)} (MM:SS)"
-    default = format_duration_for_edit(current_value or 0)
+    return _handle_seconds(
+        field_name, current_value, unit="MM:SS", fmt=format_duration_for_edit,
+        parse=parse_duration_from_edit, validate=validate_duration)
 
-    result = xbmcgui.Dialog().input(heading, default)
 
-    if not result:
-        return None, True
+def _prompt_until_valid(
+    heading: str, value: str, parse: Callable[[str], _T],
+    validate: Callable[[_T], tuple[bool, str]], error_heading: int,
+    input_type: int = xbmcgui.INPUT_ALPHANUM
+) -> tuple[_T | None, bool]:
+    """Prompt, reopening with the entry kept, until the value validates or is cancelled."""
+    while True:
+        result = xbmcgui.Dialog().input(heading, value, type=input_type)
+        if not result:
+            return None, True
+        parsed = parse(result)
+        valid, error = validate(parsed)
+        if valid:
+            return parsed, False
+        xbmcgui.Dialog().ok(ADDON.getLocalizedString(error_heading), error)
+        value = result
 
-    seconds = parse_duration_from_edit(result)
 
-    valid, error = validate_runtime(seconds)
-    if not valid:
-        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32254), error)
-        return None, True
+def _handle_date_input(
+    field_name: str, value: str, store=lambda date: date
+) -> tuple[str | None, bool]:
+    """Prompt for a date, reopening with the entry kept until it validates or is cancelled."""
+    heading = f"{_edit_heading(field_name)} (YYYY-MM-DD)"
+    date, cancelled = _prompt_until_valid(
+        heading, value, normalize_date, validate_date, 32255)
+    return (None, True) if cancelled or date is None else (store(date), False)
 
-    return seconds, False
+
+def _handle_rating_input(heading: str, value: str) -> tuple[float | None, bool]:
+    """Prompt for a 0-10 rating, decimal point or comma both accepted."""
+    return _prompt_until_valid(heading, value, parse_rating, validate_rating, 32256)
 
 
 def handle_date(
     field_name: str, current_value: str | None
 ) -> tuple[str | None, bool]:
     """Handle date input (YYYY-MM-DD); reopens with the entry kept on a bad value."""
-    heading = f"{_edit_heading(field_name)} (YYYY-MM-DD)"
-    value = current_value or ""
-
-    while True:
-        result = xbmcgui.Dialog().input(heading, value)
-        if not result:
-            return None, True
-        normalized = normalize_date(result)
-        valid, error = validate_date(normalized)
-        if valid:
-            return normalized, False
-        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32255), error)
-        value = result
+    return _handle_date_input(field_name, current_value or "")
 
 
 def handle_lastplayed(
     field_name: str, current_value: str | None
 ) -> tuple[str | None, bool]:
-    """Edit last-played as a date; store midnight since Kodi renders LastPlayed date-only."""
-    heading = f"{_edit_heading(field_name)} (YYYY-MM-DD)"
-    value = (current_value or "").split(" ")[0]
-
-    while True:
-        result = xbmcgui.Dialog().input(heading, value)
-        if not result:
-            return None, True
-        normalized = normalize_date(result)
-        valid, error = validate_date(normalized)
-        if valid:
-            return f"{normalized} 00:00:00", False
-        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32255), error)
-        value = result
+    """Handle last-played as a date, stored at midnight since Kodi shows it date-only."""
+    return _handle_date_input(
+        field_name, (current_value or "").split(" ")[0], lambda date: f"{date} 00:00:00")
 
 
 def handle_userrating(
     field_name: str, current_value: int | None
 ) -> tuple[int | None, bool]:
-    """Handle 1-10 user rating selection."""
+    """Handle 1-10 user rating selection, the first option clearing it."""
     options = [ADDON.getLocalizedString(32391)] + [str(i) for i in range(1, 11)]
     preselect = current_value if current_value else 0
 
@@ -224,7 +205,7 @@ def handle_list(
     media_type: str,
     field_key: str
 ) -> tuple[list[str] | None, bool]:
-    """Handle list editing with 3 UX options."""
+    """Handle list editing: quick edit, pick from the library, or add and remove."""
     values = list(current_values) if current_values else []
 
     current_display = ", ".join(values) if values else ADDON.getLocalizedString(32392)
@@ -268,18 +249,16 @@ def _quick_edit_list(
 def _select_from_library(
     field_name: str, current: list[str], media_type: str, field_key: str
 ) -> tuple[list[str] | None, bool]:
-    """Show multiselect with existing library values."""
+    """Show a multiselect of the library's values plus the item's own."""
     library_values = fetch_library_values_for_field(field_key, media_type)
 
     if not library_values:
         xbmcgui.Dialog().ok(
             ADDON.getLocalizedString(32390),
-            f"No existing {field_name} found in library.\n"
-            "Use Quick Edit or Add/Remove instead."
+            ADDON.getLocalizedString(32726).format(field_name)
         )
         return None, True
 
-    # Add current values that aren't in library
     all_values: list[str] = list(library_values)
     for val in current:
         if val not in all_values:
@@ -288,7 +267,7 @@ def _select_from_library(
     preselect = [i for i, v in enumerate(all_values) if v in current]
 
     result = xbmcgui.Dialog().multiselect(
-        f"Select {field_name}",
+        ADDON.getLocalizedString(32556).format(field_name),
         all_values,  # type: ignore[arg-type]
         preselect=preselect
     )
@@ -302,12 +281,12 @@ def _select_from_library(
 def _add_remove_items(
     field_name: str, current: list[str]
 ) -> tuple[list[str] | None, bool]:
-    """Interactive add/remove loop."""
+    """Add and remove items one at a time until the user saves or cancels."""
     items = list(current)
     monitor = xbmc.Monitor()
 
     while not monitor.abortRequested():
-        options = [f"[+] Add {field_name}"]
+        options = [f"[+] {ADDON.getLocalizedString(32394).format(field_name)}"]
         for item in items:
             options.append(f"[-] {item}")
         options.append(f"[{ADDON.getLocalizedString(32393)}]")
@@ -337,8 +316,10 @@ def _add_remove_items(
 def handle_ratings(
     field_name: str, current_ratings: dict[str, Any] | None
 ) -> tuple[dict[str, Any] | None, bool]:
-    """Handle external ratings editing. Returns updated ratings after each change."""
-    ratings = dict(current_ratings) if current_ratings else {}
+    """Handle external ratings editing, returning the edited map only when something changed."""
+    # shared nested dicts would read as unchanged in _edit_field's equality check
+    ratings = {source: dict(data) if isinstance(data, dict) else data
+               for source, data in (current_ratings or {}).items()}
     modified = False
     monitor = xbmc.Monitor()
 
@@ -351,12 +332,14 @@ def handle_ratings(
             if isinstance(data, dict):
                 rating = data.get("rating", 0)
                 votes = data.get("votes", 0)
-                default_mark = " [Default]" if data.get("default") else ""
-                options.append(f"{source}: {rating:.1f} ({votes:,} votes){default_mark}")
+                default_mark = f" [{xbmc.getLocalizedString(571)}]" if data.get("default") else ""
+                vote_text = ADDON.getLocalizedString(32727).format(f"{votes:,}")
+                options.append(f"{source}: {format_rating(rating)} ({vote_text}){default_mark}")
             else:
                 options.append(f"{source}: {data}")
 
-        options.append("[+] Add Rating Source")
+        add_rating = ADDON.getLocalizedString(32394).format(xbmc.getLocalizedString(563))
+        options.append(f"[+] {add_rating}")
 
         choice = show_select(ADDON.getLocalizedString(32557).format(field_name), options)
 
@@ -480,20 +463,8 @@ def _add_rating_source(ratings: dict[str, Any]) -> bool:
         )
         return False
 
-    rating_str = xbmcgui.Dialog().input(
-        ADDON.getLocalizedString(32565), "0", type=xbmcgui.INPUT_NUMERIC
-    )
-    if not rating_str:
-        return False
-
-    try:
-        rating = float(rating_str)
-    except ValueError:
-        return False
-
-    valid, error = validate_rating(rating)
-    if not valid:
-        xbmcgui.Dialog().ok(ADDON.getLocalizedString(32256), error)
+    rating, cancelled = _handle_rating_input(ADDON.getLocalizedString(32565), "0")
+    if cancelled or rating is None:
         return False
 
     votes_str = xbmcgui.Dialog().input(
@@ -509,10 +480,10 @@ def _add_rating_source(ratings: dict[str, Any]) -> bool:
 def _edit_single_rating(ratings: dict[str, Any], source: str) -> bool:
     """Edit a single rating source. Returns True if modified."""
     options = [
-        "Edit Rating Value",
+        ADDON.getLocalizedString(32557).format(xbmc.getLocalizedString(563)),
         f"Edit {ADDON.getLocalizedString(32253)}",
-        "Set as Default",
-        "Remove This Rating",
+        xbmc.getLocalizedString(40023),
+        xbmc.getLocalizedString(1210),
     ]
 
     choice = show_select(ADDON.getLocalizedString(32557).format(source), options)
@@ -527,20 +498,11 @@ def _edit_single_rating(ratings: dict[str, Any], source: str) -> bool:
 
     if choice == 0:
         current = data.get("rating", 0)
-        result = xbmcgui.Dialog().input(
-            "Rating (0-10)", f"{current:.1f}", type=xbmcgui.INPUT_NUMERIC
-        )
-        if result:
-            try:
-                new_rating = float(result)
-                valid, error = validate_rating(new_rating)
-                if valid:
-                    data["rating"] = new_rating
-                    return True
-                else:
-                    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32256), error)
-            except ValueError:
-                pass
+        new_rating, cancelled = _handle_rating_input(
+            ADDON.getLocalizedString(32565), format_rating(current))
+        if not cancelled and new_rating is not None:
+            data["rating"] = new_rating
+            return True
 
     elif choice == 1:
         current = data.get("votes", 0)

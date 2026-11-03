@@ -11,28 +11,15 @@ from typing import Optional, Dict, Any
 from lib.kodi.client import log, ADDON
 from lib.texture.utilities import is_library_artwork_url
 
-# Age and usage bucket boundaries (inclusive upper bound per bucket).
+# bucket boundaries, each an inclusive upper bound
 _AGE_BUCKET_BOUNDS = (7, 30, 90, 180)
 _AGE_BUCKET_LABELS = ('0-7', '8-30', '31-90', '91-180', '180+', 'unknown')
 _USAGE_BUCKET_BOUNDS = (5, 20, 50)
 _USAGE_BUCKET_LABELS = ('0', '1-5', '6-20', '21-50', '50+')
 
-# Kodi's `Textures.GetTextures` returns width/usecount swapped for some entries (PR #27584).
-# A `usecount >= 256` paired with `width < 256` is the swap signature, fall back to width.
-_USECOUNT_SWAP_THRESHOLD = 256
-
-
-def _real_usecount(size_record: Dict[str, Any]) -> int:
-    """Return the true usecount for a size record, accounting for the Kodi width/usecount swap."""
-    raw_usecount = size_record.get('usecount', 0)
-    raw_width = size_record.get('width', 0)
-    if raw_width < _USECOUNT_SWAP_THRESHOLD and raw_usecount >= _USECOUNT_SWAP_THRESHOLD:
-        return raw_width
-    return raw_usecount
-
 
 def _bucket_age(days_ago: int) -> str:
-    """Return the age-bucket label for `days_ago`."""
+    """Return the age-bucket label for a number of days since last use."""
     for bound, label in zip(_AGE_BUCKET_BOUNDS, _AGE_BUCKET_LABELS):
         if days_ago <= bound:
             return label
@@ -40,7 +27,7 @@ def _bucket_age(days_ago: int) -> str:
 
 
 def _bucket_usage(usecount: int) -> str:
-    """Return the usage-bucket label for `usecount`."""
+    """Return the usage-bucket label for a use count."""
     if usecount == 0:
         return _USAGE_BUCKET_LABELS[0]
     for bound, label in zip(_USAGE_BUCKET_BOUNDS, _USAGE_BUCKET_LABELS[1:]):
@@ -62,13 +49,13 @@ def _classify_texture_type(url: str) -> str:
 
 def _bucket_size_record(size: dict, now: datetime, age_buckets: Dict[str, int],
                        usage_buckets: Dict[str, int]) -> None:
-    """Update `age_buckets` and `usage_buckets` in place from a single size record."""
+    """Update the age and usage buckets in place from a single size record."""
     lastusetime = size.get('lastused')
-    usecount = _real_usecount(size)
+    usecount = size.get('usecount', 0)
 
     if lastusetime:
         try:
-            last_used = datetime.strptime(lastusetime, '%Y-%m-%d %H:%M:%S')
+            last_used = datetime.fromisoformat(lastusetime)
             age_buckets[_bucket_age((now - last_used).days)] += 1
         except Exception:
             age_buckets['unknown'] += 1
@@ -78,20 +65,31 @@ def _bucket_size_record(size: dict, now: datetime, age_buckets: Dict[str, int],
     usage_buckets[_bucket_usage(usecount)] += 1
 
 
-def _calculate_disk_usage(thumbnails_path: str) -> int:
-    """Sum the on-disk size of every file under `thumbnails_path`. Returns 0 on walk error."""
+def _calculate_disk_usage(thumbnails_path: str, progress: xbmcgui.DialogProgress,
+                          expected_files: int) -> Optional[int]:
+    """Calculate the on-disk size of every readable file under a folder; None if cancelled."""
     disk_usage = 0
-    try:
-        for root, _dirs, files in os.walk(thumbnails_path):
-            for filename in files:
-                filepath = os.path.join(root, filename)
-                try:
-                    disk_usage += os.path.getsize(filepath)
-                except Exception:
-                    pass
-    except Exception as e:
-        log("Texture", f"SkinInfo TextureCache: Disk usage calculation failed: {str(e)}",
-            xbmc.LOGWARNING)
+    seen = 0
+    pending = [thumbnails_path]
+    while pending:
+        try:
+            entries = list(os.scandir(pending.pop()))
+        except OSError as e:
+            log("Texture", f"Disk usage skipped a folder: {e}", xbmc.LOGWARNING)
+            continue
+        for entry in entries:
+            try:
+                if entry.is_dir(follow_symlinks=False):
+                    pending.append(entry.path)
+                    continue
+                disk_usage += entry.stat(follow_symlinks=False).st_size
+            except OSError:
+                continue
+            seen += 1
+            if seen % 200 == 0:
+                if progress.iscanceled():
+                    return None
+                progress.update(80 + min(19, seen * 20 // max(expected_files, 1)))
     return disk_usage
 
 
@@ -124,7 +122,10 @@ def calculate_texture_statistics(textures: list[Dict[str, Any]],
                 _bucket_size_record(size, now, age_buckets, usage_buckets)
 
         progress.update(80, ADDON.getLocalizedString(32425))
-        disk_usage = _calculate_disk_usage(xbmcvfs.translatePath("special://thumbnails"))
+        disk_usage = _calculate_disk_usage(xbmcvfs.translatePath("special://thumbnails"),
+                                           progress, total_sizes)
+        if disk_usage is None:
+            return None
         progress.update(100, ADDON.getLocalizedString(32426))
 
         return {

@@ -1,26 +1,23 @@
-"""Library scanning for missing artwork.
-
-Scans Kodi library for items with missing artwork from APIs.
-Builds queue for manual review or auto-processing.
-"""
+"""Library scanning for missing artwork."""
 from __future__ import annotations
 
 import xbmc
 from time import time
 from typing import Optional, List, Tuple, Any, Sequence
 
-from lib.data import database as db
+from lib.data.database import queue as db_queue
+from lib.data.database import workflow as db_workflow
 from lib.kodi.client import get_library_items, LibraryScanAborted
 from lib.kodi.settings import KodiSettings
 from lib.kodi.utilities import get_preferred_language_code
-from lib.artwork.config import REVIEW_MODE_MISSING
+from lib.artwork.config import REVIEW_MODE_MISSING, bulk_art_types, scope_media_types
 from lib.data.api.artwork import ApiArtworkFetcher
 from lib.infrastructure.dialogs import ProgressDialog
 from lib.kodi.client import log, ADDON
 
 
 class ArtworkScanner:
-    """Scans library for missing artwork, builds queue for review."""
+    """Scans the library for missing artwork and queues what it finds for review."""
 
     def __init__(self, fetcher: Optional[ApiArtworkFetcher] = None,
                  use_background: bool = False, abort_flag=None, task_context=None):
@@ -73,9 +70,10 @@ class ArtworkScanner:
             self._total_items += count
 
     def _update_fetch_progress(self, progress_title: str, done: int, total: int) -> None:
-        """Keep the bar moving while library data is still being fetched (seasons are per-show)."""
+        """Update the progress dialog during the library fetch; seasons are per-show."""
         percent = min(100, int((done * 100) / total)) if total else 0
-        self.progress.update(percent, f"{progress_title}[CR]Loading library: {done}/{total}")
+        loading = f"{ADDON.getLocalizedString(32350)} {done}/{total}"
+        self.progress.update(percent, f"{progress_title}[CR]{loading}")
         if self._task_context is not None:
             self._task_context.mark_progress()
 
@@ -103,35 +101,25 @@ class ArtworkScanner:
 
         speed_str = f"{int(items_per_second)}/s" if items_per_second > 0 else "0/s"
 
-        line1 = f"{overall_index}/{total_items} • {progress_title} • {speed_str} • ETA {eta_str}"
-        line2 = f"Missing: {self.missing_count} items queued"
+        eta = ADDON.getLocalizedString(32705).format(eta_str)
+        line1 = f"{overall_index}/{total_items} • {progress_title} • {speed_str} • {eta}"
+        line2 = ADDON.getLocalizedString(32706).format(self.missing_count)
         title_display = f"{title} ({year})" if year else title
-        line3 = f"Scanning: {title_display}"
+        line3 = ADDON.getLocalizedString(32704).format(title_display)
 
         message = f"{line1}[CR]{line2}[CR]{line3}"
 
         self.progress.update(percent, message)
 
     def scan(self, media_type: str) -> bool:
-        """Scan library for missing artwork.
+        """Scan a library scope for missing artwork; False only on fatal error."""
+        media_types = scope_media_types(media_type)
 
-        Args:
-            media_type: "movies", "tvshows", "music", or "all".
+        self._sync_feed_changes(media_types)
 
-        Returns:
-            True if scan queued any results or was cancelled gracefully, False on fatal error.
-        """
-        media_types = []
-        if media_type in ("movies", "all"):
-            media_types.append("movie")
-        if media_type in ("tvshows", "all"):
-            media_types.append("tvshow")
-        if media_type in ("music", "all"):
-            media_types.append("artist")
-            media_types.append("album")
-
-        all_art_types = self._get_art_types_to_check()
-        session_id = db.create_scan_session("missing_art", media_types, all_art_types)
+        art_types_by_type = {mt: self._get_art_types_to_check(mt) for mt in media_types}
+        all_art_types = sorted({at for types in art_types_by_type.values() for at in types})
+        session_id = db_workflow.create_scan_session("missing_art", media_types, all_art_types)
 
         self._begin_scan_progress()
 
@@ -140,43 +128,18 @@ class ArtworkScanner:
         try:
             scan_steps: List[Tuple[str, Any]] = []
 
-            if "movie" in media_types:
-                movie_art_types = self._get_art_types_to_check("movie")
-                scan_steps.append((
-                    'movies',
-                    lambda art_types=movie_art_types: self._scan_movies(
-                        art_types, session_id, scope_label='movies')
-                ))
+            for scan_type in media_types:
+                art_types = art_types_by_type[scan_type]
+                if not art_types:
+                    log("Artwork", f"No art types enabled for {scan_type}, skipping",
+                        xbmc.LOGDEBUG)
+                    continue
 
-            if "tvshow" in media_types:
-                tvshow_art_types = self._get_art_types_to_check("tvshow")
+                scope_label = self._SCAN_CONFIGS[scan_type]['scope_label']
                 scan_steps.append((
-                    'tvshows',
-                    lambda art_types=tvshow_art_types: self._scan_tvshows(
-                        art_types, session_id, scope_label='tvshows')
-                ))
-
-                season_art_types = self._get_art_types_to_check("season")
-                scan_steps.append((
-                    'seasons',
-                    lambda art_types=season_art_types: self._scan_seasons(
-                        art_types, session_id, scope_label='seasons')
-                ))
-
-            if "artist" in media_types:
-                artist_art_types = self._get_art_types_to_check("artist")
-                scan_steps.append((
-                    'artists',
-                    lambda art_types=artist_art_types: self._scan_artists(
-                        art_types, session_id, scope_label='artists')
-                ))
-
-            if "album" in media_types:
-                album_art_types = self._get_art_types_to_check("album")
-                scan_steps.append((
-                    'albums',
-                    lambda art_types=album_art_types: self._scan_albums(
-                        art_types, session_id, scope_label='albums')
+                    scope_label,
+                    lambda mt=scan_type, at=art_types, label=scope_label: self._scan_collection(
+                        mt, at, session_id, label)
                 ))
 
             for _, runner in scan_steps:
@@ -190,9 +153,9 @@ class ArtworkScanner:
                     had_failure = True
                     break
         finally:
-            summary_heading = "Scan cancelled" if self.cancelled else "Scan complete"
-            summary_line1 = f"Items scanned: {self.scanned_count}"
-            summary_line2 = f"Queued for selection: {self.queued_count}"
+            summary_heading = ADDON.getLocalizedString(32032 if self.cancelled else 32279)
+            summary_line1 = ADDON.getLocalizedString(32284).format(self.scanned_count)
+            summary_line2 = ADDON.getLocalizedString(32706).format(self.queued_count)
             self._close_scan_progress(summary_heading, summary_line1, summary_line2)
 
         stats = {
@@ -201,17 +164,17 @@ class ArtworkScanner:
         }
 
         if self.cancelled:
-            db.update_session_stats(session_id, stats)
-            db.cancel_session(session_id)
+            db_workflow.update_session_stats(session_id, stats)
+            db_workflow.cancel_session(session_id)
             return True
 
-        db.update_session_stats(session_id, stats)
+        db_workflow.update_session_stats(session_id, stats)
 
         if had_failure:
-            db.cancel_session(session_id)
+            db_workflow.cancel_session(session_id)
             return False
 
-        db.complete_session(session_id)
+        db_workflow.complete_session(session_id)
         return True
 
     def _scan_media_collection(
@@ -227,7 +190,7 @@ class ArtworkScanner:
         scope_label: str,
         progress_title: str,
     ) -> bool:
-        """Scan a collection of media items for missing artwork."""
+        """Scan already-fetched items, queueing the art each lacks; False only on a fatal error."""
         if not items:
             return True
 
@@ -292,116 +255,114 @@ class ArtworkScanner:
                 'dbid': dbid_value,
                 'title': title,
                 'year': year,
-                'scope': scope_label,
-                'scan_session_id': session_id,
                 'art_requests': art_requests,
             })
 
             self._processed_items += 1
 
         if queue_items:
-            queue_ids = db.add_to_queue_batch(queue_items)
-            for queue_id, item in zip(queue_ids, queue_items):
+            db_queue.add_to_queue_batch(queue_items)
+            for item in queue_items:
                 for art_request in item['art_requests']:
                     art_items.append({
-                        'queue_id': queue_id,
+                        'media_type': item['media_type'],
+                        'dbid': item['dbid'],
                         'art_type': art_request['art_type'],
-                        'requires_manual': art_request.get('requires_manual', False),
-                        'scan_session_id': session_id,
                     })
 
             if art_items:
-                db.add_art_items_batch(art_items)
+                db_queue.add_art_items_batch(art_items)
 
             self.queued_count += len(queue_items)
 
         log("Artwork",
-            f"{progress_title}: scanned {total}, queued {len(queue_items)} items "
+            f"{db_media_type}: scanned {total}, queued {len(queue_items)} items "
             f"({len(art_items)} art types)")
 
         return not self.cancelled
 
+    def _sync_feed_changes(self, media_types: List[str]) -> None:
+        """Ask fanart.tv what changed since the last scan so only those items are rechecked."""
+        from lib.artwork.utilities import FEED_FOR_MEDIA, sync_feed_changes
+
+        feeds = sorted({FEED_FOR_MEDIA[mt] for mt in media_types if mt in FEED_FOR_MEDIA})
+        if not feeds:
+            return
+
+        try:
+            sync_feed_changes(self.fetcher.fanart_api, feeds)
+        except Exception as e:
+            log("Artwork", f"Feed sync failed, scanning without it: {e}", xbmc.LOGWARNING)
+
     def _get_art_types_to_check(self, media_type: Optional[str] = None) -> List[str]:
-        """Get art types to check from settings, filtered to those compatible with media_type."""
+        """Get art types to check from settings, filtered to those the media type can hold."""
+        supported = bulk_art_types(media_type or 'movie')
         setting_value = KodiSettings.art_types_to_check()
-        if setting_value:
-            art_types = [t.strip() for t in setting_value.split(",") if t.strip()]
-        else:
-            defaults = {
-                'movie': ['poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape',
-                          'discart', 'keyart'],
-                'tvshow': ['poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape',
-                           'characterart', 'keyart'],
-                'season': ['poster', 'banner', 'landscape', 'fanart'],
-                'episode': ['thumb'],
-                'musicvideo': ['thumb', 'fanart'],
-                'set': ['poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape',
-                        'discart', 'keyart'],
-                'artist': ['thumb', 'fanart', 'clearlogo', 'banner'],
-                'album': ['thumb', 'discart'],
-            }
-            art_types = defaults.get(
-                media_type if media_type else 'movie',
-                ['poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape',
-                 'discart', 'keyart'])
+        enabled = {art_type.strip() for art_type in setting_value.split(",") if art_type.strip()}
+        return [art_type for art_type in supported if art_type in enabled]
 
-        if media_type == "season":
-            supported = ['poster', 'banner', 'landscape', 'fanart']
-            art_types = [t for t in art_types if t in supported]
-
-        return art_types
-
-    # Per-type scan configuration: properties to fetch, title/year keys, progress label.
-    # Seasons fetch via tvshow with nested seasons enabled.
+    # music sorts by artist so one artist's items share a single fetch
     _SCAN_CONFIGS = {
         'movie': {
             'fetch_media_type': 'movie', 'id_key': 'movieid',
             'properties': ["title", "year", "art"],
             'title_key': 'label', 'year_key': 'year',
-            'progress_title': "Scanning Movies",
+            'type_name': 342, 'scope_label': 'movies',
         },
         'tvshow': {
             'fetch_media_type': 'tvshow', 'id_key': 'tvshowid',
             'properties': ["title", "year", "art"],
             'title_key': 'label', 'year_key': 'year',
-            'progress_title': "Scanning TV Shows",
+            'type_name': 20343, 'scope_label': 'tvshows',
         },
         'season': {
-            'fetch_media_type': 'tvshow', 'id_key': 'seasonid',
-            'properties': ["title", "art"],
+            'fetch_media_type': 'season', 'id_key': 'seasonid',
+            'properties': ["title", "art", "season", "showtitle", "tvshowid"],
             'title_key': 'label', 'year_key': None,
-            'progress_title': "Scanning Seasons",
-            'include_nested_seasons': True,
-            'season_properties': ["title", "art", "season", "showtitle"],
-            'filter_after_fetch': 'season',
+            'type_name': 33054, 'scope_label': 'seasons',
+        },
+        'episode': {
+            'fetch_media_type': 'episode', 'id_key': 'episodeid',
+            'properties': ["title", "art", "season", "episode", "showtitle"],
+            'title_key': 'label', 'year_key': None,
+            'type_name': 20360, 'scope_label': 'episodes',
+        },
+        'musicvideo': {
+            'fetch_media_type': 'musicvideo', 'id_key': 'musicvideoid',
+            'properties': ["title", "artist", "art", "year", "uniqueid"],
+            'title_key': 'label', 'year_key': 'year',
+            'type_name': 20389, 'scope_label': 'musicvideos',
+            'sort': {'method': 'artist', 'order': 'ascending'},
         },
         'artist': {
             'fetch_media_type': 'artist', 'id_key': 'artistid',
             'properties': ["art"],
             'title_key': 'artist', 'year_key': None,
-            'progress_title': "Scanning Artists",
+            'type_name': 133, 'scope_label': 'artists',
         },
         'album': {
             'fetch_media_type': 'album', 'id_key': 'albumid',
             'properties': ["title", "artist", "art", "year"],
             'title_key': 'label', 'year_key': 'year',
-            'progress_title': "Scanning Albums",
+            'type_name': 132, 'scope_label': 'albums',
+            'sort': {'method': 'artist', 'order': 'ascending'},
         },
     }
 
     def _scan_collection(self, media_type: str, art_types: List[str], session_id: int,
                          scope_label: str) -> bool:
+        """Fetch one media type's items and queue whatever art is missing."""
         cfg = self._SCAN_CONFIGS[media_type]
-        progress_title = cfg['progress_title']
+        type_name = xbmc.getLocalizedString(cfg['type_name'])
+        progress_title = ADDON.getLocalizedString(32704).format(type_name)
         try:
             kwargs = {
                 'media_types': [cfg['fetch_media_type']],
                 'properties': cfg['properties'],
                 'decode_urls': True,
             }
-            if cfg.get('include_nested_seasons'):
-                kwargs['include_nested_seasons'] = True
-                kwargs['season_properties'] = cfg['season_properties']
+            if cfg.get('sort'):
+                kwargs['sort'] = cfg['sort']
             items = get_library_items(
                 **kwargs,
                 progress_callback=lambda _, done, total: self._update_fetch_progress(
@@ -415,10 +376,6 @@ class ArtworkScanner:
             log("Artwork", f"Error fetching {scope_label}: {e}", xbmc.LOGWARNING)
             return True
 
-        post_filter = cfg.get('filter_after_fetch')
-        if post_filter:
-            items = [it for it in items if it.get('media_type') == post_filter]
-
         if not items:
             return True
 
@@ -431,26 +388,5 @@ class ArtworkScanner:
             art_types=art_types,
             session_id=session_id,
             scope_label=scope_label,
-            progress_title=cfg['progress_title'],
+            progress_title=progress_title,
         )
-
-    def _scan_movies(self, art_types: List[str], session_id: int,
-                     scope_label: str = 'movies') -> bool:
-        return self._scan_collection('movie', art_types, session_id, scope_label)
-
-    def _scan_tvshows(self, art_types: List[str], session_id: int,
-                      scope_label: str = 'tvshows') -> bool:
-        return self._scan_collection('tvshow', art_types, session_id, scope_label)
-
-    def _scan_seasons(self, art_types: List[str], session_id: int,
-                      scope_label: str = 'seasons') -> bool:
-        return self._scan_collection('season', art_types, session_id, scope_label)
-
-    def _scan_artists(self, art_types: List[str], session_id: int,
-                      scope_label: str = 'artists') -> bool:
-        return self._scan_collection('artist', art_types, session_id, scope_label)
-
-    def _scan_albums(self, art_types: List[str], session_id: int,
-                     scope_label: str = 'albums') -> bool:
-        return self._scan_collection('album', art_types, session_id, scope_label)
-

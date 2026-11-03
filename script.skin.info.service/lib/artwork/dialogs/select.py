@@ -1,10 +1,8 @@
-"""Visual artwork chooser for manual review.
-
-Skinner control IDs and window/ListItem properties: DOCS/tools/artwork-review.md
-"""
+"""Visual artwork chooser for manual review, one image per art type."""
 from __future__ import annotations
 
 import xbmc
+import xbmcgui
 from lib.infrastructure.dialogs import show_select
 from typing import Optional, List, Tuple
 from lib.artwork.dialogs.base import ArtworkDialogBase
@@ -28,7 +26,7 @@ ARTLAYOUT_MAP = {
 
 
 class ArtworkDialogSelect(ArtworkDialogBase):
-    """Dialog for selecting artwork from multiple options with thumbnail preview."""
+    """Chooser for one art type, sorted and filtered by language, source and resolution."""
 
     ARTWORK_LIST = 100
     BUTTON_SKIP = 201
@@ -46,6 +44,7 @@ class ArtworkDialogSelect(ArtworkDialogBase):
         self.media_type = kwargs.get('media_type', '')
         self.year = kwargs.get('year', '')
         self.current_url = kwargs.get('current_url', '')
+        self.inherited_url = kwargs.get('inherited_url', '')
         self.dbid = kwargs.get('dbid', 0)
         self.test_mode = kwargs.get('test_mode', False)
         self.review_mode = kwargs.get('review_mode', 'missing')
@@ -61,7 +60,7 @@ class ArtworkDialogSelect(ArtworkDialogBase):
         self.source_pref = 'all'
 
     def onInit(self):
-        """Called when dialog opens."""
+        """Set the skin properties and collect the languages present."""
         from lib.artwork.utilities import get_available_languages
 
         if not self.full_artwork_list:
@@ -104,7 +103,7 @@ class ArtworkDialogSelect(ArtworkDialogBase):
                 except Exception:
                     pass
         elif self.full_artwork_list:
-            # Filtered list empty but artwork exists; focus language change
+            # artwork exists but the filter hides all of it
             try:
                 self.setFocusId(self.BUTTON_CHANGE_LANGUAGE)
             except Exception:
@@ -119,28 +118,30 @@ class ArtworkDialogSelect(ArtworkDialogBase):
                 pass
 
     def _populate_artwork_list(self) -> None:
-        """Populate list with available artwork options using batch operation."""
+        """Fill the list with the displayed artwork, flagging the in-use and inherited ones."""
         try:
             control = self.getControl(self.ARTWORK_LIST)
         except Exception:
             return
 
         normalized_current = self._normalize_url(self.current_url) if self.current_url else None
+        normalized_inherited = self._normalize_url(self.inherited_url)
 
         items = []
         for idx, art_info in enumerate(self.available_art):
             item = self.create_artwork_listitem(art_info, idx)
-            if normalized_current:
-                art_url = art_info.get('url', '')
-                normalized_art = self._normalize_url(art_url) if art_url else ''
-                if normalized_current == normalized_art:
-                    item.setProperty('is_current', 'true')
+            art_url = art_info.get('url', '')
+            normalized_art = self._normalize_url(art_url) if art_url else ''
+            if normalized_current and normalized_current == normalized_art:
+                item.setProperty('is_current', 'true')
+            if normalized_inherited and normalized_inherited == normalized_art:
+                item.setProperty('is_inherited', 'true')
             items.append(item)
 
         self.populate_list_batch(control, items)
 
     def onClick(self, controlId):
-        """Handle button/list clicks."""
+        """Handle a click on the list or any of the dialog's buttons."""
         if controlId == self.ARTWORK_LIST:
             self._select_current()
 
@@ -165,13 +166,15 @@ class ArtworkDialogSelect(ArtworkDialogBase):
             self._toggle_source_pref()
 
     def onAction(self, action):
-        """Handle keyboard/remote actions."""
-        if action.getId() in (9, 10, 92, 216, 247, 257, 275, 61467, 61448):
+        """Cancel and close on Back or Menu; other actions go to the shared handling."""
+        if action.getId() in (xbmcgui.ACTION_NAV_BACK, xbmcgui.ACTION_PREVIOUS_MENU):
             self.result = None
             self.close()
+            return
+        super().onAction(action)
 
     def _select_current(self) -> None:
-        """Select currently focused artwork."""
+        """Select the focused artwork and close the dialog."""
         try:
             control = self.getControl(self.ARTWORK_LIST)
             item = control.getSelectedItem()  # type: ignore[attr-defined]
@@ -186,8 +189,7 @@ class ArtworkDialogSelect(ArtworkDialogBase):
             log("Artwork", f"Error selecting artwork: {str(e)}", xbmc.LOGERROR)
 
     def _launch_multiart(self) -> None:
-        """Launch the multi-art dialog; queues its result instead of closing, applied when the main
-        dialog closes."""
+        """Launch the multi-art dialog; its result is queued and applied when this one closes."""
         if self.art_type != 'fanart':
             return
 
@@ -208,16 +210,16 @@ class ArtworkDialogSelect(ArtworkDialogBase):
             self.setProperty('multiart_queued', 'true')
 
     def _show_language_picker(self) -> None:
-        """Show dialog to select language filter."""
+        """Ask which language to show, skipped when there is nothing to choose between."""
         from lib.artwork.utilities import get_language_display_name
         from lib.kodi.utilities import get_preferred_language_code, normalize_language_tag
 
         is_filtered = len(self.available_art) != len(self.full_artwork_list)
-        # Show picker only if multiple languages exist or a filter is active (needs an All option)
         if not self.available_languages or (len(self.available_languages) <= 1 and not is_filtered):
             return
 
         def count_language(lang: str) -> int:
+            """Count the artwork entries carrying this language tag."""
             return sum(1 for art in self.full_artwork_list
                        if normalize_language_tag(art.get('language')) == lang)
 
@@ -244,17 +246,17 @@ class ArtworkDialogSelect(ArtworkDialogBase):
 
         sorted_languages.extend([lang for lang, _ in other_languages])
 
-        # Show "All images" only if it would combine multiple languages
         if is_filtered and len(sorted_languages) > 1:
             sorted_languages.append('all')
 
         labels = []
         for lang in sorted_languages:
             if lang == 'all':
-                labels.append(f"All images ({len(self.full_artwork_list)})")
+                labels.append(f"{xbmc.getLocalizedString(593)} ({len(self.full_artwork_list)})")
             else:
                 count = count_language(lang)
-                display = "Text-free" if lang == '' else get_language_display_name(lang)
+                display = (ADDON.getLocalizedString(32122) if lang == ''
+                           else get_language_display_name(lang))
                 labels.append(f"{display} ({count})")
 
         selected = show_select(ADDON.getLocalizedString(32554), labels)
@@ -262,7 +264,7 @@ class ArtworkDialogSelect(ArtworkDialogBase):
             return
 
         new_language = sorted_languages[selected]
-        # Apply even if unchanged - switches from art-type filtering to simple filtering
+        # apply even if unchanged; switches art-type filtering to simple filtering
         if new_language == 'all':
             self.current_language = 'all'
         else:
@@ -270,20 +272,19 @@ class ArtworkDialogSelect(ArtworkDialogBase):
         self._resort_artwork()
 
     def _resort_artwork(self) -> None:
-        """Re-sort and filter artwork from full list, then refresh UI."""
+        """Filter the full list by the chosen language, sort it, and redraw."""
         from lib.artwork.utilities import sort_artwork_by_popularity
         from lib.kodi.utilities import normalize_language_tag
 
         if self.current_language == 'all':
             filtered = self.full_artwork_list
         elif self.current_language is not None:
-            # Explicit language choice: simple filter, skip art-type rules
+            # an explicit choice skips the art-type rules
             filtered = [
                 art for art in self.full_artwork_list
                 if normalize_language_tag(art.get('language')) == self.current_language
             ]
         else:
-            # Initial load: use art-type-aware filtering
             from lib.artwork.utilities import filter_artwork_by_language
             filtered = filter_artwork_by_language(
                 self.full_artwork_list,
@@ -300,7 +301,7 @@ class ArtworkDialogSelect(ArtworkDialogBase):
         self._refresh_ui()
 
     def _refresh_ui(self) -> None:
-        """Update UI properties and repopulate list without filtering."""
+        """Republish the dialog's properties and repopulate the list as already filtered."""
         from lib.artwork.utilities import get_language_display_name
         from lib.kodi.utilities import get_preferred_language_code
 
@@ -314,13 +315,13 @@ class ArtworkDialogSelect(ArtworkDialogBase):
         is_fanart_no_lang_filter = self.art_type == 'fanart' and not prefer_fanart_language
 
         if self.current_language == 'all':
-            language_display = 'All images'
+            language_display = xbmc.getLocalizedString(593)
             language_short = 'all'
         elif self.current_language is not None:
             language_display = get_language_display_name(self.current_language)
             language_short = self.current_language
         elif is_fanart_no_lang_filter:
-            language_display = 'Text-free'
+            language_display = ADDON.getLocalizedString(32122)
             language_short = ''
         else:
             preferred = get_preferred_language_code()
@@ -328,14 +329,10 @@ class ArtworkDialogSelect(ArtworkDialogBase):
             language_short = preferred
 
         if len(self.available_art) != len(self.full_artwork_list):
-            if is_fanart_no_lang_filter and self.current_language is None:
-                count_text = (f"{len(self.available_art)} of {len(self.full_artwork_list)} "
-                              "available (Text-free)")
-            else:
-                count_text = (f"{len(self.available_art)} of {len(self.full_artwork_list)} "
-                              f"available ({language_display})")
+            count_text = ADDON.getLocalizedString(32709).format(
+                len(self.available_art), len(self.full_artwork_list), language_display)
         else:
-            count_text = f"{len(self.full_artwork_list)} available"
+            count_text = ADDON.getLocalizedString(32710).format(len(self.full_artwork_list))
         self.setProperty('count', count_text)
         self.setProperty('language', language_display)
         self.setProperty('language_short', language_short)
@@ -346,6 +343,7 @@ class ArtworkDialogSelect(ArtworkDialogBase):
 
         self._populate_artwork_list()
 
+
 def show_artwork_selection_dialog(
     title: str,
     art_type: str,
@@ -354,13 +352,13 @@ def show_artwork_selection_dialog(
     media_type: str = '',
     year: str = '',
     current_url: str = '',
+    inherited_url: str = '',
     dbid: int = 0,
     test_mode: bool = False,
     review_mode: str = 'missing'
 ) -> Tuple[str, Optional[dict], Optional[dict]]:
-    """Show the artwork selection dialog; returns (action, artwork, queued_multiart) with action
-    'selected'/'skip'/'cancel'."""
-    # Skip only if no artwork exists at all, not just filtered down to empty
+    """Show the chooser; returns (action, artwork, queued_multiart), action selected/skip/cancel."""
+    # a list filtered down to empty still has artwork to offer
     if not available_art and not full_artwork_list:
         return ('skip', None, None)
 
@@ -378,6 +376,7 @@ def show_artwork_selection_dialog(
         media_type=media_type,
         year=year,
         current_url=current_url,
+        inherited_url=inherited_url,
         dbid=dbid,
         test_mode=test_mode,
         review_mode=review_mode
@@ -387,8 +386,7 @@ def show_artwork_selection_dialog(
     result = dialog.result
     selected_index = dialog.selected_index
     queued_multiart = dialog.queued_multiart
-    # selected_index is only valid against the dialog's copy; its language filter/sort reorders
-    # the list
+    # selected_index is valid only against the dialog's copy
     final_art_list = dialog.available_art
     del dialog
 

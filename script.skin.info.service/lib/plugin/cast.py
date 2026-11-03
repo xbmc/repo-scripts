@@ -1,8 +1,7 @@
 """Plugin handlers for cast lists (library and player)."""
 from __future__ import annotations
 
-import traceback
-from typing import Optional
+from typing import Optional, Final
 
 import xbmc
 import xbmcgui
@@ -12,7 +11,7 @@ from lib.kodi.client import log, extract_result
 from lib.data.api.utilities import tmdb_image_url
 
 
-_MAX_CAST_ITEMS = 2000
+_MAX_CAST_ITEMS: Final = 2000
 
 
 def _deduplicate_cast(items: list) -> list:
@@ -39,8 +38,42 @@ def _deduplicate_cast(items: list) -> list:
     return unique_cast
 
 
+_SEASONS_PER_CALL: Final = 20
+_UNBILLED: Final = 9999
+_MAX_SHOW_CAST: Final = 200
+
+
+def _season_regular_cast(api, tmdb_id: int, show_data: dict) -> list:
+    """Regulars across every season, deduped on the best billing each actor reached."""
+    numbers = [n for n in ((s.get('season_number') or 0) for s in show_data.get('seasons') or [])
+               if n > 0]
+    found: dict = {}
+    for start in range(0, len(numbers), _SEASONS_PER_CALL):
+        batch = numbers[start:start + _SEASONS_PER_CALL]
+        data = api.get_tv_season_credits(tmdb_id, batch)
+        if not data:
+            continue
+        for number in batch:
+            for member in (data.get(f"season/{number}/credits") or {}).get('cast', []):
+                name = member.get('name')
+                if not name:
+                    continue
+                billing = member.get('order')
+                billing = _UNBILLED if billing is None else billing
+                # billing is show-wide, not per season
+                if name not in found or billing < found[name][0]:
+                    found[name] = (billing, member)
+    ranked = sorted(found.values(), key=lambda entry: entry[0])
+    return [member for _, member in ranked[:_MAX_SHOW_CAST]]
+
+
+def _aggregate_cast(show_data: dict) -> list:
+    """Every credited actor, for a show credited per episode with no season regulars."""
+    return show_data.get('aggregate_credits', {}).get('cast', [])[:_MAX_SHOW_CAST]
+
+
 def _create_cast_listitems(handle: int, cast_list: list) -> int:
-    """Add ListItems to the plugin directory for each actor. Returns count added."""
+    """Create a ListItem per actor in the plugin directory; returns how many were added."""
     items_added = 0
     for actor in cast_list:
         name = actor.get('name', '')
@@ -85,12 +118,15 @@ def _handle_online_cast(handle: int, dbtype: str, dbid: int, tmdb_id: int = 0,
     """Fetch and add cast ListItems from TMDB; returns None if the TMDB ID can't be resolved."""
     from lib.kodi.client import get_item_details
     from lib.data.api.tmdb import ApiTmdb
-    from lib.data.api.person import resolve_tmdb_id
+    from lib.data.api.person import library_tmdb_id
 
     api = ApiTmdb()
 
-    if not tmdb_id and dbid:
-        tmdb_id = resolve_tmdb_id(dbtype, dbid) or 0
+    if dbid and dbtype in ('season', 'episode'):
+        # a skin can only reach the episode's own id here, and TMDB needs the show's
+        tmdb_id = library_tmdb_id(dbtype, dbid) or tmdb_id
+    elif not tmdb_id and dbid:
+        tmdb_id = library_tmdb_id(dbtype, dbid) or 0
     if not tmdb_id and imdb_id:
         find_type = 'movie' if dbtype == 'movie' else 'tvshow'
         tmdb_id = api.find_by_imdb(imdb_id, find_type) or 0
@@ -105,14 +141,16 @@ def _handle_online_cast(handle: int, dbtype: str, dbid: int, tmdb_id: int = 0,
     cast = []
 
     if dbtype == 'movie':
-        data = api.get_movie_details_extended(tmdb_id)
+        data = api.get_complete_data('movie', tmdb_id, is_library_item=bool(dbid))
         if data and 'credits' in data:
             cast = data['credits'].get('cast', [])
 
     elif dbtype == 'tvshow':
-        data = api.get_tv_details_extended(tmdb_id)
-        if data and 'credits' in data:
-            cast = data['credits'].get('cast', [])
+        data = api.get_complete_data('tvshow', tmdb_id, is_library_item=bool(dbid))
+        if data:
+            cast = (data.get('credits', {}).get('cast', [])
+                    or _season_regular_cast(api, tmdb_id, data)
+                    or _aggregate_cast(data))
 
     elif dbtype == 'season':
         if season is not None:
@@ -160,7 +198,7 @@ def _handle_online_cast(handle: int, dbtype: str, dbid: int, tmdb_id: int = 0,
             cast = episode_cast + episode_guests
 
     if not cast:
-        log("Plugin", f"Online Cast: No cast found for {dbtype} tmdb {tmdb_id}", xbmc.LOGINFO)
+        log("Plugin", f"Online Cast: No cast found for {dbtype} tmdb {tmdb_id}", xbmc.LOGDEBUG)
         return 0
 
     log("Plugin", f"Online Cast: Found {len(cast)} cast members for {dbtype} tmdb {tmdb_id}",
@@ -169,8 +207,7 @@ def _handle_online_cast(handle: int, dbtype: str, dbid: int, tmdb_id: int = 0,
 
 
 def handle_get_cast(handle: int, params: dict) -> None:
-    """Plugin entry for cast listings; `online=true` fetches from TMDB, default reads the Kodi
-    library."""
+    """Plugin entry for cast listings, from TMDB with `online=true`, else the Kodi library."""
     try:
         dbid = params.get('dbid', [''])[0]
         dbtype = params.get('dbtype', [''])[0]
@@ -223,7 +260,7 @@ def handle_get_cast(handle: int, params: dict) -> None:
             if items_added is None:
                 xbmcplugin.endOfDirectory(handle, succeeded=False)
                 return
-            log("Plugin", f"Online Cast: Created {items_added} ListItems", xbmc.LOGINFO)
+            log("Plugin", f"Online Cast: Created {items_added} ListItems", xbmc.LOGDEBUG)
             xbmcplugin.endOfDirectory(handle, succeeded=True)
             return
 
@@ -246,7 +283,7 @@ def handle_get_cast(handle: int, params: dict) -> None:
 
             cast = details.get('cast', [])
             if not cast:
-                log("Plugin", f"Library Cast: No cast found for {dbtype} {dbid}", xbmc.LOGINFO)
+                log("Plugin", f"Library Cast: No cast found for {dbtype} {dbid}", xbmc.LOGDEBUG)
                 xbmcplugin.endOfDirectory(handle, succeeded=True)
                 return
 
@@ -294,7 +331,7 @@ def handle_get_cast(handle: int, params: dict) -> None:
                 items = extract_result(result, 'episodes', [])
 
             if not items:
-                log("Plugin", f"Library Cast: No items found for {dbtype} {dbid}", xbmc.LOGINFO)
+                log("Plugin", f"Library Cast: No items found for {dbtype} {dbid}", xbmc.LOGDEBUG)
                 xbmcplugin.endOfDirectory(handle, succeeded=True)
                 return
 
@@ -309,18 +346,18 @@ def handle_get_cast(handle: int, params: dict) -> None:
 
             items_added = _create_cast_listitems(handle, unique_cast)
 
-        log("Plugin", f"Library Cast: Created {items_added} ListItems", xbmc.LOGINFO)
+        log("Plugin", f"Library Cast: Created {items_added} ListItems", xbmc.LOGDEBUG)
         xbmcplugin.endOfDirectory(handle, succeeded=True)
 
     except Exception as e:
+        import traceback
         log("Plugin", f"Library Cast: Error - {e}", xbmc.LOGERROR)
         log("Plugin", traceback.format_exc(), xbmc.LOGERROR)
         xbmcplugin.endOfDirectory(handle, succeeded=False)
 
 
 def handle_get_cast_player(handle: int, params: dict) -> None:
-    """Plugin entry for player cast. `aggregate=true` on episodes returns the show's combined
-    cast."""
+    """Plugin entry for the playing item's cast; `aggregate=true` on an episode lists the show's."""
     try:
         content = xbmc.getInfoLabel('VideoPlayer.Content()')
         dbid = xbmc.getInfoLabel('VideoPlayer.DBID')
@@ -333,7 +370,11 @@ def handle_get_cast_player(handle: int, params: dict) -> None:
 
         content_type = content.rstrip('s')
 
-        valid_types = ('movie', 'episode', 'musicvideo')
+        if content_type == 'musicvideo':
+            xbmcplugin.endOfDirectory(handle, succeeded=True)
+            return
+
+        valid_types = ('movie', 'episode')
         if content_type not in valid_types:
             log("Plugin",
                 f'Player Cast: Unsupported content type "{content_type}"',
@@ -373,7 +414,7 @@ def handle_get_cast_player(handle: int, params: dict) -> None:
             log("Plugin", f"Player Cast: Getting cast for {content_type} {dbid}", xbmc.LOGDEBUG)
 
         if not items:
-            log("Plugin", "Player Cast: No items found", xbmc.LOGINFO)
+            log("Plugin", "Player Cast: No items found", xbmc.LOGDEBUG)
             xbmcplugin.endOfDirectory(handle, succeeded=True)
             return
 
@@ -387,10 +428,11 @@ def handle_get_cast_player(handle: int, params: dict) -> None:
 
         items_added = _create_cast_listitems(handle, unique_cast)
 
-        log("Plugin", f"Player Cast: Created {items_added} ListItems", xbmc.LOGINFO)
+        log("Plugin", f"Player Cast: Created {items_added} ListItems", xbmc.LOGDEBUG)
         xbmcplugin.endOfDirectory(handle, succeeded=True)
 
     except Exception as e:
+        import traceback
         log("Plugin", f"Player Cast: Error - {e}", xbmc.LOGERROR)
         log("Plugin", traceback.format_exc(), xbmc.LOGERROR)
         xbmcplugin.endOfDirectory(handle, succeeded=False)

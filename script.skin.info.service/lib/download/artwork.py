@@ -1,4 +1,4 @@
-"""Single artwork file downloader with error tracking and retry logic."""
+"""Artwork file downloads, backing off a host or the disk after repeated failures."""
 from __future__ import annotations
 
 import os
@@ -7,18 +7,19 @@ import urllib.parse
 import requests
 import xbmc
 import xbmcvfs
-from typing import Optional, Tuple, Dict, Callable
+from typing import Optional, Tuple, Dict, Callable, Final
 
-from lib.kodi.client import log
+from lib.kodi.client import log, get_item_details, request, extract_result
+from lib.kodi.settings import KodiSettings
 from lib.data.api.client import ApiSession
 from lib.data.api.client import RetryableError
-from lib.infrastructure.paths import vfs_ensure_dir_slash, DirectoryListing
+from lib.infrastructure.paths import (
+    vfs_ensure_dir_slash, vfs_dirname, DirectoryListing, PathBuilder, use_basename_for)
 
 
-# Every chunk costs an abort check and a VFS write, both of which cross into Kodi.
-_CHUNK_SIZE = 256 * 1024
-# Generous enough for a large fanart on a slow link; only a stalled host should hit it.
-_STREAM_DEADLINE = 120.0
+# every chunk costs an abort check and a VFS write into Kodi
+_CHUNK_SIZE: Final = 256 * 1024
+_STREAM_DEADLINE: Final = 120.0
 
 
 class _StreamNetworkError(Exception):
@@ -102,13 +103,7 @@ class DownloadArtwork:
         abort_flag=None,
         progress_callback: Optional[Callable[[int], None]] = None
     ) -> Tuple[bool, Optional[str], int, Optional[str]]:
-        """Download one artwork file. `local_path` is extension-less; actual extension
-        comes from Content-Type.
-
-        `existing_file_mode` is `skip`/`overwrite`/`use_existing`. `progress_callback` is
-        invoked with each chunk's byte count during streaming so callers can detect live activity.
-        Returns `(success, error_or_None, bytes_written, error_category_or_None)`.
-        """
+        """Download one artwork file, taking its extension from the response Content-Type."""
         if not url:
             log("Download", "Empty URL provided", xbmc.LOGERROR)
             return False, "Empty URL", 0, self.ERROR_INPUT
@@ -209,21 +204,17 @@ class DownloadArtwork:
             return False, f"Unexpected error: {str(e)}", 0, self.ERROR_UNEXPECTED
 
     def _find_existing_with_extension(self, base_path: str) -> Optional[str]:
-        """Return the first existing file at `base_path.<ext>` for any known extension, or None."""
+        """Find an existing file at this base path with any known image extension, or None."""
         return self.listing.find_with_extension(base_path, self.CONTENT_TYPE_MAP.values())
 
     def _get_extension(self, response) -> Optional[str]:
-        """Extract file extension from the response's Content-Type, or None if unrecognised."""
+        """Get the file extension for the response's Content-Type, or None if unrecognized."""
         content_type = response.headers.get('Content-Type', '').split(';')[0].strip()
         return self.CONTENT_TYPE_MAP.get(content_type)
 
     def _write_file_stream(self, path: str, response, abort_flag=None,
                            progress_callback: Optional[Callable[[int], None]] = None) -> int:
-        """Stream `response` body to `path`.
-
-        Deletes partial file on error. Raises `_StreamNetworkError` if the body transfer drops
-        mid-stream, `_DownloadAborted` on abort, `IOError` on write failure.
-        """
+        """Write the response body to a file, deleting it on failure; returns the bytes written."""
         bytes_written = 0
         cap = getattr(abort_flag, 'max_request_seconds', None) if abort_flag else None
         deadline = time.monotonic() + (cap or _STREAM_DEADLINE)
@@ -239,7 +230,7 @@ class DownloadArtwork:
                     except StopIteration:
                         break
                     except requests.exceptions.RequestException as e:
-                        # The watcher closes the socket on cancel, surfacing here first.
+                        # on cancel the watcher closes the socket, which raises here first
                         if abort_flag and abort_flag.is_requested():
                             raise _DownloadAborted("Download aborted") from None
                         raise _StreamNetworkError(str(e)) from e
@@ -247,8 +238,7 @@ class DownloadArtwork:
                     if abort_flag and abort_flag.is_requested():
                         raise _DownloadAborted("Download aborted")
 
-                    # The read timeout is per chunk, so a drip-feeding host is otherwise
-                    # never cut off and its worker outlives the whole batch.
+                    # the read timeout resets on every chunk
                     if time.monotonic() > deadline:
                         raise _StreamNetworkError("stream exceeded time limit")
                     if chunk:
@@ -265,3 +255,98 @@ class DownloadArtwork:
         finally:
             response.close()
         return bytes_written
+
+
+def _item_location(media_type: str, dbid: int,
+                   title: str) -> Tuple[str, Optional[int], Optional[str]]:
+    """Locate the media file, season number and artist MBID an item's art path is built from."""
+    if media_type == 'set':
+        return title, None, None
+    if media_type == 'artist':
+        details = get_item_details('artist', dbid, ['musicbrainzartistid'])
+        mbid = details.get('musicbrainzartistid', '') if isinstance(details, dict) else ''
+        if isinstance(mbid, list):
+            mbid = mbid[0] if mbid else ''
+        return title, None, mbid or None
+    if media_type == 'album':
+        songs = extract_result(request('AudioLibrary.GetSongs', {
+            'filter': {'albumid': dbid},
+            'properties': ['file'],
+            'limits': {'start': 0, 'end': 1},
+        }), 'songs', [])
+        if songs and songs[0].get('file'):
+            return vfs_dirname(songs[0]['file']), None, None
+        return '', None, None
+
+    if media_type == 'season':
+        properties = ['season', 'tvshowid']
+    elif media_type == 'episode':
+        properties = ['file', 'season']
+    elif media_type in ('movie', 'tvshow', 'musicvideo'):
+        properties = ['file']
+    else:
+        return '', None, None
+
+    item = get_item_details(media_type, dbid, properties)
+    if not isinstance(item, dict):
+        return '', None, None
+    media_file = item.get('file', '')
+    if media_type == 'season' and item.get('tvshowid'):
+        show = get_item_details('tvshow', item['tvshowid'], ['file'])
+        if isinstance(show, dict):
+            media_file = show.get('file', '')
+    return media_file, item.get('season'), None
+
+
+def download_item_art(media_type: str, dbid: int, title: str, art: dict,
+                      existing_file_mode: str, downloader: Optional[DownloadArtwork] = None) -> int:
+    """Download an item's art beside its media file; returns how many files were written."""
+    urls = {art_type: url for art_type, url in art.items() if url and url.startswith('http')}
+    if not urls:
+        return 0
+
+    media_file, season, mbid = _item_location(media_type, dbid, title)
+    if not media_file:
+        log("Download", f"No file path for {media_type} '{title}', skipping download")
+        return 0
+
+    use_basename = use_basename_for(
+        media_type, KodiSettings.get_bool('download.savewith_basefilename'))
+    path_builder = PathBuilder()
+    own_downloader = downloader is None
+    active = downloader or DownloadArtwork()
+    written = 0
+
+    try:
+        for art_type, url in urls.items():
+            local_path = path_builder.build_path(
+                media_type, media_file, art_type, season, use_basename, mbid)
+            if not local_path:
+                log("Download",
+                    f"Could not build download path for {media_type} '{title}' {art_type}")
+                continue
+
+            alternate_path = None
+            if media_type in ('movie', 'musicvideo'):
+                alternate_path = path_builder.build_path(
+                    media_type, media_file, art_type, season, not use_basename, mbid)
+
+            success, error, bytes_downloaded, _ = active.download_artwork(
+                url=url,
+                local_path=local_path,
+                existing_file_mode=existing_file_mode,
+                alternate_path=alternate_path,
+            )
+            if success:
+                written += 1
+                log("Download",
+                    f"Downloaded {art_type} for '{title}': {local_path} ({bytes_downloaded} bytes)")
+            elif error:
+                log("Download", f"Failed to download {art_type} for '{title}': {error}")
+    except Exception as e:
+        log("Download", f"Error downloading art for '{title}': {e}", xbmc.LOGWARNING)
+    finally:
+        if own_downloader:
+            active.close()
+
+    return written

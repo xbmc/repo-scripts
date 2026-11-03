@@ -1,13 +1,15 @@
-"""Build Kodi-compliant artwork file paths following naming conventions."""
+"""VFS path helpers and artwork paths that follow Kodi's naming conventions."""
 from __future__ import annotations
 
 import threading
+import urllib.parse
 
+import xbmc
 import xbmcgui
 import xbmcvfs
 from typing import Any, Optional, Tuple, Dict, List, Set
 
-from lib.kodi.client import request, get_library_items
+from lib.kodi.client import ADDON, request, get_library_items
 
 
 def vfs_get_separator(path: str) -> str:
@@ -65,7 +67,7 @@ def vfs_splitext(path: str) -> Tuple[str, str]:
         return (path, '')
 
     dot_pos = filename.rfind('.')
-    if dot_pos <= 0:  # No dot, or dot at start (hidden file)
+    if dot_pos <= 0:
         return (path, '')
 
     ext = filename[dot_pos:]
@@ -92,17 +94,26 @@ def vfs_join(base: str, *parts: str) -> str:
     return result
 
 
+def get_disc_file(path: str) -> str:
+    """Get the index.bdmv or ISO a `bluray://` path plays from; any other path is returned as-is."""
+    if not path.startswith('bluray://'):
+        return path
+    host = urllib.parse.unquote(path[len('bluray://'):].split('/', 1)[0])
+    if host.startswith('udf://'):
+        return urllib.parse.unquote(host[len('udf://'):].split('/', 1)[0])
+    return vfs_join(host, 'BDMV', 'index.bdmv')
+
+
 def build_actors_folder_path(media_type: str, file_path: str,
                              show_path: Optional[str] = None) -> Optional[str]:
-    """Build `.actors` folder path matching Kodi's VideoInfoScanner/VideoDatabase conventions.
-
-    Movie: parent of movie file. TV/Episode: show root (shared).
-    `show_path` is required for episodes.
-    """
+    """Build the `.actors` folder path Kodi's scanner reads; an episode's sits at the show root."""
     if media_type == "movie":
         if not file_path:
             return None
-        parent = vfs_dirname(file_path)
+        parent = vfs_dirname(get_disc_file(file_path))
+        # Kodi reads a bluray:// item's actors beside BDMV, an index.bdmv item's inside it
+        if file_path.startswith('bluray://') and vfs_basename(parent) == 'BDMV':
+            parent = vfs_dirname(parent)
         return vfs_join(parent, ".actors")
     elif media_type in ("tvshow", "episode"):
         base_path = show_path if show_path else file_path
@@ -115,7 +126,7 @@ def build_actors_folder_path(media_type: str, file_path: str,
 
 
 def get_tvshow_paths() -> Dict[int, str]:
-    """Map tvshowid to the show's path, for season items queried without their parent show."""
+    """Get each show's path by tvshowid, for season items queried without their parent show."""
     paths: Dict[int, str] = {}
     for show in get_library_items(media_types=['tvshow'], properties=['file']):
         show_id = show.get('tvshowid') or show.get('dbid')
@@ -125,7 +136,7 @@ def get_tvshow_paths() -> Dict[int, str]:
 
 
 def get_album_folders(album_ids: List[int]) -> Dict[int, str]:
-    """Map each albumid to its folder, taken from the first song file seen per album."""
+    """Get each album's folder by albumid, from the first song file seen per album."""
     wanted = set(album_ids)
     folders: Dict[int, str] = {}
     if not wanted:
@@ -154,22 +165,14 @@ def get_album_folders(album_ids: List[int]) -> Dict[int, str]:
 
 
 class DirectoryListing:
-    """Per-directory filename cache, so existence checks cost one listing instead of a stat each.
-
-    Every stat is a network round trip serialised behind Kodi's global NFS/SMB lock.
-    """
+    """Per-directory filename cache, so existence checks cost one listing instead of a stat each."""
 
     def __init__(self, max_dirs: int = 4096):
         self._dirs: Dict[str, Set[str]] = {}
         self.max_dirs = max_dirs
 
     def files(self, directory: str) -> Optional[Set[str]]:
-        """Lowercased filenames in `directory`; None when it can't be listed or came back empty.
-
-        listdir reports an unreachable share and an empty folder identically, so an empty
-        result is never trusted or cached. Names are folded because xbmcvfs.exists is
-        case-insensitive on NTFS and SMB.
-        """
+        """Lowercased filenames in the folder; None when unlisted or empty, never cached."""
         cached = self._dirs.get(directory)
         if cached is not None:
             return cached
@@ -196,7 +199,7 @@ class DirectoryListing:
             listing.add(filename.lower())
 
     def find_with_extension(self, base_path: str, extensions) -> Optional[str]:
-        """First existing `base_path.<ext>`, falling back to per-file stat when unlisted."""
+        """Find the first existing `base_path.<ext>`, falling back to a stat each when unlisted."""
         directory, filename = vfs_split(base_path)
 
         listing = self.files(directory) if directory else None
@@ -214,10 +217,7 @@ class DirectoryListing:
 
 
 def use_basename_for(media_type: str, savewith_basefilename: bool) -> bool:
-    """True when art saves as `<mediafile>-<type>` rather than a bare `<type>` in the folder.
-
-    Callers read the setting once per run and pass it, since it can't change mid-operation.
-    """
+    """True when art saves as `<mediafile>-<type>` rather than a bare `<type>` in the folder."""
     return (media_type in ('episode', 'musicvideo')
             or (media_type == 'movie' and savewith_basefilename))
 
@@ -225,11 +225,7 @@ def use_basename_for(media_type: str, savewith_basefilename: bool) -> bool:
 def resolve_media_file(item: Dict[str, Any],
                        album_folders: Optional[Dict[int, str]] = None,
                        tvshow_paths: Optional[Dict[int, str]] = None) -> str:
-    """Resolve the `media_file` input `PathBuilder.build_path` needs; '' when the item has none.
-
-    Seasons fetched nested under their show already carry the show's `file`; standalone
-    season queries have no path, so `tvshow_paths` (from `get_tvshow_paths`) fills it in.
-    """
+    """Resolve the `media_file` input `PathBuilder.build_path` needs; '' when the item has none."""
     file_path = item.get('file', '')
     if file_path:
         return file_path
@@ -283,16 +279,13 @@ class PathBuilder:
         if response and response.get("result") is True:
             dialog.notification(
                 heading,
-                "Folder configured successfully",
+                ADDON.getLocalizedString(32738),
                 xbmcgui.NOTIFICATION_INFO,
                 3000
             )
             return folder
 
-        dialog.ok(
-            "Error",
-            "Failed to save setting.[CR][CR]Please configure manually in Kodi settings."
-        )
+        dialog.ok(xbmc.getLocalizedString(257), ADDON.getLocalizedString(32739))
         return None
 
     @staticmethod
@@ -300,11 +293,9 @@ class PathBuilder:
         """Configured movie sets folder, prompting once if unset."""
         return PathBuilder._resolve_named_item_folder(
             "videolibrary.moviesetsfolder",
-            "Movie Set Information Folder Not Configured",
-            "MSIF (Movie Set Information Folder) is not configured in Kodi settings.[CR][CR]"
-            "This folder stores artwork for movie sets (like 'The Matrix Collection').[CR][CR]"
-            "Would you like to select a folder now?",
-            "Select Movie Sets Folder"
+            xbmc.getLocalizedString(20226),
+            ADDON.getLocalizedString(32736),
+            xbmc.getLocalizedString(20226),
         )
 
     @staticmethod
@@ -312,11 +303,9 @@ class PathBuilder:
         """Configured artist information folder, prompting once if unset."""
         return PathBuilder._resolve_named_item_folder(
             "musiclibrary.artistsfolder",
-            "Artist Information Folder Not Configured",
-            "Artist Information Folder is not configured in Kodi settings.[CR][CR]"
-            "This folder stores artwork and metadata for music artists.[CR][CR]"
-            "Would you like to select a folder now?",
-            "Select Artist Information Folder"
+            xbmc.getLocalizedString(20223),
+            ADDON.getLocalizedString(32737),
+            xbmc.getLocalizedString(20223),
         )
 
     @staticmethod
@@ -330,10 +319,7 @@ class PathBuilder:
     @staticmethod
     def _resolve_named_item_folder(setting: str, heading: str, message: str,
                                    browse_heading: str) -> Optional[str]:
-        """Get a Kodi folder setting; prompt the user to configure one if missing.
-
-        Cached per setting: worker threads reach this per artwork, and the prompt is modal.
-        """
+        """Get a Kodi folder setting, prompting once to configure it; a declined prompt is kept."""
         with PathBuilder._folder_lock:
             if setting in PathBuilder._folder_cache:
                 return PathBuilder._folder_cache[setting]
@@ -352,8 +338,7 @@ class PathBuilder:
         """Return the extensionless filename Kodi expects for music thumbs (cached)."""
         if PathBuilder._music_thumb_filename is not None:
             return PathBuilder._music_thumb_filename
-        # Kodi discovers thumb art by matching filenames from this setting,
-        # so we must save using a name from the user's configured list.
+        # Kodi finds music thumbs only by the filenames listed in this setting
         value = PathBuilder._get_kodi_folder_setting("musiclibrary.musicthumbs")
         result = "folder"
         if value:
@@ -366,11 +351,10 @@ class PathBuilder:
 
     @staticmethod
     def _make_legal_filename(name: str, fallback: str = "Unknown", parent_dir: str = "") -> str:
-        """Sanitize `name` via `makeLegalFilename`; `parent_dir` triggers filesystem-aware mode."""
+        """Sanitize a name via `makeLegalFilename`, against the folder it will be written to."""
         if not name:
             return fallback
-        # makeLegalFilename wraps CUtil::MakeLegalPath which skips
-        # sanitization for bare names (no HD/SMB/NFS prefix detected).
+        # makeLegalFilename leaves a bare name unsanitized; it needs a path prefix
         full_path = vfs_join(parent_dir, name) if parent_dir else name
         sanitized = xbmcvfs.makeLegalFilename(full_path)
         sanitized = vfs_basename(sanitized)
@@ -385,10 +369,7 @@ class PathBuilder:
 
     @staticmethod
     def _count_library_artists(artist_name: str) -> int:
-        """Count how many library artists share `artist_name` (for MBID-based disambiguation).
-
-        Cached: worker threads reach this once per artist art item.
-        """
+        """Count library artists sharing a name, cached per run, to decide on an MBID suffix."""
         with PathBuilder._artist_count_lock:
             cached = PathBuilder._artist_counts.get(artist_name)
         if cached is not None:
@@ -407,42 +388,26 @@ class PathBuilder:
 
     @staticmethod
     def _find_movie_root(path: str) -> str:
-        """Walk up past BDMV/VIDEO_TS/STREAM/BACKUP directories to find the real movie root."""
+        """Find the folder holding a BDMV or VIDEO_TS structure, else the file's own folder."""
         dir_path = vfs_dirname(path)
+        parent_dir = vfs_dirname(dir_path)
 
-        check_path = dir_path
-        for _ in range(3):
-            dirname = vfs_basename(check_path)
-            if dirname in ('BDMV', 'VIDEO_TS', 'STREAM', 'BACKUP'):
-                check_path = vfs_dirname(check_path)
-            else:
-                break
-
-        parent_name = vfs_basename(vfs_dirname(path))
-        grandparent_name = vfs_basename(vfs_dirname(vfs_dirname(path)))
-
-        if parent_name in ('BDMV', 'VIDEO_TS'):
-            return vfs_dirname(vfs_dirname(path))
-        elif grandparent_name in ('BDMV', 'VIDEO_TS'):
-            return vfs_dirname(vfs_dirname(vfs_dirname(path)))
-        elif parent_name == 'STREAM' and grandparent_name == 'BDMV':
-            return vfs_dirname(vfs_dirname(vfs_dirname(path)))
-
+        if vfs_basename(dir_path) in ('BDMV', 'VIDEO_TS'):
+            return parent_dir
+        if vfs_basename(parent_dir) in ('BDMV', 'VIDEO_TS'):
+            return vfs_dirname(parent_dir)
         return dir_path
 
     @staticmethod
     def build_path(media_type: str, media_file: str, artwork_type: str,
                    season_number: Optional[int] = None,
                    use_basename: bool = True, mbid: Optional[str] = None) -> Optional[str]:
-        """Build an extensionless artwork path for `media_type`.
-
-        `media_file` is the media file path, or a title/name for `set`/`artist`.
-        `use_basename=True` gives `Movie-poster`; False gives `poster` in the folder.
-        `mbid` disambiguates duplicate artist names. Returns None if the path can't be built.
-        """
+        """Build an extensionless artwork path or None; a set or artist may prompt for a folder."""
         if not media_file:
             return None
 
+        if media_type == 'movie':
+            media_file = get_disc_file(media_file)
         base_path, ext = vfs_splitext(media_file)
         dir_path, filename = vfs_split(base_path)
 
@@ -451,7 +416,9 @@ class PathBuilder:
             filename = ''
 
         if media_type == 'movie':
-            if use_basename and filename:
+            # Kodi reads a disc's art from the disc root only
+            on_disc = vfs_basename(dir_path) in ('BDMV', 'VIDEO_TS')
+            if use_basename and filename and not on_disc:
                 return base_path + '-' + artwork_type
             else:
                 if ext:

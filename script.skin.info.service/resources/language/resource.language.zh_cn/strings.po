@@ -1,0 +1,2620 @@
+# Kodi strings for script.skin.info.service
+msgid ""
+msgstr ""
+"Project-Id-Version: script.skin.info.service\n"
+"POT-Creation-Date: 2024-10-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-21 10:17+0000\n"
+"Last-Translator: wabisabi926 <wabisabi926@foxmail.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skin-info-service/zh_Hans/>\n"
+"Language: zh_cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2026.8.1\n"
+
+msgctxt "Addon Summary"
+msgid "Provides rich media info and artwork to skins."
+msgstr "为皮肤提供丰富的媒体信息和艺术图。"
+
+msgctxt "Addon Description"
+msgid "Skin Info Service provides skins with rich metadata and artwork beyond what Kodi exposes by default. It adds extra properties such as ratings from multiple sources, artwork, stream details, and cast and plot information for movies, TV shows, episodes, sets, music videos, artists, and albums, drawing on both your library and online data. It also includes a tool to find and add animated GIF posters to your library."
+msgstr "皮肤信息服务为皮肤提供超出 Kodi 默认范围的丰富元数据和艺术图。它添加了多种额外属性,例如来自多个来源的评分、艺术图、流媒体详情,以及电影、电视剧、剧集、合集、音乐视频、艺术家和专辑的演员阵容和剧情信息,数据来源包括您的媒体库和在线数据。它还包含一个工具,用于查找并向您的媒体库添加动画 GIF 海报。"
+
+msgctxt "Addon Disclaimer"
+msgid "This add-on uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB."
+msgstr ""
+
+msgctxt "#32000"
+msgid "Animated Art"
+msgstr "动画艺术图"
+
+msgctxt "#32001"
+msgid "Key was not saved, please try again"
+msgstr "密钥未保存,请重试"
+
+msgctxt "#32002"
+msgid "Gif filename patterns (exact/suffix)"
+msgstr "Gif 文件名模式（精确/后缀）"
+
+msgctxt "#32003"
+msgid "Comma-separated list of gif filename patterns. Matches exact filenames (e.g., 'poster.gif') or files ending with the pattern (e.g., 'movie.poster.gif')"
+msgstr "以逗号分隔的 Gif 文件名模式列表。匹配精确文件名（例如 'poster.gif'）或以该模式结尾的文件（例如 'movie.poster.gif'）"
+
+msgctxt "#32004"
+msgid "Artwork"
+msgstr "艺术图"
+
+#. Error shown when an edited rating is not a number in range; 7.3 is an example value
+msgctxt "#32005"
+msgid "Rating must be a number from 0 to 10, such as 7.3"
+msgstr ""
+
+#. Label for language dropdown in settings (used for both metadata and artwork language selection)
+msgctxt "#32006"
+msgid "Preferred language"
+msgstr "首选语言"
+
+msgctxt "#32007"
+msgid "Artwork in this language is prioritized for posters, logos, and other language-sensitive art."
+msgstr "对于海报、标志和其他对语言敏感的艺术图,将优先使用此语言的艺术图。"
+
+msgctxt "#32008"
+msgid "Prefer fanart in selected language"
+msgstr "优先选择所选语言的背景图"
+
+msgctxt "#32009"
+msgid "No artwork available from scrapers"
+msgstr "抓取器没有可用的艺术图"
+
+msgctxt "#32010"
+msgid "No artwork matched language preferences"
+msgstr "没有艺术图符合语言偏好"
+
+msgctxt "#32011"
+msgid "Needs manual review"
+msgstr "需要手动审查"
+
+msgctxt "#32012"
+msgid "No images selected"
+msgstr "未选择图片"
+
+msgctxt "#32013"
+msgid "Downloaded {0} files"
+msgstr "已下载 {0} 个文件"
+
+msgctxt "#32014"
+msgid "{0} files"
+msgstr "{0} 个文件"
+
+msgctxt "#32015"
+msgid "{0} image(s) selected"
+msgstr "已选择 {0} 张图片"
+
+msgctxt "#32016"
+msgid "{0} seasons"
+msgstr "{0} 季"
+
+msgctxt "#32017"
+msgid "{0} episodes"
+msgstr "{0} 集"
+
+#. Error shown when an edited year falls outside the accepted range
+msgctxt "#32018"
+msgid "Year must be between 1800 and 2100"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Add 'Download' option to missing artwork and pre-cache"
+msgstr "为缺失的艺术图添加“下载”选项并预缓存"
+
+msgctxt "#32020"
+msgid "Show additional menu options to download artwork to filesystem during review and pre-cache operations"
+msgstr "在审查和预缓存操作期间,显示附加菜单选项以将艺术图下载到文件系统"
+
+#. Error shown when an edited runtime is not a whole number of minutes in range
+msgctxt "#32021"
+msgid "Runtime must be 0 to 10080 minutes"
+msgstr ""
+
+msgctxt "#32022"
+msgid "When File Already Exists"
+msgstr "当文件已存在时"
+
+msgctxt "#32023"
+msgid "What to do when artwork file already exists on filesystem"
+msgstr "当艺术图文件在文件系统中已存在时的处理方式"
+
+msgctxt "#32024"
+msgid "Skip (don't download)"
+msgstr "跳过(不下载)"
+
+msgctxt "#32025"
+msgid "Overwrite existing file"
+msgstr "覆盖现有文件"
+
+#. Error shown when an edited Top 250 position falls outside the accepted range
+msgctxt "#32026"
+msgid "Top 250 must be 0-250"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Use Movie Filename Prefix"
+msgstr "使用电影文件名前缀"
+
+msgctxt "#32028"
+msgid "Save as 'Avatar-poster.jpg' instead of 'poster.jpg' in movie folder"
+msgstr "在电影文件夹中保存为 'Avatar-poster.jpg' 而不是 'poster.jpg'"
+
+msgctxt "#32029"
+msgid "Export to NFO"
+msgstr "导出到 NFO"
+
+msgctxt "#32030"
+msgid "NFO file written"
+msgstr "NFO 文件已写入"
+
+msgctxt "#32031"
+msgid "Could not write NFO file"
+msgstr "无法写入 NFO 文件"
+
+msgctxt "#32032"
+msgid "Processing cancelled"
+msgstr "处理已取消"
+
+msgctxt "#32033"
+msgid "Art Fetcher - Cancelled"
+msgstr "艺术图获取器 - 已取消"
+
+#. Error shown when an edited duration is not a MM:SS time
+msgctxt "#32034"
+msgid "Duration must be in MM:SS format"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Always Ask"
+msgstr "总是询问"
+
+msgctxt "#32036"
+msgid "GIF Scanner Mode"
+msgstr "GIF 扫描模式"
+
+msgctxt "#32037"
+msgid "Scan mode for animated art scanner"
+msgstr "动画艺术图扫描器的扫描模式"
+
+msgctxt "#32038"
+msgid "Incremental"
+msgstr "增量扫描"
+
+msgctxt "#32039"
+msgid "Full Scan"
+msgstr "完全扫描"
+
+msgctxt "#32040"
+msgid "Download Report"
+msgstr "下载报告"
+
+msgctxt "#32041"
+msgid "No download history found."
+msgstr "未找到下载历史。"
+
+msgctxt "#32042"
+msgid "Cancelled"
+msgstr "已取消"
+
+msgctxt "#32043"
+msgid "No valid media types to download."
+msgstr "没有可下载的有效媒体类型。"
+
+msgctxt "#32044"
+msgid "API Keys"
+msgstr "API 密钥"
+
+msgctxt "#32045"
+msgid "Downloaded:"
+msgstr "已下载:"
+
+msgctxt "#32046"
+msgid "Configure TMDB API Key"
+msgstr "配置 TMDB API 密钥"
+
+msgctxt "#32047"
+msgid "Get your API key from https://www.themoviedb.org/settings/api"
+msgstr "从 https://www.themoviedb.org/settings/api 获取您的 API 密钥"
+
+msgctxt "#32048"
+msgid "Test Connection"
+msgstr "测试连接"
+
+msgctxt "#32049"
+msgid "Clear API Key"
+msgstr "清除 API 密钥"
+
+msgctxt "#32050"
+msgid "MDBList"
+msgstr "MDBList"
+
+msgctxt "#32051"
+msgid "Configure MDBList API Key"
+msgstr "配置 MDBList API 密钥"
+
+msgctxt "#32052"
+msgid "Get your API key from https://mdblist.com/preferences/"
+msgstr "从 https://mdblist.com/preferences/ 获取您的 API 密钥"
+
+msgctxt "#32053"
+msgid "OMDb"
+msgstr "OMDb"
+
+msgctxt "#32054"
+msgid "Configure OMDb API Key"
+msgstr "配置 OMDb API 密钥"
+
+msgctxt "#32055"
+msgid "Get your API key from http://www.omdbapi.com/apikey.aspx"
+msgstr "从 http://www.omdbapi.com/apikey.aspx 获取您的 API 密钥"
+
+msgctxt "#32056"
+msgid "Fanart.tv · fanart.tv/get-an-api-key[CR]No key: 7 days · Personal: 2 days · VIP: immediate"
+msgstr "Fanart.tv · fanart.tv/get-an-api-key[CR]无密钥:7 天 · 个人:2 天 · VIP:即时"
+
+msgctxt "#32057"
+msgid "Configure Fanart.tv API Key"
+msgstr "配置 Fanart.tv API 密钥"
+
+msgctxt "#32058"
+msgid "Filmography"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Trakt"
+msgstr "Trakt"
+
+msgctxt "#32060"
+msgid "Authorize Trakt"
+msgstr "授权 Trakt"
+
+msgctxt "#32061"
+msgid "Authorize this addon to access your Trakt account"
+msgstr "授权此插件访问您的 Trakt 账户"
+
+msgctxt "#32062"
+msgid "Test Trakt Connection"
+msgstr "测试 Trakt 连接"
+
+msgctxt "#32063"
+msgid "Revoke Authorization"
+msgstr "撤销授权"
+
+msgctxt "#32064"
+msgid "Ratings"
+msgstr "评分"
+
+msgctxt "#32065"
+msgid "Not configured"
+msgstr "未配置"
+
+msgctxt "#32066"
+msgid "Stopped early: downloads stalled"
+msgstr "提前停止:下载停滞"
+
+msgctxt "#32067"
+msgid "No progress for over {0} seconds. Run it again to finish the rest."
+msgstr "超过 {0} 秒无进度。请再次运行以完成剩余部分。"
+
+msgctxt "#32068"
+msgid "Press OK to read biography"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Birthplace"
+msgstr ""
+
+#. Follows a person's age, as in "53 years old"
+msgctxt "#32070"
+msgid "years old"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Upcoming Episodes"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Processing Artwork Queue"
+msgstr "正在处理艺术图队列"
+
+msgctxt "#32073"
+msgid "Cache is empty"
+msgstr "缓存为空"
+
+msgctxt "#32074"
+msgid "Default ratings source"
+msgstr "默认评分来源"
+
+msgctxt "#32075"
+msgid "Primary source to display when multiple ratings are available"
+msgstr "当有多个评分可用时显示的主要来源"
+
+msgctxt "#32076"
+msgid "IMDb"
+msgstr "IMDb"
+
+msgctxt "#32077"
+msgid "TMDB"
+msgstr "TMDB"
+
+#. "Info" is the remote and keyboard button
+msgctxt "#32078"
+msgid "Info: view full size"
+msgstr ""
+
+#. "match" is the movie or TV show found for a programme, not a sports match
+msgctxt "#32079"
+msgid "Fix match"
+msgstr ""
+
+msgctxt "#32080"
+msgid "API Key"
+msgstr "API 密钥"
+
+msgctxt "#32081"
+msgid "Status: Authorized"
+msgstr "状态:已授权"
+
+msgctxt "#32082"
+msgid "Texture Cache Manager"
+msgstr "纹理缓存管理器"
+
+msgctxt "#32083"
+msgid "Pre-Cache Library Artwork"
+msgstr "预缓存媒体库艺术图"
+
+msgctxt "#32084"
+msgid "Trakt Watchlist"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Statistics & Info"
+msgstr "统计与信息"
+
+msgctxt "#32086"
+msgid "View Last Report"
+msgstr "查看上次报告"
+
+msgctxt "#32087"
+msgid "Cleanup Textures"
+msgstr "清理纹理"
+
+msgctxt "#32088"
+msgid "Library Artwork Orphans"
+msgstr "媒体库艺术图孤立项"
+
+msgctxt "#32089"
+msgid "By Age (Older Than...)"
+msgstr "按时间(早于...)"
+
+msgctxt "#32090"
+msgid "Identifying uncached artwork..."
+msgstr ""
+
+msgctxt "#32091"
+msgid "Finding orphaned textures..."
+msgstr ""
+
+msgctxt "#32092"
+msgid "Removing {0} orphaned textures..."
+msgstr ""
+
+msgctxt "#32093"
+msgid "Enter {0} API Key"
+msgstr "输入 {0} API 密钥"
+
+msgctxt "#32094"
+msgid "Are you sure you want to clear the {0} API key?"
+msgstr "确定要清除 {0} API 密钥吗?"
+
+msgctxt "#32095"
+msgid ""
+"Error testing connection:\n"
+"\n"
+"{0}"
+msgstr ""
+"测试连接出错:\n"
+"\n"
+"{0}"
+
+msgctxt "#32096"
+msgid "Failed to get device code from Trakt."
+msgstr "从 Trakt 获取设备代码失败。"
+
+msgctxt "#32097"
+msgid ""
+"Error:\n"
+"\n"
+"{0}"
+msgstr ""
+"错误:\n"
+"\n"
+"{0}"
+
+msgctxt "#32098"
+msgid ""
+"Are you sure you want to revoke Trakt authorization?\n"
+"\n"
+"You will need to re-authorize to use Trakt ratings."
+msgstr ""
+"确定要撤销 Trakt 授权吗?\n"
+"\n"
+"您需要重新授权才能使用 Trakt 评分。"
+
+msgctxt "#32099"
+msgid "Downloaded {0} files ({1} MB)"
+msgstr "已下载 {0} 个文件({1} MB)"
+
+#. Context menu item and settings group - opens artwork browser for selected item
+msgctxt "#32100"
+msgid "Manage Artwork"
+msgstr "管理艺术图"
+
+msgctxt "#32101"
+msgid "Update Ratings"
+msgstr "更新评分"
+
+msgctxt "#32102"
+msgid "Skin Info Tools"
+msgstr "皮肤信息工具"
+
+msgctxt "#32103"
+msgid "Edit Metadata"
+msgstr "编辑元数据"
+
+msgctxt "#32104"
+msgid "{0} - Connection Test"
+msgstr "{0} - 连接测试"
+
+msgctxt "#32105"
+msgid ""
+"Connection successful!\n"
+"\n"
+"API key is valid and working."
+msgstr ""
+"连接成功!\n"
+"\n"
+"API 密钥有效且工作正常。"
+
+msgctxt "#32106"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please check your API key."
+msgstr ""
+"连接失败。\n"
+"\n"
+"请检查您的 API 密钥。"
+
+msgctxt "#32107"
+msgid "Trakt Authorization Failed"
+msgstr "Trakt 授权失败"
+
+msgctxt "#32108"
+msgid "Trakt - Connection Test"
+msgstr "Trakt - 连接测试"
+
+msgctxt "#32109"
+msgid ""
+"Authorization successful!\n"
+"\n"
+"Trakt is now connected."
+msgstr ""
+"授权成功!\n"
+"\n"
+"Trakt 现已连接。"
+
+msgctxt "#32110"
+msgid ""
+"Authorization timed out.\n"
+"\n"
+"Please try again."
+msgstr ""
+"授权超时。\n"
+"\n"
+"请重试。"
+
+msgctxt "#32111"
+msgid "Context Menu Items"
+msgstr "上下文菜单项"
+
+msgctxt "#32112"
+msgid "Show Manage Artwork"
+msgstr "显示“管理艺术图”"
+
+msgctxt "#32113"
+msgid "Show Update Ratings"
+msgstr "显示“更新评分”"
+
+msgctxt "#32114"
+msgid "Show Edit Metadata"
+msgstr "显示“编辑元数据”"
+
+msgctxt "#32115"
+msgid ""
+"Connection successful!\n"
+"\n"
+"Trakt is authorized and working."
+msgstr ""
+"连接成功!\n"
+"\n"
+"Trakt 已授权且工作正常。"
+
+msgctxt "#32116"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please authorize Trakt first."
+msgstr ""
+"连接失败。\n"
+"\n"
+"请先授权 Trakt。"
+
+msgctxt "#32117"
+msgid "Show Download Artwork"
+msgstr "显示“下载艺术图”"
+
+msgctxt "#32118"
+msgid "No HTTP artwork URLs found in {0} library items."
+msgstr "在 {0} 个媒体库项目中未找到 HTTP 艺术图 URL。"
+
+msgctxt "#32119"
+msgid "Overwrite Mode Warning"
+msgstr "覆盖模式警告"
+
+msgctxt "#32120"
+msgid "Change Language"
+msgstr "更改语言"
+
+msgctxt "#32121"
+msgid "Download Complete"
+msgstr "下载完成"
+
+msgctxt "#32122"
+msgid "Text-free / Untagged"
+msgstr "无文字/未标记"
+
+msgctxt "#32123"
+msgid "Trakt History"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Trakt In Progress"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Trakt Most Played"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Skip"
+msgstr "跳过"
+
+msgctxt "#32130"
+msgid "Multi-Art..."
+msgstr "多艺术图..."
+
+msgctxt "#32131"
+msgid "Found {0} orphaned textures to remove.[CR][CR]Continue with removal?"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Source: All"
+msgstr "来源:全部"
+
+msgctxt "#32133"
+msgid "Source: TMDB"
+msgstr "来源:TMDB"
+
+msgctxt "#32134"
+msgid "Source: Fanart.tv"
+msgstr "来源:Fanart.tv"
+
+msgctxt "#32135"
+msgid "IMDb Ratings"
+msgstr "IMDb 评分"
+
+msgctxt "#32136"
+msgid "Auto-update"
+msgstr "自动更新"
+
+msgctxt "#32137"
+msgid "Automatically update IMDb ratings in your library"
+msgstr "自动更新媒体库中的 IMDb 评分"
+
+msgctxt "#32139"
+msgid "After library scan"
+msgstr "媒体库扫描后"
+
+msgctxt "#32140"
+msgid "When new ratings available"
+msgstr "有新评分可用时"
+
+msgctxt "#32141"
+msgid "Both"
+msgstr "两者都"
+
+msgctxt "#32142"
+msgid "Scope"
+msgstr "范围"
+
+msgctxt "#32143"
+msgid "Which media types to include in auto-updates"
+msgstr "自动更新中包含哪些媒体类型"
+
+msgctxt "#32144"
+msgid "All (Movies, TV Shows, Episodes)"
+msgstr "全部(电影、电视剧、剧集)"
+
+msgctxt "#32145"
+msgid "Movies and TV Shows only"
+msgstr "仅电影和电视剧"
+
+msgctxt "#32146"
+msgid "Movies only"
+msgstr "仅电影"
+
+msgctxt "#32150"
+msgid "Stinger Detection"
+msgstr "彩蛋检测"
+
+msgctxt "#32151"
+msgid "Enable stinger detection"
+msgstr "启用彩蛋检测"
+
+msgctxt "#32152"
+msgid "Notify about post-credits scenes during movie playback"
+msgstr "在电影播放时通知片尾彩蛋"
+
+msgctxt "#32156"
+msgid "Minutes before end"
+msgstr "结束前分钟数"
+
+msgctxt "#32157"
+msgid "For movies without chapters, notify this many minutes before the end"
+msgstr "对于没有章节的电影,在结束前这么多的分钟时通知"
+
+msgctxt "#32158"
+msgid "Notification duration (seconds)"
+msgstr "通知持续时间(秒)"
+
+msgctxt "#32159"
+msgid "How long to display the notification"
+msgstr "通知显示时长"
+
+msgctxt "#32162"
+msgid "Wait For It..."
+msgstr "请稍候..."
+
+msgctxt "#32163"
+msgid "Stay for scene during credits"
+msgstr "在字幕期间留下观看场景"
+
+msgctxt "#32164"
+msgid "Stay for scene after credits"
+msgstr "在字幕后留下观看场景"
+
+msgctxt "#32165"
+msgid "Stay for scenes during and after credits"
+msgstr "在字幕期间和字幕后都留下观看场景"
+
+msgctxt "#32170"
+msgid "Operation failed"
+msgstr "操作失败"
+
+msgctxt "#32171"
+msgid "No items to display"
+msgstr "无可显示项目"
+
+msgctxt "#32172"
+msgid "Task Already Running"
+msgstr "任务已在运行"
+
+msgctxt "#32173"
+msgid "Found {0} library artwork URLs"
+msgstr ""
+
+msgctxt "#32180"
+msgid "Texture Cache Statistics"
+msgstr "纹理缓存统计"
+
+msgctxt "#32181"
+msgid "Failed to gather statistics"
+msgstr "收集统计信息失败"
+
+msgctxt "#32182"
+msgid "No textures found in cache"
+msgstr "缓存中未找到纹理"
+
+msgctxt "#32183"
+msgid "Orphaned Textures Report"
+msgstr "孤立纹理报告"
+
+msgctxt "#32184"
+msgid "Analysis Failed"
+msgstr "分析失败"
+
+msgctxt "#32190"
+msgid "Art Fetcher Report"
+msgstr "艺术图获取器报告"
+
+msgctxt "#32191"
+msgid "Art Fetcher - Detailed Report"
+msgstr "艺术图获取器 - 详细报告"
+
+msgctxt "#32192"
+msgid "Animated Art Scanner"
+msgstr "动画艺术图扫描器"
+
+msgctxt "#32200"
+msgid "graphic"
+msgstr "露骨的"
+
+msgctxt "#32201"
+msgid "a lot of"
+msgstr "大量"
+
+msgctxt "#32202"
+msgid "some"
+msgstr "一些"
+
+msgctxt "#32203"
+msgid "a little"
+msgstr "少量"
+
+msgctxt "#32204"
+msgid "very little"
+msgstr "极少"
+
+msgctxt "#32210"
+msgid "violence or scares"
+msgstr "暴力或恐怖"
+
+msgctxt "#32211"
+msgid "sexual content"
+msgstr "性内容"
+
+#. Content advisory category - profanity/swearing (e.g., "Rated R for graphic language")
+msgctxt "#32212"
+msgid "language"
+msgstr "语言"
+
+msgctxt "#32213"
+msgid "substance use or smoking"
+msgstr "药物使用或吸烟"
+
+msgctxt "#32220"
+msgid "Rated {0}+ for {1}"
+msgstr "因{1}被评为 {0}+"
+
+#. Conjunction between content advisory items - spaces are intentional (e.g., "violence and language")
+msgctxt "#32221"
+msgid " and "
+msgstr " 和 "
+
+msgctxt "#32250"
+msgid "Unsupported field type"
+msgstr "不支持的字段类型"
+
+msgctxt "#32251"
+msgid "Failed to save"
+msgstr "保存失败"
+
+msgctxt "#32252"
+msgid "Rating Source (e.g., imdb, tmdb)"
+msgstr "评分来源(例如:imdb、tmdb)"
+
+msgctxt "#32253"
+msgid "Vote Count"
+msgstr "投票数"
+
+msgctxt "#32254"
+msgid "Invalid Value"
+msgstr "无效值"
+
+msgctxt "#32255"
+msgid "Invalid Date"
+msgstr "无效日期"
+
+msgctxt "#32256"
+msgid "Invalid Rating"
+msgstr "无效评分"
+
+msgctxt "#32257"
+msgid "Already Exists"
+msgstr "已存在"
+
+#. Notification title for metadata editor operations
+msgctxt "#32258"
+msgid "Editor"
+msgstr "编辑器"
+
+msgctxt "#32259"
+msgid "No valid item selected"
+msgstr "未选择有效项目"
+
+msgctxt "#32260"
+msgid "Fix Library IDs"
+msgstr "修复媒体库 ID"
+
+msgctxt "#32261"
+msgid "All IDs are valid"
+msgstr "所有 ID 均有效"
+
+msgctxt "#32262"
+msgid "Failed to load item"
+msgstr "加载项目失败"
+
+msgctxt "#32263"
+msgid "Unsupported type: {0}"
+msgstr "不支持的类型:{0}"
+
+msgctxt "#32270"
+msgid "No path provided"
+msgstr "未提供路径"
+
+msgctxt "#32271"
+msgid "No items found in directory"
+msgstr "目录中未找到项目"
+
+msgctxt "#32272"
+msgid "Select Actor"
+msgstr "选择演员"
+
+#. Menu title and feature name - scans library for items without artwork
+msgctxt "#32273"
+msgid "Missing Artwork"
+msgstr "缺失的艺术图"
+
+msgctxt "#32274"
+msgid "Scan failed"
+msgstr "扫描失败"
+
+msgctxt "#32275"
+msgid "Select Artwork"
+msgstr "选择艺术图"
+
+msgctxt "#32276"
+msgid "Loading artwork for {0}..."
+msgstr "正在加载 {0} 的艺术图..."
+
+msgctxt "#32277"
+msgid "Preparing library scan..."
+msgstr "正在准备媒体库扫描..."
+
+msgctxt "#32278"
+msgid "Initializing..."
+msgstr "正在初始化..."
+
+msgctxt "#32279"
+msgid "Processing complete!"
+msgstr "处理完成!"
+
+msgctxt "#32280"
+msgid "Art Fetcher"
+msgstr "艺术图获取器"
+
+msgctxt "#32281"
+msgid "Art Fetcher - Complete"
+msgstr "艺术图获取器 - 完成"
+
+msgctxt "#32282"
+msgid "View Report"
+msgstr "查看报告"
+
+msgctxt "#32284"
+msgid "Processed: {0} items"
+msgstr "已处理:{0} 项"
+
+msgctxt "#32285"
+msgid "Auto-applied: {0}"
+msgstr "自动应用:{0}"
+
+msgctxt "#32286"
+msgid "Skipped: {0}"
+msgstr "已跳过:{0}"
+
+msgctxt "#32287"
+msgid "Errors: {0}"
+msgstr "错误:{0}"
+
+msgctxt "#32288"
+msgid "Found {0} TV shows. Checking which are not cached..."
+msgstr ""
+
+msgctxt "#32289"
+msgid "All TV shows are already cached."
+msgstr ""
+
+msgctxt "#32290"
+msgid "Download Artwork"
+msgstr "下载艺术图"
+
+msgctxt "#32291"
+msgid "Preparing..."
+msgstr "正在准备..."
+
+msgctxt "#32292"
+msgid "Scanning library..."
+msgstr "正在扫描媒体库..."
+
+msgctxt "#32293"
+msgid "Building download list from {0} items..."
+msgstr "正在从 {0} 项构建下载列表..."
+
+msgctxt "#32294"
+msgid "Starting download of {0} artwork files..."
+msgstr "开始下载 {0} 个艺术图文件..."
+
+msgctxt "#32295"
+msgid "Scan complete. No missing artwork found."
+msgstr "扫描完成。未发现缺失的艺术图。"
+
+msgctxt "#32296"
+msgid "No remote artwork to download"
+msgstr "没有可下载的远程艺术图"
+
+msgctxt "#32297"
+msgid "Preparing download..."
+msgstr "正在准备下载..."
+
+msgctxt "#32298"
+msgid "Downloading artwork..."
+msgstr "正在下载艺术图..."
+
+msgctxt "#32299"
+msgid "Loading seasons and episodes..."
+msgstr "正在加载季和集..."
+
+msgctxt "#32300"
+msgid "Ratings Updater"
+msgstr "评分更新器"
+
+msgctxt "#32301"
+msgid "Remove Rating?"
+msgstr "移除评分?"
+
+msgctxt "#32302"
+msgid "Remove {0} rating?"
+msgstr "移除 {0} 评分?"
+
+msgctxt "#32304"
+msgid "Updating {0} {1}s..."
+msgstr "正在更新 {0} 个 {1}..."
+
+msgctxt "#32305"
+msgid "Downloading IMDb dataset..."
+msgstr "正在下载 IMDb 数据集..."
+
+msgctxt "#32306"
+msgid "Updating: {0}/{1} - {2}"
+msgstr "正在更新:{0}/{1} - {2}"
+
+msgctxt "#32307"
+msgid "Updating: {0}/{1} items"
+msgstr "正在更新:{0}/{1} 项"
+
+msgctxt "#32308"
+msgid "Finalizing: {0}/{1}"
+msgstr "正在完成:{0}/{1}"
+
+msgctxt "#32309"
+msgid "Finalizing: {0}/{1} items"
+msgstr "正在完成:{0}/{1} 项"
+
+msgctxt "#32310"
+msgid "Retrying failed items..."
+msgstr "正在重试失败的项目..."
+
+msgctxt "#32311"
+msgid "Retrying: {0}/{1}"
+msgstr "正在重试:{0}/{1}"
+
+msgctxt "#32312"
+msgid "Updating episode data..."
+msgstr "正在更新剧集数据..."
+
+msgctxt "#32313"
+msgid "{0} - Rate Limit"
+msgstr "{0} - 速率限制"
+
+msgctxt "#32314"
+msgid "Waiting to retry..."
+msgstr "等待重试..."
+
+msgctxt "#32315"
+msgid "Waiting {0}s before retry..."
+msgstr "等待 {0} 秒后重试..."
+
+msgctxt "#32316"
+msgid "Ratings Updated - {0}"
+msgstr "评分已更新 - {0}"
+
+msgctxt "#32317"
+msgid "Ratings Updater - Complete"
+msgstr "评分更新器 - 完成"
+
+msgctxt "#32318"
+msgid "IMDb Ratings Update"
+msgstr "IMDb 评分更新"
+
+msgctxt "#32319"
+msgid "{0} IMDb ratings updated"
+msgstr "已更新 {0} 个 IMDb 评分"
+
+msgctxt "#32320"
+msgid "IMDb ratings up to date"
+msgstr "IMDb 评分已是最新"
+
+msgctxt "#32321"
+msgid "{0} rate limited, resuming in {1}s"
+msgstr ""
+
+msgctxt "#32323"
+msgid "Stopped: no sources reachable"
+msgstr ""
+
+msgctxt "#32324"
+msgid "Trakt will fetch {0} movies."
+msgstr ""
+
+msgctxt "#32325"
+msgid "Trakt will fetch {0} seasons."
+msgstr ""
+
+msgctxt "#32326"
+msgid "Trakt will fetch {0} shows."
+msgstr ""
+
+msgctxt "#32327"
+msgid "Trakt allows 500 requests every 5 minutes."
+msgstr ""
+
+msgctxt "#32328"
+msgid "Include Trakt in this update?"
+msgstr ""
+
+msgctxt "#32329"
+msgid "Include"
+msgstr ""
+
+msgctxt "#32330"
+msgid "Analyzing Textures"
+msgstr "正在分析纹理"
+
+msgctxt "#32331"
+msgid "Scanning texture cache..."
+msgstr "正在扫描纹理缓存..."
+
+msgctxt "#32332"
+msgid "Analyzing {0} textures..."
+msgstr "正在分析 {0} 个纹理..."
+
+msgctxt "#32333"
+msgid "Cleanup Textures by Age"
+msgstr "按时间清理纹理"
+
+msgctxt "#32334"
+msgid "Clean Orphaned Textures"
+msgstr "清理孤立纹理"
+
+msgctxt "#32335"
+msgid "Starting cleanup..."
+msgstr "开始清理..."
+
+msgctxt "#32336"
+msgid "Starting..."
+msgstr "开始..."
+
+msgctxt "#32350"
+msgid "Loading library..."
+msgstr "正在加载媒体库..."
+
+msgctxt "#32351"
+msgid "Loading TV shows..."
+msgstr "正在加载电视剧..."
+
+msgctxt "#32352"
+msgid "Loading episodes..."
+msgstr "正在加载剧集..."
+
+msgctxt "#32353"
+msgid "Analyzing library..."
+msgstr "正在分析媒体库..."
+
+msgctxt "#32354"
+msgid "Downloading IMDb episode data..."
+msgstr ""
+
+msgctxt "#32355"
+msgid "Matching episodes (IMDb dataset)... {0}/{1}"
+msgstr ""
+
+msgctxt "#32356"
+msgid "Fetching episodes (TMDB)... {0}/{1}"
+msgstr "正在获取剧集(TMDB)... {0}/{1}"
+
+msgctxt "#32357"
+msgid "Fixing TMDB IDs... {0}/{1}"
+msgstr "正在修复 TMDB ID... {0}/{1}"
+
+msgctxt "#32358"
+msgid "Fetching {0}... {1}/{2}"
+msgstr "正在获取 {0}... {1}/{2}"
+
+msgctxt "#32359"
+msgid "No IDs could be fixed"
+msgstr "无法修复任何 ID"
+
+msgctxt "#32370"
+msgid "Testing {0}"
+msgstr "正在测试 {0}"
+
+msgctxt "#32371"
+msgid "Connecting to API..."
+msgstr "正在连接 API..."
+
+msgctxt "#32372"
+msgid "Trakt Authorization"
+msgstr "Trakt 授权"
+
+msgctxt "#32373"
+msgid "Requesting device code..."
+msgstr "正在请求设备代码..."
+
+msgctxt "#32374"
+msgid "Testing Trakt"
+msgstr "正在测试 Trakt"
+
+msgctxt "#32390"
+msgid "No Library Values"
+msgstr "无媒体库数值"
+
+#. Displayed when user rating is 0 (no rating given by user)
+msgctxt "#32391"
+msgid "Not Rated"
+msgstr "未评分"
+
+#. Placeholder shown when a field has no value
+msgctxt "#32392"
+msgid "(Not Set)"
+msgstr "(未设置)"
+
+msgctxt "#32393"
+msgid "Save Changes"
+msgstr "保存更改"
+
+msgctxt "#32394"
+msgid "Add {0}"
+msgstr "添加 {0}"
+
+msgctxt "#32395"
+msgid "Quick Edit: {0}"
+msgstr "快速编辑:{0}"
+
+msgctxt "#32396"
+msgid "Select from Library"
+msgstr "从媒体库选择"
+
+msgctxt "#32397"
+msgid "Add/Remove Items"
+msgstr "添加/移除项目"
+
+msgctxt "#32399"
+msgid "Edit {0} (comma-separated)"
+msgstr "编辑 {0}(以逗号分隔)"
+
+msgctxt "#32400"
+msgid "No rating sources available. Please configure API keys in settings."
+msgstr "没有可用的评分来源。请在设置中配置 API 密钥。"
+
+msgctxt "#32401"
+msgid "{0} not found"
+msgstr "未找到 {0}"
+
+msgctxt "#32402"
+msgid "Updating ratings..."
+msgstr "正在更新评分..."
+
+msgctxt "#32403"
+msgid "No changes needed"
+msgstr "无需更改"
+
+msgctxt "#32404"
+msgid "Item skipped (no IDs or rate limit)"
+msgstr "项目已跳过(无 ID 或速率限制)"
+
+msgctxt "#32405"
+msgid "Failed to update ratings"
+msgstr "更新评分失败"
+
+msgctxt "#32406"
+msgid "Update Movies"
+msgstr "更新电影"
+
+msgctxt "#32407"
+msgid "Update TV Shows"
+msgstr "更新电视剧"
+
+msgctxt "#32408"
+msgid "Update Episodes"
+msgstr "更新剧集"
+
+msgctxt "#32409"
+msgid "Update All"
+msgstr "全部更新"
+
+msgctxt "#32410"
+msgid "Run Mode"
+msgstr "运行模式"
+
+msgctxt "#32411"
+msgid "Show progress dialog (Foreground)"
+msgstr "显示进度对话框(前台)"
+
+msgctxt "#32412"
+msgid "Run in background"
+msgstr "在后台运行"
+
+msgctxt "#32413"
+msgid "No {0}s found in library"
+msgstr "媒体库中未找到 {0}"
+
+msgctxt "#32414"
+msgid "Fetching ratings batch {0}/{1}..."
+msgstr "正在获取评分批次 {0}/{1}..."
+
+msgctxt "#32415"
+msgid "Retry Failed Items"
+msgstr "重试失败的项目"
+
+msgctxt "#32416"
+msgid "{0} item(s) had temporary network issues."
+msgstr "{0} 项遇到临时网络问题。"
+
+msgctxt "#32417"
+msgid "Retry these items now?"
+msgstr "现在重试这些项目吗?"
+
+msgctxt "#32418"
+msgid "Network Issues"
+msgstr "网络问题"
+
+msgctxt "#32419"
+msgid "Items with network issues"
+msgstr "遇到网络问题的项目"
+
+msgctxt "#32420"
+msgid "Retry: {0}/{1} succeeded"
+msgstr "重试:{0}/{1} 成功"
+
+msgctxt "#32421"
+msgid "IMDb ID Corrections"
+msgstr "IMDb ID 修正"
+
+msgctxt "#32422"
+msgid "{0} item(s) have outdated IMDb ID(s) (redirects)."
+msgstr "{0} 项的 IMDb ID 已过时(重定向)。"
+
+msgctxt "#32423"
+msgid "Correct them in your library?"
+msgstr "在您的媒体库中修正它们吗?"
+
+msgctxt "#32424"
+msgid "No ratings update history found."
+msgstr "未找到评分更新历史。"
+
+msgctxt "#32425"
+msgid "Calculating disk usage..."
+msgstr "正在计算磁盘使用量..."
+
+msgctxt "#32426"
+msgid "Complete"
+msgstr "完成"
+
+#. Button label meaning "display/reveal" (not TV Show)
+msgctxt "#32427"
+msgid "Show"
+msgstr "显示"
+
+msgctxt "#32429"
+msgid "Retry"
+msgstr "重试"
+
+msgctxt "#32430"
+msgid "Ratings Update Report"
+msgstr "评分更新报告"
+
+msgctxt "#32440"
+msgid "Pre-Cache + Download"
+msgstr "预缓存 + 下载"
+
+msgctxt "#32441"
+msgid "Pre-Cache Artwork - Select Scope"
+msgstr "预缓存艺术图 - 选择范围"
+
+msgctxt "#32451"
+msgid "Pre-Cache + Download - Select Scope"
+msgstr "预缓存 + 下载 - 选择范围"
+
+msgctxt "#32455"
+msgid "Pre-Cache Artwork"
+msgstr "预缓存艺术图"
+
+msgctxt "#32457"
+msgid "[B]{0}[/B] is currently running."
+msgstr "[B]{0}[/B] 当前正在运行。"
+
+msgctxt "#32458"
+msgid "Cannot start another background task."
+msgstr "无法启动另一个后台任务。"
+
+msgctxt "#32459"
+msgid "Pre-Cache Cancelled"
+msgstr "预缓存已取消"
+
+msgctxt "#32460"
+msgid "Pre-Cache Complete"
+msgstr "预缓存完成"
+
+msgctxt "#32461"
+msgid "Cleanup Cancelled"
+msgstr "清理已取消"
+
+msgctxt "#32462"
+msgid "Cleanup Complete"
+msgstr "清理完成"
+
+msgctxt "#32463"
+msgid "Total: {0}"
+msgstr "总计:{0}"
+
+msgctxt "#32464"
+msgid "Cached: {0}"
+msgstr "已缓存:{0}"
+
+msgctxt "#32465"
+msgid "Downloaded: {0} ({1:.1f} MB)"
+msgstr "已下载:{0}({1:.1f} MB)"
+
+msgctxt "#32467"
+msgid "Failed: {0} cache, {1} download"
+msgstr "失败:{0} 个缓存,{1} 个下载"
+
+msgctxt "#32468"
+msgid "Already Cached: {0}"
+msgstr "已缓存:{0}"
+
+msgctxt "#32469"
+msgid "Newly Cached: {0}"
+msgstr "新缓存:{0}"
+
+msgctxt "#32470"
+msgid "Failed: {0}"
+msgstr "失败:{0}"
+
+msgctxt "#32471"
+msgid "Status: Cancelled"
+msgstr "状态:已取消"
+
+msgctxt "#32472"
+msgid "Gathering statistics..."
+msgstr "正在收集统计信息..."
+
+msgctxt "#32473"
+msgid "Remove textures not used in..."
+msgstr "移除未使用的纹理..."
+
+msgctxt "#32474"
+msgid "30 days"
+msgstr "30 天"
+
+msgctxt "#32475"
+msgid "60 days"
+msgstr "60 天"
+
+msgctxt "#32476"
+msgid "90 days"
+msgstr "90 天"
+
+msgctxt "#32477"
+msgid "180 days"
+msgstr "180 天"
+
+msgctxt "#32478"
+msgid "365 days (1 year)"
+msgstr "365 天(1 年)"
+
+msgctxt "#32479"
+msgid "No Old Textures"
+msgstr "没有旧纹理"
+
+msgctxt "#32480"
+msgid "No textures found older than {0} days."
+msgstr "未找到早于 {0} 天的纹理。"
+
+msgctxt "#32481"
+msgid "Total textures checked: {0}"
+msgstr "共检查纹理数:{0}"
+
+msgctxt "#32482"
+msgid "Confirm Cleanup"
+msgstr "确认清理"
+
+msgctxt "#32483"
+msgid "Remove {0} textures older than {1} days?"
+msgstr "移除 {0} 个早于 {1} 天的纹理?"
+
+msgctxt "#32484"
+msgid "Total: {0} | Oldest: {1}"
+msgstr "总计:{0} | 最早:{1}"
+
+msgctxt "#32485"
+msgid "Failed to analyze textures"
+msgstr ""
+
+msgctxt "#32486"
+msgid "Overwrite mode is enabled"
+msgstr ""
+
+#. {0} is a list such as "Movies: filename prefix"
+msgctxt "#32487"
+msgid "Filename pattern: {0}"
+msgstr ""
+
+msgctxt "#32488"
+msgid "Texture Cache - Last Run"
+msgstr "纹理缓存 - 上次运行"
+
+msgctxt "#32489"
+msgid "No previous operations found."
+msgstr "未找到以前的操作。"
+
+msgctxt "#32490"
+msgid "Fetching texture database..."
+msgstr "正在获取纹理数据库..."
+
+msgctxt "#32492"
+msgid "Removing {0} old textures..."
+msgstr "正在移除 {0} 个旧纹理..."
+
+msgctxt "#32493"
+msgid "Checked: {0} textures"
+msgstr "已检查:{0} 个纹理"
+
+msgctxt "#32494"
+msgid "Older than {0} days: {1}"
+msgstr "早于 {0} 天:{1}"
+
+msgctxt "#32495"
+msgid "Removed: {0}"
+msgstr "已移除:{0}"
+
+msgctxt "#32496"
+msgid "Total Cached: {0} | Library: {1}"
+msgstr "总缓存:{0} | 媒体库:{1}"
+
+msgctxt "#32497"
+msgid "Orphaned Found: {0} | Removed: {1}"
+msgstr "发现孤立:{0} | 已移除:{1}"
+
+msgctxt "#32498"
+msgid "{0} artwork files not found on disk.[CR]These are stale library entries pointing to missing files.[CR][CR]View the list?"
+msgstr "{0} 个艺术图文件在磁盘上未找到。[CR]这些是指向缺失文件的过期媒体库条目。[CR][CR]查看列表?"
+
+msgctxt "#32499"
+msgid "Missing Artwork Files"
+msgstr "缺失的艺术图文件"
+
+msgctxt "#32500"
+msgid "Session Report"
+msgstr "会话报告"
+
+msgctxt "#32501"
+msgid "Mismatches found: {0} files"
+msgstr ""
+
+msgctxt "#32502"
+msgid "Select Missing Artwork"
+msgstr "选择缺失的艺术图"
+
+msgctxt "#32503"
+msgid "Select + Download Missing Artwork"
+msgstr "选择 + 下载缺失的艺术图"
+
+msgctxt "#32504"
+msgid "Auto-Apply Missing Artwork"
+msgstr "自动应用缺失的艺术图"
+
+msgctxt "#32505"
+msgid "View Session History"
+msgstr "查看会话历史"
+
+msgctxt "#32507"
+msgid "Browse & Choose Artwork - Select Library"
+msgstr "浏览并选择艺术图 - 选择媒体库"
+
+msgctxt "#32508"
+msgid "Browse & Choose + Download - Select Library"
+msgstr "浏览并选择 + 下载 - 选择媒体库"
+
+msgctxt "#32509"
+msgid "Auto-Fill Missing Artwork - Select Library"
+msgstr "自动填充缺失的艺术图 - 选择媒体库"
+
+msgctxt "#32510"
+msgid "Last Session (any library)"
+msgstr "上次会话(任意媒体库)"
+
+msgctxt "#32511"
+msgid "Original artwork will be [B]deleted[/B] after a successful download."
+msgstr ""
+
+msgctxt "#32512"
+msgid "Session History"
+msgstr "会话历史"
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32513"
+msgid "{0}: filename prefix"
+msgstr ""
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32514"
+msgid "{0}: no prefix"
+msgstr ""
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32515"
+msgid "Loading {0}..."
+msgstr ""
+
+msgctxt "#32520"
+msgid "Artwork Download Report"
+msgstr "艺术图下载报告"
+
+msgctxt "#32522"
+msgid "Download Artwork to Filesystem"
+msgstr "下载艺术图到文件系统"
+
+msgctxt "#32523"
+msgid "Download Artwork - Select Scope"
+msgstr "下载艺术图 - 选择范围"
+
+msgctxt "#32530"
+msgid "Tools"
+msgstr "工具"
+
+msgctxt "#32532"
+msgid "Add/Fix IMDb & TMDB IDs"
+msgstr "添加/修复 IMDb 和 TMDB ID"
+
+msgctxt "#32540"
+msgid "Scan for Animated Posters"
+msgstr "扫描动画海报"
+
+msgctxt "#32541"
+msgid "View Cache Statistics"
+msgstr "查看缓存统计"
+
+msgctxt "#32542"
+msgid "Reset GIF Cache"
+msgstr "重置 GIF 缓存"
+
+msgctxt "#32543"
+msgid "GIF Scanner - Last Run"
+msgstr "GIF 扫描器 - 上次运行"
+
+msgctxt "#32544"
+msgid "GIF Cache Statistics"
+msgstr "GIF 缓存统计"
+
+msgctxt "#32546"
+msgid "Clear {0} cached GIF entries?[CR][CR]Use this to troubleshoot cache issues.[CR][CR]Tip: Use 'Full Rescan' mode instead to re-process GIFs."
+msgstr "清除 {0} 个已缓存的 GIF 条目?[CR][CR]使用此选项排查缓存问题。[CR][CR]提示:改用“完全重新扫描”模式可重新处理 GIF。"
+
+msgctxt "#32547"
+msgid "GIF Cache"
+msgstr "GIF 缓存"
+
+msgctxt "#32548"
+msgid "Reset complete - cleared {0} entries"
+msgstr "重置完成 - 已清除 {0} 个条目"
+
+msgctxt "#32549"
+msgid "Cache is already empty"
+msgstr "缓存已为空"
+
+msgctxt "#32550"
+msgid "Auto-Applied Artwork Report"
+msgstr "自动应用艺术图报告"
+
+msgctxt "#32551"
+msgid "Skipped Items Report"
+msgstr "已跳过项目报告"
+
+msgctxt "#32552"
+msgid "Scan for GIF Posters"
+msgstr "扫描 GIF 海报"
+
+msgctxt "#32553"
+msgid "Select scan mode"
+msgstr "选择扫描模式"
+
+msgctxt "#32554"
+msgid "Select Language"
+msgstr "选择语言"
+
+msgctxt "#32555"
+msgid "Select Artwork Type - {0}"
+msgstr "选择艺术图类型 - {0}"
+
+msgctxt "#32556"
+msgid "Select {0}"
+msgstr "选择 {0}"
+
+msgctxt "#32557"
+msgid "Edit {0}"
+msgstr "编辑 {0}"
+
+msgctxt "#32560"
+msgid "Edit: {0}"
+msgstr "编辑:{0}"
+
+msgctxt "#32561"
+msgid "Dialog Error"
+msgstr "对话框错误"
+
+msgctxt "#32562"
+msgid "File not found: {0}"
+msgstr "未找到文件:{0}"
+
+msgctxt "#32563"
+msgid "Failed to read file: {0}"
+msgstr "读取文件失败:{0}"
+
+msgctxt "#32564"
+msgid "Rating source '{0}' already exists."
+msgstr "评分来源“{0}”已存在。"
+
+msgctxt "#32565"
+msgid "Rating (0-10)"
+msgstr "评分(0-10)"
+
+msgctxt "#32566"
+msgid "Continue"
+msgstr "继续"
+
+msgctxt "#32567"
+msgid "Auto-Fill"
+msgstr "自动填充"
+
+msgctxt "#32569"
+msgid "Yes, Cancel It"
+msgstr "是的,取消它"
+
+msgctxt "#32570"
+msgid "No, Keep Running"
+msgstr "不,继续运行"
+
+msgctxt "#32571"
+msgid "Cancel Running Task?"
+msgstr "取消正在运行的任务?"
+
+msgctxt "#32574"
+msgid "Cancel to resume later"
+msgstr "取消以稍后继续"
+
+msgctxt "#32575"
+msgid "Invalid scope: {0}"
+msgstr "无效范围:{0}"
+
+msgctxt "#32576"
+msgid "Invalid scan mode: {0}"
+msgstr "无效扫描模式:{0}"
+
+msgctxt "#32577"
+msgid "Resuming scan..."
+msgstr "正在继续扫描..."
+
+msgctxt "#32579"
+msgid "All (Movies + TV Shows)"
+msgstr "全部(电影 + 电视剧)"
+
+msgctxt "#32580"
+msgid "Movies Only"
+msgstr "仅电影"
+
+msgctxt "#32581"
+msgid "TV Shows Only"
+msgstr "仅电视剧"
+
+msgctxt "#32582"
+msgid "Incremental Scan"
+msgstr "增量扫描"
+
+msgctxt "#32583"
+msgid "Skip unchanged GIFs, detect new/modified ones"
+msgstr "跳过未更改的 GIF,检测新的/已修改的 GIF"
+
+msgctxt "#32584"
+msgid "Full Rescan"
+msgstr "完全重新扫描"
+
+msgctxt "#32585"
+msgid "Rescan all items, rebuild cache from scratch"
+msgstr "重新扫描所有项目,从零开始重建缓存"
+
+msgctxt "#32586"
+msgid "{0} GIFs cached"
+msgstr "已缓存 {0} 个 GIF"
+
+msgctxt "#32587"
+msgid "no cache"
+msgstr "无缓存"
+
+msgctxt "#32588"
+msgid "Total Cached GIFs: {0}"
+msgstr "已缓存 GIF 总数:{0}"
+
+msgctxt "#32589"
+msgid "Recently Scanned (Last {0}):"
+msgstr "最近扫描(最后 {0} 个):"
+
+msgctxt "#32590"
+msgid "... and {0} more"
+msgstr "... 还有 {0} 个"
+
+msgctxt "#32595"
+msgid "Automatically update IMDb Top 250 rankings in your library"
+msgstr ""
+
+msgctxt "#32600"
+msgid "IMDb Top 250"
+msgstr "IMDb Top 250"
+
+msgctxt "#32601"
+msgid "Fetching Top 250 from Trakt..."
+msgstr "正在从 Trakt 获取 Top 250..."
+
+msgctxt "#32602"
+msgid "Loading library..."
+msgstr "正在加载媒体库..."
+
+msgctxt "#32603"
+msgid "Matching movies..."
+msgstr "正在匹配电影..."
+
+msgctxt "#32604"
+msgid "Updating: {0}/{1}"
+msgstr "正在更新:{0}/{1}"
+
+msgctxt "#32605"
+msgid "Top 250 Update Complete"
+msgstr "Top 250 更新完成"
+
+msgctxt "#32606"
+msgid "Updated: {0} | Cleared: {1} | Already correct: {2}"
+msgstr "已更新:{0} | 已清除:{1} | 已正确:{2}"
+
+msgctxt "#32607"
+msgid "Failed to fetch Top 250 list from Trakt."
+msgstr "从 Trakt 获取 Top 250 列表失败。"
+
+msgctxt "#32608"
+msgid "No movies found in library."
+msgstr "媒体库中未找到电影。"
+
+msgctxt "#32609"
+msgid "Update IMDb Top 250?"
+msgstr "更新 IMDb Top 250?"
+
+msgctxt "#32610"
+msgid "Set/update: {0} movies[CR]Clear: {1} movies[CR]Already correct: {2} movies[CR][CR]This will overwrite existing Top 250 values."
+msgstr "设置/更新:{0} 部电影[CR]清除:{1} 部电影[CR]已正确:{2} 部电影[CR][CR]这将覆盖现有的 Top 250 数值。"
+
+msgctxt "#32611"
+msgid "Cancelled. Updated: {0} | Cleared: {1} before cancellation."
+msgstr "已取消。取消前已更新:{0} | 已清除:{1}。"
+
+msgctxt "#32612"
+msgid "Trakt Not Signed In"
+msgstr "Trakt 未登录"
+
+msgctxt "#32613"
+msgid "Sign in to Trakt or remove this widget"
+msgstr "登录 Trakt 或移除此小部件"
+
+msgctxt "#32614"
+msgid "Search"
+msgstr "搜索"
+
+msgctxt "#32615"
+msgid "Widgets"
+msgstr "小部件"
+
+msgctxt "#32616"
+msgid "Search Movies"
+msgstr "搜索电影"
+
+msgctxt "#32617"
+msgid "Search TV Shows"
+msgstr "搜索电视剧"
+
+msgctxt "#32618"
+msgid "Search People"
+msgstr "搜索人物"
+
+msgctxt "#32619"
+msgid "Discover"
+msgstr "探索"
+
+msgctxt "#32620"
+msgid "Next Up"
+msgstr "即将观看"
+
+msgctxt "#32621"
+msgid "Recent Episodes"
+msgstr "近期剧集"
+
+msgctxt "#32622"
+msgid "Seasonal"
+msgstr "季节性"
+
+msgctxt "#32623"
+msgid "Recommended Movies"
+msgstr "推荐电影"
+
+msgctxt "#32624"
+msgid "Recommended TV Shows"
+msgstr "推荐电视剧"
+
+msgctxt "#32625"
+msgid "Movies"
+msgstr "电影"
+
+msgctxt "#32626"
+msgid "TV Shows"
+msgstr "电视剧"
+
+msgctxt "#32627"
+msgid "TMDB Trending"
+msgstr "TMDB 热门趋势"
+
+msgctxt "#32628"
+msgid "TMDB Popular"
+msgstr "TMDB 流行"
+
+msgctxt "#32629"
+msgid "TMDB Top Rated"
+msgstr "TMDB 最高评分"
+
+msgctxt "#32630"
+msgid "TMDB Now Playing"
+msgstr "TMDB 正在放映"
+
+msgctxt "#32631"
+msgid "TMDB Upcoming"
+msgstr "TMDB 即将上映"
+
+msgctxt "#32632"
+msgid "TMDB Airing Today"
+msgstr "TMDB 今日播出"
+
+msgctxt "#32633"
+msgid "TMDB On The Air"
+msgstr "TMDB 正在播出"
+
+msgctxt "#32634"
+msgid "Trakt Trending"
+msgstr "Trakt 热门趋势"
+
+msgctxt "#32635"
+msgid "Trakt Popular"
+msgstr "Trakt 流行"
+
+msgctxt "#32636"
+msgid "Trakt Anticipated"
+msgstr "Trakt 期待"
+
+msgctxt "#32637"
+msgid "Trakt Most Watched"
+msgstr "Trakt 最多观看"
+
+msgctxt "#32638"
+msgid "Trakt Most Collected"
+msgstr "Trakt 最多收藏"
+
+msgctxt "#32639"
+msgid "Trakt Box Office"
+msgstr "Trakt 票房"
+
+msgctxt "#32640"
+msgid "Trakt Recommendations"
+msgstr "Trakt 推荐"
+
+msgctxt "#32641"
+msgid "(OAuth)"
+msgstr "(OAuth)"
+
+msgctxt "#32642"
+msgid "Christmas"
+msgstr "圣诞节"
+
+msgctxt "#32643"
+msgid "Halloween"
+msgstr "万圣节"
+
+msgctxt "#32644"
+msgid "Valentine's Day"
+msgstr "情人节"
+
+msgctxt "#32645"
+msgid "Thanksgiving"
+msgstr "感恩节"
+
+msgctxt "#32646"
+msgid "Star Wars Day"
+msgstr "星球大战日"
+
+msgctxt "#32647"
+msgid "Star Trek"
+msgstr "星际迷航"
+
+msgctxt "#32648"
+msgid "New Year"
+msgstr "新年"
+
+msgctxt "#32649"
+msgid "Easter"
+msgstr "复活节"
+
+msgctxt "#32650"
+msgid "Independence Day"
+msgstr "独立日"
+
+# Recommended widget label, single-seed mode. {0} = seed title -> "Recommended based on Avatar"
+msgctxt "#32651"
+msgid "Recommended based on {0}"
+msgstr "基于 {0} 推荐"
+
+msgctxt "#32652"
+msgid "Recommended based on recent watches"
+msgstr "基于近期观看推荐"
+
+# Artwork selection dialogs
+msgctxt "#32653"
+msgid "Current Extra Art (Click to Remove)"
+msgstr "当前额外艺术图(点击移除)"
+
+msgctxt "#32654"
+msgid "Available Art (Click to Add)"
+msgstr "可用艺术图(点击添加)"
+
+msgctxt "#32655"
+msgid "Clear Selection"
+msgstr "清除选择"
+
+msgctxt "#32656"
+msgid "Apply"
+msgstr "应用"
+
+msgctxt "#32657"
+msgid "Sort: Popularity"
+msgstr "排序:流行度"
+
+msgctxt "#32658"
+msgid "Sort: Resolution"
+msgstr "排序:分辨率"
+
+# Colour picker dialog
+msgctxt "#32659"
+msgid "Colour Manager"
+msgstr "颜色管理器"
+
+msgctxt "#32660"
+msgid "Alpha"
+msgstr "透明度"
+
+msgctxt "#32661"
+msgid "Enter Hex"
+msgstr "输入十六进制"
+
+# Metadata editor, unique IDs
+msgctxt "#32663"
+msgid "Add ID"
+msgstr "添加 ID"
+
+msgctxt "#32664"
+msgid "ID type (imdb, tmdb, tvdb...)"
+msgstr "ID 类型(imdb、tmdb、tvdb...)"
+
+# {0} = id type, e.g. tmdb -> "tmdb ID (leave empty to remove)"
+msgctxt "#32665"
+msgid "{0} ID (leave empty to remove)"
+msgstr "{0} ID(留空以移除)"
+
+msgctxt "#32666"
+msgid "Kodi won't remove the default ID. Change its value, or set another ID as default first."
+msgstr "Kodi 不会移除默认 ID。请更改其值,或先将另一个 ID 设为默认。"
+
+# {0} = id type, e.g. tmdb -> "Remove the tmdb ID?"
+msgctxt "#32667"
+msgid "Remove the {0} ID?"
+msgstr "移除 {0} ID?"
+
+msgctxt "#32668"
+msgid "User Rating"
+msgstr "用户评分"
+
+msgctxt "#32669"
+msgid "External Ratings"
+msgstr "外部评分"
+
+msgctxt "#32670"
+msgid "Display Artist"
+msgstr "显示艺术家"
+
+msgctxt "#32671"
+msgid "Sort Artist"
+msgstr "排序艺术家"
+
+msgctxt "#32672"
+msgid "Record Label"
+msgstr "唱片公司"
+
+msgctxt "#32673"
+msgid "Album Type"
+msgstr "专辑类型"
+
+msgctxt "#32674"
+msgid "Sort Name"
+msgstr "排序名称"
+
+# Info dialog section headers with no Kodi core string
+msgctxt "#32675"
+msgid "Top Movies"
+msgstr "热门电影"
+
+msgctxt "#32676"
+msgid "Top TV Shows"
+msgstr "热门电视剧"
+
+msgctxt "#32677"
+msgid "In Your Library - Movies"
+msgstr "在您的媒体库中 - 电影"
+
+msgctxt "#32678"
+msgid "In Your Library - TV Shows"
+msgstr "在您的媒体库中 - 电视剧"
+
+msgctxt "#32679"
+msgid "All Credits"
+msgstr "全部演职人员"
+
+msgctxt "#32680"
+msgid "Crew Credits"
+msgstr "剧组演职人员"
+
+msgctxt "#32681"
+msgid "Images"
+msgstr "图片"
+
+msgctxt "#32682"
+msgid "Recommendations"
+msgstr "推荐"
+
+msgctxt "#32683"
+msgid "Similar in Library"
+msgstr "媒体库中的相似项"
+
+msgctxt "#32684"
+msgid "Crew"
+msgstr "团队"
+
+msgctxt "#32685"
+msgid "Next Up (Favourites)"
+msgstr "即将观看(收藏)"
+
+msgctxt "#32686"
+msgid "Recent Videos"
+msgstr "近期视频"
+
+msgctxt "#32687"
+msgid "Favourite Movies"
+msgstr "收藏的电影"
+
+msgctxt "#32688"
+msgid "Favourite TV Shows"
+msgstr "收藏的电视剧"
+
+msgctxt "#32689"
+msgid "Favourite Episodes"
+msgstr "收藏的剧集"
+
+msgctxt "#32690"
+msgid "Favourite Music Videos"
+msgstr "收藏的音乐视频"
+
+msgctxt "#32691"
+msgid "Music video thumb source"
+msgstr "音乐视频缩略图来源"
+
+#. Options for which image fills an empty music video thumb during automatic fetching
+msgctxt "#32692"
+msgid "Video screenshots"
+msgstr "视频截图"
+
+msgctxt "#32693"
+msgid "Album cover"
+msgstr "专辑封面"
+
+msgctxt "#32694"
+msgid "Artist thumb"
+msgstr "艺术家缩略图"
+
+msgctxt "#32695"
+msgid "Ratings sources to check (IMDb always on)"
+msgstr ""
+
+msgctxt "#32696"
+msgid "Continue Watching"
+msgstr ""
+
+msgctxt "#32697"
+msgid "Similar Artists"
+msgstr ""
+
+msgctxt "#32698"
+msgid "Wait 60s and Retry"
+msgstr ""
+
+msgctxt "#32699"
+msgid "Retry Tomorrow"
+msgstr ""
+
+msgctxt "#32700"
+msgid "Stop All Updates"
+msgstr ""
+
+#. {0} is the provider name, e.g. TRAKT
+msgctxt "#32701"
+msgid "Continue Without {0}"
+msgstr ""
+
+#. {0} is a web address, {1} a short code the user types there, {2} the seconds left
+msgctxt "#32702"
+msgid ""
+"1. Visit: {0}\n"
+"2. Enter code: [B]{1}[/B]\n"
+"3. Click Authorize on the website\n"
+"\n"
+"Waiting for authorization... ({2}s remaining)"
+msgstr ""
+
+msgctxt "#32703"
+msgid "Person Info"
+msgstr ""
+
+msgctxt "#32704"
+msgid "Scanning {0}"
+msgstr ""
+
+msgctxt "#32705"
+msgid "ETA {0}"
+msgstr ""
+
+msgctxt "#32706"
+msgid "Queued: {0}"
+msgstr ""
+
+msgctxt "#32707"
+msgid "Found: {0} | Cached: {1} | Existing: {2}"
+msgstr ""
+
+msgctxt "#32708"
+msgid "Option {0}"
+msgstr ""
+
+#. {2} is a language name
+msgctxt "#32709"
+msgid "{0} of {1} available ({2})"
+msgstr ""
+
+msgctxt "#32710"
+msgid "{0} available"
+msgstr ""
+
+#. {0} is an art type such as Fanart or Poster
+msgctxt "#32711"
+msgid "Multi-Art {0}"
+msgstr ""
+
+#. {0} is a media type, {1} a list of art types
+msgctxt "#32712"
+msgid "Art type not supported for {0}: {1}"
+msgstr ""
+
+msgctxt "#32713"
+msgid "No MusicBrainz ID for this artist"
+msgstr ""
+
+msgctxt "#32714"
+msgid "No MusicBrainz ID for this album"
+msgstr ""
+
+msgctxt "#32715"
+msgid "Failed to fetch artwork"
+msgstr ""
+
+#. {0} is a list of art types
+msgctxt "#32716"
+msgid "No {0} artwork found"
+msgstr ""
+
+msgctxt "#32717"
+msgid "Artwork updated"
+msgstr ""
+
+msgctxt "#32718"
+msgid "Applied: {0} | Skipped: {1} | Auto-skipped: {2}"
+msgstr ""
+
+#. {0} is a library name such as Movies
+msgctxt "#32719"
+msgid "{0} - Select Action"
+msgstr ""
+
+#. {0} is a library name such as Movies
+msgctxt "#32720"
+msgid "No report available for {0}"
+msgstr ""
+
+msgctxt "#32721"
+msgid "No reports available"
+msgstr ""
+
+#. {0} is a library name such as Movies
+msgctxt "#32722"
+msgid "Auto-Fill {0}"
+msgstr ""
+
+msgctxt "#32723"
+msgid "Automatically applies missing artwork without review.[CR]Only fills in missing artwork, won't replace existing.[CR]View results afterwards in Session History.[CR][CR]Continue?"
+msgstr ""
+
+msgctxt "#32724"
+msgid "Enter the date as YYYY-MM-DD"
+msgstr ""
+
+msgctxt "#32725"
+msgid "That date cannot exist"
+msgstr ""
+
+#. {0} is a field name such as Genre
+msgctxt "#32726"
+msgid "No existing {0} found in library.[CR]Use Quick Edit or Add/Remove instead."
+msgstr ""
+
+msgctxt "#32727"
+msgid "{0} votes"
+msgstr ""
+
+#. {0} is a field name such as Genre
+msgctxt "#32728"
+msgid "{0} updated"
+msgstr ""
+
+#. {0} is how many more values are not shown
+msgctxt "#32729"
+msgid "(+{0} more)"
+msgstr ""
+
+#. {0} is the name of the running task
+msgctxt "#32730"
+msgid "Cancel Current Task: {0}"
+msgstr ""
+
+#. {0} is the name of the running task
+msgctxt "#32731"
+msgid "[B]Currently Running:[/B] {0}"
+msgstr ""
+
+#. {0} is a time such as 5m 3s
+msgctxt "#32732"
+msgid "[B]Duration:[/B] {0}"
+msgstr ""
+
+#. {0} is a time such as 5m 3s
+msgctxt "#32733"
+msgid "[B]Last Activity:[/B] {0} ago"
+msgstr ""
+
+#. {0} is the name of the task about to start
+msgctxt "#32734"
+msgid "[B]New Task:[/B] {0}"
+msgstr ""
+
+msgctxt "#32735"
+msgid "Cancelling will stop the current task safely."
+msgstr ""
+
+msgctxt "#32736"
+msgid "Not set in Kodi's settings. This folder holds the artwork for movie sets.[CR][CR]Select a folder now?"
+msgstr ""
+
+msgctxt "#32737"
+msgid "Not set in Kodi's settings. This folder holds the artwork and metadata for artists.[CR][CR]Select a folder now?"
+msgstr ""
+
+msgctxt "#32738"
+msgid "Folder saved"
+msgstr ""
+
+msgctxt "#32739"
+msgid "Could not save the setting. Set the folder in Kodi's settings instead."
+msgstr ""
+
+#. {0} is the image's position in the list
+msgctxt "#32740"
+msgid "Profile Image {0}"
+msgstr ""
+
+#. {0} is a list of counts, such as "12 Movies, 3 TV shows"
+msgctxt "#32741"
+msgid "Missing IMDb IDs: {0}"
+msgstr ""
+
+#. {0} is a list of counts, such as "12 Movies, 3 TV shows"
+msgctxt "#32742"
+msgid "Invalid TMDB IDs: {0}"
+msgstr ""
+
+msgctxt "#32743"
+msgid "Fix these issues?"
+msgstr ""
+
+msgctxt "#32744"
+msgid "Added {0} IMDb IDs"
+msgstr ""
+
+msgctxt "#32745"
+msgid "Fixed {0} TMDB IDs"
+msgstr ""
+
+msgctxt "#32746"
+msgid "Creator"
+msgstr ""
+
+msgctxt "#32747"
+msgid "Enter 6 or 8 hex digits, as RRGGBB or AARRGGBB"
+msgstr ""
+
+msgctxt "#32901"
+msgid "Enable Debug Output"
+msgstr "启用调试输出"
+
+msgctxt "#32930"
+msgid "English"
+msgstr "英语"
+
+msgctxt "#32931"
+msgid "Spanish"
+msgstr "西班牙语"
+
+msgctxt "#32932"
+msgid "Portuguese (Brazil)"
+msgstr "葡萄牙语(巴西)"
+
+msgctxt "#32933"
+msgid "Portuguese (Portugal)"
+msgstr "葡萄牙语(葡萄牙)"
+
+msgctxt "#32934"
+msgid "French"
+msgstr "法语"
+
+msgctxt "#32935"
+msgid "German"
+msgstr "德语"
+
+msgctxt "#32936"
+msgid "Chinese (Simplified)"
+msgstr "中文(简体)"
+
+msgctxt "#32937"
+msgid "Chinese (Traditional)"
+msgstr "中文(繁体)"
+
+msgctxt "#32938"
+msgid "Italian"
+msgstr "意大利语"
+
+msgctxt "#32939"
+msgid "Polish"
+msgstr "波兰语"
+
+msgctxt "#32940"
+msgid "Russian"
+msgstr "俄语"
+
+msgctxt "#32941"
+msgid "Dutch"
+msgstr "荷兰语"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "瑞典语"
+
+msgctxt "#32943"
+msgid "Korean"
+msgstr "朝鲜语"
+
+msgctxt "#32944"
+msgid "Japanese"
+msgstr "日语"
+
+msgctxt "#32950"
+msgid "Advanced API Configuration"
+msgstr "高级 API 配置"
+
+msgctxt "#32951"
+msgid "Use Custom TMDb API Key"
+msgstr "使用自定义 TMDb API 密钥"
+
+msgctxt "#32952"
+msgid "A built-in TMDb API key is provided and works for most users. Enable this only if you need higher rate limits or want to use your own dedicated quota."
+msgstr "已提供内置 TMDb API 密钥,适用于大多数用户。仅在需要更高速率限制或希望使用自己的专用配额时启用此项。"
+
+msgctxt "#32960"
+msgid "Missing Artwork Types"
+msgstr "缺失的艺术图类型"
+
+msgctxt "#32963"
+msgid "Clearlogo"
+msgstr "透明标志图"
+
+msgctxt "#32964"
+msgid "Clearart"
+msgstr "透明艺术图"
+
+msgctxt "#32965"
+msgid "Thumb"
+msgstr "缩略图"
+
+msgctxt "#32966"
+msgid "Landscape"
+msgstr "风景图"
+
+msgctxt "#32967"
+msgid "Discart"
+msgstr "光盘图"
+
+msgctxt "#32968"
+msgid "Keyart"
+msgstr "无文字海报"
+
+msgctxt "#32969"
+msgid "Characterart"
+msgstr "角色图"
+
+msgctxt "#32970"
+msgid "Auto-download after Manage Artwork"
+msgstr "在“管理艺术图”后自动下载"
+
+msgctxt "#32971"
+msgid "Automatically download selected artwork to filesystem after selection in Manage Artwork"
+msgstr "在“管理艺术图”中选择后,自动将所选艺术图下载到文件系统"
+
+msgctxt "#32974"
+msgid "Download Settings"
+msgstr "下载设置"
+
+#. Settings group - language for data from online APIs (TMDb titles, plots, etc.)
+msgctxt "#32976"
+msgid "Online Service"
+msgstr "在线服务"
+
+msgctxt "#32977"
+msgid "Language for online metadata from TMDb, Last.fm, and TheAudioDB"
+msgstr "来自 TMDb、Last.fm 和 TheAudioDB 的在线元数据的语言"
+
+#. Actor image download feature (context menu)
+msgctxt "#32981"
+msgid "Downloading actor images..."
+msgstr "正在下载演员图片..."
+
+msgctxt "#32982"
+msgid "{0} actors"
+msgstr "{0} 位演员"
+
+msgctxt "#32983"
+msgid "Include TV Episode Guest Stars"
+msgstr "包含电视剧集客串演员"
+
+msgctxt "#32984"
+msgid "Download guest star images from TV show episodes (increases API calls)"
+msgstr "从电视剧剧集下载客串演员图片(会增加 API 调用)"
+
+msgctxt "#32985"
+msgid "Include Episode Thumbnails"
+msgstr "包含剧集缩略图"
+
+msgctxt "#32986"
+msgid "Download episode thumbnail artwork during bulk operations"
+msgstr "在批量操作期间下载剧集缩略图艺术图"
+
+msgctxt "#32987"
+msgid "Text too long to fully display"
+msgstr "文本过长,无法完全显示"
+
+msgctxt "#32988"
+msgid "Sync TV Show Metadata"
+msgstr "同步电视剧元数据"
+
+msgctxt "#32989"
+msgid "Updates online metadata for every TV show in your library. Large libraries may take significantly longer."
+msgstr "更新媒体库中每部电视剧的在线元数据。大型媒体库可能需要更长的时间。"
+
+msgctxt "#32990"
+msgid "Fetching {0:d} of {1:d}"
+msgstr "正在获取第 {0:d} 项,共 {1:d} 项"
+
+msgctxt "#32991"
+msgid "Updated: {0:d}[CR]Skipped: {1:d}[CR]Failed: {2:d}"
+msgstr "已更新:{0:d}[CR]已跳过:{1:d}[CR]失败:{2:d}"
+
+msgctxt "#32992"
+msgid "Library Maintenance"
+msgstr "媒体库维护"
+
+msgctxt "#32993"
+msgid "NFO Files"
+msgstr "NFO 文件"
+
+msgctxt "#32994"
+msgid "Write metadata changes to NFO files"
+msgstr "将元数据更改写入 NFO 文件"
+
+msgctxt "#32995"
+msgid "When you edit metadata, also write the change to the item's local NFO file so it survives a library refresh or rescrape."
+msgstr "当您编辑元数据时,也将更改写入项目的本地 NFO 文件,以便在媒体库刷新或重新抓取时保留更改。"
+
+msgctxt "#32996"
+msgid "Create an NFO file when none exists"
+msgstr "当 NFO 文件不存在时创建一个"
+
+msgctxt "#32997"
+msgid "If the item has no NFO file yet, create one. When off, only existing NFO files are updated."
+msgstr "如果项目尚无 NFO 文件,则创建一个。关闭时,仅更新现有的 NFO 文件。"
+
+msgctxt "#32998"
+msgid "Include watched state in NFO files"
+msgstr "在 NFO 文件中包含观看状态"
+
+msgctxt "#32999"
+msgid "Write playcount and last-played date to NFO files. Turn off to keep watched state out of your NFO files."
+msgstr "将播放次数和上次播放日期写入 NFO 文件。关闭以将观看状态排除在 NFO 文件之外。"
+
+#~ msgctxt "#32593"
+#~ msgid "Scan cancelled. Found: {0} | Cached: {1} | Existing: {2}"
+#~ msgstr "扫描已取消。找到:{0} | 已缓存:{1} | 已存在:{2}"
+
+#~ msgctxt "#32594"
+#~ msgid "Scan complete! Found: {0} | Cached: {1} | Existing: {2}"
+#~ msgstr "扫描完成!找到:{0} | 已缓存:{1} | 已存在:{2}"
+
+#~ msgctxt "#32354"
+#~ msgid "Downloading episode data..."
+#~ msgstr "正在下载剧集数据..."
+
+#~ msgctxt "#32355"
+#~ msgid "Matching episodes (dataset)... {0}/{1}"
+#~ msgstr "正在匹配剧集(数据集)... {0}/{1}"

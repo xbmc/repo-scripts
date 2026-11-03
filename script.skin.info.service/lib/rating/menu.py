@@ -1,16 +1,19 @@
 """Ratings menu entry points, mode selection, and report display."""
 from __future__ import annotations
 
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Final
 import xbmc
 import xbmcgui
 
 from lib.kodi.client import request, get_api_key, log, KODI_GET_DETAILS_METHODS, ADDON
+from lib.kodi.settings import KodiSettings
+from lib.kodi.utilities import focused_item
 from lib.data.api.tmdb import ApiTmdb as TMDBRatingsSource
 from lib.data.api.mdblist import ApiMdblist as MDBListRatingsSource
 from lib.data.api.omdb import ApiOmdb as OMDbRatingsSource
 from lib.data.api.trakt import ApiTrakt as TraktRatingsSource
 from lib.data.api.imdb import get_imdb_dataset
+from lib.data.api import tracker as usage_tracker
 from lib.infrastructure.dialogs import (
     show_ok, show_textviewer, show_notification, BackgroundNotice, ProgressDialog)
 from lib.infrastructure.menus import Menu, MenuItem
@@ -24,19 +27,23 @@ from lib.rating.updater import (
 from lib.rating.single import update_single_item
 
 
-_RATINGS_HEADING_ID = 32300
+_RATINGS_HEADING_ID: Final = 32300
 
 _SCOPE_LABELS = {
     "movie": "Movies",
     "tvshow": "TV Shows",
     "episode": "Episodes",
+    "all": "All",
 }
+
+_SUMMED_STATS = (
+    "updated", "failed", "skipped", "total_items", "elapsed_time", "pending_retries",
+    "retried", "total_ratings_added", "total_ratings_updated", "imdb_ids_added",
+    "imdb_ids_corrected",
+)
 
 _SOURCE_MODE_LABELS = {
     "imdb": "IMDb Dataset",
-    "tmdb": "TMDB",
-    "trakt": "Trakt",
-    "aggregators": "Aggregators (MDBList, OMDB)",
     "multi_source": "All Sources",
 }
 
@@ -51,15 +58,16 @@ def _notify(message_id: int, level: str = xbmcgui.NOTIFICATION_INFO,
 
 
 def initialize_sources() -> List:
-    """Initialize available rating sources, in priority order (TMDB, then MDBList/OMDb if keyed,
-    then Trakt) for multi_source updates."""
+    """Enabled rating sources, in priority order."""
     sources = []
-    sources.append(TMDBRatingsSource())
-    if get_api_key("mdblist_api_key"):
+    if KodiSettings.ratings_source_tmdb():
+        sources.append(TMDBRatingsSource())
+    if get_api_key("mdblist_api_key") and KodiSettings.ratings_source_mdblist():
         sources.append(MDBListRatingsSource())
-    if get_api_key("omdb_api_key"):
+    if get_api_key("omdb_api_key") and KodiSettings.ratings_source_omdb():
         sources.append(OMDbRatingsSource())
-    sources.append(TraktRatingsSource())
+    if KodiSettings.ratings_source_trakt():
+        sources.append(TraktRatingsSource())
     return sources
 
 
@@ -83,40 +91,59 @@ def run_ratings_menu() -> None:
 
 def _run_update(media_type: str) -> None:
     """Run ratings update for a media type."""
-    _select_mode_and_run([media_type], initialize_sources(), "multi_source")
+    _select_mode_and_run([media_type], initialize_sources())
 
 
 def _run_update_all() -> None:
     """Run ratings update for all media types."""
-    _select_mode_and_run(["movie", "tvshow", "episode"], initialize_sources(), "multi_source")
+    _select_mode_and_run(["movie", "tvshow", "episode"], initialize_sources())
 
 
-def _select_mode_and_run(media_types: List[str], sources: List, source_mode: str) -> None:
+def _select_mode_and_run(media_types: List[str], sources: List) -> None:
     """Show foreground/background picker, then run `update_library_ratings` per media type."""
     from lib.infrastructure.menus import run_with_mode_choice
 
     def run(use_background: bool) -> None:
+        runs = []
         for media_type in media_types:
-            update_library_ratings(
-                media_type, sources, use_background=use_background, source_mode=source_mode)
+            results = update_library_ratings(
+                media_type, sources, use_background=use_background,
+                save_report=len(media_types) == 1)
+            runs.append(results)
+            if results.get("cancelled"):
+                break
+        if len(media_types) > 1:
+            db.save_operation_stats('ratings_update', _combine_runs(runs), scope="all")
 
     run_with_mode_choice("Update Library Ratings", run)
 
 
+def _combine_runs(runs: List[Dict]) -> Dict:
+    """Combine per-type run stats into one report."""
+    combined: Dict = {key: sum(r.get(key, 0) for r in runs) for key in _SUMMED_STATS}
+    combined["cancelled"] = any(r.get("cancelled") for r in runs)
+    combined["source_mode"] = "multi_source"
+    source_stats: Dict[str, Dict[str, int]] = {}
+    for run in runs:
+        for name, counts in run.get("source_stats", {}).items():
+            merged = source_stats.setdefault(name, {"fetched": 0, "failed": 0})
+            for key, count in counts.items():
+                merged[key] = merged.get(key, 0) + count
+    combined["source_stats"] = source_stats
+    combined["item_details"] = [d for r in runs for d in r.get("item_details", [])][-20:]
+    return combined
+
+
 def _resolve_single_item_target(
         dbid: Optional[str], dbtype: Optional[str]) -> Optional[Tuple[str, str]]:
-    """Validate and resolve `(dbid, media_type)` for a single-item update; notifies and returns
-    None on failure."""
-    if not dbid:
-        dbid = xbmc.getInfoLabel("ListItem.DBID")
-    if not dbtype:
-        dbtype = xbmc.getInfoLabel("ListItem.DBType")
+    """Resolve `(dbid, media_type)`, the focused item by default; None after notifying."""
+    dbid, dbtype = focused_item(dbid, dbtype)
 
     if not dbid or dbid == "-1" or not dbtype:
         _notify(32259, xbmcgui.NOTIFICATION_WARNING)
         return None
 
-    media_type = dbtype.lower()
+    media_type = dbtype
     if media_type not in ("movie", "tvshow", "episode", "set"):
         _notify(32263, xbmcgui.NOTIFICATION_WARNING, 3000, media_type)
         return None
@@ -127,7 +154,7 @@ def _resolve_single_item_target(
 def _fetch_single_item(dbid: str, media_type: str) -> Optional[dict]:
     """Fetch a single Kodi item with the properties needed for rating update; notify on failure."""
     if media_type == "episode":
-        properties = ["title", "season", "episode", "tvshowid", "uniqueid", "ratings"]
+        properties = ["title", "season", "episode", "tvshowid", "showtitle", "uniqueid", "ratings"]
     else:
         properties = ["title", "year", "uniqueid", "ratings"]
 
@@ -147,7 +174,7 @@ def _fetch_single_item(dbid: str, media_type: str) -> Optional[dict]:
 
 def _report_single_item_result(success: Optional[bool], item_stats: Optional[dict],
                                title: str, episodes_updated: int) -> None:
-    """Notify the user of single-item update outcome and refresh the container if updated."""
+    """Report a single-item update outcome, as a toast or a dialog listing what changed."""
     if success is False:
         _notify(32405, xbmcgui.NOTIFICATION_ERROR)
         return
@@ -167,7 +194,6 @@ def _report_single_item_result(success: Optional[bool], item_stats: Optional[dic
         if episodes_updated > 0:
             message_lines.append(f"[B]Episodes:[/B] {episodes_updated} updated")
         show_ok(ADDON.getLocalizedString(32316).format(title), "[CR]".join(message_lines))
-        xbmc.executebuiltin("Container.Refresh")
     else:
         _notify(32403)
 
@@ -184,13 +210,15 @@ def _update_movieset_ratings(setid: int, sources: List) -> None:
         _notify(32401, xbmcgui.NOTIFICATION_WARNING, 3000, "Set")
         return
 
-    abort_flag = task_manager.ShutdownAbortFlag()
+    abort_flag = task_manager.ShutdownAbortFlag(task_manager.MAX_REQUEST_SECONDS)
     updated_titles: List[str] = []
     total = len(movies)
     progress = ProgressDialog(heading=ADDON.getLocalizedString(_RATINGS_HEADING_ID))
     progress.create(ADDON.getLocalizedString(32402))
     try:
         for idx, movie in enumerate(movies):
+            if usage_tracker.is_batch_cancelled():
+                break
             if progress.is_cancelled():
                 abort_flag.request()
                 break
@@ -206,13 +234,12 @@ def _update_movieset_ratings(setid: int, sources: List) -> None:
         message = (f"[B]Movies updated ({len(updated_titles)}/{len(movies)}):[/B][CR]"
                    f"{', '.join(updated_titles)}")
         show_ok(ADDON.getLocalizedString(32316).format(setdetails.get("label", "Set")), message)
-        xbmc.executebuiltin("Container.Refresh")
     else:
         _notify(32403)
 
 
 def update_single_item_ratings(dbid: Optional[str], dbtype: Optional[str]) -> None:
-    """Update ratings for a single item by DBID. Three-phase: validate, fetch+update, report."""
+    """Update ratings for one item or every movie in a set, then report what changed."""
     target = _resolve_single_item_target(dbid, dbtype)
     if target is None:
         return
@@ -277,6 +304,7 @@ def show_ratings_report() -> None:
     elapsed_time = stats.get('elapsed_time', 0)
     cancelled = stats.get('cancelled', False)
     source_stats = stats.get('source_stats', {})
+    pending_retries = stats.get('pending_retries', 0)
     item_details = stats.get('item_details', [])
     source_mode = stats.get('source_mode', 'multi_source')
 
@@ -316,6 +344,13 @@ def show_ratings_report() -> None:
             lines.append(f"{source_name.upper()}: {fetched} items fetched")
 
         lines.append("")
+
+    if pending_retries:
+        lines.extend([
+            "[B]Awaiting Retry[/B]",
+            f"Items with a missing source: {pending_retries}",
+            ""
+        ])
 
     total_ratings_added = stats.get('total_ratings_added', 0)
     total_ratings_updated = stats.get('total_ratings_updated', 0)

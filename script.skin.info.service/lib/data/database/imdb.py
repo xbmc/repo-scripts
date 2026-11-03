@@ -3,15 +3,16 @@ from __future__ import annotations
 
 import sqlite3
 from contextlib import contextmanager
-from datetime import datetime
+import time
 from typing import Optional, Dict, List, Tuple, Generator, Callable
 
-from lib.data.database._infrastructure import get_db
+from lib.data.database._infrastructure import get_db, chunked_in_query
 
 
 def _select_rating(cursor: sqlite3.Cursor, imdb_id: str) -> Optional[Dict[str, float | int]]:
+    """Rating and vote count for one IMDb id."""
     cursor.execute(
-        "SELECT rating, votes FROM imdb_ratings WHERE imdb_id = ?",
+        "SELECT rating, votes FROM imdb_rating WHERE imdb_id = ?",
         (imdb_id,)
     )
     row = cursor.fetchone()
@@ -21,7 +22,7 @@ def _select_rating(cursor: sqlite3.Cursor, imdb_id: str) -> Optional[Dict[str, f
 
 
 def get_rating(imdb_id: str) -> Optional[Dict[str, float | int]]:
-    """Return `{rating, votes}` for an IMDb ID, or None if not in the dataset."""
+    """Get `{rating, votes}` for an IMDb id, or None when the dataset has no row."""
     with get_db() as cursor:
         return _select_rating(cursor, imdb_id)
 
@@ -33,13 +34,12 @@ def get_rating_with_cursor(imdb_id: str,
 
 
 def get_ratings_batch(imdb_ids: List[str]) -> Dict[str, Dict[str, float | int]]:
-    """Return `imdb_id -> {rating, votes}` for hits; chunks to stay under SQLite param limits."""
+    """Get `imdb_id -> {rating, votes}` for many ids; an id with no row is left out."""
     if not imdb_ids:
         return {}
 
-    from lib.data.database._infrastructure import chunked_in_query
     results: Dict[str, Dict[str, float | int]] = {}
-    sql = "SELECT imdb_id, rating, votes FROM imdb_ratings WHERE imdb_id IN ({placeholders})"
+    sql = "SELECT imdb_id, rating, votes FROM imdb_rating WHERE imdb_id IN ({placeholders})"
     with get_db() as cursor:
         for row in chunked_in_query(cursor, sql, [], list(imdb_ids)):
             results[row["imdb_id"]] = {"rating": row["rating"], "votes": row["votes"]}
@@ -49,8 +49,9 @@ def get_ratings_batch(imdb_ids: List[str]) -> Dict[str, Dict[str, float | int]]:
 def _select_episode_imdb_id(
     cursor: sqlite3.Cursor, show_imdb_id: str, season: int, episode: int
 ) -> Optional[str]:
+    """Episode IMDb id from the parent show's id and its numbering."""
     cursor.execute(
-        "SELECT episode_id FROM imdb_episodes WHERE parent_id = ? AND season = ? AND episode = ?",
+        "SELECT episode_id FROM imdb_episode WHERE parent_id = ? AND season = ? AND episode = ?",
         (show_imdb_id, season, episode)
     )
     row = cursor.fetchone()
@@ -58,7 +59,7 @@ def _select_episode_imdb_id(
 
 
 def get_episode_imdb_id(show_imdb_id: str, season: int, episode: int) -> Optional[str]:
-    """Look up an episode's IMDb ID from the parent show ID and season/episode numbers."""
+    """Get an episode's IMDb id from the parent show's id and its season and episode numbers."""
     with get_db() as cursor:
         return _select_episode_imdb_id(cursor, show_imdb_id, season, episode)
 
@@ -71,11 +72,11 @@ def get_episode_imdb_id_with_cursor(
 
 
 def get_episodes_for_show(show_imdb_id: str) -> Dict[Tuple[int, int], str]:
-    """Return `(season, episode) -> imdb_id` for every known episode of a show."""
+    """Get `(season, episode) -> imdb_id` for every known episode of a show."""
     result: Dict[Tuple[int, int], str] = {}
     with get_db() as cursor:
         cursor.execute(
-            "SELECT season, episode, episode_id FROM imdb_episodes WHERE parent_id = ?",
+            "SELECT season, episode, episode_id FROM imdb_episode WHERE parent_id = ?",
             (show_imdb_id,)
         )
         for row in cursor.fetchall():
@@ -88,20 +89,16 @@ def bulk_episode_lookup() -> Generator[Callable[..., Optional[str]], None, None]
     """Context manager yielding a lookup function with a shared connection."""
     with get_db() as cursor:
         def lookup(show_imdb_id: str, season: int, episode: int) -> Optional[str]:
-            cursor.execute(
-                "SELECT episode_id FROM imdb_episodes "
-                "WHERE parent_id = ? AND season = ? AND episode = ?",
-                (show_imdb_id, season, episode)
-            )
-            row = cursor.fetchone()
-            return row["episode_id"] if row else None
+            """Episode IMDb id through the caller's open cursor."""
+            return _select_episode_imdb_id(cursor, show_imdb_id, season, episode)
         yield lookup
 
 
-_DATASET_TABLES = {"ratings": "imdb_ratings", "episodes": "imdb_episodes"}
+_DATASET_TABLES = {"ratings": "imdb_rating", "episodes": "imdb_episode"}
 
 
 def _is_dataset_available(dataset: str) -> bool:
+    """Whether the dataset table holds any rows."""
     table = _DATASET_TABLES[dataset]
     with get_db() as cursor:
         cursor.execute(f"SELECT 1 FROM {table} LIMIT 1")
@@ -109,6 +106,7 @@ def _is_dataset_available(dataset: str) -> bool:
 
 
 def _get_dataset_stats(dataset: str) -> Dict[str, int | float | str | bool | None]:
+    """Entry count and download timestamps for one IMDb dataset."""
     stats: Dict[str, int | float | str | bool | None] = {
         "entries": 0,
         "last_modified": None,
@@ -116,7 +114,7 @@ def _get_dataset_stats(dataset: str) -> Dict[str, int | float | str | bool | Non
     }
     with get_db() as cursor:
         cursor.execute(
-            "SELECT last_modified, downloaded_at, entry_count FROM imdb_meta WHERE dataset = ?",
+            "SELECT last_modified, downloaded_at, entry_count FROM imdb_dataset WHERE dataset = ?",
             (dataset,)
         )
         row = cursor.fetchone()
@@ -133,7 +131,7 @@ def is_dataset_available() -> bool:
 
 
 def get_dataset_stats() -> Dict[str, int | float | str | bool | None]:
-    """Return ratings dataset stats: entries, last_modified, downloaded_at."""
+    """Get ratings dataset stats: entries, last_modified, downloaded_at."""
     return _get_dataset_stats("ratings")
 
 
@@ -143,15 +141,15 @@ def is_episode_dataset_available() -> bool:
 
 
 def get_episode_dataset_stats() -> Dict[str, int | str | None]:
-    """Return episode dataset stats: entries, last_modified, downloaded_at."""
+    """Get episode dataset stats: entries, last_modified, downloaded_at."""
     return _get_dataset_stats("episodes")  # type: ignore[return-value]
 
 
 def get_meta_last_modified(dataset: str) -> Optional[str]:
-    """Return the stored Last-Modified header for a dataset ('ratings' or 'episodes')."""
+    """Get a dataset's stored Last-Modified header, or None when there is none."""
     with get_db() as cursor:
         cursor.execute(
-            "SELECT last_modified FROM imdb_meta WHERE dataset = ?",
+            "SELECT last_modified FROM imdb_dataset WHERE dataset = ?",
             (dataset,)
         )
         row = cursor.fetchone()
@@ -166,80 +164,75 @@ def save_meta(
     entry_count: int = 0,
     library_episode_count: Optional[int] = None
 ) -> None:
-    """Upsert dataset metadata (last-modified, downloaded-at, counts)."""
+    """Save dataset metadata stamped now; an omitted library count keeps the stored one."""
     with get_db() as cursor:
-        if library_episode_count is not None:
+        if library_episode_count is None:
             cursor.execute(
-                """INSERT OR REPLACE INTO imdb_meta
-                   (dataset, last_modified, downloaded_at, entry_count, library_episode_count)
-                   VALUES (?, ?, ?, ?, ?)""",
-                (dataset, last_mod, datetime.now().isoformat(), entry_count, library_episode_count)
-            )
-        else:
-            cursor.execute(
-                """INSERT OR REPLACE INTO imdb_meta
-                   (dataset, last_modified, downloaded_at, entry_count)
-                   VALUES (?, ?, ?, ?)""",
-                (dataset, last_mod, datetime.now().isoformat(), entry_count)
-            )
+                "SELECT library_count FROM imdb_dataset WHERE dataset = ?", (dataset,))
+            row = cursor.fetchone()
+            library_episode_count = (row["library_count"] if row else 0) or 0
+
+        cursor.execute(
+            """INSERT OR REPLACE INTO imdb_dataset
+               (dataset, last_modified, downloaded_at, entry_count, library_count)
+               VALUES (?, ?, ?, ?, ?)""",
+            (dataset, last_mod, int(time.time()), entry_count, library_episode_count)
+        )
 
 
 def get_episode_meta() -> Tuple[Optional[str], int]:
-    """Return (last_modified, library_episode_count) for the episodes dataset."""
+    """Get (last_modified, library_episode_count) for the episodes dataset."""
     with get_db() as cursor:
         cursor.execute(
-            "SELECT last_modified, library_episode_count FROM imdb_meta WHERE dataset = ?",
+            "SELECT last_modified, library_count FROM imdb_dataset WHERE dataset = ?",
             ("episodes",)
         )
         row = cursor.fetchone()
         if row:
-            return row["last_modified"], row["library_episode_count"] or 0
+            return row["last_modified"], row["library_count"] or 0
         return None, 0
 
 
 def import_ratings_begin(cursor: sqlite3.Cursor) -> None:
-    """Create a fresh `imdb_ratings_new` staging table; live table untouched until commit."""
-    cursor.execute("PRAGMA synchronous = OFF")
-    cursor.execute("DROP TABLE IF EXISTS imdb_ratings_new")
+    """Create a fresh `imdb_rating_new` staging table; live table untouched until commit."""
+    cursor.execute("DROP TABLE IF EXISTS imdb_rating_new")
     cursor.execute('''
-        CREATE TABLE imdb_ratings_new (
-            imdb_id TEXT PRIMARY KEY,
+        CREATE TABLE imdb_rating_new (
+            imdb_id TEXT NOT NULL,
             rating REAL NOT NULL,
-            votes INTEGER NOT NULL
-        )
+            votes INTEGER NOT NULL,
+            PRIMARY KEY (imdb_id)
+        ) WITHOUT ROWID
     ''')
 
 
 def import_ratings_batch(cursor: sqlite3.Cursor, batch: List[Tuple[str, float, int]]) -> None:
     """Bulk-insert a batch of (imdb_id, rating, votes) tuples into the staging table."""
     cursor.executemany(
-        "INSERT INTO imdb_ratings_new (imdb_id, rating, votes) VALUES (?, ?, ?)",
+        "INSERT INTO imdb_rating_new (imdb_id, rating, votes) VALUES (?, ?, ?)",
         batch
     )
 
 
 def import_ratings_commit(cursor: sqlite3.Cursor) -> None:
-    """Swap the staging table in for `imdb_ratings`.
-
-    The DROP/RENAME join the open insert transaction, so an aborted import rolls
-    back to the previous table instead of leaving the live table dropped and empty.
-    """
-    cursor.execute("DROP TABLE IF EXISTS imdb_ratings")
-    cursor.execute("ALTER TABLE imdb_ratings_new RENAME TO imdb_ratings")
+    """Swap the staging table in for `imdb_rating`; the live table survives an aborted fill."""
+    # DDL autocommits unless a transaction is already open
+    cursor.execute("BEGIN")
+    cursor.execute("DROP TABLE IF EXISTS imdb_rating")
+    cursor.execute("ALTER TABLE imdb_rating_new RENAME TO imdb_rating")
 
 
 def import_episodes_begin(cursor: sqlite3.Cursor) -> None:
-    """Create a fresh `imdb_episodes_new` staging table; live table untouched until commit."""
-    cursor.execute("PRAGMA synchronous = OFF")
-    cursor.execute("DROP TABLE IF EXISTS imdb_episodes_new")
+    """Create a fresh `imdb_episode_new` staging table; live table untouched until commit."""
+    cursor.execute("DROP TABLE IF EXISTS imdb_episode_new")
     cursor.execute('''
-        CREATE TABLE imdb_episodes_new (
+        CREATE TABLE imdb_episode_new (
             parent_id TEXT NOT NULL,
             season INTEGER NOT NULL,
             episode INTEGER NOT NULL,
             episode_id TEXT NOT NULL,
             PRIMARY KEY (parent_id, season, episode)
-        )
+        ) WITHOUT ROWID
     ''')
 
 
@@ -247,20 +240,15 @@ def import_episodes_batch(cursor: sqlite3.Cursor,
                           batch: List[Tuple[str, int, int, str]]) -> None:
     """Bulk-insert (parent_id, season, episode, episode_id) tuples into the staging table."""
     cursor.executemany(
-        "INSERT OR REPLACE INTO imdb_episodes_new (parent_id, season, episode, episode_id) "
+        "INSERT OR REPLACE INTO imdb_episode_new (parent_id, season, episode, episode_id) "
         "VALUES (?, ?, ?, ?)",
         batch
     )
 
 
 def import_episodes_commit(cursor: sqlite3.Cursor) -> None:
-    """Swap the staging table in for `imdb_episodes` and rebuild its lookup index.
-
-    The DROP/RENAME join the open insert transaction, so an aborted import rolls
-    back to the previous table instead of leaving the live table dropped and empty.
-    """
-    cursor.execute("DROP TABLE IF EXISTS imdb_episodes")
-    cursor.execute("ALTER TABLE imdb_episodes_new RENAME TO imdb_episodes")
-    cursor.execute(
-        "CREATE INDEX IF NOT EXISTS idx_imdb_episodes_parent ON imdb_episodes(parent_id)"
-    )
+    """Swap the staging table in for `imdb_episode`; the PK prefix serves parent lookups."""
+    cursor.execute("BEGIN")
+    cursor.execute("DROP TABLE IF EXISTS imdb_episode")
+    cursor.execute("DROP INDEX IF EXISTS idx_imdb_episode_parent")
+    cursor.execute("ALTER TABLE imdb_episode_new RENAME TO imdb_episode")

@@ -1,8 +1,7 @@
-"""OMDb API integration."""
+"""OMDb ratings and awards for a title, looked up by IMDb id."""
 from __future__ import annotations
 
 from typing import Optional, Dict
-import re
 import xbmc
 
 from lib.data.api.client import ApiSession
@@ -10,11 +9,11 @@ from lib.data.api.source import RatingSource
 from lib.data.api.client import RateLimitHit, RetryableError
 from lib.data.api import tracker as usage_tracker
 from lib.kodi.client import get_api_key, log
-from lib.kodi.formatters import RT_SOURCE_TOMATOES, RT_SOURCE_POPCORN
+from lib.kodi.formatters import RT_SOURCE_TOMATOES
 
 
 class ApiOmdb(RatingSource):
-    """OMDb API implementation."""
+    """OMDb rating source that also serves a title's awards and short plot."""
 
     BASE_URL = "https://www.omdbapi.com"
 
@@ -29,9 +28,9 @@ class ApiOmdb(RatingSource):
             rate_limit=(20, 1.0)
         )
 
-    def fetch_data(self, imdb_id: str, abort_flag=None,
+    def fetch_data(self, media_type: str, imdb_id: str, abort_flag=None,
                    force_refresh: bool = False) -> Optional[dict]:
-        """Fetch full OMDb data for an item; `force_refresh` skips cache read but still writes."""
+        """Fetch full OMDb data for an item; a forced refresh still caches."""
         if not self.api_key:
             return None
 
@@ -39,14 +38,14 @@ class ApiOmdb(RatingSource):
             return None
 
         if not force_refresh:
-            cached = self.get_cached_data(imdb_id)
+            cached = self.get_cached_data(media_type, imdb_id)
             if cached:
                 return cached
 
         try:
             data = self.session.get(
                 "/",
-                params={"i": imdb_id, "apikey": self.api_key, "tomatoes": "true"},
+                params={"i": imdb_id, "apikey": self.api_key},
                 abort_flag=abort_flag
             )
 
@@ -60,7 +59,7 @@ class ApiOmdb(RatingSource):
                 log("OMDb", f"API error for {imdb_id}: {error}", xbmc.LOGDEBUG)
                 return None
 
-            self.cache_data(imdb_id, data)
+            self.cache_data(media_type, imdb_id, data)
             return data
 
         except RateLimitHit:
@@ -71,9 +70,9 @@ class ApiOmdb(RatingSource):
             log("OMDb", f"Fetch error for {imdb_id}: {str(e)}", xbmc.LOGWARNING)
             return None
 
-    def get_omdb_data(self, imdb_id: str) -> Optional[dict]:
-        """Get full cached OMDb response."""
-        return self.get_cached_data(imdb_id)
+    def get_omdb_data(self, media_type: str, imdb_id: str) -> Optional[dict]:
+        """Get cached OMDb data, never fetching."""
+        return self.get_cached_data(media_type, imdb_id)
 
     def fetch_ratings(
         self,
@@ -81,39 +80,26 @@ class ApiOmdb(RatingSource):
         ids: Dict[str, str],
         abort_flag=None,
         force_refresh: bool = False,
-        pause_reporter=None,
     ) -> Optional[Dict[str, Dict[str, float]]]:
-        """Fetch ratings from OMDb (RatingSource interface). ids must contain 'imdb'."""
-        if media_type == "episode":
+        """Fetch ratings from OMDb (RatingSource interface); needs an IMDb id."""
+        if not self.supports(media_type):
             return None
         imdb_id = ids.get("imdb")
         if not imdb_id:
             return None
 
-        self.session.set_pause_context(pause_reporter, self.provider_name)
-        try:
-            data = self.fetch_data(imdb_id, abort_flag, force_refresh=force_refresh)
-            if not data:
-                return None
-
-            return self._extract_ratings(data)
-        finally:
-            self.session.clear_pause_context()
-
-    def get_awards(self, imdb_id: str, abort_flag=None) -> Optional[dict]:
-        """Extract awards data from OMDb (fetches if not cached)."""
-        data = self.get_omdb_data(imdb_id)
+        data = self.fetch_data(media_type, imdb_id, abort_flag, force_refresh=force_refresh)
         if not data:
-            data = self.fetch_data(imdb_id, abort_flag)
-
-        if not data or not data.get('Awards'):
             return None
 
-        media_type = data.get('Type', 'movie')
-        return self._parse_awards(data['Awards'], media_type)
+        return self._extract_ratings(data)
+
+    def supports(self, media_type: str) -> bool:
+        """OMDb rates the parent title only; it has no per-episode entry."""
+        return media_type != "episode"
 
     def _extract_ratings(self, data: dict) -> Dict[str, Dict[str, float]]:
-        """Extract ratings dict from full OMDb response."""
+        """Extract ratings from the OMDb response, every scale converted to 0-10."""
         result: Dict[str, Dict[str, float]] = {}
 
         imdb_rating = data.get("imdbRating")
@@ -127,32 +113,6 @@ class ApiOmdb(RatingSource):
                     "rating": self.normalize_rating(rating_val, 10),
                     "votes": votes_val
                 }
-            except (ValueError, AttributeError):
-                pass
-
-        tomato_meter = data.get("tomatoMeter", "").replace("N/A", "")
-        tomato_reviews = data.get("tomatoReviews", "0").replace("N/A", "0").replace(",", "")
-
-        if tomato_meter:
-            try:
-                rating = self.normalize_rating(float(tomato_meter), 100)
-                if rating > 0:
-                    result[RT_SOURCE_TOMATOES] = {"rating": rating, "votes": float(tomato_reviews)}
-            except (ValueError, AttributeError):
-                pass
-
-        tomato_user_meter = data.get("tomatoUserMeter", "").replace("N/A", "")
-        tomato_user_reviews = (
-            data.get("tomatoUserReviews", "0").replace("N/A", "0").replace(",", "")
-        )
-
-        if tomato_user_meter:
-            try:
-                rating = self.normalize_rating(float(tomato_user_meter), 100)
-                if rating > 0:
-                    result[RT_SOURCE_POPCORN] = {
-                        "rating": rating, "votes": float(tomato_user_reviews)
-                    }
             except (ValueError, AttributeError):
                 pass
 
@@ -199,54 +159,6 @@ class ApiOmdb(RatingSource):
 
         return result
 
-    def _parse_awards(self, awards_string: str, media_type: str) -> dict:
-        """Parse OMDb Awards field into structured data."""
-        result = {
-            "oscar_wins": 0,
-            "oscar_nominations": 0,
-            "emmy_wins": 0,
-            "emmy_nominations": 0,
-            "other_wins": 0,
-            "other_nominations": 0,
-            "awards_text": ""
-        }
-
-        if not awards_string or awards_string == "N/A":
-            return result
-
-        result["awards_text"] = awards_string
-
-        if media_type == "series":
-            emmy_wins_match = re.search(r'Won (\d+) Primetime Emmys?', awards_string)
-            if emmy_wins_match:
-                result["emmy_wins"] = int(emmy_wins_match.group(1))
-
-            emmy_noms_match = re.search(r'Nominated for (\d+) Primetime Emmys?', awards_string)
-            if emmy_noms_match:
-                result["emmy_nominations"] = int(emmy_noms_match.group(1))
-        else:
-            oscar_wins_match = re.search(r'Won (\d+) Oscars?', awards_string)
-            if oscar_wins_match:
-                result["oscar_wins"] = int(oscar_wins_match.group(1))
-
-            oscar_noms_match = re.search(r'Nominated for (\d+) Oscars?', awards_string)
-            if oscar_noms_match:
-                result["oscar_nominations"] = int(oscar_noms_match.group(1))
-
-        total_match = re.search(r'(\d+) wins? & (\d+) nominations? total', awards_string)
-        if total_match:
-            total_wins = int(total_match.group(1))
-            total_noms = int(total_match.group(2))
-
-            if media_type == "series":
-                result["other_wins"] = total_wins - result["emmy_wins"]
-                result["other_nominations"] = total_noms - result["emmy_nominations"]
-            else:
-                result["other_wins"] = total_wins - result["oscar_wins"]
-                result["other_nominations"] = total_noms - result["oscar_nominations"]
-
-        return result
-
     def test_connection(self) -> bool:
         """Test OMDb API connection."""
         if not self.api_key:
@@ -255,7 +167,7 @@ class ApiOmdb(RatingSource):
         try:
             data = self.session.get(
                 "/",
-                params={"i": "tt0133093", "apikey": self.api_key, "tomatoes": "true"}
+                params={"i": "tt0133093", "apikey": self.api_key}
             )
             return data is not None and data.get("Response") == "True"
         except Exception as e:

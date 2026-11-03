@@ -8,11 +8,11 @@ import xbmcgui
 import xbmcvfs
 
 from lib.kodi.client import log, ADDON
-from lib.kodi.utilities import resolve_infolabel as _resolve_infolabel
+from lib.kodi.utilities import clear_window_prop, resolve_infolabel as _resolve_infolabel
 
 
 def _show_error(message: str) -> None:
-    """Show error notification."""
+    """Show an error notification for a bad color picker call."""
     xbmcgui.Dialog().notification(
         'Color Picker Error',
         message,
@@ -22,6 +22,7 @@ def _show_error(message: str) -> None:
 
 
 class _ColorPickerDialog(xbmcgui.WindowXMLDialog):
+    """Color picker with RGB sliders and a preset palette."""
     def __init__(self, *args, **kwargs):
         self.current_color = kwargs.pop('current_color')
         self.default_color = kwargs.pop('default_color')
@@ -32,6 +33,7 @@ class _ColorPickerDialog(xbmcgui.WindowXMLDialog):
         super().__init__(*args, **kwargs)
 
     def onInit(self):
+        """Fill sliders, preview and palette once; Kodi can fire this again."""
         if self._initialized:
             return
         self._initialized = True
@@ -47,6 +49,7 @@ class _ColorPickerDialog(xbmcgui.WindowXMLDialog):
             pass
 
     def onAction(self, action):
+        """Live-update the preview on slider moves and honor the back-out actions."""
         if action.getId() in (xbmcgui.ACTION_MOVE_LEFT, xbmcgui.ACTION_MOVE_RIGHT):
             self._update_preview()
         elif action.getId() == xbmcgui.ACTION_SELECT_ITEM:
@@ -60,7 +63,7 @@ class _ColorPickerDialog(xbmcgui.WindowXMLDialog):
         super().onAction(action)
 
     def _execute_onback(self) -> None:
-        """Execute onback behavior with conditional support."""
+        """Execute the first onback block whose condition holds; one with no actions closes."""
         for block in self.onback.split('||'):
             block = block.strip()
             if not block:
@@ -162,63 +165,35 @@ class _ColorPickerDialog(xbmcgui.WindowXMLDialog):
             palette_list = self.getControl(300)
             palette_list.reset()  # type: ignore[attr-defined]
 
+            items = []
             for color_info in self.palette_colors:
-                item = xbmcgui.ListItem(color_info['name'])
+                item = xbmcgui.ListItem(color_info['name'], offscreen=True)
                 item.setProperty('color', color_info['value'])
-                palette_list.addItem(item)  # type: ignore[attr-defined]
+                items.append(item)
+            palette_list.addItems(items)  # type: ignore[attr-defined]
         except Exception as e:
             log("General", f'Color Picker: Failed to populate palette: {e}', xbmc.LOGERROR)
 
     def _enter_hex_code(self) -> None:
         """Prompt user to enter hex color code and update sliders/preview."""
         dialog = xbmcgui.Dialog()
-        hex_input = dialog.input(
-            'Enter Hex Color Code',
-            type=xbmcgui.INPUT_ALPHANUM
-        )
-
+        hex_input = dialog.input(ADDON.getLocalizedString(32661), type=xbmcgui.INPUT_ALPHANUM)
         if not hex_input:
             return
 
-        hex_input = hex_input.strip().upper()
-
-        if hex_input.startswith('#'):
-            hex_input = hex_input[1:]
-
+        hex_input = hex_input.strip().upper().lstrip('#')
         if len(hex_input) == 6:
             hex_input = 'FF' + hex_input
-        elif len(hex_input) != 8:
-            dialog.notification(
-                'Invalid Hex Code',
-                'Please enter 6 (RRGGBB) or 8 (AARRGGBB) hex digits',
-                xbmcgui.NOTIFICATION_ERROR,
-                3000
-            )
+        if len(hex_input) != 8 or not all(c in '0123456789ABCDEF' for c in hex_input):
+            dialog.notification(xbmc.getLocalizedString(257), ADDON.getLocalizedString(32747),
+                                xbmcgui.NOTIFICATION_ERROR, 3000)
             return
 
-        if not all(c in '0123456789ABCDEF' for c in hex_input):
-            dialog.notification(
-                'Invalid Hex Code',
-                'Hex code must contain only 0-9 and A-F',
-                xbmcgui.NOTIFICATION_ERROR,
-                3000
-            )
-            return
-
-        try:
-            self._parse_and_set_sliders(hex_input)
-            self._update_preview()
-            log("General", f'Color Picker: Applied hex code {hex_input}', xbmc.LOGDEBUG)
-        except Exception as e:
-            log("General", f'Color Picker: Failed to apply hex code: {e}', xbmc.LOGERROR)
-            dialog.notification(
-                'Error',
-                'Failed to apply hex code',
-                xbmcgui.NOTIFICATION_ERROR,
-                3000
-            )
+        self._parse_and_set_sliders(hex_input)
+        self._update_preview()
 
     def onClick(self, controlId: int) -> None:
+        """Handle the accept, cancel and reset buttons."""
         if controlId == 200:
             self.result_color = self._merge_color()
             self.close()
@@ -236,8 +211,7 @@ class _ColorPickerDialog(xbmcgui.WindowXMLDialog):
 
 def colorpicker(setting: str = '', default: str = '', colors: str = '',
                 onback: str = '', **kwargs) -> None:
-    """Open the RGBA color picker; onback runs condition::action blocks (separated by ||)
-    when the user backs out."""
+    """Open the RGBA color picker for a skin string, running the skin's back-out actions if set."""
     setting = _resolve_infolabel(setting)
     default = _resolve_infolabel(default) or 'FFFFFFFF'
     colors = _resolve_infolabel(colors)
@@ -253,8 +227,7 @@ def colorpicker(setting: str = '', default: str = '', colors: str = '',
         _show_error(f'Invalid color format: {current_color} (expected AARRGGBB)')
         return
 
-    if not colors:
-        colors = xbmcvfs.translatePath('special://xbmc/system/colors.xml')
+    colors = xbmcvfs.translatePath(colors or 'special://xbmc/system/colors.xml')
 
     palette_colors = []
     if os.path.exists(colors):
@@ -293,7 +266,7 @@ def colorpicker(setting: str = '', default: str = '', colors: str = '',
     ):
         monitor.waitForAbort(0.1)
 
-    xbmc.executebuiltin('ClearProperty(SkinInfo.ColorPicker.CustomMode,home)')
-    xbmc.executebuiltin('ClearProperty(SkinInfo.ColorPicker.Preview,home)')
+    clear_window_prop('SkinInfo.ColorPicker.CustomMode')
+    clear_window_prop('SkinInfo.ColorPicker.Preview')
 
     del dialog

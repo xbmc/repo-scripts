@@ -3,9 +3,19 @@ from __future__ import annotations
 
 import re
 import urllib.parse
+from typing import Final, List
+
 from lib.kodi.client import decode_image_url
 
-_SYSTEM_PATH_MARKERS = ('/addons/', '\\addons\\', '/system/', '\\system\\')
+# a textviewer lays out every line before it opens
+_REPORT_URL_LIMIT: Final = 500
+
+_SYSTEM_PATH_MARKERS = (
+    '/addons/', '\\addons\\', '/system/', '\\system\\', '/userdata/', '\\userdata\\',
+)
+
+# Kodi also wraps PVR, EPG and picture folder images, none of them library art
+_LIBRARY_WRAPPERS = ('video', 'music')
 
 
 def _parse_image_url(url: str) -> str:
@@ -16,7 +26,7 @@ def _parse_image_url(url: str) -> str:
 
 
 def _is_system_artwork(text: str) -> bool:
-    """True if `text` looks like an addon/system path or a Kodi `Default*.png` placeholder."""
+    """True if the text looks like an add-on or system path, or Kodi's `Default*.png` icon."""
     if any(marker in text for marker in _SYSTEM_PATH_MARKERS):
         return True
     if 'Default' in text and text.endswith('.png'):
@@ -25,10 +35,7 @@ def _is_system_artwork(text: str) -> bool:
 
 
 def should_precache_url(url: str) -> bool:
-    """True for cacheable library artwork URLs.
-
-    Skips auto-generated `video@`/`music@` thumbnails, addon icons, plugin URLs, and system files.
-    """
+    """True for library artwork worth caching, not generated thumbs, add-on icons or plugins."""
     if not url:
         return False
 
@@ -43,17 +50,11 @@ def should_precache_url(url: str) -> bool:
     return not _is_system_artwork(decoded)
 
 
-# `D:` through `Z:` are valid library drive letters; `C:` is excluded because that's where
-# Kodi (and addon system) lives; a path on `C:` is almost certainly system, not library.
-_LIBRARY_DRIVE_RE = re.compile(r'^[D-Z]:', re.IGNORECASE)
+_LOCAL_PATH_RE = re.compile(r'^([A-Z]:|/)', re.IGNORECASE)
 
 
 def is_library_artwork_url(url: str) -> bool:
-    """True if URL points at library artwork; False for addon icons, system files,
-    or special folders.
-
-    Recognised library: HTTP/HTTPS, `image://video@`/`music@`, drive-letter paths, SMB/NFS shares.
-    """
+    """True if URL is library artwork; not icons, system files, special folders, PVR or pictures."""
     if not url:
         return False
 
@@ -64,7 +65,6 @@ def is_library_artwork_url(url: str) -> bool:
         return False
 
     special_folders = (
-        '/.actors/', '\\.actors\\',
         '/.extrafanart/', '\\.extrafanart\\',
         '/.extrathumbs/', '\\.extrathumbs\\'
     )
@@ -75,12 +75,20 @@ def is_library_artwork_url(url: str) -> bool:
         return True
 
     if url.startswith('image://') and '@' in inner_url:
-        return True
+        return inner_url.split('@', 1)[0] in _LIBRARY_WRAPPERS
 
-    if _LIBRARY_DRIVE_RE.match(decoded_url):
+    if _LOCAL_PATH_RE.match(decoded_url):
         return True
 
     if decoded_url.startswith('\\\\') or decoded_url.startswith('smb://') or decoded_url.startswith('nfs://'):
         return True
 
     return False
+
+
+def report_url_lines(urls: List[str]) -> List[str]:
+    """Report lines for the first few hundred URLs, then a count of the rest."""
+    lines = list(urls[:_REPORT_URL_LIMIT])
+    if len(urls) > _REPORT_URL_LIMIT:
+        lines.append(f"...and {len(urls) - _REPORT_URL_LIMIT} more")
+    return lines

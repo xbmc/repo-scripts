@@ -1,7 +1,6 @@
 """User-triggered bulk sync of TMDB metadata for every TV show in the library."""
 from __future__ import annotations
 
-from datetime import datetime
 from typing import Dict, List
 
 import xbmc
@@ -9,19 +8,11 @@ import xbmcgui
 
 from lib.kodi.client import log, ADDON, request, extract_result
 from lib.data.api.tmdb import resolve_tmdb_id
-from lib.data.database.cache import (
-    cache_online_properties,
-    get_cached_metadata,
-    get_cached_online_keys,
-    get_cached_online_properties,
-)
+from lib.data.database.cache import get_fresh_title_ids, merge_online_properties
 from lib.data.database.mapping import get_imdb_ids_batch
-from lib.data.database.schedule import upsert_schedule
 from lib.infrastructure import tasks as task_manager
 from lib.infrastructure.dialogs import ProgressDialog
-from lib.infrastructure.menus import confirm_cancel_running_task
-from lib.service.online.fetchers import fetch_tmdb_online_data
-from lib.service.online.helpers import get_online_ttl, make_cache_key
+from lib.data.online import fetch_tmdb_online_data, make_cache_key
 
 
 def run_sync_tvshows() -> None:
@@ -36,13 +27,8 @@ def run_sync_tvshows() -> None:
 
     operation_name = ADDON.getLocalizedString(32988)
 
-    if task_manager.is_task_running():
-        if not confirm_cancel_running_task(operation_name):
-            return
-        task_manager.cancel_task()
-        monitor = xbmc.Monitor()
-        while task_manager.is_task_running() and not monitor.abortRequested():
-            monitor.waitForAbort(0.1)
+    if not task_manager.acquire_task_slot(operation_name, use_background=False):
+        return
 
     progress = None
     try:
@@ -72,18 +58,18 @@ def run_sync_tvshows() -> None:
 
 
 def _execute_sync(progress: ProgressDialog, ctx: task_manager.TaskContext) -> Dict[str, int]:
+    """Fetch TMDB data for every library show whose cached title data is missing or stale."""
     stats = {"fetched": 0, "skipped": 0, "failed": 0, "cancelled": False}
     monitor = xbmc.Monitor()
-    today = datetime.now().strftime("%Y-%m-%d")
 
-    progress.update(0, "Scanning library...")
+    progress.update(0, ADDON.getLocalizedString(32292))
     library_shows = _get_all_library_shows()
     total_library = len(library_shows)
     if total_library == 0:
         return stats
 
-    progress.update(2, f"Found {total_library} TV shows. Identifying uncached...")
-    cached_keys = get_cached_online_keys()
+    progress.update(2, ADDON.getLocalizedString(32288).format(total_library))
+    fresh_ids = get_fresh_title_ids("tvshow")
     imdb_map = get_imdb_ids_batch(
         {s["tmdb_id"] for s in library_shows}, "tvshow"
     )
@@ -92,13 +78,13 @@ def _execute_sync(progress: ProgressDialog, ctx: task_manager.TaskContext) -> Di
     for s in library_shows:
         imdb_id = imdb_map.get(s["tmdb_id"], s.get("imdb_id") or "")
         cache_key = make_cache_key("tvshow", imdb_id, s["tmdb_id"])
-        if cache_key in cached_keys:
+        if not cache_key or s["tmdb_id"] in fresh_ids:
             stats["skipped"] += 1
             continue
         work.append({**s, "imdb_id": imdb_id, "cache_key": cache_key})
 
     if not work:
-        progress.update(100, "All TV shows already cached.")
+        progress.update(100, ADDON.getLocalizedString(32289))
         return stats
 
     total_work = len(work)
@@ -121,23 +107,8 @@ def _execute_sync(progress: ProgressDialog, ctx: task_manager.TaskContext) -> Di
             if not tmdb_props:
                 stats["failed"] += 1
                 continue
-            existing = get_cached_online_properties(cache_key) or {}
-            existing.update(tmdb_props)
-            ttl = get_online_ttl("tvshow", tmdb_id)
-            cache_online_properties(cache_key, existing, ttl_hours=ttl)
+            merge_online_properties(cache_key, tmdb_props)
             stats["fetched"] += 1
-
-            tmdb_data = get_cached_metadata("tvshow", tmdb_id)
-            if tmdb_data:
-                next_ep = tmdb_data.get("next_episode_to_air")
-                if next_ep and (next_ep.get("air_date") or "") < today:
-                    next_ep = None
-                upsert_schedule(
-                    tmdb_id, show["tvshowid"], show["title"],
-                    tmdb_data.get("status") or "",
-                    next_ep,
-                    tmdb_data.get("last_episode_to_air"),
-                )
         except Exception as e:
             log("Plugin", f"Sync TV shows: error for tmdb_id={tmdb_id}: {e}", xbmc.LOGWARNING)
             stats["failed"] += 1

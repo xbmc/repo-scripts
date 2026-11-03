@@ -9,6 +9,7 @@ import xbmcgui
 
 from lib.kodi.client import get_library_items, log, ADDON, decode_image_url, LibraryScanAborted
 from lib.kodi.settings import KodiSettings
+from lib.kodi.utilities import media_type_label
 from lib.infrastructure.dialogs import ProgressDialog
 from lib.infrastructure.paths import (
     PathBuilder,
@@ -17,7 +18,7 @@ from lib.infrastructure.paths import (
     resolve_media_file,
 )
 from lib.infrastructure.workers import STALL_TIMEOUT_SECONDS
-from lib.texture.utilities import should_precache_url, is_library_artwork_url
+from lib.texture.utilities import should_precache_url, is_library_artwork_url, report_url_lines
 from lib.texture.queues import TextureCache, TextureCacheDownload
 from lib.texture.library import (
     DEFAULT_TEXTURE_MEDIA_TYPES,
@@ -43,10 +44,7 @@ _PRECACHE_PROPERTIES = {
 def precache_library_artwork(media_types: Optional[List[str]] = None,
                              progress_dialog: Optional[ProgressDialog] = None,
                              task_context=None) -> Dict[str, Any]:
-    """Pre-cache library artwork URLs not already in the texture cache.
-
-    Returns stats: `total_urls, already_cached, needed_caching, successfully_cached, failed`.
-    """
+    """Pre-cache the library artwork not yet in the texture cache; returns the run's counts."""
     stats = {
         'total_urls': 0,
         'already_cached': 0,
@@ -63,28 +61,28 @@ def precache_library_artwork(media_types: Optional[List[str]] = None,
             media_types = list(DEFAULT_TEXTURE_MEDIA_TYPES)
 
         if progress_dialog:
-            progress_dialog.update(0, "Scanning library for artwork URLs...")
+            progress_dialog.update(0, ADDON.getLocalizedString(32292))
 
         def progress_callback(type_index: int, type_count: int, media_type: str,
                               done: int, total: int):
             if progress_dialog:
                 frac = (type_index - 1 + (done / total if total else 1)) / type_count
-                progress_dialog.update(int(frac * 10),
-                                       f"Scanning {media_type}: {done:,} / {total:,}")
+                label = ADDON.getLocalizedString(32704).format(media_type_label(media_type))
+                progress_dialog.update(int(frac * 10), f"{label}: {done:,} / {total:,}")
 
         library_urls = get_all_library_artwork_urls(
             media_types, progress_callback=progress_callback
         )
 
-        log("Artwork",f"Pre-cache: found {len(library_urls)} total library artwork URLs")
+        log("Artwork", f"Pre-cache: found {len(library_urls)} total library artwork URLs")
 
         if progress_dialog:
-            progress_dialog.update(10, "Loading texture cache...")
+            progress_dialog.update(10, ADDON.getLocalizedString(32331))
 
         cached_urls_set = load_cached_urls_once()
 
         if progress_dialog:
-            progress_dialog.update(20, "Identifying uncached artwork...")
+            progress_dialog.update(20, ADDON.getLocalizedString(32090))
 
         precacheable_urls = []
         urls_to_cache = []
@@ -127,7 +125,7 @@ def precache_library_artwork(media_types: Optional[List[str]] = None,
 
         try:
             queued = cache_queue.bulk_add_urls(urls_to_cache)
-            log("Artwork",f"Pre-cache: queued {queued} URLs for background processing")
+            log("Artwork", f"Pre-cache: queued {queued} URLs for background processing")
 
             last_update_time = time.time()
             last_percent = -1
@@ -186,7 +184,7 @@ def precache_library_artwork(media_types: Optional[List[str]] = None,
             clear_cached_urls_cache()
 
     except Exception as e:
-        log("Texture",f"Pre-cache failed: {str(e)}", xbmc.LOGERROR)
+        log("Texture", f"Pre-cache failed: {str(e)}", xbmc.LOGERROR)
         stats['failed'] = stats['needed_caching']
         clear_cached_urls_cache()
 
@@ -196,10 +194,7 @@ def precache_library_artwork(media_types: Optional[List[str]] = None,
 def precache_and_download_artwork(media_types: Optional[List[str]] = None,
                                   progress_dialog: Optional[ProgressDialog] = None,
                                   task_context=None) -> Dict[str, Any]:
-    """Pre-cache + download artwork in one pass via `TextureCacheDownload`.
-
-    Returns stats: `total_items, cached, downloaded, skipped, failed, cancelled, stalled`.
-    """
+    """Pre-cache and download the library artwork in one pass; returns the run's counts."""
     stats = {
         'total_items': 0,
         'total_urls': 0,
@@ -220,7 +215,7 @@ def precache_and_download_artwork(media_types: Optional[List[str]] = None,
 
     try:
         if progress_dialog:
-            progress_dialog.update(5, "Scanning library...")
+            progress_dialog.update(5, ADDON.getLocalizedString(32292))
 
         def has_artwork(item: Dict[str, Any]) -> bool:
             art = item.get('art', {})
@@ -268,11 +263,7 @@ def precache_and_download_artwork(media_types: Optional[List[str]] = None,
         if progress_dialog:
             progress_dialog.update(15, f"Processing {len(items)} items...")
 
-        existing_file_mode_setting = KodiSettings.existing_file_mode()
-        existing_file_mode_int = (
-            int(existing_file_mode_setting) if existing_file_mode_setting else 0
-        )
-        existing_file_mode = ['skip', 'overwrite', 'use_existing'][existing_file_mode_int]
+        existing_file_mode = KodiSettings.existing_file_mode()
 
         PathBuilder.prepare_named_item_folders(media_types)
 
@@ -309,7 +300,7 @@ def precache_and_download_artwork(media_types: Optional[List[str]] = None,
                     queued += 1
 
             stats['total_urls'] = queued
-            log("Artwork",f"Pre-cache+download: queued {queued} URLs for processing")
+            log("Artwork", f"Pre-cache+download: queued {queued} URLs for processing")
 
             last_update_time = time.time()
             last_percent = -1
@@ -394,7 +385,7 @@ def precache_and_download_artwork(media_types: Optional[List[str]] = None,
             clear_cached_urls_cache()
 
     except Exception as e:
-        log("Texture",f"Pre-cache+download failed: {str(e)}", xbmc.LOGERROR)
+        log("Texture", f"Pre-cache+download failed: {str(e)}", xbmc.LOGERROR)
         clear_cached_urls_cache()
 
     return stats
@@ -403,10 +394,7 @@ def precache_and_download_artwork(media_types: Optional[List[str]] = None,
 def cleanup_orphaned_textures(media_types: Optional[List[str]] = None,
                               progress_dialog: Optional[ProgressDialog] = None,
                               task_context=None) -> Dict[str, int]:
-    """Remove cached textures whose URL no longer appears in the library.
-
-    Returns stats: `total_cached, total_library, orphaned_found, removed, failed, cancelled`.
-    """
+    """Remove cached library artwork no item uses, once confirmed; returns the counts."""
     stats = {
         'total_cached': 0,
         'total_library': 0,
@@ -419,7 +407,7 @@ def cleanup_orphaned_textures(media_types: Optional[List[str]] = None,
     monitor = xbmc.Monitor()
 
     try:
-        log("Artwork",f"Starting orphaned texture cleanup for media types: {media_types}")
+        log("Artwork", f"Starting orphaned texture cleanup for media types: {media_types}")
 
         def aborted() -> bool:
             return bool(
@@ -439,7 +427,7 @@ def cleanup_orphaned_textures(media_types: Optional[List[str]] = None,
         stats['total_cached'] = scan_data['stats']['total_cached']
 
         if progress_dialog:
-            progress_dialog.update(50, "Finding orphaned textures...")
+            progress_dialog.update(50, ADDON.getLocalizedString(32091))
 
         orphaned = []
         for texture in cached_textures:
@@ -450,17 +438,16 @@ def cleanup_orphaned_textures(media_types: Optional[List[str]] = None,
 
         stats['orphaned_found'] = len(orphaned)
 
-        log("Artwork",f"Found {stats['orphaned_found']} orphaned textures")
+        log("Artwork", f"Found {stats['orphaned_found']} orphaned textures")
 
         if stats['orphaned_found'] > 0:
             dialog = xbmcgui.Dialog()
 
             while True:
                 result = dialog.yesnocustom(
-                    "Confirm Cleanup",
-                    f"Found {stats['orphaned_found']} orphaned textures to remove.[CR][CR]"
-                    f"Continue with removal?",
-                    customlabel="View Report"
+                    ADDON.getLocalizedString(32482),
+                    ADDON.getLocalizedString(32131).format(stats['orphaned_found']),
+                    customlabel=ADDON.getLocalizedString(32282)
                 )
 
                 if result == 2:
@@ -474,9 +461,9 @@ def cleanup_orphaned_textures(media_types: Optional[List[str]] = None,
                         "URLs to be removed:",
                         ""
                     ]
-                    for i, texture in enumerate(orphaned, 1):
-                        url = texture.get('url', '')
-                        report_lines.append(f"{i}. {url}")
+                    report_lines.extend(report_url_lines(
+                        [f"{i}. {texture.get('url', '')}" for i, texture in enumerate(orphaned, 1)]
+                    ))
 
                     dialog.textviewer(ADDON.getLocalizedString(32183), "\n".join(report_lines))
                 elif result == 1:
@@ -485,7 +472,8 @@ def cleanup_orphaned_textures(media_types: Optional[List[str]] = None,
                     return stats
 
         if progress_dialog:
-            progress_dialog.update(60, f"Removing {stats['orphaned_found']} orphaned textures...")
+            progress_dialog.update(
+                60, ADDON.getLocalizedString(32092).format(stats['orphaned_found']))
 
         for idx, texture in enumerate(orphaned):
             if (
@@ -510,15 +498,13 @@ def cleanup_orphaned_textures(media_types: Optional[List[str]] = None,
                 progress_dialog.update(percent, f"Removed {idx + 1} / {stats['orphaned_found']}")
 
         status = "cancelled" if stats['cancelled'] else "complete"
-        log("Artwork",f"Cleanup {status}: {stats['removed']} removed, {stats['failed']} failed")
+        log("Artwork", f"Cleanup {status}: {stats['removed']} removed, {stats['failed']} failed")
 
     except LibraryScanAborted:
         stats['cancelled'] = True
         log("Artwork", "Orphaned cleanup cancelled during library scan")
 
     except Exception as e:
-        log("Texture",f"Orphaned cleanup failed: {str(e)}", xbmc.LOGERROR)
+        log("Texture", f"Orphaned cleanup failed: {str(e)}", xbmc.LOGERROR)
 
     return stats
-
-

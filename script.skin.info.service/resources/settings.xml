@@ -167,30 +167,6 @@
 						<dependency type="visible" setting="trakt_configured">false</dependency>
 					</dependencies>
 				</setting>
-				<setting id="trakt_access_token" type="string">
-					<visible>false</visible>
-					<default></default>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="edit" format="string" />
-				</setting>
-				<setting id="trakt_refresh_token" type="string">
-					<visible>false</visible>
-					<default></default>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="edit" format="string" />
-				</setting>
-				<setting id="trakt_token_expires" type="string">
-					<visible>false</visible>
-					<default></default>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="edit" format="string" />
-				</setting>
 				<setting id="trakt_test_action" type="action" label="32062">
 					<control type="button" format="action">
 						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=test_trakt_connection)</data>
@@ -279,6 +255,30 @@
 					<control type="list" format="string" />
 				</setting>
 			</group>
+			<group id="3" label="32695">
+				<setting id="ratings_source_tmdb" type="boolean" label="32077">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
+				<setting id="ratings_source_mdblist" type="boolean" label="32050">
+					<default>true</default>
+					<control type="toggle" />
+					<dependencies>
+						<dependency type="enable" setting="mdblist_configured">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="ratings_source_omdb" type="boolean" label="32053">
+					<default>true</default>
+					<control type="toggle" />
+					<dependencies>
+						<dependency type="enable" setting="omdb_configured">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="ratings_source_trakt" type="boolean" label="32059">
+					<default>false</default>
+					<control type="toggle" />
+				</setting>
+			</group>
 			<group id="2" label="32135">
 				<setting id="imdb_auto_update" type="string" label="32136" help="32137">
 					<default>off</default>
@@ -304,6 +304,20 @@
 							<option label="32144">all</option>
 							<option label="32145">movies_tvshows</option>
 							<option label="32146">movies</option>
+						</options>
+					</constraints>
+					<control type="list" format="string" />
+				</setting>
+			</group>
+			<group id="4" label="32600">
+				<setting id="top250_auto_update" type="string" label="32136" help="32595">
+					<default>off</default>
+					<constraints>
+						<options>
+							<option label="351">off</option>
+							<option label="32139">library_scan</option>
+							<option label="808">daily</option>
+							<option label="32141">both</option>
 						</options>
 					</constraints>
 					<control type="list" format="string" />
@@ -413,6 +427,10 @@
 					<default>true</default>
 					<control type="toggle" />
 				</setting>
+				<setting id="art_type_thumb" type="boolean" label="32965">
+					<default>true</default>
+					<control type="toggle" />
+				</setting>
 				<setting id="art_type_banner" type="boolean" label="20020">
 					<default>true</default>
 					<control type="toggle" />
@@ -432,6 +450,19 @@
 				<setting id="art_type_characterart" type="boolean" label="32969">
 					<default>true</default>
 					<control type="toggle" />
+				</setting>
+				<setting id="musicvideo_thumb_source" type="string" label="32691">
+					<default>screenshots</default>
+					<constraints>
+						<options>
+							<option label="32692">screenshots</option>
+							<option label="32693">album_cover</option>
+							<option label="32694">artist_thumb</option>
+						</options>
+					</constraints>
+					<control type="list" format="string">
+						<heading>32691</heading>
+					</control>
 				</setting>
 			</group>
 		</category>

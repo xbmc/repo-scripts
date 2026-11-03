@@ -3,38 +3,21 @@ import sys
 import xbmc
 from typing import Callable, Dict, Optional
 from lib.kodi.client import log
-from lib.kodi.utilities import set_prop, clear_prop, resolve_infolabel
-from lib.infrastructure.dialogs import DialogProgress
-
-
-def _set_window_prop(key: str, value: str, window: str) -> None:
-    """Set a window property. Routes home-window writes through the cached helper to avoid
-    desync with service-layer writes that share the same property name."""
-    if window == "home":
-        set_prop(key, value)
-    else:
-        xbmc.executebuiltin(f'SetProperty({key},{value},{window})')
-
-
-def _clear_window_prop(key: str, window: str) -> None:
-    """Clear a window property. Routes home-window clears through the cached helper."""
-    if window == "home":
-        clear_prop(key)
-    else:
-        xbmc.executebuiltin(f'ClearProperty({key},{window})')
+from lib.kodi.utilities import (
+    resolve_infolabel, normalize_dbtype, set_window_prop, clear_window_prop, read_labels,
+)
 
 
 def _clear_blur_properties(blur_key: str, orig_key: str, window: str) -> None:
-    """Clear both blur properties on `window`."""
-    _clear_window_prop(blur_key, window)
-    _clear_window_prop(orig_key, window)
+    """Clear both blur properties on the target window."""
+    clear_window_prop(blur_key, window)
+    clear_window_prop(orig_key, window)
 
 
 def _blur_image_and_set_property(source: str, prefix: str = "",
                                  radius: Optional[int] = None,
                                  window: str = "home") -> None:
-    """Blur `source` and set `SkinInfo.[prefix.]BlurredImage`/`.Original` on `window`;
-    empty `source` clears them."""
+    """Blur an image into `SkinInfo.[prefix.]BlurredImage`/`.Original`; no image clears them."""
     prop_base = f"SkinInfo.{prefix}." if prefix else "SkinInfo."
     blur_key = f"{prop_base}BlurredImage"
     orig_key = f"{prop_base}BlurredImage.Original"
@@ -44,22 +27,13 @@ def _blur_image_and_set_property(source: str, prefix: str = "",
             _clear_blur_properties(blur_key, orig_key, window)
             return
 
-        if radius is None:
-            blur_radius_str = xbmc.getInfoLabel("Skin.String(SkinInfo.BlurRadius)") or "40"
-            try:
-                radius = int(blur_radius_str)
-                if radius < 1:
-                    radius = 40
-            except (ValueError, TypeError):
-                radius = 40
-
-        from lib.service import blur
+        from lib.infrastructure import blur
         blurred_path = blur.blur_image(source, radius)
 
         if blurred_path:
             log("Blur", f"Setting {blur_key} on window {window} to: {blurred_path}", xbmc.LOGDEBUG)
-            _set_window_prop(blur_key, blurred_path, window)
-            _set_window_prop(orig_key, source, window)
+            set_window_prop(blur_key, blurred_path, window)
+            set_window_prop(orig_key, source, window)
         else:
             log("Blur", "Blur failed, clearing properties", xbmc.LOGDEBUG)
             _clear_blur_properties(blur_key, orig_key, window)
@@ -93,6 +67,7 @@ def _handle_colorpicker(args: dict) -> None:
 
 
 def _handle_blur(args: dict) -> None:
+    """Blur a resolved source image into a window property."""
     source = resolve_infolabel(args.get('source', ""))
     prefix = args.get('prefix', "Custom")
     window = args.get('window_id', "home")
@@ -113,9 +88,13 @@ def _handle_split_string(args: dict) -> None:
 
 
 def _handle_urlencode(args: dict) -> None:
+    """URL-encode a string, or an infolabel read here so commas and quotes survive."""
     from lib.skin.strings import urlencode
-    string = resolve_infolabel(args.get('string', ""))
-    urlencode(string, args.get('prefix', ''), args.get('window', 'home'))
+    stringinfo = args.get('stringinfo', '')
+    string = (read_labels((stringinfo,))[stringinfo] if stringinfo
+              else resolve_infolabel(args.get('string', "")))
+    urlencode(string, args.get('prefix', ''), args.get('window', 'home'),
+              args.get('doneaction', ''), args.get('json', '').lower() == 'true')
 
 
 def _handle_urldecode(args: dict) -> None:
@@ -177,6 +156,7 @@ def _handle_get_setting(args: dict) -> None:
 
 
 def _handle_set_setting(args: dict) -> None:
+    """Set a skin setting, coercing the string value to bool or int first."""
     from lib.skin.settings import set_setting
     setting = args.get('setting', "")
     value = args.get('value', "")
@@ -203,13 +183,18 @@ def _handle_reset_setting(args: dict) -> None:
 
 
 def _handle_update_library_ratings(args: dict) -> None:
+    """Start a library rating update unless another task holds the slot."""
+    from lib.infrastructure import tasks as task_manager
     from lib.rating.menu import initialize_sources
     from lib.rating.updater import update_library_ratings
     media_type = args.get('dbtype', 'movie').lower()
     if media_type not in ("movie", "tvshow", "episode"):
         media_type = "movie"
     use_background = args.get('background', 'true').lower() == 'true'
-    update_library_ratings(media_type, initialize_sources(), use_background=use_background)
+    if not task_manager.acquire_task_slot("Update Library Ratings", use_background):
+        return
+    update_library_ratings(
+        media_type, initialize_sources(), use_background=use_background)
 
 
 def _handle_sync_tvshows(_args: dict) -> None:
@@ -232,9 +217,14 @@ def _handle_tools(_args: dict) -> None:
     run_tools()
 
 
+def _handle_update_top250(_args: dict) -> None:
+    from lib.script.top250 import run_top250_update
+    run_top250_update()
+
+
 def _handle_review_artwork(args: dict) -> None:
     from lib.artwork.manager import run_art_fetcher_single
-    run_art_fetcher_single(args.get('dbid'), args.get('dbtype'))
+    run_art_fetcher_single(args.get('dbid'), args.get('dbtype'), args.get('art_type'))
 
 
 def _handle_download_artwork(args: dict) -> None:
@@ -253,6 +243,7 @@ def _handle_edit(args: dict) -> None:
 
 
 def _handle_export_nfo(args: dict) -> None:
+    """Write an NFO beside one library item's file."""
     import xbmcgui
     from lib.kodi.client import ADDON
     from lib.editor.nfo import write_nfo
@@ -263,7 +254,7 @@ def _handle_export_nfo(args: dict) -> None:
     if not dbid or dbid == "-1" or not dbtype:
         return
 
-    wrote = write_nfo(dbtype.lower(), int(dbid), forced=True)
+    wrote = write_nfo(normalize_dbtype(dbtype), int(dbid), forced=True)
     if wrote:
         show_notification(ADDON.getLocalizedString(32029), ADDON.getLocalizedString(32030),
                           xbmcgui.NOTIFICATION_INFO, 3000)
@@ -273,6 +264,7 @@ def _handle_export_nfo(args: dict) -> None:
 
 
 def _handle_settings_action(args: dict) -> None:
+    """Run an API key or Trakt authorization action from the add-on settings."""
     from lib.data.api import settings as api_settings
     sub_action = args.get('sub_action')
     provider = args.get('provider')
@@ -311,6 +303,7 @@ def _handle_person_search(args: dict) -> None:
 
 
 def _handle_tmdb_search(args: dict) -> None:
+    """Search TMDB by keyboard, publish the pick, open its info on request; `:YYYY` sets a year."""
     import xbmcgui
     import re
     from lib.data.api.tmdb import ApiTmdb
@@ -326,7 +319,7 @@ def _handle_tmdb_search(args: dict) -> None:
 
     log("General", f"tmdb_search: Opening keyboard for {media_type} search", xbmc.LOGDEBUG)
 
-    keyboard = xbmcgui.Dialog().input(heading=f'Search {media_type.upper()}')
+    keyboard = xbmcgui.Dialog().input(heading=xbmc.getLocalizedString(137))
     if not keyboard:
         log("General", "tmdb_search: User cancelled keyboard", xbmc.LOGDEBUG)
         return
@@ -351,7 +344,8 @@ def _handle_tmdb_search(args: dict) -> None:
 
     if not results:
         xbmcgui.Dialog().notification(
-            'TMDB Search', 'No results found', xbmcgui.NOTIFICATION_INFO, 3000)
+            xbmc.getLocalizedString(137), xbmc.getLocalizedString(284),
+            xbmcgui.NOTIFICATION_INFO, 3000)
         log("General", f"tmdb_search: No results found for '{query}'", xbmc.LOGDEBUG)
         return
 
@@ -385,7 +379,8 @@ def _handle_tmdb_search(args: dict) -> None:
         listitem.setProperty('tmdb_id', str(result.get('id', '')))
         listitems.append(listitem)
 
-    selected_index = xbmcgui.Dialog().select(f'Search Results: {query}', listitems, useDetails=True)
+    selected_index = xbmcgui.Dialog().select(
+        f'{xbmc.getLocalizedString(283)}: {query}', listitems, useDetails=True)
 
     if selected_index < 0:
         log("General", "tmdb_search: User cancelled selection", xbmc.LOGDEBUG)
@@ -394,12 +389,18 @@ def _handle_tmdb_search(args: dict) -> None:
     tmdb_id = listitems[selected_index].getProperty('tmdb_id')
     log("General", f"tmdb_search: User selected {media_type} with tmdb_id={tmdb_id}", xbmc.LOGDEBUG)
 
-    xbmc.executebuiltin(f'ClearProperty({property_name},{window})')
+    clear_window_prop(property_name, window)
 
     details_url = f"plugin://script.skin.info.service/?action=tmdb_details&type={media_type}&tmdb_id={tmdb_id}"
-    xbmc.executebuiltin(f'SetProperty({property_name},{details_url},{window})')
+    set_window_prop(property_name, details_url, window)
 
     log("General", f"tmdb_search: Set property {property_name}={details_url}", xbmc.LOGDEBUG)
+
+    if args.get('open') == 'info':
+        if media_type == 'person':
+            _handle_dialog_actor_info({'person_id': tmdb_id})
+        else:
+            _handle_dialog_video_info({'dbtype': media_type, 'tmdb_id': tmdb_id})
 
     if doneaction:
         for builtin in doneaction.split('|'):
@@ -409,9 +410,11 @@ def _handle_tmdb_search(args: dict) -> None:
 
 
 def _handle_search_library_person(args: dict) -> None:
+    """Show a person's library credits and open the chosen one; writer credits cover movies only."""
     import urllib.parse
     import xbmcgui
     from lib.kodi.client import request
+    from lib.infrastructure.dialogs import DialogProgress
 
     name = urllib.parse.unquote(args.get('name', ''))
     crew = args.get('crew', '')
@@ -546,8 +549,18 @@ def _handle_search_library_person(args: dict) -> None:
             xbmc.executebuiltin(f'ActivateWindow(Videos,videodb://episodes/{item["id"]},return)')
 
 
+def _handle_pvr_match(_args: dict) -> None:
+    """Let the user fix the focused live TV programme's match."""
+    from lib.data.database._infrastructure import init_database
+    from lib.script.pvr import fix_match
+
+    init_database()
+    fix_match()
+
+
 def _handle_online_fetch(args: dict) -> None:
-    from lib.service.online import fetch_all_online_data
+    """Fetch online data into a window property; an episode resolves ids via its parent show."""
+    from lib.data.online import fetch_all_online_data
     from lib.kodi.client import get_item_details
     from lib.data.api.tmdb import ApiTmdb
     from lib.data.database._infrastructure import init_database
@@ -639,15 +652,11 @@ def _handle_online_fetch(args: dict) -> None:
         plugin_url += f"&imdb_id={imdb_id}"
 
     log("General", f"online_fetch: Setting {property_name}={plugin_url} on {window}", xbmc.LOGDEBUG)
-    xbmc.executebuiltin(f"SetProperty({property_name},{plugin_url},{window})")
+    set_window_prop(property_name, plugin_url, window)
 
 
 def _restore_focus(args: dict, dialog_xml: str) -> None:
-    """Focus the `focus` control once its dialog has left the screen.
-
-    A closing dialog lingers a beat, so focusing before it's gone lands on the
-    dialog, not the control underneath.
-    """
+    """Focus the `focus` control once its dialog has closed; a closing dialog lingers a beat."""
     control_id = args.get('focus', '')
     if not (control_id.isdigit() and int(control_id) > 0):
         return
@@ -661,15 +670,17 @@ def _restore_focus(args: dict, dialog_xml: str) -> None:
 
 
 def _handle_dialog_actor_info(args: dict) -> None:
-    xbmc.executebuiltin('ActivateWindow(busydialog)')
+    """Show the busy dialog while the actor info dialog loads."""
+    xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
     try:
         _handle_dialog_actor_info_inner(args)
     finally:
-        xbmc.executebuiltin('Dialog.Close(busydialog,true)')
+        xbmc.executebuiltin('Dialog.Close(busydialognocancel,true)')
         _restore_focus(args, 'script-skin-info-service-DialogActorInfo.xml')
 
 
 def _handle_dialog_actor_info_inner(args: dict) -> None:
+    """Open the actor info dialog, resolving the person by id or by name search."""
     from lib.data.api import person as person_api
     from lib.data.database._infrastructure import init_database
 
@@ -695,21 +706,26 @@ def _handle_dialog_actor_info_inner(args: dict) -> None:
 
     if not person_id and crew:
         from lib.script.person import resolve_via_crew
-        resolved = resolve_via_crew(person_api, name, dbid, dbtype, crew, separator, auto_search)
+        resolved = resolve_via_crew(person_api, name, dbid, dbtype, crew, separator, auto_search,
+                                    args.get('tmdb_id'))
         if not resolved:
             return
         person_id, name = resolved
 
     elif not person_id:
-        from lib.script.person import resolve_via_actor
+        from lib.script.person import pick_name, resolve_via_actor
+        name = pick_name(name, separator, xbmc.getLocalizedString(424))
+        if not name:
+            return
         person_id = resolve_via_actor(
             person_api, name, role, dbid, dbtype, auto_search, online,
             args.get('sourceid'), open_window='', set_search_query=False,
+            tmdb_id=args.get('tmdb_id'),
         )
         if not person_id:
             return
 
-    from lib.info.dialogs.actor import open_actor_info
+    from lib.dialog.actor import open_actor_info
     open_actor_info(
         person_id=person_id,
         person_name=name,
@@ -717,15 +733,17 @@ def _handle_dialog_actor_info_inner(args: dict) -> None:
 
 
 def _handle_dialog_image_viewer(args: dict) -> None:
-    xbmc.executebuiltin('ActivateWindow(busydialog)')
+    """Show the busy dialog while the image viewer loads."""
+    xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
     try:
         _handle_dialog_image_viewer_inner(args)
     finally:
-        xbmc.executebuiltin('Dialog.Close(busydialog,true)')
+        xbmc.executebuiltin('Dialog.Close(busydialognocancel,true)')
         _restore_focus(args, 'script-skin-info-service-DialogImageViewer.xml')
 
 
 def _handle_dialog_image_viewer_inner(args: dict) -> None:
+    """Open the image viewer; the skin's index is 1-based, the control's is not."""
     images_path = args.get('images_path', '')
     if not images_path:
         log("General", "dialog_image_viewer: Missing images_path", xbmc.LOGWARNING)
@@ -737,20 +755,22 @@ def _handle_dialog_image_viewer_inner(args: dict) -> None:
     except (ValueError, TypeError):
         selected_index = 0
 
-    from lib.info.dialogs.image import open_image_viewer
+    from lib.dialog.image import open_image_viewer
     open_image_viewer(images_path=images_path, selected_index=selected_index)
 
 
 def _handle_dialog_video_info(args: dict) -> None:
-    xbmc.executebuiltin('ActivateWindow(busydialog)')
+    """Show the busy dialog while the video info dialog loads."""
+    xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
     try:
         _handle_dialog_video_info_inner(args)
     finally:
-        xbmc.executebuiltin('Dialog.Close(busydialog,true)')
+        xbmc.executebuiltin('Dialog.Close(busydialognocancel,true)')
         _restore_focus(args, 'script-skin-info-service-DialogVideoInfo.xml')
 
 
 def _handle_dialog_video_info_inner(args: dict) -> None:
+    """Open the video info dialog, resolving ids from a dbid, or type and dbid from a TMDB id."""
     from lib.data.database._infrastructure import init_database
 
     init_database()
@@ -758,12 +778,31 @@ def _handle_dialog_video_info_inner(args: dict) -> None:
     media_type = args.get('dbtype', '')
     if media_type == 'tv':
         media_type = 'tvshow'
+    if media_type and media_type not in ('movie', 'tvshow'):
+        log("General", f"dialog_video_info: Unsupported dbtype '{media_type}'", xbmc.LOGDEBUG)
+        return
     dbid = args.get('dbid', '')
     tmdb_id = args.get('tmdb_id', '')
     imdb_id = args.get('imdb_id', '')
 
+    if tmdb_id and not dbid:
+        from lib.data.database.rollcall import get_dbids_by_tmdb
+        types = (media_type,) if media_type else ('movie', 'tvshow')
+        found = {}
+        for candidate in types:
+            hit = get_dbids_by_tmdb(candidate, [tmdb_id]).get(str(tmdb_id))
+            if hit:
+                found[candidate] = str(hit)
+        if len(found) == 1:
+            media_type, dbid = found.popitem()
+
+    # TMDB movie and TV ids overlap
+    if not media_type:
+        log("General", "dialog_video_info: No dbtype given or resolvable", xbmc.LOGWARNING)
+        return
+
     if not tmdb_id and not imdb_id:
-        if not dbid or not media_type:
+        if not dbid:
             log("General", "dialog_video_info: Need dbid+dbtype or tmdb_id/imdb_id",
                 xbmc.LOGWARNING)
             return
@@ -775,14 +814,7 @@ def _handle_dialog_video_info_inner(args: dict) -> None:
             log("General", f"dialog_video_info: Invalid dbid '{dbid}'", xbmc.LOGWARNING)
             return
 
-        if media_type == 'episode':
-            episode_details = get_item_details("episode", dbid_int, ["tvshowid"])
-            if episode_details and episode_details.get("tvshowid"):
-                details = get_item_details("tvshow", episode_details["tvshowid"], ["uniqueid"])
-            else:
-                return
-        else:
-            details = get_item_details(media_type, dbid_int, ["uniqueid"])
+        details = get_item_details(media_type, dbid_int, ["uniqueid"])
 
         if not details:
             return
@@ -790,7 +822,7 @@ def _handle_dialog_video_info_inner(args: dict) -> None:
         imdb_id = uniqueid.get("imdb", "")
         tmdb_id = uniqueid.get("tmdb", "")
 
-    from lib.info.dialogs.video import open_video_info
+    from lib.dialog.video import open_video_info
     open_video_info(
         tmdb_id=tmdb_id,
         imdb_id=imdb_id,
@@ -821,6 +853,7 @@ _HANDLERS: Dict[str, Callable[[dict], None]] = {
     "playall": _handle_playall,
     "playrandom": _handle_playrandom,
     "tools": _handle_tools,
+    "update_top250": _handle_update_top250,
     "review_artwork": _handle_review_artwork,
     "download_artwork": _handle_download_artwork,
     "update_ratings": _handle_update_ratings,
@@ -834,6 +867,7 @@ _HANDLERS: Dict[str, Callable[[dict], None]] = {
     "tmdb_search": _handle_tmdb_search,
     "search_library_person": _handle_search_library_person,
     "online_fetch": _handle_online_fetch,
+    "pvr_match": _handle_pvr_match,
     "dialog_actor_info": _handle_dialog_actor_info,
     "dialog_video_info": _handle_dialog_video_info,
     "dialog_image_viewer": _handle_dialog_image_viewer,
@@ -841,6 +875,7 @@ _HANDLERS: Dict[str, Callable[[dict], None]] = {
 
 
 def _dispatch_dialog(dialog: str, args: dict) -> None:
+    """Route a dialog name to its skin dialog helper."""
     from lib.skin.dialogs import (
         dialog_yesno, dialog_yesnocustom, dialog_ok, dialog_select,
         dialog_multiselect, dialog_contextmenu, dialog_input, dialog_numeric,

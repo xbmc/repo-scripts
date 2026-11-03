@@ -1,14 +1,16 @@
-"""Helper classes and utilities for artwork fetching."""
+"""Helper utilities for artwork fetching."""
 from __future__ import annotations
 
+import math
 from typing import List, Optional
 
+from lib.kodi.client import ADDON
 from lib.kodi.settings import KodiSettings
 from lib.kodi.utilities import get_preferred_language_code, normalize_language_tag
 
 
 def compare_art_quality(art_list: List[dict]) -> Optional[dict]:
-    """Find highest quality artwork from list based on resolution (width x height)."""
+    """Pick the highest-resolution artwork from a list; None when the list is empty."""
     if not art_list:
         return None
 
@@ -16,6 +18,7 @@ def compare_art_quality(art_list: List[dict]) -> Optional[dict]:
         return art_list[0]
 
     def get_pixel_count(art: dict) -> int:
+        """Area in pixels, zero when either dimension is missing."""
         width = int(art.get('width', 0) or 0)
         height = int(art.get('height', 0) or 0)
         return width * height
@@ -26,28 +29,7 @@ def compare_art_quality(art_list: List[dict]) -> Optional[dict]:
 def sort_artwork_by_popularity(art_list: List[dict], art_type: str = '',
                                sort_mode: str = 'popularity',
                                source_pref: str = 'all') -> List[dict]:
-    """Sort artwork by quality and popularity. Returns a new list (input not modified).
-
-    sort_mode:
-    - 'popularity' (default): Language > Weighted Popularity > Resolution.
-      Uses IMDb Bayesian averaging to balance rating quality vs. vote confidence.
-    - 'resolution': Resolution only (highest pixel count first).
-
-    source_pref:
-    - 'all' (default): TMDB and Fanart.tv mixed, sorted fairly.
-    - 'tmdb': Only TMDB items.
-    - 'fanart': Only Fanart.tv items.
-
-    Popularity mode sorting priority:
-    - Source tier: Primary sources first (TMDB, Fanart.tv), TheAudioDB last.
-    - Source preference (landscape only): Fanart.tv before TMDB.
-    - Language preference (if enabled for art type).
-    - Weighted popularity:
-      * TMDB: Bayesian (m=3, C=2.3): weighted = (votes/(votes+3)) * rating + (3/(votes+3)) * 2.3
-        Prevents single-vote ratings from dominating.
-      * Fanart.tv: Normalized likes (likes * 0.73) to match TMDB rating range.
-    - Resolution (pixel count) as tiebreaker.
-    """
+    """Sort a copy by source, language, fanart.tv likes or TMDB's own order, then resolution."""
     if not art_list or len(art_list) <= 1:
         return art_list
 
@@ -72,6 +54,7 @@ def sort_artwork_by_popularity(art_list: List[dict], art_type: str = '',
         use_language_preference = False
 
     def get_sort_key(art: dict) -> tuple:
+        """Sort tuple for the chosen mode; every field is negated to sort descending."""
         width = int(art.get('width', 0) or 0)
         height = int(art.get('height', 0) or 0)
         pixels = width * height
@@ -79,20 +62,9 @@ def sort_artwork_by_popularity(art_list: List[dict], art_type: str = '',
         if sort_mode == 'resolution':
             return (-pixels,)
 
-        m = 3
-        C = 2.3
-
-        rating = float(art.get('rating', 0) or 0)
-        vote_count = int(art.get('vote_count', 0) or 0)
+        # likes scaled onto TMDB's rating range; TMDB images share one baseline
         likes = int(art.get('likes', '0') or '0')
-
-        if rating > 0 and vote_count >= 0:
-            weighted_rating = (vote_count / (vote_count + m)) * rating + (m / (vote_count + m)) * C
-            popularity = weighted_rating
-        elif likes > 0:
-            popularity = likes * 0.73
-        else:
-            popularity = C if rating > 0 or vote_count == 0 else 0
+        popularity = likes * 0.73 if likes > 0 else 2.3
 
         if use_language_preference:
             language = normalize_language_tag(art.get('language'))
@@ -114,16 +86,13 @@ def sort_artwork_by_popularity(art_list: List[dict], art_type: str = '',
         else:
             source_priority = 0
 
-        return (source_priority, lang_match, -popularity, -pixels)
+        return (source_priority, lang_match, -popularity, art.get('rank', math.inf), -pixels)
 
     return sorted(art_list, key=get_sort_key)
 
 
 def get_available_languages(artwork_list: List[dict]) -> List[str]:
-    """Extract unique language codes from artwork list.
-
-    Returned list is sorted, with empty string (text-free) first if present.
-    """
+    """Unique language codes, sorted, with text-free first."""
     if not artwork_list:
         return []
 
@@ -147,17 +116,7 @@ def filter_artwork_by_language(
     language_code: Optional[str] = None,
     include_no_language: bool = True
 ) -> List[dict]:
-    """Filter artwork based on art type rules and language preferences.
-
-    Art type filtering rules:
-    - AUTO_NO_LANGUAGE_TYPES (fanart, keyart): Only text-free items (unless
-      prefer_fanart_language=True).
-    - AUTO_LANG_REQUIRED_TYPES (poster, clearlogo, etc.): Preferred language + text-free,
-      fallback to all.
-    - Other types or explicit language_code: Filter to specified language.
-
-    When language_code is None, uses the preferred language from settings.
-    """
+    """Keep art matching the wanted language; fanart and keyart take text-free only."""
     if not artwork_list:
         return []
 
@@ -208,7 +167,7 @@ def filter_artwork_by_language(
 def get_language_display_name(language_code: str) -> str:
     """Human-readable name for ISO 639-1 code; empty returns localized 'Text-free / Untagged'."""
     if not language_code or language_code == '':
-        return KodiSettings._get_addon().getLocalizedString(32122)
+        return ADDON.getLocalizedString(32122)
 
     language_names = {
         'en': 'English',
@@ -265,15 +224,80 @@ def get_language_display_name(language_code: str) -> str:
 
 
 def parse_art_slot_index(slot_name: str) -> int:
-    """Parse 0-based index from art slot name ('fanart' -> 0, 'fanart1' -> 1).
-
-    Returns -1 if not a fanart slot.
-    """
+    """0-based slot index ('fanart' is 0, 'fanart1' is 1), or -1 if not a fanart slot."""
     if slot_name == 'fanart':
         return 0
     elif slot_name.startswith('fanart'):
         try:
-            return int(slot_name[6:])  # Extract number after 'fanart'
+            return int(slot_name[6:])
         except (ValueError, IndexError):
             return -1
     return -1
+
+
+FEED_FOR_MEDIA = {
+    'movie': 'movies',
+    'set': 'movies',
+    'tvshow': 'tv',
+    'season': 'tv',
+    'episode': 'tv',
+    'artist': 'music',
+    'album': 'music',
+    'musicvideo': 'music',
+}
+
+
+def _feed_item_ids(entries: List[dict]) -> set:
+    """Ids from a fanart.tv latest response; movies carry both tmdb and imdb."""
+    ids = set()
+    for entry in entries:
+        for key in ('id', 'tmdb_id', 'imdb_id'):
+            value = entry.get(key)
+            if value:
+                ids.add(str(value))
+    return ids
+
+
+def sync_feed_changes(fanart_api, feeds: List[str]) -> dict:
+    """Queue rechecks for items each fanart.tv feed reports changed since its checkpoint."""
+    import time
+
+    from lib.data.database import cache as db_cache
+    from lib.data.database.mapping import get_tmdb_ids_by_tvdb
+    from lib.kodi.client import log
+    import xbmc
+
+    delay_hours = db_cache.get_fanarttv_cache_ttl_hours()
+    now = int(time.time())
+    outcome = {}
+
+    for feed in feeds:
+        since = db_cache.get_feed_checkpoint(feed)
+        if not since:
+            db_cache.set_feed_checkpoint(feed, now)
+            outcome[feed] = 'synced'
+            continue
+
+        entries = fanart_api.get_latest(feed, since)
+        if entries is None:
+            outcome[feed] = 'unavailable'
+            continue
+
+        item_ids = sorted(_feed_item_ids(entries))
+        db_cache.add_rechecks(feed, item_ids, now + delay_hours * 3600)
+        db_cache.set_feed_checkpoint(feed, now)
+        outcome[feed] = 'synced'
+        log("Artwork", f"Feed '{feed}': {len(item_ids)} changed since last scan", xbmc.LOGDEBUG)
+
+    for feed in feeds:
+        due = db_cache.take_due_rechecks(feed, now)
+        if due:
+            ids = list(due)
+            if feed == 'tv':
+                # a show's completion marker is keyed by its TMDB id, the feed sends TVDB ids
+                ids += get_tmdb_ids_by_tvdb(due, 'tvshow')
+            cleared = db_cache.clear_artwork_for_ids(ids)
+            log("Artwork", f"Feed '{feed}': cleared {cleared} cached rows for {len(due)} items",
+                xbmc.LOGDEBUG)
+
+    return outcome

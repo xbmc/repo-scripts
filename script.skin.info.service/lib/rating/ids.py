@@ -1,4 +1,4 @@
-"""Library ID operations - lookup, update, and fix missing/invalid IDs."""
+"""Library id lookups and the Fix Library IDs tool for missing IMDb and invalid TMDB ids."""
 from __future__ import annotations
 
 from typing import Dict, List, Optional, Set
@@ -21,7 +21,7 @@ from lib.infrastructure.dialogs import show_ok, show_notification, show_yesno, D
 def get_imdb_id_from_tmdb(media_type: str, uniqueid: Dict,
                           season: Optional[int] = None,
                           episode: Optional[int] = None) -> Optional[str]:
-    """Resolve IMDb ID via cached metadata -> TMDB API (by TMDB ID) -> TMDB `/find` (by TVDB ID)."""
+    """Resolve an IMDb id from TMDB by TMDB or TVDB id, recording episodes TMDB cannot supply."""
     tmdb_id = uniqueid.get("tmdb")
     tvdb_id = uniqueid.get("tvdb")
 
@@ -52,16 +52,19 @@ def get_imdb_id_from_tmdb(media_type: str, uniqueid: Dict,
         if mapped_imdb:
             return mapped_imdb
 
+    if media_type == "episode" and season is not None and episode is not None:
+        from lib.data.database.mapping import is_known_episode_miss
+        if is_known_episode_miss(tmdb_id, season, episode):
+            return None
+
     cached = db_cache.get_cached_metadata(cache_media_type, tmdb_id)
 
     if cached:
         if media_type == "episode" and season is not None and episode is not None:
             pass
-        else:
-            external_ids = cached.get("external_ids", {})
-            imdb_id = external_ids.get("imdb_id")
-            if imdb_id:
-                return imdb_id
+        elif "external_ids" in cached:
+            # a live payload carrying the field has answered, empty or not
+            return (cached["external_ids"] or {}).get("imdb_id") or None
 
     try:
         if media_type == "movie":
@@ -83,6 +86,9 @@ def get_imdb_id_from_tmdb(media_type: str, uniqueid: Dict,
 
             if not imdb_id:
                 if media_type == "episode":
+                    if season is not None and episode is not None:
+                        from lib.data.database.mapping import save_episode_miss
+                        save_episode_miss(tmdb_id, season, episode, data.get("air_date"))
                     log(
                         "Ratings",
                         f"TMDB has no IMDb ID for episode "
@@ -96,23 +102,21 @@ def get_imdb_id_from_tmdb(media_type: str, uniqueid: Dict,
                         xbmc.LOGDEBUG,
                     )
 
-            return imdb_id
+            return imdb_id or None
 
-        if media_type == "episode" and tvdb_id:
+        if media_type == "episode" and season is not None and episode is not None:
+            fallback = "trying TVDB fallback" if tvdb_id else "no TVDB ID for fallback"
             log(
                 "Ratings",
                 f"TMDB lookup failed for episode "
-                f"(tmdb={tmdb_id}, S{season:02d}E{episode:02d}), trying TVDB fallback",
+                f"(tmdb={tmdb_id}, S{season:02d}E{episode:02d}), {fallback}",
                 xbmc.LOGDEBUG,
             )
-            return _try_tvdb_episode_fallback(tmdb_client, str(tvdb_id))
-        if media_type == "episode":
-            log(
-                "Ratings",
-                f"TMDB lookup failed for episode "
-                f"(tmdb={tmdb_id}, S{season:02d}E{episode:02d}), no TVDB ID for fallback",
-                xbmc.LOGDEBUG,
-            )
+            imdb_id = _try_tvdb_episode_fallback(tmdb_client, str(tvdb_id)) if tvdb_id else None
+            if not imdb_id and _unlisted_on_tmdb(cached, season, episode):
+                from lib.data.database.mapping import save_unlisted_episode
+                save_unlisted_episode(tmdb_id, season, episode)
+            return imdb_id
         else:
             log(
                 "Ratings",
@@ -124,6 +128,15 @@ def get_imdb_id_from_tmdb(media_type: str, uniqueid: Dict,
         log("Ratings", f"Error fetching TMDB data for IMDb ID lookup: {e}", xbmc.LOGWARNING)
 
     return None
+
+
+def _unlisted_on_tmdb(show: Optional[Dict], season: int, episode: int) -> bool:
+    """True when TMDB's cached show lists fewer episodes for the season, or not the season."""
+    seasons = (show or {}).get("seasons") or []
+    for entry in seasons:
+        if entry.get("season_number") == season:
+            return episode > (entry.get("episode_count") or 0)
+    return bool(seasons)
 
 
 def _try_tvdb_episode_fallback(tmdb_client: ApiTmdb, tvdb_id: str) -> Optional[str]:
@@ -156,13 +169,13 @@ def _try_tvdb_episode_fallback(tmdb_client: ApiTmdb, tvdb_id: str) -> Optional[s
 
 
 def update_kodi_uniqueid(media_type: str, dbid: int, uniqueid: Dict, imdb_id: str) -> bool:
-    """Convenience wrapper: set the `imdb` field on a Kodi uniqueid dict."""
+    """Update a Kodi item's IMDb uniqueid, keeping its other ids."""
     return update_kodi_uniqueid_field(media_type, dbid, uniqueid, "imdb", imdb_id)
 
 
 def update_kodi_uniqueid_field(media_type: str, dbid: int, uniqueid: Dict,
                                field: str, value: str) -> bool:
-    """Set a single `uniqueid` field on a Kodi library item via `SetXDetails` JSON-RPC."""
+    """Update one uniqueid field on a Kodi library item, keeping the rest."""
     method_info = KODI_SET_DETAILS_METHODS.get(media_type)
     if not method_info:
         return False
@@ -296,28 +309,28 @@ def run_fix_library_ids(prompt: bool = True) -> None:
         if total_missing_imdb > 0:
             parts = []
             if missing_imdb_movies:
-                parts.append(f"{len(missing_imdb_movies):,} movies")
+                parts.append(f"{len(missing_imdb_movies):,} {xbmc.getLocalizedString(342)}")
             if missing_imdb_shows:
-                parts.append(f"{len(missing_imdb_shows):,} TV shows")
+                parts.append(f"{len(missing_imdb_shows):,} {xbmc.getLocalizedString(20343)}")
             if missing_imdb_episodes:
-                parts.append(f"{len(missing_imdb_episodes):,} episodes")
-            lines.append(f"Missing IMDb IDs: {', '.join(parts)}")
+                parts.append(f"{len(missing_imdb_episodes):,} {xbmc.getLocalizedString(20360)}")
+            lines.append(ADDON.getLocalizedString(32741).format(", ".join(parts)))
 
         if total_invalid_tmdb > 0:
             parts = []
             if invalid_tmdb_movies:
-                parts.append(f"{len(invalid_tmdb_movies):,} movies")
+                parts.append(f"{len(invalid_tmdb_movies):,} {xbmc.getLocalizedString(342)}")
             if invalid_tmdb_shows:
-                parts.append(f"{len(invalid_tmdb_shows):,} TV shows")
-            lines.append(f"Invalid TMDB IDs: {', '.join(parts)}")
+                parts.append(f"{len(invalid_tmdb_shows):,} {xbmc.getLocalizedString(20343)}")
+            lines.append(ADDON.getLocalizedString(32742).format(", ".join(parts)))
 
-        message = "\n".join(lines) + "\n\nFix these issues?"
+        message = "\n".join(lines) + "\n\n" + ADDON.getLocalizedString(32743)
 
         if not show_yesno(ADDON.getLocalizedString(32260), message):
             return
 
     progress = DialogProgress()
-    progress.create(ADDON.getLocalizedString(32260), "Starting...")
+    progress.create(ADDON.getLocalizedString(32260), ADDON.getLocalizedString(32336))
 
     total_imdb_fixed = 0
     total_tmdb_fixed = 0
@@ -330,16 +343,17 @@ def run_fix_library_ids(prompt: bool = True) -> None:
         total_tmdb_fixed = tmdb_fixed
 
     if missing_imdb_movies and not progress.iscanceled():
-        matched = _fix_missing_ids_via_tmdb(missing_imdb_movies, "movie", progress, "movies")
+        matched = _fix_missing_ids_via_tmdb(
+            missing_imdb_movies, "movie", progress, xbmc.getLocalizedString(342))
         total_imdb_fixed += matched
 
     if missing_imdb_shows and not progress.iscanceled():
         matched = _fix_missing_ids_via_tmdb(
-            missing_imdb_shows, "tvshow", progress, "TV shows", show_imdb_map
+            missing_imdb_shows, "tvshow", progress, xbmc.getLocalizedString(20343), show_imdb_map
         )
         total_imdb_fixed += matched
 
-    # Refresh show_imdb mapping for episodes whose shows were just fixed
+    # shows fixed above now give their episodes a show IMDb id
     for ep in missing_imdb_episodes:
         tvshowid = ep.get("tvshowid")
         if tvshowid and tvshowid in show_imdb_map:
@@ -348,7 +362,7 @@ def run_fix_library_ids(prompt: bool = True) -> None:
 
     if missing_imdb_episodes and not progress.iscanceled():
         total_imdb_fixed += _fix_missing_episode_ids(
-            missing_imdb_episodes, user_show_ids, progress
+            missing_imdb_episodes, user_show_ids, progress, len(episodes)
         )
 
     progress.close()
@@ -356,11 +370,10 @@ def run_fix_library_ids(prompt: bool = True) -> None:
     if total_imdb_fixed > 0 or total_tmdb_fixed > 0:
         results = []
         if total_imdb_fixed > 0:
-            results.append(f"Added {total_imdb_fixed:,} IMDb IDs")
+            results.append(ADDON.getLocalizedString(32744).format(f"{total_imdb_fixed:,}"))
         if total_tmdb_fixed > 0:
-            results.append(f"Fixed {total_tmdb_fixed:,} TMDB IDs")
+            results.append(ADDON.getLocalizedString(32745).format(f"{total_tmdb_fixed:,}"))
         show_ok(ADDON.getLocalizedString(32260), "\n".join(results))
-        xbmc.executebuiltin("Container.Refresh")
     else:
         show_ok(ADDON.getLocalizedString(32260), ADDON.getLocalizedString(32359))
 
@@ -420,7 +433,7 @@ def _fix_invalid_tmdb_ids(items: List[Dict], progress: xbmcgui.DialogProgress) -
 def _fix_missing_ids_via_tmdb(items: List[Dict], media_type: str,
                               progress: xbmcgui.DialogProgress, label: str,
                               id_map: Optional[Dict[int, str]] = None) -> int:
-    """Fill missing IMDb IDs on movies/shows from TMDB. `id_map` populated for tvshows."""
+    """Fill missing IMDb ids on movies or shows from TMDB, recording each show's new id."""
     matched = 0
     total = len(items)
     last_percent = -1
@@ -451,7 +464,7 @@ def _fix_missing_ids_via_tmdb(items: List[Dict], media_type: str,
 
 
 def _fix_missing_episode_ids(episodes: List[Dict], user_show_ids: Set[str],
-                             progress: xbmcgui.DialogProgress) -> int:
+                             progress: xbmcgui.DialogProgress, library_ep_count: int) -> int:
     """Fill episode IMDb IDs via IMDb dataset bulk lookup, then per-episode TMDB fallback."""
     progress.update(0, ADDON.getLocalizedString(32354))
 
@@ -459,7 +472,8 @@ def _fix_missing_episode_ids(episodes: List[Dict], user_show_ids: Set[str],
         progress.update(50, status)
 
     dataset = get_imdb_dataset()
-    result = dataset.refresh_episode_dataset(user_show_ids, progress_callback=progress_callback)
+    result = dataset.refresh_episode_dataset(user_show_ids, library_ep_count,
+                                             progress_callback=progress_callback)
 
     fixed = 0
     unmatched: List[Dict] = []
@@ -543,10 +557,7 @@ def clear_tvshow_uniqueid_cache() -> None:
 
 
 def prefetch_tvshow_uniqueids(tvshow_ids: Optional[Set[int]] = None) -> None:
-    """Pre-fetch all TV show uniqueids in one request to populate the cache.
-
-    `tvshow_ids` skips the request entirely when every wanted show is already cached.
-    """
+    """Prefetch every TV show's uniqueids in one request, unless the wanted ones are cached."""
     if tvshow_ids is not None and not (set(tvshow_ids) - set(_tvshow_uniqueid_cache)):
         return
     response = request("VideoLibrary.GetTVShows", {"properties": ["uniqueid"]})
@@ -562,7 +573,7 @@ def prefetch_tvshow_uniqueids(tvshow_ids: Optional[Set[int]] = None) -> None:
 
 
 def get_tvshow_uniqueid(tvshow_dbid: int) -> Dict[str, str]:
-    """Fetch a TV show's uniqueid dict, cached to avoid refetching per episode."""
+    """Get a TV show's uniqueid dict, cached per show with misses included."""
     if tvshow_dbid in _tvshow_uniqueid_cache:
         return _tvshow_uniqueid_cache[tvshow_dbid]
 
@@ -579,10 +590,13 @@ def get_tvshow_uniqueid(tvshow_dbid: int) -> Dict[str, str]:
     return {}
 
 
-def build_external_ids(ids: Dict) -> Dict[str, str]:
+def build_external_ids(ids: Dict, media_type: str = "") -> Dict[str, str]:
     """Build the external_ids dict for database sync from a resolved ids dict."""
     external_ids: Dict[str, str] = {}
-    imdb_id = ids.get("imdb_episode") or ids.get("imdb")
+    if media_type == "episode":
+        imdb_id = ids.get("imdb_episode")
+    else:
+        imdb_id = ids.get("imdb_episode") or ids.get("imdb")
     if imdb_id:
         external_ids["imdb"] = str(imdb_id)
     tmdb_id = ids.get("tmdb")

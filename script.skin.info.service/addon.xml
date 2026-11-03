@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.skin.info.service"
 	   name="Skin Info Service"
-	   version="2.0.0"
+	   version="2.0.1"
 	   provider-name="MikeSiLVO">
 	<requires>
 		<import addon="xbmc.python" version="3.0.1" />
@@ -18,7 +18,11 @@
 		<menu id="kodi.core.main">
 			<item library="context.py">
 				<label>$ADDON[script.skin.info.service 32102]</label>
-				<visible>!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo) | String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]</visible>
+				<visible>!String.IsEmpty(ListItem.DBID) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo) | String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)] + [Addon.SettingBool(script.skin.info.service,context_show_review_artwork) | Addon.SettingBool(script.skin.info.service,context_show_download_artwork) | Addon.SettingBool(script.skin.info.service,context_show_update_ratings) | Addon.SettingBool(script.skin.info.service,context_show_edit_metadata) | Addon.SettingBool(script.skin.info.service,context_show_export_nfo)]</visible>
+			</item>
+			<item library="context.py" args="pvr">
+				<label>$ADDON[script.skin.info.service 32079]</label>
+				<visible>Skin.HasSetting(SkinInfo.PVR) + [[String.StartsWith(ListItem.FileNameAndPath,pvr://guide/) + !Window.IsActive(radioguide) + !Window.IsActive(radiosearch)] | [String.StartsWith(ListItem.FileNameAndPath,pvr://channels/tv/) + ListItem.HasEpg] | [String.StartsWith(ListItem.FileNameAndPath,pvr://recordings/tv/) + !ListItem.IsFolder] | [String.StartsWith(ListItem.FileNameAndPath,pvr://timers/tv/timers/) + ListItem.HasEpg]]</visible>
 			</item>
 		</menu>
 	</extension>
@@ -32,27 +36,54 @@
 			<fanart>fanart.jpg</fanart>
 		</assets>
 		<news>
-2.0.0
-- Complete rewrite of the service
-- Online metadata and multi-source ratings (TMDb, OMDb, MDBList, Trakt, IMDb, Rotten Tomatoes, Metacritic and more)
-- Incremental IMDb rating updates and IMDb Top 250 rankings
-- Bulk TV show metadata sync and a tool to repair missing IMDb, TMDB and TVDB IDs
-- Smart caching that adapts to content age and TV show status, no manual settings
-- Music and music video online data and artwork (TheAudioDB, Last.fm, Wikipedia, Fanart.tv)
-- Artwork review tool plus single and bulk artwork download
-- Metadata editor for movies, TV shows, episodes, music videos, artists, albums and songs, plus NFO export
-- Plugin widgets: Next Up, Discovery, Recommendations, Cast, Crew, Similar, letter jump and more
-- Info dialogs: Actor Info, Video Info and Image Viewer
-- Stinger (mid/post-credits) notifications with skin override support
-- Tools: image blur, color picker, fanart slideshow, texture cache cleanup and GIF poster scanner
-- Skinner helpers: JSON-RPC wrapper (action=json) and skin setting actions
-- Requires Kodi 21 (Omega) or newer; skins enable it with Skin.SetBool(SkinInfo.Service)
+2.0.1
+- New widgets: Continue Watching, Next Up (Favourites), Recent Videos, Favourites, Upcoming Episodes and TMDB Discover
+- Trakt widgets for watchlist, history, in progress, Next Up, most played and lists
+- Online properties for episodes and for widget items outside the library
+- Live TV properties for the guide, channels, recordings and timers, plus a Fix match context item
+- Player properties for the playing season, live TV, artist discography and similar artists
+- New properties: awards, Rotten Tomatoes counts, star ratings, HDR, audio and subtitle language, watch time, image color
+- Plugin path for numbered infolabels, such as hourly weather
+- Ratings sources can each be turned off, and the IMDb Top 250 can update daily
+- Artwork review covers episodes and music videos, plus Fanart.tv 4K backgrounds and season keyart
+- Estuary versions of the actor, video info, artwork and image dialogs
+- Actor info covers crew, and TMDB search can open the info dialog
+- Slideshow can follow a playlist or library node, and includes music videos
+- Metadata editor handles movie sets and song moods, NFO export adds TV show status (Piers+)
+- Fix a rare Kodi crash when closing a library window
+- Fix home properties and blur being cleared by modal dialogs
+- Fix ratings and awards on the wrong item when a movie and a show share a TMDB id
+- Fix Library.Refreshed for removals, library clean and scans
+- Fix texture cleanup keeping unused actor photos from .actors folders
 		</news>
+		<summary lang="cs_CZ">Poskytuje vzhledům podrobné informace o médiích a grafiku.</summary>
 		<summary lang="en_GB">Provides rich media info and artwork to skins.</summary>
+		<summary lang="en_US">Provides rich media info and artwork to skins.</summary>
+		<summary lang="es_ES">Provee información enriquecida del contenido y arte a las skins.</summary>
 		<summary lang="fr_FR">Fournit aux habillages des informations enrichies sur les médias ainsi que leurs visuels.</summary>
+		<summary lang="hu_HU">Médiainformációkat és grafikákat biztosít a felszínekhez.</summary>
+		<summary lang="it_IT">Fornisce informazioni sui media e artwork di alta qualità alle skin.</summary>
 		<summary lang="pl_PL">Dostarcza bogatych informacji o mediach i grafikę dla skórek.</summary>
+		<summary lang="ru_RU">Предоставляет обложкам подробную информацию о медиа и иллюстрации.</summary>
+		<summary lang="sv_SE">Ger skal omfattande medieinformation och bilder.</summary>
+		<summary lang="zh_CN">为皮肤提供丰富的媒体信息和艺术图。</summary>
+		<description lang="cs_CZ">Služba Skin Info Service poskytuje vzhledům podrobná metadata a grafiku nad rámec toho, co Kodi standardně zpřístupňuje. Přidává další vlastnosti, například hodnocení z více zdrojů, grafiku, podrobnosti o streamu a informace o obsazení a ději filmů, seriálů, epizod, sbírek filmů, hudebních videoklipů, interpretů a alb; využívá přitom knihovnu i online data. Obsahuje také nástroj pro vyhledání animovaných plakátů GIF a jejich přidání do knihovny.</description>
 		<description lang="en_GB">Skin Info Service provides skins with rich metadata and artwork beyond what Kodi exposes by default. It adds extra properties such as ratings from multiple sources, artwork, stream details, and cast and plot information for movies, TV shows, episodes, sets, music videos, artists, and albums, drawing on both your library and online data. It also includes a tool to find and add animated GIF posters to your library.</description>
+		<description lang="en_US">Skin Info Service provides skins with rich metadata and artwork beyond what Kodi exposes by default. It adds extra properties such as ratings from multiple sources, artwork, stream details, and cast and plot information for movies, TV shows, episodes, sets, music videos, artists, and albums, drawing on both your library and online data. It also includes a tool to find and add animated GIF posters to your library.</description>
+		<description lang="es_ES">Skin Info Service provee skins con metadata enriquecida y mejor arte de lo que expone Kodi por defecto. Añade propiedades extra como las valoraciones desde distintas fuentes, arte, detalles de la emisión, elenco y argumento de las películas, programas de TV, episodios, sagas, vídeos musicales, intérpretes y álbumes, pintándolo todo en la colección y datos online. Incluye tambien una herramietna para buscar y añadir carteles de GIF animados para la colección.</description>
 		<description lang="fr_FR">Skin Info Service fournit des informations supplémentaires telles que les notes, les illustrations et les détails de flux pour les films, les séries, les sagas, les artistes et les albums. Comprend un outil de recherche d&apos;affiches GIF pour trouver et ajouter automatiquement des affiches GIF animées à votre médiathèque.</description>
+		<description lang="hu_HU">A Skin Info Service gazdag metaadatokkal és grafikákkal látja el a felszíneket, amelyek túlmutatnak azon, amit a Kodi alapértelmezés szerint megjelenít. Extra tulajdonságokat ad hozzá, például értékeléseket több forrásból, grafikákat, streamelési részleteket, valamint szereplő- és cselekményinformációkat filmekhez, tévéműsorokhoz, epizódokhoz, díszletekhez, videoklipekhez, előadókhoz és albumokhoz, mind a médiatárad, mind az online adatok felhasználásával. Tartalmaz egy eszközt is, amellyel animált GIF-posztereket kereshetsz és adhatsz hozzá a médiatáradhoz.</description>
+		<description lang="it_IT">Skin Info Service fornisce alle skin metadati e artwork avanzati, oltre a quanto Kodi mostra di default. Aggiunge proprietà extra come le valutazioni da più fonti, artwork, dettagli del flusso e informazioni su cast e trama per film, serie TV, episodi, saghe cinematografiche, video musicali, artisti e album, attingendo sia dalla libreria che dai dati online. Include anche uno strumento per trovare e aggiungere poster GIF animati alla libreria.</description>
 		<description lang="pl_PL">Skin Info Service dostarcza skórkom bogate metadane i grafikę, wykraczając daleko poza to, co Kodi udostępnia domyślnie. Dodaje dodatkowe właściwości, takie jak oceny z wielu źródeł, grafikę, szczegóły transmisji oraz informacje o obsadzie i fabule filmów, seriali, odcinków, kolekcji filmowych, teledysków, wykonawców i albumów, korzystając zarówno z Twojej biblioteki, jak i danych online. Zawiera również narzędzie do wyszukiwania i dodawania animowanych plakatów GIF do Twojej biblioteki.</description>
+		<description lang="ru_RU">Skin Info Service предоставляет обложкам расширенные метаданные и иллюстрации, выходящие за рамки стандартных возможностей Kodi. Он добавляет дополнительные свойства, такие как рейтинги из нескольких источников, иллюстрации, сведения о потоках, а также информацию об актёрах и сюжете для фильмов, сериалов, серий, киноциклов, музыкальных клипов, исполнителей и альбомов, используя как вашу медиатеку, так и данные из интернета. Также включает инструмент для поиска и добавления в медиатеку анимированных постеров в формате GIF.</description>
+		<description lang="sv_SE">Skin Info Service ger skal omfattande metadata och bilder utöver det som Kodi visar som standard. Tillägget lägger till extra egenskaper, till exempel betyg från flera källor, bilder, strömningsinformation samt uppgifter om medverkande och handling för filmer, tv-serier, avsnitt, samlingar, musikvideor, artister och album, med data från både ditt bibliotek och nätet. Det innehåller även ett verktyg för att hitta och lägga till animerade GIF-affischer i ditt bibliotek.</description>
+		<description lang="zh_CN">皮肤信息服务为皮肤提供超出 Kodi 默认范围的丰富元数据和艺术图。它添加了多种额外属性,例如来自多个来源的评分、艺术图、流媒体详情,以及电影、电视剧、剧集、合集、音乐视频、艺术家和专辑的演员阵容和剧情信息,数据来源包括您的媒体库和在线数据。它还包含一个工具,用于查找并向您的媒体库添加动画 GIF 海报。</description>
+		<disclaimer lang="cs_CZ">Tento doplněk využívá službu TMDb a její rozhraní API, ale nemá od TMDb oficiální podporu, certifikaci ani jiné schválení.</disclaimer>
+		<disclaimer lang="en_GB">This add-on uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.</disclaimer>
+		<disclaimer lang="en_US">This add-on uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.</disclaimer>
+		<disclaimer lang="it_IT">Questo add-on usa TMDB e le API di TMDB, ma non è approvato, certificato o altrimenti autorizzato da TMDB.</disclaimer>
+		<disclaimer lang="pl_PL">Ten dodatek korzysta z serwisu TMDB i interfejsów API TMDB, ale nie jest zatwierdzony, certyfikowany ani w żaden inny sposób wspierany przez TMDB.</disclaimer>
+		<disclaimer lang="ru_RU">Это дополнение использует TMDB и API TMDB, но не одобрено, не сертифицировано и иным образом не поддержано TMDB.</disclaimer>
+		<disclaimer lang="sv_SE">Detta tillägg använder TMDB och TMDB:s API:er, men är inte rekommenderat, certifierat eller på annat sätt godkänt av TMDB.</disclaimer>
 	</extension>
 </addon>

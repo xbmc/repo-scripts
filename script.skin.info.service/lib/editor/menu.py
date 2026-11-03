@@ -9,6 +9,7 @@ import xbmcgui
 from lib.infrastructure.dialogs import show_notification
 from lib.infrastructure.menus import Menu, MenuItem
 from lib.kodi.client import log, ADDON
+from lib.kodi.utilities import focused_item
 from lib.editor.config import (
     MEDIA_TYPE_FIELDS,
     FieldType,
@@ -38,11 +39,8 @@ from lib.editor.utilities import (
 
 
 def run_editor(dbid: str | None = None, dbtype: str | None = None) -> None:
-    """Main entry point for metadata editor."""
-    if not dbid:
-        dbid = xbmc.getInfoLabel("ListItem.DBID")
-    if not dbtype:
-        dbtype = xbmc.getInfoLabel("ListItem.DBType")
+    """Run the metadata editor on an item, the focused ListItem when none is given."""
+    dbid, dbtype = focused_item(dbid, dbtype)
 
     if not dbid or dbid == "-1" or not dbtype:
         show_notification(
@@ -53,7 +51,7 @@ def run_editor(dbid: str | None = None, dbtype: str | None = None) -> None:
         )
         return
 
-    media_type = dbtype.lower()
+    media_type = dbtype
 
     if media_type not in MEDIA_TYPE_FIELDS:
         show_notification(
@@ -76,7 +74,7 @@ def run_editor(dbid: str | None = None, dbtype: str | None = None) -> None:
         )
         return
 
-    title = item.get("title") or item.get("artist") or "Unknown"
+    title = item.get("title") or item.get("artist") or xbmc.getLocalizedString(13205)
     log("Editor", f"Editing {media_type} '{title}' (dbid={dbid_int})", xbmc.LOGDEBUG)
 
     _show_main_menu(dbid_int, media_type, item, title)
@@ -85,7 +83,7 @@ def run_editor(dbid: str | None = None, dbtype: str | None = None) -> None:
 def _show_main_menu(
     dbid: int, media_type: str, item: dict[str, Any], title: str
 ) -> None:
-    """Show flattened field menu with all editable fields."""
+    """Show every editable field with its current value until the user backs out."""
     fields = get_fields_for_media_type(media_type)
     last_selected = 0
     monitor = xbmc.Monitor()
@@ -97,7 +95,7 @@ def _show_main_menu(
             if not field_def:
                 continue
 
-            current = item.get(field_def["get_property"])
+            current = item.get(field_def["api_name"])
             display_name = get_display_name(field_def)
             field_type = field_def["field_type"]
 
@@ -129,7 +127,6 @@ def _show_main_menu(
         last_selected = menu._last_selected_idx or 0
 
 
-# Per-field overrides for INTEGER fields that need a specialized handler.
 _INTEGER_FIELD_OVERRIDES = {
     "runtime": lambda dn, cur, _mt, _f: handle_runtime(dn, cur),
     "duration": lambda dn, cur, _mt, _f: handle_duration(dn, cur),
@@ -139,6 +136,7 @@ _INTEGER_FIELD_OVERRIDES = {
 
 
 def _dispatch_integer(display_name: str, current, media_type: str, field: str, _item):
+    """Edit an integer field through its override handler when one exists."""
     handler = _INTEGER_FIELD_OVERRIDES.get(field)
     if handler:
         return handler(display_name, current, media_type, field)
@@ -149,7 +147,6 @@ _FIELD_TYPE_HANDLERS = {
     FieldType.TEXT:       lambda dn, cur, _mt, _f, _it: handle_text(dn, cur),
     FieldType.TEXT_LONG:  lambda dn, cur, _mt, _f, _it: handle_text(dn, cur),
     FieldType.INTEGER:    _dispatch_integer,
-    FieldType.NUMBER:     lambda dn, cur, _mt, _f, _it: handle_integer(dn, cur),
     FieldType.DATE:       lambda dn, cur, _mt, _f, _it: handle_date(dn, cur),
     FieldType.DATETIME:   lambda dn, cur, _mt, _f, _it: handle_lastplayed(dn, cur),
     FieldType.LIST:       lambda dn, cur, mt, f, _it: handle_list(dn, cur, mt, f),
@@ -164,12 +161,12 @@ _FIELD_TYPE_HANDLERS = {
 def _edit_field(
     dbid: int, media_type: str, item: dict[str, Any], field: str
 ) -> bool:
-    """Edit a single field. Returns True to keep menu open."""
+    """Edit one field, then save it and update the NFO; True keeps the menu open."""
     field_def = get_field_def(field)
     if not field_def:
         return True
 
-    current = item.get(field_def["get_property"])
+    current = item.get(field_def["api_name"])
     display_name = get_display_name(field_def)
     field_type = field_def["field_type"]
 
@@ -190,19 +187,19 @@ def _edit_field(
     if save_field(dbid, media_type, field, new_value, item):
         stored = new_value
         if field_type == FieldType.UNIQUEIDS and isinstance(new_value, dict):
-            # Nulls tell Kodi to remove
+            # a null tells Kodi to remove the id
             stored = {k: v for k, v in new_value.items() if v is not None}
-        item[field_def["get_property"]] = stored
-        # Also update premiered in local item when year changes since Kodi links them
+        item[field_def["api_name"]] = stored
+        # Kodi links year and premiered
         if field == "year" and isinstance(new_value, int):
             original = item.get("premiered", "")
             if original and len(original) >= 10:
                 item["premiered"] = f"{new_value}{original[4:10]}"
             else:
                 item["premiered"] = f"{new_value}-01-01"
-        show_notification(ADDON.getLocalizedString(32258), f"{display_name} updated",
+        show_notification(ADDON.getLocalizedString(32258),
+                          ADDON.getLocalizedString(32728).format(display_name),
                           xbmcgui.NOTIFICATION_INFO, 2000)
-        xbmc.executebuiltin("Container.Refresh")
 
         from lib.editor.nfo import write_nfo
         write_nfo(media_type, dbid)

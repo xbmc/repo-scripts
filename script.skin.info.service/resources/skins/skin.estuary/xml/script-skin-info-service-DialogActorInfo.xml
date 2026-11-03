@@ -1,0 +1,1180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	<defaultcontrol always="true">138</defaultcontrol>
+	<controls>
+		<control type="group">
+			<animation effect="fade" time="200">WindowClose</animation>
+			<include>ColoredBackgroundImages</include>
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<aspectratio>scale</aspectratio>
+				<fadetime>400</fadetime>
+				<texture background="true" colordiffuse="37FFFFFF">$INFO[Window.Property(BlurredThumb)]</texture>
+				<animation effect="fade" end="0" condition="String.IsEmpty(Window.Property(IsTop)) | Container(1500).IsUpdating | Container(1501).IsUpdating | Container(1502).IsUpdating | Container(1503).IsUpdating | Container(1505).IsUpdating | Container(1506).IsUpdating" reversible="false">Conditional</animation>
+				<animation effect="fade" time="300" tween="sine" easing="out" condition="!String.IsEmpty(Window.Property(IsTop)) + !Container(1500).IsUpdating + !Container(1501).IsUpdating + !Container(1502).IsUpdating + !Container(1503).IsUpdating + !Container(1505).IsUpdating + !Container(1506).IsUpdating" reversible="false">Conditional</animation>
+			</control>
+		</control>
+		<control type="group">
+			<centerleft>50%</centerleft>
+			<centertop>50%</centertop>
+			<width>1920</width>
+			<height>1080</height>
+			<control type="group">
+				<left>66</left>
+				<top>150</top>
+				<animation type="Conditional" condition="String.IsEmpty(Window.Property(IsTop)) | Container(1500).IsUpdating | Container(1501).IsUpdating | Container(1502).IsUpdating | Container(1503).IsUpdating | Container(1505).IsUpdating | Container(1506).IsUpdating" reversible="false">
+					<effect type="fade" end="0" />
+					<effect type="slide" start="-320" end="-320" />
+				</animation>
+				<animation type="Conditional" condition="!String.IsEmpty(Window.Property(IsTop)) + !Container(1500).IsUpdating + !Container(1501).IsUpdating + !Container(1502).IsUpdating + !Container(1503).IsUpdating + !Container(1505).IsUpdating + !Container(1506).IsUpdating" reversible="false">
+					<effect type="fade" time="300" tween="sine" easing="out" />
+					<effect type="slide" start="-320" time="400" tween="cubic" easing="out" />
+				</animation>
+				<animation type="WindowClose">
+					<effect type="fade" time="300" tween="sine" easing="out" />
+					<effect type="slide" end="-320" time="300" tween="cubic" easing="out" />
+				</animation>
+				<control type="image">
+					<left>-16</left>
+					<top>-16</top>
+					<width>566</width>
+					<height>841</height>
+					<texture>colors/black.png</texture>
+					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+					<bordersize>20</bordersize>
+				</control>
+				<control type="image">
+					<left>4</left>
+					<top>4</top>
+					<width>526</width>
+					<height>801</height>
+					<aspectratio>scale</aspectratio>
+					<texture fallback="DefaultActor.png" background="true">$INFO[Window.Property(ProfileImage)]</texture>
+				</control>
+			</control>
+			<control type="group">
+				<left>620</left>
+				<top>-30</top>
+				<animation type="Conditional" condition="String.IsEmpty(Window.Property(IsTop)) | Container(1500).IsUpdating | Container(1501).IsUpdating | Container(1502).IsUpdating | Container(1503).IsUpdating | Container(1505).IsUpdating | Container(1506).IsUpdating" reversible="false">
+					<effect type="fade" end="0" />
+					<effect type="slide" start="320" end="320" />
+				</animation>
+				<animation type="Conditional" condition="!String.IsEmpty(Window.Property(IsTop)) + !Container(1500).IsUpdating + !Container(1501).IsUpdating + !Container(1502).IsUpdating + !Container(1503).IsUpdating + !Container(1505).IsUpdating + !Container(1506).IsUpdating" reversible="false">
+					<effect type="fade" time="300" tween="sine" easing="out" />
+					<effect type="slide" start="320" time="400" tween="cubic" easing="out" />
+				</animation>
+				<animation type="WindowClose">
+					<effect type="fade" time="300" tween="sine" easing="out" />
+					<effect type="slide" end="320" time="300" tween="cubic" easing="out" />
+				</animation>
+				<control type="panel" id="1500">
+					<top>158</top>
+					<width>1235</width>
+					<height>370</height>
+					<onleft>1500</onleft>
+					<onright>1500</onright>
+					<ondown>138</ondown>
+					<scrolltime>200</scrolltime>
+					<orientation>horizontal</orientation>
+					<animation effect="fade" start="100" end="0" time="200" condition="![String.IsEqual(Window.Property(Section),library_movies) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1500).NumItems,0)]]">Conditional</animation>
+					<onclick>RunScript(script.skin.info.service,action=dialog_video_info,dbid=$INFO[Container(1500).ListItem.DBID],dbtype=$INFO[Container(1500).ListItem.DBType])</onclick>
+					<itemlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<label>$INFO[ListItem.Property(Role)]</label>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Property(Role)]</label>
+							</control>
+							<control type="image">
+								<left>16</left>
+								<top>16</top>
+								<width>193</width>
+								<height>285</height>
+								<texture border="4" infill="false" colordiffuse="button_focus">colors/white.png</texture>
+							</control>
+						</control>
+					</focusedlayout>
+					<content target="videos">$INFO[Window.Property(Container.Library_Movies.Path)]</content>
+				</control>
+				<control type="panel" id="1501">
+					<top>158</top>
+					<width>1235</width>
+					<height>370</height>
+					<onleft>1501</onleft>
+					<onright>1501</onright>
+					<ondown>138</ondown>
+					<scrolltime>200</scrolltime>
+					<orientation>horizontal</orientation>
+					<animation effect="fade" start="100" end="0" time="200" condition="![String.IsEqual(Window.Property(Section),library_tvshows) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0)]]">Conditional</animation>
+					<onclick>RunScript(script.skin.info.service,action=dialog_video_info,dbid=$INFO[Container(1501).ListItem.DBID],dbtype=$INFO[Container(1501).ListItem.DBType])</onclick>
+					<itemlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<label>$INFO[ListItem.Property(Role)]</label>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Property(Role)]</label>
+							</control>
+							<control type="image">
+								<left>16</left>
+								<top>16</top>
+								<width>193</width>
+								<height>285</height>
+								<texture border="4" infill="false" colordiffuse="button_focus">colors/white.png</texture>
+							</control>
+						</control>
+					</focusedlayout>
+					<content target="videos">$INFO[Window.Property(Container.Library_TVShows.Path)]</content>
+				</control>
+				<control type="panel" id="1502">
+					<top>158</top>
+					<width>1235</width>
+					<height>370</height>
+					<onleft>1502</onleft>
+					<onright>1502</onright>
+					<ondown>138</ondown>
+					<scrolltime>200</scrolltime>
+					<orientation>horizontal</orientation>
+					<animation effect="fade" start="100" end="0" time="200" condition="![String.IsEqual(Window.Property(Section),movies) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0)]]">Conditional</animation>
+					<onclick>RunScript(script.skin.info.service,action=dialog_video_info,tmdb_id=$INFO[Container(1502).ListItem.Property(TMDb_ID)],dbtype=$INFO[Container(1502).ListItem.Property(MediaType)])</onclick>
+					<itemlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>173</left>
+								<top>20</top>
+								<width>32</width>
+								<height>32</height>
+								<visible>String.IsEqual(ListItem.Property(IsInLibrary),true)</visible>
+								<texture>icons/inlibrary.png</texture>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<label>$INFO[ListItem.Property(Role)]</label>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>173</left>
+								<top>20</top>
+								<width>32</width>
+								<height>32</height>
+								<visible>String.IsEqual(ListItem.Property(IsInLibrary),true)</visible>
+								<texture>icons/inlibrary.png</texture>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Property(Role)]</label>
+							</control>
+							<control type="image">
+								<left>16</left>
+								<top>16</top>
+								<width>193</width>
+								<height>285</height>
+								<texture border="4" infill="false" colordiffuse="button_focus">colors/white.png</texture>
+							</control>
+						</control>
+					</focusedlayout>
+					<content target="videos">$INFO[Window.Property(Container.Movies.Path)]</content>
+				</control>
+				<control type="panel" id="1503">
+					<top>158</top>
+					<width>1235</width>
+					<height>370</height>
+					<onleft>1503</onleft>
+					<onright>1503</onright>
+					<ondown>138</ondown>
+					<scrolltime>200</scrolltime>
+					<orientation>horizontal</orientation>
+					<animation effect="fade" start="100" end="0" time="200" condition="![String.IsEqual(Window.Property(Section),tvshows) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1503).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0)]]">Conditional</animation>
+					<onclick>RunScript(script.skin.info.service,action=dialog_video_info,tmdb_id=$INFO[Container(1503).ListItem.Property(TMDb_ID)],dbtype=$INFO[Container(1503).ListItem.Property(MediaType)])</onclick>
+					<itemlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>173</left>
+								<top>20</top>
+								<width>32</width>
+								<height>32</height>
+								<visible>String.IsEqual(ListItem.Property(IsInLibrary),true)</visible>
+								<texture>icons/inlibrary.png</texture>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<label>$INFO[ListItem.Property(Role)]</label>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>173</left>
+								<top>20</top>
+								<width>32</width>
+								<height>32</height>
+								<visible>String.IsEqual(ListItem.Property(IsInLibrary),true)</visible>
+								<texture>icons/inlibrary.png</texture>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Property(Role)]</label>
+							</control>
+							<control type="image">
+								<left>16</left>
+								<top>16</top>
+								<width>193</width>
+								<height>285</height>
+								<texture border="4" infill="false" colordiffuse="button_focus">colors/white.png</texture>
+							</control>
+						</control>
+					</focusedlayout>
+					<content target="videos">$INFO[Window.Property(Container.TVShows.Path)]</content>
+				</control>
+				<control type="panel" id="1505">
+					<top>158</top>
+					<width>1235</width>
+					<height>370</height>
+					<onleft>1505</onleft>
+					<onright>1505</onright>
+					<ondown>138</ondown>
+					<scrolltime>200</scrolltime>
+					<orientation>horizontal</orientation>
+					<animation effect="fade" start="100" end="0" time="200" condition="![String.IsEqual(Window.Property(Section),crew) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1505).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0)]]">Conditional</animation>
+					<onclick>RunScript(script.skin.info.service,action=dialog_video_info,tmdb_id=$INFO[Container(1505).ListItem.Property(TMDb_ID)],dbtype=$INFO[Container(1505).ListItem.Property(MediaType)])</onclick>
+					<itemlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>173</left>
+								<top>20</top>
+								<width>32</width>
+								<height>32</height>
+								<visible>String.IsEqual(ListItem.Property(IsInLibrary),true)</visible>
+								<texture>icons/inlibrary.png</texture>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<label>$INFO[ListItem.Property(Job)]</label>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout height="317" width="204">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>225</width>
+								<height>317</height>
+								<texture>DefaultVideo.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>185</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>173</left>
+								<top>20</top>
+								<width>32</width>
+								<height>32</height>
+								<visible>String.IsEqual(ListItem.Property(IsInLibrary),true)</visible>
+								<texture>icons/inlibrary.png</texture>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>185</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>175</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Property(Job)]</label>
+							</control>
+							<control type="image">
+								<left>16</left>
+								<top>16</top>
+								<width>193</width>
+								<height>285</height>
+								<texture border="4" infill="false" colordiffuse="button_focus">colors/white.png</texture>
+							</control>
+						</control>
+					</focusedlayout>
+					<content target="videos">$INFO[Window.Property(Container.Crew.Path)]</content>
+				</control>
+				<control type="panel" id="1506">
+					<top>158</top>
+					<width>1235</width>
+					<height>370</height>
+					<onleft>1506</onleft>
+					<onright>1506</onright>
+					<ondown>138</ondown>
+					<scrolltime>200</scrolltime>
+					<orientation>horizontal</orientation>
+					<animation effect="fade" start="100" end="0" time="200" condition="![String.IsEqual(Window.Property(Section),images) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1506).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0) + !Integer.IsGreater(Container(1505).NumItems,0)]]">Conditional</animation>
+					<onclick>RunScript(script.skin.info.service,action=dialog_image_viewer,images_path=$INFO[Window.Property(Container.Images.Path)],selected_index=$INFO[Container(1506).CurrentItem])</onclick>
+					<itemlayout height="317" width="245">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>264</width>
+								<height>317</height>
+								<texture>DefaultActorSolid.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>224</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>224</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>214</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>214</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<label>$INFO[ListItem.Property(Dimensions)]</label>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout height="317" width="245">
+						<control type="group">
+							<top>10</top>
+							<control type="image">
+								<width>264</width>
+								<height>317</height>
+								<texture>DefaultActorSolid.png</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+								<bordersize>20</bordersize>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<top>20</top>
+								<width>224</width>
+								<height>277</height>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<aspectratio aligny="center">scale</aspectratio>
+							</control>
+							<control type="image">
+								<left>20</left>
+								<bottom>10</bottom>
+								<width>224</width>
+								<height>80</height>
+								<texture>overlays/overlayfade.png</texture>
+								<animation effect="fade" start="100" end="80" condition="true">Conditional</animation>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>218</top>
+								<width>214</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Title]</label>
+							</control>
+							<control type="label">
+								<left>25</left>
+								<top>245</top>
+								<width>214</width>
+								<height>67</height>
+								<align>center</align>
+								<aligny>center</aligny>
+								<font>font12</font>
+								<textcolor>grey</textcolor>
+								<scroll>true</scroll>
+								<label>$INFO[ListItem.Property(Dimensions)]</label>
+							</control>
+							<control type="image">
+								<left>16</left>
+								<top>16</top>
+								<width>232</width>
+								<height>285</height>
+								<texture border="4" infill="false" colordiffuse="button_focus">colors/white.png</texture>
+							</control>
+						</control>
+					</focusedlayout>
+					<content target="images">$INFO[Window.Property(Container.Images.Path)]</content>
+				</control>
+				<include content="LeftRightArrows">
+					<param name="list_id" value="1500" />
+					<param name="left_posx" value="-15" />
+					<param name="right_posx" value="1240" />
+					<param name="posy" value="320" />
+					<param name="visible" value="String.IsEqual(Window.Property(Section),library_movies) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1500).NumItems,0)]" />
+				</include>
+				<include content="LeftRightArrows">
+					<param name="list_id" value="1501" />
+					<param name="left_posx" value="-15" />
+					<param name="right_posx" value="1240" />
+					<param name="posy" value="320" />
+					<param name="visible" value="String.IsEqual(Window.Property(Section),library_tvshows) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0)]" />
+				</include>
+				<include content="LeftRightArrows">
+					<param name="list_id" value="1502" />
+					<param name="left_posx" value="-15" />
+					<param name="right_posx" value="1240" />
+					<param name="posy" value="320" />
+					<param name="visible" value="String.IsEqual(Window.Property(Section),movies) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0)]" />
+				</include>
+				<include content="LeftRightArrows">
+					<param name="list_id" value="1503" />
+					<param name="left_posx" value="-15" />
+					<param name="right_posx" value="1240" />
+					<param name="posy" value="320" />
+					<param name="visible" value="String.IsEqual(Window.Property(Section),tvshows) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1503).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0)]" />
+				</include>
+				<include content="LeftRightArrows">
+					<param name="list_id" value="1505" />
+					<param name="left_posx" value="-15" />
+					<param name="right_posx" value="1240" />
+					<param name="posy" value="320" />
+					<param name="visible" value="String.IsEqual(Window.Property(Section),crew) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1505).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0)]" />
+				</include>
+				<include content="LeftRightArrows">
+					<param name="list_id" value="1506" />
+					<param name="left_posx" value="-15" />
+					<param name="right_posx" value="1240" />
+					<param name="posy" value="320" />
+					<param name="visible" value="String.IsEqual(Window.Property(Section),images) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1506).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0) + !Integer.IsGreater(Container(1505).NumItems,0)]" />
+				</include>
+				<control type="button" id="138">
+					<top>468</top>
+					<width>754</width>
+					<height>418</height>
+					<label />
+					<onclick>SetProperty(TextViewer_Header,$ESCINFO[Window.Property(Name)],home)</onclick>
+					<onclick>SetProperty(TextViewer_Text,$ESCINFO[Window.Property(Biography)],home)</onclick>
+					<onclick>ActivateWindow(1102)</onclick>
+					<onup condition="String.IsEqual(Window.Property(Section),library_movies) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1500).NumItems,0)]">SetFocus(1500)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),library_tvshows) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0)]">SetFocus(1501)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),movies) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0)]">SetFocus(1502)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),tvshows) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1503).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0)]">SetFocus(1503)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),crew) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1505).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0)]">SetFocus(1505)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),images) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1506).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0) + !Integer.IsGreater(Container(1505).NumItems,0)]">SetFocus(1506)</onup>
+					<onleft>4000</onleft>
+					<onright>4000</onright>
+					<ondown>5000</ondown>
+					<texturenofocus border="21">dialogs/dialog-bg.png</texturenofocus>
+				</control>
+				<control type="textbox">
+					<left>40</left>
+					<top>493</top>
+					<width>670</width>
+					<height>363</height>
+					<label fallback="19055">$INFO[Window.Property(Biography)]</label>
+					<autoscroll delay="10000" time="5000" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
+				</control>
+				<control type="image">
+					<left>735</left>
+					<top>468</top>
+					<width>512</width>
+					<height>418</height>
+					<texture border="21">dialogs/dialog-bg.png</texture>
+				</control>
+				<control type="grouplist" id="4000">
+					<orientation>vertical</orientation>
+					<left>755</left>
+					<top>488</top>
+					<height>377</height>
+					<itemgap>-8</itemgap>
+					<onup condition="String.IsEqual(Window.Property(Section),library_movies) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1500).NumItems,0)]">SetFocus(1500)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),library_tvshows) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0)]">SetFocus(1501)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),movies) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0)]">SetFocus(1502)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),tvshows) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1503).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0)]">SetFocus(1503)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),crew) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1505).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0)]">SetFocus(1505)</onup>
+					<onup condition="String.IsEqual(Window.Property(Section),images) | [String.IsEmpty(Window.Property(Section)) + Integer.IsGreater(Container(1506).NumItems,0) + !Integer.IsGreater(Container(1500).NumItems,0) + !Integer.IsGreater(Container(1501).NumItems,0) + !Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0) + !Integer.IsGreater(Container(1505).NumItems,0)]">SetFocus(1506)</onup>
+					<ondown>5000</ondown>
+					<onleft>138</onleft>
+					<onright>138</onright>
+					<include content="InfoDialogMetadata">
+						<param name="control_id" value="146" />
+						<param name="label" value="[COLOR button_focus]$LOCALIZE[21893]: [/COLOR]$INFO[Window.Property(BirthdayFormatted)]" />
+						<param name="altlabel" value="$LOCALIZE[21893]: $INFO[Window.Property(BirthdayFormatted)]" />
+						<param name="visible" value="!String.IsEmpty(Window.Property(BirthdayFormatted))" />
+					</include>
+					<include content="InfoDialogMetadata">
+						<param name="control_id" value="147" />
+						<param name="label" value="[COLOR button_focus]$LOCALIZE[21897]: [/COLOR]$INFO[Window.Property(DeathdayFormatted)]" />
+						<param name="altlabel" value="$LOCALIZE[21897]: $INFO[Window.Property(DeathdayFormatted)]" />
+						<param name="visible" value="!String.IsEmpty(Window.Property(DeathdayFormatted))" />
+					</include>
+					<include content="InfoDialogMetadata">
+						<param name="control_id" value="148" />
+						<param name="label" value="[COLOR button_focus]$ADDON[script.skin.info.service 32069]: [/COLOR]$INFO[Window.Property(Birthplace)]" />
+						<param name="altlabel" value="$ADDON[script.skin.info.service 32069]: $INFO[Window.Property(Birthplace)]" />
+						<param name="visible" value="!String.IsEmpty(Window.Property(Birthplace))" />
+					</include>
+					<include content="InfoDialogMetadata">
+						<param name="control_id" value="149" />
+						<param name="label" value="[COLOR button_focus]$LOCALIZE[39025]: [/COLOR]$INFO[Window.Property(Gender)]" />
+						<param name="altlabel" value="$LOCALIZE[39025]: $INFO[Window.Property(Gender)]" />
+						<param name="visible" value="!String.IsEmpty(Window.Property(Gender))" />
+					</include>
+					<include content="InfoDialogMetadata">
+						<param name="control_id" value="150" />
+						<param name="label" value="[COLOR button_focus]$ADDON[script.skin.info.service 32675]: [/COLOR]$INFO[Window.Property(TopMovies)]" />
+						<param name="altlabel" value="$ADDON[script.skin.info.service 32675]: $INFO[Window.Property(TopMovies)]" />
+						<param name="visible" value="!String.IsEmpty(Window.Property(TopMovies))" />
+					</include>
+					<include content="InfoDialogMetadata">
+						<param name="control_id" value="151" />
+						<param name="label" value="[COLOR button_focus]$ADDON[script.skin.info.service 32676]: [/COLOR]$INFO[Window.Property(TopTVShows)]" />
+						<param name="altlabel" value="$ADDON[script.skin.info.service 32676]: $INFO[Window.Property(TopTVShows)]" />
+						<param name="visible" value="!String.IsEmpty(Window.Property(TopTVShows))" />
+					</include>
+				</control>
+				<control type="grouplist" id="5000">
+					<top>864</top>
+					<width>1248</width>
+					<height>400</height>
+					<onleft>5000</onleft>
+					<onright>5000</onright>
+					<onup>138</onup>
+					<itemgap>-18</itemgap>
+					<align>center</align>
+					<orientation>horizontal</orientation>
+					<scrolltime tween="quadratic">200</scrolltime>
+					<control type="radiobutton" id="20">
+						<width>264</width>
+						<height>142</height>
+						<align>center</align>
+						<aligny>top</aligny>
+						<textoffsetx>22</textoffsetx>
+						<textoffsety>78</textoffsety>
+						<radioposx>108</radioposx>
+						<radioposy>16</radioposy>
+						<radiowidth>48</radiowidth>
+						<font>font12</font>
+						<hitrect x="21" y="21" w="245" h="100" />
+						<textureradioonfocus colordiffuse="D0FFFFFF">icons/infodialogs/record.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="D0FFFFFF">icons/infodialogs/record.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="D0FFFFFF">icons/infodialogs/record.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/infodialogs/record.png</textureradiooffnofocus>
+						<textureradiooffdisabled colordiffuse="disabled">icons/infodialogs/record.png</textureradiooffdisabled>
+						<textureradioondisabled colordiffuse="disabled">icons/infodialogs/record.png</textureradioondisabled>
+						<label>$LOCALIZE[342]</label>
+						<onclick>SetProperty(Section,library_movies)</onclick>
+						<onclick>SetFocus(1500)</onclick>
+						<enable>Integer.IsGreater(Container(1500).NumItems,0)</enable>
+					</control>
+					<control type="radiobutton" id="21">
+						<width>264</width>
+						<height>142</height>
+						<align>center</align>
+						<aligny>top</aligny>
+						<textoffsetx>22</textoffsetx>
+						<textoffsety>78</textoffsety>
+						<radioposx>108</radioposx>
+						<radioposy>16</radioposy>
+						<radiowidth>48</radiowidth>
+						<font>font12</font>
+						<hitrect x="21" y="21" w="245" h="100" />
+						<textureradioonfocus colordiffuse="D0FFFFFF">icons/library_tvshows.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="D0FFFFFF">icons/library_tvshows.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="D0FFFFFF">icons/library_tvshows.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/library_tvshows.png</textureradiooffnofocus>
+						<textureradiooffdisabled colordiffuse="disabled">icons/library_tvshows.png</textureradiooffdisabled>
+						<textureradioondisabled colordiffuse="disabled">icons/library_tvshows.png</textureradioondisabled>
+						<label>$LOCALIZE[20343]</label>
+						<onclick>SetProperty(Section,library_tvshows)</onclick>
+						<onclick>SetFocus(1501)</onclick>
+						<enable>Integer.IsGreater(Container(1501).NumItems,0)</enable>
+					</control>
+					<control type="radiobutton" id="24">
+						<width>264</width>
+						<height>142</height>
+						<align>center</align>
+						<aligny>top</aligny>
+						<textoffsetx>22</textoffsetx>
+						<textoffsety>78</textoffsety>
+						<radioposx>108</radioposx>
+						<radioposy>16</radioposy>
+						<radiowidth>48</radiowidth>
+						<font>font12</font>
+						<hitrect x="21" y="21" w="245" h="100" />
+						<textureradioonfocus colordiffuse="D0FFFFFF">icons/infodialogs/info.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="D0FFFFFF">icons/infodialogs/info.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="D0FFFFFF">icons/infodialogs/info.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/infodialogs/info.png</textureradiooffnofocus>
+						<textureradiooffdisabled colordiffuse="disabled">icons/infodialogs/info.png</textureradiooffdisabled>
+						<textureradioondisabled colordiffuse="disabled">icons/infodialogs/info.png</textureradioondisabled>
+						<label>$ADDON[script.skin.info.service 32058]</label>
+						<onclick condition="Integer.IsGreater(Container(1502).NumItems,0) + Integer.IsGreater(Container(1503).NumItems,0)">RunScript(script.skin.info.service,dialog=select,heading=$ADDON[script.skin.info.service 32058],items=$LOCALIZE[342]|$LOCALIZE[20343],"executebuiltin_0=SetProperty(Section,movies)|SetFocus(1502)","executebuiltin_1=SetProperty(Section,tvshows)|SetFocus(1503)")</onclick>
+						<onclick condition="Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0)">SetProperty(Section,movies)</onclick>
+						<onclick condition="Integer.IsGreater(Container(1502).NumItems,0) + !Integer.IsGreater(Container(1503).NumItems,0)">SetFocus(1502)</onclick>
+						<onclick condition="!Integer.IsGreater(Container(1502).NumItems,0) + Integer.IsGreater(Container(1503).NumItems,0)">SetProperty(Section,tvshows)</onclick>
+						<onclick condition="!Integer.IsGreater(Container(1502).NumItems,0) + Integer.IsGreater(Container(1503).NumItems,0)">SetFocus(1503)</onclick>
+						<enable>Integer.IsGreater(Container(1502).NumItems,0) | Integer.IsGreater(Container(1503).NumItems,0)</enable>
+					</control>
+					<control type="radiobutton" id="25">
+						<width>264</width>
+						<height>142</height>
+						<align>center</align>
+						<aligny>top</aligny>
+						<textoffsetx>22</textoffsetx>
+						<textoffsety>78</textoffsety>
+						<radioposx>108</radioposx>
+						<radioposy>16</radioposy>
+						<radiowidth>48</radiowidth>
+						<font>font12</font>
+						<hitrect x="21" y="21" w="245" h="100" />
+						<textureradioonfocus colordiffuse="D0FFFFFF">icons/infodialogs/director.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="D0FFFFFF">icons/infodialogs/director.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="D0FFFFFF">icons/infodialogs/director.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/infodialogs/director.png</textureradiooffnofocus>
+						<textureradiooffdisabled colordiffuse="disabled">icons/infodialogs/director.png</textureradiooffdisabled>
+						<textureradioondisabled colordiffuse="disabled">icons/infodialogs/director.png</textureradioondisabled>
+						<label>$ADDON[script.skin.info.service 32680]</label>
+						<onclick>SetProperty(Section,crew)</onclick>
+						<onclick>SetFocus(1505)</onclick>
+						<enable>Integer.IsGreater(Container(1505).NumItems,0)</enable>
+					</control>
+					<control type="radiobutton" id="26">
+						<width>264</width>
+						<height>142</height>
+						<align>center</align>
+						<aligny>top</aligny>
+						<textoffsetx>22</textoffsetx>
+						<textoffsety>78</textoffsety>
+						<radioposx>108</radioposx>
+						<radioposy>16</radioposy>
+						<radiowidth>48</radiowidth>
+						<font>font12</font>
+						<hitrect x="21" y="21" w="245" h="100" />
+						<textureradioonfocus colordiffuse="D0FFFFFF">icons/infodialogs/image.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="D0FFFFFF">icons/infodialogs/image.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="D0FFFFFF">icons/infodialogs/image.png</textureradioofffocus>
+						<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/infodialogs/image.png</textureradiooffnofocus>
+						<textureradiooffdisabled colordiffuse="disabled">icons/infodialogs/image.png</textureradiooffdisabled>
+						<textureradioondisabled colordiffuse="disabled">icons/infodialogs/image.png</textureradioondisabled>
+						<label>$ADDON[script.skin.info.service 32681]</label>
+						<onclick>SetProperty(Section,images)</onclick>
+						<onclick>SetFocus(1506)</onclick>
+						<enable>Integer.IsGreater(Container(1506).NumItems,0)</enable>
+					</control>
+				</control>
+			</control>
+			<control type="group">
+				<animation effect="fade" end="0" condition="String.IsEmpty(Window.Property(IsTop)) | Container(1500).IsUpdating | Container(1501).IsUpdating | Container(1502).IsUpdating | Container(1503).IsUpdating | Container(1505).IsUpdating | Container(1506).IsUpdating" reversible="false">Conditional</animation>
+				<animation effect="fade" time="300" tween="sine" easing="out" condition="!String.IsEmpty(Window.Property(IsTop)) + !Container(1500).IsUpdating + !Container(1501).IsUpdating + !Container(1502).IsUpdating + !Container(1503).IsUpdating + !Container(1505).IsUpdating + !Container(1506).IsUpdating" reversible="false">Conditional</animation>
+				<include content="InfoDialogTopBarInfo">
+					<param name="main_label" value="$INFO[Window.Property(Name)]" />
+					<param name="sub_label" value="$INFO[Window.Property(KnownFor)]$INFO[Window.Property(Age), • , $ADDON[script.skin.info.service 32070]]" />
+				</include>
+			</control>
+		</control>
+		<control type="group">
+			<visible>String.IsEmpty(Window.Property(IsTop)) | Container(1500).IsUpdating | Container(1501).IsUpdating | Container(1502).IsUpdating | Container(1503).IsUpdating | Container(1505).IsUpdating | Container(1506).IsUpdating</visible>
+			<animation effect="fade" time="200" delay="300" reversible="false">Visible</animation>
+			<animation effect="fade" time="200" delay="300">WindowOpen</animation>
+			<animation effect="fade" time="200" reversible="false">Hidden</animation>
+			<control type="group">
+				<depth>DepthMax</depth>
+				<centerleft>50%</centerleft>
+				<centertop>50%</centertop>
+				<width>80</width>
+				<height>80</height>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<centertop>50%</centertop>
+					<width>80</width>
+					<height>80</height>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" end="-45" center="auto" time="200" delay="600" loop="true" condition="true" reversible="false">Conditional</animation>
+					<texture colordiffuse="button_focus">spinner.png</texture>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<centertop>50%</centertop>
+					<width>50</width>
+					<height>50</height>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" end="45" center="auto" time="200" delay="600" loop="true" condition="true" reversible="false">Conditional</animation>
+					<texture flipx="true" colordiffuse="button_focus">spinner.png</texture>
+				</control>
+			</control>
+		</control>
+		<control type="group">
+			<centerleft>50%</centerleft>
+			<bottom>10</bottom>
+			<width>1920</width>
+			<height>40</height>
+			<animation effect="fade" time="300" delay="300">WindowOpen</animation>
+			<animation effect="fade" end="0" condition="String.IsEmpty(Window.Property(IsTop)) | Container(1500).IsUpdating | Container(1501).IsUpdating | Container(1502).IsUpdating | Container(1503).IsUpdating | Container(1505).IsUpdating | Container(1506).IsUpdating" reversible="false">Conditional</animation>
+			<animation effect="fade" time="300" tween="sine" easing="out" condition="!String.IsEmpty(Window.Property(IsTop)) + !Container(1500).IsUpdating + !Container(1501).IsUpdating + !Container(1502).IsUpdating + !Container(1503).IsUpdating + !Container(1505).IsUpdating + !Container(1506).IsUpdating" reversible="false">Conditional</animation>
+			<animation effect="fade" time="200">WindowClose</animation>
+			<control type="group">
+				<top>-10</top>
+				<visible>Control.HasFocus(138)</visible>
+				<animation effect="fade" time="200">VisibleChange</animation>
+				<control type="image">
+					<left>17</left>
+					<top>4</top>
+					<width>36</width>
+					<height>36</height>
+					<texture colordiffuse="grey">lists/played-total.png</texture>
+				</control>
+				<control type="label">
+					<left>74</left>
+					<width>800</width>
+					<height>44</height>
+					<shadowcolor>text_shadow</shadowcolor>
+					<label>$ADDON[script.skin.info.service 32068]</label>
+				</control>
+			</control>
+		</control>
+		<include condition="Skin.HasSetting(touchmode)">TouchBackButton</include>
+	</controls>
+</window>

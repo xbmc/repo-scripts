@@ -1,0 +1,2595 @@
+# Kodi strings for script.skin.info.service
+msgid ""
+msgstr ""
+"Project-Id-Version: script.skin.info.service\n"
+"POT-Creation-Date: 2024-10-23 00:00+0000\n"
+"PO-Revision-Date: 2026-11-03 00:15+0000\n"
+"Last-Translator: Daniel Nylander <daniel@danielnylander.se>\n"
+"Language-Team: Swedish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skin-info-service/sv_se/>\n"
+"Language: sv_se\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2026.11\n"
+
+msgctxt "Addon Summary"
+msgid "Provides rich media info and artwork to skins."
+msgstr "Ger skal omfattande medieinformation och bilder."
+
+msgctxt "Addon Description"
+msgid "Skin Info Service provides skins with rich metadata and artwork beyond what Kodi exposes by default. It adds extra properties such as ratings from multiple sources, artwork, stream details, and cast and plot information for movies, TV shows, episodes, sets, music videos, artists, and albums, drawing on both your library and online data. It also includes a tool to find and add animated GIF posters to your library."
+msgstr "Skin Info Service ger skal omfattande metadata och bilder utöver det som Kodi visar som standard. Tillägget lägger till extra egenskaper, till exempel betyg från flera källor, bilder, strömningsinformation samt uppgifter om medverkande och handling för filmer, tv-serier, avsnitt, samlingar, musikvideor, artister och album, med data från både ditt bibliotek och nätet. Det innehåller även ett verktyg för att hitta och lägga till animerade GIF-affischer i ditt bibliotek."
+
+msgctxt "Addon Disclaimer"
+msgid "This add-on uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB."
+msgstr "Detta tillägg använder TMDB och TMDB:s API:er, men är inte rekommenderat, certifierat eller på annat sätt godkänt av TMDB."
+
+msgctxt "#32000"
+msgid "Animated Art"
+msgstr "Animerade bilder"
+
+msgctxt "#32001"
+msgid "Key was not saved, please try again"
+msgstr "Nyckeln sparades inte, försök igen"
+
+msgctxt "#32002"
+msgid "Gif filename patterns (exact/suffix)"
+msgstr "GIF-filnamnsmönster (exakt/suffix)"
+
+msgctxt "#32003"
+msgid "Comma-separated list of gif filename patterns. Matches exact filenames (e.g., 'poster.gif') or files ending with the pattern (e.g., 'movie.poster.gif')"
+msgstr "Kommaseparerad lista med GIF-filnamnsmönster. Matchar exakta filnamn (t.ex. ”poster.gif”) eller filer som slutar med mönstret (t.ex. ”movie.poster.gif”)."
+
+msgctxt "#32004"
+msgid "Artwork"
+msgstr "Bilder"
+
+#. Error shown when an edited rating is not a number in range; 7.3 is an example value
+msgctxt "#32005"
+msgid "Rating must be a number from 0 to 10, such as 7.3"
+msgstr "Betyget måste vara ett tal från 0 till 10, till exempel 7,3"
+
+#. Label for language dropdown in settings (used for both metadata and artwork language selection)
+msgctxt "#32006"
+msgid "Preferred language"
+msgstr "Föredraget språk"
+
+msgctxt "#32007"
+msgid "Artwork in this language is prioritized for posters, logos, and other language-sensitive art."
+msgstr "Bilder på detta språk prioriteras för affischer, logotyper och andra språkkänsliga bilder."
+
+msgctxt "#32008"
+msgid "Prefer fanart in selected language"
+msgstr "Föredra fanart på valt språk"
+
+msgctxt "#32009"
+msgid "No artwork available from scrapers"
+msgstr "Inga bilder tillgängliga från skrapor"
+
+msgctxt "#32010"
+msgid "No artwork matched language preferences"
+msgstr "Inga bilder matchade språkinställningarna"
+
+msgctxt "#32011"
+msgid "Needs manual review"
+msgstr "Kräver manuell granskning"
+
+msgctxt "#32012"
+msgid "No images selected"
+msgstr "Inga bilder har valts"
+
+msgctxt "#32013"
+msgid "Downloaded {0} files"
+msgstr "Hämtade {0} filer"
+
+msgctxt "#32014"
+msgid "{0} files"
+msgstr "{0} filer"
+
+msgctxt "#32015"
+msgid "{0} image(s) selected"
+msgstr "{0} bild(er) har valts"
+
+msgctxt "#32016"
+msgid "{0} seasons"
+msgstr "{0} säsonger"
+
+msgctxt "#32017"
+msgid "{0} episodes"
+msgstr "{0} avsnitt"
+
+#. Error shown when an edited year falls outside the accepted range
+msgctxt "#32018"
+msgid "Year must be between 1800 and 2100"
+msgstr "Året måste vara mellan 1800 och 2100"
+
+msgctxt "#32019"
+msgid "Add 'Download' option to missing artwork and pre-cache"
+msgstr "Lägg till alternativet ”Hämta” för saknade bilder och förhandsbuffring"
+
+msgctxt "#32020"
+msgid "Show additional menu options to download artwork to filesystem during review and pre-cache operations"
+msgstr "Visa ytterligare menyalternativ för att hämta bilder till filsystemet vid granskning och förhandsbuffring"
+
+#. Error shown when an edited runtime is not a whole number of minutes in range
+msgctxt "#32021"
+msgid "Runtime must be 0 to 10080 minutes"
+msgstr "Körtiden måste vara 0 till 10080 minuter"
+
+msgctxt "#32022"
+msgid "When File Already Exists"
+msgstr "När filen redan finns"
+
+msgctxt "#32023"
+msgid "What to do when artwork file already exists on filesystem"
+msgstr "Vad som ska göras när bildfilen redan finns i filsystemet"
+
+msgctxt "#32024"
+msgid "Skip (don't download)"
+msgstr "Hoppa över (hämta inte)"
+
+msgctxt "#32025"
+msgid "Overwrite existing file"
+msgstr "Skriv över befintlig fil"
+
+#. Error shown when an edited Top 250 position falls outside the accepted range
+msgctxt "#32026"
+msgid "Top 250 must be 0-250"
+msgstr "Topp 250 måste vara 0–250"
+
+msgctxt "#32027"
+msgid "Use Movie Filename Prefix"
+msgstr "Använd filmfilnamnets prefix"
+
+msgctxt "#32028"
+msgid "Save as 'Avatar-poster.jpg' instead of 'poster.jpg' in movie folder"
+msgstr "Spara som ”Avatar-poster.jpg” i stället för ”poster.jpg” i filmens mapp"
+
+msgctxt "#32029"
+msgid "Export to NFO"
+msgstr "Exportera till NFO"
+
+msgctxt "#32030"
+msgid "NFO file written"
+msgstr "NFO-fil skrevs"
+
+msgctxt "#32031"
+msgid "Could not write NFO file"
+msgstr "Kunde inte skriva NFO-fil"
+
+msgctxt "#32032"
+msgid "Processing cancelled"
+msgstr "Bearbetningen avbröts"
+
+msgctxt "#32033"
+msgid "Art Fetcher - Cancelled"
+msgstr "Bildhämtaren – avbruten"
+
+#. Error shown when an edited duration is not a MM:SS time
+msgctxt "#32034"
+msgid "Duration must be in MM:SS format"
+msgstr "Varaktigheten måste ha formatet MM:SS"
+
+msgctxt "#32035"
+msgid "Always Ask"
+msgstr "Fråga alltid"
+
+msgctxt "#32036"
+msgid "GIF Scanner Mode"
+msgstr "Läge för GIF-skanning"
+
+msgctxt "#32037"
+msgid "Scan mode for animated art scanner"
+msgstr "Genomsökningsläge för skannern för animerade bilder"
+
+msgctxt "#32038"
+msgid "Incremental"
+msgstr "Inkrementell"
+
+msgctxt "#32039"
+msgid "Full Scan"
+msgstr "Fullständig genomsökning"
+
+msgctxt "#32040"
+msgid "Download Report"
+msgstr "Hämtningsrapport"
+
+msgctxt "#32041"
+msgid "No download history found."
+msgstr "Ingen hämtningshistorik hittades."
+
+msgctxt "#32042"
+msgid "Cancelled"
+msgstr "Avbruten"
+
+msgctxt "#32043"
+msgid "No valid media types to download."
+msgstr "Inga giltiga medietyper att hämta."
+
+msgctxt "#32044"
+msgid "API Keys"
+msgstr "API-nycklar"
+
+msgctxt "#32045"
+msgid "Downloaded:"
+msgstr "Hämtat:"
+
+msgctxt "#32046"
+msgid "Configure TMDB API Key"
+msgstr "Konfigurera TMDB API-nyckel"
+
+msgctxt "#32047"
+msgid "Get your API key from https://www.themoviedb.org/settings/api"
+msgstr "Hämta din API-nyckel från https://www.themoviedb.org/settings/api"
+
+msgctxt "#32048"
+msgid "Test Connection"
+msgstr "Testa anslutning"
+
+msgctxt "#32049"
+msgid "Clear API Key"
+msgstr "Rensa API-nyckel"
+
+msgctxt "#32050"
+msgid "MDBList"
+msgstr "MDBList"
+
+msgctxt "#32051"
+msgid "Configure MDBList API Key"
+msgstr "Konfigurera MDBList API-nyckel"
+
+msgctxt "#32052"
+msgid "Get your API key from https://mdblist.com/preferences/"
+msgstr "Hämta din API-nyckel från https://mdblist.com/preferences/"
+
+msgctxt "#32053"
+msgid "OMDb"
+msgstr "OMDb"
+
+msgctxt "#32054"
+msgid "Configure OMDb API Key"
+msgstr "Konfigurera OMDb API-nyckel"
+
+msgctxt "#32055"
+msgid "Get your API key from http://www.omdbapi.com/apikey.aspx"
+msgstr "Hämta din API-nyckel från http://www.omdbapi.com/apikey.aspx"
+
+msgctxt "#32056"
+msgid "Fanart.tv · fanart.tv/get-an-api-key[CR]No key: 7 days · Personal: 2 days · VIP: immediate"
+msgstr "Fanart.tv · fanart.tv/get-an-api-key[CR]Ingen nyckel: 7 dagar · Personlig: 2 dagar · VIP: omedelbart"
+
+msgctxt "#32057"
+msgid "Configure Fanart.tv API Key"
+msgstr "Konfigurera Fanart.tv API-nyckel"
+
+msgctxt "#32058"
+msgid "Filmography"
+msgstr "Filmografi"
+
+msgctxt "#32059"
+msgid "Trakt"
+msgstr "Trakt"
+
+msgctxt "#32060"
+msgid "Authorize Trakt"
+msgstr "Auktorisera Trakt"
+
+msgctxt "#32061"
+msgid "Authorize this addon to access your Trakt account"
+msgstr "Auktorisera detta tillägg för åtkomst till ditt Trakt-konto"
+
+msgctxt "#32062"
+msgid "Test Trakt Connection"
+msgstr "Testa Trakt-anslutning"
+
+msgctxt "#32063"
+msgid "Revoke Authorization"
+msgstr "Återkalla auktorisering"
+
+msgctxt "#32064"
+msgid "Ratings"
+msgstr "Betyg"
+
+msgctxt "#32065"
+msgid "Not configured"
+msgstr "Inte konfigurerad"
+
+msgctxt "#32066"
+msgid "Stopped early: downloads stalled"
+msgstr "Avbröts i förtid: hämtningarna stannade av"
+
+msgctxt "#32067"
+msgid "No progress for over {0} seconds. Run it again to finish the rest."
+msgstr "Inga framsteg på över {0} sekunder. Kör det igen för att slutföra resten."
+
+msgctxt "#32068"
+msgid "Press OK to read biography"
+msgstr "Tryck på OK för att läsa biografin"
+
+msgctxt "#32069"
+msgid "Birthplace"
+msgstr "Födelseort"
+
+#. Follows a person's age, as in "53 years old"
+msgctxt "#32070"
+msgid "years old"
+msgstr "år gammal"
+
+msgctxt "#32071"
+msgid "Upcoming Episodes"
+msgstr "Kommande avsnitt"
+
+msgctxt "#32072"
+msgid "Processing Artwork Queue"
+msgstr "Bearbetar bildkö"
+
+msgctxt "#32073"
+msgid "Cache is empty"
+msgstr "Cachen är tom"
+
+msgctxt "#32074"
+msgid "Default ratings source"
+msgstr "Standardkälla för betyg"
+
+msgctxt "#32075"
+msgid "Primary source to display when multiple ratings are available"
+msgstr "Primär källa som visas när flera betyg är tillgängliga"
+
+msgctxt "#32076"
+msgid "IMDb"
+msgstr "IMDb"
+
+msgctxt "#32077"
+msgid "TMDB"
+msgstr "TMDB"
+
+#. "Info" is the remote and keyboard button
+msgctxt "#32078"
+msgid "Info: view full size"
+msgstr "Information: visa i full storlek"
+
+#. "match" is the movie or TV show found for a programme, not a sports match
+msgctxt "#32079"
+msgid "Fix match"
+msgstr "Åtgärda matchning"
+
+msgctxt "#32080"
+msgid "API Key"
+msgstr "API-nyckel"
+
+msgctxt "#32081"
+msgid "Status: Authorized"
+msgstr "Status: Auktoriserad"
+
+msgctxt "#32082"
+msgid "Texture Cache Manager"
+msgstr "Texturcachehanterare"
+
+msgctxt "#32083"
+msgid "Pre-Cache Library Artwork"
+msgstr "Förhandsbuffra bibliotekets bilder"
+
+msgctxt "#32084"
+msgid "Trakt Watchlist"
+msgstr "Trakt-bevakningslista"
+
+msgctxt "#32085"
+msgid "Statistics & Info"
+msgstr "Statistik och information"
+
+msgctxt "#32086"
+msgid "View Last Report"
+msgstr "Visa senaste rapporten"
+
+msgctxt "#32087"
+msgid "Cleanup Textures"
+msgstr "Rensa texturer"
+
+msgctxt "#32088"
+msgid "Library Artwork Orphans"
+msgstr "Övergivna biblioteksbilder"
+
+msgctxt "#32089"
+msgid "By Age (Older Than...)"
+msgstr "Efter ålder (äldre än...)"
+
+msgctxt "#32090"
+msgid "Identifying uncached artwork..."
+msgstr "Identifierar ocachade bilder..."
+
+msgctxt "#32091"
+msgid "Finding orphaned textures..."
+msgstr "Hittar övergivna texturer..."
+
+msgctxt "#32092"
+msgid "Removing {0} orphaned textures..."
+msgstr "Tar bort {0} övergivna texturer..."
+
+msgctxt "#32093"
+msgid "Enter {0} API Key"
+msgstr "Ange {0}-API-nyckel"
+
+msgctxt "#32094"
+msgid "Are you sure you want to clear the {0} API key?"
+msgstr "Är du säker på att du vill rensa API-nyckeln för {0}?"
+
+msgctxt "#32095"
+msgid ""
+"Error testing connection:\n"
+"\n"
+"{0}"
+msgstr "Fel vid test av anslutning:\\n\\n{0}"
+
+msgctxt "#32096"
+msgid "Failed to get device code from Trakt."
+msgstr "Det gick inte att hämta enhetskod från Trakt."
+
+msgctxt "#32097"
+msgid ""
+"Error:\n"
+"\n"
+"{0}"
+msgstr "Fel:\\n\\n{0}"
+
+msgctxt "#32098"
+msgid ""
+"Are you sure you want to revoke Trakt authorization?\n"
+"\n"
+"You will need to re-authorize to use Trakt ratings."
+msgstr ""
+"Är du säker på att du vill återkalla Trakt-auktoriseringen?\\n\\n"
+"Du måste auktorisera på nytt för att använda Trakt-betyg."
+
+msgctxt "#32099"
+msgid "Downloaded {0} files ({1} MB)"
+msgstr "Hämtade {0} filer ({1} MB)"
+
+#. Context menu item and settings group - opens artwork browser for selected item
+msgctxt "#32100"
+msgid "Manage Artwork"
+msgstr "Hantera bilder"
+
+msgctxt "#32101"
+msgid "Update Ratings"
+msgstr "Uppdatera betyg"
+
+msgctxt "#32102"
+msgid "Skin Info Tools"
+msgstr "Skin Info-verktyg"
+
+msgctxt "#32103"
+msgid "Edit Metadata"
+msgstr "Redigera metadata"
+
+msgctxt "#32104"
+msgid "{0} - Connection Test"
+msgstr "{0} – anslutningstest"
+
+msgctxt "#32105"
+msgid ""
+"Connection successful!\n"
+"\n"
+"API key is valid and working."
+msgstr ""
+"Anslutningen lyckades!\\n\\n"
+"API-nyckeln är giltig och fungerar."
+
+msgctxt "#32106"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please check your API key."
+msgstr ""
+"Anslutningen misslyckades.\\n\\n"
+"Kontrollera API-nyckeln."
+
+msgctxt "#32107"
+msgid "Trakt Authorization Failed"
+msgstr "Trakt-auktorisering misslyckades"
+
+msgctxt "#32108"
+msgid "Trakt - Connection Test"
+msgstr "Trakt – anslutningstest"
+
+msgctxt "#32109"
+msgid ""
+"Authorization successful!\n"
+"\n"
+"Trakt is now connected."
+msgstr ""
+"Auktoriseringen lyckades!\\n\\n"
+"Trakt är nu ansluten."
+
+msgctxt "#32110"
+msgid ""
+"Authorization timed out.\n"
+"\n"
+"Please try again."
+msgstr ""
+"Tidsgränsen för auktorisering överskreds.\\n\\n"
+"Försök igen."
+
+msgctxt "#32111"
+msgid "Context Menu Items"
+msgstr "Snabbmenyalternativ"
+
+msgctxt "#32112"
+msgid "Show Manage Artwork"
+msgstr "Visa Hantera bilder"
+
+msgctxt "#32113"
+msgid "Show Update Ratings"
+msgstr "Visa Uppdatera betyg"
+
+msgctxt "#32114"
+msgid "Show Edit Metadata"
+msgstr "Visa Redigera metadata"
+
+msgctxt "#32115"
+msgid ""
+"Connection successful!\n"
+"\n"
+"Trakt is authorized and working."
+msgstr ""
+"Anslutningen lyckades!\\n\\n"
+"Trakt är auktoriserad och fungerar."
+
+msgctxt "#32116"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please authorize Trakt first."
+msgstr ""
+"Anslutningen misslyckades.\\n\\n"
+"Auktorisera först Trakt."
+
+msgctxt "#32117"
+msgid "Show Download Artwork"
+msgstr "Visa Hämta bilder"
+
+msgctxt "#32118"
+msgid "No HTTP artwork URLs found in {0} library items."
+msgstr "Inga HTTP-adresser till bilder hittades i {0} biblioteksobjekt."
+
+msgctxt "#32119"
+msgid "Overwrite Mode Warning"
+msgstr "Varning för överskrivningsläge"
+
+msgctxt "#32120"
+msgid "Change Language"
+msgstr "Byt språk"
+
+msgctxt "#32121"
+msgid "Download Complete"
+msgstr "Hämtningen är klar"
+
+msgctxt "#32122"
+msgid "Text-free / Untagged"
+msgstr "Textfri / otaggad"
+
+msgctxt "#32123"
+msgid "Trakt History"
+msgstr "Trakt-historik"
+
+msgctxt "#32124"
+msgid "Trakt In Progress"
+msgstr "Trakt pågående"
+
+msgctxt "#32125"
+msgid "Trakt Most Played"
+msgstr "Trakt mest spelade"
+
+msgctxt "#32128"
+msgid "Skip"
+msgstr "Hoppa över"
+
+msgctxt "#32130"
+msgid "Multi-Art..."
+msgstr "Flera bilder..."
+
+msgctxt "#32131"
+msgid "Found {0} orphaned textures to remove.[CR][CR]Continue with removal?"
+msgstr "Hittade {0} övergivna texturer att ta bort.[CR][CR]Fortsätt med borttagningen?"
+
+msgctxt "#32132"
+msgid "Source: All"
+msgstr "Källa: Alla"
+
+msgctxt "#32133"
+msgid "Source: TMDB"
+msgstr "Källa: TMDB"
+
+msgctxt "#32134"
+msgid "Source: Fanart.tv"
+msgstr "Källa: Fanart.tv"
+
+msgctxt "#32135"
+msgid "IMDb Ratings"
+msgstr "IMDb-betyg"
+
+msgctxt "#32136"
+msgid "Auto-update"
+msgstr "Uppdatera automatiskt"
+
+msgctxt "#32137"
+msgid "Automatically update IMDb ratings in your library"
+msgstr "Uppdatera automatiskt IMDb-betyg i ditt bibliotek"
+
+msgctxt "#32139"
+msgid "After library scan"
+msgstr "Efter biblioteksskanning"
+
+msgctxt "#32140"
+msgid "When new ratings available"
+msgstr "När nya betyg finns tillgängliga"
+
+msgctxt "#32141"
+msgid "Both"
+msgstr "Båda"
+
+msgctxt "#32142"
+msgid "Scope"
+msgstr "Omfattning"
+
+msgctxt "#32143"
+msgid "Which media types to include in auto-updates"
+msgstr "Vilka medietyper som ska inkluderas i automatiska uppdateringar"
+
+msgctxt "#32144"
+msgid "All (Movies, TV Shows, Episodes)"
+msgstr "Alla (filmer, tv-serier, avsnitt)"
+
+msgctxt "#32145"
+msgid "Movies and TV Shows only"
+msgstr "Endast filmer och tv-serier"
+
+msgctxt "#32146"
+msgid "Movies only"
+msgstr "Endast filmer"
+
+msgctxt "#32150"
+msgid "Stinger Detection"
+msgstr "Detektering av eftertextscener"
+
+msgctxt "#32151"
+msgid "Enable stinger detection"
+msgstr "Aktivera detektering av eftertextscener"
+
+msgctxt "#32152"
+msgid "Notify about post-credits scenes during movie playback"
+msgstr "Meddela om scener efter eftertexterna under filmuppspelning"
+
+msgctxt "#32156"
+msgid "Minutes before end"
+msgstr "Minuter före slutet"
+
+msgctxt "#32157"
+msgid "For movies without chapters, notify this many minutes before the end"
+msgstr "Meddela så här många minuter före slutet för filmer utan kapitel"
+
+msgctxt "#32158"
+msgid "Notification duration (seconds)"
+msgstr "Meddelandets visningstid (sekunder)"
+
+msgctxt "#32159"
+msgid "How long to display the notification"
+msgstr "Hur länge meddelandet ska visas"
+
+msgctxt "#32162"
+msgid "Wait For It..."
+msgstr "Vänta på det..."
+
+msgctxt "#32163"
+msgid "Stay for scene during credits"
+msgstr "Stanna kvar för scen under eftertexterna"
+
+msgctxt "#32164"
+msgid "Stay for scene after credits"
+msgstr "Stanna kvar för scen efter eftertexterna"
+
+msgctxt "#32165"
+msgid "Stay for scenes during and after credits"
+msgstr "Stanna kvar för scener under och efter eftertexterna"
+
+msgctxt "#32170"
+msgid "Operation failed"
+msgstr "Åtgärden misslyckades"
+
+msgctxt "#32171"
+msgid "No items to display"
+msgstr "Inga objekt att visa"
+
+msgctxt "#32172"
+msgid "Task Already Running"
+msgstr "Uppgiften körs redan"
+
+msgctxt "#32173"
+msgid "Found {0} library artwork URLs"
+msgstr "Hittade {0} adresser till biblioteksbilder"
+
+msgctxt "#32180"
+msgid "Texture Cache Statistics"
+msgstr "Statistik för texturcache"
+
+msgctxt "#32181"
+msgid "Failed to gather statistics"
+msgstr "Kunde inte samla in statistik"
+
+msgctxt "#32182"
+msgid "No textures found in cache"
+msgstr "Inga texturer hittades i cachen"
+
+msgctxt "#32183"
+msgid "Orphaned Textures Report"
+msgstr "Rapport om övergivna texturer"
+
+msgctxt "#32184"
+msgid "Analysis Failed"
+msgstr "Analysen misslyckades"
+
+msgctxt "#32190"
+msgid "Art Fetcher Report"
+msgstr "Rapport från bildhämtaren"
+
+msgctxt "#32191"
+msgid "Art Fetcher - Detailed Report"
+msgstr "Detaljerad rapport från bildhämtaren"
+
+msgctxt "#32192"
+msgid "Animated Art Scanner"
+msgstr "Skanner för animerade bilder"
+
+msgctxt "#32200"
+msgid "graphic"
+msgstr "grovt"
+
+msgctxt "#32201"
+msgid "a lot of"
+msgstr "mycket"
+
+msgctxt "#32202"
+msgid "some"
+msgstr "en del"
+
+msgctxt "#32203"
+msgid "a little"
+msgstr "lite"
+
+msgctxt "#32204"
+msgid "very little"
+msgstr "mycket lite"
+
+msgctxt "#32210"
+msgid "violence or scares"
+msgstr "våld eller skrämmande inslag"
+
+msgctxt "#32211"
+msgid "sexual content"
+msgstr "sexuellt innehåll"
+
+#. Content advisory category - profanity/swearing (e.g., "Rated R for graphic language")
+msgctxt "#32212"
+msgid "language"
+msgstr "språkbruk"
+
+msgctxt "#32213"
+msgid "substance use or smoking"
+msgstr "droganvändning eller rökning"
+
+msgctxt "#32220"
+msgid "Rated {0}+ for {1}"
+msgstr "Klassificerad {0}+ för {1}"
+
+#. Conjunction between content advisory items - spaces are intentional (e.g., "violence and language")
+msgctxt "#32221"
+msgid " and "
+msgstr " och "
+
+msgctxt "#32250"
+msgid "Unsupported field type"
+msgstr "Fälttypen stöds inte"
+
+msgctxt "#32251"
+msgid "Failed to save"
+msgstr "Kunde inte spara"
+
+msgctxt "#32252"
+msgid "Rating Source (e.g., imdb, tmdb)"
+msgstr "Betygskälla (t.ex. imdb, tmdb)"
+
+msgctxt "#32253"
+msgid "Vote Count"
+msgstr "Antal röster"
+
+msgctxt "#32254"
+msgid "Invalid Value"
+msgstr "Ogiltigt värde"
+
+msgctxt "#32255"
+msgid "Invalid Date"
+msgstr "Ogiltigt datum"
+
+msgctxt "#32256"
+msgid "Invalid Rating"
+msgstr "Ogiltigt betyg"
+
+msgctxt "#32257"
+msgid "Already Exists"
+msgstr "Finns redan"
+
+#. Notification title for metadata editor operations
+msgctxt "#32258"
+msgid "Editor"
+msgstr "Redigerare"
+
+msgctxt "#32259"
+msgid "No valid item selected"
+msgstr "Inget giltigt objekt har valts"
+
+msgctxt "#32260"
+msgid "Fix Library IDs"
+msgstr "Åtgärda biblioteks-ID:n"
+
+msgctxt "#32261"
+msgid "All IDs are valid"
+msgstr "Alla ID:n är giltiga"
+
+msgctxt "#32262"
+msgid "Failed to load item"
+msgstr "Kunde inte läsa in objektet"
+
+msgctxt "#32263"
+msgid "Unsupported type: {0}"
+msgstr "Typen stöds inte: {0}"
+
+msgctxt "#32270"
+msgid "No path provided"
+msgstr "Ingen sökväg angavs"
+
+msgctxt "#32271"
+msgid "No items found in directory"
+msgstr "Inga objekt hittades i katalogen"
+
+msgctxt "#32272"
+msgid "Select Actor"
+msgstr "Välj skådespelare"
+
+#. Menu title and feature name - scans library for items without artwork
+msgctxt "#32273"
+msgid "Missing Artwork"
+msgstr "Saknade bilder"
+
+msgctxt "#32274"
+msgid "Scan failed"
+msgstr "Genomsökningen misslyckades"
+
+msgctxt "#32275"
+msgid "Select Artwork"
+msgstr "Välj bild"
+
+msgctxt "#32276"
+msgid "Loading artwork for {0}..."
+msgstr "Läser in bild för {0}..."
+
+msgctxt "#32277"
+msgid "Preparing library scan..."
+msgstr "Förbereder biblioteksskanning..."
+
+msgctxt "#32278"
+msgid "Initializing..."
+msgstr "Initierar..."
+
+msgctxt "#32279"
+msgid "Processing complete!"
+msgstr "Bearbetningen är klar!"
+
+msgctxt "#32280"
+msgid "Art Fetcher"
+msgstr "Bildhämtaren"
+
+msgctxt "#32281"
+msgid "Art Fetcher - Complete"
+msgstr "Bildhämtaren – klar"
+
+msgctxt "#32282"
+msgid "View Report"
+msgstr "Visa rapport"
+
+msgctxt "#32284"
+msgid "Processed: {0} items"
+msgstr "Bearbetade: {0} objekt"
+
+msgctxt "#32285"
+msgid "Auto-applied: {0}"
+msgstr "Tillämpades automatiskt: {0}"
+
+msgctxt "#32286"
+msgid "Skipped: {0}"
+msgstr "Överhoppade: {0}"
+
+msgctxt "#32287"
+msgid "Errors: {0}"
+msgstr "Fel: {0}"
+
+msgctxt "#32288"
+msgid "Found {0} TV shows. Checking which are not cached..."
+msgstr "Hittade {0} tv-serier. Kontrollerar vilka som inte är cachade..."
+
+msgctxt "#32289"
+msgid "All TV shows are already cached."
+msgstr "Alla tv-serier är redan cachade."
+
+msgctxt "#32290"
+msgid "Download Artwork"
+msgstr "Hämta bilder"
+
+msgctxt "#32291"
+msgid "Preparing..."
+msgstr "Förbereder..."
+
+msgctxt "#32292"
+msgid "Scanning library..."
+msgstr "Genomsöker biblioteket..."
+
+msgctxt "#32293"
+msgid "Building download list from {0} items..."
+msgstr "Bygger hämtningslista från {0} objekt..."
+
+msgctxt "#32294"
+msgid "Starting download of {0} artwork files..."
+msgstr "Startar hämtning av {0} bildfiler..."
+
+msgctxt "#32295"
+msgid "Scan complete. No missing artwork found."
+msgstr "Genomsökningen är klar. Inga saknade bilder hittades."
+
+msgctxt "#32296"
+msgid "No remote artwork to download"
+msgstr "Inga fjärrbilder att hämta"
+
+msgctxt "#32297"
+msgid "Preparing download..."
+msgstr "Förbereder hämtning..."
+
+msgctxt "#32298"
+msgid "Downloading artwork..."
+msgstr "Hämtar bilder..."
+
+msgctxt "#32299"
+msgid "Loading seasons and episodes..."
+msgstr "Läser in säsonger och avsnitt..."
+
+msgctxt "#32300"
+msgid "Ratings Updater"
+msgstr "Betygsuppdaterare"
+
+msgctxt "#32301"
+msgid "Remove Rating?"
+msgstr "Ta bort betyg?"
+
+msgctxt "#32302"
+msgid "Remove {0} rating?"
+msgstr "Ta bort betyg från {0}?"
+
+msgctxt "#32304"
+msgid "Updating {0} {1}s..."
+msgstr "Uppdaterar {0} {1}..."
+
+msgctxt "#32305"
+msgid "Downloading IMDb dataset..."
+msgstr "Hämtar IMDb-dataset..."
+
+msgctxt "#32306"
+msgid "Updating: {0}/{1} - {2}"
+msgstr "Uppdaterar: {0}/{1} – {2}"
+
+msgctxt "#32307"
+msgid "Updating: {0}/{1} items"
+msgstr "Uppdaterar: {0}/{1} objekt"
+
+msgctxt "#32308"
+msgid "Finalizing: {0}/{1}"
+msgstr "Slutför: {0}/{1}"
+
+msgctxt "#32309"
+msgid "Finalizing: {0}/{1} items"
+msgstr "Slutför: {0}/{1} objekt"
+
+msgctxt "#32310"
+msgid "Retrying failed items..."
+msgstr "Försöker igen med misslyckade objekt..."
+
+msgctxt "#32311"
+msgid "Retrying: {0}/{1}"
+msgstr "Försöker igen: {0}/{1}"
+
+msgctxt "#32312"
+msgid "Updating episode data..."
+msgstr "Uppdaterar avsnittsdata..."
+
+msgctxt "#32313"
+msgid "{0} - Rate Limit"
+msgstr "{0} – hastighetsbegränsning"
+
+msgctxt "#32314"
+msgid "Waiting to retry..."
+msgstr "Väntar med nytt försök..."
+
+msgctxt "#32315"
+msgid "Waiting {0}s before retry..."
+msgstr "Väntar {0} s före nytt försök..."
+
+msgctxt "#32316"
+msgid "Ratings Updated - {0}"
+msgstr "Betyg uppdaterade – {0}"
+
+msgctxt "#32317"
+msgid "Ratings Updater - Complete"
+msgstr "Betygsuppdaterare – klar"
+
+msgctxt "#32318"
+msgid "IMDb Ratings Update"
+msgstr "Uppdatering av IMDb-betyg"
+
+msgctxt "#32319"
+msgid "{0} IMDb ratings updated"
+msgstr "{0} IMDb-betyg uppdaterade"
+
+msgctxt "#32320"
+msgid "IMDb ratings up to date"
+msgstr "IMDb-betygen är aktuella"
+
+msgctxt "#32321"
+msgid "{0} rate limited, resuming in {1}s"
+msgstr "{0} har hastighetsbegränsats, återupptar om {1} s"
+
+msgctxt "#32323"
+msgid "Stopped: no sources reachable"
+msgstr "Stoppad: inga källor kan nås"
+
+msgctxt "#32324"
+msgid "Trakt will fetch {0} movies."
+msgstr "Trakt hämtar {0} filmer."
+
+msgctxt "#32325"
+msgid "Trakt will fetch {0} seasons."
+msgstr "Trakt hämtar {0} säsonger."
+
+msgctxt "#32326"
+msgid "Trakt will fetch {0} shows."
+msgstr "Trakt hämtar {0} serier."
+
+msgctxt "#32327"
+msgid "Trakt allows 500 requests every 5 minutes."
+msgstr "Trakt tillåter 500 begäranden var femte minut."
+
+msgctxt "#32328"
+msgid "Include Trakt in this update?"
+msgstr "Inkludera Trakt i denna uppdatering?"
+
+msgctxt "#32329"
+msgid "Include"
+msgstr "Inkludera"
+
+msgctxt "#32330"
+msgid "Analyzing Textures"
+msgstr "Analyserar texturer"
+
+msgctxt "#32331"
+msgid "Scanning texture cache..."
+msgstr "Genomsöker texturcache..."
+
+msgctxt "#32332"
+msgid "Analyzing {0} textures..."
+msgstr "Analyserar {0} texturer..."
+
+msgctxt "#32333"
+msgid "Cleanup Textures by Age"
+msgstr "Rensa texturer efter ålder"
+
+msgctxt "#32334"
+msgid "Clean Orphaned Textures"
+msgstr "Rensa övergivna texturer"
+
+msgctxt "#32335"
+msgid "Starting cleanup..."
+msgstr "Startar rensning..."
+
+msgctxt "#32336"
+msgid "Starting..."
+msgstr "Startar..."
+
+msgctxt "#32350"
+msgid "Loading library..."
+msgstr "Läser in biblioteket..."
+
+msgctxt "#32351"
+msgid "Loading TV shows..."
+msgstr "Läser in tv-serier..."
+
+msgctxt "#32352"
+msgid "Loading episodes..."
+msgstr "Läser in avsnitt..."
+
+msgctxt "#32353"
+msgid "Analyzing library..."
+msgstr "Analyserar biblioteket..."
+
+msgctxt "#32354"
+msgid "Downloading IMDb episode data..."
+msgstr "Hämtar IMDb-avsnittsdata..."
+
+msgctxt "#32355"
+msgid "Matching episodes (IMDb dataset)... {0}/{1}"
+msgstr "Matchar avsnitt (IMDb-dataset)... {0}/{1}"
+
+msgctxt "#32356"
+msgid "Fetching episodes (TMDB)... {0}/{1}"
+msgstr "Hämtar avsnitt (TMDB)... {0}/{1}"
+
+msgctxt "#32357"
+msgid "Fixing TMDB IDs... {0}/{1}"
+msgstr "Åtgärdar TMDB-ID:n... {0}/{1}"
+
+msgctxt "#32358"
+msgid "Fetching {0}... {1}/{2}"
+msgstr "Hämtar {0}... {1}/{2}"
+
+msgctxt "#32359"
+msgid "No IDs could be fixed"
+msgstr "Inga ID:n kunde åtgärdas"
+
+msgctxt "#32370"
+msgid "Testing {0}"
+msgstr "Testar {0}"
+
+msgctxt "#32371"
+msgid "Connecting to API..."
+msgstr "Ansluter till API..."
+
+msgctxt "#32372"
+msgid "Trakt Authorization"
+msgstr "Trakt-auktorisering"
+
+msgctxt "#32373"
+msgid "Requesting device code..."
+msgstr "Begär enhetskod..."
+
+msgctxt "#32374"
+msgid "Testing Trakt"
+msgstr "Testar Trakt"
+
+msgctxt "#32390"
+msgid "No Library Values"
+msgstr "Inga biblioteksvärden"
+
+#. Displayed when user rating is 0 (no rating given by user)
+msgctxt "#32391"
+msgid "Not Rated"
+msgstr "Inget betyg"
+
+#. Placeholder shown when a field has no value
+msgctxt "#32392"
+msgid "(Not Set)"
+msgstr "(Ej angivet)"
+
+msgctxt "#32393"
+msgid "Save Changes"
+msgstr "Spara ändringar"
+
+msgctxt "#32394"
+msgid "Add {0}"
+msgstr "Lägg till {0}"
+
+msgctxt "#32395"
+msgid "Quick Edit: {0}"
+msgstr "Snabbredigering: {0}"
+
+msgctxt "#32396"
+msgid "Select from Library"
+msgstr "Välj från biblioteket"
+
+msgctxt "#32397"
+msgid "Add/Remove Items"
+msgstr "Lägg till/ta bort objekt"
+
+msgctxt "#32399"
+msgid "Edit {0} (comma-separated)"
+msgstr "Redigera {0} (kommaseparerade)"
+
+msgctxt "#32400"
+msgid "No rating sources available. Please configure API keys in settings."
+msgstr "Inga betygskällor är tillgängliga. Konfigurera API-nycklar i inställningarna."
+
+msgctxt "#32401"
+msgid "{0} not found"
+msgstr "{0} hittades inte"
+
+msgctxt "#32402"
+msgid "Updating ratings..."
+msgstr "Uppdaterar betyg..."
+
+msgctxt "#32403"
+msgid "No changes needed"
+msgstr "Inga ändringar behövs"
+
+msgctxt "#32404"
+msgid "Item skipped (no IDs or rate limit)"
+msgstr "Objekt hoppades över (inga ID:n eller hastighetsbegränsning)"
+
+msgctxt "#32405"
+msgid "Failed to update ratings"
+msgstr "Kunde inte uppdatera betyg"
+
+msgctxt "#32406"
+msgid "Update Movies"
+msgstr "Uppdatera filmer"
+
+msgctxt "#32407"
+msgid "Update TV Shows"
+msgstr "Uppdatera tv-serier"
+
+msgctxt "#32408"
+msgid "Update Episodes"
+msgstr "Uppdatera avsnitt"
+
+msgctxt "#32409"
+msgid "Update All"
+msgstr "Uppdatera alla"
+
+msgctxt "#32410"
+msgid "Run Mode"
+msgstr "Körläge"
+
+msgctxt "#32411"
+msgid "Show progress dialog (Foreground)"
+msgstr "Visa förloppsdialogruta (förgrund)"
+
+msgctxt "#32412"
+msgid "Run in background"
+msgstr "Kör i bakgrunden"
+
+msgctxt "#32413"
+msgid "No {0}s found in library"
+msgstr "Inga {0} hittades i biblioteket"
+
+msgctxt "#32414"
+msgid "Fetching ratings batch {0}/{1}..."
+msgstr "Hämtar omgång {0}/{1} med betyg..."
+
+msgctxt "#32415"
+msgid "Retry Failed Items"
+msgstr "Försök igen med misslyckade objekt"
+
+msgctxt "#32416"
+msgid "{0} item(s) had temporary network issues."
+msgstr "{0} objekt hade tillfälliga nätverksproblem."
+
+msgctxt "#32417"
+msgid "Retry these items now?"
+msgstr "Försök igen med dessa objekt nu?"
+
+msgctxt "#32418"
+msgid "Network Issues"
+msgstr "Nätverksproblem"
+
+msgctxt "#32419"
+msgid "Items with network issues"
+msgstr "Objekt med nätverksproblem"
+
+msgctxt "#32420"
+msgid "Retry: {0}/{1} succeeded"
+msgstr "Nytt försök: {0}/{1} lyckades"
+
+msgctxt "#32421"
+msgid "IMDb ID Corrections"
+msgstr "Korrigeringar av IMDb-ID:n"
+
+msgctxt "#32422"
+msgid "{0} item(s) have outdated IMDb ID(s) (redirects)."
+msgstr "{0} objekt har inaktuella IMDb-ID:n (omdirigeringar)."
+
+msgctxt "#32423"
+msgid "Correct them in your library?"
+msgstr "Korrigera dem i ditt bibliotek?"
+
+msgctxt "#32424"
+msgid "No ratings update history found."
+msgstr "Ingen historik över betygsuppdateringar hittades."
+
+msgctxt "#32425"
+msgid "Calculating disk usage..."
+msgstr "Beräknar diskanvändning..."
+
+msgctxt "#32426"
+msgid "Complete"
+msgstr "Klar"
+
+#. Button label meaning "display/reveal" (not TV Show)
+msgctxt "#32427"
+msgid "Show"
+msgstr "Visa"
+
+msgctxt "#32429"
+msgid "Retry"
+msgstr "Försök igen"
+
+msgctxt "#32430"
+msgid "Ratings Update Report"
+msgstr "Rapport över betygsuppdatering"
+
+msgctxt "#32440"
+msgid "Pre-Cache + Download"
+msgstr "Förhandsbuffra + hämta"
+
+msgctxt "#32441"
+msgid "Pre-Cache Artwork - Select Scope"
+msgstr "Förhandsbuffra bilder – välj omfattning"
+
+msgctxt "#32451"
+msgid "Pre-Cache + Download - Select Scope"
+msgstr "Förhandsbuffra + hämta – välj omfattning"
+
+msgctxt "#32455"
+msgid "Pre-Cache Artwork"
+msgstr "Förhandsbuffra bilder"
+
+msgctxt "#32457"
+msgid "[B]{0}[/B] is currently running."
+msgstr "[B]{0}[/B] körs just nu."
+
+msgctxt "#32458"
+msgid "Cannot start another background task."
+msgstr "Kan inte starta en annan bakgrundsuppgift."
+
+msgctxt "#32459"
+msgid "Pre-Cache Cancelled"
+msgstr "Förhandsbuffringen avbröts"
+
+msgctxt "#32460"
+msgid "Pre-Cache Complete"
+msgstr "Förhandsbuffringen är klar"
+
+msgctxt "#32461"
+msgid "Cleanup Cancelled"
+msgstr "Rensningen avbröts"
+
+msgctxt "#32462"
+msgid "Cleanup Complete"
+msgstr "Rensningen är klar"
+
+msgctxt "#32463"
+msgid "Total: {0}"
+msgstr "Totalt: {0}"
+
+msgctxt "#32464"
+msgid "Cached: {0}"
+msgstr "Cachade: {0}"
+
+msgctxt "#32465"
+msgid "Downloaded: {0} ({1:.1f} MB)"
+msgstr "Hämtade: {0} ({1:.1f} MB)"
+
+msgctxt "#32467"
+msgid "Failed: {0} cache, {1} download"
+msgstr "Misslyckades: {0} cache, {1} hämtning"
+
+msgctxt "#32468"
+msgid "Already Cached: {0}"
+msgstr "Redan cachade: {0}"
+
+msgctxt "#32469"
+msgid "Newly Cached: {0}"
+msgstr "Nyligen cachade: {0}"
+
+msgctxt "#32470"
+msgid "Failed: {0}"
+msgstr "Misslyckades: {0}"
+
+msgctxt "#32471"
+msgid "Status: Cancelled"
+msgstr "Status: Avbruten"
+
+msgctxt "#32472"
+msgid "Gathering statistics..."
+msgstr "Samlar in statistik..."
+
+msgctxt "#32473"
+msgid "Remove textures not used in..."
+msgstr "Ta bort texturer som inte använts på..."
+
+msgctxt "#32474"
+msgid "30 days"
+msgstr "30 dagar"
+
+msgctxt "#32475"
+msgid "60 days"
+msgstr "60 dagar"
+
+msgctxt "#32476"
+msgid "90 days"
+msgstr "90 dagar"
+
+msgctxt "#32477"
+msgid "180 days"
+msgstr "180 dagar"
+
+msgctxt "#32478"
+msgid "365 days (1 year)"
+msgstr "365 dagar (1 år)"
+
+msgctxt "#32479"
+msgid "No Old Textures"
+msgstr "Inga gamla texturer"
+
+msgctxt "#32480"
+msgid "No textures found older than {0} days."
+msgstr "Inga texturer äldre än {0} dagar hittades."
+
+msgctxt "#32481"
+msgid "Total textures checked: {0}"
+msgstr "Totalt antal kontrollerade texturer: {0}"
+
+msgctxt "#32482"
+msgid "Confirm Cleanup"
+msgstr "Bekräfta rensning"
+
+msgctxt "#32483"
+msgid "Remove {0} textures older than {1} days?"
+msgstr "Ta bort {0} texturer äldre än {1} dagar?"
+
+msgctxt "#32484"
+msgid "Total: {0} | Oldest: {1}"
+msgstr "Totalt: {0} | Äldst: {1}"
+
+msgctxt "#32485"
+msgid "Failed to analyze textures"
+msgstr "Kunde inte analysera texturer"
+
+msgctxt "#32486"
+msgid "Overwrite mode is enabled"
+msgstr "Överskrivningsläget är aktiverat"
+
+#. {0} is a list such as "Movies: filename prefix"
+msgctxt "#32487"
+msgid "Filename pattern: {0}"
+msgstr "Filnamnsmönster: {0}"
+
+msgctxt "#32488"
+msgid "Texture Cache - Last Run"
+msgstr "Texturcache – senaste körning"
+
+msgctxt "#32489"
+msgid "No previous operations found."
+msgstr "Inga tidigare åtgärder hittades."
+
+msgctxt "#32490"
+msgid "Fetching texture database..."
+msgstr "Hämtar texturdatabas..."
+
+msgctxt "#32492"
+msgid "Removing {0} old textures..."
+msgstr "Tar bort {0} gamla texturer..."
+
+msgctxt "#32493"
+msgid "Checked: {0} textures"
+msgstr "Kontrollerade: {0} texturer"
+
+msgctxt "#32494"
+msgid "Older than {0} days: {1}"
+msgstr "Äldre än {0} dagar: {1}"
+
+msgctxt "#32495"
+msgid "Removed: {0}"
+msgstr "Borttagna: {0}"
+
+msgctxt "#32496"
+msgid "Total Cached: {0} | Library: {1}"
+msgstr "Totalt cachade: {0} | Bibliotek: {1}"
+
+msgctxt "#32497"
+msgid "Orphaned Found: {0} | Removed: {1}"
+msgstr "Övergivna hittade: {0} | Borttagna: {1}"
+
+msgctxt "#32498"
+msgid "{0} artwork files not found on disk.[CR]These are stale library entries pointing to missing files.[CR][CR]View the list?"
+msgstr "{0} bildfiler hittades inte på disken.[CR]Detta är inaktuella biblioteksposter som pekar på saknade filer.[CR][CR]Visa listan?"
+
+msgctxt "#32499"
+msgid "Missing Artwork Files"
+msgstr "Saknade bildfiler"
+
+msgctxt "#32500"
+msgid "Session Report"
+msgstr "Sessionsrapport"
+
+msgctxt "#32501"
+msgid "Mismatches found: {0} files"
+msgstr "Avvikelser hittades: {0} filer"
+
+msgctxt "#32502"
+msgid "Select Missing Artwork"
+msgstr "Välj saknade bilder"
+
+msgctxt "#32503"
+msgid "Select + Download Missing Artwork"
+msgstr "Välj och hämta saknade bilder"
+
+msgctxt "#32504"
+msgid "Auto-Apply Missing Artwork"
+msgstr "Tillämpa saknade bilder automatiskt"
+
+msgctxt "#32505"
+msgid "View Session History"
+msgstr "Visa sessionshistorik"
+
+msgctxt "#32507"
+msgid "Browse & Choose Artwork - Select Library"
+msgstr "Bläddra och välj bilder – välj bibliotek"
+
+msgctxt "#32508"
+msgid "Browse & Choose + Download - Select Library"
+msgstr "Bläddra och välj samt hämta – välj bibliotek"
+
+msgctxt "#32509"
+msgid "Auto-Fill Missing Artwork - Select Library"
+msgstr "Fyll automatiskt i saknade bilder – välj bibliotek"
+
+msgctxt "#32510"
+msgid "Last Session (any library)"
+msgstr "Senaste sessionen (valfritt bibliotek)"
+
+msgctxt "#32511"
+msgid "Original artwork will be [B]deleted[/B] after a successful download."
+msgstr "Originalbilden kommer att [B]tas bort[/B] efter en lyckad hämtning."
+
+msgctxt "#32512"
+msgid "Session History"
+msgstr "Sessionshistorik"
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32513"
+msgid "{0}: filename prefix"
+msgstr "{0}: filnamnsprefix"
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32514"
+msgid "{0}: no prefix"
+msgstr "{0}: inget prefix"
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32515"
+msgid "Loading {0}..."
+msgstr "Läser in {0}..."
+
+msgctxt "#32520"
+msgid "Artwork Download Report"
+msgstr "Rapport om bildhämtning"
+
+msgctxt "#32522"
+msgid "Download Artwork to Filesystem"
+msgstr "Hämta bilder till filsystemet"
+
+msgctxt "#32523"
+msgid "Download Artwork - Select Scope"
+msgstr "Hämta bilder – välj omfattning"
+
+msgctxt "#32530"
+msgid "Tools"
+msgstr "Verktyg"
+
+msgctxt "#32532"
+msgid "Add/Fix IMDb & TMDB IDs"
+msgstr "Lägg till/åtgärda IMDb- och TMDB-ID:n"
+
+msgctxt "#32540"
+msgid "Scan for Animated Posters"
+msgstr "Sök efter animerade affischer"
+
+msgctxt "#32541"
+msgid "View Cache Statistics"
+msgstr "Visa cachestatistik"
+
+msgctxt "#32542"
+msgid "Reset GIF Cache"
+msgstr "Återställ GIF-cache"
+
+msgctxt "#32543"
+msgid "GIF Scanner - Last Run"
+msgstr "GIF-skanner – senaste körning"
+
+msgctxt "#32544"
+msgid "GIF Cache Statistics"
+msgstr "GIF-cachestatistik"
+
+msgctxt "#32546"
+msgid "Clear {0} cached GIF entries?[CR][CR]Use this to troubleshoot cache issues.[CR][CR]Tip: Use 'Full Rescan' mode instead to re-process GIFs."
+msgstr "Rensa {0} cachade GIF-poster?[CR][CR]Använd detta för att felsöka cacheproblem.[CR][CR]Tips: använd i stället läget ”Fullständig omskanning” för att bearbeta GIF:ar igen."
+
+msgctxt "#32547"
+msgid "GIF Cache"
+msgstr "GIF-cache"
+
+msgctxt "#32548"
+msgid "Reset complete - cleared {0} entries"
+msgstr "Återställningen är klar – {0} poster rensades"
+
+msgctxt "#32549"
+msgid "Cache is already empty"
+msgstr "Cachen är redan tom"
+
+msgctxt "#32550"
+msgid "Auto-Applied Artwork Report"
+msgstr "Rapport om automatiskt tillämpade bilder"
+
+msgctxt "#32551"
+msgid "Skipped Items Report"
+msgstr "Rapport om överhoppade objekt"
+
+msgctxt "#32552"
+msgid "Scan for GIF Posters"
+msgstr "Sök efter GIF-affischer"
+
+msgctxt "#32553"
+msgid "Select scan mode"
+msgstr "Välj genomsökningsläge"
+
+msgctxt "#32554"
+msgid "Select Language"
+msgstr "Välj språk"
+
+msgctxt "#32555"
+msgid "Select Artwork Type - {0}"
+msgstr "Välj bildtyp – {0}"
+
+msgctxt "#32556"
+msgid "Select {0}"
+msgstr "Välj {0}"
+
+msgctxt "#32557"
+msgid "Edit {0}"
+msgstr "Redigera {0}"
+
+msgctxt "#32560"
+msgid "Edit: {0}"
+msgstr "Redigera: {0}"
+
+msgctxt "#32561"
+msgid "Dialog Error"
+msgstr "Dialogruteproblem"
+
+msgctxt "#32562"
+msgid "File not found: {0}"
+msgstr "Filen hittades inte: {0}"
+
+msgctxt "#32563"
+msgid "Failed to read file: {0}"
+msgstr "Kunde inte läsa filen: {0}"
+
+msgctxt "#32564"
+msgid "Rating source '{0}' already exists."
+msgstr "Betygskällan ”{0}” finns redan."
+
+msgctxt "#32565"
+msgid "Rating (0-10)"
+msgstr "Betyg (0–10)"
+
+msgctxt "#32566"
+msgid "Continue"
+msgstr "Fortsätt"
+
+msgctxt "#32567"
+msgid "Auto-Fill"
+msgstr "Fyll automatiskt"
+
+msgctxt "#32569"
+msgid "Yes, Cancel It"
+msgstr "Ja, avbryt den"
+
+msgctxt "#32570"
+msgid "No, Keep Running"
+msgstr "Nej, låt köras"
+
+msgctxt "#32571"
+msgid "Cancel Running Task?"
+msgstr "Avbryt pågående uppgift?"
+
+msgctxt "#32574"
+msgid "Cancel to resume later"
+msgstr "Avbryt för att återuppta senare"
+
+msgctxt "#32575"
+msgid "Invalid scope: {0}"
+msgstr "Ogiltig omfattning: {0}"
+
+msgctxt "#32576"
+msgid "Invalid scan mode: {0}"
+msgstr "Ogiltigt genomsökningsläge: {0}"
+
+msgctxt "#32577"
+msgid "Resuming scan..."
+msgstr "Återupptar genomsökning..."
+
+msgctxt "#32579"
+msgid "All (Movies + TV Shows)"
+msgstr "Alla (filmer + tv-serier)"
+
+msgctxt "#32580"
+msgid "Movies Only"
+msgstr "Endast filmer"
+
+msgctxt "#32581"
+msgid "TV Shows Only"
+msgstr "Endast tv-serier"
+
+msgctxt "#32582"
+msgid "Incremental Scan"
+msgstr "Inkrementell genomsökning"
+
+msgctxt "#32583"
+msgid "Skip unchanged GIFs, detect new/modified ones"
+msgstr "Hoppa över oförändrade GIF:ar, upptäck nya eller ändrade"
+
+msgctxt "#32584"
+msgid "Full Rescan"
+msgstr "Fullständig omskanning"
+
+msgctxt "#32585"
+msgid "Rescan all items, rebuild cache from scratch"
+msgstr "Genomsök alla objekt igen, bygg om cachen från grunden"
+
+msgctxt "#32586"
+msgid "{0} GIFs cached"
+msgstr "{0} GIF:ar cachade"
+
+msgctxt "#32587"
+msgid "no cache"
+msgstr "ingen cache"
+
+msgctxt "#32588"
+msgid "Total Cached GIFs: {0}"
+msgstr "Totalt cachade GIF:ar: {0}"
+
+msgctxt "#32589"
+msgid "Recently Scanned (Last {0}):"
+msgstr "Nyligen genomsökta (senaste {0}):"
+
+msgctxt "#32590"
+msgid "... and {0} more"
+msgstr "... och {0} till"
+
+msgctxt "#32595"
+msgid "Automatically update IMDb Top 250 rankings in your library"
+msgstr "Uppdatera automatiskt IMDb Topp 250-rankningar i ditt bibliotek"
+
+msgctxt "#32600"
+msgid "IMDb Top 250"
+msgstr "IMDb Topp 250"
+
+msgctxt "#32601"
+msgid "Fetching Top 250 from Trakt..."
+msgstr "Hämtar Topp 250 från Trakt..."
+
+msgctxt "#32602"
+msgid "Loading library..."
+msgstr "Läser in biblioteket..."
+
+msgctxt "#32603"
+msgid "Matching movies..."
+msgstr "Matchar filmer..."
+
+msgctxt "#32604"
+msgid "Updating: {0}/{1}"
+msgstr "Uppdaterar: {0}/{1}"
+
+msgctxt "#32605"
+msgid "Top 250 Update Complete"
+msgstr "Uppdatering av Topp 250 är klar"
+
+msgctxt "#32606"
+msgid "Updated: {0} | Cleared: {1} | Already correct: {2}"
+msgstr "Uppdaterade: {0} | Rensade: {1} | Redan korrekta: {2}"
+
+msgctxt "#32607"
+msgid "Failed to fetch Top 250 list from Trakt."
+msgstr "Kunde inte hämta Topp 250-listan från Trakt."
+
+msgctxt "#32608"
+msgid "No movies found in library."
+msgstr "Inga filmer hittades i biblioteket."
+
+msgctxt "#32609"
+msgid "Update IMDb Top 250?"
+msgstr "Uppdatera IMDb Topp 250?"
+
+msgctxt "#32610"
+msgid "Set/update: {0} movies[CR]Clear: {1} movies[CR]Already correct: {2} movies[CR][CR]This will overwrite existing Top 250 values."
+msgstr "Ange/uppdatera: {0} filmer[CR]Rensa: {1} filmer[CR]Redan korrekta: {2} filmer[CR][CR]Detta skriver över befintliga Topp 250-värden."
+
+msgctxt "#32611"
+msgid "Cancelled. Updated: {0} | Cleared: {1} before cancellation."
+msgstr "Avbrutet. Uppdaterade: {0} | Rensade: {1} före avbrottet."
+
+msgctxt "#32612"
+msgid "Trakt Not Signed In"
+msgstr "Inte inloggad på Trakt"
+
+msgctxt "#32613"
+msgid "Sign in to Trakt or remove this widget"
+msgstr "Logga in på Trakt eller ta bort denna widget"
+
+msgctxt "#32614"
+msgid "Search"
+msgstr "Sök"
+
+msgctxt "#32615"
+msgid "Widgets"
+msgstr "Widgetar"
+
+msgctxt "#32616"
+msgid "Search Movies"
+msgstr "Sök filmer"
+
+msgctxt "#32617"
+msgid "Search TV Shows"
+msgstr "Sök tv-serier"
+
+msgctxt "#32618"
+msgid "Search People"
+msgstr "Sök personer"
+
+msgctxt "#32619"
+msgid "Discover"
+msgstr "Upptäck"
+
+msgctxt "#32620"
+msgid "Next Up"
+msgstr "Nästa på tur"
+
+msgctxt "#32621"
+msgid "Recent Episodes"
+msgstr "Senaste avsnitten"
+
+msgctxt "#32622"
+msgid "Seasonal"
+msgstr "Säsongsbetonat"
+
+msgctxt "#32623"
+msgid "Recommended Movies"
+msgstr "Rekommenderade filmer"
+
+msgctxt "#32624"
+msgid "Recommended TV Shows"
+msgstr "Rekommenderade tv-serier"
+
+msgctxt "#32625"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#32626"
+msgid "TV Shows"
+msgstr "Tv-serier"
+
+msgctxt "#32627"
+msgid "TMDB Trending"
+msgstr "TMDB-trender"
+
+msgctxt "#32628"
+msgid "TMDB Popular"
+msgstr "TMDB-populärt"
+
+msgctxt "#32629"
+msgid "TMDB Top Rated"
+msgstr "TMDB högst betygsatta"
+
+msgctxt "#32630"
+msgid "TMDB Now Playing"
+msgstr "TMDB spelas nu"
+
+msgctxt "#32631"
+msgid "TMDB Upcoming"
+msgstr "TMDB kommande"
+
+msgctxt "#32632"
+msgid "TMDB Airing Today"
+msgstr "TMDB visas i dag"
+
+msgctxt "#32633"
+msgid "TMDB On The Air"
+msgstr "TMDB sänds nu"
+
+msgctxt "#32634"
+msgid "Trakt Trending"
+msgstr "Trakt-trender"
+
+msgctxt "#32635"
+msgid "Trakt Popular"
+msgstr "Trakt-populärt"
+
+msgctxt "#32636"
+msgid "Trakt Anticipated"
+msgstr "Trakt mest efterlängtade"
+
+msgctxt "#32637"
+msgid "Trakt Most Watched"
+msgstr "Trakt mest sedda"
+
+msgctxt "#32638"
+msgid "Trakt Most Collected"
+msgstr "Trakt mest samlade"
+
+msgctxt "#32639"
+msgid "Trakt Box Office"
+msgstr "Trakt kassa"
+
+msgctxt "#32640"
+msgid "Trakt Recommendations"
+msgstr "Trakt-rekommendationer"
+
+msgctxt "#32641"
+msgid "(OAuth)"
+msgstr "(OAuth)"
+
+msgctxt "#32642"
+msgid "Christmas"
+msgstr "Jul"
+
+msgctxt "#32643"
+msgid "Halloween"
+msgstr "Halloween"
+
+msgctxt "#32644"
+msgid "Valentine's Day"
+msgstr "Alla hjärtans dag"
+
+msgctxt "#32645"
+msgid "Thanksgiving"
+msgstr "Thanksgiving"
+
+msgctxt "#32646"
+msgid "Star Wars Day"
+msgstr "Star Wars-dagen"
+
+msgctxt "#32647"
+msgid "Star Trek"
+msgstr "Star Trek"
+
+msgctxt "#32648"
+msgid "New Year"
+msgstr "Nyår"
+
+msgctxt "#32649"
+msgid "Easter"
+msgstr "Påsk"
+
+msgctxt "#32650"
+msgid "Independence Day"
+msgstr "Självständighetsdagen"
+
+# Recommended widget label, single-seed mode. {0} = seed title -> "Recommended based on Avatar"
+msgctxt "#32651"
+msgid "Recommended based on {0}"
+msgstr "Rekommenderas utifrån {0}"
+
+msgctxt "#32652"
+msgid "Recommended based on recent watches"
+msgstr "Rekommenderas utifrån nyligen sett innehåll"
+
+# Artwork selection dialogs
+msgctxt "#32653"
+msgid "Current Extra Art (Click to Remove)"
+msgstr "Aktuell extrabild (klicka för att ta bort)"
+
+msgctxt "#32654"
+msgid "Available Art (Click to Add)"
+msgstr "Tillgänglig bild (klicka för att lägga till)"
+
+msgctxt "#32655"
+msgid "Clear Selection"
+msgstr "Rensa markering"
+
+msgctxt "#32656"
+msgid "Apply"
+msgstr "Tillämpa"
+
+msgctxt "#32657"
+msgid "Sort: Popularity"
+msgstr "Sortera: popularitet"
+
+msgctxt "#32658"
+msgid "Sort: Resolution"
+msgstr "Sortera: upplösning"
+
+# Colour picker dialog
+msgctxt "#32659"
+msgid "Colour Manager"
+msgstr "Färghanterare"
+
+msgctxt "#32660"
+msgid "Alpha"
+msgstr "Alfa"
+
+msgctxt "#32661"
+msgid "Enter Hex"
+msgstr "Ange hexkod"
+
+# Metadata editor, unique IDs
+msgctxt "#32663"
+msgid "Add ID"
+msgstr "Lägg till ID"
+
+msgctxt "#32664"
+msgid "ID type (imdb, tmdb, tvdb...)"
+msgstr "ID-typ (imdb, tmdb, tvdb...)"
+
+# {0} = id type, e.g. tmdb -> "tmdb ID (leave empty to remove)"
+msgctxt "#32665"
+msgid "{0} ID (leave empty to remove)"
+msgstr "{0}-ID (lämna tomt för att ta bort)"
+
+msgctxt "#32666"
+msgid "Kodi won't remove the default ID. Change its value, or set another ID as default first."
+msgstr "Kodi tar inte bort standard-ID:t. Ändra dess värde eller ange först ett annat ID som standard."
+
+# {0} = id type, e.g. tmdb -> "Remove the tmdb ID?"
+msgctxt "#32667"
+msgid "Remove the {0} ID?"
+msgstr "Ta bort {0}-ID:t?"
+
+msgctxt "#32668"
+msgid "User Rating"
+msgstr "Användarbetyg"
+
+msgctxt "#32669"
+msgid "External Ratings"
+msgstr "Externa betyg"
+
+msgctxt "#32670"
+msgid "Display Artist"
+msgstr "Visningsartist"
+
+msgctxt "#32671"
+msgid "Sort Artist"
+msgstr "Sorteringsartist"
+
+msgctxt "#32672"
+msgid "Record Label"
+msgstr "Skivbolag"
+
+msgctxt "#32673"
+msgid "Album Type"
+msgstr "Albumtyp"
+
+msgctxt "#32674"
+msgid "Sort Name"
+msgstr "Sorteringsnamn"
+
+# Info dialog section headers with no Kodi core string
+msgctxt "#32675"
+msgid "Top Movies"
+msgstr "Toppfilmer"
+
+msgctxt "#32676"
+msgid "Top TV Shows"
+msgstr "Bästa tv-serierna"
+
+msgctxt "#32677"
+msgid "In Your Library - Movies"
+msgstr "I ditt bibliotek – filmer"
+
+msgctxt "#32678"
+msgid "In Your Library - TV Shows"
+msgstr "I ditt bibliotek – tv-serier"
+
+msgctxt "#32679"
+msgid "All Credits"
+msgstr "Alla medverkande"
+
+msgctxt "#32680"
+msgid "Crew Credits"
+msgstr "Medverkande bakom kameran"
+
+msgctxt "#32681"
+msgid "Images"
+msgstr "Bilder"
+
+msgctxt "#32682"
+msgid "Recommendations"
+msgstr "Rekommendationer"
+
+msgctxt "#32683"
+msgid "Similar in Library"
+msgstr "Liknande i biblioteket"
+
+msgctxt "#32684"
+msgid "Crew"
+msgstr "Medverkande"
+
+msgctxt "#32685"
+msgid "Next Up (Favourites)"
+msgstr "Nästa på tur (favoriter)"
+
+msgctxt "#32686"
+msgid "Recent Videos"
+msgstr "Senaste videor"
+
+msgctxt "#32687"
+msgid "Favourite Movies"
+msgstr "Favoritfilmer"
+
+msgctxt "#32688"
+msgid "Favourite TV Shows"
+msgstr "Favorit-tv-serier"
+
+msgctxt "#32689"
+msgid "Favourite Episodes"
+msgstr "Favoritavsnitt"
+
+msgctxt "#32690"
+msgid "Favourite Music Videos"
+msgstr "Favoritmusikvideor"
+
+msgctxt "#32691"
+msgid "Music video thumb source"
+msgstr "Källa för miniatyrbild till musikvideo"
+
+#. Options for which image fills an empty music video thumb during automatic fetching
+msgctxt "#32692"
+msgid "Video screenshots"
+msgstr "Skärmbilder från video"
+
+msgctxt "#32693"
+msgid "Album cover"
+msgstr "Albumomslag"
+
+msgctxt "#32694"
+msgid "Artist thumb"
+msgstr "Artistminiatyrbild"
+
+msgctxt "#32695"
+msgid "Ratings sources to check (IMDb always on)"
+msgstr "Betygskällor att kontrollera (IMDb alltid aktiv)"
+
+msgctxt "#32696"
+msgid "Continue Watching"
+msgstr "Fortsätt titta"
+
+msgctxt "#32697"
+msgid "Similar Artists"
+msgstr "Liknande artister"
+
+msgctxt "#32698"
+msgid "Wait 60s and Retry"
+msgstr "Vänta 60 s och försök igen"
+
+msgctxt "#32699"
+msgid "Retry Tomorrow"
+msgstr "Försök igen i morgon"
+
+msgctxt "#32700"
+msgid "Stop All Updates"
+msgstr "Stoppa alla uppdateringar"
+
+#. {0} is the provider name, e.g. TRAKT
+msgctxt "#32701"
+msgid "Continue Without {0}"
+msgstr "Fortsätt utan {0}"
+
+#. {0} is a web address, {1} a short code the user types there, {2} the seconds left
+msgctxt "#32702"
+msgid ""
+"1. Visit: {0}\n"
+"2. Enter code: [B]{1}[/B]\n"
+"3. Click Authorize on the website\n"
+"\n"
+"Waiting for authorization... ({2}s remaining)"
+msgstr ""
+"1. Besök: {0}\\n"
+"2. Ange koden: [B]{1}[/B]\\n"
+"3. Klicka på Auktorisera på webbplatsen\\n\\n"
+"Väntar på auktorisering... ({2} s återstår)"
+
+msgctxt "#32703"
+msgid "Person Info"
+msgstr "Personinformation"
+
+msgctxt "#32704"
+msgid "Scanning {0}"
+msgstr "Genomsöker {0}"
+
+msgctxt "#32705"
+msgid "ETA {0}"
+msgstr "Beräknad tid {0}"
+
+msgctxt "#32706"
+msgid "Queued: {0}"
+msgstr "I kö: {0}"
+
+msgctxt "#32707"
+msgid "Found: {0} | Cached: {1} | Existing: {2}"
+msgstr "Hittade: {0} | Cachade: {1} | Befintliga: {2}"
+
+msgctxt "#32708"
+msgid "Option {0}"
+msgstr "Alternativ {0}"
+
+#. {2} is a language name
+msgctxt "#32709"
+msgid "{0} of {1} available ({2})"
+msgstr "{0} av {1} tillgängliga ({2})"
+
+msgctxt "#32710"
+msgid "{0} available"
+msgstr "{0} tillgängliga"
+
+#. {0} is an art type such as Fanart or Poster
+msgctxt "#32711"
+msgid "Multi-Art {0}"
+msgstr "Flera bilder {0}"
+
+#. {0} is a media type, {1} a list of art types
+msgctxt "#32712"
+msgid "Art type not supported for {0}: {1}"
+msgstr "Bildtypen stöds inte för {0}: {1}"
+
+msgctxt "#32713"
+msgid "No MusicBrainz ID for this artist"
+msgstr "Inget MusicBrainz-ID för denna artist"
+
+msgctxt "#32714"
+msgid "No MusicBrainz ID for this album"
+msgstr "Inget MusicBrainz-ID för detta album"
+
+msgctxt "#32715"
+msgid "Failed to fetch artwork"
+msgstr "Kunde inte hämta bilder"
+
+#. {0} is a list of art types
+msgctxt "#32716"
+msgid "No {0} artwork found"
+msgstr "Inga {0}-bilder hittades"
+
+msgctxt "#32717"
+msgid "Artwork updated"
+msgstr "Bilder uppdaterade"
+
+msgctxt "#32718"
+msgid "Applied: {0} | Skipped: {1} | Auto-skipped: {2}"
+msgstr "Tillämpade: {0} | Överhoppade: {1} | Hoppades över automatiskt: {2}"
+
+#. {0} is a library name such as Movies
+msgctxt "#32719"
+msgid "{0} - Select Action"
+msgstr "{0} – välj åtgärd"
+
+#. {0} is a library name such as Movies
+msgctxt "#32720"
+msgid "No report available for {0}"
+msgstr "Ingen rapport tillgänglig för {0}"
+
+msgctxt "#32721"
+msgid "No reports available"
+msgstr "Inga rapporter tillgängliga"
+
+#. {0} is a library name such as Movies
+msgctxt "#32722"
+msgid "Auto-Fill {0}"
+msgstr "Fyll automatiskt i {0}"
+
+msgctxt "#32723"
+msgid "Automatically applies missing artwork without review.[CR]Only fills in missing artwork, won't replace existing.[CR]View results afterwards in Session History.[CR][CR]Continue?"
+msgstr "Tillämpa saknade bilder automatiskt utan granskning.[CR]Fyller endast i saknade bilder och ersätter inte befintliga.[CR]Visa resultatet efteråt i sessionshistoriken.[CR][CR]Fortsätt?"
+
+msgctxt "#32724"
+msgid "Enter the date as YYYY-MM-DD"
+msgstr "Ange datumet som ÅÅÅÅ-MM-DD"
+
+msgctxt "#32725"
+msgid "That date cannot exist"
+msgstr "Det datumet kan inte finnas"
+
+#. {0} is a field name such as Genre
+msgctxt "#32726"
+msgid "No existing {0} found in library.[CR]Use Quick Edit or Add/Remove instead."
+msgstr "Inga befintliga {0} hittades i biblioteket.[CR]Använd Snabbredigering eller Lägg till/ta bort i stället."
+
+msgctxt "#32727"
+msgid "{0} votes"
+msgstr "{0} röster"
+
+#. {0} is a field name such as Genre
+msgctxt "#32728"
+msgid "{0} updated"
+msgstr "{0} uppdaterade"
+
+#. {0} is how many more values are not shown
+msgctxt "#32729"
+msgid "(+{0} more)"
+msgstr "(+{0} till)"
+
+#. {0} is the name of the running task
+msgctxt "#32730"
+msgid "Cancel Current Task: {0}"
+msgstr "Avbryt aktuell uppgift: {0}"
+
+#. {0} is the name of the running task
+msgctxt "#32731"
+msgid "[B]Currently Running:[/B] {0}"
+msgstr "[B]Körs just nu:[/B] {0}"
+
+#. {0} is a time such as 5m 3s
+msgctxt "#32732"
+msgid "[B]Duration:[/B] {0}"
+msgstr "[B]Varaktighet:[/B] {0}"
+
+#. {0} is a time such as 5m 3s
+msgctxt "#32733"
+msgid "[B]Last Activity:[/B] {0} ago"
+msgstr "[B]Senaste aktivitet:[/B] för {0} sedan"
+
+#. {0} is the name of the task about to start
+msgctxt "#32734"
+msgid "[B]New Task:[/B] {0}"
+msgstr "[B]Ny uppgift:[/B] {0}"
+
+msgctxt "#32735"
+msgid "Cancelling will stop the current task safely."
+msgstr "Ett avbrott stoppar den aktuella uppgiften säkert."
+
+msgctxt "#32736"
+msgid "Not set in Kodi's settings. This folder holds the artwork for movie sets.[CR][CR]Select a folder now?"
+msgstr "Inte angivet i Kodis inställningar. Den här mappen innehåller bilder för filmsamlingar.[CR][CR]Välj en mapp nu?"
+
+msgctxt "#32737"
+msgid "Not set in Kodi's settings. This folder holds the artwork and metadata for artists.[CR][CR]Select a folder now?"
+msgstr "Inte angivet i Kodis inställningar. Den här mappen innehåller bilder och metadata för artister.[CR][CR]Välj en mapp nu?"
+
+msgctxt "#32738"
+msgid "Folder saved"
+msgstr "Mappen sparades"
+
+msgctxt "#32739"
+msgid "Could not save the setting. Set the folder in Kodi's settings instead."
+msgstr "Kunde inte spara inställningen. Ange mappen i Kodis inställningar i stället."
+
+#. {0} is the image's position in the list
+msgctxt "#32740"
+msgid "Profile Image {0}"
+msgstr "Profilbild {0}"
+
+#. {0} is a list of counts, such as "12 Movies, 3 TV shows"
+msgctxt "#32741"
+msgid "Missing IMDb IDs: {0}"
+msgstr "Saknade IMDb-ID:n: {0}"
+
+#. {0} is a list of counts, such as "12 Movies, 3 TV shows"
+msgctxt "#32742"
+msgid "Invalid TMDB IDs: {0}"
+msgstr "Ogiltiga TMDB-ID:n: {0}"
+
+msgctxt "#32743"
+msgid "Fix these issues?"
+msgstr "Åtgärda dessa problem?"
+
+msgctxt "#32744"
+msgid "Added {0} IMDb IDs"
+msgstr "Lade till {0} IMDb-ID:n"
+
+msgctxt "#32745"
+msgid "Fixed {0} TMDB IDs"
+msgstr "Åtgärdade {0} TMDB-ID:n"
+
+msgctxt "#32746"
+msgid "Creator"
+msgstr "Skapare"
+
+msgctxt "#32747"
+msgid "Enter 6 or 8 hex digits, as RRGGBB or AARRGGBB"
+msgstr "Ange 6 eller 8 hexadecimala siffror, som RRGGBB eller AARRGGBB"
+
+msgctxt "#32901"
+msgid "Enable Debug Output"
+msgstr "Aktivera felsökningsutdata"
+
+msgctxt "#32930"
+msgid "English"
+msgstr "Engelska"
+
+msgctxt "#32931"
+msgid "Spanish"
+msgstr "Spanska"
+
+msgctxt "#32932"
+msgid "Portuguese (Brazil)"
+msgstr "Portugisiska (Brasilien)"
+
+msgctxt "#32933"
+msgid "Portuguese (Portugal)"
+msgstr "Portugisiska (Portugal)"
+
+msgctxt "#32934"
+msgid "French"
+msgstr "Franska"
+
+msgctxt "#32935"
+msgid "German"
+msgstr "Tyska"
+
+msgctxt "#32936"
+msgid "Chinese (Simplified)"
+msgstr "Kinesiska (förenklad)"
+
+msgctxt "#32937"
+msgid "Chinese (Traditional)"
+msgstr "Kinesiska (traditionell)"
+
+msgctxt "#32938"
+msgid "Italian"
+msgstr "Italienska"
+
+msgctxt "#32939"
+msgid "Polish"
+msgstr "Polska"
+
+msgctxt "#32940"
+msgid "Russian"
+msgstr "Ryska"
+
+msgctxt "#32941"
+msgid "Dutch"
+msgstr "Nederländska"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Svenska"
+
+msgctxt "#32943"
+msgid "Korean"
+msgstr "Koreanska"
+
+msgctxt "#32944"
+msgid "Japanese"
+msgstr "Japanska"
+
+msgctxt "#32950"
+msgid "Advanced API Configuration"
+msgstr "Avancerad API-konfiguration"
+
+msgctxt "#32951"
+msgid "Use Custom TMDb API Key"
+msgstr "Använd anpassad TMDb API-nyckel"
+
+msgctxt "#32952"
+msgid "A built-in TMDb API key is provided and works for most users. Enable this only if you need higher rate limits or want to use your own dedicated quota."
+msgstr "En inbyggd TMDb API-nyckel tillhandahålls och fungerar för de flesta användare. Aktivera detta endast om du behöver högre anropsgränser eller vill använda din egen dedikerade kvot."
+
+msgctxt "#32960"
+msgid "Missing Artwork Types"
+msgstr "Saknade bildtyper"
+
+msgctxt "#32963"
+msgid "Clearlogo"
+msgstr "Ren logotyp"
+
+msgctxt "#32964"
+msgid "Clearart"
+msgstr "Ren bild"
+
+msgctxt "#32965"
+msgid "Thumb"
+msgstr "Miniatyrbild"
+
+msgctxt "#32966"
+msgid "Landscape"
+msgstr "Landskapsbild"
+
+msgctxt "#32967"
+msgid "Discart"
+msgstr "Skivbild"
+
+msgctxt "#32968"
+msgid "Keyart"
+msgstr "Nyckelbild"
+
+msgctxt "#32969"
+msgid "Characterart"
+msgstr "Figurbild"
+
+msgctxt "#32970"
+msgid "Auto-download after Manage Artwork"
+msgstr "Hämta automatiskt efter Hantera bilder"
+
+msgctxt "#32971"
+msgid "Automatically download selected artwork to filesystem after selection in Manage Artwork"
+msgstr "Hämta automatiskt valda bilder till filsystemet efter val i Hantera bilder"
+
+msgctxt "#32974"
+msgid "Download Settings"
+msgstr "Hämtningsinställningar"
+
+#. Settings group - language for data from online APIs (TMDb titles, plots, etc.)
+msgctxt "#32976"
+msgid "Online Service"
+msgstr "Nättjänst"
+
+msgctxt "#32977"
+msgid "Language for online metadata from TMDb, Last.fm, and TheAudioDB"
+msgstr "Språk för metadata på nätet från TMDb, Last.fm och TheAudioDB"
+
+#. Actor image download feature (context menu)
+msgctxt "#32981"
+msgid "Downloading actor images..."
+msgstr "Hämtar bilder på skådespelare..."
+
+msgctxt "#32982"
+msgid "{0} actors"
+msgstr "{0} skådespelare"
+
+msgctxt "#32983"
+msgid "Include TV Episode Guest Stars"
+msgstr "Inkludera gästskådespelare i tv-avsnitt"
+
+msgctxt "#32984"
+msgid "Download guest star images from TV show episodes (increases API calls)"
+msgstr "Hämta bilder på gästskådespelare från tv-serieavsnitt (ökar antalet API-anrop)"
+
+msgctxt "#32985"
+msgid "Include Episode Thumbnails"
+msgstr "Inkludera miniatyrbilder för avsnitt"
+
+msgctxt "#32986"
+msgid "Download episode thumbnail artwork during bulk operations"
+msgstr "Hämta miniatyrbilder för avsnitt vid gruppåtgärder"
+
+msgctxt "#32987"
+msgid "Text too long to fully display"
+msgstr "Texten är för lång för att visas helt"
+
+msgctxt "#32988"
+msgid "Sync TV Show Metadata"
+msgstr "Synkronisera metadata för tv-serier"
+
+msgctxt "#32989"
+msgid "Updates online metadata for every TV show in your library. Large libraries may take significantly longer."
+msgstr "Uppdaterar metadata på nätet för varje tv-serie i ditt bibliotek. Stora bibliotek kan ta avsevärt längre tid."
+
+msgctxt "#32990"
+msgid "Fetching {0:d} of {1:d}"
+msgstr "Hämtar {0:d} av {1:d}"
+
+msgctxt "#32991"
+msgid "Updated: {0:d}[CR]Skipped: {1:d}[CR]Failed: {2:d}"
+msgstr "Uppdaterade: {0:d}[CR]Överhoppade: {1:d}[CR]Misslyckade: {2:d}"
+
+msgctxt "#32992"
+msgid "Library Maintenance"
+msgstr "Biblioteksunderhåll"
+
+msgctxt "#32993"
+msgid "NFO Files"
+msgstr "NFO-filer"
+
+msgctxt "#32994"
+msgid "Write metadata changes to NFO files"
+msgstr "Skriv metadataändringar till NFO-filer"
+
+msgctxt "#32995"
+msgid "When you edit metadata, also write the change to the item's local NFO file so it survives a library refresh or rescrape."
+msgstr "När du redigerar metadata skriver du även ändringen till objektets lokala NFO-fil så att den bevaras vid en biblioteksuppdatering eller omskrapning."
+
+msgctxt "#32996"
+msgid "Create an NFO file when none exists"
+msgstr "Skapa en NFO-fil när ingen finns"
+
+msgctxt "#32997"
+msgid "If the item has no NFO file yet, create one. When off, only existing NFO files are updated."
+msgstr "Om objektet ännu inte har någon NFO-fil skapas en. När det är avstängt uppdateras endast befintliga NFO-filer."
+
+msgctxt "#32998"
+msgid "Include watched state in NFO files"
+msgstr "Inkludera sett-status i NFO-filer"
+
+msgctxt "#32999"
+msgid "Write playcount and last-played date to NFO files. Turn off to keep watched state out of your NFO files."
+msgstr "Skriv spelantal och senast spelade datum till NFO-filer. Stäng av för att hålla sett-status utanför dina NFO-filer."

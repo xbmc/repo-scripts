@@ -1,17 +1,17 @@
-"""Worker queue infrastructure for background processing."""
+"""Threaded worker queue base for background jobs."""
 from __future__ import annotations
 
 import time
 import threading
 import xbmc
 from queue import Queue, Empty
-from typing import Optional, Set, List, Dict, Any
+from typing import Optional, Set, List, Dict, Any, Final
 from multiprocessing import cpu_count
 from lib.kodi.client import log
 
 
 def get_optimal_worker_count() -> int:
-    """Calculate optimal number of worker threads based on CPU cores."""
+    """Calculate a worker thread count from the CPU cores, between 3 and 8."""
     try:
         cores = cpu_count()
     except (NotImplementedError, AttributeError):
@@ -23,10 +23,10 @@ def get_optimal_worker_count() -> int:
     return min(max(3, cores), 8)
 
 
-# Kodi serialises all NFS/SMB I/O on one global lock and caches textures one at a time.
-VFS_WORKER_COUNT = 2
+# Kodi serializes all NFS/SMB I/O on one global lock and caches textures one at a time
+VFS_WORKER_COUNT: Final = 2
 
-STALL_TIMEOUT_SECONDS = 120
+STALL_TIMEOUT_SECONDS: Final = 120
 
 
 class WorkerQueue:
@@ -72,14 +72,13 @@ class WorkerQueue:
             self.workers.append(worker)
 
     def stop(self, wait: bool = True) -> None:
-        """Stop workers. `wait=False` clears pending items and interrupts in-flight work."""
+        """Stop the workers; without waiting, pending items are dropped and running ones stopped."""
         if not self.running:
             return
 
         self.running = False
 
-        # A worker past the join is unreachable otherwise: `running` is only read at the top
-        # of the loop, and TaskContext clears the abort property moments after this returns.
+        # in-flight work sees only the abort flag; `running` is read at the top of the loop
         if not wait and self.abort_flag:
             self.abort_flag.request()
 
@@ -132,30 +131,8 @@ class WorkerQueue:
                 queued += 1
         return queued
 
-    def wait(self, timeout: Optional[float] = None) -> bool:
-        """Block until the queue is empty. Returns False on timeout or Kodi abort."""
-        try:
-            if timeout:
-                start = time.time()
-                monitor = xbmc.Monitor()
-                while not self.queue.empty() or self.processing_set:
-                    if time.time() - start > timeout:
-                        return False
-                    if monitor.waitForAbort(0.1):
-                        return False
-            else:
-                self.queue.join()
-            return True
-        except Exception as e:
-            log("General", f"{self.__class__.__name__} wait error: {str(e)}", xbmc.LOGERROR)
-            return False
-
     def get_stats(self) -> Dict:
-        """Return current queue statistics.
-
-        Keys: `queued, processing, completed, successful, failed, total_queued,
-        num_workers, results`.
-        """
+        """Return current queue counts and the retained results."""
         with self.results_lock:
             return {
                 'queued': self.queue.qsize(),
@@ -221,11 +198,7 @@ class WorkerQueue:
                 )
 
     def _run_item(self, item: tuple, worker_id: int, monitor: xbmc.Monitor) -> bool:
-        """Process one queued item, record result, fire callbacks, clean up.
-
-        Returns False if processing was aborted before _process_item ran (caller breaks out
-        of the worker loop). Returns True otherwise, including on _process_item exceptions.
-        """
+        """Process one item and record its result; False only when abort stopped it first."""
         item_data, dedupe_key, start_time = item
 
         if monitor.abortRequested() or (self.abort_flag and self.abort_flag.is_requested()):
@@ -278,12 +251,11 @@ class WorkerQueue:
         return True
 
     def _process_item(self, item: Any, worker_id: int) -> Optional[Dict]:
-        """Override in subclass. Return a result dict (must include `success`)."""
+        """Do one item's work in a subclass; a result without `success` counts as a success."""
         raise NotImplementedError("Subclasses must implement _process_item()")
 
     def _on_start(self) -> None:
         """Optional subclass hook: called once when `start()` spins up workers."""
-        pass
 
     def _should_process_item(self, item: Any, dedupe_key: Any) -> bool:
         """Optional subclass hook: return False to skip queuing an item."""
@@ -291,4 +263,3 @@ class WorkerQueue:
 
     def _on_item_complete(self, item: Any, result: Dict) -> None:
         """Optional subclass hook: called after every item (success or failure)."""
-        pass

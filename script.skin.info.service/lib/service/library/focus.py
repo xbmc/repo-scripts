@@ -3,16 +3,21 @@ from __future__ import annotations
 
 import re
 import threading
-from typing import Dict, List, Optional, Tuple, TYPE_CHECKING
-
-import xbmc
+from typing import Optional, Tuple, TYPE_CHECKING, Final
 
 from lib.kodi.client import (
     request, get_cache_only, extract_result, get_item_details,
     KODI_MOVIE_PROPERTIES,
 )
-from lib.kodi.utilities import clear_group, gui_transition_settled, is_kodi_piers_or_later
-from lib.service.properties import (
+from lib.kodi.utilities import (
+    LabelSnapshot, clear_group, is_kodi_piers_or_later, modal_dialog_active, normalize_dbtype,
+    tvshow_version_fields,
+)
+from lib.kodi.library import (
+    cached_watch_minutes, cached_watched_episodes, resolve_season_runtime, resolve_show_runtime,
+    resolve_watch_minutes,
+)
+from lib.kodi.properties import (
     set_artist_properties,
     set_album_properties,
     set_movie_properties,
@@ -22,6 +27,7 @@ from lib.service.properties import (
     set_episode_properties,
     set_ratings_properties,
     set_movie_extras_aggregates,
+    set_watched_properties,
     clear_listitem_unified_properties,
 )
 
@@ -29,18 +35,15 @@ if TYPE_CHECKING:
     from lib.service.library.main import ServiceMain
 
 
-CACHE_MOVIESET_TTL = 300
+CACHE_MOVIESET_TTL: Final = 300
+FOCUS_LABELS: Final = ("ListItem.DBID", "ListItem.DBType",
+                       "ListItem.Property(musicvideomediatype)", "Container.Content")
 
 _ASSET_VIEW_PATH_RE = re.compile(r"^videodb://.*?/(\d+)/-?\d+/?(?:\?|$)")
 
 
 def _fetch_extras_aggregates(parent_dbid: str) -> Tuple[int, int, int, int]:
-    """Return (count, total_runtime, unwatched, unwatched_runtime) for a movie's extras folder.
-
-    Uncached: invalidate_asset_view() plus the _last_asset_parent dedup already limit
-    refetches; per-file length reads streamdetails since `runtime` here is the parent
-    movie's duration.
-    """
+    """Fetch the count, runtime, unwatched count and unwatched runtime of a movie's extras."""
     resp = request(
         "Files.GetDirectory",
         {
@@ -81,53 +84,26 @@ _MEDIA_TYPE_PREFIXES = {
 }
 
 
-def _get_episode_runtimes(tvshowid: int, season: Optional[int] = None) -> List[int]:
-    props = ["runtime"] if is_kodi_piers_or_later() else ["runtime", "streamdetails"]
-    params: Dict = {"tvshowid": tvshowid, "properties": props}
-    cache_key = f"tvshow:{tvshowid}:episode_runtimes"
-    if season is not None:
-        params["season"] = season
-        cache_key = f"tvshow:{tvshowid}:s{season}:episode_runtimes"
-    resp = request("VideoLibrary.GetEpisodes", params, cache_key=cache_key)
-    episodes = extract_result(resp, "episodes")
-    return [e["runtime"] for e in episodes if e.get("runtime", 0) > 0]
-
-
-def resolve_show_runtime(tvshowid: int) -> Tuple[int, int]:
-    """Return (total_runtime, avg_episode_runtime); cache-miss fetches via GetEpisodes."""
-    from lib.data.database import runtime as runtime_cache
-    cached = runtime_cache.get_show_runtime(tvshowid)
-    if cached is not None:
-        return cached
-    runtimes = _get_episode_runtimes(tvshowid)
-    total = sum(runtimes)
-    avg = total // len(runtimes) if runtimes else 0
-    runtime_cache.save_show_runtime(tvshowid, total, avg, len(runtimes))
-    return total, avg
-
-
-def _resolve_season_runtime(tvshowid: int, season: int) -> int:
-    """Return season total_runtime; cache-miss fetches via GetEpisodes."""
-    from lib.data.database import runtime as runtime_cache
-    cached = runtime_cache.get_season_runtime(tvshowid, season)
-    if cached is not None:
-        return cached
-    runtimes = _get_episode_runtimes(tvshowid, season)
-    total = sum(runtimes)
-    runtime_cache.save_season_runtime(tvshowid, season, total, len(runtimes))
-    return total
+_CONTAINER_CONTENT_TYPES = {
+    "sets": "set",
+    "movies": "movie",
+    "artists": "artist",
+    "albums": "album",
+    "tvshows": "tvshow",
+    "seasons": "season",
+    "episodes": "episode",
+    "musicvideos": "musicvideo",
+}
 
 
 class FocusDispatcher:
-    """Reads `ListItem.DBID` each tick and dispatches to per-type detail setters.
-
-    Holds last-seen `(dbid, type)` to skip work when nothing changed.
-    """
+    """Dispatcher setting the focused library item's properties, idle while focus holds still."""
 
     def __init__(self, service: 'ServiceMain'):
         self._service = service
         self._last_id: Optional[str] = None
         self._last_type: Optional[str] = None
+        self._last_dbtype: Optional[str] = None
         self._last_asset_parent: Optional[str] = None
 
     def clear_media_type(self, media_type: str) -> None:
@@ -138,31 +114,27 @@ class FocusDispatcher:
         if media_type == "season":
             clear_group(_MEDIA_TYPE_PREFIXES["tvshow"])
 
+    def invalidate_item(self, media_type: str, dbid) -> None:
+        """Drop the memo and the cached details for an item Kodi has just written to."""
+        from lib.kodi.client import drop_cached
+        drop_cached(f"{media_type}:{dbid}:")
+        if self._last_id == str(dbid):
+            self._last_id = None
+
     def invalidate_asset_view(self) -> None:
-        """Force a refetch of extras aggregates on the next tick. Called from the
-        library monitor on playcount-relevant events (extra watched / marked watched).
-        """
+        """Invalidate the extras aggregates, refetched on the next tick."""
         self._last_asset_parent = None
 
-    def _handle_asset_view(self) -> bool:
-        """Treat the parent movie as focus context inside a videoversions/videoextras
-        container (Piers+ only).
-
-        Driven by `Container.FolderPath` since focused items there often lack a DBID;
-        returns True while active so `process()` keeps `SkinInfo.Movie.*` on empty-DBID focus.
-        """
+    def _handle_asset_view(self, labels: LabelSnapshot) -> bool:
+        """Handle a versions or extras view as its parent movie; True while one is open."""
         if not is_kodi_piers_or_later():
             return False
-        in_container = xbmc.getCondVisibility(
-            "Container.Content(videoversions) | Container.Content(videoextras)"
-        )
-        if not in_container:
-            if self._last_asset_parent is not None:
+        if labels.get("Container.Content").lower() not in ("videoversions", "videoextras"):
+            if self._last_asset_parent is not None and not modal_dialog_active():
                 set_movie_extras_aggregates(0, 0, 0, 0)
                 self._last_asset_parent = None
             return False
-        folder_path = xbmc.getInfoLabel("Container.FolderPath") or ""
-        match = _ASSET_VIEW_PATH_RE.match(folder_path)
+        match = _ASSET_VIEW_PATH_RE.match(labels.get("Container.FolderPath"))
         if not match:
             return True
         parent_dbid = match.group(1)
@@ -177,33 +149,38 @@ class FocusDispatcher:
             self._last_asset_parent = parent_dbid
         return True
 
-    def process(self) -> None:
-        """Read ListItem.DBID/DBType and dispatch to the matching detail setter."""
-        if not gui_transition_settled():
-            return
-        in_asset_view = self._handle_asset_view()
+    def process(self, labels: LabelSnapshot) -> None:
+        """Read ListItem.DBID/DBType, dispatch to its detail setter, then run the focus blur."""
+        in_asset_view = self._handle_asset_view(labels)
 
-        dbid = xbmc.getInfoLabel("ListItem.DBID") or ""
+        dbid = labels.get("ListItem.DBID")
         if not dbid:
             if in_asset_view:
-                self._service.blur.handle_focus()
+                self._service.blur.handle_focus(labels)
+                return
+            if modal_dialog_active():
+                self._service.blur.handle_focus(labels)
                 return
             if self._last_type:
                 self.clear_media_type(self._last_type)
                 clear_listitem_unified_properties()
                 self._last_type = ""
+                self._last_dbtype = None
                 self._last_id = None
-            self._service.blur.handle_focus()
+            self._service.blur.handle_focus(labels)
             return
 
-        dbtype = xbmc.getInfoLabel("ListItem.DBType") or ""
-        if dbid == self._last_id and dbtype and dbtype == self._last_type:
-            self._service.blur.handle_focus()
-            return
+        dbtype = normalize_dbtype(labels.get("ListItem.DBType"))
 
         mv_mediatype = ""
         if dbtype in ("actor", "album"):
-            mv_mediatype = xbmc.getInfoLabel("ListItem.Property(musicvideomediatype)")
+            mv_mediatype = labels.get("ListItem.Property(musicvideomediatype)")
+
+        # one person is the same dbid+DBType in the actors and artists nodes; only this differs
+        identity = f"{dbtype}|{mv_mediatype}"
+        if dbid == self._last_id and self._last_type and identity == self._last_dbtype:
+            self._service.blur.handle_focus(labels)
+            return
 
         if dbtype == "actor" and mv_mediatype == "artist":
             cur_type = "musicvideo_artist"
@@ -216,27 +193,8 @@ class FocusDispatcher:
         elif dbid == self._last_id and self._last_type:
             cur_type = self._last_type
         else:
-            is_set = xbmc.getCondVisibility(
-                "ListItem.IsCollection | String.IsEqual(ListItem.DBType,set)"
-            )
-            if is_set or xbmc.getCondVisibility("Container.Content(sets)"):
-                cur_type = "set"
-            elif xbmc.getCondVisibility("Container.Content(movies)"):
-                cur_type = "movie"
-            elif xbmc.getCondVisibility("Container.Content(artists)"):
-                cur_type = "artist"
-            elif xbmc.getCondVisibility("Container.Content(albums)"):
-                cur_type = "album"
-            elif xbmc.getCondVisibility("Container.Content(tvshows)"):
-                cur_type = "tvshow"
-            elif xbmc.getCondVisibility("Container.Content(seasons)"):
-                cur_type = "season"
-            elif xbmc.getCondVisibility("Container.Content(episodes)"):
-                cur_type = "episode"
-            elif xbmc.getCondVisibility("Container.Content(musicvideos)"):
-                cur_type = "musicvideo"
-            else:
-                cur_type = ""
+            # Container.Content(x) is a case-insensitive compare against this label
+            cur_type = _CONTAINER_CONTENT_TYPES.get(labels.get("Container.Content").lower(), "")
 
         if self._last_id and dbid != self._last_id:
             if self._last_type and self._last_type != cur_type:
@@ -244,7 +202,7 @@ class FocusDispatcher:
             self._last_type = ""
 
         if dbid == self._last_id and cur_type == self._last_type:
-            self._service.blur.handle_focus()
+            self._service.blur.handle_focus(labels)
             return
 
         if cur_type == "set":
@@ -282,11 +240,11 @@ class FocusDispatcher:
         elif cur_type == "musicvideo_artist":
             self._last_id = dbid
             self._last_type = "musicvideo_artist"
-            self._service.musicvideo.set_artist_node()
+            self._service.musicvideo.set_artist_node(labels)
         elif cur_type == "musicvideo_album":
             self._last_id = dbid
             self._last_type = "musicvideo_album"
-            self._service.musicvideo.set_album_node()
+            self._service.musicvideo.set_album_node(labels)
         elif cur_type == "musicvideo":
             self._last_id = dbid
             self._last_type = "musicvideo"
@@ -301,9 +259,11 @@ class FocusDispatcher:
             self._last_id = dbid
             self._last_type = ""
 
-        self._service.blur.handle_focus()
+        self._last_dbtype = identity
+        self._service.blur.handle_focus(labels)
 
     def _set_movie(self, movieid: str) -> None:
+        """Set movie properties for the focused item."""
         details = get_item_details(
             'movie', int(movieid), KODI_MOVIE_PROPERTIES,
             cache_key=f"movie:{movieid}:details",
@@ -314,6 +274,7 @@ class FocusDispatcher:
         set_ratings_properties(details, "Movie")
 
     def _set_movieset(self, setid: str) -> None:
+        """Set movie set properties, preferring a cached full record over a minimal fetch."""
         cached_full = get_cache_only(f"set:{setid}:details")
         if cached_full:
             details = extract_result(cached_full, "setdetails")
@@ -350,6 +311,7 @@ class FocusDispatcher:
             ).start()
 
     def _fetch_movieset_movies(self, current_id: str, base_details: dict) -> None:
+        """Fetch a movie set's members, publishing only while that set is still focused."""
         movies_req = {
             "filter": {"setid": int(current_id)},
             "properties": [
@@ -373,18 +335,21 @@ class FocusDispatcher:
             set_movieset_properties(base_details, movies)
 
     def _set_artist(self, artistid: str) -> None:
-        from lib.plugin.dbid import fetch_artist_details
+        """Set artist properties for the focused item."""
+        from lib.kodi.library import fetch_artist_details
         result = fetch_artist_details(int(artistid))
         if result:
             set_artist_properties(*result)
 
     def _set_album(self, albumid: str) -> None:
-        from lib.plugin.dbid import fetch_album_details
+        """Set album properties for the focused item."""
+        from lib.kodi.library import fetch_album_details
         result = fetch_album_details(int(albumid))
         if result:
             set_album_properties(*result)
 
-    def _set_tvshow(self, tvshowid: str) -> None:
+    def _set_tvshow(self, tvshowid: str, defer: bool = True) -> bool:
+        """Set tvshow properties for the focused item; True when its watch time is still due."""
         details = get_item_details(
             'tvshow', int(tvshowid),
             [
@@ -393,22 +358,53 @@ class FocusDispatcher:
                 "watchedepisodes", "imdbnumber", "originaltitle", "sorttitle",
                 "episodeguide", "tag", "art", "userrating", "ratings",
                 "cast", "uniqueid", "dateadded", "file", "lastplayed", "playcount",
-                "trailer",
-            ],
+            ] + tvshow_version_fields(),
             cache_key=f"tvshow:{tvshowid}:details",
         )
         if not isinstance(details, dict):
-            return
+            return False
 
-        total, avg = resolve_show_runtime(int(tvshowid))
+        total, avg = resolve_show_runtime(int(tvshowid), details.get("episode"))
         if not details.get("runtime") and avg:
             details["runtime"] = avg
         details["total_runtime"] = total
+        pending = self._watch_minutes_now(details, int(tvshowid))
 
         set_tvshow_properties(details)
         set_ratings_properties(details, "TVShow")
+        if pending and defer:
+            self._defer_watch_minutes(int(tvshowid), None, tvshowid, "tvshow")
+        return pending
+
+    @staticmethod
+    def _watch_minutes_now(details: dict, tvshowid: int) -> bool:
+        """Fill in a show's minutes watched from the cache; True when a fetch is still needed."""
+        if not details.get("watchedepisodes"):
+            details["watch_minutes"] = 0
+            return False
+        cached = cached_watch_minutes(tvshowid)
+        details["watch_minutes"] = cached or 0
+        return cached is None
+
+    def _defer_watch_minutes(self, tvshowid: int, season: Optional[int], focus_id: str,
+                             focus_type: str) -> None:
+        """Fetch minutes watched off-thread, publishing them only while the item holds focus."""
+        def worker() -> None:
+            if self._service.abort.wait(0.3) or self._last_id != focus_id:
+                return
+            show = resolve_watch_minutes(tvshowid)
+            season_minutes = resolve_watch_minutes(tvshowid, season) if season is not None else 0
+            if self._last_id != focus_id or self._last_type != focus_type:
+                return
+            set_watched_properties("TVShow", show, unified=season is None)
+            if season is not None:
+                set_watched_properties("Season", season_minutes, unified=True,
+                                       episodes=cached_watched_episodes(tvshowid, season) or 0)
+
+        threading.Thread(target=worker, daemon=True).start()
 
     def _set_season(self, seasonid: str) -> None:
+        """Set season properties, filling runtime from the parent show's episodes."""
         details = get_item_details(
             'season', int(seasonid),
             [
@@ -427,14 +423,26 @@ class FocusDispatcher:
             if avg:
                 details["runtime"] = avg
             if season_num is not None:
-                details["total_runtime"] = _resolve_season_runtime(int(tvshowid), int(season_num))
+                details["total_runtime"] = resolve_season_runtime(
+                    int(tvshowid), int(season_num), details.get("episode"))
 
-        set_season_properties(details)
-
+        pending: Optional[Tuple[int, int]] = None
         if tvshowid and tvshowid != -1:
-            self._set_tvshow(str(tvshowid))
+            show_due = self._set_tvshow(str(tvshowid), defer=False)
+            if season_num is not None:
+                key = (int(tvshowid), int(season_num))
+                details["watch_minutes"] = cached_watch_minutes(*key) or 0
+                # GetSeasonDetails never returns watchedepisodes
+                details["watchedepisodes"] = cached_watched_episodes(*key) or 0
+                if show_due:
+                    pending = key
+        # after the show, which also writes the unified ListItem block
+        set_season_properties(details)
+        if pending:
+            self._defer_watch_minutes(*pending, seasonid, "season")
 
     def _set_episode(self, episodeid: str) -> None:
+        """Set episode properties for the focused item."""
         details = get_item_details(
             'episode', int(episodeid),
             [
@@ -451,4 +459,3 @@ class FocusDispatcher:
 
         set_episode_properties(details)
         set_ratings_properties(details, "Episode")
-

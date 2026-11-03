@@ -1,15 +1,16 @@
-"""API key and authorization management utilities."""
+"""Settings-screen actions for the provider API keys and the Trakt authorization."""
 from __future__ import annotations
 
 import xbmc
 import xbmcgui
 
-from lib.kodi.client import ADDON
-from lib.infrastructure.dialogs import DialogProgress
+from lib.kodi.client import ADDON, log
+from lib.kodi.settings import KodiSettings
+from lib.infrastructure.dialogs import DialogProgress, show_notification
 
 
 def edit_api_key(provider: str) -> None:
-    """Show keyboard dialog to edit API key."""
+    """Prompt for a provider's API key and store it, warning if it did not persist."""
     from lib.kodi.client import API_KEY_CONFIG
 
     config = API_KEY_CONFIG.get(f"{provider}_api_key")
@@ -35,9 +36,17 @@ def edit_api_key(provider: str) -> None:
         ADDON.setSetting(f"{provider}_configured", "true")
         ADDON.setSetting(f"{provider}_api_key_display", keyboard)
 
+        KodiSettings.clear_cache()
+
+        if ADDON.getSetting(config["setting_path"]) != keyboard:
+            log("API", f"{config['name']} key did not persist to {config['setting_path']}",
+                xbmc.LOGERROR)
+            show_notification(config['name'], ADDON.getLocalizedString(32001),
+                              xbmcgui.NOTIFICATION_ERROR, 5000)
+
 
 def clear_api_key(provider: str) -> None:
-    """Clear API key after confirmation."""
+    """Clear a provider's API key once the user confirms."""
     from lib.kodi.client import API_KEY_CONFIG
     from lib.infrastructure.dialogs import show_yesno
 
@@ -59,15 +68,22 @@ def clear_api_key(provider: str) -> None:
         ADDON.setSetting(f"{provider}_configured", "false")
         ADDON.setSetting(f"{provider}_api_key_display", not_configured)
 
+        KodiSettings.clear_cache()
+
         xbmc.executebuiltin('Action(Up)')
 
 
 def test_api_key(provider: str) -> None:
-    """Test API key connection."""
+    """Test a provider's stored key against its API and report the outcome."""
     from lib.kodi.client import API_KEY_CONFIG
 
     config = API_KEY_CONFIG.get(f"{provider}_api_key")
     if not config:
+        return
+
+    if not ADDON.getSetting(config["setting_path"]):
+        show_notification(config['name'], ADDON.getLocalizedString(32065),
+                          xbmcgui.NOTIFICATION_INFO, 4000)
         return
 
     progress = DialogProgress()
@@ -122,7 +138,7 @@ def test_api_key(provider: str) -> None:
 
 
 def authorize_trakt() -> None:
-    """Authorize Trakt using OAuth device code flow."""
+    """Authorize Trakt: show the device code, then poll until the user approves it."""
     import time
     from lib.data.api.trakt import TRAKT_CLIENT_ID, ApiTrakt as TraktRatingsSource
     from lib.data.api.client import ApiSession
@@ -167,11 +183,7 @@ def authorize_trakt() -> None:
             remaining = int(expires_in - (time.time() - start_time))
 
             progress.update(
-                0,
-                f"1. Visit: {verification_url}\n"
-                f"2. Enter code: [B]{user_code}[/B]\n"
-                f"3. Click Authorize on the website\n\n"
-                f"Waiting for authorization... ({remaining}s remaining)"
+                0, ADDON.getLocalizedString(32702).format(verification_url, user_code, remaining)
             )
 
             if progress.iscanceled() or monitor.abortRequested():
@@ -219,7 +231,7 @@ def authorize_trakt() -> None:
 
 
 def test_trakt_connection() -> None:
-    """Test Trakt API connection."""
+    """Test the stored Trakt token against the API and report the outcome."""
     from lib.data.api.trakt import ApiTrakt as TraktRatingsSource
     from lib.infrastructure.dialogs import show_ok
 
@@ -251,7 +263,7 @@ def test_trakt_connection() -> None:
 
 
 def revoke_trakt_authorization() -> None:
-    """Revoke Trakt authorization after confirmation."""
+    """Revoke the Trakt authorization once the user confirms."""
     from lib.data.api.trakt import ApiTrakt as TraktRatingsSource
     from lib.infrastructure.dialogs import show_yesno
 
@@ -265,5 +277,3 @@ def revoke_trakt_authorization() -> None:
         settings = ADDON.getSettings()
         settings.setString("trakt_configured", "false")
         ADDON.setSetting("trakt_configured", "false")
-
-

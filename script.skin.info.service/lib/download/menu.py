@@ -1,16 +1,18 @@
-"""Download artwork menu UI handlers."""
+"""Artwork download menu and its last-run report."""
 from __future__ import annotations
 
 import xbmc
 from typing import Optional, List
 
 from lib.infrastructure.dialogs import show_ok, show_textviewer
-from lib.artwork.config import REVIEW_MEDIA_FILTERS, REVIEW_SCOPE_LABELS
+from lib.artwork.config import REVIEW_MEDIA_FILTERS, scope_label
 
-from lib.data import database as db
+from lib.data.database._infrastructure import init_database
+from lib.data.database import workflow as db_workflow
 from lib.download.workflows import (
     LOG_DIR,
     download_scope_artwork,
+    format_failure_section,
     format_folder_section,
     format_mismatch_section,
 )
@@ -19,7 +21,7 @@ from lib.kodi.client import ADDON
 
 def show_download_report() -> None:
     """Show the last download report from operation history."""
-    last_report = db.get_last_operation_stats('artwork_download')
+    last_report = db_workflow.get_last_operation_stats('artwork_download')
 
     if not last_report:
         show_ok(
@@ -32,7 +34,7 @@ def show_download_report() -> None:
     scope = last_report.get('scope', 'unknown')
     timestamp = last_report['timestamp']
 
-    scope_label = REVIEW_SCOPE_LABELS.get(scope, scope.title())
+    scope_name = scope_label(scope)
 
     downloaded = stats.get('downloaded', 0)
     skipped = stats.get('skipped', 0)
@@ -50,7 +52,7 @@ def show_download_report() -> None:
     lines = [
         f"[B]Artwork Download Report - {status}[/B]",
         "",
-        f"Scope: {scope_label}",
+        f"Scope: {scope_name}",
         f"Timestamp: {timestamp}",
         "",
         f"Library items scanned: {total_items}",
@@ -62,6 +64,7 @@ def show_download_report() -> None:
         f"Total size: {mb:.2f} MB",
     ]
     lines.extend(format_folder_section(stats.get('folder_counts', {})))
+    lines.extend(format_failure_section(stats.get('error_categories', {})))
     lines.extend(format_mismatch_section(mismatch_counts))
     lines.extend([
         "",
@@ -74,16 +77,16 @@ def show_download_report() -> None:
 
 
 def run_download_menu() -> None:
-    """Show the download menu: scope-pick + download, plus a report viewer if history exists."""
+    """Show the download menu, with the last-run report once a run has been recorded."""
     from lib.infrastructure.menus import Menu, MenuItem
 
-    db.init_database()
+    init_database()
 
     items = [
         MenuItem(ADDON.getLocalizedString(32290), _handle_download, loop=True),
     ]
 
-    if db.get_last_operation_stats('artwork_download'):
+    if db_workflow.get_last_operation_stats('artwork_download'):
         items.append(MenuItem(ADDON.getLocalizedString(32086), show_download_report, loop=True))
 
     menu = Menu(ADDON.getLocalizedString(32522), items)
@@ -91,7 +94,7 @@ def run_download_menu() -> None:
 
 
 def _handle_download():
-    """Show the scope-selection menu (all / movies / tvshows / music)."""
+    """Handle the download entry: pick a scope of all, movies, TV shows or music."""
     from lib.infrastructure.menus import Menu, MenuItem
 
     scope_menu = Menu(ADDON.getLocalizedString(32523), [
@@ -107,7 +110,7 @@ def _handle_download():
 
 
 def _select_mode(scope: str, media_filter: Optional[List[str]]):
-    """Show foreground/background run-mode menu, then kick off the download."""
+    """Select foreground or background mode, then start the scope's download."""
     from lib.infrastructure.menus import run_with_mode_choice
 
     return run_with_mode_choice(

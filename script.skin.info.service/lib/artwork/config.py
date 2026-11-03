@@ -1,28 +1,86 @@
-"""Shared constants and utility functions for artwork package."""
+"""Art types per media type, session-stats shape, and the constants the artwork package shares."""
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, List, Final
 
-from lib.kodi.utilities import validate_media_type, validate_dbid  # noqa: F401 - re-exported
+import xbmc
 
 
+# each scope's name as a Kodi core string
 REVIEW_SCOPE_OPTIONS = [
-    ('movies', 'Movies'),
-    ('tvshows', 'TV Shows'),
-    ('music', 'Music'),
-    ('all', 'All Types'),
+    ('movies', 342),
+    ('tvshows', 20343),
+    ('musicvideos', 20389),
+    ('music', 2),
+    ('all', 593),
 ]
-
-REVIEW_SCOPE_LABELS = {scope: label for scope, label in REVIEW_SCOPE_OPTIONS}
 
 REVIEW_MEDIA_FILTERS = {
     'movies': ['movie'],
-    'tvshows': ['tvshow', 'episode'],
+    'tvshows': ['tvshow', 'season', 'episode'],
+    'musicvideos': ['musicvideo'],
     'music': ['artist', 'album'],
 }
 
-REVIEW_MODE_MISSING = 'missing_only'
+REVIEW_MODE_MISSING: Final = 'missing_only'
+
+
+def scope_label(scope: str) -> str:
+    """Get a review scope's name in Kodi's language, the raw scope when it is unknown."""
+    for option, label_id in REVIEW_SCOPE_OPTIONS:
+        if option == scope:
+            return xbmc.getLocalizedString(label_id)
+    return scope
+
+
+def scope_media_types(scope: str) -> List[str]:
+    """Media types a review scope covers, every one of them for 'all'."""
+    if scope == 'all':
+        return [media_type for types in REVIEW_MEDIA_FILTERS.values() for media_type in types]
+    return list(REVIEW_MEDIA_FILTERS.get(scope, []))
+
+
+# art types each media type can receive from the providers
+ART_TYPES_BY_MEDIA = {
+    'movie': ['poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape', 'discart',
+              'keyart'],
+    'set': ['poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape', 'discart',
+            'keyart'],
+    'tvshow': ['poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape', 'characterart',
+               'keyart'],
+    'season': ['poster', 'fanart', 'banner', 'landscape', 'keyart'],
+    'episode': ['thumb'],
+    'musicvideo': ['thumb', 'fanart'],
+    'artist': ['thumb', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape', 'cutout'],
+    'album': ['thumb', 'discart', 'back', 'spine', '3dcase', '3dflat', '3dface', '3dthumb'],
+}
+
+# kept out of bulk paths; TheAudioDB's rate limit can't carry a library pass
+AUDIODB_ONLY_ART_TYPES = {
+    'artist': ('clearart', 'landscape', 'cutout'),
+    'album': ('back', 'spine', '3dcase', '3dflat', '3dface', '3dthumb'),
+}
+
+# the show's fanart is the only source, and Kodi already falls back to it
+MANUAL_ONLY_ART_TYPES = {
+    'season': ('fanart',),
+}
+
+
+def bulk_art_types(media_type: str) -> list:
+    """Art types a scan or auto-apply can fill, minus the TheAudioDB-only and manual-only ones."""
+    excluded = (AUDIODB_ONLY_ART_TYPES.get(media_type, ())
+                + MANUAL_ONLY_ART_TYPES.get(media_type, ()))
+    return [art_type for art_type in ART_TYPES_BY_MEDIA.get(media_type, [])
+            if art_type not in excluded]
+
+
+def inherited_art_url(media_type: str, art_type: str, art: dict) -> str:
+    """Parent art Kodi shows in an empty slot; only a season's fanart inherits, from its show."""
+    if media_type == 'season' and art_type == 'fanart':
+        return art.get('tvshow.fanart') or ''
+    return ''
 
 
 FANART_DIMENSIONS_VARIANTS = {
@@ -37,7 +95,6 @@ FANART_DIMENSIONS_VARIANTS = {
     'discart': [(1000, 1000), (512, 512), (2000, 2000)],
 }
 
-# Auto-fetch language policies
 AUTO_LANG_REQUIRED_TYPES = {
     'poster',
     'clearlogo',
@@ -74,20 +131,19 @@ SESSION_DETAIL_KEYS = (
 
 
 def default_session_stats() -> dict:
-    """Create default session statistics structure."""
+    """Default session statistics: zeroed counters and empty detail lists."""
     return {
         'applied': 0,
         'skipped': 0,
         'auto': 0,
         'remaining': 0,
         'details': {key: [] for key in SESSION_DETAIL_KEYS},
-        'auto_runs': [],
         'review_mode': REVIEW_MODE_MISSING,
     }
 
 
 def load_session_stats(raw: Any) -> dict:
-    """Load and normalize session statistics from storage. Accepts dict, JSON string, or None."""
+    """Load session statistics from a dict, a JSON string or nothing, filling in what is absent."""
     stats = default_session_stats()
 
     if raw:
@@ -112,15 +168,6 @@ def load_session_stats(raw: Any) -> dict:
                             dict(entry) for entry in entries if isinstance(entry, dict)
                         ]
 
-            auto_runs = source.get('auto_runs')
-            if isinstance(auto_runs, list):
-                stats['auto_runs'] = [dict(run) for run in auto_runs if isinstance(run, dict)]
-
             stats['review_mode'] = REVIEW_MODE_MISSING
 
     return stats
-
-
-def serialise_session_stats(stats: dict) -> dict:
-    """Serialize session stats (currently just normalizes via load)."""
-    return load_session_stats(stats)

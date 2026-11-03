@@ -16,10 +16,7 @@ from lib.download.artwork import DownloadArtwork
 
 
 def _cache_url_via_xbmcvfs(url: str) -> tuple[bool, Optional[str]]:
-    """Trigger Kodi's texture cache for `url` by reading it via `xbmcvfs.File`.
-
-    Returns `(success, error_or_None)`. Caller is responsible for logging/stat updates.
-    """
+    """Cache one URL into Kodi's texture cache by reading it; returns (success, error)."""
     wrapped_url = encode_image_url(url)
     try:
         f = xbmcvfs.File(wrapped_url)
@@ -57,23 +54,25 @@ class TextureCache(WorkerQueue):
         log("Cache", f"TextureCache initialized with {self.num_workers} workers")
 
     def _on_start(self) -> None:
+        """Load the cached URL set before the workers start."""
         if self.check_cached:
             self._load_cached_urls()
         log("Cache", f"TextureCache started {self.num_workers} worker threads")
 
     def bulk_add_urls(self, urls: List[str]) -> int:
-        """Queue multiple URLs. Returns count successfully queued."""
+        """Queue many URLs, returning how many were queued."""
         queued = self.bulk_add_items(urls)
         log("Cache", f"TextureCache bulk_add: {queued}/{len(urls)} URLs queued")
         return queued
 
     def _should_process_item(self, item: Any, dedupe_key: Any) -> bool:
+        """Whether the item still needs work, or is already cached."""
         if self.cached_urls_set and dedupe_key in self.cached_urls_set:
             return False
         return True
 
     def _process_item(self, item: str, worker_id: int) -> Dict:
-        """`WorkerQueue` entry point: cache one URL via `xbmcvfs.File` read."""
+        """Cache one URL into Kodi's texture cache by reading it."""
         url = item
         success, error = _cache_url_via_xbmcvfs(url)
         if not success and error and error != "file not found or empty":
@@ -84,6 +83,7 @@ class TextureCache(WorkerQueue):
         )
 
     def _on_item_complete(self, item: str, result: Dict) -> None:
+        """Report one finished item to the completion callback."""
         url = item
         if self.on_complete:
             try:
@@ -92,6 +92,7 @@ class TextureCache(WorkerQueue):
                 pass
 
     def _load_cached_urls(self) -> None:
+        """Load every already-cached texture URL so downloads can skip them."""
         try:
             response = request('Textures.GetTextures', {'properties': ['url']})
             if response and 'result' in response:
@@ -110,7 +111,7 @@ class TextureCache(WorkerQueue):
 
 
 class TextureCacheDownload(WorkerQueue):
-    """Unified queue: cache via `xbmcvfs.File` AND download to filesystem in one worker per item."""
+    """Queue that caches each image into Kodi and saves a local copy, one worker per item."""
 
     def __init__(
         self,
@@ -153,7 +154,7 @@ class TextureCacheDownload(WorkerQueue):
         episode: Optional[int] = None,
         mbid: Optional[str] = None
     ) -> bool:
-        """Queue an item for caching + downloading. Returns False if already processing."""
+        """Queue an image for caching and download; False when that URL is already queued."""
         item = (url, media_type, media_file, artwork_type, title, season, episode, mbid)
         return self.add_item(item, dedupe_key=url)
 
@@ -165,6 +166,7 @@ class TextureCacheDownload(WorkerQueue):
         self.artworks.clear()
 
     def get_stats(self) -> Dict:
+        """Get the base queue stats plus the cache and download counters."""
         base_stats = super().get_stats()
         with self._stats_lock:
             base_stats.update({
@@ -184,6 +186,7 @@ class TextureCacheDownload(WorkerQueue):
             self.stats_activity += 1
 
     def _process_item(self, item: Any, worker_id: int) -> Dict:
+        """Cache one URL into Kodi's texture cache, then save a local copy for non-inherited art."""
         url, media_type, media_file, artwork_type, title, season, _episode, mbid = item
 
         download_success = False
@@ -214,8 +217,7 @@ class TextureCacheDownload(WorkerQueue):
                 mbid=mbid
             )
 
-            # Art saved under the opposite naming convention still counts as present,
-            # otherwise flipping the setting re-downloads the library beside the old files.
+            # art saved under the other naming setting still counts as present
             alternate_path = None
             if media_type in ('movie', 'musicvideo'):
                 alternate_path = self.path_builder.build_path(

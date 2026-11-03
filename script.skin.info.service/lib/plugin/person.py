@@ -1,12 +1,15 @@
 """Plugin handlers for person info, person library, crew lists, and TMDB details."""
 from __future__ import annotations
 
+from typing import Dict, List, Optional
+
 import xbmc
 import xbmcgui
 import xbmcplugin
 
-from lib.kodi.client import log, extract_result
+from lib.kodi.client import ADDON, log, extract_result
 from lib.data.api.utilities import tmdb_image_url
+from lib.kodi.formatters import format_rating, pick_clearlogo
 
 
 def handle_person_info(handle: int, params: dict) -> None:
@@ -55,11 +58,11 @@ def handle_person_info(handle: int, params: dict) -> None:
 
 
 def _handle_person_details(handle: int, person_data: dict) -> None:
-    """Return single ListItem with all person details."""
+    """Handle `info_type=details`: one ListItem carrying every person property."""
     from lib.data.api.person import build_person_props
 
     props = build_person_props(person_data)
-    item = xbmcgui.ListItem(props['Name'], offscreen=True)
+    item = xbmcgui.ListItem(props['name'], offscreen=True)
 
     profile_image = props.get('ProfileImage')
     if profile_image:
@@ -69,11 +72,12 @@ def _handle_person_details(handle: int, person_data: dict) -> None:
         item.setProperty(key, value)
 
     xbmcplugin.addDirectoryItem(handle, '', item, False)
+    xbmcplugin.setContent(handle, 'actors')
     xbmcplugin.endOfDirectory(handle, succeeded=True)
 
 
 def _handle_person_images(handle: int, person_data: dict) -> None:
-    """Return multiple ListItems for profile images."""
+    """Handle `info_type=images`: the profile images, best rated first."""
     images = person_data.get('images', {}).get('profiles', [])
 
     if not images:
@@ -87,7 +91,7 @@ def _handle_person_images(handle: int, person_data: dict) -> None:
         if not file_path:
             continue
 
-        item = xbmcgui.ListItem(f"Profile Image {i+1}", offscreen=True)
+        item = xbmcgui.ListItem(ADDON.getLocalizedString(32740).format(i + 1), offscreen=True)
 
         image_url = tmdb_image_url(file_path)
         item.setArt({'thumb': image_url, 'icon': image_url})
@@ -95,21 +99,21 @@ def _handle_person_images(handle: int, person_data: dict) -> None:
         width = image.get('width')
         height = image.get('height')
         if width:
-            item.setProperty('Width', str(width))
+            item.setProperty('width', str(width))
         if height:
-            item.setProperty('Height', str(height))
+            item.setProperty('height', str(height))
         if width and height:
-            item.setProperty('Dimensions', f"{width}x{height}")
+            item.setProperty('dimensions', f"{width}x{height}")
 
         vote_average = image.get('vote_average')
         if vote_average:
-            item.setProperty('Rating', f"{vote_average:.1f}")
+            item.setProperty('rating', format_rating(vote_average))
 
         vote_count = image.get('vote_count')
         if vote_count:
-            item.setProperty('Votes', str(vote_count))
+            item.setProperty('votes', str(vote_count))
 
-        item.setProperty('AspectRatio', str(image.get('aspect_ratio', '')))
+        item.setProperty('aspectratio', str(image.get('aspect_ratio', '')))
 
         xbmcplugin.addDirectoryItem(handle, '', item, False)
 
@@ -118,9 +122,10 @@ def _handle_person_images(handle: int, person_data: dict) -> None:
 
 
 def _handle_person_filmography(handle: int, person_data: dict, params: dict) -> None:
-    """Return filmography as movie/TV show ListItems."""
+    """Handle `info_type=filmography`: the acting credits, filtered and sorted."""
     credits = person_data.get('combined_credits', {}).get('cast', [])
 
+    credits = _dedupe_credits(credits, 'character', ' / ')
     credits = _filter_credits(credits, params)
     credits = _sort_credits(credits, params)
 
@@ -132,8 +137,10 @@ def _handle_person_filmography(handle: int, person_data: dict, params: dict) -> 
         except (ValueError, TypeError):
             pass
 
+    library_dbids = _library_dbid_map(credits)
+
     for credit in credits:
-        item = _create_credit_listitem(credit)
+        item = _create_credit_listitem(credit, library_dbids)
         xbmcplugin.addDirectoryItem(handle, '', item, False)
 
     xbmcplugin.setContent(handle, 'movies')
@@ -141,8 +148,7 @@ def _handle_person_filmography(handle: int, person_data: dict, params: dict) -> 
 
 
 def _handle_person_crew(handle: int, person_data: dict, params: dict) -> None:
-    """Return crew credits as ListItems; without `job=`, dedupes multiple jobs per item into one
-    joined entry (e.g. "Director, Producer")."""
+    """Handle `info_type=crew`: one entry per title with jobs joined, unless a `job` is given."""
     credits = person_data.get('combined_credits', {}).get('crew', [])
 
     job_filter = params.get('job', [''])[0]
@@ -150,7 +156,7 @@ def _handle_person_crew(handle: int, person_data: dict, params: dict) -> None:
         target = job_filter.lower()
         credits = [c for c in credits if (c.get('job') or '').lower() == target]
     else:
-        credits = _dedupe_crew_credits(credits)
+        credits = _dedupe_credits(credits, 'job', ', ')
 
     credits = _filter_credits(credits, params)
     credits = _sort_credits(credits, params)
@@ -163,13 +169,15 @@ def _handle_person_crew(handle: int, person_data: dict, params: dict) -> None:
         except (ValueError, TypeError):
             pass
 
+    library_dbids = _library_dbid_map(credits)
+
     for credit in credits:
-        item = _create_credit_listitem(credit)
+        item = _create_credit_listitem(credit, library_dbids)
 
         if credit.get('job'):
-            item.setProperty('Job', credit['job'])
+            item.setProperty('job', credit['job'])
         if credit.get('department'):
-            item.setProperty('Department', credit['department'])
+            item.setProperty('department', credit['department'])
 
         xbmcplugin.addDirectoryItem(handle, '', item, False)
 
@@ -177,23 +185,23 @@ def _handle_person_crew(handle: int, person_data: dict, params: dict) -> None:
     xbmcplugin.endOfDirectory(handle, succeeded=True)
 
 
-def _dedupe_crew_credits(credits: list) -> list:
-    """Combine credits for the same (id, media_type) into one entry with joined jobs."""
+def _dedupe_credits(credits: list, field: str, separator: str) -> list:
+    """Dedupe credits for the same title into one entry with one field's values joined."""
     seen: dict = {}
     for credit in credits:
         key = (credit.get('id'), credit.get('media_type'))
         if key in seen:
-            existing = seen[key].get('job') or ''
-            new_job = credit.get('job') or ''
-            if new_job and new_job not in existing.split(', '):
-                seen[key]['job'] = f"{existing}, {new_job}" if existing else new_job
+            existing = seen[key].get(field) or ''
+            new_value = credit.get(field) or ''
+            if new_value and new_value not in existing.split(separator):
+                seen[key][field] = f"{existing}{separator}{new_value}" if existing else new_value
         else:
             seen[key] = dict(credit)
     return list(seen.values())
 
 
 def _filter_credits(credits: list, params: dict) -> list:
-    """Apply filters to credits list."""
+    """Filter credits by media type, minimum votes and release, per the request."""
     from datetime import datetime
 
     dbtype = params.get('dbtype', ['both'])[0]
@@ -213,7 +221,7 @@ def _filter_credits(credits: list, params: dict) -> list:
     exclude_unreleased = params.get('exclude_unreleased', ['false'])[0].lower() == 'true'
     if exclude_unreleased:
         today = datetime.now().strftime('%Y-%m-%d')
-        # undated credits are unannounced future projects: treat as unreleased
+        # undated credits are unannounced future projects
         credits = [
             c for c in credits
             if (c.get('release_date') or c.get('first_air_date') or '9999') <= today
@@ -223,10 +231,12 @@ def _filter_credits(credits: list, params: dict) -> list:
 
 
 def _sort_credits(credits: list, params: dict) -> list:
-    """Sort credits list."""
+    """Sort credits by popularity, date, rating or title; any other `sort` keeps TMDB's order."""
     sort_method = params.get('sort', ['popularity'])[0]
 
-    if sort_method == 'date_desc':
+    if sort_method == 'popularity':
+        credits.sort(key=lambda c: c.get('popularity') or 0, reverse=True)
+    elif sort_method == 'date_desc':
         credits.sort(
             key=lambda c: c.get('release_date') or c.get('first_air_date', '0000'),
             reverse=True,
@@ -242,92 +252,41 @@ def _sort_credits(credits: list, params: dict) -> list:
 
 
 def handle_person_library(handle: int, params: dict) -> None:
-    """Plugin entry for library items featuring an actor. `info_type` is `movies` or `tvshows`."""
+    """Plugin entry for library movies or shows featuring an actor, by TMDB credit or cast link."""
     try:
         info_type = params.get('info_type', [''])[0]
         person_name = params.get('person_name', [''])[0]
-
-        if not info_type or not person_name:
-            log("Plugin", "Person Library: Missing required parameters", xbmc.LOGWARNING)
-            xbmcplugin.endOfDirectory(handle, succeeded=False)
-            return
+        person_id = params.get('person_id', [''])[0]
 
         if info_type not in ('movies', 'tvshows'):
             log("Plugin", f"Person Library: Invalid info_type '{info_type}'", xbmc.LOGWARNING)
             xbmcplugin.endOfDirectory(handle, succeeded=False)
             return
 
-        from lib.kodi.client import request
-
-        if info_type == 'movies':
-            result = request('VideoLibrary.GetMovies', {
-                'filter': {
-                    'field': 'actor',
-                    'operator': 'is',
-                    'value': person_name
-                },
-                'properties': ['title', 'year', 'rating', 'playcount', 'art', 'cast'],
-                'sort': {'method': 'sorttitle', 'order': 'ascending'}
-            })
-            items = extract_result(result, 'movies', [])
-        else:
-            result = request('VideoLibrary.GetTVShows', {
-                'filter': {
-                    'field': 'actor',
-                    'operator': 'is',
-                    'value': person_name
-                },
-                'properties': ['title', 'year', 'rating', 'playcount', 'art', 'cast'],
-                'sort': {'method': 'sorttitle', 'order': 'ascending'}
-            })
-            items = extract_result(result, 'tvshows', [])
+        if not person_id and not person_name:
+            log("Plugin", "Person Library: Missing required parameters", xbmc.LOGWARNING)
+            xbmcplugin.endOfDirectory(handle, succeeded=False)
+            return
 
         dbtype = 'movie' if info_type == 'movies' else 'tvshow'
-        dbid_key = 'movieid' if info_type == 'movies' else 'tvshowid'
+
+        from lib.kodi.client import KODI_ID_KEYS
+        id_key = KODI_ID_KEYS[dbtype]
+
+        items = _library_from_filmography(person_id, dbtype) if person_id else []
+        if person_name:
+            seen = {item.get(id_key) for item in items}
+            for item in _library_from_actor_link(person_name, dbtype):
+                if item.get(id_key) not in seen:
+                    items.append(item)
+
+        items.sort(key=lambda item: (-(item.get('year') or 0),
+                                     (item.get('title') or '').lower()))
 
         for item in items:
-            title = item.get('title', 'Unknown')
-            year = item.get('year', '')
+            xbmcplugin.addDirectoryItem(handle, '', _create_library_listitem(item, dbtype), False)
 
-            label = f"{title} ({year})" if year else title
-            listitem = xbmcgui.ListItem(label, offscreen=True)
-
-            video_tag = listitem.getVideoInfoTag()
-            video_tag.setMediaType(dbtype)
-            video_tag.setTitle(title)
-            dbid = item.get(dbid_key)
-            if dbid:
-                video_tag.setDbId(dbid)
-
-            listitem.setProperty('Title', title)
-            if year:
-                video_tag.setYear(int(year))
-                listitem.setProperty('Year', str(year))
-
-            rating = item.get('rating')
-            if rating:
-                listitem.setProperty('Rating', str(rating))
-
-            playcount = item.get('playcount')
-            if playcount:
-                listitem.setProperty('Playcount', str(playcount))
-
-            cast = item.get('cast', [])
-            for actor in cast:
-                if actor.get('name') == person_name:
-                    role = actor.get('role', '')
-                    if role:
-                        listitem.setProperty('Role', role)
-                        listitem.setLabel2(role)
-                    break
-
-            art = item.get('art', {})
-            if art:
-                listitem.setArt(art)
-
-            xbmcplugin.addDirectoryItem(handle, '', listitem, False)
-
-        xbmcplugin.setContent(handle, 'movies' if info_type == 'movies' else 'tvshows')
+        xbmcplugin.setContent(handle, info_type)
         xbmcplugin.endOfDirectory(handle, succeeded=True)
 
     except Exception as e:
@@ -337,15 +296,129 @@ def handle_person_library(handle: int, params: dict) -> None:
         xbmcplugin.endOfDirectory(handle, succeeded=False)
 
 
-def _create_credit_listitem(credit: dict) -> xbmcgui.ListItem:
-    """Create ListItem from credit entry."""
+def _library_from_filmography(person_id: str, dbtype: str) -> List[dict]:
+    """Library items whose TMDB id appears in the person's filmography."""
+    from lib.data.api.person import get_person_data
+    from lib.data.database.rollcall import get_dbids_by_tmdb
+    from lib.kodi.client import get_item_details
+
+    try:
+        person_data = get_person_data(int(person_id))
+    except (ValueError, TypeError):
+        log("Plugin", f"Person Library: Invalid person_id '{person_id}'", xbmc.LOGWARNING)
+        return []
+
+    if not person_data:
+        return []
+
+    media_type = 'movie' if dbtype == 'movie' else 'tv'
+    roles: Dict[str, str] = {}
+    for credit in person_data.get('combined_credits', {}).get('cast', []):
+        if credit.get('media_type') != media_type:
+            continue
+        tmdb_id = str(credit.get('id') or '')
+        if tmdb_id and tmdb_id not in roles:
+            roles[tmdb_id] = credit.get('character', '')
+
+    items = []
+    properties = ['title', 'year', 'rating', 'playcount', 'art']
+    for tmdb_id, dbid in get_dbids_by_tmdb(dbtype, roles).items():
+        details = get_item_details(dbtype, dbid, properties)
+        if not details:
+            continue
+        details['_role'] = roles.get(tmdb_id, '')
+        items.append(details)
+
+    return items
+
+
+def _library_from_actor_link(person_name: str, dbtype: str) -> List[dict]:
+    """Library items Kodi links to the actor by name; show-level links hold main cast only."""
+    from lib.kodi.client import request
+
+    method, result_key = (
+        ('VideoLibrary.GetMovies', 'movies') if dbtype == 'movie'
+        else ('VideoLibrary.GetTVShows', 'tvshows')
+    )
+    result = request(method, {
+        'filter': {'field': 'actor', 'operator': 'is', 'value': person_name},
+        'properties': ['title', 'year', 'rating', 'playcount', 'art', 'cast']
+    })
+
+    items = extract_result(result, result_key, [])
+    for item in items:
+        for actor in item.get('cast', []):
+            if actor.get('name') == person_name:
+                item['_role'] = actor.get('role', '')
+                break
+    return items
+
+
+def _create_library_listitem(item: dict, dbtype: str) -> xbmcgui.ListItem:
+    """Create a ListItem for a library movie or show in the person containers."""
+    title = item.get('title', 'Unknown')
+    year = item.get('year', '')
+
+    label = f"{title} ({year})" if year else title
+    listitem = xbmcgui.ListItem(label, offscreen=True)
+
+    video_tag = listitem.getVideoInfoTag()
+    video_tag.setMediaType(dbtype)
+    video_tag.setTitle(title)
+
+    dbid = item.get('movieid' if dbtype == 'movie' else 'tvshowid')
+    if dbid:
+        video_tag.setDbId(dbid)
+
+    listitem.setProperty('title', title)
+    if year:
+        video_tag.setYear(int(year))
+        listitem.setProperty('year', str(year))
+
+    rating = item.get('rating')
+    if rating:
+        listitem.setProperty('rating', format_rating(rating))
+
+    playcount = item.get('playcount')
+    if playcount:
+        listitem.setProperty('playcount', str(playcount))
+
+    role = item.get('_role', '')
+    if role:
+        listitem.setProperty('role', role)
+        listitem.setLabel2(role)
+
+    art = item.get('art', {})
+    if art:
+        listitem.setArt(art)
+
+    return listitem
+
+
+_CREDIT_DBTYPES = (('movie', 'movie'), ('tv', 'tvshow'))
+
+
+def _library_dbid_map(credits: list) -> dict:
+    """DBIDs for the credits that are in the library, keyed by `(media_type, tmdb_id)`."""
+    from lib.data.database.rollcall import get_dbids_by_tmdb
+
+    mapping: dict = {}
+    for media_type, dbtype in _CREDIT_DBTYPES:
+        tmdb_ids = [c.get('id') for c in credits if c.get('media_type') == media_type]
+        for tmdb_id, dbid in get_dbids_by_tmdb(dbtype, tmdb_ids).items():
+            mapping[(media_type, tmdb_id)] = dbid
+    return mapping
+
+
+def _create_credit_listitem(credit: dict, library_dbids: Optional[dict] = None) -> xbmcgui.ListItem:
+    """Create a ListItem for a TMDB credit, flagged with its dbid when it is in the library."""
     title = credit.get('title') or credit.get('name', 'Unknown')
     item = xbmcgui.ListItem(title, offscreen=True)
 
     video_tag = item.getVideoInfoTag()
 
     media_type = credit.get('media_type', 'movie')
-    video_tag.setMediaType(media_type)
+    video_tag.setMediaType('tvshow' if media_type == 'tv' else media_type)
 
     video_tag.setTitle(title)
 
@@ -374,22 +447,25 @@ def _create_credit_listitem(credit: dict) -> xbmcgui.ListItem:
     tmdb_id = credit.get('id')
     if tmdb_id:
         item.setProperty('tmdb_id', str(tmdb_id))
+        dbid = (library_dbids or {}).get((media_type, str(tmdb_id)))
+        if dbid:
+            item.setProperty('dbid', str(dbid))
+            item.setProperty('isinlibrary', 'true')
 
     character = credit.get('character', '')
-    item.setProperty('Role', character)
-    item.setProperty('ReleaseDate', release_date or '')
+    item.setProperty('role', character)
+    item.setProperty('releasedate', release_date or '')
     if character:
         item.setLabel2(character)
-    item.setProperty('MediaType', media_type)
+    item.setProperty('mediatype', media_type)
 
     return item
 
 
 def handle_crew_list(handle: int, params: dict) -> None:
-    """Plugin entry for crew listings (director/writer/creator); accepts `tmdb_id` directly for
-    TMDB-only items with no library entry."""
+    """Plugin entry for a title's directors, writers or creators, by dbid or `tmdb_id`."""
     from lib.data.api import person as person_api
-    from lib.data.api.person import resolve_tmdb_id
+    from lib.data.api.person import library_tmdb_id
 
     crew_type = params.get('crew_type', [''])[0]
     dbtype = params.get('dbtype', [''])[0]
@@ -435,7 +511,7 @@ def handle_crew_list(handle: int, params: dict) -> None:
             xbmcplugin.endOfDirectory(handle, succeeded=False)
             return
 
-        resolved = resolve_tmdb_id(dbtype, dbid)
+        resolved = library_tmdb_id(dbtype, dbid)
         tmdb_id = resolved or 0
         if not tmdb_id:
             log(
@@ -449,7 +525,8 @@ def handle_crew_list(handle: int, params: dict) -> None:
     crew_list = person_api.get_crew_from_tmdb(crew_type, tmdb_id, dbtype)
 
     if not crew_list:
-        log("Plugin", f"Crew List: No {crew_type}s found for {dbtype} tmdb={tmdb_id}", xbmc.LOGINFO)
+        log("Plugin", f"Crew List: No {crew_type}s found for {dbtype} tmdb={tmdb_id}",
+            xbmc.LOGDEBUG)
         xbmcplugin.endOfDirectory(handle, succeeded=True)
         return
 
@@ -471,7 +548,7 @@ def handle_crew_list(handle: int, params: dict) -> None:
         if person_id:
             item.setProperty('person_id', str(person_id))
 
-        item.setProperty('Job', member.get('job', ''))
+        item.setProperty('job', member.get('job', ''))
 
         xbmcplugin.addDirectoryItem(handle, '', item, False)
 
@@ -486,7 +563,7 @@ def handle_crew_list(handle: int, params: dict) -> None:
 
 
 def handle_tmdb_details(handle: int, params: dict) -> None:
-    """Plugin entry for TMDB details by ID (`type`: movie/tv/person, `tmdb_id`: int)."""
+    """Plugin entry for one TMDB movie, show or person as a ListItem, by `tmdb_id`."""
     from lib.data.api.tmdb import ApiTmdb
 
     media_type = params.get('type', ['movie'])[0]
@@ -517,10 +594,9 @@ def handle_tmdb_details(handle: int, params: dict) -> None:
 
     api = ApiTmdb()
 
-    if media_type == 'movie':
-        data = api.get_movie_details_extended(tmdb_id)
-    elif media_type == 'tv':
-        data = api.get_tv_details_extended(tmdb_id)
+    if media_type in ('movie', 'tv'):
+        data = api.get_complete_data('movie' if media_type == 'movie' else 'tvshow', tmdb_id,
+                                     is_library_item=False)
     else:
         log("Plugin", f"TMDB Details: Invalid type '{media_type}'", xbmc.LOGWARNING)
         xbmcplugin.endOfDirectory(handle, succeeded=False)
@@ -656,16 +732,12 @@ def handle_tmdb_details(handle: int, params: dict) -> None:
         art['fanart'] = tmdb_image_url(data['backdrop_path'])
 
     images = data.get('images', {})
-    if images.get('logos'):
-        for logo in images['logos']:
-            if logo.get('iso_639_1') in ('en', None):
-                art['clearlogo'] = tmdb_image_url(logo['file_path'])
-                break
+    clearlogo = pick_clearlogo(images.get('logos'))
+    if clearlogo:
+        art['clearlogo'] = clearlogo
 
     if art:
         listitem.setArt(art)
 
     xbmcplugin.addDirectoryItem(handle, '', listitem, False)
     xbmcplugin.endOfDirectory(handle)
-
-

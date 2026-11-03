@@ -97,7 +97,7 @@
 								<texturefocus colordiffuse="40FFFFFF">white.png</texturefocus>
 								<texturenofocus />
 								<label />
-								<onclick>RunScript(script.skin.info.service,dialog=textviewer,heading=$ESCINFO[Window.Property(Title)],text=$ESCINFO[Window.Property(Plot)])</onclick>
+								<onclick>RunScript(script.skin.info.service,dialog=textviewer,headinginfo=Window.Property(Title),textinfo=Window.Property(Plot))</onclick>
 								<ondown>5000</ondown>
 							</control>
 						</control>
@@ -152,7 +152,7 @@
 						<orientation>horizontal</orientation>
 						<scrolltime>200</scrolltime>
 						<visible allowhiddenfocus="true">Integer.IsGreater(Container(1510).NumItems,0)</visible>
-						<onclick>RunScript(script.skin.info.service,action=dialog_actor_info,person_id=$INFO[Container(1510).ListItem.Property(person_id)],name=$ESCINFO[Container(1510).ListItem.Label])</onclick>
+						<onclick>RunScript(script.skin.info.service,action=dialog_actor_info,person_id=$INFO[Container(1510).ListItem.Property(person_id)],"name=$INFO[Container(1510).ListItem.Label]")</onclick>
 						<itemlayout width="260" height="490">
 							<control type="image">
 								<width>240</width>
@@ -233,7 +233,7 @@
 						<orientation>horizontal</orientation>
 						<scrolltime>200</scrolltime>
 						<visible allowhiddenfocus="true">Integer.IsGreater(Container(1511).NumItems,0)</visible>
-						<onclick>RunScript(script.skin.info.service,action=dialog_video_info,tmdb_id=$INFO[Container(1511).ListItem.Property(tmdb_id)],dbtype=$INFO[Container(1511).ListItem.Property(MediaType)])</onclick>
+						<onclick>RunScript(script.skin.info.service,action=dialog_video_info,tmdb_id=$INFO[Container(1511).ListItem.Property(tmdb_id)],dbtype=$INFO[Container(1511).ListItem.DBType])</onclick>
 						<itemlayout width="260" height="490">
 							<control type="image">
 								<width>240</width>
@@ -258,6 +258,17 @@
 								<textcolor>silver</textcolor>
 								<align>center</align>
 								<label>$INFO[ListItem.Year]$INFO[ListItem.Rating, · ]</label>
+								<visible>!Integer.IsEqual(ListItem.Rating,10)</visible>
+							</control>
+							<control type="label">
+								<top>400</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>silver</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Year,, · ]10</label>
+								<visible>Integer.IsEqual(ListItem.Rating,10)</visible>
 							</control>
 						</itemlayout>
 						<focusedlayout width="260" height="490">
@@ -291,6 +302,17 @@
 									<textcolor>silver</textcolor>
 									<align>center</align>
 									<label>$INFO[ListItem.Year]$INFO[ListItem.Rating, · ]</label>
+									<visible>!Integer.IsEqual(ListItem.Rating,10)</visible>
+								</control>
+								<control type="label">
+									<top>400</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>silver</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Year,, · ]10</label>
+									<visible>Integer.IsEqual(ListItem.Rating,10)</visible>
 								</control>
 							</control>
 						</focusedlayout>
@@ -339,6 +361,17 @@
 								<textcolor>silver</textcolor>
 								<align>center</align>
 								<label>$INFO[ListItem.Year]$INFO[ListItem.Rating, · ]</label>
+								<visible>!Integer.IsEqual(ListItem.Rating,10)</visible>
+							</control>
+							<control type="label">
+								<top>400</top>
+								<width>240</width>
+								<height>40</height>
+								<font>font13</font>
+								<textcolor>silver</textcolor>
+								<align>center</align>
+								<label>$INFO[ListItem.Year,, · ]10</label>
+								<visible>Integer.IsEqual(ListItem.Rating,10)</visible>
 							</control>
 						</itemlayout>
 						<focusedlayout width="260" height="490">
@@ -372,6 +405,17 @@
 									<textcolor>silver</textcolor>
 									<align>center</align>
 									<label>$INFO[ListItem.Year]$INFO[ListItem.Rating, · ]</label>
+									<visible>!Integer.IsEqual(ListItem.Rating,10)</visible>
+								</control>
+								<control type="label">
+									<top>400</top>
+									<width>240</width>
+									<height>40</height>
+									<font>font13</font>
+									<textcolor>silver</textcolor>
+									<align>center</align>
+									<label>$INFO[ListItem.Year,, · ]10</label>
+									<visible>Integer.IsEqual(ListItem.Rating,10)</visible>
 								</control>
 							</control>
 						</focusedlayout>
@@ -395,7 +439,7 @@
 						<orientation>horizontal</orientation>
 						<scrolltime>200</scrolltime>
 						<visible allowhiddenfocus="true">Integer.IsGreater(Container(1513).NumItems,0)</visible>
-						<onclick>RunScript(script.skin.info.service,action=dialog_actor_info,person_id=$INFO[Container(1513).ListItem.Property(person_id)],name=$ESCINFO[Container(1513).ListItem.Label])</onclick>
+						<onclick>RunScript(script.skin.info.service,action=dialog_actor_info,person_id=$INFO[Container(1513).ListItem.Property(person_id)],"name=$INFO[Container(1513).ListItem.Label]")</onclick>
 						<itemlayout width="260" height="490">
 							<control type="image">
 								<width>240</width>
