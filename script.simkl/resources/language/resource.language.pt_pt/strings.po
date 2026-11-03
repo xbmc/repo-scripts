@@ -1,0 +1,661 @@
+# Kodi Media Center language file
+# Addon Name: Simkl TV Tracker
+# Addon id: script.simkl
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Simkl\n"
+"Language-Team: Portuguese (Portugal)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr "Percentagem para marcar como visto"
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr "Mostrar notificação ao marcar como visto"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "Duração mínima do ficheiro para envio (minutos)"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "Início de sessão no Simkl"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \ncomputer or phone and enter this code"
+msgstr "Por favor, visite {0} num \ncomputador ou telemóvel e introduza este código"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr "A enviar para o Simkl: {0}"
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "Sessão iniciada, {0}"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "Não foi possível iniciar sessão"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgctxt "#32100"
+msgid "Account"
+msgstr "Conta"
+
+msgctxt "#32101"
+msgid "Simkl keeps track of what you watch. Sign up at simkl.com, then log in here with a code."
+msgstr "O Simkl acompanha o que vê. Crie uma conta em simkl.com e depois inicie sessão aqui com um código."
+
+msgctxt "#32102"
+msgid "Status"
+msgstr "Estado"
+
+msgctxt "#32103"
+msgid "Log in"
+msgstr "Iniciar sessão"
+
+msgctxt "#32104"
+msgid "Shows a code to enter on simkl.com/pin from any phone or computer."
+msgstr "Mostra um código para introduzir em simkl.com/pin a partir de qualquer telemóvel ou computador."
+
+msgctxt "#32105"
+msgid "Log out"
+msgstr "Terminar sessão"
+
+msgctxt "#32106"
+msgid "Forgets the Simkl login on this device."
+msgstr "Esquece a sessão do Simkl neste dispositivo."
+
+msgctxt "#32110"
+msgid "Scrobbling"
+msgstr "Envio para o Simkl"
+
+msgctxt "#32111"
+msgid "Track movies"
+msgstr "Registar filmes"
+
+msgctxt "#32112"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "Envia para o Simkl o que vê, enquanto é reproduzido. Uma reprodução que termine na percentagem abaixo ou depois dela marca o item como visto."
+
+msgctxt "#32113"
+msgid "Track TV shows and anime"
+msgstr "Registar séries e anime"
+
+msgctxt "#32114"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "Envia para o Simkl o que vê, enquanto é reproduzido. Uma reprodução que termine na percentagem abaixo ou depois dela marca o item como visto."
+
+msgctxt "#32115"
+msgid "A playback that stops at or past this point is marked as watched. Below it, Simkl keeps the position so you can continue later."
+msgstr "Uma reprodução que pare neste ponto ou depois dele marca o item como visto. Abaixo dele, o Simkl guarda a posição para que possa continuar mais tarde."
+
+msgctxt "#32117"
+msgid "A notification when something is marked as watched on Simkl."
+msgstr "Uma notificação quando algo é marcado como visto no Simkl."
+
+msgctxt "#32118"
+msgid "Log rewatches on Simkl (Pro or VIP)"
+msgstr "Registar revisionamentos no Simkl (Pro ou VIP)"
+
+msgctxt "#32119"
+msgid "Needs Simkl Pro or VIP (simkl.com/vip). Watching something again opens a new rewatch session on Simkl instead of keeping the first date, once at least 10% of it was really watched (replaying the ending is not a rewatch)."
+msgstr "Requer Simkl Pro ou VIP (simkl.com/vip). Ver algo novamente abre uma nova sessão de revisionamento no Simkl em vez de manter a primeira data, assim que pelo menos 10% tiver sido realmente visto (voltar a reproduzir o final não é um revisionamento)."
+
+msgctxt "#32121"
+msgid "Send watched marks made in the Kodi library to Simkl"
+msgstr "Enviar para o Simkl as marcações de visto feitas na biblioteca do Kodi"
+
+msgctxt "#32122"
+msgid "Marking a movie, episode, season or show as watched in Kodi marks it on Simkl too. A single unmark removes an episode from the Simkl history; for a movie you are asked whether to remove it (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched, and no answer keeps it. A movie with rewatch sessions on Simkl is never removed. Unmarking a whole season or show is not sent."
+msgstr "Marcar um filme, episódio, temporada ou série como visto no Kodi também o marca no Simkl. Desmarcar um único episódio remove-o do histórico do Simkl; no caso de um filme, é-lhe perguntado se o quer remover (a classificação e a nota também são removidas), movê-lo para a lista Para ver (estas ficam, a data de visualização é removida) ou mantê-lo como visto, e, sem resposta, é mantido. Um filme com sessões de revisionamento no Simkl nunca é removido. A desmarcação de uma temporada ou série inteira não é enviada."
+
+msgctxt "#32130"
+msgid "Sync from Simkl"
+msgstr "Sincronizar a partir do Simkl"
+
+msgctxt "#32131"
+msgid "Sync updates from Simkl"
+msgstr "Sincronizar atualizações do Simkl"
+
+msgctxt "#32132"
+msgid "Marks in the Kodi library what was watched on Simkl since the last sync. The first run fetches the whole history; a run after new items were added to the library marks them from the kept copy of it. What you unmarked in Kodi stays unwatched until Simkl sees a newer watch of it."
+msgstr "Marca na biblioteca do Kodi o que foi visto no Simkl desde a última sincronização. A primeira execução obtém todo o histórico; uma execução depois de serem adicionados novos itens à biblioteca marca-os a partir da cópia guardada do histórico. O que desmarcou no Kodi permanece como não visto até o Simkl registar uma visualização mais recente desse item."
+
+msgctxt "#32133"
+msgid "Reset and sync everything again"
+msgstr "Repor e sincronizar tudo de novo"
+
+msgctxt "#32134"
+msgid "Forgets what was synced and goes through the whole Simkl history again. Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "Esquece o que foi sincronizado e percorre de novo todo o histórico do Simkl. Os itens já vistos no Kodi mantêm a marcação; as respetivas datas de visualização são atualizadas a partir do Simkl."
+
+msgctxt "#32135"
+msgid "Automatically sync updates from Simkl"
+msgstr "Sincronizar automaticamente as atualizações do Simkl"
+
+msgctxt "#32136"
+msgid "Checks Simkl at the interval below and marks what is new, whenever Kodi is running but nothing is playing; a device nobody used since the last check (no key press, no playback, no change of the library) waits for the next use. With a library shared by several Kodi devices, switch this on for one device only."
+msgstr "Consulta o Simkl no intervalo abaixo e marca o que for novo, sempre que o Kodi estiver em execução sem nada a reproduzir; um dispositivo que ninguém usou desde a última verificação (nenhuma tecla premida, nenhuma reprodução, nenhuma alteração na biblioteca) aguarda pela próxima utilização. Com uma biblioteca partilhada por vários dispositivos Kodi, ative esta opção apenas num dispositivo."
+
+msgctxt "#32137"
+msgid "Check every"
+msgstr "Verificar a cada"
+
+msgctxt "#32138"
+msgid "How often the automatic sync checks Simkl for new history."
+msgstr "Com que frequência a sincronização automática procura novo histórico no Simkl."
+
+msgctxt "#32139"
+msgid "1 hour"
+msgstr "1 hora"
+
+msgctxt "#32140"
+msgid "3 hours"
+msgstr "3 horas"
+
+msgctxt "#32141"
+msgid "6 hours"
+msgstr "6 horas"
+
+msgctxt "#32142"
+msgid "12 hours"
+msgstr "12 horas"
+
+msgctxt "#32143"
+msgid "24 hours"
+msgstr "24 horas"
+
+msgctxt "#32144"
+msgid "Once a week"
+msgstr "Uma vez por semana"
+
+msgctxt "#32145"
+msgid "Continue watching: sync resume positions from Simkl"
+msgstr "Continuar a ver: sincronizar pontos de retoma do Simkl"
+
+msgctxt "#32146"
+msgid "Where you paused in another Simkl app becomes a resume point in Kodi. Applied to items not yet watched in Kodi, and only when the Simkl pause is newer than Kodi's own last play."
+msgstr "O ponto onde fez pausa noutra aplicação Simkl torna-se um ponto de retoma no Kodi. Aplica-se a itens ainda não vistos no Kodi, e apenas quando a pausa no Simkl é mais recente do que a última reprodução no próprio Kodi."
+
+msgctxt "#32147"
+msgid "Last sync"
+msgstr "Última sincronização"
+
+msgctxt "#32148"
+msgid "The result of the last sync."
+msgstr "O resultado da última sincronização."
+
+msgctxt "#32149"
+msgid "Start over"
+msgstr "Recomeçar"
+
+msgctxt "#32150"
+msgid "Exclusions"
+msgstr "Exclusões"
+
+msgctxt "#32151"
+msgid "Don't track Live TV"
+msgstr "Não registar TV em direto"
+
+msgctxt "#32152"
+msgid "Nothing played from a PVR (pvr://) is sent to Simkl."
+msgstr "Nada do que for reproduzido a partir de um PVR (pvr://) é enviado para o Simkl."
+
+msgctxt "#32153"
+msgid "Don't track HTTP streams"
+msgstr "Não registar transmissões HTTP"
+
+msgctxt "#32154"
+msgid "Nothing played from an http:// or https:// address is sent to Simkl."
+msgstr "Nada do que for reproduzido a partir de um endereço http:// ou https:// é enviado para o Simkl."
+
+msgctxt "#32155"
+msgid "Don't track videos played through add-ons"
+msgstr "Não registar vídeos reproduzidos através de extras"
+
+msgctxt "#32156"
+msgid "Nothing played from a plugin:// path is sent to Simkl."
+msgstr "Nada do que for reproduzido a partir de um caminho plugin:// é enviado para o Simkl."
+
+msgctxt "#32157"
+msgid "Exclude folder 1"
+msgstr "Excluir pasta 1"
+
+msgctxt "#32158"
+msgid "Exclude folder 2"
+msgstr "Excluir pasta 2"
+
+msgctxt "#32159"
+msgid "Exclude folder 3"
+msgstr "Excluir pasta 3"
+
+msgctxt "#32160"
+msgid "Exclude folder 4"
+msgstr "Excluir pasta 4"
+
+msgctxt "#32161"
+msgid "Exclude folder 5"
+msgstr "Excluir pasta 5"
+
+msgctxt "#32162"
+msgid "Folder"
+msgstr "Pasta"
+
+msgctxt "#32163"
+msgid "Nothing played from this folder (or a folder inside it) is sent to Simkl, and marks made on its items are not sent either."
+msgstr "Nada do que for reproduzido a partir desta pasta (ou de uma pasta dentro dela) é enviado para o Simkl, e as marcações feitas nos seus itens também não são enviadas."
+
+msgctxt "#32170"
+msgid "Advanced"
+msgstr "Avançado"
+
+msgctxt "#32171"
+msgid "Debug logging"
+msgstr "Registo de depuração"
+
+msgctxt "#32172"
+msgid "Writes what the add-on does to the Kodi log, without Kodi's own debug mode."
+msgstr "Escreve no registo do Kodi o que o extra faz, sem o modo de depuração do próprio Kodi."
+
+msgctxt "#32200"
+msgid "The code expires in {0}"
+msgstr "O código expira em {0}"
+
+msgctxt "#32203"
+msgid "Log in from the add-on settings to start tracking what you watch"
+msgstr "Inicie sessão nas definições do extra para começar a registar o que vê"
+
+msgctxt "#32210"
+msgid "Simkl is not reachable right now, try again later"
+msgstr "O Simkl não está acessível de momento, tente novamente mais tarde"
+
+msgctxt "#32211"
+msgid "Logged out of Simkl"
+msgstr "Sessão do Simkl terminada"
+
+msgctxt "#32212"
+msgid "Please reconnect in the add-on settings (Account) to keep tracking when the old sign-in is retired"
+msgstr "Por favor, volte a ligar-se nas definições do extra (Conta) para continuar a registar quando o início de sessão antigo for descontinuado"
+
+msgctxt "#32213"
+msgid "Simkl rejected the stored login, please log in again in the add-on settings"
+msgstr "O Simkl rejeitou a sessão guardada, por favor, inicie sessão novamente nas definições do extra"
+
+msgctxt "#32214"
+msgid "Logging rewatches needs Simkl Pro or VIP, the option was switched off"
+msgstr "Registar revisionamentos requer Simkl Pro ou VIP, a opção foi desativada"
+
+msgctxt "#32215"
+msgid "Not connected"
+msgstr "Não ligado"
+
+msgctxt "#32216"
+msgid "Connected to Simkl as {0}"
+msgstr "Ligado ao Simkl como {0}"
+
+msgctxt "#32217"
+msgid "Connected to Simkl as {0} ({1})"
+msgstr "Ligado ao Simkl como {0} ({1})"
+
+msgctxt "#32224"
+msgid "Log in to Simkl first"
+msgstr "Inicie sessão no Simkl primeiro"
+
+msgctxt "#32225"
+msgid "A sync is already running"
+msgstr "Já está a decorrer uma sincronização"
+
+msgctxt "#32226"
+msgid "The code expired before the login was completed, start again"
+msgstr "O código expirou antes de o início de sessão ser concluído, comece de novo"
+
+msgctxt "#32227"
+msgid "The login was denied on Simkl"
+msgstr "O início de sessão foi recusado no Simkl"
+
+msgctxt "#32228"
+msgid "A sync ran a moment ago, try again in two minutes"
+msgstr "Foi feita uma sincronização há instantes, tente novamente dentro de dois minutos"
+
+msgctxt "#32229"
+msgid "Nothing new on Simkl since the last sync."
+msgstr "Nada de novo no Simkl desde a última sincronização."
+
+msgctxt "#32230"
+msgid "Marked {0} movies and {1} episodes as watched, {2} already watched."
+msgstr "{0} filmes e {1} episódios marcados como vistos, {2} já vistos."
+
+msgctxt "#32231"
+msgid "Sync failed: {0}"
+msgstr "A sincronização falhou: {0}"
+
+msgctxt "#32232"
+msgid "Syncing from Simkl..."
+msgstr "A sincronizar a partir do Simkl..."
+
+msgctxt "#32233"
+msgid "Reading the Kodi library..."
+msgstr "A ler a biblioteca do Kodi..."
+
+msgctxt "#32234"
+msgid "Fetching the Simkl history..."
+msgstr "A obter o histórico do Simkl..."
+
+msgctxt "#32235"
+msgid "Updating the library..."
+msgstr "A atualizar a biblioteca..."
+
+msgctxt "#32236"
+msgid "Connected to Simkl"
+msgstr "Ligado ao Simkl"
+
+msgctxt "#32237"
+msgid "{0} minutes"
+msgstr "{0} minutos"
+
+msgctxt "#32238"
+msgid "{0} seconds"
+msgstr "{0} segundos"
+
+msgctxt "#32239"
+msgid "A Simkl login is already in progress"
+msgstr "Já está em curso um início de sessão no Simkl"
+
+msgctxt "#32240"
+msgid "Couldn't start the Simkl login"
+msgstr "Não foi possível iniciar o processo de início de sessão no Simkl"
+
+msgctxt "#32241"
+msgid "Watch history is sent again once Simkl is reachable"
+msgstr "O histórico de visualizações é enviado novamente assim que o Simkl estiver acessível"
+
+msgctxt "#32242"
+msgid "Connected as {0} with the old sign-in: press Reconnect"
+msgstr "Ligado como {0} com o início de sessão antigo: prima Voltar a ligar"
+
+msgctxt "#32243"
+msgid "{0} resume positions updated."
+msgstr "{0} pontos de retoma atualizados."
+
+msgctxt "#32244"
+msgid "Simkl refused the request: this history is too large for one call"
+msgstr "O Simkl recusou o pedido: este histórico é demasiado grande para uma só chamada"
+
+msgctxt "#32245"
+msgid "Simkl is rate limiting requests, try again later"
+msgstr "O Simkl está a limitar os pedidos, tente novamente mais tarde"
+
+msgctxt "#32246"
+msgid "Simkl did not answer (unreachable or timed out)"
+msgstr "O Simkl não respondeu (inacessível ou tempo esgotado)"
+
+msgctxt "#32247"
+msgid "Simkl answered HTTP {0}"
+msgstr "O Simkl respondeu com HTTP {0}"
+
+msgctxt "#32248"
+msgid "Everything synced again."
+msgstr "Tudo sincronizado de novo."
+
+msgctxt "#32250"
+msgid "Mark as watched on Simkl"
+msgstr "Marcar como visto no Simkl"
+
+msgctxt "#32251"
+msgid "Remove from Simkl history"
+msgstr "Remover do histórico do Simkl"
+
+msgctxt "#32252"
+msgid "Add to Plan to watch on Simkl"
+msgstr "Adicionar à lista Para ver no Simkl"
+
+msgctxt "#32253"
+msgid "Sync updates from Simkl"
+msgstr "Sincronizar atualizações do Simkl"
+
+msgctxt "#32254"
+msgid "Added to Plan to watch: {0}"
+msgstr "Adicionado à lista Para ver: {0}"
+
+msgctxt "#32255"
+msgid "Marked as watched on Simkl: {0}"
+msgstr "Marcado como visto no Simkl: {0}"
+
+msgctxt "#32256"
+msgid "Removed from the Simkl history: {0}"
+msgstr "Removido do histórico do Simkl: {0}"
+
+msgctxt "#32257"
+msgid "Nothing to send: Simkl needs ids that Kodi does not have for this item"
+msgstr "Nada para enviar: o Simkl precisa de identificadores que o Kodi não tem para este item"
+
+msgctxt "#32259"
+msgid "{0} watch dates refreshed from Simkl."
+msgstr "{0} datas de visualização atualizadas a partir do Simkl."
+
+msgctxt "#32260"
+msgid "Forget what was synced and go through the whole Simkl history again? Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "Esquecer o que foi sincronizado e percorrer de novo todo o histórico do Simkl? Os itens já vistos no Kodi mantêm a marcação; as respetivas datas de visualização são atualizadas a partir do Simkl."
+
+msgctxt "#32261"
+msgid "Log out of Simkl on this device? Watch history that could not be sent yet is discarded."
+msgstr "Terminar sessão do Simkl neste dispositivo? O histórico de visualizações que ainda não pôde ser enviado é descartado."
+
+msgctxt "#32262"
+msgid "{0} episodes"
+msgstr "{0} episódios"
+
+msgctxt "#32263"
+msgid "Simkl does not know {0}"
+msgstr "O Simkl não conhece {0}"
+
+msgctxt "#32264"
+msgid "Simkl refused the request: {0}"
+msgstr "O Simkl recusou o pedido: {0}"
+
+msgctxt "#32265"
+msgid "the Simkl login was rejected, log in again"
+msgstr "a sessão do Simkl foi rejeitada, inicie sessão novamente"
+
+msgctxt "#32266"
+msgid "Kodi is shutting down"
+msgstr "O Kodi está a encerrar"
+
+msgctxt "#32267"
+msgid "{0} library writes failed, the sync runs again next time"
+msgstr "{0} gravações na biblioteca falharam, a sincronização é executada novamente da próxima vez"
+
+msgctxt "#32268"
+msgid "{0} items changed in Kodi during the sync were left alone."
+msgstr "{0} itens alterados no Kodi durante a sincronização foram deixados como estavam."
+
+msgctxt "#32269"
+msgid "the Kodi library could not be read"
+msgstr "não foi possível ler a biblioteca do Kodi"
+
+msgctxt "#32270"
+msgid "A whole show or season can be marked only when it is in the Kodi library; use Add to Plan to watch for a show from an add-on"
+msgstr "Uma série ou temporada inteira só pode ser marcada quando está na biblioteca do Kodi; para uma série de um extra, use Adicionar à lista Para ver"
+
+msgctxt "#32271"
+msgid "An episode from an add-on can be marked only when the add-on provides the show's ids"
+msgstr "Um episódio de um extra só pode ser marcado quando o extra fornece os identificadores da série"
+
+msgctxt "#32273"
+msgid "Reconnect with the new sign-in"
+msgstr "Voltar a ligar com o novo início de sessão"
+
+msgctxt "#32274"
+msgid "The old sign-in is being retired. Shows a code to enter on simkl.com/pin; the account stays the same."
+msgstr "O início de sessão antigo está a ser descontinuado. Mostra um código para introduzir em simkl.com/pin; a conta mantém-se a mesma."
+
+msgctxt "#32275"
+msgid "Rate on Simkl"
+msgstr "Classificar no Simkl"
+
+msgctxt "#32276"
+msgid "Remove the rating"
+msgstr "Remover a classificação"
+
+msgctxt "#32277"
+msgid "Rated {0} {1}/10 on Simkl"
+msgstr "Classificação de {1}/10 no Simkl: {0}"
+
+msgctxt "#32278"
+msgid "Rating removed on Simkl: {0}"
+msgstr "Classificação removida no Simkl: {0}"
+
+msgctxt "#32279"
+msgid "Not in the Kodi library"
+msgstr "Não está na biblioteca do Kodi"
+
+msgctxt "#32280"
+msgid "{0} movies, {1} shows, {2} episodes"
+msgstr "{0} filmes, {1} séries, {2} episódios"
+
+msgctxt "#32281"
+msgid "What the last sync found watched on Simkl but could not place in the Kodi library."
+msgstr "O que a última sincronização encontrou como visto no Simkl mas não conseguiu colocar na biblioteca do Kodi."
+
+msgctxt "#32282"
+msgid "Scan with your phone"
+msgstr "Digitalize com o telemóvel"
+
+msgctxt "#32283"
+msgid "{0} episodes, {1} movies marked"
+msgstr "{0} episódios, {1} filmes marcados"
+
+msgctxt "#32284"
+msgid "{0} dates refreshed"
+msgstr "{0} datas atualizadas"
+
+msgctxt "#32285"
+msgid "{0} resume points"
+msgstr "{0} pontos de retoma"
+
+msgctxt "#32286"
+msgid "Show the Simkl log"
+msgstr "Mostrar o registo do Simkl"
+
+msgctxt "#32287"
+msgid "The Kodi log, Simkl lines only (switch debug logging on first for the details). What is shown is also saved as simkl.log next to the add-on's settings, ready for a bug report."
+msgstr "O registo do Kodi, apenas as linhas do Simkl (ative primeiro o registo de depuração para obter os detalhes). O que é mostrado também é guardado como simkl.log junto às definições do extra, pronto para um relatório de erro."
+
+msgctxt "#32288"
+msgid "Kodi log"
+msgstr "Registo do Kodi"
+
+msgctxt "#32289"
+msgid "Simkl log"
+msgstr "Registo do Simkl"
+
+msgctxt "#32290"
+msgid "Saved to {0}"
+msgstr "Guardado em {0}"
+
+msgctxt "#32291"
+msgid "No Simkl lines in the Kodi log yet"
+msgstr "Ainda não há linhas do Simkl no registo do Kodi"
+
+msgctxt "#32292"
+msgid "Ask for a rating after a movie"
+msgstr "Pedir uma classificação após um filme"
+
+msgctxt "#32294"
+msgid "Send ratings made in Kodi to Simkl"
+msgstr "Enviar para o Simkl as classificações feitas no Kodi"
+
+msgctxt "#32295"
+msgid "A rating set in Kodi's information dialog for a movie or a show goes to Simkl (1-10, 0 removes it). Episodes are not sent, nor the rating of a movie Kodi has as unwatched: Simkl files a rated movie as watched."
+msgstr "Uma classificação definida na janela de informação do Kodi para um filme ou uma série é enviada para o Simkl (1-10, 0 remove-a). Os episódios não são enviados, nem a classificação de um filme que o Kodi tem como não visto: o Simkl regista um filme classificado como visto."
+
+msgctxt "#32296"
+msgid "Bring Simkl ratings into Kodi"
+msgstr "Trazer as classificações do Simkl para o Kodi"
+
+msgctxt "#32297"
+msgid "Your Simkl rating of a movie or a show becomes the Kodi library's user rating (1-10). Nothing is removed in Kodi; episodes have no ratings on Simkl."
+msgstr "A sua classificação no Simkl de um filme ou de uma série torna-se a classificação do utilizador na biblioteca do Kodi (1-10). Nada é removido no Kodi; os episódios não têm classificações no Simkl."
+
+msgctxt "#32298"
+msgid "{0} ratings updated."
+msgstr "{0} classificações atualizadas."
+
+msgctxt "#32299"
+msgid "Simkl would mark {0} as watched: rate it once you have watched it"
+msgstr "O Simkl marcaria {0} como visto: classifique-o depois de o ver"
+
+msgctxt "#32300"
+msgid "Not now"
+msgstr "Agora não"
+
+msgctxt "#32301"
+msgid "That is another Simkl account ({0}); log out first to switch"
+msgstr "Essa é outra conta do Simkl ({0}); termine sessão primeiro para mudar"
+
+msgctxt "#32302"
+msgid "{0} unmarked in Kodi, left unwatched."
+msgstr "{0} desmarcados no Kodi, mantidos como não vistos."
+
+msgctxt "#32303"
+msgid "Watches sent to Simkl: {0}"
+msgstr "Visualizações enviadas para o Simkl: {0}"
+
+msgctxt "#32304"
+msgid "Shorter add-on streams and files named by Simkl's file search (trailers, clips) are ignored. Items of the Kodi library are always tracked."
+msgstr "As transmissões de extras e os ficheiros identificados pela pesquisa de ficheiros do Simkl que sejam mais curtos (trailers, clipes) são ignorados. Os itens da biblioteca do Kodi são sempre registados."
+
+msgctxt "#32305"
+msgid "{0} is unwatched in Kodi now. On Simkl: remove it from your history (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched?"
+msgstr "{0} está agora marcado como não visto no Kodi. No Simkl: removê-lo do seu histórico (a classificação e a nota também são removidas), movê-lo para a lista Para ver (estas ficam, a data de visualização é removida) ou mantê-lo como visto?"
+
+msgctxt "#32306"
+msgid "Remove"
+msgstr "Remover"
+
+msgctxt "#32307"
+msgid "Plan to watch"
+msgstr "Para ver"
+
+msgctxt "#32308"
+msgid "Keep watched"
+msgstr "Manter visto"
+
+msgctxt "#32309"
+msgid "Kept on Simkl, it has rewatch sessions there: {0}"
+msgstr "Mantido no Simkl, tem lá sessões de revisionamento: {0}"
+
+msgctxt "#32310"
+msgid "Not in your Simkl history, nothing to change: {0}"
+msgstr "Não está no seu histórico do Simkl, nada a alterar: {0}"
+
+msgctxt "#32311"
+msgid "{0} unsent Simkl updates older than 30 days were dropped"
+msgstr "{0} atualizações do Simkl por enviar com mais de 30 dias foram descartadas"
+
+msgctxt "#32312"
+msgid "When a movie ends at or past the percentage, a 1-10 pick appears and goes to Simkl. A movie you rated in Kodi or watched before is not asked, nor are shows and episodes."
+msgstr "Quando um filme termina na percentagem ou depois dela, aparece uma escolha de 1-10 que é enviada para o Simkl. Não é perguntado nada para um filme que classificou no Kodi ou que já viu antes, nem para séries e episódios."
+
+msgctxt "#32313"
+msgid "the kept copy of the Simkl history could not be saved"
+msgstr "não foi possível guardar a cópia do histórico do Simkl"
+
+msgctxt "#32314"
+msgid "{0} is already watched in Kodi, so it was not moved to Plan to watch"
+msgstr "{0} já está visto no Kodi, por isso não foi movido para a lista Para ver"
