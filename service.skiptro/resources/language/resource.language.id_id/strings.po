@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Indonesian\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Tombol lewati intro/kredit"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Menampilkan tombol lewati saat intro dan kredit penutup. Membaca data waktu dari file .skiptro.json yang berada di samping file video."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Dialog"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Tutup dialog otomatis setelah (detik)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Lewati intro secara otomatis"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Lewati Intro"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Lewati Kredit"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Lompat ke Adegan Pasca-Kredit"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Tidak dapat membaca data lewati. Periksa izin file."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Tidak dapat membaca data lewati. Aktifkan “Akses semua file” untuk Kodi di setelan Android."

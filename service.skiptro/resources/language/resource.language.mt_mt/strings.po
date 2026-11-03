@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Maltese\n"
+"Language: mt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==0 || ( n%100>1 && n%100<11) ? 1 : (n%100>10 && n%100<20 ) ? 2 : 3);\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Buttuna biex taqbeż l-intro/il-krediti"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Turi buttuna biex taqbeż waqt l-intro u l-krediti. Taqra d-data tal-ħin mill-fajls .skiptro.json li jinsabu ħdejn il-fajls tal-vidjo."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Djalogu"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Agħlaq id-djalogu awtomatikament wara (sekondi)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Aqbeż l-intros awtomatikament"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Aqbeż l-Intro"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Aqbeż il-Krediti"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Mur għax-Xena Wara l-Krediti"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Id-data tal-qbiż ma tistax tinqara. Iċċekkja l-permessi tal-fajl."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Id-data tal-qbiż ma tistax tinqara. Ixgħel “Aċċess għall-fajls kollha” għal Kodi fl-issettjar tal-Android."

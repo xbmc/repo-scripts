@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Welsh\n"
+"Language: cy\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Botwm hepgor y cyflwyniad/credydau"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Yn dangos botwm hepgor yn ystod y cyflwyniad a'r credydau. Yn darllen data amseru o ffeiliau .skiptro.json wrth ymyl y ffeiliau fideo."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Deialog"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Cau'r deialog yn awtomatig ar ôl (eiliadau)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Hepgor cyflwyniadau'n awtomatig"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Hepgor y cyflwyniad"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Hepgor y credydau"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Neidio i'r olygfa ychwanegol"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Methu darllen y data hepgor. Gwiriwch ganiatadau'r ffeil."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Methu darllen y data hepgor. Trowch “Mynediad i bob ffeil” ymlaen ar gyfer Kodi yng ngosodiadau Android."

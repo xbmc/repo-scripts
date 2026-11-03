@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Catalan\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Botó per ometre la introducció i els crèdits"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Mostra un botó per ometre la introducció i els crèdits finals. Llegeix les dades de temps dels fitxers .skiptro.json situats al costat dels fitxers de vídeo."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Diàleg"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Tanca el diàleg automàticament després de (segons)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Omet automàticament les introduccions"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Omet la introducció"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Omet els crèdits"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Salta a l'escena postcrèdits"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "No es poden llegir les dades d'omissió. Comproveu els permisos dels fitxers."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "No es poden llegir les dades d'omissió. Activeu «Accés a tots els fitxers» per a Kodi a la configuració d'Android."

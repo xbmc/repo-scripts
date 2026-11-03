@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Pulsante per saltare intro/titoli di coda"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Mostra un pulsante per saltare l'intro e i titoli di coda. Legge i dati temporali dai file .skiptro.json presenti accanto ai file video."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Finestra di dialogo"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Chiudi automaticamente la finestra dopo (secondi)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Salta automaticamente le intro"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Salta intro"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Salta titoli di coda"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Vai alla scena post-credit"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Impossibile leggere i dati di salto. Controlla i permessi del file."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Impossibile leggere i dati di salto. Attiva «Accesso a tutti i file» per Kodi nelle impostazioni di Android."

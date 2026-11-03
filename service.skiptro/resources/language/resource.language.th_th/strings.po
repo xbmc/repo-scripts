@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Thai\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "ปุ่มข้ามอินโทร/เครดิต"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "แสดงปุ่มข้ามระหว่างช่วงอินโทรและเครดิตท้ายเรื่อง อ่านข้อมูลเวลาจากไฟล์ .skiptro.json ที่อยู่ข้างไฟล์วิดีโอ"
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "กล่องโต้ตอบ"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "ปิดกล่องโต้ตอบอัตโนมัติหลังจาก (วินาที)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "ข้ามอินโทรอัตโนมัติ"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "ข้ามอินโทร"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "ข้ามเครดิต"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "ข้ามไปฉากหลังเครดิต"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "ไม่สามารถอ่านข้อมูลการข้ามได้ โปรดตรวจสอบสิทธิ์ของไฟล์"
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "ไม่สามารถอ่านข้อมูลการข้ามได้ โปรดเปิด “การเข้าถึงไฟล์ทั้งหมด” ให้ Kodi ในการตั้งค่า Android"

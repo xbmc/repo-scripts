@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Burmese\n"
+"Language: my\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "အစပိုင်း/ခရက်ဒစ် ကျော်ရန် ခလုတ်"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "အစပိုင်းနှင့် ခရက်ဒစ် ပြသနေစဉ် ကျော်ရန် ခလုတ်ကို ပြသပေးသည်။ ဗီဒီယိုဖိုင်များ၏ ဘေးရှိ .skiptro.json ဖိုင်များမှ အချိန်ဒေတာကို ဖတ်ယူသည်။"
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "ဒိုင်ယာလော့ဂ်"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "ဒိုင်ယာလော့ဂ်ကို အလိုအလျောက် ပိတ်မည့်အချိန် (စက္ကန့်)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "အစပိုင်းများကို အလိုအလျောက် ကျော်ရန်"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "အစပိုင်း ကျော်ရန်"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "ခရက်ဒစ် ကျော်ရန်"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "ခရက်ဒစ်နောက်ပိုင်း ပြကွက်သို့ ကျော်ရန်"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "ကျော်ရန် ဒေတာကို ဖတ်၍မရပါ။ ဖိုင်ခွင့်ပြုချက်များကို စစ်ဆေးပါ။"
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "ကျော်ရန် ဒေတာကို ဖတ်၍မရပါ။ Android ဆက်တင်များတွင် Kodi အတွက် “ဖိုင်အားလုံး သုံးခွင့်” ကို ဖွင့်ပါ။"

@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Irish\n"
+"Language: ga_ie\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>6 && n<11) ? 3 : 4;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Cnaipe chun an réamhrá/na creidiúintí a scipeáil"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Taispeánann sé cnaipe scipeála le linn an réamhrá agus na gcreidiúintí. Léann sé sonraí uainithe ó chomhaid .skiptro.json in aice leis na comhaid físe."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Dialóg"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Dún an dialóg go huathoibríoch tar éis (soicindí)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Scipeáil réamhráite go huathoibríoch"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Scipeáil an réamhrá"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Scipeáil na creidiúintí"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Léim go dtí an radharc breise"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Ní féidir na sonraí scipeála a léamh. Seiceáil ceadanna an chomhaid."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Ní féidir na sonraí scipeála a léamh. Cas air “Rochtain ar gach comhad” do Kodi i socruithe Android."

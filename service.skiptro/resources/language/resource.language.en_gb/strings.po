@@ -16,6 +16,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr ""
+
 # Settings
 msgctxt "#32001"
 msgid "Dialog"
@@ -40,4 +48,13 @@ msgstr ""
 
 msgctxt "#32012"
 msgid "Skip to Stinger"
+msgstr ""
+
+# Notifications
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr ""
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
 msgstr ""

@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Korean\n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "인트로/크레딧 건너뛰기 버튼"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "인트로와 크레딧이 나오는 동안 건너뛰기 버튼을 표시합니다. 비디오 파일 옆에 있는 .skiptro.json 파일에서 구간 정보를 읽습니다."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "대화 상자"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "대화 상자 자동 닫기 시간(초)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "인트로 자동 건너뛰기"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "인트로 건너뛰기"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "크레딧 건너뛰기"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "쿠키 영상으로 이동"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "건너뛰기 데이터를 읽을 수 없습니다. 파일 권한을 확인하세요."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "건너뛰기 데이터를 읽을 수 없습니다. Android 설정에서 Kodi의 “모든 파일 액세스”를 켜세요."

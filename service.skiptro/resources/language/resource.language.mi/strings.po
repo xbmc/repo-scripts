@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Maori\n"
+"Language: mi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Pātene hei peke i te whakataki/ngā whakamihi"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Ka whakaatu i tētahi pātene peke i te wā o te whakataki me ngā whakamihi. Ka pānui i ngā raraunga wā mai i ngā kōnae .skiptro.json kei te taha o ngā kōnae ataata."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Pouaka kōrero"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Katia aunoatia te pouaka kōrero i muri i (hēkona)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Pekea aunoatia ngā whakataki"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Pekea te Whakataki"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Pekea ngā Whakamihi"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Peke ki te Wāhanga Āpiti"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Kāore e taea te pānui i ngā raraunga peke. Tirohia ngā whakaaetanga kōnae."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Kāore e taea te pānui i ngā raraunga peke. Whakakāngia te “Uru ki ngā kōnae katoa” mō Kodi i ngā tautuhinga Android."

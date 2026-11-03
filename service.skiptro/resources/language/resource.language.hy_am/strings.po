@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Armenian\n"
+"Language: hy\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Ներածությունը և տիտրերը բաց թողնելու կոճակ"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Ցուցադրում է բաց թողնելու կոճակ ներածության և տիտրերի ընթացքում։ Կարդում է ժամանակային տվյալները տեսաֆայլերի կողքին գտնվող .skiptro.json ֆայլերից։"
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Երկխոսության պատուհան"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Ավտոմատ փակել պատուհանը (վայրկյան անց)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Ավտոմատ բաց թողնել ներածությունները"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Բաց թողնել ներածությունը"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Բաց թողնել տիտրերը"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Անցնել հետտիտրային տեսարանին"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Հնարավոր չէ կարդալ բաց թողնելու տվյալները։ Ստուգեք ֆայլերի թույլտվությունները։"
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Հնարավոր չէ կարդալ բաց թողնելու տվյալները։ Android-ի կարգավորումներում միացրեք «Բոլոր ֆայլերի հասանելիություն» թույլտվությունը Kodi-ի համար։"

@@ -1,0 +1,57 @@
+# Kodi Media Center language file
+# Addon Name: Skiptro
+# Addon id: service.skiptro
+# Addon Provider: Skiptro
+msgid ""
+msgstr ""
+"Project-Id-Version: service.skiptro\n"
+"Report-Msgid-Bugs-To: https://github.com/MikeSiLVO/service.skiptro\n"
+"POT-Creation-Date: 2025-01-12\n"
+"PO-Revision-Date: 2026-11-01\n"
+"Last-Translator: \n"
+"Language-Team: Albanian\n"
+"Language: sq_AL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgctxt "Addon Summary"
+msgid "Skip intro/credits button"
+msgstr "Buton për kapërcimin e hyrjes/jenerikut"
+
+msgctxt "Addon Description"
+msgid "Displays a skip button during intro and credits sequences. Reads timing data from .skiptro.json files next to video files."
+msgstr "Shfaq një buton kapërcimi gjatë hyrjes dhe jenerikut të fundit. Lexon të dhënat kohore nga skedarët .skiptro.json pranë skedarëve video."
+
+msgctxt "#32001"
+msgid "Dialog"
+msgstr "Dialogu"
+
+msgctxt "#32002"
+msgid "Auto-close dialog after (seconds)"
+msgstr "Mbyll dialogun automatikisht pas (sekondash)"
+
+msgctxt "#32003"
+msgid "Automatically skip intros"
+msgstr "Kapërce hyrjet automatikisht"
+
+msgctxt "#32010"
+msgid "Skip Intro"
+msgstr "Kapërce hyrjen"
+
+msgctxt "#32011"
+msgid "Skip Credits"
+msgstr "Kapërce jenerikun"
+
+msgctxt "#32012"
+msgid "Skip to Stinger"
+msgstr "Kalo te skena pas jenerikut"
+
+msgctxt "#32020"
+msgid "Can't read skip data. Check the file permissions."
+msgstr "Të dhënat e kapërcimit nuk mund të lexohen. Kontrollo lejet e skedarit."
+
+msgctxt "#32021"
+msgid "Can't read skip data. Turn on \"All files access\" for Kodi in Android settings."
+msgstr "Të dhënat e kapërcimit nuk mund të lexohen. Aktivizo «Qasja në të gjithë skedarët» për Kodi te cilësimet e Android-it."
