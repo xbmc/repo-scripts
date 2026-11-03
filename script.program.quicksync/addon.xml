@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.program.quicksync" name="Kodi QuickSync" version="1.0.0" provider-name="jairamrb.com">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en_GB">Scan your libraries for new content</summary>
+        <summary lang="es_ES">Busca contenido nuevo en tus bibliotecas</summary>
+        <description lang="en_GB">Triggers the video and/or music library scan, the same as Kodi's "Update library on startup" option. Only sources with a content type (scraper) set are scanned. When finished, a summary shows how many items were added.[CR][CR]Run it from Add-ons > Program add-ons, or add it to your favourites to launch it from the home screen.[CR][CR]Developed by jairamrb.com</description>
+        <description lang="es_ES">Lanza el escaneo de la biblioteca de vídeo y/o música, igual que la opción "Buscar nuevo contenido al iniciar" de Kodi. Solo se escanean las fuentes que tienen un tipo de contenido (scraper) asignado. Al terminar muestra un resumen con lo que se ha añadido.[CR][CR]Ejecútalo desde Add-ons > Complementos de programa, o añádelo a tus favoritos para lanzarlo desde la pantalla de inicio.[CR][CR]Desarrollado por jairamrb.com</description>
+        <license>GPL-2.0-or-later</license>
+        <website>https://jairamrb.com</website>
+        <source>https://github.com/jairamrb/KodiQuickSync</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+            <screenshot>resources/screenshot-01.jpg</screenshot>
+            <screenshot>resources/screenshot-02.jpg</screenshot>
+            <screenshot>resources/screenshot-03.jpg</screenshot>
+        </assets>
+        <news>Version 1.0.0
+- Manual video and music library scan
+- Summary with the new content found
+- English and Spanish translations</news>
+    </extension>
+</addon>

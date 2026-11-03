@@ -1,0 +1,9 @@
+<settings>
+    <category label="30013">
+        <setting id="scan_video" type="bool" label="30010" default="true"/>
+        <setting id="scan_music" type="bool" label="30011" default="true"/>
+    </category>
+    <category label="30014">
+        <setting id="show_report" type="bool" label="30012" default="true"/>
+    </category>
+</settings>
