@@ -7,11 +7,11 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 
-from lib.kodi.client import log, request, extract_result, get_item_details
+from lib.kodi.client import ADDON, log, request, extract_result, get_item_details
 
 
 def _resolve_artist_name(params: dict) -> Optional[str]:
-    """Extract artist name from params or resolve via dbid+dbtype."""
+    """Resolve the artist name from the params, else the first artist of the dbid's item."""
     artist = params.get('artist', [''])[0]
     if artist:
         return artist
@@ -237,16 +237,17 @@ def _create_musicvideo_listitem(mv: dict) -> xbmcgui.ListItem:
 
 
 def handle_similar_artists(handle: int, params: dict) -> None:
-    """Get library artists similar to the given artist via Last.fm data."""
+    """Plugin entry for library artists Last.fm lists as similar to the given artist."""
     artist_name = _resolve_artist_name(params)
     if not artist_name:
         log("Plugin", "similar_artists: Could not resolve artist name", xbmc.LOGWARNING)
         xbmcplugin.endOfDirectory(handle, succeeded=False)
         return
 
+    xbmcplugin.setPluginCategory(handle, ADDON.getLocalizedString(32697))
     limit = int(params.get('limit', ['25'])[0])
 
-    from lib.service.music import get_similar_artist_names
+    from lib.data.music import get_similar_artist_names
     similar_names = get_similar_artist_names(artist_name)
 
     if not similar_names:
@@ -259,7 +260,9 @@ def handle_similar_artists(handle: int, params: dict) -> None:
                           for n in similar_names]},
         'properties': _ARTIST_PROPERTIES,
     })
-    matched = extract_result(result, 'artists', [])[:limit]
+    rank = {name.lower(): index for index, name in enumerate(similar_names)}
+    matched = sorted(extract_result(result, 'artists', []),
+                     key=lambda a: rank.get((a.get('artist') or '').lower(), len(rank)))[:limit]
 
     for artist in matched:
         item = _create_artist_listitem(artist)
@@ -272,14 +275,15 @@ def handle_similar_artists(handle: int, params: dict) -> None:
 
 
 def handle_artist_albums(handle: int, params: dict) -> None:
-    """Get albums by the given artist from AudioLibrary."""
+    """Plugin entry for the given artist's albums in the music library."""
     artist_name = _resolve_artist_name(params)
     if not artist_name:
         log("Plugin", "artist_albums: Could not resolve artist name", xbmc.LOGWARNING)
         xbmcplugin.endOfDirectory(handle, succeeded=False)
         return
 
-    from lib.plugin.widgets import validate_sort_method
+    xbmcplugin.setPluginCategory(handle, artist_name)
+    from lib.kodi.utilities import validate_sort_method
     limit = int(params.get('limit', ['25'])[0])
     sort_method = validate_sort_method(params.get('sort', ['year'])[0], 'year')
 
@@ -308,13 +312,14 @@ def handle_artist_albums(handle: int, params: dict) -> None:
 
 
 def handle_artist_musicvideos(handle: int, params: dict) -> None:
-    """Get musicvideos by the given artist from VideoLibrary."""
+    """Plugin entry for the given artist's music videos, leaving out the one being viewed."""
     artist_name = _resolve_artist_name(params)
     if not artist_name:
         log("Plugin", "artist_musicvideos: Could not resolve artist name", xbmc.LOGWARNING)
         xbmcplugin.endOfDirectory(handle, succeeded=False)
         return
 
+    xbmcplugin.setPluginCategory(handle, artist_name)
     limit = int(params.get('limit', ['25'])[0])
 
     exclude_id: Optional[int] = None
@@ -352,7 +357,7 @@ def handle_artist_musicvideos(handle: int, params: dict) -> None:
 
 
 def handle_genre_artists(handle: int, params: dict) -> None:
-    """Get artists in the same genre as the given artist from AudioLibrary."""
+    """Plugin entry for random library artists sharing the given artist's first genre."""
     genre = params.get('genre', [''])[0]
     source_artist: Optional[str] = None
 
@@ -378,6 +383,7 @@ def handle_genre_artists(handle: int, params: dict) -> None:
             return
         genre = genres[0]
 
+    xbmcplugin.setPluginCategory(handle, genre)
     limit = int(params.get('limit', ['25'])[0])
 
     result = request('AudioLibrary.GetArtists', {

@@ -1,17 +1,13 @@
-"""
-Formatters for converting API responses to Kodi-style property dicts.
+"""Formatters that turn TMDB and ratings responses into Kodi-style property dicts."""
+from typing import Dict, List, Tuple, Optional, Final
 
-Maps API field names to Kodi InfoLabel equivalents where applicable.
-"""
-import datetime
-from typing import Dict, Tuple, Optional
-
-from lib.kodi.utilities import format_date
+from lib.kodi.settings import KodiSettings
+from lib.kodi.utilities import format_date, format_region_date
 from lib.kodi.utilities import MULTI_VALUE_SEP
 from lib.data.api.utilities import tmdb_image_url
 
-RT_SOURCE_TOMATOES = "tomatoes"
-RT_SOURCE_POPCORN = "popcorn"
+RT_SOURCE_TOMATOES: Final = "tomatoes"
+RT_SOURCE_POPCORN: Final = "popcorn"
 
 RATING_SOURCE_NORMALIZE = {
     "tomatometerallcritics": RT_SOURCE_TOMATOES,
@@ -20,6 +16,31 @@ RATING_SOURCE_NORMALIZE = {
     "popcorn": RT_SOURCE_POPCORN,
     "themoviedb": "tmdb",
 }
+
+_STAR_SCALES = {"rogerebert": (4, 0.5), "letterboxd": (5, 0.0)}
+
+
+def format_stars(source: Optional[str], rating: float) -> str:
+    """Format the rating on the source's own star scale; empty unless the source uses one."""
+    scale = _STAR_SCALES.get(source) if source else None
+    if not scale or not rating:
+        return ""
+    max_val, step = scale
+    stars = float(rating) / 10.0 * max_val
+    if step:
+        stars = round(stars / step) * step
+    return f"{stars:.1f}"
+
+
+def format_rating(rating: Optional[float]) -> str:
+    """Format a 0-10 rating to one decimal; empty for no rating or 0."""
+    if not rating:
+        return ""
+    value = round(float(rating), 1)
+    if value <= 0:
+        return ""
+    return f"{value:.1f}"
+
 
 def format_number(value) -> str:
     """Format number with thousand separators."""
@@ -31,15 +52,41 @@ def format_number(value) -> str:
         return str(value)
 
 
+def format_minutes(key: str, total: int) -> Dict[str, str]:
+    """Format a minute total plus its `.Hours` and `.Minutes` parts; zeros are empty."""
+    hrs, mins = divmod(total, 60)
+    return {
+        key: str(total) if total > 0 else "",
+        f"{key}.Hours": str(hrs) if hrs else "",
+        f"{key}.Minutes": str(mins) if mins >= 1 else "",
+    }
+
+
 def format_rating_props(source: str, rating: float, votes: int) -> Dict[str, str]:
-    """Format rating data into property dict for a given source."""
+    """Format rating data into property dict for a given source; empty for a 0 rating."""
+    text = format_rating(rating)
+    if not text:
+        return {}
     scaled = round(rating, 1)
     pct = max(0, min(100, int(round(scaled * 10))))
-    return {
-        f"Rating.{source}": str(scaled),
+    props = {
+        f"Rating.{source}": text,
         f"Rating.{source}.Votes": format_number(votes),
         f"Rating.{source}.Percent": str(pct)
     }
+    stars = format_stars(source, scaled)
+    if stars:
+        props[f"Rating.{source}.Stars"] = stars
+    return props
+
+
+def format_default_rating(props: Dict[str, str]) -> Dict[str, str]:
+    """Format the default source's rating as `Rating` and `Votes`, TMDb's when it has none."""
+    for source in (KodiSettings.ratings_default_source(), "tmdb"):
+        rating = props.get(f"Rating.{source}")
+        if rating:
+            return {"Rating": rating, "Votes": props.get(f"Rating.{source}.Votes") or ""}
+    return {}
 
 
 def format_movie_props(data: dict) -> Dict[str, str]:
@@ -59,10 +106,7 @@ def format_movie_props(data: dict) -> Dict[str, str]:
     if release_date:
         props["Premiered"] = release_date
         props["PremieredFormatted"] = format_date(release_date)
-        try:
-            props["Year"] = release_date[:4]
-        except (IndexError, TypeError):
-            pass
+        props["Year"] = release_date[:4]
 
     genres = data.get("genres") or []
     if genres:
@@ -112,10 +156,7 @@ def format_tvshow_props(data: dict) -> Dict[str, str]:
     if first_air:
         props["Premiered"] = first_air
         props["PremieredFormatted"] = format_date(first_air)
-        try:
-            props["Year"] = first_air[:4]
-        except (IndexError, TypeError):
-            pass
+        props["Year"] = first_air[:4]
 
     last_air = data.get("last_air_date") or ""
     if last_air:
@@ -158,16 +199,20 @@ def format_tvshow_props(data: dict) -> Dict[str, str]:
 
     next_ep = data.get("next_episode_to_air")
     next_air = (next_ep.get("air_date") or "") if next_ep else ""
-    if next_ep and next_air and next_air >= datetime.date.today().isoformat():
+    from datetime import date, datetime
+    if next_ep and next_air and next_air >= date.today().isoformat():
         props["NextEpisodeTitle"] = next_ep.get("name") or ""
         props["NextEpisode"] = str(next_ep.get("episode_number") or "")
         props["NextEpisodeSeason"] = str(next_ep.get("season_number") or "")
         props["NextEpisodeAired"] = format_date(next_air)
+        props["NextEpisodeAiredLong"] = format_region_date(
+            datetime.fromisoformat(next_air), "datelong")
     else:
         props["NextEpisodeTitle"] = ""
         props["NextEpisode"] = ""
         props["NextEpisodeSeason"] = ""
         props["NextEpisodeAired"] = ""
+        props["NextEpisodeAiredLong"] = ""
 
     add_content_rating_props(props, data)
     add_trailer_props(props, data)
@@ -210,6 +255,17 @@ def format_credits_props(data: dict) -> Dict[str, str]:
     return props
 
 
+def pick_clearlogo(logos: Optional[List[dict]]) -> str:
+    """Pick a TMDB logo in the metadata language, else English, else an untagged one."""
+    usable = [logo for logo in logos or [] if logo.get("file_path")]
+    language = KodiSettings.online_metadata_language().split('-')[0].lower()
+    for wanted in dict.fromkeys((language, "en", None)):
+        logo = next((x for x in usable if x.get("iso_639_1") == wanted), None)
+        if logo:
+            return tmdb_image_url(logo["file_path"])
+    return ""
+
+
 def format_images_props(data: dict) -> Dict[str, str]:
     """Format image URL properties from TMDB data."""
     props: Dict[str, str] = {}
@@ -227,13 +283,7 @@ def format_images_props(data: dict) -> Dict[str, str]:
         props["Fanart"] = tmdb_image_url(backdrop)
 
     images = data.get("images") or {}
-    logos = images.get("logos") or []
-    for logo in logos:
-        if logo.get("iso_639_1") in ("en", None):
-            file_path = logo.get("file_path")
-            if file_path:
-                props["Clearlogo"] = tmdb_image_url(file_path)
-                break
+    props["Clearlogo"] = pick_clearlogo(images.get("logos"))
 
     return props
 
@@ -301,7 +351,6 @@ def add_keywords_props(props: Dict[str, str], data: dict) -> None:
         props["Tag"] = MULTI_VALUE_SEP.join(tag_names)
 
 
-# Common Sense Media severity and category mappings
 _CS_SEVERITY = {5: 32200, 4: 32201, 3: 32202, 2: 32203, 1: 32204}
 _CS_CATEGORIES = [
     ("violence", 32210),
@@ -312,16 +361,11 @@ _CS_CATEGORIES = [
 
 
 def build_common_sense_summary(cs_data: dict) -> Tuple[str, str]:
-    """Build localized Common Sense `(summary, reasons)` strings, grouping categories by severity.
-
-    `summary` includes age rating + reasons phrase. `reasons` is the phrase alone.
-    """
-    from typing import Dict, List
+    """Build localized Common Sense `(summary, reasons)`; the summary adds the age rating."""
     from lib.kodi.client import ADDON
 
     age = cs_data.get("age", 0)
 
-    # Group categories by severity level
     by_level: Dict[int, List[str]] = {}
     for cat_key, string_id in _CS_CATEGORIES:
         score = cs_data.get(cat_key, 0)

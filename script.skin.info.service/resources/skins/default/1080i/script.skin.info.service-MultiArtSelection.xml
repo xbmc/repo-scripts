@@ -40,6 +40,17 @@
 				<aligny>center</aligny>
 				<label>$INFO[Window.Property(arttype)]$INFO[Window.Property(count), - ]</label>
 			</control>
+			<!-- Full size hint -->
+			<control type="label">
+				<top>60</top>
+				<width>1800</width>
+				<height>60</height>
+				<font>font12</font>
+				<textcolor>FFCCCCCC</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>$ADDON[script.skin.info.service 32078]</label>
+			</control>
 			<control type="group">
 				<centerleft>50%</centerleft>
 				<top>120</top>
@@ -210,22 +221,21 @@
 								<bordersize>8</bordersize>
 							</control>
 							<!-- Current Main Art indicator -->
-							<control type="group">
-								<left>320</left>
-								<top>15</top>
+							<control type="image">
+								<left>323</left>
+								<top>18</top>
+								<width>32</width>
+								<height>32</height>
+								<texture>current.png</texture>
 								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-								<control type="image">
-									<width>38</width>
-									<height>38</height>
-									<colordiffuse>80000000</colordiffuse>
-									<texture>overlay.png</texture>
-								</control>
-								<control type="image">
-									<width>38</width>
-									<height>38</height>
-									<colordiffuse>FF00CC00</colordiffuse>
-									<texture>check_circle.png</texture>
-								</control>
+							</control>
+							<control type="image">
+								<left>18</left>
+								<top>18</top>
+								<width>32</width>
+								<height>32</height>
+								<texture>inherited.png</texture>
+								<visible>String.IsEqual(ListItem.Property(is_inherited),true)</visible>
 							</control>
 							<control type="label">
 								<left>10</left>
@@ -266,22 +276,21 @@
 								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 							</control>
 							<!-- Current Main Art indicator -->
-							<control type="group">
-								<left>320</left>
-								<top>15</top>
+							<control type="image">
+								<left>323</left>
+								<top>18</top>
+								<width>32</width>
+								<height>32</height>
+								<texture>current.png</texture>
 								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-								<control type="image">
-									<width>38</width>
-									<height>38</height>
-									<colordiffuse>80000000</colordiffuse>
-									<texture>overlay.png</texture>
-								</control>
-								<control type="image">
-									<width>38</width>
-									<height>38</height>
-									<colordiffuse>FF00CC00</colordiffuse>
-									<texture>check_circle.png</texture>
-								</control>
+							</control>
+							<control type="image">
+								<left>18</left>
+								<top>18</top>
+								<width>32</width>
+								<height>32</height>
+								<texture>inherited.png</texture>
+								<visible>String.IsEqual(ListItem.Property(is_inherited),true)</visible>
 							</control>
 							<control type="label">
 								<left>10</left>

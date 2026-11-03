@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog">
+	<defaultcontrol always="true">5001</defaultcontrol>
+	<controls>
+		<control type="image">
+			<include>FullScreenDimensions</include>
+			<texture>colors/black.png</texture>
+			<animation effect="fade" time="200">WindowClose</animation>
+		</control>
+		<control type="list" id="1520">
+			<left>-3000</left>
+			<top>-3000</top>
+			<width>1</width>
+			<height>1</height>
+			<orientation>horizontal</orientation>
+			<scrolltime>0</scrolltime>
+			<itemlayout />
+			<focusedlayout />
+			<content>$INFO[Window.Property(Container.Viewer.Path)]</content>
+		</control>
+		<control type="button" id="5001">
+			<left>-3000</left>
+			<top>-3000</top>
+			<width>1</width>
+			<height>1</height>
+			<texturenofocus />
+			<texturefocus />
+			<label />
+			<onleft>Control.Move(1520,-1)</onleft>
+			<onright>Control.Move(1520,1)</onright>
+			<onup>noop</onup>
+			<ondown>noop</ondown>
+		</control>
+		<control type="image">
+			<include>FullScreenDimensions</include>
+			<aspectratio>keep</aspectratio>
+			<fadetime>200</fadetime>
+			<texture background="true">$INFO[Container(1520).ListItem.Art(thumb)]</texture>
+			<animation effect="fade" end="0" condition="String.IsEmpty(Window.Property(IsTop)) | String.IsEmpty(Window.Property(Viewer_Ready))" reversible="false">Conditional</animation>
+			<animation effect="fade" time="300" tween="sine" easing="out" condition="!String.IsEmpty(Window.Property(IsTop)) + !String.IsEmpty(Window.Property(Viewer_Ready))" reversible="false">Conditional</animation>
+			<animation effect="fade" time="200">WindowClose</animation>
+		</control>
+		<control type="group">
+			<animation effect="fade" end="0" condition="String.IsEmpty(Window.Property(IsTop)) | String.IsEmpty(Window.Property(Viewer_Ready))" reversible="false">Conditional</animation>
+			<animation effect="fade" time="300" tween="sine" easing="out" condition="!String.IsEmpty(Window.Property(IsTop)) + !String.IsEmpty(Window.Property(Viewer_Ready))" reversible="false">Conditional</animation>
+			<animation effect="fade" start="100" end="0" time="300" condition="System.IdleTime(3)">Conditional</animation>
+			<animation effect="fade" time="300" condition="!System.IdleTime(3)">Conditional</animation>
+			<include content="LeftRightArrows">
+				<param name="list_id" value="1520" />
+				<param name="left_posx" value="40" />
+				<param name="right_posx" value="1852" />
+				<param name="posy" value="526" />
+				<param name="visible" value="true" />
+			</include>
+			<control type="group">
+				<centerleft>50%</centerleft>
+				<bottom>10</bottom>
+				<width>1920</width>
+				<height>40</height>
+				<control type="label">
+					<left>21</left>
+					<top>-10</top>
+					<width>1000</width>
+					<height>44</height>
+					<shadowcolor>text_shadow</shadowcolor>
+					<label>$INFO[Container(1520).CurrentItem]$INFO[Container(1520).NumItems, / ,]$INFO[Container(1520).ListItem.Property(Dimensions),  •  ]</label>
+					<visible>String.IsEmpty(Window.Property(Artwork_View))</visible>
+				</control>
+				<control type="label">
+					<left>21</left>
+					<top>-10</top>
+					<width>1000</width>
+					<height>44</height>
+					<shadowcolor>text_shadow</shadowcolor>
+					<label>$INFO[Container(1520).ListItem.Property(Source)]$INFO[Container(1520).ListItem.Property(Dimensions),  •  ]</label>
+					<visible>!String.IsEmpty(Window.Property(Artwork_View))</visible>
+				</control>
+			</control>
+		</control>
+		<control type="group">
+			<visible>String.IsEmpty(Window.Property(IsTop)) | String.IsEmpty(Window.Property(Viewer_Ready))</visible>
+			<animation effect="fade" time="200" delay="300" reversible="false">Visible</animation>
+			<animation effect="fade" time="200" delay="300">WindowOpen</animation>
+			<animation effect="fade" time="200" reversible="false">Hidden</animation>
+			<control type="group">
+				<depth>DepthMax</depth>
+				<centerleft>50%</centerleft>
+				<centertop>50%</centertop>
+				<width>80</width>
+				<height>80</height>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<centertop>50%</centertop>
+					<width>80</width>
+					<height>80</height>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" end="-45" center="auto" time="200" delay="600" loop="true" condition="true" reversible="false">Conditional</animation>
+					<texture colordiffuse="button_focus">spinner.png</texture>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<centertop>50%</centertop>
+					<width>50</width>
+					<height>50</height>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" end="45" center="auto" time="200" delay="600" loop="true" condition="true" reversible="false">Conditional</animation>
+					<texture flipx="true" colordiffuse="button_focus">spinner.png</texture>
+				</control>
+			</control>
+		</control>
+		<include condition="Skin.HasSetting(touchmode)">TouchBackButton</include>
+	</controls>
+</window>

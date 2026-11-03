@@ -31,6 +31,7 @@
 
 	LISTITEM PROPERTIES use $INFO[ListItem.Property(name)]:
 	  - is_current: "true" if this artwork is currently assigned
+	  - is_inherited: "true" on the show's fanart in a season fanart list
 	  - dimensions: Width x Height (e.g., "1920x1080")
 	  - width: Image width in pixels
 	  - height: Image height in pixels
@@ -79,6 +80,17 @@
 				<aligny>center</aligny>
 				<label>$INFO[Window.Property(arttype)]$INFO[Window.Property(count), - ]</label>
 			</control>
+			<!-- Full size hint -->
+			<control type="label">
+				<top>60</top>
+				<width>1800</width>
+				<height>60</height>
+				<font>font12</font>
+				<textcolor>FFCCCCCC</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+				<label>$ADDON[script.skin.info.service 32078]</label>
+			</control>
 			<control type="group">
 				<centerleft>50%</centerleft>
 				<centertop>50%</centertop>
@@ -105,22 +117,13 @@
 							<aspectratio>scale</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>226</left>
 							<top>18</top>
+							<width>48</width>
+							<height>48</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>48</width>
-								<height>48</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>48</width>
-								<height>48</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -147,22 +150,13 @@
 								<bordersize>8</bordersize>
 								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 							</control>
-							<control type="group">
+							<control type="image">
 								<left>226</left>
 								<top>18</top>
+								<width>48</width>
+								<height>48</height>
+								<texture>current.png</texture>
 								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-								<control type="image">
-									<width>48</width>
-									<height>48</height>
-									<colordiffuse>80000000</colordiffuse>
-									<texture>overlay.png</texture>
-								</control>
-								<control type="image">
-									<width>48</width>
-									<height>48</height>
-									<colordiffuse>FF00CC00</colordiffuse>
-									<texture>check_circle.png</texture>
-								</control>
 							</control>
 						</control>
 						<control type="label">
@@ -188,22 +182,21 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
-							<left>529</left>
+						<control type="image">
+							<left>528</left>
 							<top>18</top>
+							<width>48</width>
+							<height>48</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>48</width>
-								<height>48</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>48</width>
-								<height>48</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
+						</control>
+						<control type="image">
+							<left>24</left>
+							<top>18</top>
+							<width>48</width>
+							<height>48</height>
+							<texture>inherited.png</texture>
+							<visible>String.IsEqual(ListItem.Property(is_inherited),true)</visible>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -230,22 +223,21 @@
 								<bordersize>8</bordersize>
 								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 							</control>
-							<control type="group">
-								<left>529</left>
+							<control type="image">
+								<left>528</left>
 								<top>18</top>
+								<width>48</width>
+								<height>48</height>
+								<texture>current.png</texture>
 								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-								<control type="image">
-									<width>48</width>
-									<height>48</height>
-									<colordiffuse>80000000</colordiffuse>
-									<texture>overlay.png</texture>
-								</control>
-								<control type="image">
-									<width>48</width>
-									<height>48</height>
-									<colordiffuse>FF00CC00</colordiffuse>
-									<texture>check_circle.png</texture>
-								</control>
+							</control>
+							<control type="image">
+								<left>24</left>
+								<top>18</top>
+								<width>48</width>
+								<height>48</height>
+								<texture>inherited.png</texture>
+								<visible>String.IsEqual(ListItem.Property(is_inherited),true)</visible>
 							</control>
 						</control>
 						<control type="label">
@@ -271,22 +263,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>379</left>
 							<top>18</top>
+							<width>48</width>
+							<height>48</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>48</width>
-								<height>48</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>48</width>
-								<height>48</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -311,22 +294,13 @@
 							<bordersize>8</bordersize>
 							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>379</left>
 							<top>18</top>
+							<width>48</width>
+							<height>48</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>48</width>
-								<height>48</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>48</width>
-								<height>48</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -351,22 +325,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>812</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -391,22 +356,13 @@
 							<bordersize>8</bordersize>
 							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>812</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -431,22 +387,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>246</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -471,22 +418,13 @@
 							<bordersize>8</bordersize>
 							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>246</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -511,22 +449,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>246</left>
 							<top>74</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -551,22 +480,13 @@
 							<bordersize>8</bordersize>
 							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>246</left>
 							<top>74</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -591,22 +511,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>536</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -631,22 +542,13 @@
 							<bordersize>8</bordersize>
 							<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>536</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -671,22 +573,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>96</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -713,22 +606,13 @@
 								<bordersize>8</bordersize>
 								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 							</control>
-							<control type="group">
+							<control type="image">
 								<left>96</left>
 								<top>18</top>
+								<width>36</width>
+								<height>36</height>
+								<texture>current.png</texture>
 								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-								<control type="image">
-									<width>36</width>
-									<height>36</height>
-									<colordiffuse>80000000</colordiffuse>
-									<texture>overlay.png</texture>
-								</control>
-								<control type="image">
-									<width>36</width>
-									<height>36</height>
-									<colordiffuse>FF00CC00</colordiffuse>
-									<texture>check_circle.png</texture>
-								</control>
 							</control>
 						</control>
 						<control type="label">
@@ -754,22 +638,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>386</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -796,22 +671,13 @@
 								<bordersize>8</bordersize>
 								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 							</control>
-							<control type="group">
+							<control type="image">
 								<left>386</left>
 								<top>18</top>
+								<width>36</width>
+								<height>36</height>
+								<texture>current.png</texture>
 								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-								<control type="image">
-									<width>36</width>
-									<height>36</height>
-									<colordiffuse>80000000</colordiffuse>
-									<texture>overlay.png</texture>
-								</control>
-								<control type="image">
-									<width>36</width>
-									<height>36</height>
-									<colordiffuse>FF00CC00</colordiffuse>
-									<texture>check_circle.png</texture>
-								</control>
 							</control>
 						</control>
 						<control type="label">
@@ -837,22 +703,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>536</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -879,22 +736,13 @@
 								<bordersize>8</bordersize>
 								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 							</control>
-							<control type="group">
+							<control type="image">
 								<left>536</left>
 								<top>18</top>
+								<width>36</width>
+								<height>36</height>
+								<texture>current.png</texture>
 								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-								<control type="image">
-									<width>36</width>
-									<height>36</height>
-									<colordiffuse>80000000</colordiffuse>
-									<texture>overlay.png</texture>
-								</control>
-								<control type="image">
-									<width>36</width>
-									<height>36</height>
-									<colordiffuse>FF00CC00</colordiffuse>
-									<texture>check_circle.png</texture>
-								</control>
 							</control>
 						</control>
 						<control type="label">
@@ -920,22 +768,13 @@
 							<aspectratio>keep</aspectratio>
 							<bordersize>8</bordersize>
 						</control>
-						<control type="group">
+						<control type="image">
 							<left>386</left>
 							<top>18</top>
+							<width>36</width>
+							<height>36</height>
+							<texture>current.png</texture>
 							<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>80000000</colordiffuse>
-								<texture>overlay.png</texture>
-							</control>
-							<control type="image">
-								<width>36</width>
-								<height>36</height>
-								<colordiffuse>FF00CC00</colordiffuse>
-								<texture>check_circle.png</texture>
-							</control>
 						</control>
 						<control type="label">
 							<left>10</left>
@@ -962,22 +801,13 @@
 								<bordersize>8</bordersize>
 								<bordertexture colordiffuse="FF0088FF" border="8" infill="false">white.png</bordertexture>
 							</control>
-							<control type="group">
+							<control type="image">
 								<left>386</left>
 								<top>18</top>
+								<width>36</width>
+								<height>36</height>
+								<texture>current.png</texture>
 								<visible>String.IsEqual(ListItem.Property(is_current),true)</visible>
-								<control type="image">
-									<width>36</width>
-									<height>36</height>
-									<colordiffuse>80000000</colordiffuse>
-									<texture>overlay.png</texture>
-								</control>
-								<control type="image">
-									<width>36</width>
-									<height>36</height>
-									<colordiffuse>FF00CC00</colordiffuse>
-									<texture>check_circle.png</texture>
-								</control>
 							</control>
 						</control>
 						<control type="label">

@@ -1,51 +1,50 @@
-"""Artwork management workflows for interactive selection and auto-processing.
-
-Contains:
-- ArtworkSelection: Interactive artwork selection workflow
-- ArtworkManager: Workflow coordinator
-
-Core functionality is in the artwork package (scanner, processor, api_integration).
-"""
+"""Artwork management workflows for interactive selection and auto-processing."""
 from __future__ import annotations
 
 import json
 from datetime import datetime
-from typing import Optional, List, Dict, Tuple, Any
+from typing import Optional, List, Dict, Tuple, Any, Final
 
 import xbmc
 import xbmcgui
 
-from lib.data import database as db
+from lib.data.database._infrastructure import init_database
+from lib.data.database import queue as db_queue
+from lib.data.database import workflow as db_workflow
 from lib.data.database.queue import QueueEntry, ArtItemEntry
 from lib.kodi.client import (
-    request, extract_result, get_item_details, decode_image_url, KODI_GET_DETAILS_METHODS,
+    request, extract_result, get_item_details, decode_image_url, is_inherited_art,
+    KODI_GET_DETAILS_METHODS,
 )
+from lib.download.artwork import DownloadArtwork, download_item_art
 from lib.artwork.dialogs.select import show_artwork_selection_dialog
 from lib.kodi.client import log, ADDON
 from lib.kodi.settings import KodiSettings
+from lib.kodi.utilities import focused_item, parse_pipe_list
 from lib.infrastructure.menus import Menu, MenuItem
 from lib.infrastructure.dialogs import (
     show_ok, show_yesno, show_textviewer, show_select, show_notification, DialogProgress)
 from lib.actor.downloader import download_actor_images
 
-# Import from new artwork package
 from lib.artwork.config import (
+    ART_TYPES_BY_MEDIA,
     REVIEW_SCOPE_OPTIONS,
-    REVIEW_SCOPE_LABELS,
     REVIEW_MEDIA_FILTERS,
     REVIEW_MODE_MISSING,
     SESSION_DETAIL_KEYS,
     default_session_stats as _default_session_stats,
-    serialise_session_stats as _serialise_session_stats,
+    inherited_art_url,
+    load_session_stats as _load_session_stats,
+    scope_label,
 )
 from lib.artwork.scanner import ArtworkScanner
 
-MAX_REVIEW_LOG_ITEMS = 100
+MAX_REVIEW_LOG_ITEMS: Final = 100
 
 
 def _scan_scope(scope: str, use_background: bool = False,
                 abort_flag=None, task_context=None) -> Optional[ArtworkScanner]:
-    """Run artwork scanner for the selected scope and return the scanner on success."""
+    """Scan the selected scope, returning the scanner on success."""
 
     scanner = ArtworkScanner(
         use_background=use_background, abort_flag=abort_flag, task_context=task_context)
@@ -57,8 +56,13 @@ def _scan_scope(scope: str, use_background: bool = False,
     return scanner
 
 
+def _stamp(epoch: Optional[int]) -> str:
+    """A stored epoch as a readable local timestamp, empty when the column is unset."""
+    return datetime.fromtimestamp(epoch).strftime('%Y-%m-%d %H:%M:%S') if epoch else ''
+
+
 def _show_session_report(session_row) -> None:
-    """Display a report for a review session."""
+    """Show one review session's counts and per-item detail in the text viewer."""
     stats = json.loads(session_row['stats']) if session_row['stats'] else {}
     applied = int(stats.get('applied', 0) or 0)
     skipped = int(stats.get('skipped', 0) or 0)
@@ -67,16 +71,13 @@ def _show_session_report(session_row) -> None:
     details = stats.get('details')
     if not isinstance(details, dict):
         details = {}
-    auto_runs = stats.get('auto_runs')
-    if not isinstance(auto_runs, list):
-        auto_runs = []
 
-    started = session_row['started']
-    last_activity = session_row['last_activity']
+    started = _stamp(session_row['started'])
     status = session_row['status']
-    completed = session_row['completed']
+    completed = _stamp(session_row['completed'])
 
     def _shorten(value: Optional[str], max_len: int = 80) -> str:
+        """Shorten with an ellipsis past the limit."""
         if not value:
             return ''
         if len(value) <= max_len:
@@ -87,20 +88,17 @@ def _show_session_report(session_row) -> None:
         lines: List[str],
         header: str,
         entries: List[Dict[str, Any]],
-        formatter,
-        *,
-        indent: str = "    ",
-        max_items: int = 20
+        formatter
     ) -> None:
+        """Append a capped report section, with a count line when entries overflow."""
         valid_entries = [entry for entry in entries if isinstance(entry, dict)]
         if not valid_entries:
             return
         lines.append(header)
-        to_show = min(max_items, len(valid_entries))
-        for entry in valid_entries[:to_show]:
-            lines.append(f"{indent}• {formatter(entry)}")
-        if len(valid_entries) > max_items:
-            lines.append(f"{indent}… {len(valid_entries) - max_items} more")
+        for entry in valid_entries[:20]:
+            lines.append(f"    • {formatter(entry)}")
+        if len(valid_entries) > 20:
+            lines.append(f"    … {len(valid_entries) - 20} more")
         lines.append("")
 
     def _format_entry(
@@ -111,6 +109,7 @@ def _show_session_report(session_row) -> None:
         include_url: bool = False,
         include_reason: bool = False
     ) -> str:
+        """Format one report line for an artwork entry, with the requested parts appended."""
         title = entry.get('title', 'Unknown')
         parts = [title]
 
@@ -140,16 +139,12 @@ def _show_session_report(session_row) -> None:
     def _format_manual_skipped(entry: Dict[str, Any]) -> str:
         return _format_entry(entry, include_art_type=True, include_reason=True)
 
-    def _format_auto_run_applied(entry: Dict[str, Any]) -> str:
-        return _format_entry(entry, include_art_type=True, include_url=True)
-
-    def _format_auto_run_skipped(entry: Dict[str, Any]) -> str:
-        return _format_entry(entry, include_art_type=False, include_reason=True)
-
     session_id = session_row['id']
-    session_art_types = db.get_session_art_types(session_id)
-    session_media_types = db.get_session_media_types(session_id)
-    missing_count = db.count_pending_missing_art(session_media_types) if session_media_types else 0
+    session_art_types = db_workflow.get_session_art_types(session_id)
+    session_media_types = db_workflow.get_session_media_types(session_id)
+    missing_count = (
+        db_queue.count_pending_missing_art(session_media_types) if session_media_types else 0
+    )
 
     art_types_str = ', '.join(session_art_types) if session_art_types else 'all'
 
@@ -160,11 +155,10 @@ def _show_session_report(session_row) -> None:
     lines.append("")
     lines.append(f"Status: {status.upper()}")
     lines.append(f"Started: {started}")
-    lines.append(f"Last Activity: {last_activity}")
     if status == 'completed' and completed:
         lines.append(f"Completed: {completed}")
     elif status == 'cancelled':
-        lines.append(f"Cancelled: {last_activity}")
+        lines.append(f"Cancelled: {completed}")
     lines.append(f"Art Types: {art_types_str}")
     lines.append("")
     lines.append("Statistics:")
@@ -209,181 +203,29 @@ def _show_session_report(session_row) -> None:
         _format_manual_skipped
     )
 
-    if auto_runs:
-        lines.append("Auto Fetch Runs:")
-        for idx, run in enumerate(auto_runs, start=1):
-            timestamp = run.get('timestamp')
-            if isinstance(timestamp, str):
-                ts_display = timestamp.replace('T', ' ')
-            else:
-                ts_display = "unknown"
-            counts = run.get('counts', {})
-            processed = counts.get('processed', 0)
-            auto_applied = counts.get('auto_applied', 0)
-            skipped_auto = counts.get('skipped', 0)
-            errors = counts.get('errors', 0)
-            pending_after = run.get('pending_after', 'n/a')
-            lines.append(f"  Run #{idx} ({ts_display})")
-            lines.append(
-                f"    Processed: {processed} | Applied: {auto_applied} | "
-                f"Skipped: {skipped_auto} | Errors: {errors}"
-            )
-            lines.append(f"    Remaining after run: {pending_after}")
-            _append_detail_section(
-                lines,
-                "    Applied:",
-                run.get('applied', []),
-                _format_auto_run_applied,
-                indent="      ",
-                max_items=15
-            )
-            _append_detail_section(
-                lines,
-                "    Skipped:",
-                run.get('skipped', []),
-                _format_auto_run_skipped,
-                indent="      ",
-                max_items=15
-            )
-        lines.append("")
-
     lines.append("=" * 50)
 
     text = "\n".join(lines)
     show_textviewer(ADDON.getLocalizedString(32500), text, use_mono=True)
 
 
-def _download_selected_artwork(
-    media_type: str,
-    dbid: int,
-    title: str,
-    art_updates: Dict[str, str],
-    force_overwrite: bool = False
-) -> None:
-    """Download selected artwork to filesystem."""
-    from lib.download.artwork import DownloadArtwork
-    from lib.infrastructure.paths import PathBuilder, use_basename_for
-
-    if media_type not in KODI_GET_DETAILS_METHODS:
-        return
-
-    mbid: Optional[str] = None
-    season: Optional[int] = None
-
-    if media_type == 'set':
-        media_file = title
-    elif media_type == 'artist':
-        media_file = title
-        artist_details = get_item_details(media_type, dbid, ["musicbrainzartistid"])
-        if isinstance(artist_details, dict):
-            mbid = artist_details.get("musicbrainzartistid", "")
-            if isinstance(mbid, list):
-                mbid = mbid[0] if mbid else ""
-    elif media_type == 'album':
-        songs_resp = request("AudioLibrary.GetSongs", {
-            "filter": {"albumid": dbid},
-            "properties": ["file"],
-            "limits": {"start": 0, "end": 1}
-        })
-        songs = extract_result(songs_resp, "songs", [])
-        if songs and songs[0].get("file"):
-            from lib.infrastructure.paths import vfs_dirname
-            media_file = vfs_dirname(songs[0]["file"])
-        else:
-            media_file = ""
+def _show_last_session_report(media_filter: Optional[List[str]], heading: int,
+                              message: str) -> None:
+    """Show the newest review session report for the media types, or say there is none."""
+    last_session = db_workflow.get_last_manual_review_session(media_filter)
+    if last_session and last_session['stats']:
+        _show_session_report(last_session)
     else:
-        properties = []
-        if media_type in ('movie', 'tvshow', 'episode', 'musicvideo'):
-            properties.append("file")
-        if media_type == 'season':
-            properties.extend(["season", "tvshowid"])
-        elif media_type == 'episode':
-            properties.extend(["season", "episode"])
-
-        if not properties:
-            return
-
-        item = get_item_details(media_type, dbid, properties)
-        if not isinstance(item, dict):
-            return
-
-        media_file = item.get("file", "")
-        season = item.get("season")
-
-        if media_type == 'season' and not media_file:
-            tvshowid = item.get("tvshowid")
-            if tvshowid:
-                tvshow = get_item_details("tvshow", tvshowid, ["file"])
-                if isinstance(tvshow, dict):
-                    media_file = tvshow.get("file", "")
-
-    if not media_file and media_type not in ('tvshow', 'set', 'artist'):
-        log("Artwork", f"No file path for {media_type} '{title}', skipping download")
-        return
-
-    if force_overwrite:
-        existing_file_mode = 'overwrite'
-    else:
-        existing_file_mode_setting = KodiSettings.existing_file_mode()
-        existing_file_mode_int = (
-            int(existing_file_mode_setting) if existing_file_mode_setting else 0
-        )
-        existing_file_mode = ['skip', 'overwrite'][existing_file_mode_int]
-
-    savewith_basefilename = ADDON.getSettingBool('download.savewith_basefilename')
-
-    use_basename = use_basename_for(media_type, savewith_basefilename)
-
-    path_builder = PathBuilder()
-    downloader = DownloadArtwork()
-
-    for artwork_type, url in art_updates.items():
-        if not url or not url.startswith('http'):
-            continue
-
-        local_path = path_builder.build_path(
-            media_type=media_type,
-            media_file=media_file,
-            artwork_type=artwork_type,
-            season_number=season,
-            use_basename=use_basename,
-            mbid=mbid
-        )
-
-        if not local_path:
-            log(
-                "Artwork",
-                f"Could not build download path for {media_type} '{title}' {artwork_type}",
-            )
-            continue
-
-        success, error, bytes_downloaded, _ = downloader.download_artwork(
-            url=url,
-            local_path=local_path,
-            existing_file_mode=existing_file_mode
-        )
-
-        if success:
-            log(
-                "Artwork",
-                f"Downloaded {artwork_type} for '{title}': {local_path} ({bytes_downloaded} bytes)",
-            )
-        elif error:
-            log("Artwork", f"Failed to download {artwork_type} for '{title}': {error}")
+        show_notification(ADDON.getLocalizedString(heading), message,
+                          xbmcgui.NOTIFICATION_INFO, 3000)
 
 
-def _extract_downloadable_art(
-    art_dict: Dict[str, str],
-    skip_prefixes: Optional[List[str]] = None
-) -> Dict[str, str]:
-    """Extract HTTP URLs from art dict, optionally filtering by prefix."""
+def _extract_downloadable_art(media_type: str, art_dict: Dict[str, str]) -> Dict[str, str]:
+    """Extract the HTTP art URLs an item holds itself, decoded; inherited parent art is left out."""
     downloadable = {}
     for art_type, url in art_dict.items():
-        if not url:
+        if not url or is_inherited_art(media_type, art_type):
             continue
-        if skip_prefixes:
-            if any(art_type.startswith(prefix) for prefix in skip_prefixes):
-                continue
         decoded_url = decode_image_url(url)
         if decoded_url.startswith('http'):
             downloadable[art_type] = decoded_url
@@ -391,15 +233,8 @@ def _extract_downloadable_art(
 
 
 def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
-    """Download existing library artwork to filesystem for a single item.
-
-    For TV shows, downloads show + all seasons + all episodes.
-    Falls back to ListItem.DBID/DBType if args are None.
-    """
-    if not dbid:
-        dbid = xbmc.getInfoLabel("ListItem.DBID")
-    if not dbtype:
-        dbtype = xbmc.getInfoLabel("ListItem.DBType")
+    """Download library art for one item or a whole show; args fall back to ListItem."""
+    dbid, dbtype = focused_item(dbid, dbtype)
 
     if not dbid or dbid == "-1" or not dbtype:
         show_notification(
@@ -410,9 +245,9 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
         )
         return
 
-    db.init_database()
+    init_database()
 
-    media_type = dbtype.lower()
+    media_type = dbtype
     dbid_int = int(dbid)
 
     method_info = KODI_GET_DETAILS_METHODS.get(media_type)
@@ -429,6 +264,7 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
 
     progress = DialogProgress()
     progress.create(ADDON.getLocalizedString(32290), ADDON.getLocalizedString(32297))
+    downloader = DownloadArtwork()
 
     try:
         if media_type == 'artist':
@@ -459,26 +295,14 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
             title = details.get("title", details.get("label", "Unknown"))
         current_art = details.get("art", {})
 
-        skip_prefixes = None
-        if media_type == 'episode':
-            skip_prefixes = ["tvshow.", "season."]
-        elif media_type == 'season':
-            skip_prefixes = ["tvshow."]
-        elif media_type == 'movie':
-            skip_prefixes = ["set."]
-
-        downloadable_art = _extract_downloadable_art(current_art, skip_prefixes=skip_prefixes)
+        downloadable_art = _extract_downloadable_art(media_type, current_art)
 
         art_count = 0
         season_count = 0
         episode_count = 0
         actor_count = 0
 
-        existing_file_mode_setting = KodiSettings.existing_file_mode()
-        existing_file_mode_int = (
-            int(existing_file_mode_setting) if existing_file_mode_setting else 0
-        )
-        existing_file_mode = ['skip', 'overwrite'][existing_file_mode_int]
+        existing_file_mode = KodiSettings.existing_file_mode()
 
         if progress.iscanceled():
             progress.close()
@@ -486,8 +310,8 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
 
         if downloadable_art:
             progress.update(5, f"{title}\n{ADDON.getLocalizedString(32298)}")
-            _download_selected_artwork(media_type, dbid_int, title, downloadable_art)
-            art_count += len(downloadable_art)
+            art_count += download_item_art(
+                media_type, dbid_int, title, downloadable_art, existing_file_mode, downloader)
 
         if media_type == 'tvshow':
             if progress.iscanceled():
@@ -524,9 +348,7 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
                     continue
 
                 season_art = season.get("art", {})
-                season_downloadable = _extract_downloadable_art(
-                    season_art, skip_prefixes=["tvshow."]
-                )
+                season_downloadable = _extract_downloadable_art("season", season_art)
 
                 if season_downloadable:
                     season_id = season.get("seasonid")
@@ -535,11 +357,11 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
                     if season_id:
                         pct = 10 + int((processed / max(total_items, 1)) * 85)
                         progress.update(pct, f"{title}\n{season_title}")
-                        _download_selected_artwork(
-                            "season", season_id, f"{title} - {season_title}", season_downloadable
-                        )
-                        art_count += len(season_downloadable)
-                        season_count += 1
+                        written = download_item_art(
+                            "season", season_id, f"{title} - {season_title}",
+                            season_downloadable, existing_file_mode, downloader)
+                        art_count += written
+                        season_count += 1 if written else 0
 
                 processed += 1
 
@@ -553,9 +375,7 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
                     continue
 
                 episode_art = episode.get("art", {})
-                episode_downloadable = _extract_downloadable_art(
-                    episode_art, skip_prefixes=["tvshow.", "season."]
-                )
+                episode_downloadable = _extract_downloadable_art("episode", episode_art)
 
                 if episode_downloadable:
                     episode_id = episode.get("episodeid")
@@ -565,12 +385,11 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
                     if episode_id:
                         pct = 10 + int((processed / max(total_items, 1)) * 85)
                         progress.update(pct, f"{title}\n{ep_num} {ep_title}")
-                        _download_selected_artwork(
+                        written = download_item_art(
                             "episode", episode_id, f"{title} - {ep_num} {ep_title}",
-                            episode_downloadable,
-                        )
-                        art_count += len(episode_downloadable)
-                        episode_count += 1
+                            episode_downloadable, existing_file_mode, downloader)
+                        art_count += written
+                        episode_count += 1 if written else 0
 
                 processed += 1
 
@@ -581,13 +400,8 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
         if media_type in ('movie', 'tvshow'):
             progress.update(95, f"{title}\n{ADDON.getLocalizedString(32981)}")
             file_path = details.get("file", "")
-            downloaded, _, _ = download_actor_images(
-                media_type=media_type,
-                dbid=dbid_int,
-                file_path=file_path,
-                existing_file_mode=existing_file_mode
-            )
-            actor_count = downloaded
+            actor_count = download_actor_images(
+                media_type, dbid_int, file_path, existing_file_mode, downloader)
 
         progress.close()
 
@@ -601,6 +415,8 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
             3000
         )
         return
+    finally:
+        downloader.close()
 
     total_count = art_count + actor_count
     log(
@@ -642,72 +458,65 @@ def download_item_artwork(dbid: Optional[str], dbtype: Optional[str]) -> None:
         )
 
 
-def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str]) -> None:
-    """Open artwork selection dialog for a single item.
-
-    Falls back to ListItem.DBID/DBType if args are None.
-    """
-    if not dbid:
-        dbid = xbmc.getInfoLabel("ListItem.DBID")
-    if not dbtype:
-        dbtype = xbmc.getInfoLabel("ListItem.DBType")
+def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str],
+                           art_type_filter: Optional[str] = None) -> None:
+    """Run artwork selection dialog for a single item, optionally limited to given art types."""
+    dbid, dbtype = focused_item(dbid, dbtype)
 
     if not dbid or dbid == "-1" or not dbtype:
         show_notification(
-            "Artwork",
-            "No valid item selected",
+            ADDON.getLocalizedString(32004),
+            ADDON.getLocalizedString(32259),
             xbmcgui.NOTIFICATION_WARNING,
             3000
         )
         return
 
-    db.init_database()
+    init_database()
 
-    dbtype_lower = dbtype.lower()
     dbid_int = int(dbid)
 
-    art_type_options = {
-        'movie': [
-            'poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape', 'discart', 'keyart'
-        ],
-        'tvshow': [
-            'poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape', 'characterart',
-            'keyart',
-        ],
-        'season': ['poster', 'banner', 'landscape', 'fanart'],
-        'episode': ['thumb'],
-        'musicvideo': ['thumb', 'fanart'],
-        'set': [
-            'poster', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape', 'discart', 'keyart'
-        ],
-        'artist': ['thumb', 'fanart', 'clearlogo', 'clearart', 'banner', 'landscape', 'cutout'],
-        'album': ['thumb', 'discart', 'back', 'spine', '3dcase', '3dflat', '3dface', '3dthumb'],
-    }
-
-    art_types = art_type_options.get(dbtype_lower)
-    method_info = KODI_GET_DETAILS_METHODS.get(dbtype_lower)
+    art_types = ART_TYPES_BY_MEDIA.get(dbtype)
+    method_info = KODI_GET_DETAILS_METHODS.get(dbtype)
 
     if not art_types or not method_info:
         show_notification(
-            "Artwork",
-            f"Unsupported media type: {dbtype}",
+            ADDON.getLocalizedString(32004),
+            ADDON.getLocalizedString(32263).format(dbtype),
             xbmcgui.NOTIFICATION_WARNING,
             3000
         )
         return
+
+    requested = [art_type.lower() for art_type in parse_pipe_list(art_type_filter or "")]
+    if requested:
+        unsupported = [art_type for art_type in requested if art_type not in art_types]
+        if unsupported:
+            log("Artwork", f"Art types not valid for {dbtype}: {', '.join(unsupported)}",
+                xbmc.LOGWARNING)
+        requested = [art_type for art_type in art_types if art_type in requested]
+        if not requested:
+            show_notification(
+                ADDON.getLocalizedString(32004),
+                ADDON.getLocalizedString(32712).format(dbtype, art_type_filter),
+                xbmcgui.NOTIFICATION_WARNING,
+                3000
+            )
+            return
+        art_types = requested
 
     method_name, id_key, result_key = method_info
 
     properties = ["art"]
-    if dbtype_lower == 'album':
+    if dbtype == 'album':
         properties.extend(
             ["title", "year", "musicbrainzalbumartistid", "musicbrainzreleasegroupid"]
         )
-    elif dbtype_lower == 'artist':
+    elif dbtype == 'artist':
         properties.append("musicbrainzartistid")
     else:
         properties.append("title")
-        if dbtype_lower in ('movie', 'tvshow', 'musicvideo'):
+        if dbtype in ('movie', 'tvshow', 'musicvideo'):
             properties.append("year")
 
     details = extract_result(
@@ -717,8 +526,8 @@ def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str]) -> None:
 
     if not details or not isinstance(details, dict):
         show_notification(
-            "Artwork",
-            f"{dbtype.title()} not found",
+            ADDON.getLocalizedString(32004),
+            ADDON.getLocalizedString(32401).format(dbtype.title()),
             xbmcgui.NOTIFICATION_WARNING,
             3000
         )
@@ -728,32 +537,27 @@ def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str]) -> None:
     year = details.get("year", "")
     current_art = details.get("art", {})
 
-    if dbtype_lower == 'artist':
+    if dbtype == 'artist':
         mbid = details.get('musicbrainzartistid')
         if isinstance(mbid, list):
             mbid = mbid[0] if mbid else None
         if not mbid:
             show_notification(
-                "Artwork",
-                "No MusicBrainz ID for this artist",
+                ADDON.getLocalizedString(32004),
+                ADDON.getLocalizedString(32713),
                 xbmcgui.NOTIFICATION_WARNING,
                 4000
             )
             return
-    elif dbtype_lower == 'album':
+    elif dbtype == 'album':
         artist_mbid = details.get('musicbrainzalbumartistid')
         if isinstance(artist_mbid, list):
             artist_mbid = artist_mbid[0] if artist_mbid else None
         release_group_id = details.get('musicbrainzreleasegroupid')
         if not artist_mbid or not release_group_id:
-            missing = []
-            if not artist_mbid:
-                missing.append("artist")
-            if not release_group_id:
-                missing.append("release group")
             show_notification(
-                "Artwork",
-                f"Missing MusicBrainz {' & '.join(missing)} ID",
+                ADDON.getLocalizedString(32004),
+                ADDON.getLocalizedString(32714),
                 xbmcgui.NOTIFICATION_WARNING,
                 4000
             )
@@ -766,19 +570,19 @@ def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str]) -> None:
     processor = ArtworkAuto(source_fetcher=fetcher, use_background=False)
 
     show_notification(
-        "Artwork",
-        "Fetching artwork...",
+        ADDON.getLocalizedString(32004),
+        ADDON.getLocalizedString(32276).format(title),
         xbmcgui.NOTIFICATION_INFO,
         2000
     )
 
     try:
-        all_artwork = fetcher.fetch_all(dbtype_lower, dbid_int, bypass_cache=True)
+        all_artwork = fetcher.fetch_all(dbtype, dbid_int, bypass_cache=True)
     except Exception as e:
         log("Artwork", f"Error fetching artwork: {str(e)}", xbmc.LOGERROR)
         show_notification(
-            "Artwork",
-            "Failed to fetch artwork",
+            ADDON.getLocalizedString(32004),
+            ADDON.getLocalizedString(32715),
             xbmcgui.NOTIFICATION_ERROR,
             3000
         )
@@ -792,8 +596,9 @@ def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str]) -> None:
 
     if not available_by_type:
         show_notification(
-            "Artwork",
-            "No artwork found",
+            ADDON.getLocalizedString(32004),
+            (ADDON.getLocalizedString(32716).format(', '.join(requested)) if requested
+             else ADDON.getLocalizedString(32009)),
             xbmcgui.NOTIFICATION_INFO,
             3000
         )
@@ -805,32 +610,41 @@ def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str]) -> None:
 
     from lib.artwork.utilities import filter_artwork_by_language
 
+    skip_picker = bool(requested) and len(available_art_types) == 1
+
     last_selected = 0
     while True:
-        selected = show_select(
-            ADDON.getLocalizedString(32555).format(title), art_type_labels, preselect=last_selected
-        )
+        if skip_picker:
+            selected_art_type = available_art_types[0]
+        else:
+            selected = show_select(
+                ADDON.getLocalizedString(32555).format(title), art_type_labels,
+                preselect=last_selected
+            )
 
-        if selected < 0:
-            return
+            if selected < 0:
+                return
 
-        last_selected = selected
+            last_selected = selected
 
-        selected_art_type = available_art_types[selected]
+            selected_art_type = available_art_types[selected]
+
         full_artwork_list = available_by_type[selected_art_type]
 
         filtered_art = filter_artwork_by_language(full_artwork_list, art_type=selected_art_type)
 
         current_url = current_art.get(selected_art_type, "")
+        inherited_url = inherited_art_url(dbtype, selected_art_type, current_art)
 
         action, selected_art, queued_multiart = show_artwork_selection_dialog(
             title=title,
             art_type=selected_art_type,
             available_art=filtered_art,
             full_artwork_list=full_artwork_list,
-            media_type=dbtype_lower,
+            media_type=dbtype,
             year=str(year) if year else "",
             current_url=current_url,
+            inherited_url=inherited_url,
             dbid=dbid_int
         )
 
@@ -842,19 +656,18 @@ def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str]) -> None:
         if action == "selected" and selected_art:
             art_updates[selected_art_type] = selected_art.get("url")
 
-        if art_updates:
-            processor._apply_art(dbtype_lower, dbid_int, art_updates)
-            xbmc.executebuiltin("Container.Refresh")
+        if art_updates and not processor._apply_art(dbtype, dbid_int, art_updates):
+            show_notification(ADDON.getLocalizedString(32004), ADDON.getLocalizedString(32251),
+                              xbmcgui.NOTIFICATION_ERROR, 3000)
+        elif art_updates:
             show_notification(
-                "Artwork",
-                "Artwork updated",
+                ADDON.getLocalizedString(32004),
+                ADDON.getLocalizedString(32717),
                 xbmcgui.NOTIFICATION_INFO,
                 2000
             )
             if KodiSettings.download_after_manage_artwork():
-                _download_selected_artwork(
-                    dbtype_lower, dbid_int, title, art_updates, force_overwrite=True
-                )
+                download_item_art(dbtype, dbid_int, title, art_updates, 'overwrite')
             refreshed_details = extract_result(
                 request(method_name, {id_key: dbid_int, "properties": ["art"]}),
                 result_key
@@ -862,12 +675,7 @@ def run_art_fetcher_single(dbid: Optional[str], dbtype: Optional[str]) -> None:
             if refreshed_details and isinstance(refreshed_details, dict):
                 current_art = refreshed_details.get("art", {})
 
-        if action == "cancel":
-            if not queued_multiart:
-                continue
-            return
-
-        elif action == "skip":
+        if skip_picker or action == "skip":
             return
 
 
@@ -887,7 +695,7 @@ class ArtworkSelection:
 
         fetcher = create_default_fetcher()
         self.auto = ArtworkAuto(source_fetcher=fetcher, enable_download=enable_download)
-        self.session_id = session_id  # Resume existing session or None for new
+        self.session_id = session_id
         self.stats = {'applied': 0, 'skipped': 0, 'auto': 0}
         self.media_filter = media_filter or None
         self.review_mode = REVIEW_MODE_MISSING
@@ -901,7 +709,7 @@ class ArtworkSelection:
         self._session_base_stats: Dict[str, Any] = {}
 
     def _build_stats_payload(self) -> Dict[str, Any]:
-        """Return a JSON-serializable snapshot of review statistics and details."""
+        """Build a JSON-serializable snapshot of review statistics and details."""
         payload = _default_session_stats()
 
         payload.update(self._session_base_stats)
@@ -918,15 +726,8 @@ class ArtworkSelection:
         return payload
 
     def review_queue(self) -> Optional[Dict[str, Any]]:
-        """Review pending queue items with visual artwork selection.
-
-        Processes the queue in batches, validating each item before prompting.
-
-        Returns:
-            Dict with keys: status, cancelled, session_id, remaining, stats.
-            None if queue is empty.
-        """
-        pending_check = db.get_next_batch(
+        """Review the pending queue in batches; returns a stats dict, or None when empty."""
+        pending_check = db_queue.get_next_batch(
             batch_size=1,
             status='pending',
             media_types=self.media_filter,
@@ -938,7 +739,9 @@ class ArtworkSelection:
         enable_debug = KodiSettings.debug_enabled()
         if enable_debug:
             pending_count = len(
-                db.get_next_batch(batch_size=1000, status='pending', media_types=self.media_filter)
+                db_queue.get_next_batch(
+                    batch_size=1000, status='pending', media_types=self.media_filter
+                )
             )
             log(
                 "Artwork",
@@ -960,7 +763,7 @@ class ArtworkSelection:
 
                 self._current_art_cache.clear()
 
-                queue_batch = db.get_next_batch(
+                queue_batch = db_queue.get_next_batch(
                     batch_size=25,
                     status='pending',
                     media_types=self.media_filter,
@@ -969,15 +772,16 @@ class ArtworkSelection:
                 if not queue_batch:
                     break
 
-                queue_ids = [entry.id for entry in queue_batch]
-                art_items_by_queue = db.get_art_items_for_queue_batch(queue_ids)
+                keys = [(entry.media_type, entry.dbid) for entry in queue_batch]
+                art_items_by_queue = db_queue.get_art_items_for_queue_batch(keys)
 
                 for queue_entry in queue_batch:
                     if self.loading_progress.is_cancelled():
                         cancelled = True
                         break
 
-                    art_items = art_items_by_queue.get(queue_entry.id, [])
+                    art_items = art_items_by_queue.get(
+                        (queue_entry.media_type, queue_entry.dbid), [])
                     pending_art, current_art = self._collect_pending_art_items(
                         queue_entry, art_items
                     )
@@ -996,12 +800,13 @@ class ArtworkSelection:
                     elif result == 'auto':
                         self.stats['auto'] += 1
 
-                    db.update_session_stats(
+                    db_workflow.update_session_stats(
                         self.session_id,
-                        _serialise_session_stats(self._build_stats_payload()),
+                        _load_session_stats(self._build_stats_payload()),
                     )
         finally:
             self.loading_progress.close()
+            self.auto.close()
 
         enable_debug = KodiSettings.debug_enabled()
         if enable_debug:
@@ -1012,38 +817,28 @@ class ArtworkSelection:
                 f"auto={self.stats.get('auto', 0)}, session={self.session_id}"
             )
 
-        applied_count = self.stats['applied']
-        skipped_count = self.stats['skipped']
-        auto_count = self.stats.get('auto', 0)
-        manual_total = applied_count + skipped_count
-        remaining = db.count_queue_items(
+        summary = ADDON.getLocalizedString(32718).format(
+            self.stats['applied'], self.stats['skipped'], self.stats.get('auto', 0))
+        remaining = db_queue.count_queue_items(
             status='pending',
             media_types=self.media_filter,
         )
         self.remaining_pending = remaining
 
         if cancelled:
-            db.update_session_stats(
-                self.session_id, _serialise_session_stats(self._build_stats_payload())
+            db_workflow.update_session_stats(
+                self.session_id, _load_session_stats(self._build_stats_payload())
             )
-            db.cancel_session(self.session_id)
-            heading = (
-                f"Cancelled: manual {manual_total} "
-                f"(applied {applied_count}, skipped {skipped_count})"
-            )
-            message = f"Auto-skipped: {auto_count}"
-            show_notification(heading, message, xbmcgui.NOTIFICATION_INFO, 5000)
+            db_workflow.cancel_session(self.session_id)
+            show_notification(ADDON.getLocalizedString(32032), summary,
+                              xbmcgui.NOTIFICATION_INFO, 5000)
         else:
-            db.update_session_stats(
-                self.session_id, _serialise_session_stats(self._build_stats_payload())
+            db_workflow.update_session_stats(
+                self.session_id, _load_session_stats(self._build_stats_payload())
             )
-            db.complete_session(self.session_id)
-            heading = (
-                f"Complete: manual {manual_total} "
-                f"(applied {applied_count}, skipped {skipped_count})"
-            )
-            message = f"Auto-skipped: {auto_count}"
-            show_notification(heading, message, xbmcgui.NOTIFICATION_INFO, 5000)
+            db_workflow.complete_session(self.session_id)
+            show_notification(ADDON.getLocalizedString(32279), summary,
+                              xbmcgui.NOTIFICATION_INFO, 5000)
 
         outcome = {
             'status': 'cancelled' if cancelled else 'completed',
@@ -1056,9 +851,9 @@ class ArtworkSelection:
         return outcome
 
     def _initialize_session(self) -> None:
-        """Create the manual review session."""
+        """Initialize the manual review session, skipping if one already exists."""
         if not self.session_id:
-            self.session_id = db.create_scan_session(
+            self.session_id = db_workflow.create_scan_session(
                 scan_type='manual_review',
                 media_types=self.media_filter or [],
                 art_types=[]
@@ -1070,9 +865,9 @@ class ArtworkSelection:
         queue_entry: QueueEntry,
         art_items: Optional[List[ArtItemEntry]] = None
     ) -> Tuple[List[ArtItemEntry], Dict[str, Any]]:
-        """Return pending art items plus current artwork state for validation."""
+        """Collect pending art items plus current artwork state for validation."""
         if art_items is None:
-            art_items = db.get_art_items_for_queue(queue_entry.id)
+            art_items = db_queue.get_art_items_for_queue(queue_entry.media_type, queue_entry.dbid)
         current_art = self._get_current_artwork(queue_entry.media_type, queue_entry.dbid)
 
         pending_items: List[ArtItemEntry] = []
@@ -1083,7 +878,8 @@ class ArtworkSelection:
                 continue
 
             if current_art.get(art_item.art_type):
-                db.update_art_item_status(art_item.id, 'stale')
+                db_queue.update_art_item_status(art_item.media_type, art_item.dbid,
+                                          art_item.art_type, 'stale')
                 stale_reasons.append((art_item.art_type, "Artwork already set"))
                 continue
 
@@ -1091,13 +887,13 @@ class ArtworkSelection:
 
         if not pending_items:
             if stale_reasons:
-                db.update_queue_status(queue_entry.id, 'completed')
+                db_queue.update_queue_status(queue_entry.media_type, queue_entry.dbid, 'completed')
             return [], current_art
 
         return pending_items, current_art
 
     def _get_current_artwork(self, media_type: str, dbid: int) -> Dict[str, Any]:
-        """Fetch current artwork from Kodi (with per-item caching)."""
+        """Get an item's current artwork from Kodi, remembered for the rest of the review."""
         cache_key = (media_type, dbid)
 
         if cache_key in self._current_art_cache:
@@ -1125,7 +921,6 @@ class ArtworkSelection:
 
         return current_art
 
-
     def _load_available_artwork(
         self, media_type: str, dbid: int, title: str
     ) -> Dict[str, List[Any]]:
@@ -1141,6 +936,7 @@ class ArtworkSelection:
         return all_available_art
 
     def _log_review_event(self, category: str, entry_data: Dict[str, Any]) -> None:
+        """Log a timestamped review entry, dropping the oldest past the cap."""
         entry_data['timestamp'] = datetime.now().isoformat()
         log = self.review_log[category]
         log.append(entry_data)
@@ -1149,12 +945,12 @@ class ArtworkSelection:
             log.pop(0)
 
     def _handle_user_cancel(self, queue_entry: QueueEntry, applied_any: bool) -> str:
-        """Handle user cancellation during review."""
+        """Mark the item completed if anything was applied before the cancel, else pending."""
         if applied_any:
-            db.update_queue_status(queue_entry.id, 'completed')
+            db_queue.update_queue_status(queue_entry.media_type, queue_entry.dbid, 'completed')
             return 'applied'
         else:
-            db.update_queue_status(queue_entry.id, 'pending')
+            db_queue.update_queue_status(queue_entry.media_type, queue_entry.dbid, 'pending')
             return 'cancel'
 
     def _apply_selected_artwork(
@@ -1170,30 +966,30 @@ class ArtworkSelection:
 
         latest_art = self._get_current_artwork(queue_entry.media_type, queue_entry.dbid)
         if latest_art.get(art_type):
-            db.update_art_item_status(art_item.id, 'stale')
+            db_queue.update_art_item_status(media_type, dbid, art_type, 'stale')
             self._log_review_event('stale', {
                 'title': queue_entry.title,
                 'art_type': art_type,
                 'media_type': media_type,
                 'dbid': dbid,
-                'guid': queue_entry.guid,
                 'reason': 'artwork_no_longer_missing',
             })
             return False
 
-        self.auto._apply_art(media_type, dbid, {art_type: selected_art['url']})
+        if not self.auto._apply_art(media_type, dbid, {art_type: selected_art['url']},
+                                    title=queue_entry.title):
+            return False
 
         cache_key = (media_type, dbid)
         if cache_key in self._current_art_cache:
             del self._current_art_cache[cache_key]
 
-        db.update_art_item(art_item.id, selected_art['url'], auto_applied=False)
+        db_queue.update_art_item(media_type, dbid, art_type, selected_art['url'])
         self._log_review_event('manual_applied', {
             'title': queue_entry.title,
             'art_type': art_type,
             'media_type': media_type,
             'dbid': dbid,
-            'guid': queue_entry.guid,
             'url': selected_art.get('url', ''),
             'source': selected_art.get('source', ''),
         })
@@ -1206,7 +1002,6 @@ class ArtworkSelection:
             'art_type': art_type,
             'media_type': queue_entry.media_type,
             'dbid': queue_entry.dbid,
-            'guid': queue_entry.guid,
             'reason': 'no_options',
         })
 
@@ -1218,22 +1013,18 @@ class ArtworkSelection:
         art_item: ArtItemEntry,
         applied_any: bool
     ) -> Tuple[str, bool]:
-        """Process user action from artwork selection dialog.
-
-        Returns:
-            (flow_control, applied_any) where flow_control is 'cancel', 'continue', or 'applied'.
-        """
+        """Process the dialog action; returns (flow, applied) with flow cancel/continue/applied."""
         if action == 'cancel':
             return ('cancel', applied_any)
 
         if action == 'skip':
-            db.update_art_item_status(art_item.id, 'skipped')
+            db_queue.update_art_item_status(art_item.media_type, art_item.dbid,
+                                      art_item.art_type, 'skipped')
             self._log_review_event('manual_skipped', {
                 'title': queue_entry.title,
                 'art_type': art_item.art_type,
                 'media_type': queue_entry.media_type,
                 'dbid': queue_entry.dbid,
-                'guid': queue_entry.guid,
                 'reason': 'user_skip',
             })
             return ('continue', applied_any)
@@ -1254,10 +1045,10 @@ class ArtworkSelection:
     ) -> str:
         """Finalize queue status and return result after reviewing all art items."""
         if applied_any:
-            db.update_queue_status(queue_entry.id, 'completed')
+            db_queue.update_queue_status(queue_entry.media_type, queue_entry.dbid, 'completed')
             return 'applied'
 
-        db.update_queue_status(queue_entry.id, 'skipped')
+        db_queue.update_queue_status(queue_entry.media_type, queue_entry.dbid, 'skipped')
         if not had_options and not auto_logged:
             for art_item in art_items:
                 self._log_review_event('manual_auto', {
@@ -1265,8 +1056,7 @@ class ArtworkSelection:
                     'art_type': art_item.art_type,
                     'media_type': queue_entry.media_type,
                     'dbid': queue_entry.dbid,
-                    'guid': queue_entry.guid,
-                    'reason': 'all_art_types_missing',
+                        'reason': 'all_art_types_missing',
                 })
         return 'skipped' if had_options else 'auto'
 
@@ -1321,7 +1111,8 @@ class ArtworkSelection:
             )
 
             if queued_multiart:
-                self.auto._apply_art(queue_entry.media_type, queue_entry.dbid, queued_multiart)
+                self.auto._apply_art(queue_entry.media_type, queue_entry.dbid, queued_multiart,
+                                     title=queue_entry.title)
 
             flow_control, applied_any = self._process_dialog_action(
                 action, selected_art, queue_entry, art_item, applied_any
@@ -1344,7 +1135,7 @@ class ArtworkSelection:
 
 
 class ArtworkManager:
-    """Coordinates artwork management workflows."""
+    """Drives the artwork menus: scan, manual review, auto-apply and the session reports."""
 
     def __init__(self, scope_arg: Optional[str] = None):
         self.scope_arg = scope_arg.lower().strip() if scope_arg else None
@@ -1354,8 +1145,9 @@ class ArtworkManager:
         self.review_mode: str = REVIEW_MODE_MISSING
 
     def run(self) -> None:
-        db.init_database()
-        db.cleanup_old_queue_items()
+        """Prepare the database and queue, then act on the scope."""
+        init_database()
+        db_queue.cleanup_old_queue_items()
 
         if self.scope_arg:
             if not self._handle_scope_arg():
@@ -1364,26 +1156,27 @@ class ArtworkManager:
 
         self._select_intent()
 
-    def _handle_scope_arg(self) -> bool:
-        """Handle pre-selected scope from argument."""
-        valid_scopes = {scope for scope, _ in REVIEW_SCOPE_OPTIONS}
+    def _set_scope(self, scope: str) -> None:
+        """Set the scope and its media filter; 'all' filters nothing."""
+        self.scope = scope
+        self.media_filter = None if scope == 'all' else REVIEW_MEDIA_FILTERS.get(scope)
 
-        if self.scope_arg not in valid_scopes:
+    def _handle_scope_arg(self) -> bool:
+        """Act on a scope passed in by argument, warning when it is not one we know."""
+        valid_scopes = {scope for scope, _ in REVIEW_SCOPE_OPTIONS}
+        scope = self.scope_arg
+
+        if not scope or scope not in valid_scopes:
             show_notification(
-                "Missing Artwork",
-                f"Unknown scope '{self.scope_arg}'.",
+                ADDON.getLocalizedString(32273),
+                ADDON.getLocalizedString(32575).format(self.scope_arg),
                 xbmcgui.NOTIFICATION_WARNING,
                 4000
             )
             return False
 
-        self.scope = self.scope_arg
-        self.media_filter = (
-            None if self.scope == 'all' else REVIEW_MEDIA_FILTERS.get(self.scope, None)
-        )
+        self._set_scope(scope)
         self.session_id = None
-
-        scope_label = REVIEW_SCOPE_LABELS.get(self.scope, self.scope.title())
 
         items = []
 
@@ -1410,35 +1203,27 @@ class ArtworkManager:
         items.append(
             MenuItem(
                 ADDON.getLocalizedString(32086),
-                lambda: self._view_scope_report(scope_label),
+                lambda: self._view_scope_report(scope_label(scope)),
                 loop=True,
             )
         )
 
-        menu = Menu(f"{scope_label} - Select Action", items)
+        menu = Menu(ADDON.getLocalizedString(32719).format(scope_label(scope)), items)
         result = menu.show()
         return result if isinstance(result, bool) else False
 
     def _run_auto_apply_and_return_false(self) -> bool:
-        """Run auto-apply and return False to exit workflow."""
+        """Run auto-apply from the menu, then close the manager."""
         self._run_auto_apply_mode()
         return False
 
-    def _view_scope_report(self, scope_label: str) -> None:
-        """View report for current scope."""
-        last_session = db.get_last_manual_review_session(self.media_filter)
-        if last_session and last_session['stats']:
-            _show_session_report(last_session)
-        else:
-            show_notification(
-                "View Report",
-                f"No report available for {scope_label}.",
-                xbmcgui.NOTIFICATION_INFO,
-                3000
-            )
+    def _view_scope_report(self, label: str) -> None:
+        """Show the last session report for the current scope, or say there is none."""
+        _show_last_session_report(
+            self.media_filter, 32282, ADDON.getLocalizedString(32720).format(label))
 
     def _select_intent(self):
-        """Show the artwork review main menu."""
+        """Show the review main menu and return the chosen action; the combo entry is optional."""
         items = []
 
         items.append(
@@ -1466,10 +1251,11 @@ class ArtworkManager:
         """Handle 'Browse & Choose Artwork' flow with scope selection."""
         items = []
 
-        for scope, label in REVIEW_SCOPE_OPTIONS:
+        for scope, _ in REVIEW_SCOPE_OPTIONS:
             items.append(
                 MenuItem(
-                    label, lambda s=scope: self._start_scan_for_scope(s, enable_download=False)
+                    scope_label(scope),
+                    lambda s=scope: self._start_scan_for_scope(s, enable_download=False),
                 )
             )
 
@@ -1480,34 +1266,34 @@ class ArtworkManager:
         """Handle 'Browse & Choose + Download' flow with scope selection."""
         items = []
 
-        for scope, label in REVIEW_SCOPE_OPTIONS:
+        for scope, _ in REVIEW_SCOPE_OPTIONS:
             items.append(
-                MenuItem(label, lambda s=scope: self._start_scan_for_scope(s, enable_download=True))
+                MenuItem(scope_label(scope),
+                         lambda s=scope: self._start_scan_for_scope(s, enable_download=True))
             )
 
         menu = Menu(ADDON.getLocalizedString(32508), items)
         return menu.show()
 
     def _start_scan_for_scope(self, scope: str, enable_download: bool = False) -> bool:
-        """Start scan workflow for selected scope."""
-        self.scope = scope
-        self.media_filter = None if scope == 'all' else REVIEW_MEDIA_FILTERS.get(scope, None)
+        """Start a fresh manual review of the scope, downloading picks when asked."""
+        self._set_scope(scope)
         self.session_id = None
         return self._handle_manual_review(enable_download=enable_download)
 
     def _handle_auto_apply_flow(self):
         """Handle 'Auto-Fill Missing Artwork' flow with scope selection."""
-        items = [MenuItem(xbmc.getLocalizedString(593), lambda: self._run_auto_apply('all'))]
+        items = [MenuItem(scope_label('all'), lambda: self._run_auto_apply('all'))]
 
-        for scope, label in REVIEW_SCOPE_OPTIONS:
+        for scope, _ in REVIEW_SCOPE_OPTIONS:
             if scope != 'all':
-                items.append(MenuItem(label, lambda s=scope: self._run_auto_apply(s)))
+                items.append(MenuItem(scope_label(scope), lambda s=scope: self._run_auto_apply(s)))
 
         menu = Menu(ADDON.getLocalizedString(32509), items)
         return menu.show()
 
     def _run_auto_apply_mode(self) -> None:
-        """Foreground/background picker, then auto-apply for the current scope."""
+        """Pick foreground or background, then auto-apply the current scope."""
         from lib.infrastructure.menus import run_with_mode_choice
 
         run_with_mode_choice(
@@ -1516,19 +1302,10 @@ class ArtworkManager:
         )
 
     def _run_auto_apply(self, scope: str) -> None:
-        """Execute auto-apply for selected scope."""
-        scope_label = REVIEW_SCOPE_LABELS.get(scope, scope.title())
-
-        message = (
-            "Automatically applies missing artwork without review.[CR]"
-            "Only fills in missing artwork, won't replace existing.[CR]"
-            "View results afterwards in Session History.[CR][CR]"
-            "Continue?"
-        )
-
+        """Confirm auto-apply for the scope, then hand off to the mode picker."""
         confirmed = show_yesno(
-            f"Auto-Fill {scope_label}",
-            message,
+            ADDON.getLocalizedString(32722).format(scope_label(scope)),
+            ADDON.getLocalizedString(32723),
             nolabel=xbmc.getLocalizedString(222),
             yeslabel=ADDON.getLocalizedString(32567)
         )
@@ -1536,8 +1313,7 @@ class ArtworkManager:
         if not confirmed:
             return
 
-        self.scope = scope
-        self.media_filter = None if scope == 'all' else REVIEW_MEDIA_FILTERS.get(scope, None)
+        self._set_scope(scope)
         self.session_id = None
         self._run_auto_apply_mode()
 
@@ -1547,53 +1323,34 @@ class ArtworkManager:
             MenuItem(ADDON.getLocalizedString(32510), self._view_last_report_any_scope, loop=True)
         ]
 
-        for scope, label in REVIEW_SCOPE_OPTIONS:
+        for scope, _ in REVIEW_SCOPE_OPTIONS:
             if scope != 'all':
-                items.append(
-                    MenuItem(label, lambda s=scope: self._view_report_for_scope(s), loop=True)
-                )
+                items.append(MenuItem(
+                    scope_label(scope), lambda s=scope: self._view_report_for_scope(s), loop=True))
 
         menu = Menu(ADDON.getLocalizedString(32512), items)
         return menu.show()
 
     def _view_last_report_any_scope(self) -> None:
-        """View the last report from any scope."""
-        last_session = db.get_last_manual_review_session(None)
-        if last_session and last_session['stats']:
-            _show_session_report(last_session)
-        else:
-            show_notification(
-                "View Reports",
-                "No reports available.",
-                xbmcgui.NOTIFICATION_INFO,
-                3000
-            )
+        """View the newest review session report, whatever its scope."""
+        _show_last_session_report(None, 32512, ADDON.getLocalizedString(32721))
 
     def _view_report_for_scope(self, scope: str) -> None:
-        """View report for a specific scope."""
-        self.scope = scope
-        self.media_filter = None if scope == 'all' else REVIEW_MEDIA_FILTERS.get(scope, None)
-
-        last_session = db.get_last_manual_review_session(self.media_filter)
-
-        if last_session and last_session['stats']:
-            _show_session_report(last_session)
-        else:
-            show_notification(
-                "View Reports",
-                f"No report available for {REVIEW_SCOPE_LABELS.get(scope, scope)}.",
-                xbmcgui.NOTIFICATION_INFO,
-                3000
-            )
+        """View the report after switching the manager to that scope."""
+        self._set_scope(scope)
+        _show_last_session_report(
+            self.media_filter, 32512, ADDON.getLocalizedString(32720).format(scope_label(scope)))
 
     def _clear_scope_queue(self) -> None:
+        """Clear the queue for the current media filter, or all of it."""
         if self.media_filter:
-            db.clear_queue_for_media(self.media_filter)
+            db_queue.clear_queue_for_media(self.media_filter)
         else:
-            db.clear_queue_and_sessions()
+            db_queue.clear_queue_and_sessions()
         log("Artwork", "Cleared queue for scope")
 
     def _handle_auto_apply_missing(self, use_background: bool = False) -> None:
+        """Scan the scope, then auto-apply art to everything the scan queued as missing."""
         from lib.artwork.auto import ArtworkAuto
         from lib.infrastructure import tasks as task_manager
 
@@ -1622,6 +1379,7 @@ class ArtworkManager:
             )
 
     def _handle_manual_review(self, enable_download: bool = False) -> bool:
+        """Scan the scope, then walk its pending queue for manual review."""
         if not self.scope:
             return False
 
@@ -1635,7 +1393,7 @@ class ArtworkManager:
         if scanner.cancelled:
             return True
 
-        pending_total = db.count_queue_items(status='pending', media_types=self.media_filter)
+        pending_total = db_queue.count_queue_items(status='pending', media_types=self.media_filter)
 
         if pending_total == 0:
             show_ok(
@@ -1655,7 +1413,9 @@ class ArtworkManager:
 
         return True
 
+
 def run_artwork_manager(scope: Optional[str] = None) -> None:
+    """Open the artwork manager for a scope, or the single-item fetcher."""
     normalized = scope.lower().strip() if scope else None
 
     valid_scopes = {s for s, _ in REVIEW_SCOPE_OPTIONS}
@@ -1668,8 +1428,8 @@ def run_artwork_manager(scope: Optional[str] = None) -> None:
             manager.run()
             return
         show_notification(
-            "Missing Artwork",
-            f"Unknown scope '{normalized}'.",
+            ADDON.getLocalizedString(32273),
+            ADDON.getLocalizedString(32575).format(normalized),
             xbmcgui.NOTIFICATION_WARNING,
             4000
         )

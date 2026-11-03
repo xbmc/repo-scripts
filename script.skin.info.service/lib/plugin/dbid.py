@@ -1,17 +1,15 @@
-"""Get media details by DBID for plugin calls; queries the Kodi library and returns formatted
-ListItem property dicts."""
+"""Plugin `getdetails` handler: a library item's details by DBID, as ListItem properties."""
 from __future__ import annotations
 
 import xbmc
 import xbmcgui
 import xbmcplugin
-from collections import OrderedDict
-from typing import List, Optional, Tuple
+from typing import Optional
 from lib.kodi.client import (
-    request, extract_result, get_item_details, decode_image_url, KODI_MOVIE_PROPERTIES, log,
+    get_item_details, KODI_MOVIE_PROPERTIES, log,
 )
-from lib.kodi.formatters import RATING_SOURCE_NORMALIZE
-from lib.kodi.utilities import MULTI_VALUE_SEP
+from lib.kodi.formatters import format_stars, RATING_SOURCE_NORMALIZE
+from lib.kodi.utilities import MULTI_VALUE_SEP, parse_pipe_list, tvshow_version_fields
 from lib.plugin.listitems import (
     build_movie_data,
     build_movieset_data,
@@ -22,16 +20,15 @@ from lib.plugin.listitems import (
     build_artist_data,
     build_album_data,
 )
-from lib.service.properties import join_multi
-
-
-def split_multivalue(value: str, separator: str = MULTI_VALUE_SEP) -> list[str]:
-    """Split multi-value string by separator, or return single-item list."""
-    return value.split(separator) if separator in value else [value]
+from lib.kodi.library import (
+    cached_watched_episodes, fetch_album_details, fetch_artist_details,
+    get_musicvideo_library_art, resolve_season_runtime, resolve_show_runtime,
+    resolve_watch_minutes,
+)
 
 
 def _set_stream_details(video_tag: xbmc.InfoTagVideo, streamdetails: dict) -> None:
-    """Add video/audio/subtitle streams from a JSON-RPC `streamdetails` dict to a `VideoInfoTag`."""
+    """Set the video, audio and subtitle streams from a JSON-RPC stream details dict on a tag."""
     video_streams = streamdetails.get("video") or []
     audio_streams = streamdetails.get("audio") or []
     subtitle_streams = streamdetails.get("subtitle") or []
@@ -70,7 +67,6 @@ _TVSHOW_PROPERTIES = [
     "watchedepisodes", "imdbnumber", "originaltitle", "sorttitle",
     "episodeguide", "tag", "art", "userrating", "ratings",
     "cast", "uniqueid", "dateadded", "file", "lastplayed", "playcount",
-    "trailer",
 ]
 
 _SEASON_PROPERTIES = [
@@ -101,36 +97,9 @@ _MOVIESET_MOVIE_PROPERTIES = [
     "streamdetails", "art", "thumbnail",
 ]
 
-_ARTIST_PROPERTIES = [
-    "description", "genre", "art", "thumbnail", "fanart", "musicbrainzartistid",
-    "born", "formed", "died", "disbanded", "yearsactive", "instrument",
-    "style", "mood", "type", "gender", "disambiguation", "sortname",
-    "dateadded", "roles", "songgenres", "sourceid", "datemodified", "datenew",
-    "compilationartist", "isalbumartist",
-]
-
-_ARTIST_ALBUM_PROPERTIES = [
-    "title", "year", "artist", "artistid",
-    "genre", "art", "albumlabel", "playcount", "rating",
-]
-
-_ALBUM_PROPERTIES = [
-    "title", "art", "year", "artist", "artistid", "genre",
-    "style", "mood", "type", "albumlabel", "playcount", "rating", "userrating",
-    "musicbrainzalbumid", "musicbrainzreleasegroupid", "lastplayed", "dateadded",
-    "description", "votes", "displayartist", "compilation", "releasetype",
-    "sortartist", "songgenres", "totaldiscs", "releasedate", "originaldate", "albumduration",
-]
-
-_ALBUM_PROPERTIES_MIN = [
-    "title", "art", "year", "artist", "genre", "albumlabel", "playcount", "rating",
-]
-
-_ALBUM_SONG_PROPERTIES = ["title", "duration", "track", "disc", "file", "art", "thumbnail"]
-
 
 def get_item_data_by_dbid(media_type: str, dbid: int) -> Optional[dict]:
-    """Query a library item by `(media_type, dbid)` and return ListItem property dict, or None."""
+    """Get a library item's ListItem property dict by media type and dbid, or None."""
     handler = _MEDIA_TYPE_HANDLERS.get(media_type)
     if handler is None:
         log("Plugin", f"Unknown media type '{media_type}'", xbmc.LOGWARNING)
@@ -145,6 +114,13 @@ def get_item_data_by_dbid(media_type: str, dbid: int) -> Optional[dict]:
         return None
 
 
+def _with_raw_dates(data: dict, details: dict) -> dict:
+    """Add the library's own last-played and date-added values for the info tag setters."""
+    data["_lastplayed"] = details.get("lastplayed") or ""
+    data["_dateadded"] = details.get("dateadded") or ""
+    return data
+
+
 def _get_movie_data(movieid: int) -> Optional[dict]:
     """Get movie data as dictionary for ListItem."""
     details = get_item_details(
@@ -156,7 +132,7 @@ def _get_movie_data(movieid: int) -> Optional[dict]:
     if not isinstance(details, dict):
         return None
 
-    return build_movie_data(details)
+    return _with_raw_dates(build_movie_data(details), details)
 
 
 def _get_movieset_data(setid: int) -> Optional[dict]:
@@ -186,13 +162,20 @@ def _get_tvshow_data(tvshowid: int) -> Optional[dict]:
     details = get_item_details(
         'tvshow',
         tvshowid,
-        _TVSHOW_PROPERTIES,
+        _TVSHOW_PROPERTIES + tvshow_version_fields(),
         cache_key=f"tvshow:{tvshowid}:details",
     )
     if not isinstance(details, dict):
         return None
 
-    return build_tvshow_data(details)
+    total, avg = resolve_show_runtime(tvshowid, details.get("episode"))
+    if not details.get("runtime") and avg:
+        details["runtime"] = avg
+    details["total_runtime"] = total
+    if details.get("watchedepisodes"):
+        details["watch_minutes"] = resolve_watch_minutes(tvshowid)
+
+    return _with_raw_dates(build_tvshow_data(details), details)
 
 
 def _get_season_data(seasonid: int) -> Optional[dict]:
@@ -205,6 +188,17 @@ def _get_season_data(seasonid: int) -> Optional[dict]:
     )
     if not isinstance(details, dict):
         return None
+
+    tvshowid = details.get("tvshowid")
+    season = details.get("season")
+    if tvshowid and tvshowid > 0 and season is not None:
+        _, avg = resolve_show_runtime(tvshowid)
+        if avg:
+            details["runtime"] = avg
+        details["total_runtime"] = resolve_season_runtime(tvshowid, season, details.get("episode"))
+        details["watch_minutes"] = resolve_watch_minutes(tvshowid, season)
+        # GetSeasonDetails never returns watchedepisodes
+        details["watchedepisodes"] = cached_watched_episodes(tvshowid, season) or 0
 
     return build_season_data(details)
 
@@ -220,7 +214,7 @@ def _get_episode_data(episodeid: int) -> Optional[dict]:
     if not isinstance(details, dict):
         return None
 
-    return build_episode_data(details)
+    return _with_raw_dates(build_episode_data(details), details)
 
 
 def _get_musicvideo_data(musicvideoid: int) -> Optional[dict]:
@@ -236,180 +230,7 @@ def _get_musicvideo_data(musicvideoid: int) -> Optional[dict]:
 
     data = build_musicvideo_data(details)
     data.update(get_musicvideo_library_art(details))
-    return data
-
-
-_artist_art_cache: "OrderedDict[str, Tuple[dict, object]]" = OrderedDict()
-_artist_albums_cache: "OrderedDict[Tuple[str, str], str]" = OrderedDict()
-_MAX_CACHE_ENTRIES = 200
-
-
-def _lru_set(cache: OrderedDict, key, value) -> None:
-    """Insert into an OrderedDict cache with LRU eviction at `_MAX_CACHE_ENTRIES`."""
-    cache[key] = value
-    cache.move_to_end(key)
-    if len(cache) > _MAX_CACHE_ENTRIES:
-        cache.popitem(last=False)
-
-
-def clear_musicvideo_library_art_cache() -> None:
-    """Clear cached artist art lookups (call on library updates)."""
-    _artist_art_cache.clear()
-    _artist_albums_cache.clear()
-
-
-def get_musicvideo_library_art(details: dict) -> dict:
-    """Return `{Artist.Fanart, Artist.Thumb, Album.Thumb, ...}` matched from the music library."""
-    artist_art, artist_id = get_musicvideo_artist_art(details)
-    props = dict(artist_art)
-    album_thumb = get_musicvideo_album_art(details, artist_id)
-    if album_thumb:
-        props["Album.Thumb"] = album_thumb
-    return props
-
-
-def get_musicvideo_artist_art(details: dict) -> tuple:
-    """Return `(artist_props_dict, artist_id)` matched from AudioLibrary; caches per artist name."""
-
-    artist_name = join_multi(details.get("artist"))
-    if not artist_name:
-        return {}, None
-
-    artist_key = artist_name.lower()
-
-    if artist_key in _artist_art_cache:
-        _artist_art_cache.move_to_end(artist_key)
-        artist_props, artist_id = _artist_art_cache[artist_key]
-        return dict(artist_props), artist_id
-
-    result = request("AudioLibrary.GetArtists", {
-        "filter": {"field": "artist", "operator": "is", "value": artist_name},
-        "properties": ["art"],
-        "limits": {"end": 1},
-    })
-
-    artists_list = extract_result(result, 'artists')
-    if not artists_list:
-        _lru_set(_artist_art_cache, artist_key, ({}, None))
-        return {}, None
-
-    artist = artists_list[0]
-    artist_art_raw = artist.get("art", {})
-    artist_id = artist.get("artistid")
-
-    artist_props: dict = {}
-    for art_type in ("fanart", "thumb", "clearlogo", "banner"):
-        value = artist_art_raw.get(art_type, "")
-        if value:
-            artist_props[f"Artist.{art_type.capitalize()}"] = decode_image_url(value)
-
-    _lru_set(_artist_art_cache, artist_key, (artist_props, artist_id))
-    return dict(artist_props), artist_id
-
-
-def get_musicvideo_album_art(details: dict, artist_id: object) -> str:
-    """Return album thumb URL matched from AudioLibrary, or empty string."""
-
-    artist_name = join_multi(details.get("artist"))
-    album_name = details.get("album") or ""
-    if not album_name or not artist_id or not artist_name:
-        return ""
-
-    artist_key = artist_name.lower()
-    album_cache_key = (artist_key, album_name.lower())
-
-    if album_cache_key in _artist_albums_cache:
-        _artist_albums_cache.move_to_end(album_cache_key)
-        return _artist_albums_cache[album_cache_key]
-
-    album_thumb = ""
-    albums_result = request("AudioLibrary.GetAlbums", {
-        "filter": {"artistid": artist_id},
-        "properties": ["title", "art"],
-    })
-    if albums_result:
-        album_list = extract_result(albums_result, 'albums')
-        if isinstance(album_list, list):
-            album_lower = album_name.lower()
-            for album in album_list:
-                if album.get("title", "").lower() == album_lower:
-                    thumb = album.get("art", {}).get("thumb", "")
-                    if thumb:
-                        album_thumb = decode_image_url(thumb)
-                    break
-    _lru_set(_artist_albums_cache, album_cache_key, album_thumb)
-    return album_thumb
-
-
-def get_musicvideo_node_data(artist_name: str, album_name: str = "") -> dict:
-    """Get music library art for musicvideo artist/album navigation nodes."""
-    if not artist_name:
-        return {}
-    details: dict = {"artist": [artist_name], "album": album_name}
-    return get_musicvideo_library_art(details)
-
-
-def fetch_artist_details(artistid: int) -> Optional[Tuple[dict, List[dict]]]:
-    """Fetch artist and their albums from library. Returns (artist, albums) or None."""
-    artist = get_item_details(
-        'artist',
-        artistid,
-        _ARTIST_PROPERTIES,
-        cache_key=f"artist:{artistid}:details",
-    )
-    if not isinstance(artist, dict):
-        return None
-
-    albums_req = {
-        "filter": {"artistid": artistid},
-        "properties": _ARTIST_ALBUM_PROPERTIES,
-        "sort": {"method": "year", "order": "ascending"},
-    }
-    albums_resp = request(
-        "AudioLibrary.GetAlbums",
-        albums_req,
-        cache_key=f"artist:{artistid}:albums",
-    )
-    albums = extract_result(albums_resp, "albums") if albums_resp else []
-    if not isinstance(albums, list):
-        albums = []
-
-    return artist, albums
-
-
-def fetch_album_details(albumid: int) -> Optional[Tuple[dict, List[dict]]]:
-    """Fetch album and its songs from library. Returns (album, songs) or None."""
-    album = get_item_details(
-        'album',
-        albumid,
-        _ALBUM_PROPERTIES,
-        cache_key=f"album:{albumid}:details",
-    )
-    if not album:
-        album = get_item_details(
-            'album',
-            albumid,
-            _ALBUM_PROPERTIES_MIN,
-            cache_key=f"album:{albumid}:details:min",
-        )
-    if not isinstance(album, dict):
-        return None
-
-    songs_req = {
-        "filter": {"albumid": albumid},
-        "properties": _ALBUM_SONG_PROPERTIES,
-        "sort": {"method": "track", "order": "ascending"},
-    }
-    songs_resp = request(
-        "AudioLibrary.GetSongs",
-        songs_req,
-        cache_key=f"album:{albumid}:songs",
-    )
-    songs = extract_result(songs_resp, "songs") if songs_resp else []
-    if not isinstance(songs, list):
-        songs = []
-
-    return album, songs
+    return _with_raw_dates(data, details)
 
 
 def _get_artist_data(artistid: int) -> Optional[dict]:
@@ -443,7 +264,13 @@ _MEDIA_TYPE_HANDLERS = {
 def handle_dbid_query(handle: int, params: dict) -> None:
     """Plugin entry `?action=getdetails&dbid=N&dbtype=X`: one ListItem with library properties."""
     dbid = params.get("dbid", [""])[0]
-    media_type = params.get("dbtype", [""])[0]
+    media_type = params.get("dbtype", [""])[0].lower().strip()
+
+    # music video artist and album nodes are looked up by name and carry no dbid
+    if media_type in ("musicvideo_artist", "musicvideo_album"):
+        from lib.plugin.online import handle_musicvideo_node
+        handle_musicvideo_node(handle, params, media_type)
+        return
 
     if not dbid:
         log("Plugin", "Missing required parameter 'dbid'", xbmc.LOGWARNING)
@@ -462,13 +289,6 @@ def handle_dbid_query(handle: int, params: dict) -> None:
     if not media_type:
         log("Plugin", "Missing required parameter 'dbtype'", xbmc.LOGWARNING)
         xbmcplugin.endOfDirectory(handle, succeeded=False)
-        return
-
-    media_type = media_type.lower().strip()
-
-    if media_type in ("musicvideo_artist", "musicvideo_album"):
-        from lib.plugin.online import handle_musicvideo_node
-        handle_musicvideo_node(handle, params, media_type)
         return
 
     valid_types = (
@@ -493,7 +313,7 @@ def handle_dbid_query(handle: int, params: dict) -> None:
 
     list_item = xbmcgui.ListItem(label=item_data.get("Title", ""), offscreen=True)
 
-    is_music = media_type in ("artist", "album", "musicvideo")
+    is_music = media_type in ("artist", "album")
     video_tag = list_item.getVideoInfoTag() if not is_music else None
 
     art_dict = {}
@@ -529,7 +349,7 @@ def handle_dbid_query(handle: int, params: dict) -> None:
                         max_val = rating_info.get("max", 10)
                         is_default = rating_info.get("default", False)
 
-                        if rating_val is not None:
+                        if rating_val:
                             try:
                                 ratings_for_kodi[rating_type] = (float(rating_val), int(votes_val))
                                 if is_default:
@@ -539,6 +359,10 @@ def handle_dbid_query(handle: int, params: dict) -> None:
                                     (float(rating_val) / float(max_val)) * 100)))
                                 output_type = RATING_SOURCE_NORMALIZE.get(rating_type, rating_type)
                                 properties_dict[f"Rating.{output_type}.Percent"] = str(pct)
+                                stars = format_stars(
+                                    output_type, float(rating_val) / float(max_val) * 10.0)
+                                if stars:
+                                    properties_dict[f"Rating.{output_type}.Stars"] = stars
                             except (ValueError, TypeError, ZeroDivisionError):
                                 pass
 
@@ -596,23 +420,23 @@ def handle_dbid_query(handle: int, params: dict) -> None:
         if "Premiered" in item_data:
             video_tag.setPremiered(item_data["Premiered"])
         if "Genre" in item_data:
-            video_tag.setGenres(split_multivalue(item_data["Genre"]))
+            video_tag.setGenres(parse_pipe_list(item_data["Genre"], MULTI_VALUE_SEP))
         if "Director" in item_data:
-            video_tag.setDirectors(split_multivalue(item_data["Director"]))
+            video_tag.setDirectors(parse_pipe_list(item_data["Director"], MULTI_VALUE_SEP))
         if "Writer" in item_data:
-            video_tag.setWriters(split_multivalue(item_data["Writer"]))
+            video_tag.setWriters(parse_pipe_list(item_data["Writer"], MULTI_VALUE_SEP))
         if "Studio" in item_data:
-            video_tag.setStudios(split_multivalue(item_data["Studio"]))
+            video_tag.setStudios(parse_pipe_list(item_data["Studio"], MULTI_VALUE_SEP))
         if "Country" in item_data:
-            video_tag.setCountries(split_multivalue(item_data["Country"]))
+            video_tag.setCountries(parse_pipe_list(item_data["Country"], MULTI_VALUE_SEP))
         if "Trailer" in item_data:
             video_tag.setTrailer(item_data["Trailer"])
-        if "LastPlayed" in item_data:
-            video_tag.setLastPlayed(item_data["LastPlayed"])
-        if "DateAdded" in item_data:
-            video_tag.setDateAdded(item_data["DateAdded"])
+        if item_data.get("_lastplayed"):
+            video_tag.setLastPlayed(item_data["_lastplayed"])
+        if item_data.get("_dateadded"):
+            video_tag.setDateAdded(item_data["_dateadded"])
         if "Tag" in item_data:
-            video_tag.setTags(split_multivalue(item_data["Tag"]))
+            video_tag.setTags(parse_pipe_list(item_data["Tag"], MULTI_VALUE_SEP))
         if "IMDBNumber" in item_data:
             video_tag.setIMDBNumber(item_data["IMDBNumber"])
         if "ProductionCode" in item_data:

@@ -1,14 +1,14 @@
 """Container manipulation utilities for skin integration."""
 from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, Final
 import unicodedata
-from urllib.parse import quote
 import xbmc
 import xbmcgui
 import xbmcplugin
 
 from lib.kodi.client import log, request
+from lib.kodi.utilities import clear_window_prop, read_labels
 
 
 _SMS_MAP = {
@@ -22,7 +22,7 @@ _SMS_MAP = {
     'W': 'jumpsms9', 'X': 'jumpsms9', 'Y': 'jumpsms9', 'Z': 'jumpsms9',
 }
 
-# Latin letters that don't NFKD-decompose; folded to the base letter Kodi sorts them under.
+# Latin letters with no NFKD decomposition, folded to the base letter Kodi sorts them under
 _LETTER_FOLD = {
     'Ø': 'O', 'ø': 'O', 'Æ': 'A', 'æ': 'A', 'Œ': 'O', 'œ': 'O',
     'ß': 'S', 'ẞ': 'S', 'Ð': 'D', 'ð': 'D', 'Đ': 'D', 'đ': 'D',
@@ -32,10 +32,7 @@ _LETTER_FOLD = {
 
 
 def _fold_letter(value: str) -> str:
-    """Bucket a SortLetter into A-Z or '#', folding accents to their base letter.
-
-    Matches Kodi's collation so the availability flag lines up with where the SMS jump lands.
-    """
+    """Bucket a SortLetter into A-Z or '#', folding accents to the letter Kodi sorts them under."""
     if not value:
         return ''
     ch = value[0]
@@ -81,19 +78,14 @@ def move_to_position(
     next_position: Optional[str] = None,
     next_action: Optional[str] = None
 ) -> None:
-    """Move or focus containers to a target position; see DOCS/skin-utilities.md for the
-    `container_move` RunScript API."""
+    """Move or focus containers to a target position for the `container_move` action."""
     _move_main_containers(main_focus, main_position, main_action)
     _handle_next_focus(next_focus, next_position, next_action)
 
 
 def _move_main_containers(main_focus: str, main_position: Optional[str],
                           main_action: Optional[str]) -> None:
-    """Reset each visible control in `main_focus` to its target, skipping any already there.
-
-    List containers guard on `CurrentItem`; buttons have no item position, so they guard on
-    `HasFocus` instead.
-    """
+    """Move each visible control to its target, unless a list is there or a button focused."""
     main_ids = [cid.strip() for cid in main_focus.split('|')]
     main_action_list = [a.strip() for a in main_action.split('|')] if main_action else []
     has_pipe_main_action = main_action and '|' in main_action
@@ -125,15 +117,9 @@ def _move_main_containers(main_focus: str, main_position: Optional[str],
             except (ValueError, TypeError):
                 continue
 
-        try:
-            item_count = int(xbmc.getInfoLabel(f'Container({cid}).NumItems') or 0)
-        except ValueError:
-            item_count = 0
-
-        if item_count > 0:
-            should_move = (
-                xbmc.getInfoLabel(f'Container({cid}).CurrentItem') != target_1indexed
-            )
+        if xbmc.getCondVisibility(f'Integer.IsGreater(Container({cid}).NumItems,0)'):
+            should_move = not xbmc.getCondVisibility(
+                f'Integer.IsEqual(Container({cid}).CurrentItem,{target_1indexed})')
         else:
             should_move = not xbmc.getCondVisibility(f'Control.HasFocus({cid})')
 
@@ -179,7 +165,7 @@ def _handle_next_focus(next_focus: Optional[str], next_position: Optional[str],
 
 def _focus_next_containers(next_focus: str, next_position: Optional[str],
                           next_action: Optional[str]) -> None:
-    """Focus and optionally position each container in `next_focus` (pipe-separated IDs)."""
+    """Focus and optionally position each container in a pipe-separated id list."""
     next_ids = [fid.strip() for fid in next_focus.split('|')]
     next_action_list = [a.strip() for a in next_action.split('|')] if next_action else []
     has_pipe_next_action = next_action and '|' in next_action
@@ -215,13 +201,13 @@ def _focus_next_containers(next_focus: str, next_position: Optional[str],
 
 
 def _clear_cm_focus_props(properties_found: list) -> None:
-    """Clear `SkinInfo.CM_Focus.{i}` for each `(i, _)` in `properties_found`."""
+    """Clear the numbered `SkinInfo.CM_Focus.*` properties that were found."""
     for i, _ in properties_found:
-        xbmc.executebuiltin(f'ClearProperty(SkinInfo.CM_Focus.{i},home)', True)
+        clear_window_prop(f'SkinInfo.CM_Focus.{i}')
 
 
 def jump_letter(letter: str, container_id: Optional[str] = None) -> None:
-    """Jump to an item starting with `letter` (A-Z or `#`) via Kodi's SMS actions."""
+    """Jump to an item starting with a letter via Kodi's SMS actions, `#` by a page jump."""
     if container_id:
         xbmc.executebuiltin(f'SetFocus({container_id})', True)
 
@@ -241,75 +227,135 @@ def jump_letter(letter: str, container_id: Optional[str] = None) -> None:
         request('Input.ExecuteAction', {'action': action})
         xbmc.sleep(30)
 
-        if _fold_letter(xbmc.getInfoLabel('ListItem.SortLetter')) == letter_upper:
+        sort_letter = read_labels(('ListItem.SortLetter',))['ListItem.SortLetter']
+        if _fold_letter(sort_letter) == letter_upper:
             break
 
 
-_SCAN_CHUNK = 1000
+_LETTERS: Final = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#'
 
-# Skip the scan above this count; each item permanently registers a GUIInfo entry against
-# Kodi's ~60k global cap.
-_MAX_AVAILABILITY_ITEMS = 10000
+# fixed, so repeat scans reuse registrations
+_LETTER_GRID: Final = 16384
+_GRID_LEVELS = _LETTER_GRID.bit_length()
+
+_ALPHA_SORT_METHODS = (1, 7, 10, 29, 57)
+
+# below this a sweep is cheaper
+_SWEEP_MAX_ITEMS: Final = 256
+
+
+def _letter_rank(letter: str) -> int:
+    """Position of a folded letter in ascending sort order, with '#' ahead of A."""
+    return 0 if letter == '#' else ord(letter) - ord('A') + 1
+
+
+def _sorts_before(letter: str, target_letter: str, descending: bool) -> bool:
+    """True when one folded letter sorts earlier than another in the container's order."""
+    rank, target_rank = _letter_rank(letter), _letter_rank(target_letter)
+    return rank > target_rank if descending else rank < target_rank
+
+
+def _alphabetic_sort(target: str) -> bool:
+    """True when the sort puts letters in sequence, and false outside a media window."""
+    return xbmc.getCondVisibility(
+        ' | '.join(f'Container({target}).SortMethod({m})' for m in _ALPHA_SORT_METHODS)
+    )
 
 
 def _container_too_large(target: str) -> bool:
-    """True when the target has too many items to scan for availability safely."""
+    """True when the container holds more items than the probe grid can address."""
+    label = f'Container({target}).NumAllItems'
     try:
-        count = int(xbmc.getInfoLabel(f'Container({target}).NumItems') or 0)
+        count = int(read_labels((label,))[label] or 0)
     except ValueError:
         return False
-    if count > _MAX_AVAILABILITY_ITEMS:
-        log('SkinUtils', f'letter_jump: {count} items exceed availability cap; plain bar',
+    if count > _LETTER_GRID:
+        log('SkinUtils', f'letter_jump: {count} items exceed the probe grid; plain bar',
             xbmc.LOGINFO)
         return True
     return False
 
 
-def _available_sort_letters(target: str) -> set[str]:
-    """Folded jump letters (A-Z plus '#') present in the target container.
+def _probe_letters(target: str, indexes: list) -> dict:
+    """Folded letter at each absolute index, from one batched `GetInfoLabels` call."""
+    labels = [f'Container({target}).ListItemAbsolute({i}).SortLetter' for i in indexes]
+    result = read_labels(labels)
+    return {index: _fold_letter(result[label]) for index, label in zip(indexes, labels)}
 
-    Reads the live container, so active filters and the current sort are honoured.
-    """
+
+def _sweep_letters(target: str, start_index: int, all_count: int) -> set[str]:
+    """Every folded letter in a small container, reading each item in one batch."""
+    at = _probe_letters(target, list(range(start_index, all_count)))
+    return {letter for letter in at.values() if letter}
+
+
+def _available_sort_letters(target: str, descending: bool) -> set[str]:
+    """Folded jump letters (A-Z plus '#') in the live container, honoring filters and sort."""
+    counts = read_labels((f'Container({target}).NumAllItems', f'Container({target}).NumItems'))
     try:
-        all_count = int(xbmc.getInfoLabel(f'Container({target}).NumAllItems') or 0)
-        count = int(xbmc.getInfoLabel(f'Container({target}).NumItems') or 0)
+        all_count = int(counts[f'Container({target}).NumAllItems'] or 0)
+        count = int(counts[f'Container({target}).NumItems'] or 0)
     except ValueError:
+        return set()
+    if all_count <= 0:
         return set()
 
     start_index = max(0, all_count - count)  # 1 when a ".." parent item leads the list
+    if all_count - start_index <= _SWEEP_MAX_ITEMS:
+        return _sweep_letters(target, start_index, all_count)
 
+    low = {letter: start_index for letter in _LETTERS}
+    high = {letter: _LETTER_GRID for letter in _LETTERS}
+    active = set(_LETTERS)
     found: set[str] = set()
-    for start in range(start_index, all_count, _SCAN_CHUNK):
-        labels = [
-            f'Container({target}).ListItemAbsolute({i}).SortLetter'
-            for i in range(start, min(start + _SCAN_CHUNK, all_count))
-        ]
-        response = request('XBMC.GetInfoLabels', {'labels': labels})
-        for value in (response.get('result', {}) if response else {}).values():
-            letter = _fold_letter(value)
-            if letter:
-                found.add(letter)
-        if len(found) >= 27:
+
+    for _ in range(_GRID_LEVELS):
+        probes = {}
+        for letter in sorted(active):
+            if low[letter] >= high[letter]:
+                active.discard(letter)
+                continue
+            probes[letter] = (low[letter] + high[letter]) // 2
+        if not probes:
             break
+
+        at = _probe_letters(target, sorted(set(probes.values())))
+        found.update(value for value in at.values() if value)
+
+        for letter, mid in probes.items():
+            seen = at.get(mid, '')
+            if seen and _sorts_before(seen, letter, descending):
+                low[letter] = mid + 1
+            else:
+                high[letter] = mid
+
+    # unseen letter present only at its lower bound
+    missing = [letter for letter in _LETTERS
+               if letter not in found and low[letter] < all_count]
+    if missing:
+        at = _probe_letters(target, sorted({low[letter] for letter in missing}))
+        found.update(letter for letter in missing if at.get(low[letter], '') == letter)
+
     return found
 
 
 def handle_letter_jump_list(handle: int, params: dict) -> None:
-    """Return A-Z (plus '#') ListItems for container letter-jump; see DOCS/plugin/navigation.md
-    for the full API."""
+    """Plugin entry for the letter-jump bar: A-Z plus '#', marking letters the container lacks."""
+    from urllib.parse import quote
     target = params.get('target', ['50'])[0]
     showall = params.get('showall', ['true'])[0].lower() != 'false'
     want_available = params.get('available', ['false'])[0].lower() == 'true' or not showall
 
-    if want_available and _container_too_large(target):
+    if want_available and (_container_too_large(target) or not _alphabetic_sort(target)):
         want_available = False
-        showall = True  # can't compact or dim without the scan; fall back to the full bar
+        showall = True  # the bar can't be compacted or dimmed without the scan
 
     is_descending = xbmc.getCondVisibility(f'Container({target}).SortDirection(descending)')
 
-    letters = 'ZYXWVUTSRQPONMLKJIHGFEDCBA#' if is_descending else 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#'
+    # '#' last both ways, only A-Z reverses
+    letters = _LETTERS[:-1][::-1] + '#' if is_descending else _LETTERS
 
-    available = _available_sort_letters(target) if want_available else set()
+    available = _available_sort_letters(target, is_descending) if want_available else set()
 
     for letter in letters:
         is_available = letter in available
@@ -319,8 +365,8 @@ def handle_letter_jump_list(handle: int, params: dict) -> None:
         listitem = xbmcgui.ListItem(letter, offscreen=True)
 
         if want_available and not is_available:
-            url = ''  # no jump target, so the cell is inert
-            listitem.setProperty('IsNotAvailable', 'true')
+            url = ''  # no jump target
+            listitem.setProperty('isnotavailable', 'true')
         else:
             url = (f'plugin://script.skin.info.service/?action=jump_letter_exec'
                    f'&letter={quote(letter, safe="")}&target={target}')
@@ -344,8 +390,8 @@ def handle_letter_jump_exec(handle: int, params: dict) -> None:
     if not letter:
         return
 
-    current = xbmc.getInfoLabel(f'Container({target}).ListItem.SortLetter')
-    if letter.upper() == _fold_letter(current):
+    label = f'Container({target}).ListItem.SortLetter'
+    if letter.upper() == _fold_letter(read_labels((label,))[label]):
         return
 
     jump_letter(letter, target)

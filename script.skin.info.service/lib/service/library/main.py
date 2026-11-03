@@ -1,25 +1,25 @@
-"""SkinInfo background service for property updates.
-
-Coordinator for the library-focus service. Composes per-concern handlers
-(refresh, blur, player, music_player, musicvideo, slideshow, focus) and
-runs the main loop.
-"""
+"""Library service: the poll loop over the focus, player, blur, slideshow and refresh handlers."""
 from __future__ import annotations
 
 import threading
+from typing import Final
 
 import xbmc
 
 from lib.kodi.client import log
+from lib.kodi.utilities import LabelSnapshot
 from lib.service.library.refresh import RefreshTracker
-from lib.service.library.blur import BlurHandler
+from lib.service.library.blur import SKIN_BOOL_LABELS, BlurHandler, ImageColorHandler
 from lib.service.library.player import PlayerVideoTracker, PlayerMusicTracker
 from lib.service.library.musicvideo import MusicVideoArt
 from lib.service.library.slideshow import SlideshowDriver
-from lib.service.library.focus import FocusDispatcher
+from lib.service.library.focus import FOCUS_LABELS, FocusDispatcher
 
-SERVICE_POLL_INTERVAL = 0.10
-MAX_CONSECUTIVE_ERRORS = 10
+SERVICE_POLL_INTERVAL: Final = 0.10
+MAX_CONSECUTIVE_ERRORS: Final = 10
+LIBRARY_REFRESH_EVENTS: Final = ('VideoLibrary.OnUpdate', 'VideoLibrary.OnRemove',
+                                 'VideoLibrary.OnRefresh', 'VideoLibrary.OnScanFinished',
+                                 'VideoLibrary.OnCleanFinished')
 
 
 class LibraryMonitor(xbmc.Monitor):
@@ -31,7 +31,7 @@ class LibraryMonitor(xbmc.Monitor):
 
     def onNotification(self, sender: str, method: str, data: str) -> None:
         """Route Kodi library/audio notifications to the matching handler."""
-        if method in ('VideoLibrary.OnUpdate', 'VideoLibrary.OnScanFinished'):
+        if method in LIBRARY_REFRESH_EVENTS and not self._in_transaction(data):
             self.service_main.refresh.increment()
         if method == 'VideoLibrary.OnUpdate':
             self.service_main.focus.invalidate_asset_view()
@@ -40,7 +40,7 @@ class LibraryMonitor(xbmc.Monitor):
             self.service_main.focus.invalidate_asset_view()
         if method in ('AudioLibrary.OnUpdate', 'AudioLibrary.OnScanFinished',
                       'AudioLibrary.OnCleanFinished'):
-            from lib.plugin.dbid import clear_musicvideo_library_art_cache
+            from lib.kodi.library import clear_musicvideo_library_art_cache
             clear_musicvideo_library_art_cache()
         if method == 'VideoLibrary.OnRemove':
             self._on_video_remove(data)
@@ -53,12 +53,24 @@ class LibraryMonitor(xbmc.Monitor):
             clear_all_runtime_cache()
 
     @staticmethod
+    def _in_transaction(data: str) -> bool:
+        """True when Kodi sent the notification mid-scan or mid-clean."""
+        try:
+            import json
+            return bool(json.loads(data).get('transaction'))
+        except Exception:
+            return False
+
+    @staticmethod
     def _sync_dbids() -> None:
+        """Sync the DBID registry off the notification thread."""
         from lib.data.database.rollcall import sync_dbids
-        sync_dbids()
+        from lib.infrastructure.tasks import ShutdownAbortFlag
+        sync_dbids(ShutdownAbortFlag())
 
     @staticmethod
     def _on_video_remove(data: str) -> None:
+        """Drop cached data for an item removed from the library."""
         try:
             import json
             info = json.loads(data)
@@ -70,26 +82,41 @@ class LibraryMonitor(xbmc.Monitor):
             return
         from lib.data.database.rollcall import remove_dbid
         remove_dbid(media_type, dbid)
+        if media_type in ('episode', 'tvshow'):
+            from lib.kodi.library import forget_watch_minutes
+            forget_watch_minutes(int(dbid) if media_type == 'tvshow' else None)
         if media_type == 'tvshow':
             from lib.data.database.runtime import invalidate_show_runtime
             invalidate_show_runtime(int(dbid))
 
     def _on_video_update(self, data: str) -> None:
+        """Invalidate cached data for an updated item; a playcount-only change stops early."""
         try:
             import json
             info = json.loads(data)
         except Exception:
             return
-        if 'playcount' in info:
-            return
-        media_type = info.get('type', '')
-        dbid = info.get('id')
+        # playback and playcount updates nest the id and type under "item"
+        item = info.get('item') or info
+        media_type = item.get('type', '')
+        dbid = item.get('id')
         if not dbid:
+            return
+        if media_type == 'episode' and ('playcount' in info or 'item' not in info):
+            from lib.kodi.client import get_item_details
+            from lib.kodi.library import forget_watch_minutes, watch_minutes_cached
+            tvshowid = None
+            if watch_minutes_cached():
+                episode = get_item_details('episode', int(dbid), ['tvshowid'])
+                tvshowid = episode.get('tvshowid') if isinstance(episode, dict) else None
+            forget_watch_minutes(tvshowid if tvshowid and tvshowid > 0 else None)
+        self.service_main.focus.invalidate_item(media_type, dbid)
+        if 'playcount' in info or 'item' in info:
             return
         if media_type == 'musicvideo':
             self.service_main.musicvideo.invalidate_for(int(dbid))
         elif media_type in ('movie', 'tvshow', 'episode'):
-            from lib.service.online import invalidate_online_cache_for_dbid
+            from lib.service.online.helpers import invalidate_online_cache_for_dbid
             invalidate_online_cache_for_dbid(media_type, str(dbid))
             if media_type == 'tvshow':
                 from lib.data.database.runtime import invalidate_show_runtime
@@ -104,6 +131,7 @@ class ServiceMain(threading.Thread):
         self.abort = threading.Event()
         self.refresh = RefreshTracker()
         self.blur = BlurHandler()
+        self.color = ImageColorHandler()
         self.player = PlayerVideoTracker(self)
         self.music_player = PlayerMusicTracker()
         self.musicvideo = MusicVideoArt()
@@ -151,12 +179,11 @@ class ServiceMain(threading.Thread):
             log("Service", "Library service stopped", xbmc.LOGINFO)
 
     def _loop(self) -> None:
-        """One service tick: player blur, video/audio player tracking, focus dispatch."""
-        self.blur.handle_player()
+        """One service tick: player blur, video/audio player tracking, focus, image color."""
+        labels = LabelSnapshot((*FOCUS_LABELS, *SKIN_BOOL_LABELS, *self.blur.focus_labels(),
+                                *self.color.focus_labels()))
+        self.blur.handle_player(labels)
         self.player.handle()
         self.music_player.handle()
-        self.focus.process()
-
-    def _clear_media_type(self, media_type: str) -> None:
-        """Compatibility shim that delegates to the focus dispatcher."""
-        self.focus.clear_media_type(media_type)
+        self.focus.process(labels)
+        self.color.handle_focus(labels)

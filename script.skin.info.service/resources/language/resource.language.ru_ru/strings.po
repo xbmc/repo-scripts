@@ -1,0 +1,2625 @@
+# Kodi strings for script.skin.info.service
+msgid ""
+msgstr ""
+"Project-Id-Version: script.skin.info.service\n"
+"POT-Creation-Date: 2024-10-23 00:00+0000\n"
+"PO-Revision-Date: 2026-10-25 00:02+0000\n"
+"Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
+"Language-Team: Russian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skin-info-service/ru_ru/>\n"
+"Language: ru_ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2026.10.1\n"
+
+msgctxt "Addon Summary"
+msgid "Provides rich media info and artwork to skins."
+msgstr "Предоставляет обложкам подробную информацию о медиа и иллюстрации."
+
+msgctxt "Addon Description"
+msgid "Skin Info Service provides skins with rich metadata and artwork beyond what Kodi exposes by default. It adds extra properties such as ratings from multiple sources, artwork, stream details, and cast and plot information for movies, TV shows, episodes, sets, music videos, artists, and albums, drawing on both your library and online data. It also includes a tool to find and add animated GIF posters to your library."
+msgstr "Skin Info Service предоставляет обложкам расширенные метаданные и иллюстрации, выходящие за рамки стандартных возможностей Kodi. Он добавляет дополнительные свойства, такие как рейтинги из нескольких источников, иллюстрации, сведения о потоках, а также информацию об актёрах и сюжете для фильмов, сериалов, серий, киноциклов, музыкальных клипов, исполнителей и альбомов, используя как вашу медиатеку, так и данные из интернета. Также включает инструмент для поиска и добавления в медиатеку анимированных постеров в формате GIF."
+
+msgctxt "Addon Disclaimer"
+msgid "This add-on uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB."
+msgstr "Это дополнение использует TMDB и API TMDB, но не одобрено, не сертифицировано и иным образом не поддержано TMDB."
+
+msgctxt "#32000"
+msgid "Animated Art"
+msgstr "Анимированные иллюстрации"
+
+msgctxt "#32001"
+msgid "Key was not saved, please try again"
+msgstr "Ключ не сохранён, повторите попытку"
+
+msgctxt "#32002"
+msgid "Gif filename patterns (exact/suffix)"
+msgstr "Шаблоны имён файлов GIF (точное совпадение/суффикс)"
+
+msgctxt "#32003"
+msgid "Comma-separated list of gif filename patterns. Matches exact filenames (e.g., 'poster.gif') or files ending with the pattern (e.g., 'movie.poster.gif')"
+msgstr "Разделённый запятыми список шаблонов имён файлов GIF. Соответствует точным именам файлов (например, 'poster.gif') или файлам, оканчивающимся на шаблон (например, 'movie.poster.gif')"
+
+msgctxt "#32004"
+msgid "Artwork"
+msgstr "Иллюстрации"
+
+#. Error shown when an edited rating is not a number in range; 7.3 is an example value
+msgctxt "#32005"
+msgid "Rating must be a number from 0 to 10, such as 7.3"
+msgstr "Рейтинг должен быть числом от 0 до 10, например 7,3"
+
+#. Label for language dropdown in settings (used for both metadata and artwork language selection)
+msgctxt "#32006"
+msgid "Preferred language"
+msgstr "Предпочитаемый язык"
+
+msgctxt "#32007"
+msgid "Artwork in this language is prioritized for posters, logos, and other language-sensitive art."
+msgstr "Иллюстрации на этом языке имеют приоритет для постеров, логотипов и других языкозависимых изображений."
+
+msgctxt "#32008"
+msgid "Prefer fanart in selected language"
+msgstr "Предпочитать фан-арт на выбранном языке"
+
+msgctxt "#32009"
+msgid "No artwork available from scrapers"
+msgstr "Нет иллюстраций от скреперов"
+
+msgctxt "#32010"
+msgid "No artwork matched language preferences"
+msgstr "Нет иллюстраций, соответствующих языковым предпочтениям"
+
+msgctxt "#32011"
+msgid "Needs manual review"
+msgstr "Требуется ручная проверка"
+
+msgctxt "#32012"
+msgid "No images selected"
+msgstr "Не выбрано изображений"
+
+msgctxt "#32013"
+msgid "Downloaded {0} files"
+msgstr "Скачано файлов: {0}"
+
+msgctxt "#32014"
+msgid "{0} files"
+msgstr "Файлов: {0}"
+
+msgctxt "#32015"
+msgid "{0} image(s) selected"
+msgstr "Выбрано изображений: {0}"
+
+msgctxt "#32016"
+msgid "{0} seasons"
+msgstr "Сезонов: {0}"
+
+msgctxt "#32017"
+msgid "{0} episodes"
+msgstr "Серий: {0}"
+
+#. Error shown when an edited year falls outside the accepted range
+msgctxt "#32018"
+msgid "Year must be between 1800 and 2100"
+msgstr "Год должен быть между 1800 и 2100"
+
+msgctxt "#32019"
+msgid "Add 'Download' option to missing artwork and pre-cache"
+msgstr "Добавить опцию «Скачать» для отсутствующих иллюстраций и предварительного кэширования"
+
+msgctxt "#32020"
+msgid "Show additional menu options to download artwork to filesystem during review and pre-cache operations"
+msgstr "Показывать дополнительные пункты меню для скачивания иллюстраций в файловую систему во время проверки и операций предварительного кэширования"
+
+#. Error shown when an edited runtime is not a whole number of minutes in range
+msgctxt "#32021"
+msgid "Runtime must be 0 to 10080 minutes"
+msgstr "Длительность должна быть от 0 до 10080 минут"
+
+msgctxt "#32022"
+msgid "When File Already Exists"
+msgstr "Когда файл уже существует"
+
+msgctxt "#32023"
+msgid "What to do when artwork file already exists on filesystem"
+msgstr "Что делать, если файл иллюстрации уже существует в файловой системе"
+
+msgctxt "#32024"
+msgid "Skip (don't download)"
+msgstr "Пропустить (не скачивать)"
+
+msgctxt "#32025"
+msgid "Overwrite existing file"
+msgstr "Перезаписать существующий файл"
+
+#. Error shown when an edited Top 250 position falls outside the accepted range
+msgctxt "#32026"
+msgid "Top 250 must be 0-250"
+msgstr "Топ-250 должен быть 0–250"
+
+msgctxt "#32027"
+msgid "Use Movie Filename Prefix"
+msgstr "Использовать префикс из имени фильма"
+
+msgctxt "#32028"
+msgid "Save as 'Avatar-poster.jpg' instead of 'poster.jpg' in movie folder"
+msgstr "Сохранять как 'Avatar-poster.jpg' вместо 'poster.jpg' в папке фильма"
+
+msgctxt "#32029"
+msgid "Export to NFO"
+msgstr "Экспортировать в NFO"
+
+msgctxt "#32030"
+msgid "NFO file written"
+msgstr "NFO-файл записан"
+
+msgctxt "#32031"
+msgid "Could not write NFO file"
+msgstr "Не удалось записать NFO-файл"
+
+msgctxt "#32032"
+msgid "Processing cancelled"
+msgstr "Обработка отменена"
+
+msgctxt "#32033"
+msgid "Art Fetcher - Cancelled"
+msgstr "Загрузчик иллюстраций — отменено"
+
+#. Error shown when an edited duration is not a MM:SS time
+msgctxt "#32034"
+msgid "Duration must be in MM:SS format"
+msgstr "Длительность должна быть в формате ММ:СС"
+
+msgctxt "#32035"
+msgid "Always Ask"
+msgstr "Всегда спрашивать"
+
+msgctxt "#32036"
+msgid "GIF Scanner Mode"
+msgstr "Режим сканирования GIF"
+
+msgctxt "#32037"
+msgid "Scan mode for animated art scanner"
+msgstr "Режим сканирования для поиска анимированных иллюстраций"
+
+msgctxt "#32038"
+msgid "Incremental"
+msgstr "Добавочное"
+
+msgctxt "#32039"
+msgid "Full Scan"
+msgstr "Полное сканирование"
+
+msgctxt "#32040"
+msgid "Download Report"
+msgstr "Отчёт о скачивании"
+
+msgctxt "#32041"
+msgid "No download history found."
+msgstr "История скачиваний не найдена."
+
+msgctxt "#32042"
+msgid "Cancelled"
+msgstr "Отменено"
+
+msgctxt "#32043"
+msgid "No valid media types to download."
+msgstr "Нет подходящих типов медиа для скачивания."
+
+msgctxt "#32044"
+msgid "API Keys"
+msgstr "Ключи API"
+
+msgctxt "#32045"
+msgid "Downloaded:"
+msgstr "Скачано:"
+
+msgctxt "#32046"
+msgid "Configure TMDB API Key"
+msgstr "Настроить ключ API TMDB"
+
+msgctxt "#32047"
+msgid "Get your API key from https://www.themoviedb.org/settings/api"
+msgstr "Получите ключ API на https://www.themoviedb.org/settings/api"
+
+msgctxt "#32048"
+msgid "Test Connection"
+msgstr "Проверить подключение"
+
+msgctxt "#32049"
+msgid "Clear API Key"
+msgstr "Очистить ключ API"
+
+msgctxt "#32050"
+msgid "MDBList"
+msgstr "MDBList"
+
+msgctxt "#32051"
+msgid "Configure MDBList API Key"
+msgstr "Настроить ключ API MDBList"
+
+msgctxt "#32052"
+msgid "Get your API key from https://mdblist.com/preferences/"
+msgstr "Получите ключ API на https://mdblist.com/preferences/"
+
+msgctxt "#32053"
+msgid "OMDb"
+msgstr "OMDb"
+
+msgctxt "#32054"
+msgid "Configure OMDb API Key"
+msgstr "Настроить ключ API OMDb"
+
+msgctxt "#32055"
+msgid "Get your API key from http://www.omdbapi.com/apikey.aspx"
+msgstr "Получите ключ API на http://www.omdbapi.com/apikey.aspx"
+
+msgctxt "#32056"
+msgid "Fanart.tv · fanart.tv/get-an-api-key[CR]No key: 7 days · Personal: 2 days · VIP: immediate"
+msgstr "Fanart.tv · fanart.tv/get-an-api-key[CR]Без ключа: 7 дней · Персональный: 2 дня · VIP: немедленно"
+
+msgctxt "#32057"
+msgid "Configure Fanart.tv API Key"
+msgstr "Настроить ключ API Fanart.tv"
+
+msgctxt "#32058"
+msgid "Filmography"
+msgstr "Фильмография"
+
+msgctxt "#32059"
+msgid "Trakt"
+msgstr "Trakt"
+
+msgctxt "#32060"
+msgid "Authorize Trakt"
+msgstr "Авторизовать Trakt"
+
+msgctxt "#32061"
+msgid "Authorize this addon to access your Trakt account"
+msgstr "Авторизовать это дополнение для доступа к вашей учётной записи Trakt"
+
+msgctxt "#32062"
+msgid "Test Trakt Connection"
+msgstr "Проверить подключение к Trakt"
+
+msgctxt "#32063"
+msgid "Revoke Authorization"
+msgstr "Отозвать авторизацию"
+
+msgctxt "#32064"
+msgid "Ratings"
+msgstr "Рейтинги"
+
+msgctxt "#32065"
+msgid "Not configured"
+msgstr "Не настроено"
+
+msgctxt "#32066"
+msgid "Stopped early: downloads stalled"
+msgstr "Досрочная остановка: загрузка зависла"
+
+msgctxt "#32067"
+msgid "No progress for over {0} seconds. Run it again to finish the rest."
+msgstr "Нет прогресса более {0} секунд. Запустите снова, чтобы завершить остальное."
+
+msgctxt "#32068"
+msgid "Press OK to read biography"
+msgstr "Нажмите OK, чтобы прочитать биографию"
+
+msgctxt "#32069"
+msgid "Birthplace"
+msgstr "Место рождения"
+
+#. Follows a person's age, as in "53 years old"
+msgctxt "#32070"
+msgid "years old"
+msgstr "лет"
+
+msgctxt "#32071"
+msgid "Upcoming Episodes"
+msgstr "Будущие серии"
+
+msgctxt "#32072"
+msgid "Processing Artwork Queue"
+msgstr "Обработка очереди иллюстраций"
+
+msgctxt "#32073"
+msgid "Cache is empty"
+msgstr "Кэш пуст"
+
+msgctxt "#32074"
+msgid "Default ratings source"
+msgstr "Источник рейтинга по умолчанию"
+
+msgctxt "#32075"
+msgid "Primary source to display when multiple ratings are available"
+msgstr "Основной источник для отображения, когда доступно несколько рейтингов"
+
+msgctxt "#32076"
+msgid "IMDb"
+msgstr "IMDb"
+
+msgctxt "#32077"
+msgid "TMDB"
+msgstr "TMDB"
+
+#. "Info" is the remote and keyboard button
+msgctxt "#32078"
+msgid "Info: view full size"
+msgstr "Info: показать в полном размере"
+
+#. "match" is the movie or TV show found for a programme, not a sports match
+msgctxt "#32079"
+msgid "Fix match"
+msgstr "Исправить соответствие"
+
+msgctxt "#32080"
+msgid "API Key"
+msgstr "Ключ API"
+
+msgctxt "#32081"
+msgid "Status: Authorized"
+msgstr "Статус: авторизован"
+
+msgctxt "#32082"
+msgid "Texture Cache Manager"
+msgstr "Управление кэшем текстур"
+
+msgctxt "#32083"
+msgid "Pre-Cache Library Artwork"
+msgstr "Предварительное кэширование иллюстраций медиатеки"
+
+msgctxt "#32084"
+msgid "Trakt Watchlist"
+msgstr "Trakt Watchlist"
+
+msgctxt "#32085"
+msgid "Statistics & Info"
+msgstr "Статистика и информация"
+
+msgctxt "#32086"
+msgid "View Last Report"
+msgstr "Просмотреть последний отчёт"
+
+msgctxt "#32087"
+msgid "Cleanup Textures"
+msgstr "Очистка текстур"
+
+msgctxt "#32088"
+msgid "Library Artwork Orphans"
+msgstr "Сироты иллюстраций медиатеки"
+
+msgctxt "#32089"
+msgid "By Age (Older Than...)"
+msgstr "По возрасту (старше...)"
+
+msgctxt "#32090"
+msgid "Identifying uncached artwork..."
+msgstr "Определение некэшированных иллюстраций..."
+
+msgctxt "#32091"
+msgid "Finding orphaned textures..."
+msgstr "Поиск текстур-сирот..."
+
+msgctxt "#32092"
+msgid "Removing {0} orphaned textures..."
+msgstr "Удаление текстур-сирот: {0}..."
+
+msgctxt "#32093"
+msgid "Enter {0} API Key"
+msgstr "Введите ключ API {0}"
+
+msgctxt "#32094"
+msgid "Are you sure you want to clear the {0} API key?"
+msgstr "Вы уверены, что хотите очистить ключ API {0}?"
+
+msgctxt "#32095"
+msgid ""
+"Error testing connection:\n"
+"\n"
+"{0}"
+msgstr ""
+"Ошибка проверки подключения:\n"
+"\n"
+"{0}"
+
+msgctxt "#32096"
+msgid "Failed to get device code from Trakt."
+msgstr "Не удалось получить код устройства от Trakt."
+
+msgctxt "#32097"
+msgid ""
+"Error:\n"
+"\n"
+"{0}"
+msgstr ""
+"Ошибка:\n"
+"\n"
+"{0}"
+
+msgctxt "#32098"
+msgid ""
+"Are you sure you want to revoke Trakt authorization?\n"
+"\n"
+"You will need to re-authorize to use Trakt ratings."
+msgstr ""
+"Вы уверены, что хотите отозвать авторизацию Trakt?\n"
+"\n"
+"Вам потребуется повторно авторизоваться для использования рейтингов Trakt."
+
+msgctxt "#32099"
+msgid "Downloaded {0} files ({1} MB)"
+msgstr "Скачано файлов: {0} ({1} МБ)"
+
+#. Context menu item and settings group - opens artwork browser for selected item
+msgctxt "#32100"
+msgid "Manage Artwork"
+msgstr "Управление иллюстрациями"
+
+msgctxt "#32101"
+msgid "Update Ratings"
+msgstr "Обновить рейтинги"
+
+msgctxt "#32102"
+msgid "Skin Info Tools"
+msgstr "Инструменты информации обложки"
+
+msgctxt "#32103"
+msgid "Edit Metadata"
+msgstr "Править метаданные"
+
+msgctxt "#32104"
+msgid "{0} - Connection Test"
+msgstr "{0} — проверка подключения"
+
+msgctxt "#32105"
+msgid ""
+"Connection successful!\n"
+"\n"
+"API key is valid and working."
+msgstr ""
+"Подключение выполнено успешно!\n"
+"\n"
+"Ключ API действителен и работает."
+
+msgctxt "#32106"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please check your API key."
+msgstr ""
+"Подключение не удалось.\n"
+"\n"
+"Проверьте ваш ключ API."
+
+msgctxt "#32107"
+msgid "Trakt Authorization Failed"
+msgstr "Авторизация Trakt не удалась"
+
+msgctxt "#32108"
+msgid "Trakt - Connection Test"
+msgstr "Trakt — проверка подключения"
+
+msgctxt "#32109"
+msgid ""
+"Authorization successful!\n"
+"\n"
+"Trakt is now connected."
+msgstr ""
+"Авторизация выполнена успешно!\n"
+"\n"
+"Trakt подключён."
+
+msgctxt "#32110"
+msgid ""
+"Authorization timed out.\n"
+"\n"
+"Please try again."
+msgstr ""
+"Время авторизации истекло.\n"
+"\n"
+"Повторите попытку."
+
+msgctxt "#32111"
+msgid "Context Menu Items"
+msgstr "Пункты контекстного меню"
+
+msgctxt "#32112"
+msgid "Show Manage Artwork"
+msgstr "Показывать «Управление иллюстрациями»"
+
+msgctxt "#32113"
+msgid "Show Update Ratings"
+msgstr "Показывать «Обновить рейтинги»"
+
+msgctxt "#32114"
+msgid "Show Edit Metadata"
+msgstr "Показывать «Править метаданные»"
+
+msgctxt "#32115"
+msgid ""
+"Connection successful!\n"
+"\n"
+"Trakt is authorized and working."
+msgstr ""
+"Подключение выполнено успешно!\n"
+"\n"
+"Trakt авторизован и работает."
+
+msgctxt "#32116"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please authorize Trakt first."
+msgstr ""
+"Подключение не удалось.\n"
+"\n"
+"Сначала авторизуйте Trakt."
+
+msgctxt "#32117"
+msgid "Show Download Artwork"
+msgstr "Показывать «Скачать иллюстрации»"
+
+msgctxt "#32118"
+msgid "No HTTP artwork URLs found in {0} library items."
+msgstr "Не найдено HTTP-адресов иллюстраций в {0} элементах медиатеки."
+
+msgctxt "#32119"
+msgid "Overwrite Mode Warning"
+msgstr "Предупреждение о режиме перезаписи"
+
+msgctxt "#32120"
+msgid "Change Language"
+msgstr "Сменить язык"
+
+msgctxt "#32121"
+msgid "Download Complete"
+msgstr "Загрузка завершена"
+
+msgctxt "#32122"
+msgid "Text-free / Untagged"
+msgstr "Без текста / без подписей"
+
+msgctxt "#32123"
+msgid "Trakt History"
+msgstr "Trakt History"
+
+msgctxt "#32124"
+msgid "Trakt In Progress"
+msgstr "Trakt In Progress"
+
+msgctxt "#32125"
+msgid "Trakt Most Played"
+msgstr "Trakt Most Played"
+
+msgctxt "#32128"
+msgid "Skip"
+msgstr "Пропустить"
+
+msgctxt "#32130"
+msgid "Multi-Art..."
+msgstr "Несколько иллюстраций..."
+
+msgctxt "#32131"
+msgid "Found {0} orphaned textures to remove.[CR][CR]Continue with removal?"
+msgstr "Найдено текстур-сирот для удаления: {0}.[CR][CR]Продолжить удаление?"
+
+msgctxt "#32132"
+msgid "Source: All"
+msgstr "Источник: все"
+
+msgctxt "#32133"
+msgid "Source: TMDB"
+msgstr "Источник: TMDB"
+
+msgctxt "#32134"
+msgid "Source: Fanart.tv"
+msgstr "Источник: Fanart.tv"
+
+msgctxt "#32135"
+msgid "IMDb Ratings"
+msgstr "Рейтинги IMDb"
+
+msgctxt "#32136"
+msgid "Auto-update"
+msgstr "Автообновление"
+
+msgctxt "#32137"
+msgid "Automatically update IMDb ratings in your library"
+msgstr "Автоматически обновлять рейтинги IMDb в вашей медиатеке"
+
+msgctxt "#32139"
+msgid "After library scan"
+msgstr "После сканирования медиатеки"
+
+msgctxt "#32140"
+msgid "When new ratings available"
+msgstr "Когда доступны новые рейтинги"
+
+msgctxt "#32141"
+msgid "Both"
+msgstr "Оба"
+
+msgctxt "#32142"
+msgid "Scope"
+msgstr "Область"
+
+msgctxt "#32143"
+msgid "Which media types to include in auto-updates"
+msgstr "Какие типы медиа включать в автообновление"
+
+msgctxt "#32144"
+msgid "All (Movies, TV Shows, Episodes)"
+msgstr "Все (фильмы, сериалы, серии)"
+
+msgctxt "#32145"
+msgid "Movies and TV Shows only"
+msgstr "Только фильмы и сериалы"
+
+msgctxt "#32146"
+msgid "Movies only"
+msgstr "Только фильмы"
+
+msgctxt "#32150"
+msgid "Stinger Detection"
+msgstr "Обнаружение послетитровых сцен"
+
+msgctxt "#32151"
+msgid "Enable stinger detection"
+msgstr "Включить обнаружение послетитровых сцен"
+
+msgctxt "#32152"
+msgid "Notify about post-credits scenes during movie playback"
+msgstr "Уведомлять о сценах после титров во время воспроизведения фильма"
+
+msgctxt "#32156"
+msgid "Minutes before end"
+msgstr "Минут до конца"
+
+msgctxt "#32157"
+msgid "For movies without chapters, notify this many minutes before the end"
+msgstr "Для фильмов без глав уведомлять за это количество минут до конца"
+
+msgctxt "#32158"
+msgid "Notification duration (seconds)"
+msgstr "Длительность уведомления (секунды)"
+
+msgctxt "#32159"
+msgid "How long to display the notification"
+msgstr "Как долго показывать уведомление"
+
+msgctxt "#32162"
+msgid "Wait For It..."
+msgstr "Подождите..."
+
+msgctxt "#32163"
+msgid "Stay for scene during credits"
+msgstr "Остаться для сцены во время титров"
+
+msgctxt "#32164"
+msgid "Stay for scene after credits"
+msgstr "Остаться для сцены после титров"
+
+msgctxt "#32165"
+msgid "Stay for scenes during and after credits"
+msgstr "Остаться для сцен во время и после титров"
+
+msgctxt "#32170"
+msgid "Operation failed"
+msgstr "Операция не удалась"
+
+msgctxt "#32171"
+msgid "No items to display"
+msgstr "Нет элементов для отображения"
+
+msgctxt "#32172"
+msgid "Task Already Running"
+msgstr "Задача уже выполняется"
+
+msgctxt "#32173"
+msgid "Found {0} library artwork URLs"
+msgstr "Найдено URL-адресов иллюстраций медиатеки: {0}"
+
+msgctxt "#32180"
+msgid "Texture Cache Statistics"
+msgstr "Статистика кэша текстур"
+
+msgctxt "#32181"
+msgid "Failed to gather statistics"
+msgstr "Не удалось собрать статистику"
+
+msgctxt "#32182"
+msgid "No textures found in cache"
+msgstr "В кэше не найдено текстур"
+
+msgctxt "#32183"
+msgid "Orphaned Textures Report"
+msgstr "Отчёт о текстурах-сиротах"
+
+msgctxt "#32184"
+msgid "Analysis Failed"
+msgstr "Анализ не удался"
+
+msgctxt "#32190"
+msgid "Art Fetcher Report"
+msgstr "Отчёт загрузчика иллюстраций"
+
+msgctxt "#32191"
+msgid "Art Fetcher - Detailed Report"
+msgstr "Загрузчик иллюстраций — подробный отчёт"
+
+msgctxt "#32192"
+msgid "Animated Art Scanner"
+msgstr "Сканер анимированных иллюстраций"
+
+msgctxt "#32200"
+msgid "graphic"
+msgstr "графичные"
+
+msgctxt "#32201"
+msgid "a lot of"
+msgstr "много"
+
+msgctxt "#32202"
+msgid "some"
+msgstr "некоторые"
+
+msgctxt "#32203"
+msgid "a little"
+msgstr "немного"
+
+msgctxt "#32204"
+msgid "very little"
+msgstr "очень мало"
+
+msgctxt "#32210"
+msgid "violence or scares"
+msgstr "насилие или пугающие сцены"
+
+msgctxt "#32211"
+msgid "sexual content"
+msgstr "сексуальный контент"
+
+#. Content advisory category - profanity/swearing (e.g., "Rated R for graphic language")
+msgctxt "#32212"
+msgid "language"
+msgstr "нецензурная лексика"
+
+msgctxt "#32213"
+msgid "substance use or smoking"
+msgstr "употребление веществ или курение"
+
+msgctxt "#32220"
+msgid "Rated {0}+ for {1}"
+msgstr "Рейтинг {0}+ за {1}"
+
+#. Conjunction between content advisory items - spaces are intentional (e.g., "violence and language")
+msgctxt "#32221"
+msgid " and "
+msgstr " и "
+
+msgctxt "#32250"
+msgid "Unsupported field type"
+msgstr "Неподдерживаемый тип поля"
+
+msgctxt "#32251"
+msgid "Failed to save"
+msgstr "Не удалось сохранить"
+
+msgctxt "#32252"
+msgid "Rating Source (e.g., imdb, tmdb)"
+msgstr "Источник рейтинга (например, imdb, tmdb)"
+
+msgctxt "#32253"
+msgid "Vote Count"
+msgstr "Количество голосов"
+
+msgctxt "#32254"
+msgid "Invalid Value"
+msgstr "Недопустимое значение"
+
+msgctxt "#32255"
+msgid "Invalid Date"
+msgstr "Недопустимая дата"
+
+msgctxt "#32256"
+msgid "Invalid Rating"
+msgstr "Недопустимый рейтинг"
+
+msgctxt "#32257"
+msgid "Already Exists"
+msgstr "Уже существует"
+
+#. Notification title for metadata editor operations
+msgctxt "#32258"
+msgid "Editor"
+msgstr "Редактор"
+
+msgctxt "#32259"
+msgid "No valid item selected"
+msgstr "Не выбран подходящий элемент"
+
+msgctxt "#32260"
+msgid "Fix Library IDs"
+msgstr "Исправить идентификаторы медиатеки"
+
+msgctxt "#32261"
+msgid "All IDs are valid"
+msgstr "Все идентификаторы действительны"
+
+msgctxt "#32262"
+msgid "Failed to load item"
+msgstr "Не удалось загрузить элемент"
+
+msgctxt "#32263"
+msgid "Unsupported type: {0}"
+msgstr "Неподдерживаемый тип: {0}"
+
+msgctxt "#32270"
+msgid "No path provided"
+msgstr "Путь не указан"
+
+msgctxt "#32271"
+msgid "No items found in directory"
+msgstr "В каталоге не найдено элементов"
+
+msgctxt "#32272"
+msgid "Select Actor"
+msgstr "Выбрать актёра"
+
+#. Menu title and feature name - scans library for items without artwork
+msgctxt "#32273"
+msgid "Missing Artwork"
+msgstr "Отсутствующие иллюстрации"
+
+msgctxt "#32274"
+msgid "Scan failed"
+msgstr "Сканирование не удалось"
+
+msgctxt "#32275"
+msgid "Select Artwork"
+msgstr "Выбрать иллюстрацию"
+
+msgctxt "#32276"
+msgid "Loading artwork for {0}..."
+msgstr "Загрузка иллюстраций для {0}..."
+
+msgctxt "#32277"
+msgid "Preparing library scan..."
+msgstr "Подготовка сканирования медиатеки..."
+
+msgctxt "#32278"
+msgid "Initializing..."
+msgstr "Инициализация..."
+
+msgctxt "#32279"
+msgid "Processing complete!"
+msgstr "Обработка завершена!"
+
+msgctxt "#32280"
+msgid "Art Fetcher"
+msgstr "Загрузчик иллюстраций"
+
+msgctxt "#32281"
+msgid "Art Fetcher - Complete"
+msgstr "Загрузчик иллюстраций — завершено"
+
+msgctxt "#32282"
+msgid "View Report"
+msgstr "Просмотреть отчёт"
+
+msgctxt "#32284"
+msgid "Processed: {0} items"
+msgstr "Обработано элементов: {0}"
+
+msgctxt "#32285"
+msgid "Auto-applied: {0}"
+msgstr "Применено автоматически: {0}"
+
+msgctxt "#32286"
+msgid "Skipped: {0}"
+msgstr "Пропущено: {0}"
+
+msgctxt "#32287"
+msgid "Errors: {0}"
+msgstr "Ошибок: {0}"
+
+msgctxt "#32288"
+msgid "Found {0} TV shows. Checking which are not cached..."
+msgstr "Найдено сериалов: {0}. Проверка, какие из них не кэшированы..."
+
+msgctxt "#32289"
+msgid "All TV shows are already cached."
+msgstr "Все сериалы уже кэшированы."
+
+msgctxt "#32290"
+msgid "Download Artwork"
+msgstr "Скачать иллюстрации"
+
+msgctxt "#32291"
+msgid "Preparing..."
+msgstr "Подготовка..."
+
+msgctxt "#32292"
+msgid "Scanning library..."
+msgstr "Сканирование медиатеки..."
+
+msgctxt "#32293"
+msgid "Building download list from {0} items..."
+msgstr "Формирование списка скачивания из {0} элементов..."
+
+msgctxt "#32294"
+msgid "Starting download of {0} artwork files..."
+msgstr "Начало скачивания {0} файлов иллюстраций..."
+
+msgctxt "#32295"
+msgid "Scan complete. No missing artwork found."
+msgstr "Сканирование завершено. Отсутствующих иллюстраций не найдено."
+
+msgctxt "#32296"
+msgid "No remote artwork to download"
+msgstr "Нет удалённых иллюстраций для скачивания"
+
+msgctxt "#32297"
+msgid "Preparing download..."
+msgstr "Подготовка к скачиванию..."
+
+msgctxt "#32298"
+msgid "Downloading artwork..."
+msgstr "Скачивание иллюстраций..."
+
+msgctxt "#32299"
+msgid "Loading seasons and episodes..."
+msgstr "Загрузка сезонов и серий..."
+
+msgctxt "#32300"
+msgid "Ratings Updater"
+msgstr "Обновление рейтингов"
+
+msgctxt "#32301"
+msgid "Remove Rating?"
+msgstr "Удалить рейтинг?"
+
+msgctxt "#32302"
+msgid "Remove {0} rating?"
+msgstr "Удалить рейтинг {0}?"
+
+msgctxt "#32304"
+msgid "Updating {0} {1}s..."
+msgstr "Обновление {0} {1}..."
+
+msgctxt "#32305"
+msgid "Downloading IMDb dataset..."
+msgstr "Скачивание набора данных IMDb..."
+
+msgctxt "#32306"
+msgid "Updating: {0}/{1} - {2}"
+msgstr "Обновление: {0}/{1} — {2}"
+
+msgctxt "#32307"
+msgid "Updating: {0}/{1} items"
+msgstr "Обновление: элементов {0}/{1}"
+
+msgctxt "#32308"
+msgid "Finalizing: {0}/{1}"
+msgstr "Завершение: {0}/{1}"
+
+msgctxt "#32309"
+msgid "Finalizing: {0}/{1} items"
+msgstr "Завершение: элементов {0}/{1}"
+
+msgctxt "#32310"
+msgid "Retrying failed items..."
+msgstr "Повторная попытка для неудавшихся элементов..."
+
+msgctxt "#32311"
+msgid "Retrying: {0}/{1}"
+msgstr "Повтор: {0}/{1}"
+
+msgctxt "#32312"
+msgid "Updating episode data..."
+msgstr "Обновление данных серий..."
+
+msgctxt "#32313"
+msgid "{0} - Rate Limit"
+msgstr "{0} — ограничение частоты запросов"
+
+msgctxt "#32314"
+msgid "Waiting to retry..."
+msgstr "Ожидание повторной попытки..."
+
+msgctxt "#32315"
+msgid "Waiting {0}s before retry..."
+msgstr "Ожидание {0} с перед повторной попыткой..."
+
+msgctxt "#32316"
+msgid "Ratings Updated - {0}"
+msgstr "Рейтинги обновлены — {0}"
+
+msgctxt "#32317"
+msgid "Ratings Updater - Complete"
+msgstr "Обновление рейтингов — завершено"
+
+msgctxt "#32318"
+msgid "IMDb Ratings Update"
+msgstr "Обновление рейтингов IMDb"
+
+msgctxt "#32319"
+msgid "{0} IMDb ratings updated"
+msgstr "Обновлено рейтингов IMDb: {0}"
+
+msgctxt "#32320"
+msgid "IMDb ratings up to date"
+msgstr "Рейтинги IMDb актуальны"
+
+msgctxt "#32321"
+msgid "{0} rate limited, resuming in {1}s"
+msgstr "{0} ограничен по частоте запросов, возобновление через {1} с"
+
+msgctxt "#32323"
+msgid "Stopped: no sources reachable"
+msgstr "Остановлено: нет доступных источников"
+
+msgctxt "#32324"
+msgid "Trakt will fetch {0} movies."
+msgstr "Trakt получит фильмов: {0}."
+
+msgctxt "#32325"
+msgid "Trakt will fetch {0} seasons."
+msgstr "Trakt получит сезонов: {0}."
+
+msgctxt "#32326"
+msgid "Trakt will fetch {0} shows."
+msgstr "Trakt получит сериалов: {0}."
+
+msgctxt "#32327"
+msgid "Trakt allows 500 requests every 5 minutes."
+msgstr "Trakt допускает 500 запросов каждые 5 минут."
+
+msgctxt "#32328"
+msgid "Include Trakt in this update?"
+msgstr "Включить Trakt в это обновление?"
+
+msgctxt "#32329"
+msgid "Include"
+msgstr "Включить"
+
+msgctxt "#32330"
+msgid "Analyzing Textures"
+msgstr "Анализ текстур"
+
+msgctxt "#32331"
+msgid "Scanning texture cache..."
+msgstr "Сканирование кэша текстур..."
+
+msgctxt "#32332"
+msgid "Analyzing {0} textures..."
+msgstr "Анализ {0} текстур..."
+
+msgctxt "#32333"
+msgid "Cleanup Textures by Age"
+msgstr "Очистка текстур по возрасту"
+
+msgctxt "#32334"
+msgid "Clean Orphaned Textures"
+msgstr "Очистка текстур-сирот"
+
+msgctxt "#32335"
+msgid "Starting cleanup..."
+msgstr "Запуск очистки..."
+
+msgctxt "#32336"
+msgid "Starting..."
+msgstr "Запуск..."
+
+msgctxt "#32350"
+msgid "Loading library..."
+msgstr "Загрузка медиатеки..."
+
+msgctxt "#32351"
+msgid "Loading TV shows..."
+msgstr "Загрузка сериалов..."
+
+msgctxt "#32352"
+msgid "Loading episodes..."
+msgstr "Загрузка серий..."
+
+msgctxt "#32353"
+msgid "Analyzing library..."
+msgstr "Анализ медиатеки..."
+
+msgctxt "#32354"
+msgid "Downloading IMDb episode data..."
+msgstr "Скачивание данных серий IMDb..."
+
+msgctxt "#32355"
+msgid "Matching episodes (IMDb dataset)... {0}/{1}"
+msgstr "Сопоставление серий (набор данных IMDb)... {0}/{1}"
+
+msgctxt "#32356"
+msgid "Fetching episodes (TMDB)... {0}/{1}"
+msgstr "Получение серий (TMDB)... {0}/{1}"
+
+msgctxt "#32357"
+msgid "Fixing TMDB IDs... {0}/{1}"
+msgstr "Исправление идентификаторов TMDB... {0}/{1}"
+
+msgctxt "#32358"
+msgid "Fetching {0}... {1}/{2}"
+msgstr "Получение {0}... {1}/{2}"
+
+msgctxt "#32359"
+msgid "No IDs could be fixed"
+msgstr "Не удалось исправить ни одного идентификатора"
+
+msgctxt "#32370"
+msgid "Testing {0}"
+msgstr "Тестирование {0}"
+
+msgctxt "#32371"
+msgid "Connecting to API..."
+msgstr "Подключение к API..."
+
+msgctxt "#32372"
+msgid "Trakt Authorization"
+msgstr "Авторизация Trakt"
+
+msgctxt "#32373"
+msgid "Requesting device code..."
+msgstr "Запрос кода устройства..."
+
+msgctxt "#32374"
+msgid "Testing Trakt"
+msgstr "Тестирование Trakt"
+
+msgctxt "#32390"
+msgid "No Library Values"
+msgstr "Нет значений в медиатеке"
+
+#. Displayed when user rating is 0 (no rating given by user)
+msgctxt "#32391"
+msgid "Not Rated"
+msgstr "Не оценено"
+
+#. Placeholder shown when a field has no value
+msgctxt "#32392"
+msgid "(Not Set)"
+msgstr "(Не задано)"
+
+msgctxt "#32393"
+msgid "Save Changes"
+msgstr "Сохранить изменения"
+
+msgctxt "#32394"
+msgid "Add {0}"
+msgstr "Добавить {0}"
+
+msgctxt "#32395"
+msgid "Quick Edit: {0}"
+msgstr "Быстрое редактирование: {0}"
+
+msgctxt "#32396"
+msgid "Select from Library"
+msgstr "Выбрать из медиатеки"
+
+msgctxt "#32397"
+msgid "Add/Remove Items"
+msgstr "Добавить/удалить элементы"
+
+msgctxt "#32399"
+msgid "Edit {0} (comma-separated)"
+msgstr "Править {0} (через запятую)"
+
+msgctxt "#32400"
+msgid "No rating sources available. Please configure API keys in settings."
+msgstr "Нет доступных источников рейтингов. Настройте ключи API в параметрах."
+
+msgctxt "#32401"
+msgid "{0} not found"
+msgstr "{0} не найдено"
+
+msgctxt "#32402"
+msgid "Updating ratings..."
+msgstr "Обновление рейтингов..."
+
+msgctxt "#32403"
+msgid "No changes needed"
+msgstr "Изменения не требуются"
+
+msgctxt "#32404"
+msgid "Item skipped (no IDs or rate limit)"
+msgstr "Элемент пропущен (нет идентификаторов или ограничение частоты запросов)"
+
+msgctxt "#32405"
+msgid "Failed to update ratings"
+msgstr "Не удалось обновить рейтинги"
+
+msgctxt "#32406"
+msgid "Update Movies"
+msgstr "Обновить фильмы"
+
+msgctxt "#32407"
+msgid "Update TV Shows"
+msgstr "Обновить сериалы"
+
+msgctxt "#32408"
+msgid "Update Episodes"
+msgstr "Обновить серии"
+
+msgctxt "#32409"
+msgid "Update All"
+msgstr "Обновить всё"
+
+msgctxt "#32410"
+msgid "Run Mode"
+msgstr "Режим выполнения"
+
+msgctxt "#32411"
+msgid "Show progress dialog (Foreground)"
+msgstr "Показывать диалог прогресса (в приоритете)"
+
+msgctxt "#32412"
+msgid "Run in background"
+msgstr "Выполнять в фоне"
+
+msgctxt "#32413"
+msgid "No {0}s found in library"
+msgstr "В медиатеке не найдено {0}"
+
+msgctxt "#32414"
+msgid "Fetching ratings batch {0}/{1}..."
+msgstr "Получение рейтингов, пакет {0}/{1}..."
+
+msgctxt "#32415"
+msgid "Retry Failed Items"
+msgstr "Повторить для неудавшихся элементов"
+
+msgctxt "#32416"
+msgid "{0} item(s) had temporary network issues."
+msgstr "{0} элементов имели временные сетевые проблемы."
+
+msgctxt "#32417"
+msgid "Retry these items now?"
+msgstr "Повторить для этих элементов сейчас?"
+
+msgctxt "#32418"
+msgid "Network Issues"
+msgstr "Сетевые проблемы"
+
+msgctxt "#32419"
+msgid "Items with network issues"
+msgstr "Элементы с сетевыми проблемами"
+
+msgctxt "#32420"
+msgid "Retry: {0}/{1} succeeded"
+msgstr "Повтор: успешно для {0}/{1}"
+
+msgctxt "#32421"
+msgid "IMDb ID Corrections"
+msgstr "Исправления идентификаторов IMDb"
+
+msgctxt "#32422"
+msgid "{0} item(s) have outdated IMDb ID(s) (redirects)."
+msgstr "{0} элементов имеют устаревшие идентификаторы IMDb (перенаправления)."
+
+msgctxt "#32423"
+msgid "Correct them in your library?"
+msgstr "Исправить их в вашей медиатеке?"
+
+msgctxt "#32424"
+msgid "No ratings update history found."
+msgstr "История обновлений рейтингов не найдена."
+
+msgctxt "#32425"
+msgid "Calculating disk usage..."
+msgstr "Расчёт использования диска..."
+
+msgctxt "#32426"
+msgid "Complete"
+msgstr "Завершено"
+
+#. Button label meaning "display/reveal" (not TV Show)
+msgctxt "#32427"
+msgid "Show"
+msgstr "Показать"
+
+msgctxt "#32429"
+msgid "Retry"
+msgstr "Повторить"
+
+msgctxt "#32430"
+msgid "Ratings Update Report"
+msgstr "Отчёт об обновлении рейтингов"
+
+msgctxt "#32440"
+msgid "Pre-Cache + Download"
+msgstr "Предварительное кэширование + скачивание"
+
+msgctxt "#32441"
+msgid "Pre-Cache Artwork - Select Scope"
+msgstr "Предварительное кэширование иллюстраций — выбор области"
+
+msgctxt "#32451"
+msgid "Pre-Cache + Download - Select Scope"
+msgstr "Предварительное кэширование + скачивание — выбор области"
+
+msgctxt "#32455"
+msgid "Pre-Cache Artwork"
+msgstr "Предварительное кэширование иллюстраций"
+
+msgctxt "#32457"
+msgid "[B]{0}[/B] is currently running."
+msgstr "В данный момент выполняется [B]{0}[/B]."
+
+msgctxt "#32458"
+msgid "Cannot start another background task."
+msgstr "Невозможно запустить другую фоновую задачу."
+
+msgctxt "#32459"
+msgid "Pre-Cache Cancelled"
+msgstr "Предварительное кэширование отменено"
+
+msgctxt "#32460"
+msgid "Pre-Cache Complete"
+msgstr "Предварительное кэширование завершено"
+
+msgctxt "#32461"
+msgid "Cleanup Cancelled"
+msgstr "Очистка отменена"
+
+msgctxt "#32462"
+msgid "Cleanup Complete"
+msgstr "Очистка завершена"
+
+msgctxt "#32463"
+msgid "Total: {0}"
+msgstr "Всего: {0}"
+
+msgctxt "#32464"
+msgid "Cached: {0}"
+msgstr "Закэшировано: {0}"
+
+msgctxt "#32465"
+msgid "Downloaded: {0} ({1:.1f} MB)"
+msgstr "Скачано: {0} ({1:.1f} МБ)"
+
+msgctxt "#32467"
+msgid "Failed: {0} cache, {1} download"
+msgstr "Не удалось: кэширование {0}, скачивание {1}"
+
+msgctxt "#32468"
+msgid "Already Cached: {0}"
+msgstr "Уже в кэше: {0}"
+
+msgctxt "#32469"
+msgid "Newly Cached: {0}"
+msgstr "Добавлено в кэш: {0}"
+
+msgctxt "#32470"
+msgid "Failed: {0}"
+msgstr "Не удалось: {0}"
+
+msgctxt "#32471"
+msgid "Status: Cancelled"
+msgstr "Статус: отменено"
+
+msgctxt "#32472"
+msgid "Gathering statistics..."
+msgstr "Сбор статистики..."
+
+msgctxt "#32473"
+msgid "Remove textures not used in..."
+msgstr "Удалить текстуры, не использовавшиеся за..."
+
+msgctxt "#32474"
+msgid "30 days"
+msgstr "30 дней"
+
+msgctxt "#32475"
+msgid "60 days"
+msgstr "60 дней"
+
+msgctxt "#32476"
+msgid "90 days"
+msgstr "90 дней"
+
+msgctxt "#32477"
+msgid "180 days"
+msgstr "180 дней"
+
+msgctxt "#32478"
+msgid "365 days (1 year)"
+msgstr "365 дней (1 год)"
+
+msgctxt "#32479"
+msgid "No Old Textures"
+msgstr "Нет старых текстур"
+
+msgctxt "#32480"
+msgid "No textures found older than {0} days."
+msgstr "Не найдено текстур старше {0} дней."
+
+msgctxt "#32481"
+msgid "Total textures checked: {0}"
+msgstr "Всего проверено текстур: {0}"
+
+msgctxt "#32482"
+msgid "Confirm Cleanup"
+msgstr "Подтверждение очистки"
+
+msgctxt "#32483"
+msgid "Remove {0} textures older than {1} days?"
+msgstr "Удалить {0} текстур старше {1} дней?"
+
+msgctxt "#32484"
+msgid "Total: {0} | Oldest: {1}"
+msgstr "Всего: {0} | Самых старых: {1}"
+
+msgctxt "#32485"
+msgid "Failed to analyze textures"
+msgstr "Не удалось проанализировать текстуры"
+
+msgctxt "#32486"
+msgid "Overwrite mode is enabled"
+msgstr "Включён режим перезаписи"
+
+#. {0} is a list such as "Movies: filename prefix"
+msgctxt "#32487"
+msgid "Filename pattern: {0}"
+msgstr "Шаблон имени файла: {0}"
+
+msgctxt "#32488"
+msgid "Texture Cache - Last Run"
+msgstr "Кэш текстур — последний запуск"
+
+msgctxt "#32489"
+msgid "No previous operations found."
+msgstr "Предыдущих операций не найдено."
+
+msgctxt "#32490"
+msgid "Fetching texture database..."
+msgstr "Получение базы данных текстур..."
+
+msgctxt "#32492"
+msgid "Removing {0} old textures..."
+msgstr "Удаление {0} старых текстур..."
+
+msgctxt "#32493"
+msgid "Checked: {0} textures"
+msgstr "Проверено текстур: {0}"
+
+msgctxt "#32494"
+msgid "Older than {0} days: {1}"
+msgstr "Старше {0} дней: {1}"
+
+msgctxt "#32495"
+msgid "Removed: {0}"
+msgstr "Удалено: {0}"
+
+msgctxt "#32496"
+msgid "Total Cached: {0} | Library: {1}"
+msgstr "Всего в кэше: {0} | Медиатека: {1}"
+
+msgctxt "#32497"
+msgid "Orphaned Found: {0} | Removed: {1}"
+msgstr "Найдено сирот: {0} | Удалено: {1}"
+
+msgctxt "#32498"
+msgid "{0} artwork files not found on disk.[CR]These are stale library entries pointing to missing files.[CR][CR]View the list?"
+msgstr "{0} файлов иллюстраций не найдено на диске.[CR]Это устаревшие записи в медиатеке, указывающие на отсутствующие файлы.[CR][CR]Просмотреть список?"
+
+msgctxt "#32499"
+msgid "Missing Artwork Files"
+msgstr "Отсутствующие файлы иллюстраций"
+
+msgctxt "#32500"
+msgid "Session Report"
+msgstr "Отчёт сеанса"
+
+msgctxt "#32501"
+msgid "Mismatches found: {0} files"
+msgstr "Найдено несоответствий: файлов {0}"
+
+msgctxt "#32502"
+msgid "Select Missing Artwork"
+msgstr "Выбрать отсутствующие иллюстрации"
+
+msgctxt "#32503"
+msgid "Select + Download Missing Artwork"
+msgstr "Выбрать + скачать отсутствующие иллюстрации"
+
+msgctxt "#32504"
+msgid "Auto-Apply Missing Artwork"
+msgstr "Автоматически применить отсутствующие иллюстрации"
+
+msgctxt "#32505"
+msgid "View Session History"
+msgstr "Просмотреть историю сеансов"
+
+msgctxt "#32507"
+msgid "Browse & Choose Artwork - Select Library"
+msgstr "Обзор и выбор иллюстраций — выбор медиатеки"
+
+msgctxt "#32508"
+msgid "Browse & Choose + Download - Select Library"
+msgstr "Обзор и выбор + скачивание — выбор медиатеки"
+
+msgctxt "#32509"
+msgid "Auto-Fill Missing Artwork - Select Library"
+msgstr "Автозаполнение отсутствующих иллюстраций — выбор медиатеки"
+
+msgctxt "#32510"
+msgid "Last Session (any library)"
+msgstr "Последний сеанс (любая медиатека)"
+
+msgctxt "#32511"
+msgid "Original artwork will be [B]deleted[/B] after a successful download."
+msgstr "Оригинальные иллюстрации будут [B]удалены[/B] после успешного скачивания."
+
+msgctxt "#32512"
+msgid "Session History"
+msgstr "История сеансов"
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32513"
+msgid "{0}: filename prefix"
+msgstr "{0}: префикс имени файла"
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32514"
+msgid "{0}: no prefix"
+msgstr "{0}: без префикса"
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32515"
+msgid "Loading {0}..."
+msgstr "Загрузка {0}..."
+
+msgctxt "#32520"
+msgid "Artwork Download Report"
+msgstr "Отчёт о скачивании иллюстраций"
+
+msgctxt "#32522"
+msgid "Download Artwork to Filesystem"
+msgstr "Скачать иллюстрации в файловую систему"
+
+msgctxt "#32523"
+msgid "Download Artwork - Select Scope"
+msgstr "Скачивание иллюстраций — выбор области"
+
+msgctxt "#32530"
+msgid "Tools"
+msgstr "Инструменты"
+
+msgctxt "#32532"
+msgid "Add/Fix IMDb & TMDB IDs"
+msgstr "Добавить/исправить идентификаторы IMDb и TMDB"
+
+msgctxt "#32540"
+msgid "Scan for Animated Posters"
+msgstr "Поиск анимированных постеров"
+
+msgctxt "#32541"
+msgid "View Cache Statistics"
+msgstr "Просмотреть статистику кэша"
+
+msgctxt "#32542"
+msgid "Reset GIF Cache"
+msgstr "Сбросить кэш GIF"
+
+msgctxt "#32543"
+msgid "GIF Scanner - Last Run"
+msgstr "Сканер GIF — последний запуск"
+
+msgctxt "#32544"
+msgid "GIF Cache Statistics"
+msgstr "Статистика кэша GIF"
+
+msgctxt "#32546"
+msgid "Clear {0} cached GIF entries?[CR][CR]Use this to troubleshoot cache issues.[CR][CR]Tip: Use 'Full Rescan' mode instead to re-process GIFs."
+msgstr "Очистить {0} записей в кэше GIF?[CR][CR]Используйте это для устранения проблем с кэшем.[CR][CR]Совет: используйте режим «Полное сканирование» для повторной обработки GIF."
+
+msgctxt "#32547"
+msgid "GIF Cache"
+msgstr "Кэш GIF"
+
+msgctxt "#32548"
+msgid "Reset complete - cleared {0} entries"
+msgstr "Сброс выполнен — очищено записей: {0}"
+
+msgctxt "#32549"
+msgid "Cache is already empty"
+msgstr "Кэш уже пуст"
+
+msgctxt "#32550"
+msgid "Auto-Applied Artwork Report"
+msgstr "Отчёт о автоматически применённых иллюстрациях"
+
+msgctxt "#32551"
+msgid "Skipped Items Report"
+msgstr "Отчёт о пропущенных элементах"
+
+msgctxt "#32552"
+msgid "Scan for GIF Posters"
+msgstr "Поиск постеров GIF"
+
+msgctxt "#32553"
+msgid "Select scan mode"
+msgstr "Выберите режим сканирования"
+
+msgctxt "#32554"
+msgid "Select Language"
+msgstr "Выберите язык"
+
+msgctxt "#32555"
+msgid "Select Artwork Type - {0}"
+msgstr "Выберите тип иллюстрации — {0}"
+
+msgctxt "#32556"
+msgid "Select {0}"
+msgstr "Выберите {0}"
+
+msgctxt "#32557"
+msgid "Edit {0}"
+msgstr "Править {0}"
+
+msgctxt "#32560"
+msgid "Edit: {0}"
+msgstr "Правка: {0}"
+
+msgctxt "#32561"
+msgid "Dialog Error"
+msgstr "Ошибка диалога"
+
+msgctxt "#32562"
+msgid "File not found: {0}"
+msgstr "Файл не найден: {0}"
+
+msgctxt "#32563"
+msgid "Failed to read file: {0}"
+msgstr "Не удалось прочитать файл: {0}"
+
+msgctxt "#32564"
+msgid "Rating source '{0}' already exists."
+msgstr "Источник рейтинга «{0}» уже существует."
+
+msgctxt "#32565"
+msgid "Rating (0-10)"
+msgstr "Рейтинг (0-10)"
+
+msgctxt "#32566"
+msgid "Continue"
+msgstr "Продолжить"
+
+msgctxt "#32567"
+msgid "Auto-Fill"
+msgstr "Автозаполнение"
+
+msgctxt "#32569"
+msgid "Yes, Cancel It"
+msgstr "Да, отменить"
+
+msgctxt "#32570"
+msgid "No, Keep Running"
+msgstr "Нет, продолжить выполнение"
+
+msgctxt "#32571"
+msgid "Cancel Running Task?"
+msgstr "Отменить выполняемую задачу?"
+
+msgctxt "#32574"
+msgid "Cancel to resume later"
+msgstr "Отмена для продолжения позже"
+
+msgctxt "#32575"
+msgid "Invalid scope: {0}"
+msgstr "Неверная область: {0}"
+
+msgctxt "#32576"
+msgid "Invalid scan mode: {0}"
+msgstr "Неверный режим сканирования: {0}"
+
+msgctxt "#32577"
+msgid "Resuming scan..."
+msgstr "Возобновление сканирования..."
+
+msgctxt "#32579"
+msgid "All (Movies + TV Shows)"
+msgstr "Всё (фильмы + сериалы)"
+
+msgctxt "#32580"
+msgid "Movies Only"
+msgstr "Только фильмы"
+
+msgctxt "#32581"
+msgid "TV Shows Only"
+msgstr "Только сериалы"
+
+msgctxt "#32582"
+msgid "Incremental Scan"
+msgstr "Добавочное сканирование"
+
+msgctxt "#32583"
+msgid "Skip unchanged GIFs, detect new/modified ones"
+msgstr "Пропускать неизменённые GIF, обнаруживать новые/изменённые"
+
+msgctxt "#32584"
+msgid "Full Rescan"
+msgstr "Полное сканирование"
+
+msgctxt "#32585"
+msgid "Rescan all items, rebuild cache from scratch"
+msgstr "Пересканировать все элементы, перестроить кэш с нуля"
+
+msgctxt "#32586"
+msgid "{0} GIFs cached"
+msgstr "GIF в кэше: {0}"
+
+msgctxt "#32587"
+msgid "no cache"
+msgstr "нет кэша"
+
+msgctxt "#32588"
+msgid "Total Cached GIFs: {0}"
+msgstr "Всего GIF в кэше: {0}"
+
+msgctxt "#32589"
+msgid "Recently Scanned (Last {0}):"
+msgstr "Недавно отсканировано (последние {0}):"
+
+msgctxt "#32590"
+msgid "... and {0} more"
+msgstr "... и ещё {0}"
+
+msgctxt "#32595"
+msgid "Automatically update IMDb Top 250 rankings in your library"
+msgstr "Автоматически обновлять рейтинг IMDb Топ-250 в вашей медиатеке"
+
+msgctxt "#32600"
+msgid "IMDb Top 250"
+msgstr "IMDb Топ-250"
+
+msgctxt "#32601"
+msgid "Fetching Top 250 from Trakt..."
+msgstr "Получение Топ-250 из Trakt..."
+
+msgctxt "#32602"
+msgid "Loading library..."
+msgstr "Загрузка медиатеки..."
+
+msgctxt "#32603"
+msgid "Matching movies..."
+msgstr "Сопоставление фильмов..."
+
+msgctxt "#32604"
+msgid "Updating: {0}/{1}"
+msgstr "Обновление: {0}/{1}"
+
+msgctxt "#32605"
+msgid "Top 250 Update Complete"
+msgstr "Обновление Топ-250 завершено"
+
+msgctxt "#32606"
+msgid "Updated: {0} | Cleared: {1} | Already correct: {2}"
+msgstr "Обновлено: {0} | Очищено: {1} | Уже правильно: {2}"
+
+msgctxt "#32607"
+msgid "Failed to fetch Top 250 list from Trakt."
+msgstr "Не удалось получить список Топ-250 из Trakt."
+
+msgctxt "#32608"
+msgid "No movies found in library."
+msgstr "В медиатеке не найдено фильмов."
+
+msgctxt "#32609"
+msgid "Update IMDb Top 250?"
+msgstr "Обновить IMDb Топ-250?"
+
+msgctxt "#32610"
+msgid "Set/update: {0} movies[CR]Clear: {1} movies[CR]Already correct: {2} movies[CR][CR]This will overwrite existing Top 250 values."
+msgstr "Установить/обновить: {0} фильмов[CR]Очистить: {1} фильмов[CR]Уже правильно: {2} фильмов[CR][CR]Это перезапишет существующие значения Топ-250."
+
+msgctxt "#32611"
+msgid "Cancelled. Updated: {0} | Cleared: {1} before cancellation."
+msgstr "Отменено. Обновлено: {0} | Очищено: {1} до отмены."
+
+msgctxt "#32612"
+msgid "Trakt Not Signed In"
+msgstr "Вход в Trakt не выполнен"
+
+msgctxt "#32613"
+msgid "Sign in to Trakt or remove this widget"
+msgstr "Войдите в Trakt или удалите этот виджет"
+
+msgctxt "#32614"
+msgid "Search"
+msgstr "Поиск"
+
+msgctxt "#32615"
+msgid "Widgets"
+msgstr "Виджеты"
+
+msgctxt "#32616"
+msgid "Search Movies"
+msgstr "Поиск фильмов"
+
+msgctxt "#32617"
+msgid "Search TV Shows"
+msgstr "Поиск сериалов"
+
+msgctxt "#32618"
+msgid "Search People"
+msgstr "Поиск людей"
+
+msgctxt "#32619"
+msgid "Discover"
+msgstr "Обзор"
+
+msgctxt "#32620"
+msgid "Next Up"
+msgstr "Следующая серия"
+
+msgctxt "#32621"
+msgid "Recent Episodes"
+msgstr "Недавние серии"
+
+msgctxt "#32622"
+msgid "Seasonal"
+msgstr "Сезонное"
+
+msgctxt "#32623"
+msgid "Recommended Movies"
+msgstr "Рекомендуемые фильмы"
+
+msgctxt "#32624"
+msgid "Recommended TV Shows"
+msgstr "Рекомендуемые сериалы"
+
+msgctxt "#32625"
+msgid "Movies"
+msgstr "Фильмы"
+
+msgctxt "#32626"
+msgid "TV Shows"
+msgstr "Сериалы"
+
+msgctxt "#32627"
+msgid "TMDB Trending"
+msgstr "Популярное TMDB"
+
+msgctxt "#32628"
+msgid "TMDB Popular"
+msgstr "Популярные TMDB"
+
+msgctxt "#32629"
+msgid "TMDB Top Rated"
+msgstr "Самые высокооценённые TMDB"
+
+msgctxt "#32630"
+msgid "TMDB Now Playing"
+msgstr "Сейчас в прокате TMDB"
+
+msgctxt "#32631"
+msgid "TMDB Upcoming"
+msgstr "Будущие релизы TMDB"
+
+msgctxt "#32632"
+msgid "TMDB Airing Today"
+msgstr "В эфире сегодня TMDB"
+
+msgctxt "#32633"
+msgid "TMDB On The Air"
+msgstr "В эфире TMDB"
+
+msgctxt "#32634"
+msgid "Trakt Trending"
+msgstr "Популярное Trakt"
+
+msgctxt "#32635"
+msgid "Trakt Popular"
+msgstr "Популярные Trakt"
+
+msgctxt "#32636"
+msgid "Trakt Anticipated"
+msgstr "Ожидаемые Trakt"
+
+msgctxt "#32637"
+msgid "Trakt Most Watched"
+msgstr "Самые просматриваемые Trakt"
+
+msgctxt "#32638"
+msgid "Trakt Most Collected"
+msgstr "Самые коллекционируемые Trakt"
+
+msgctxt "#32639"
+msgid "Trakt Box Office"
+msgstr "Кассовые сборы Trakt"
+
+msgctxt "#32640"
+msgid "Trakt Recommendations"
+msgstr "Рекомендации Trakt"
+
+msgctxt "#32641"
+msgid "(OAuth)"
+msgstr "(OAuth)"
+
+msgctxt "#32642"
+msgid "Christmas"
+msgstr "Рождество"
+
+msgctxt "#32643"
+msgid "Halloween"
+msgstr "Хэллоуин"
+
+msgctxt "#32644"
+msgid "Valentine's Day"
+msgstr "День святого Валентина"
+
+msgctxt "#32645"
+msgid "Thanksgiving"
+msgstr "День благодарения"
+
+msgctxt "#32646"
+msgid "Star Wars Day"
+msgstr "День Звёздных войн"
+
+msgctxt "#32647"
+msgid "Star Trek"
+msgstr "Звёздный путь"
+
+msgctxt "#32648"
+msgid "New Year"
+msgstr "Новый год"
+
+msgctxt "#32649"
+msgid "Easter"
+msgstr "Пасха"
+
+msgctxt "#32650"
+msgid "Independence Day"
+msgstr "День независимости"
+
+# Recommended widget label, single-seed mode. {0} = seed title -> "Recommended based on Avatar"
+msgctxt "#32651"
+msgid "Recommended based on {0}"
+msgstr "Рекомендации на основе {0}"
+
+msgctxt "#32652"
+msgid "Recommended based on recent watches"
+msgstr "Рекомендации на основе недавних просмотров"
+
+# Artwork selection dialogs
+msgctxt "#32653"
+msgid "Current Extra Art (Click to Remove)"
+msgstr "Текущие дополнительные иллюстрации (нажмите для удаления)"
+
+msgctxt "#32654"
+msgid "Available Art (Click to Add)"
+msgstr "Доступные иллюстрации (нажмите для добавления)"
+
+msgctxt "#32655"
+msgid "Clear Selection"
+msgstr "Очистить выбор"
+
+msgctxt "#32656"
+msgid "Apply"
+msgstr "Применить"
+
+msgctxt "#32657"
+msgid "Sort: Popularity"
+msgstr "Сортировка: по популярности"
+
+msgctxt "#32658"
+msgid "Sort: Resolution"
+msgstr "Сортировка: по разрешению"
+
+# Colour picker dialog
+msgctxt "#32659"
+msgid "Colour Manager"
+msgstr "Управление цветом"
+
+msgctxt "#32660"
+msgid "Alpha"
+msgstr "Прозрачность"
+
+msgctxt "#32661"
+msgid "Enter Hex"
+msgstr "Введите шестнадцатеричный код"
+
+# Metadata editor, unique IDs
+msgctxt "#32663"
+msgid "Add ID"
+msgstr "Добавить идентификатор"
+
+msgctxt "#32664"
+msgid "ID type (imdb, tmdb, tvdb...)"
+msgstr "Тип идентификатора (imdb, tmdb, tvdb...)"
+
+# {0} = id type, e.g. tmdb -> "tmdb ID (leave empty to remove)"
+msgctxt "#32665"
+msgid "{0} ID (leave empty to remove)"
+msgstr "{0} ID (оставьте пустым для удаления)"
+
+msgctxt "#32666"
+msgid "Kodi won't remove the default ID. Change its value, or set another ID as default first."
+msgstr "Kodi не удалит идентификатор по умолчанию. Измените его значение или сначала назначьте другой идентификатор основным."
+
+# {0} = id type, e.g. tmdb -> "Remove the tmdb ID?"
+msgctxt "#32667"
+msgid "Remove the {0} ID?"
+msgstr "Удалить идентификатор {0}?"
+
+msgctxt "#32668"
+msgid "User Rating"
+msgstr "Оценка пользователя"
+
+msgctxt "#32669"
+msgid "External Ratings"
+msgstr "Внешние рейтинги"
+
+msgctxt "#32670"
+msgid "Display Artist"
+msgstr "Исполнитель (для отображения)"
+
+msgctxt "#32671"
+msgid "Sort Artist"
+msgstr "Исполнитель (для сортировки)"
+
+msgctxt "#32672"
+msgid "Record Label"
+msgstr "Лейбл звукозаписи"
+
+msgctxt "#32673"
+msgid "Album Type"
+msgstr "Тип альбома"
+
+msgctxt "#32674"
+msgid "Sort Name"
+msgstr "Имя для сортировки"
+
+# Info dialog section headers with no Kodi core string
+msgctxt "#32675"
+msgid "Top Movies"
+msgstr "Лучшие фильмы"
+
+msgctxt "#32676"
+msgid "Top TV Shows"
+msgstr "Лучшие сериалы"
+
+msgctxt "#32677"
+msgid "In Your Library - Movies"
+msgstr "В вашей медиатеке — фильмы"
+
+msgctxt "#32678"
+msgid "In Your Library - TV Shows"
+msgstr "В вашей медиатеке — сериалы"
+
+msgctxt "#32679"
+msgid "All Credits"
+msgstr "Все роли"
+
+msgctxt "#32680"
+msgid "Crew Credits"
+msgstr "Роли съёмочной группы"
+
+msgctxt "#32681"
+msgid "Images"
+msgstr "Изображения"
+
+msgctxt "#32682"
+msgid "Recommendations"
+msgstr "Рекомендации"
+
+msgctxt "#32683"
+msgid "Similar in Library"
+msgstr "Похожее в медиатеке"
+
+msgctxt "#32684"
+msgid "Crew"
+msgstr "Съёмочная группа"
+
+msgctxt "#32685"
+msgid "Next Up (Favourites)"
+msgstr "Следующая серия (избранное)"
+
+msgctxt "#32686"
+msgid "Recent Videos"
+msgstr "Недавние видео"
+
+msgctxt "#32687"
+msgid "Favourite Movies"
+msgstr "Избранные фильмы"
+
+msgctxt "#32688"
+msgid "Favourite TV Shows"
+msgstr "Избранные сериалы"
+
+msgctxt "#32689"
+msgid "Favourite Episodes"
+msgstr "Избранные серии"
+
+msgctxt "#32690"
+msgid "Favourite Music Videos"
+msgstr "Избранные музыкальные клипы"
+
+msgctxt "#32691"
+msgid "Music video thumb source"
+msgstr "Источник эскиза музыкального клипа"
+
+#. Options for which image fills an empty music video thumb during automatic fetching
+msgctxt "#32692"
+msgid "Video screenshots"
+msgstr "Скриншоты видео"
+
+msgctxt "#32693"
+msgid "Album cover"
+msgstr "Обложка альбома"
+
+msgctxt "#32694"
+msgid "Artist thumb"
+msgstr "Эскиз исполнителя"
+
+msgctxt "#32695"
+msgid "Ratings sources to check (IMDb always on)"
+msgstr "Источники рейтингов для проверки (IMDb всегда включён)"
+
+msgctxt "#32696"
+msgid "Continue Watching"
+msgstr "Продолжить просмотр"
+
+msgctxt "#32697"
+msgid "Similar Artists"
+msgstr "Похожие исполнители"
+
+msgctxt "#32698"
+msgid "Wait 60s and Retry"
+msgstr "Подождать 60 с и повторить"
+
+msgctxt "#32699"
+msgid "Retry Tomorrow"
+msgstr "Повторить завтра"
+
+msgctxt "#32700"
+msgid "Stop All Updates"
+msgstr "Остановить все обновления"
+
+#. {0} is the provider name, e.g. TRAKT
+msgctxt "#32701"
+msgid "Continue Without {0}"
+msgstr "Продолжить без {0}"
+
+#. {0} is a web address, {1} a short code the user types there, {2} the seconds left
+msgctxt "#32702"
+msgid ""
+"1. Visit: {0}\n"
+"2. Enter code: [B]{1}[/B]\n"
+"3. Click Authorize on the website\n"
+"\n"
+"Waiting for authorization... ({2}s remaining)"
+msgstr ""
+"1. Перейдите на: {0}\n"
+"2. Введите код: [B]{1}[/B]\n"
+"3. Нажмите «Авторизовать» на сайте\n"
+"\n"
+"Ожидание авторизации... (осталось {2} с)"
+
+msgctxt "#32703"
+msgid "Person Info"
+msgstr "Информация о человеке"
+
+msgctxt "#32704"
+msgid "Scanning {0}"
+msgstr "Сканирование {0}"
+
+msgctxt "#32705"
+msgid "ETA {0}"
+msgstr "Осталось {0}"
+
+msgctxt "#32706"
+msgid "Queued: {0}"
+msgstr "В очереди: {0}"
+
+msgctxt "#32707"
+msgid "Found: {0} | Cached: {1} | Existing: {2}"
+msgstr "Найдено: {0} | В кэше: {1} | Существующих: {2}"
+
+msgctxt "#32708"
+msgid "Option {0}"
+msgstr "Вариант {0}"
+
+#. {2} is a language name
+msgctxt "#32709"
+msgid "{0} of {1} available ({2})"
+msgstr "Доступно {0} из {1} ({2})"
+
+msgctxt "#32710"
+msgid "{0} available"
+msgstr "Доступно: {0}"
+
+#. {0} is an art type such as Fanart or Poster
+msgctxt "#32711"
+msgid "Multi-Art {0}"
+msgstr "Несколько иллюстраций: {0}"
+
+#. {0} is a media type, {1} a list of art types
+msgctxt "#32712"
+msgid "Art type not supported for {0}: {1}"
+msgstr "Тип иллюстрации не поддерживается для {0}: {1}"
+
+msgctxt "#32713"
+msgid "No MusicBrainz ID for this artist"
+msgstr "Нет идентификатора MusicBrainz для этого исполнителя"
+
+msgctxt "#32714"
+msgid "No MusicBrainz ID for this album"
+msgstr "Нет идентификатора MusicBrainz для этого альбома"
+
+msgctxt "#32715"
+msgid "Failed to fetch artwork"
+msgstr "Не удалось получить иллюстрации"
+
+#. {0} is a list of art types
+msgctxt "#32716"
+msgid "No {0} artwork found"
+msgstr "Иллюстрации типа {0} не найдены"
+
+msgctxt "#32717"
+msgid "Artwork updated"
+msgstr "Иллюстрации обновлены"
+
+msgctxt "#32718"
+msgid "Applied: {0} | Skipped: {1} | Auto-skipped: {2}"
+msgstr "Применено: {0} | Пропущено: {1} | Пропущено автоматически: {2}"
+
+#. {0} is a library name such as Movies
+msgctxt "#32719"
+msgid "{0} - Select Action"
+msgstr "{0} — выберите действие"
+
+#. {0} is a library name such as Movies
+msgctxt "#32720"
+msgid "No report available for {0}"
+msgstr "Отчёт для {0} недоступен"
+
+msgctxt "#32721"
+msgid "No reports available"
+msgstr "Отчёты недоступны"
+
+#. {0} is a library name such as Movies
+msgctxt "#32722"
+msgid "Auto-Fill {0}"
+msgstr "Автозаполнение {0}"
+
+msgctxt "#32723"
+msgid "Automatically applies missing artwork without review.[CR]Only fills in missing artwork, won't replace existing.[CR]View results afterwards in Session History.[CR][CR]Continue?"
+msgstr "Автоматически применяет отсутствующие иллюстрации без проверки.[CR]Заполняет только отсутствующие иллюстрации, не заменяет существующие.[CR]Просмотрите результаты после этого в истории сеансов.[CR][CR]Продолжить?"
+
+msgctxt "#32724"
+msgid "Enter the date as YYYY-MM-DD"
+msgstr "Введите дату в формате ГГГГ-ММ-ДД"
+
+msgctxt "#32725"
+msgid "That date cannot exist"
+msgstr "Такой даты не может существовать"
+
+#. {0} is a field name such as Genre
+msgctxt "#32726"
+msgid "No existing {0} found in library.[CR]Use Quick Edit or Add/Remove instead."
+msgstr "В медиатеке не найдено существующих значений «{0}».[CR]Используйте вместо этого быстрое редактирование или добавление/удаление."
+
+msgctxt "#32727"
+msgid "{0} votes"
+msgstr "Голосов: {0}"
+
+#. {0} is a field name such as Genre
+msgctxt "#32728"
+msgid "{0} updated"
+msgstr "{0} обновлено"
+
+#. {0} is how many more values are not shown
+msgctxt "#32729"
+msgid "(+{0} more)"
+msgstr "(ещё +{0})"
+
+#. {0} is the name of the running task
+msgctxt "#32730"
+msgid "Cancel Current Task: {0}"
+msgstr "Отменить текущую задачу: {0}"
+
+#. {0} is the name of the running task
+msgctxt "#32731"
+msgid "[B]Currently Running:[/B] {0}"
+msgstr "[B]Сейчас выполняется:[/B] {0}"
+
+#. {0} is a time such as 5m 3s
+msgctxt "#32732"
+msgid "[B]Duration:[/B] {0}"
+msgstr "[B]Длительность:[/B] {0}"
+
+#. {0} is a time such as 5m 3s
+msgctxt "#32733"
+msgid "[B]Last Activity:[/B] {0} ago"
+msgstr "[B]Последняя активность:[/B] {0} назад"
+
+#. {0} is the name of the task about to start
+msgctxt "#32734"
+msgid "[B]New Task:[/B] {0}"
+msgstr "[B]Новая задача:[/B] {0}"
+
+msgctxt "#32735"
+msgid "Cancelling will stop the current task safely."
+msgstr "Отмена безопасно остановит текущую задачу."
+
+msgctxt "#32736"
+msgid "Not set in Kodi's settings. This folder holds the artwork for movie sets.[CR][CR]Select a folder now?"
+msgstr "Не задано в настройках Kodi. Эта папка содержит иллюстрации для киноциклов.[CR][CR]Выбрать папку сейчас?"
+
+msgctxt "#32737"
+msgid "Not set in Kodi's settings. This folder holds the artwork and metadata for artists.[CR][CR]Select a folder now?"
+msgstr "Не задано в настройках Kodi. Эта папка содержит иллюстрации и метаданные для исполнителей.[CR][CR]Выбрать папку сейчас?"
+
+msgctxt "#32738"
+msgid "Folder saved"
+msgstr "Папка сохранена"
+
+msgctxt "#32739"
+msgid "Could not save the setting. Set the folder in Kodi's settings instead."
+msgstr "Не удалось сохранить настройку. Задайте папку вместо этого в настройках Kodi."
+
+#. {0} is the image's position in the list
+msgctxt "#32740"
+msgid "Profile Image {0}"
+msgstr "Изображение профиля {0}"
+
+#. {0} is a list of counts, such as "12 Movies, 3 TV shows"
+msgctxt "#32741"
+msgid "Missing IMDb IDs: {0}"
+msgstr "Отсутствующие идентификаторы IMDb: {0}"
+
+#. {0} is a list of counts, such as "12 Movies, 3 TV shows"
+msgctxt "#32742"
+msgid "Invalid TMDB IDs: {0}"
+msgstr "Недопустимые идентификаторы TMDB: {0}"
+
+msgctxt "#32743"
+msgid "Fix these issues?"
+msgstr "Исправить эти проблемы?"
+
+msgctxt "#32744"
+msgid "Added {0} IMDb IDs"
+msgstr "Добавлено идентификаторов IMDb: {0}"
+
+msgctxt "#32745"
+msgid "Fixed {0} TMDB IDs"
+msgstr "Исправлено идентификаторов TMDB: {0}"
+
+msgctxt "#32746"
+msgid "Creator"
+msgstr "Создатель"
+
+msgctxt "#32747"
+msgid "Enter 6 or 8 hex digits, as RRGGBB or AARRGGBB"
+msgstr "Введите 6 или 8 шестнадцатеричных цифр в виде RRGGBB или AARRGGBB"
+
+msgctxt "#32901"
+msgid "Enable Debug Output"
+msgstr "Включить вывод отладки"
+
+msgctxt "#32930"
+msgid "English"
+msgstr "Английский"
+
+msgctxt "#32931"
+msgid "Spanish"
+msgstr "Испанский"
+
+msgctxt "#32932"
+msgid "Portuguese (Brazil)"
+msgstr "Португальский (Бразилия)"
+
+msgctxt "#32933"
+msgid "Portuguese (Portugal)"
+msgstr "Португальский (Португалия)"
+
+msgctxt "#32934"
+msgid "French"
+msgstr "Французский"
+
+msgctxt "#32935"
+msgid "German"
+msgstr "Немецкий"
+
+msgctxt "#32936"
+msgid "Chinese (Simplified)"
+msgstr "Китайский (упрощённый)"
+
+msgctxt "#32937"
+msgid "Chinese (Traditional)"
+msgstr "Китайский (традиционный)"
+
+msgctxt "#32938"
+msgid "Italian"
+msgstr "Итальянский"
+
+msgctxt "#32939"
+msgid "Polish"
+msgstr "Польский"
+
+msgctxt "#32940"
+msgid "Russian"
+msgstr "Русский"
+
+msgctxt "#32941"
+msgid "Dutch"
+msgstr "Голландский"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Шведский"
+
+msgctxt "#32943"
+msgid "Korean"
+msgstr "Корейский"
+
+msgctxt "#32944"
+msgid "Japanese"
+msgstr "Японский"
+
+msgctxt "#32950"
+msgid "Advanced API Configuration"
+msgstr "Расширенная настройка API"
+
+msgctxt "#32951"
+msgid "Use Custom TMDb API Key"
+msgstr "Использовать собственный ключ API TMDb"
+
+msgctxt "#32952"
+msgid "A built-in TMDb API key is provided and works for most users. Enable this only if you need higher rate limits or want to use your own dedicated quota."
+msgstr "Встроенный ключ API TMDb предоставляется и работает для большинства пользователей. Включайте это, только если вам нужны более высокие лимиты запросов или вы хотите использовать собственную квоту."
+
+msgctxt "#32960"
+msgid "Missing Artwork Types"
+msgstr "Типы отсутствующих иллюстраций"
+
+msgctxt "#32963"
+msgid "Clearlogo"
+msgstr "Логотип без фона"
+
+msgctxt "#32964"
+msgid "Clearart"
+msgstr "Иллюстрация без фона"
+
+msgctxt "#32965"
+msgid "Thumb"
+msgstr "Эскиз"
+
+msgctxt "#32966"
+msgid "Landscape"
+msgstr "Пейзажная"
+
+msgctxt "#32967"
+msgid "Discart"
+msgstr "Диск"
+
+msgctxt "#32968"
+msgid "Keyart"
+msgstr "Ключевое искусство"
+
+msgctxt "#32969"
+msgid "Characterart"
+msgstr "Персонажи"
+
+msgctxt "#32970"
+msgid "Auto-download after Manage Artwork"
+msgstr "Автоскачивание после управления иллюстрациями"
+
+msgctxt "#32971"
+msgid "Automatically download selected artwork to filesystem after selection in Manage Artwork"
+msgstr "Автоматически скачивать выбранные иллюстрации в файловую систему после выбора в «Управлении иллюстрациями»"
+
+msgctxt "#32974"
+msgid "Download Settings"
+msgstr "Настройки скачивания"
+
+#. Settings group - language for data from online APIs (TMDb titles, plots, etc.)
+msgctxt "#32976"
+msgid "Online Service"
+msgstr "Интернет-сервисы"
+
+msgctxt "#32977"
+msgid "Language for online metadata from TMDb, Last.fm, and TheAudioDB"
+msgstr "Язык для метаданных из интернета от TMDb, Last.fm и TheAudioDB"
+
+#. Actor image download feature (context menu)
+msgctxt "#32981"
+msgid "Downloading actor images..."
+msgstr "Скачивание изображений актёров..."
+
+msgctxt "#32982"
+msgid "{0} actors"
+msgstr "Актёров: {0}"
+
+msgctxt "#32983"
+msgid "Include TV Episode Guest Stars"
+msgstr "Включать приглашённых звёзд серий"
+
+msgctxt "#32984"
+msgid "Download guest star images from TV show episodes (increases API calls)"
+msgstr "Скачивать изображения приглашённых звёзд из серий сериалов (увеличивает количество запросов к API)"
+
+msgctxt "#32985"
+msgid "Include Episode Thumbnails"
+msgstr "Включать эскизы серий"
+
+msgctxt "#32986"
+msgid "Download episode thumbnail artwork during bulk operations"
+msgstr "Скачивать эскизы серий во время массовых операций"
+
+msgctxt "#32987"
+msgid "Text too long to fully display"
+msgstr "Текст слишком длинный для полного отображения"
+
+msgctxt "#32988"
+msgid "Sync TV Show Metadata"
+msgstr "Синхронизировать метаданные сериалов"
+
+msgctxt "#32989"
+msgid "Updates online metadata for every TV show in your library. Large libraries may take significantly longer."
+msgstr "Обновляет метаданные из интернета для каждого сериала в вашей медиатеке. Большие медиатеки могут обрабатываться значительно дольше."
+
+msgctxt "#32990"
+msgid "Fetching {0:d} of {1:d}"
+msgstr "Получение {0:d} из {1:d}"
+
+msgctxt "#32991"
+msgid "Updated: {0:d}[CR]Skipped: {1:d}[CR]Failed: {2:d}"
+msgstr "Обновлено: {0:d}[CR]Пропущено: {1:d}[CR]Не удалось: {2:d}"
+
+msgctxt "#32992"
+msgid "Library Maintenance"
+msgstr "Обслуживание медиатеки"
+
+msgctxt "#32993"
+msgid "NFO Files"
+msgstr "NFO-файлы"
+
+msgctxt "#32994"
+msgid "Write metadata changes to NFO files"
+msgstr "Записывать изменения метаданных в NFO-файлы"
+
+msgctxt "#32995"
+msgid "When you edit metadata, also write the change to the item's local NFO file so it survives a library refresh or rescrape."
+msgstr "При редактировании метаданных также записывать изменения в локальный NFO-файл элемента, чтобы они сохранялись при обновлении или перескрепинге медиатеки."
+
+msgctxt "#32996"
+msgid "Create an NFO file when none exists"
+msgstr "Создавать NFO-файл, если его нет"
+
+msgctxt "#32997"
+msgid "If the item has no NFO file yet, create one. When off, only existing NFO files are updated."
+msgstr "Если у элемента ещё нет NFO-файла, создать его. При отключении обновляются только существующие NFO-файлы."
+
+msgctxt "#32998"
+msgid "Include watched state in NFO files"
+msgstr "Включать статус просмотра в NFO-файлы"
+
+msgctxt "#32999"
+msgid "Write playcount and last-played date to NFO files. Turn off to keep watched state out of your NFO files."
+msgstr "Записывать количество воспроизведений и дату последнего просмотра в NFO-файлы. Отключите, чтобы не сохранять статус просмотра в NFO-файлах."
+
+#~ msgctxt "#32593"
+#~ msgid "Scan cancelled. Found: {0} | Cached: {1} | Existing: {2}"
+#~ msgstr "Сканирование отменено. Найдено: {0} | В кэше: {1} | Существующих: {2}"
+
+#~ msgctxt "#32594"
+#~ msgid "Scan complete! Found: {0} | Cached: {1} | Existing: {2}"
+#~ msgstr "Сканирование завершено! Найдено: {0} | В кэше: {1} | Существующих: {2}"
+
+#~ msgctxt "#32354"
+#~ msgid "Downloading episode data..."
+#~ msgstr "Скачивание данных серий..."
+
+#~ msgctxt "#32355"
+#~ msgid "Matching episodes (dataset)... {0}/{1}"
+#~ msgstr "Сопоставление серий (набор данных)... {0}/{1}"

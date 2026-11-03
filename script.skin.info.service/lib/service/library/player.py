@@ -9,8 +9,10 @@ import xbmc
 from lib.kodi.client import (
     request, extract_result, get_item_details, KODI_MOVIE_PROPERTIES, decode_image_url,
 )
-from lib.kodi.utilities import batch_set_props, clear_group, MULTI_VALUE_SEP
-from lib.service.properties import set_ratings_properties
+from lib.kodi.utilities import (
+    batch_set_props, clear_group, MULTI_VALUE_SEP,
+)
+from lib.kodi.properties import set_ratings_properties
 
 if TYPE_CHECKING:
     from lib.service.library.main import ServiceMain
@@ -22,43 +24,41 @@ class PlayerVideoTracker:
     def __init__(self, service: 'ServiceMain'):
         self._service = service
         self._last_player_id: Optional[str] = None
-        self._last_player_type: Optional[str] = None
+        self._last_player_file: Optional[str] = None
+        self._player = xbmc.Player()
 
     def handle(self) -> None:
         """Update Player props for the currently playing video."""
-        if not xbmc.getCondVisibility("Player.HasVideo"):
+        if not self._player.isPlayingVideo():
             if self._last_player_id:
-                self._service._clear_media_type("player")
+                self._service.focus.clear_media_type("player")
                 self._last_player_id = None
-                self._last_player_type = None
+                self._last_player_file = None
             return
 
         player_dbid = xbmc.getInfoLabel("VideoPlayer.DBID") or ""
         if not player_dbid:
             if self._last_player_id:
-                self._service._clear_media_type("player")
+                self._service.focus.clear_media_type("player")
                 self._last_player_id = None
-                self._last_player_type = None
+                self._last_player_file = None
             return
 
-        is_movie = xbmc.getCondVisibility("VideoPlayer.Content(movies)")
-        is_episode = xbmc.getCondVisibility("VideoPlayer.Content(episodes)")
-        is_musicvideo = xbmc.getCondVisibility("VideoPlayer.Content(musicvideos)")
+        player_file = xbmc.getInfoLabel("Player.Filenameandpath")
+        if player_dbid == self._last_player_id and player_file == self._last_player_file:
+            return
 
-        if is_movie:
+        if xbmc.getCondVisibility("VideoPlayer.Content(movies)"):
             player_type = "movie"
-        elif is_episode:
+        elif xbmc.getCondVisibility("VideoPlayer.Content(episodes)"):
             player_type = "episode"
-        elif is_musicvideo:
+        elif xbmc.getCondVisibility("VideoPlayer.Content(musicvideos)"):
             player_type = "musicvideo"
         else:
             return
 
-        if player_dbid == self._last_player_id and player_type == self._last_player_type:
-            return
-
         self._last_player_id = player_dbid
-        self._last_player_type = player_type
+        self._last_player_file = player_file
 
         if player_type == "movie":
             self._set_movie(player_dbid)
@@ -68,19 +68,21 @@ class PlayerVideoTracker:
             self._set_musicvideo(player_dbid)
 
     def _set_movie(self, movieid: str) -> None:
+        """Set movie properties for the playing item."""
         details = get_item_details(
             'movie', int(movieid), KODI_MOVIE_PROPERTIES,
-            cache_key=f"player:movie:{movieid}:details",
+            cache_key=f"movie:{movieid}:details",
         )
         if not isinstance(details, dict):
             return
         set_ratings_properties(details, "Player")
 
     def _set_episode(self, episodeid: str) -> None:
+        """Set rating properties for the playing episode, and its show's and season's properties."""
         details = get_item_details(
             'episode', int(episodeid),
-            ["title", "ratings", "tvshowid", "season", "episode", "showtitle"],
-            cache_key=f"player:episode:{episodeid}:details",
+            ["title", "ratings", "tvshowid", "seasonid", "season", "episode", "showtitle"],
+            cache_key=f"episode:{episodeid}:player",
         )
         if not isinstance(details, dict):
             return
@@ -89,8 +91,12 @@ class PlayerVideoTracker:
         tvshowid = details.get("tvshowid")
         if tvshowid and tvshowid != -1:
             self._set_tvshow(str(tvshowid))
+        seasonid = details.get("seasonid")
+        if seasonid and seasonid != -1:
+            self._set_season(int(seasonid))
 
     def _set_tvshow(self, tvshowid: str) -> None:
+        """Set tvshow properties for the playing item, with runtime from its episodes."""
         details = get_item_details(
             'tvshow', int(tvshowid),
             [
@@ -99,25 +105,57 @@ class PlayerVideoTracker:
                 "watchedepisodes", "imdbnumber", "originaltitle",
                 "art", "userrating", "ratings",
             ],
-            cache_key=f"player:tvshow:{tvshowid}:details",
+            cache_key=f"tvshow:{tvshowid}:player",
         )
         if not isinstance(details, dict):
             return
 
-        from lib.service.library.focus import resolve_show_runtime
-        total, avg = resolve_show_runtime(int(tvshowid))
+        from lib.kodi.library import resolve_show_runtime, resolve_watch_minutes
+        total, avg = resolve_show_runtime(int(tvshowid), details.get("episode"))
         if not details.get("runtime") and avg:
             details["runtime"] = avg
         details["total_runtime"] = total
+        if details.get("watchedepisodes"):
+            details["watch_minutes"] = resolve_watch_minutes(int(tvshowid))
 
-        from lib.service.properties import build_tvshow_data
+        from lib.kodi.properties import build_tvshow_data
         data = build_tvshow_data(details)
         props = {f"SkinInfo.Player.TVShow.{k}": v for k, v in data.items() if not k.startswith("_")}
         batch_set_props(props)
 
         set_ratings_properties(details, "Player.TVShow")
 
+    def _set_season(self, seasonid: int) -> None:
+        """Set season properties for the playing episode's season, its episode count included."""
+        details = get_item_details(
+            'season', seasonid,
+            ["season", "showtitle", "playcount", "episode", "tvshowid", "userrating", "title"],
+            cache_key=f"season:{seasonid}:player",
+        )
+        if not isinstance(details, dict):
+            return
+
+        from lib.kodi.library import (
+            cached_watch_minutes, cached_watched_episodes, resolve_season_runtime,
+            resolve_show_runtime,
+        )
+        tvshowid = details.get("tvshowid")
+        season = details.get("season")
+        if tvshowid and tvshowid != -1 and season is not None:
+            _, avg = resolve_show_runtime(int(tvshowid))
+            if avg:
+                details["runtime"] = avg
+            details["total_runtime"] = resolve_season_runtime(
+                int(tvshowid), int(season), details.get("episode"))
+            details["watch_minutes"] = cached_watch_minutes(int(tvshowid), int(season)) or 0
+            details["watchedepisodes"] = cached_watched_episodes(int(tvshowid), int(season)) or 0
+
+        from lib.kodi.properties import build_season_data
+        data = build_season_data(details)
+        batch_set_props({f"SkinInfo.Player.Season.{k}": v for k, v in data.items()})
+
     def _set_musicvideo(self, musicvideoid: str) -> None:
+        """Set musicvideo properties and library art for the playing item."""
         details = get_item_details(
             'musicvideo', int(musicvideoid),
             [
@@ -126,12 +164,12 @@ class PlayerVideoTracker:
                 "tag", "playcount", "lastplayed", "resume", "dateadded",
                 "rating", "userrating", "uniqueid", "track",
             ],
-            cache_key=f"player:musicvideo:{musicvideoid}:details",
+            cache_key=f"musicvideo:{musicvideoid}:details",
         )
         if not isinstance(details, dict):
             return
 
-        from lib.service.properties import build_musicvideo_data
+        from lib.kodi.properties import build_musicvideo_data
         data = build_musicvideo_data(details)
         props = {
             f"SkinInfo.Player.MusicVideo.{k}": v
@@ -143,17 +181,15 @@ class PlayerVideoTracker:
 
 
 class PlayerMusicTracker:
-    """Watches `MusicPlayer.*` and sets `SkinInfo.Player.Music.*` props.
-
-    Data fetch runs in a background thread so the main service loop never blocks on it.
-    """
+    """Watches `MusicPlayer.*` and sets `SkinInfo.Player.Music.*` props from an off-thread fetch."""
 
     def __init__(self):
         self._last_music_artist: Optional[str] = None
+        self._player = xbmc.Player()
 
     def handle(self) -> None:
         """Update Player.Music props for the currently playing audio."""
-        if not xbmc.getCondVisibility("Player.HasAudio"):
+        if not self._player.isPlayingAudio():
             if self._last_music_artist:
                 clear_group("SkinInfo.Player.Music.")
                 self._last_music_artist = None
@@ -175,6 +211,7 @@ class PlayerMusicTracker:
         thread.start()
 
     def _set_details(self, artist_name: str) -> None:
+        """Set the playing artists' library bio, fanart and albums; the first bio found wins."""
         artists = [a.strip() for a in artist_name.split(MULTI_VALUE_SEP)]
         bio = ""
         library_fanart = ""

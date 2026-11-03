@@ -31,6 +31,7 @@ class RefreshTracker:
         self._refresh_debounce_timer.start()
 
     def _apply(self, counter: int) -> None:
+        """Publish the refresh counter for the skin to watch."""
         set_prop("SkinInfo.Library.Refreshed", str(counter))
         log("Service", f"Library refreshed (counter: {counter})", xbmc.LOGDEBUG)
 

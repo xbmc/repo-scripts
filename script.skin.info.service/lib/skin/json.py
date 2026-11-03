@@ -1,28 +1,17 @@
-"""Skinner-facing JSON-RPC wrapper.
-
-Exposes one entry point (`execute`) called from the `action=json` RunScript
-handler. Two modes:
-- `textviewer`: render full response (success or error) for discovery
-- `property`: bind result keys to `SkinInfo.{prop_prefix}.{key}[.{subkey}]`
-
-Param format for the URL-passed `params` arg:
-- `key:value|key:value` pairs
-- `key:a;b;c` for array values (comma is reserved by RunScript)
-- Raw JSON supported when `params` starts with `{` or `[`
-- Type coercion: `true`/`false`/`null`, int, float, string fallback
-"""
+"""Skinner-facing JSON-RPC calls, shown in a text viewer or bound to window properties."""
 from __future__ import annotations
 
 import json
-from typing import Any, Dict
+from typing import Any, Dict, Final
 
 import xbmc
 import xbmcgui
 
 from lib.kodi.client import log
+from lib.kodi.utilities import set_window_prop
 
 
-_DEFAULT_MODE = 'textviewer'
+_DEFAULT_MODE: Final = 'textviewer'
 
 
 def execute(
@@ -31,7 +20,7 @@ def execute(
     mode: str = _DEFAULT_MODE,
     prop_prefix: str = '',
 ) -> None:
-    """Run one JSON-RPC call and dispatch the response per `mode`."""
+    """Run one JSON-RPC call, shown in a text viewer or bound to properties."""
     if not method:
         log("JSON", "execute called without a method", xbmc.LOGWARNING)
         return
@@ -46,11 +35,7 @@ def execute(
 
 
 def _call(method: str, params: Dict[str, Any]) -> dict:
-    """Issue the JSON-RPC call via `xbmc.executeJSONRPC` and return the parsed body.
-
-    Bypasses `lib.kodi.client.request` so JSON-RPC error responses reach the caller
-    instead of being logged-and-swallowed.
-    """
+    """Issue the JSON-RPC call and return the parsed body, JSON-RPC errors included."""
     payload = json.dumps(
         {"jsonrpc": "2.0", "method": method, "params": params, "id": 1},
         separators=(',', ':'),
@@ -67,6 +52,7 @@ def _call(method: str, params: Dict[str, Any]) -> dict:
 
 
 def _show_textviewer(method: str, params: Dict[str, Any], response: dict) -> None:
+    """Show the request and response as formatted JSON."""
     body = {"method": method, "params": params, "response": response}
     xbmcgui.Dialog().textviewer(
         f"JSON-RPC: {method}",
@@ -75,6 +61,7 @@ def _show_textviewer(method: str, params: Dict[str, Any], response: dict) -> Non
 
 
 def _bind_properties(method: str, response: dict, prop_prefix: str) -> None:
+    """Flatten a JSON-RPC dict result into SkinInfo window properties, one level deep."""
     if not prop_prefix:
         log("JSON", f"property mode requires prop_prefix (method={method})", xbmc.LOGWARNING)
         return
@@ -102,11 +89,12 @@ def _bind_properties(method: str, response: dict, prop_prefix: str) -> None:
 
 
 def _set_prop(name: str, value: Any) -> None:
-    xbmc.executebuiltin(f'SetProperty({name},{value},home)')
+    """Set one Home window property."""
+    set_window_prop(name, value, 'home')
 
 
 def _parse_params(raw: str) -> Dict[str, Any]:
-    """Parse the URL-passed params string into a dict for the JSON-RPC payload."""
+    """Parse `key:value|key:a;b` pairs or raw JSON into the JSON-RPC params dict."""
     if not raw:
         return {}
 
@@ -152,7 +140,7 @@ def _coerce(token: str) -> Any:
 
 
 def execute_from_args(args: dict) -> None:
-    """Convenience wrapper for the script-action dispatcher."""
+    """Execute a JSON-RPC call from the script action's arguments."""
     execute(
         method=args.get('method', ''),
         params_str=args.get('params', ''),

@@ -10,11 +10,7 @@ from lib.kodi.client import log, extract_result
 
 
 def handle_wrap(handle: int, params: dict) -> None:
-    """Wrap XSP-filtered library paths in `plugin://` so Kodi refreshes them on updates.
-
-    For inline XSP filters, `.xsp` files, and smart playlists with InfoLabel filters;
-    not needed for regular library browsing.
-    """
+    """Wrap an XSP-filtered library path in `plugin://`, which Kodi refreshes on library updates."""
     from lib.kodi.settings import KodiSettings
 
     path = params.get('path', [''])[0]
@@ -209,6 +205,8 @@ def handle_wrap(handle: int, params: dict) -> None:
 
         if 'type' in file_item:
             video_tag.setMediaType(file_item['type'])
+        if file_item.get('id'):
+            video_tag.setDbId(int(file_item['id']))
 
         if 'resume' in file_item:
             resume = file_item['resume']

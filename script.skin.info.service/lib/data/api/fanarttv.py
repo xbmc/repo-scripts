@@ -1,23 +1,20 @@
-"""Fanart.tv API client for artwork.
-
-Provides:
-- Movie artwork (clearlogos, clearart, banners, discart, etc.)
-- TV show artwork (clearlogos, clearart, banners, characterart, etc.)
-- Season artwork (posters, banners, thumbs filtered by season number)
-- Music artist artwork (fanart, thumb, clearlogo, banner)
-- Album artwork (thumb, discart) via artist endpoint
-"""
+"""Fanart.tv artwork for movies, TV shows, seasons, music artists and their albums."""
 from __future__ import annotations
 
-from typing import Any, Optional, List, Dict
+from collections import OrderedDict
+from typing import Any, Optional, List, Dict, Final
 
 from lib.data.api.client import ApiSession
 from lib.data.api.utilities import decode_key
 from lib.kodi.settings import KodiSettings
 
+# TV blobs run larger
+_MUSIC_BLOB_CACHE_SIZE: Final = 32
+_TV_BLOB_CACHE_SIZE: Final = 4
+
 
 class ApiFanarttv:
-    """Fanart.tv API client with rate limiting."""
+    """Fanart.tv API client; the artwork getters return {} for a miss or a failed fetch."""
 
     BASE_URL = "https://webservice.fanart.tv/v3.2"
 
@@ -35,20 +32,46 @@ class ApiFanarttv:
                 "Accept": "application/json"
             }
         )
-        self._tv_blob_cache: Dict[int, Optional[dict]] = {}
+        self._tv_blob_cache: "OrderedDict[int, Optional[dict]]" = OrderedDict()
+        self._music_blob_cache: "OrderedDict[str, Optional[dict]]" = OrderedDict()
+
+    @staticmethod
+    def _blob_cache_get(cache: OrderedDict, key, fetch, limit: int) -> Optional[dict]:
+        """Memoize a fetch result, None included, dropping the least recently used."""
+        if key in cache:
+            cache.move_to_end(key)
+            return cache[key]
+
+        cache[key] = fetch()
+        if len(cache) > limit:
+            cache.popitem(last=False)
+        return cache[key]
+
+    def _get_music_blob(self, musicbrainz_id: str, abort_flag=None) -> Optional[dict]:
+        """Fetch and memoize /music/{mbid}; artist, album and music video art share it."""
+        return self._blob_cache_get(
+            self._music_blob_cache, musicbrainz_id,
+            lambda: self._make_request(f"/music/{musicbrainz_id}", abort_flag),
+            _MUSIC_BLOB_CACHE_SIZE,
+        )
 
     def _get_tv_blob(self, tvdb_id: int, abort_flag=None) -> Optional[dict]:
-        """Fetch and memoize the /tv/{tvdb_id} response for this fetcher's lifetime.
+        """Fetch and memoize /tv/{tvdb_id}; show and season art share it."""
+        return self._blob_cache_get(
+            self._tv_blob_cache, tvdb_id,
+            lambda: self._make_request(f"/tv/{tvdb_id}", abort_flag),
+            _TV_BLOB_CACHE_SIZE,
+        )
 
-        Show and season artwork both derive from the same response, so a season batch reuses one
-        request instead of re-fetching the whole show blob per season.
-        """
-        if tvdb_id not in self._tv_blob_cache:
-            self._tv_blob_cache[tvdb_id] = self._make_request(f"/tv/{tvdb_id}", abort_flag)
-        return self._tv_blob_cache[tvdb_id]
+    def get_latest(self, feed: str, since: int) -> Optional[List[dict]]:
+        """Items with new images since a unix timestamp, or None if the feed is unreachable."""
+        data = self._make_request(f"/{feed}/latest?date={since}")
+        if data is None:
+            return None
+        return data if isinstance(data, list) else []
 
     def get_api_key(self) -> str:
-        """Get fanart.tv project API key."""
+        """Get the built-in fanart.tv project API key."""
         return self.API_KEY.strip()
 
     def get_client_key(self) -> Optional[str]:
@@ -56,7 +79,7 @@ class ApiFanarttv:
         return KodiSettings.fanarttv_api_key() or None
 
     def _make_request(self, endpoint: str, abort_flag=None) -> Optional[dict]:
-        """Make HTTP request to fanart.tv API with rate limiting and retry."""
+        """Make HTTP request to fanart.tv API, sending the personal key when there is one."""
         headers = {"api-key": self.get_api_key()}
 
         client_key = self.get_client_key()
@@ -70,7 +93,7 @@ class ApiFanarttv:
         )
 
     def _format_artwork_item(self, item: dict, fanart_type: str) -> dict:
-        """Format a fanart.tv artwork item to common format."""
+        """Format a fanart.tv artwork item to common format, its preview derived from the URL."""
         full_url = item.get('url', '')
 
         if 'banner' in fanart_type:
@@ -105,10 +128,18 @@ class ApiFanarttv:
         if disc_type:
             artwork['disc_type'] = disc_type
 
+        size = item.get('size')
+        if size:
+            artwork['size'] = size
+
+        added = item.get('added')
+        if added:
+            artwork['added'] = added
+
         return artwork
 
     def get_movie_artwork(self, tmdb_id: int, abort_flag=None) -> dict:
-        """Get all available artwork for a movie from fanart.tv."""
+        """Get all artwork for a movie from fanart.tv."""
         data = self._make_request(f"/movies/{tmdb_id}", abort_flag)
 
         if not data:
@@ -119,11 +150,11 @@ class ApiFanarttv:
         type_map = {
             'movieposter': 'poster',
             'moviebackground': 'fanart',
-            'moviebackground4k': 'fanart',
+            'movie4kbackground': 'fanart',
             'hdmovielogo': 'clearlogo',
             'movielogo': 'clearlogo',
             'hdmovieclearart': 'clearart',
-            'movieclearart': 'clearart',
+            'movieart': 'clearart',
             'moviebanner': 'banner',
             'moviedisc': 'discart',
             'moviethumb': 'landscape'
@@ -142,13 +173,7 @@ class ApiFanarttv:
         return result
 
     def get_tv_artwork(self, tvdb_id: int, abort_flag=None) -> dict:
-        """
-        Get all available artwork for a TV show from fanart.tv.
-
-        Show-level artwork is returned under standard keys (poster, fanart, etc.).
-        Season-specific artwork is returned under prefixed keys (season.poster, etc.)
-        with the season number in the artwork dict.
-        """
+        """Get all artwork for a TV show from fanart.tv, season art under `season.<type>` keys."""
         data = self._get_tv_blob(tvdb_id, abort_flag)
 
         if not data:
@@ -159,7 +184,7 @@ class ApiFanarttv:
         show_type_map = {
             'tvposter': 'poster',
             'showbackground': 'fanart',
-            'showbackground4k': 'fanart',
+            'show4kbackground': 'fanart',
             'hdtvlogo': 'clearlogo',
             'clearlogo': 'clearlogo',
             'hdclearart': 'clearart',
@@ -198,7 +223,7 @@ class ApiFanarttv:
         return result
 
     def get_season_artwork(self, tvdb_id: int, season_number: int, abort_flag=None) -> dict:
-        """Get artwork for a specific TV season from fanart.tv."""
+        """Get all artwork for one TV season from fanart.tv."""
         data = self._get_tv_blob(tvdb_id, abort_flag)
 
         if not data:
@@ -228,16 +253,8 @@ class ApiFanarttv:
         return result
 
     def get_artist_artwork(self, musicbrainz_id: str, abort_flag=None) -> dict:
-        """Get all artwork for a music artist from fanart.tv.
-
-        Returns artist-level artwork plus album artwork nested under 'albums'
-        (keyed by MusicBrainz release group ID).
-
-        Artist types: fanart (1920x1080), thumb (1000x1000), clearlogo (800x310), banner (1000x185).
-        Album types (under 'albums'): thumb (1000x1000, square unlike video 16:9 thumb),
-        discart (1000x1000).
-        """
-        data = self._make_request(f"/music/{musicbrainz_id}", abort_flag)
+        """Get all artwork for a music artist from fanart.tv, album art nested under `albums`."""
+        data = self._get_music_blob(musicbrainz_id, abort_flag)
 
         if not data:
             return {}
@@ -298,9 +315,12 @@ class ApiFanarttv:
         return result
 
     def test_connection(self) -> bool:
-        """Test fanart.tv API connection."""
+        """Test fanart.tv API connection with the user's personal key; False when none is set."""
+        client_key = self.get_client_key()
+        if not client_key:
+            return False
         try:
-            data = self._make_request("/movies/11")
+            data = self.session.get("/movies/11", headers={"client-key": client_key})
             return data is not None and data.get('name') is not None
         except Exception:
             return False

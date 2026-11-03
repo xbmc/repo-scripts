@@ -10,8 +10,9 @@ from lib.kodi.client import log, request
 
 
 def _process_items(stats: Dict[str, Any], items: List[dict]) -> None:
-    """Count watched/unwatched/in-progress per item; TV shows use episode counts since there's no
-    show-level resume."""
+    """Count items as watched, unwatched or in progress; a TV show is judged by its episodes."""
+    episode_shows = set()
+
     for item in items:
         if item.get('type') == 'tvshow':
             episode_count = item.get('episode', 0)
@@ -27,6 +28,14 @@ def _process_items(stats: Dict[str, Any], items: List[dict]) -> None:
                 stats['unwatched'] += 1
             continue
 
+        if item.get('type') == 'episode':
+            stats['episodes'] += 1
+            if item.get('playcount', 0) > 0:
+                stats['watched_episodes'] += 1
+            tvshowid = item.get('tvshowid')
+            if tvshowid:
+                episode_shows.add(tvshowid)
+
         playcount = item.get('playcount', 0)
         resume = item.get('resume', {})
         resume_position = 0
@@ -39,6 +48,8 @@ def _process_items(stats: Dict[str, Any], items: List[dict]) -> None:
             stats['watched'] += 1
         else:
             stats['unwatched'] += 1
+
+    stats['tvshow_count'] += len(episode_shows)
 
     if stats['episodes']:
         stats['unwatched_episodes'] = stats['episodes'] - stats['watched_episodes']
@@ -65,7 +76,7 @@ def get_path_statistics(path: str) -> Dict[str, Any]:
         {
             'directory': path,
             'media': 'video',
-            'properties': ['playcount', 'resume', 'episode', 'watchedepisodes'],
+            'properties': ['playcount', 'resume', 'episode', 'watchedepisodes', 'tvshowid'],
         }
     )
 
@@ -81,8 +92,7 @@ def get_path_statistics(path: str) -> Dict[str, Any]:
 
 
 def handle_path_stats(handle: int, params: dict) -> None:
-    """Plugin entry for path stats; returns an invisible ListItem with `SkinInfo.PathStats.*`
-    properties."""
+    """Plugin entry for path stats, set as `SkinInfo.PathStats.*` on Home and on one ListItem."""
     path = params.get('path', [''])[0]
 
     if not path:

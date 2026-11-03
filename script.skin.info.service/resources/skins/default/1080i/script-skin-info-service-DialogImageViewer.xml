@@ -41,8 +41,10 @@
 			<height>100%</height>
 			<texture background="true">$INFO[Container(1520).ListItem.Art(thumb)]</texture>
 			<aspectratio>keep</aspectratio>
+			<visible>!String.IsEmpty(Window.Property(viewer_ready))</visible>
 		</control>
 		<control type="group">
+			<visible>!String.IsEmpty(Window.Property(viewer_ready))</visible>
 			<animation effect="fade" start="100" end="0" time="300" condition="System.IdleTime(3)">Conditional</animation>
 			<animation effect="fade" start="0" end="100" time="300" condition="!System.IdleTime(3)">Conditional</animation>
 			<control type="image">
@@ -51,7 +53,7 @@
 				<height>60</height>
 				<texture colordiffuse="99000000">white.png</texture>
 			</control>
-			<!-- Image count -->
+			<!-- Image count, or the provider for one picker image -->
 			<control type="label">
 				<left>60</left>
 				<bottom>0</bottom>
@@ -60,6 +62,17 @@
 				<font>font13</font>
 				<textcolor>whitesmoke</textcolor>
 				<label>$INFO[Container(1520).CurrentItem] / $INFO[Container(1520).NumItems]</label>
+				<visible>String.IsEmpty(Window.Property(artwork_view))</visible>
+			</control>
+			<control type="label">
+				<left>60</left>
+				<bottom>0</bottom>
+				<width>300</width>
+				<height>50</height>
+				<font>font13</font>
+				<textcolor>whitesmoke</textcolor>
+				<label>$INFO[Container(1520).ListItem.Property(Source)]</label>
+				<visible>!String.IsEmpty(Window.Property(artwork_view))</visible>
 			</control>
 			<!-- Dimensions -->
 			<control type="label">

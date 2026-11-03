@@ -1,27 +1,46 @@
-"""Base dialog class with shared artwork functionality"""
+"""Base class carrying the sort, source-filter and list-building the artwork dialogs share."""
 
 from __future__ import annotations
 
-from typing import List
+from typing import Final, List
 import xbmcgui
 from lib.artwork.utilities import get_language_display_name
 from lib.kodi.client import decode_image_url, ADDON
 
+_FULL_SIZE_ACTIONS: Final = (xbmcgui.ACTION_SHOW_INFO, xbmcgui.ACTION_CONTEXT_MENU)
+
 
 class ArtworkDialogBase(xbmcgui.WindowXMLDialog):
-    """Base class for artwork dialogs.
+    """Shared sort and source-filter behavior for the artwork dialogs."""
 
-    Subclasses must define `BUTTON_SORT`, `BUTTON_SOURCE_PREF` control IDs and
-    state vars `full_artwork_list`, `sort_mode`, `source_pref`, plus implement
-    `_resort_artwork()`.
-    """
-
-    # Placeholders so subclass-supplied attrs typecheck for the helpers below
+    # placeholders so subclass attributes typecheck in the helpers below
     BUTTON_SORT: int = 0
     BUTTON_SOURCE_PREF: int = 0
     full_artwork_list: list = []
     sort_mode: str = 'popularity'
     source_pref: str = 'all'
+
+    def onAction(self, action):
+        """Open the focused artwork full size on Info or the context menu."""
+        if action.getId() in _FULL_SIZE_ACTIONS:
+            self._view_full_size()
+            return
+        super().onAction(action)
+
+    def _view_full_size(self) -> None:
+        """View the focused artwork full size in the image viewer."""
+        try:
+            control = self.getControl(self.getFocusId())
+        except (RuntimeError, TypeError):
+            return
+        if not isinstance(control, xbmcgui.ControlList):
+            return
+        item = control.getSelectedItem()
+        url = (item.getProperty('fullurl') or item.getProperty('url')) if item else ''
+        if not url:
+            return
+        from lib.dialog.image import open_artwork_viewer
+        open_artwork_viewer(url, item.getProperty('dimensions'), item.getProperty('source'))
 
     def _normalize_url(self, url: str) -> str:
         """Normalize URL for comparison; collapses fanart.tv paths to filename only."""
@@ -33,7 +52,7 @@ class ArtworkDialogBase(xbmcgui.WindowXMLDialog):
         return decoded
 
     def _get_available_sources(self) -> set:
-        """Get set of unique sources in the full artwork list."""
+        """Get the sources in the list; only tmdb and fanart are recognized."""
         sources = set()
         for art in self.full_artwork_list:
             source = art.get('source', '').lower()
@@ -42,7 +61,7 @@ class ArtworkDialogBase(xbmcgui.WindowXMLDialog):
         return sources
 
     def _get_available_resolutions(self) -> set:
-        """Get set of unique resolutions in the full artwork list."""
+        """Get the (width, height) pairs in the list; art with no dimensions is skipped."""
         resolutions = set()
         for art in self.full_artwork_list:
             width = art.get('width')
@@ -84,7 +103,7 @@ class ArtworkDialogBase(xbmcgui.WindowXMLDialog):
         self.setProperty('source_pref', self.source_pref)
 
     def _resort_artwork(self) -> None:
-        """Subclasses re-sort `full_artwork_list` by sort_mode/source_pref/language."""
+        """Re-sort the full list into the displayed one; each dialog filters its own way."""
         raise NotImplementedError
 
     def create_artwork_listitem(
@@ -92,8 +111,7 @@ class ArtworkDialogBase(xbmcgui.WindowXMLDialog):
         art_info: dict,
         index: int
     ) -> xbmcgui.ListItem:
-        """Create a ListItem from an artwork info dict, with properties for display in the dialog
-        skin XML."""
+        """Create a ListItem for one artwork, with the properties the dialog XML reads."""
         url = art_info.get('url', '')
         preview = art_info.get('previewurl', url)
         width = art_info.get('width', 0)
@@ -102,9 +120,9 @@ class ArtworkDialogBase(xbmcgui.WindowXMLDialog):
         season = art_info.get('season', '')
         source = art_info.get('source', '')
 
-        label = f"Option {index + 1}"
+        label = ADDON.getLocalizedString(32708).format(index + 1)
 
-        item = xbmcgui.ListItem(label=label)
+        item = xbmcgui.ListItem(label=label, offscreen=True)
         item.setArt({'thumb': preview, 'icon': preview})
         item.setProperty('fullurl', url)
         item.setProperty('index', str(index))
@@ -126,7 +144,7 @@ class ArtworkDialogBase(xbmcgui.WindowXMLDialog):
         return item
 
     def populate_list_batch(self, control, items: List[xbmcgui.ListItem]) -> None:
-        """Batch-add items via addItems(), faster than looping addItem()."""
+        """Replace the control's contents in one call, which a per-item loop is too slow for."""
         control.reset()
         if items:
             control.addItems(items)

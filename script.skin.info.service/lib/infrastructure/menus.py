@@ -1,4 +1,4 @@
-"""Menu helper utilities with automatic navigation and task cancellation support."""
+"""Select-dialog menus with nested navigation and a cancel row for the running task."""
 from __future__ import annotations
 
 from typing import Sequence, Tuple, Optional, Any, Callable
@@ -9,17 +9,11 @@ import xbmcgui
 from lib.infrastructure import tasks as task_manager
 from lib.kodi.client import ADDON
 
-# Sentinel value to signal "return to main menu" vs "go back one level"
 RETURN_TO_MAIN_SENTINEL = object()
 
 
 class MenuItem:
-    """Menu row with a label and an action.
-
-    `action` can be a callable (executed), another `Menu` (shown as submenu),
-    or a plain value (returned as-is). `loop=True` re-shows the parent menu
-    after the action completes.
-    """
+    """Menu row whose action is run, opened as a submenu or returned as the result."""
 
     def __init__(self, label: str, action, loop: bool = False):
         self.label = label
@@ -28,10 +22,7 @@ class MenuItem:
 
 
 class Menu:
-    """Declarative menu with back/cancel/task-cancel handling and nested-submenu navigation.
-
-    `is_main_menu=True` makes the top-level Cancel exit to Kodi instead of bubbling up.
-    """
+    """Select-dialog menu with nested submenus; Cancel in a submenu returns to the main menu."""
 
     def __init__(self, title: str, items: Sequence[MenuItem], is_main_menu: bool = False):
         self.title = title
@@ -40,7 +31,7 @@ class Menu:
         self._last_selected_idx: Optional[int] = None
 
     def show(self, preselect: Optional[int] = None) -> Any:
-        """Show menu and run navigation. Returns action result, or None on back/ESC/abort."""
+        """Show the menu until an action returns a result; None on back or abort."""
         monitor = xbmc.Monitor()
 
         while not monitor.abortRequested():
@@ -107,11 +98,7 @@ class Menu:
 
 
 def run_with_mode_choice(operation_name: str, run: Callable[[bool], None]) -> Any:
-    """Foreground/background picker, then claim the task slot and run in the chosen mode.
-
-    `run` gets the chosen use_background bool and owns its own dialog and work; it must
-    not claim the slot itself.
-    """
+    """Run after a foreground/background choice, claiming the task slot for the callback first."""
     def _start(use_background: bool) -> None:
         if task_manager.acquire_task_slot(operation_name, use_background):
             run(use_background)
@@ -124,11 +111,7 @@ def run_with_mode_choice(operation_name: str, run: Callable[[bool], None]) -> An
 
 def show_menu_with_cancel(title: str, options: Sequence[Tuple[str, Optional[str]]],
                           preselect: Optional[int] = None) -> Tuple[Optional[str], bool]:
-    """Show a select dialog, injecting a "Cancel Current Task" row at the top if a task is running.
-
-    Returns `(action, was_task_cancelled)`. `action` is `'__back__'` for ESC,
-    the selected row's action string otherwise.
-    """
+    """Show a select dialog topped by a cancel row for any running task; `'__back__'` on Back."""
     task_info = task_manager.get_task_info()
 
     display_options = []
@@ -136,7 +119,7 @@ def show_menu_with_cancel(title: str, options: Sequence[Tuple[str, Optional[str]
 
     if task_info:
         task_name = task_info['name']
-        cancel_label = f"[B]Cancel Current Task: {task_name}[/B]"
+        cancel_label = f"[B]{ADDON.getLocalizedString(32730).format(task_name)}[/B]"
         display_options.append(cancel_label)
         action_map.append('__cancel_task__')
 
@@ -164,50 +147,31 @@ def show_menu_with_cancel(title: str, options: Sequence[Tuple[str, Optional[str]
     return (selected_action, False)
 
 
-def confirm_cancel_running_task(new_task_name: str) -> bool:
-    """Prompt the user to cancel the running task in favour of `new_task_name`.
+def _elapsed(seconds: float) -> str:
+    """Format a span as `5m 3s`, or `3s` under a minute."""
+    minutes, secs = divmod(int(seconds), 60)
+    return f"{minutes}m {secs}s" if minutes else f"{secs}s"
 
-    Dialog shows the current task, its duration, last-activity age, and the intended new task.
-    """
+
+def confirm_cancel_running_task(new_task_name: str) -> bool:
+    """Confirm cancelling the running task for a new one; True at once when none is running."""
     from lib.infrastructure.dialogs import show_yesno
 
     task_info = task_manager.get_task_info()
     if not task_info:
         return True
 
-    current_task = task_info.get('name', 'Unknown task')
-    started_at = task_info.get('started_at', time.time())
-    last_progress = task_info.get('last_progress', time.time())
-
     now = time.time()
-    duration_seconds = int(now - started_at)
-    progress_seconds = int(now - last_progress)
-
-    duration_mins = duration_seconds // 60
-    duration_secs = duration_seconds % 60
-
-    progress_mins = progress_seconds // 60
-    progress_secs = progress_seconds % 60
-
-    if duration_mins > 0:
-        duration_str = f"{duration_mins}m {duration_secs}s"
-    else:
-        duration_str = f"{duration_secs}s"
-
-    if progress_mins > 0:
-        progress_str = f"{progress_mins}m {progress_secs}s"
-    else:
-        progress_str = f"{progress_secs}s"
-
+    current_task = task_info.get('name') or xbmc.getLocalizedString(13205)
     lines = [
-        f"[B]Currently Running:[/B] {current_task}",
-        f"[B]Duration:[/B] {duration_str}",
-        f"[B]Last Activity:[/B] {progress_str} ago",
+        ADDON.getLocalizedString(32731).format(current_task),
+        ADDON.getLocalizedString(32732).format(_elapsed(now - task_info.get('started_at', now))),
+        ADDON.getLocalizedString(32733).format(
+            _elapsed(now - task_info.get('last_progress', now))),
         "",
-        f"[B]New Task:[/B] {new_task_name}",
+        ADDON.getLocalizedString(32734).format(new_task_name),
         "",
-        "Cancelling will stop the current task safely.",
-        "You can resume it later from the menu."
+        ADDON.getLocalizedString(32735),
     ]
 
     message = "[CR]".join(lines)

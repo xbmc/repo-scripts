@@ -1,18 +1,16 @@
-"""TheAudioDB API client for music metadata and artwork.
-
-Provides:
-- Artist metadata (biography, style, mood, genre, country, formed year)
-- Artist artwork (thumb, logo, fanart, banner)
-- Album metadata (description, style, mood, genre, year, label)
-- Album artwork (thumb, cdart)
-
-Free tier: API key '123', 30 requests/minute
-"""
+"""TheAudioDB metadata and artwork for artists, albums and music-video tracks."""
 from __future__ import annotations
 
+import threading
 from typing import Optional, List, Dict
 
 from lib.data.api.client import ApiSession
+
+
+def _straight_quotes(text: str) -> str:
+    """Straighten the curly single quotes Kodi scrapers may store, for a TheAudioDB search."""
+    return text.replace('\u2018', "'").replace('\u2019', "'")
+
 
 class ApiAudioDb:
     """TheAudioDB API client with rate limiting."""
@@ -61,15 +59,22 @@ class ApiAudioDb:
 
         return albums[0] if albums else None
 
-    def search_album(self, artist_name: str, album_name: str, abort_flag=None) -> Optional[dict]:
-        """Search for an album by artist and album name.
+    def get_track(self, track_id: str, abort_flag=None) -> Optional[dict]:
+        """Get track data by TheAudioDB track ID, as stored in a music video's uniqueid."""
+        data = self._make_request(f"/track.php?h={track_id}", abort_flag)
+        if not data:
+            return None
 
-        Useful as fallback when the MusicBrainz release group ID has been merged
-        and the old ID is needed for artwork services.
-        """
-        # Kodi scrapers may store smart quotes - normalize to ASCII for search
-        artist_name = artist_name.replace('\u2018', "'").replace('\u2019', "'")
-        album_name = album_name.replace('\u2018', "'").replace('\u2019', "'")
+        tracks = data.get('track')
+        if not tracks or not isinstance(tracks, list):
+            return None
+
+        return tracks[0] if tracks else None
+
+    def search_album(self, artist_name: str, album_name: str, abort_flag=None) -> Optional[dict]:
+        """Search for an album by artist and album name."""
+        artist_name = _straight_quotes(artist_name)
+        album_name = _straight_quotes(album_name)
 
         data = self.session.get(
             "/searchalbum.php",
@@ -87,8 +92,8 @@ class ApiAudioDb:
 
     def search_track(self, artist_name: str, track_name: str, abort_flag=None) -> Optional[dict]:
         """Search for a track by artist and track name."""
-        artist_name = artist_name.replace('\u2018', "'").replace('\u2019', "'")
-        track_name = track_name.replace('\u2018', "'").replace('\u2019', "'")
+        artist_name = _straight_quotes(artist_name)
+        track_name = _straight_quotes(track_name)
 
         data = self.session.get(
             "/searchtrack.php",
@@ -105,8 +110,8 @@ class ApiAudioDb:
         return tracks[0] if tracks else None
 
     def search_artist(self, artist_name: str, abort_flag=None) -> Optional[dict]:
-        """Search for an artist by name."""
-        artist_name = artist_name.replace('\u2018', "'").replace('\u2019', "'")
+        """Search for an artist, returning only an exact name match."""
+        artist_name = _straight_quotes(artist_name)
 
         data = self.session.get(
             "/search.php",
@@ -189,7 +194,7 @@ class ApiAudioDb:
         """Extract music video screenshot artwork from an already-fetched track dict."""
         result: Dict[str, List[dict]] = {}
 
-        for i in [''] + list(range(2, 13)):
+        for i in range(1, 13):
             url = track.get(f'strMusicVidScreen{i}')
             if url:
                 result.setdefault('thumb', []).append(self._format_artwork_item(url))
@@ -197,7 +202,7 @@ class ApiAudioDb:
         return result
 
     def _format_artwork_item(self, url: str) -> dict:
-        """Format a TheAudioDB artwork URL to common format."""
+        """Format a TheAudioDB artwork URL to common format, its preview derived from the URL."""
         return {
             'url': url,
             'previewurl': f"{url}/preview",
@@ -219,3 +224,17 @@ class ApiAudioDb:
     def get_attribution() -> str:
         """Get required TheAudioDB attribution text."""
         return "Metadata provided by TheAudioDB.com"
+
+
+_SHARED: Optional[ApiAudioDb] = None
+_SHARED_LOCK = threading.Lock()
+
+
+def get_audiodb() -> ApiAudioDb:
+    """Get the shared TheAudioDB client, one rate-limit window for every caller."""
+    global _SHARED
+    if _SHARED is None:
+        with _SHARED_LOCK:
+            if _SHARED is None:
+                _SHARED = ApiAudioDb()
+    return _SHARED

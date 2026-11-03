@@ -1,19 +1,20 @@
 """Discovery widgets for trending, popular, and upcoming content."""
 from __future__ import annotations
 
-import traceback
-from typing import Dict, List, Optional, Tuple
+import sys
+from typing import Dict, Iterable, List, Optional, Tuple, Final
 
 import xbmc
 import xbmcgui
 import xbmcplugin
 
-from lib.kodi.client import ADDON, log, request, extract_result
-from lib.data.api.utilities import tmdb_image_url
+from lib.kodi.client import ADDON, log, get_item_details
+from lib.data.api.utilities import tmdb_image_url, trakt_image_url
 
 # Trakt wrapped responses nest the media object under "movie" or "show"
 _TRAKT_WRAPPED = {
     "trakt_trending", "trakt_anticipated", "trakt_watched", "trakt_collected", "trakt_boxoffice",
+    "trakt_played", "trakt_watchlist", "trakt_history", "trakt_inprogress",
 }
 
 WIDGET_REGISTRY: Dict[str, dict] = {
@@ -33,37 +34,34 @@ WIDGET_REGISTRY: Dict[str, dict] = {
     "trakt_recommendations": {
         "provider": "trakt", "types": ("movie", "tv"), "label": 32640, "auth": "oauth",
     },
+    "trakt_played":      {"provider": "trakt", "types": ("movie", "tv"), "label": 32125},
+    "trakt_watchlist": {
+        "provider": "trakt", "types": ("movie", "tv"), "label": 32084, "auth": "oauth",
+    },
+    "trakt_history": {
+        "provider": "trakt", "types": ("movie", "tv"), "label": 32123, "auth": "oauth",
+    },
+    "trakt_inprogress": {"provider": "trakt", "types": ("tv",), "label": 32124, "auth": "oauth"},
 }
 
+# show history lists episodes, several per show
+_HISTORY_EPISODES_PER_SHOW = 5
 
-def _get_library_lookup(media_type: str) -> Dict[str, Dict[str, object]]:
-    """Map `tmdb_id -> {dbid, file}` for library `media_type` items, for "in library" matching."""
+
+def _get_library_lookup(media_type: str, tmdb_ids: Iterable) -> Dict[str, Dict[str, object]]:
+    """Map `tmdb_id -> {dbid, file}` for the ids that are in the library."""
+    from lib.data.database.rollcall import get_dbids_by_tmdb
+
     lookup: Dict[str, Dict[str, object]] = {}
-
-    if media_type == "movie":
-        result = request("VideoLibrary.GetMovies", {
-            "properties": ["uniqueid", "file"]
-        })
-        items = extract_result(result, 'movies', [])
-        for item in items:
-            tmdb_id = (item.get("uniqueid") or {}).get("tmdb")
-            if tmdb_id:
-                lookup[str(tmdb_id)] = {
-                    "dbid": item["movieid"],
-                    "file": item.get("file", "")
-                }
-    else:
-        result = request("VideoLibrary.GetTVShows", {
-            "properties": ["uniqueid"]
-        })
-        items = extract_result(result, 'tvshows', [])
-        for item in items:
-            tmdb_id = (item.get("uniqueid") or {}).get("tmdb")
-            if tmdb_id:
-                lookup[str(tmdb_id)] = {
-                    "dbid": item["tvshowid"],
-                    "file": f"videodb://tvshows/titles/{item['tvshowid']}/"
-                }
+    for tmdb_id, dbid in get_dbids_by_tmdb(media_type, tmdb_ids).items():
+        if media_type == "movie":
+            details = get_item_details("movie", dbid, ["file"])
+            file_path = (details or {}).get("file", "")
+            if not file_path:
+                continue
+        else:
+            file_path = f"videodb://tvshows/titles/{dbid}/"
+        lookup[tmdb_id] = {"dbid": dbid, "file": file_path}
 
     return lookup
 
@@ -109,18 +107,6 @@ def _extract_trakt_media(item: dict, action: str, media_type: str) -> Optional[d
     return item
 
 
-def _trakt_image_url(paths: Optional[list]) -> str:
-    """Pick the first Trakt image URL and prefix `https://`. Trakt URLs are protocol-less."""
-    if not paths or not isinstance(paths, list):
-        return ""
-    raw = paths[0]
-    if not raw:
-        return ""
-    if raw.startswith("http://") or raw.startswith("https://"):
-        return raw
-    return f"https://{raw}"
-
-
 def _normalize_trakt_item(media: dict, media_type: str) -> dict:
     """Convert a Trakt media object (`extended=full` images) to a normalized listitem dict."""
     is_movie = media_type == "movie"
@@ -133,8 +119,8 @@ def _normalize_trakt_item(media: dict, media_type: str) -> dict:
     genres_raw = media.get("genres", [])
     genres = [g.replace("-", " ").title() for g in genres_raw]
     images = media.get("images") or {}
-    poster = _trakt_image_url(images.get("poster"))
-    fanart = _trakt_image_url(images.get("fanart"))
+    poster = trakt_image_url(images.get("poster"))
+    fanart = trakt_image_url(images.get("fanart"))
 
     return {
         "title": media.get("title", ""),
@@ -208,7 +194,7 @@ def _create_listitem(normalized: dict,
     if library_match:
         dbid = int(library_match["dbid"])  # type: ignore[arg-type]
         video_tag.setDbId(dbid)
-        listitem.setProperty("IsInLibrary", "true")
+        listitem.setProperty("isinlibrary", "true")
         url = str(library_match.get("file", ""))
 
     return url, listitem, is_folder
@@ -249,17 +235,23 @@ def _fetch_trakt(action: str, media_type: str, limit: int, page: int, period: st
         "trakt_boxoffice": lambda: api.get_box_office(limit=limit),
         "trakt_recommendations": lambda: api.get_recommendations(
             trakt_type, limit=limit, page=page),
+        "trakt_played": lambda: api.get_most_played(
+            trakt_type, period=period, limit=limit, page=page),
+        "trakt_watchlist": lambda: api.get_watchlist(trakt_type, limit=limit, page=page),
+        "trakt_history": lambda: api.get_history(
+            trakt_type, page=page,
+            limit=limit if trakt_type == "movie" else limit * _HISTORY_EPISODES_PER_SHOW),
+        "trakt_inprogress": lambda: api.get_up_next(limit=limit, page=page),
     }
     return dispatch[action]()
 
 
-_AUTH_WARN_PROP = "SkinInfo.Trakt.AuthWarned"
-_AUTH_WARN_COOLDOWN = 10.0
+_AUTH_WARN_PROP: Final = "SkinInfo.Trakt.AuthWarned"
+_AUTH_WARN_COOLDOWN: Final = 10.0
 
 
-def _warn_trakt_auth() -> None:
-    """Notify that a Trakt-auth widget can't load; a short cooldown stops duplicate
-    notifications from stacked widgets."""
+def warn_trakt_auth() -> None:
+    """Warn that a Trakt widget needs an account, at most once per cooldown across widgets."""
     import time
     from lib.kodi.utilities import get_prop, set_prop
     last = get_prop(_AUTH_WARN_PROP)
@@ -279,7 +271,7 @@ def _warn_trakt_auth() -> None:
 
 
 def handle_discover(handle: int, action: str, params: dict) -> None:
-    """Plugin entry for a discovery widget: fetch, normalize, create ListItems, render directory."""
+    """Plugin entry for a TMDB or Trakt discovery widget, flagging titles already in the library."""
     try:
         config = WIDGET_REGISTRY.get(action)
         if not config:
@@ -287,10 +279,11 @@ def handle_discover(handle: int, action: str, params: dict) -> None:
             xbmcplugin.endOfDirectory(handle, succeeded=False)
             return
 
+        xbmcplugin.setPluginCategory(handle, ADDON.getLocalizedString(config["label"]))
         if config.get("auth") == "oauth":
             from lib.data.api.trakt import ApiTrakt
             if not ApiTrakt().is_authorized():
-                _warn_trakt_auth()
+                warn_trakt_auth()
                 xbmcplugin.endOfDirectory(handle, succeeded=True)
                 return
 
@@ -306,7 +299,6 @@ def handle_discover(handle: int, action: str, params: dict) -> None:
         period = params.get("period", ["weekly"])[0]
 
         kodi_media_type = "movie" if media_type == "movie" else "tvshow"
-        library_lookup = _get_library_lookup(kodi_media_type)
 
         normalized_items: List[dict] = []
 
@@ -325,8 +317,18 @@ def handle_discover(handle: int, action: str, params: dict) -> None:
                 if media_obj:
                     medias.append(media_obj)
 
+            seen = set()
             for media_obj in medias:
-                normalized_items.append(_normalize_trakt_item(media_obj, media_type))
+                normalized = _normalize_trakt_item(media_obj, media_type)
+                key = normalized.get("tmdb_id") or normalized.get("title")
+                if key not in seen:
+                    seen.add(key)
+                    normalized_items.append(normalized)
+            normalized_items = normalized_items[:limit]
+
+        library_lookup = _get_library_lookup(
+            kodi_media_type, [n.get("tmdb_id") for n in normalized_items]
+        )
 
         items: List[Tuple[str, xbmcgui.ListItem, bool]] = []
         for normalized in normalized_items:
@@ -347,21 +349,141 @@ def handle_discover(handle: int, action: str, params: dict) -> None:
         xbmcplugin.endOfDirectory(handle, succeeded=True)
 
         log("Plugin", f"Discover: {action} ({media_type}) returned {len(items)} items",
-            xbmc.LOGINFO)
+            xbmc.LOGDEBUG)
 
     except Exception as e:
+        import traceback
         log("Plugin", f"Discover: Error - {e}", xbmc.LOGERROR)
         log("Plugin", traceback.format_exc(), xbmc.LOGERROR)
         xbmcplugin.endOfDirectory(handle, succeeded=False)
 
 
+_TRAKT_LIST_KINDS: Final = ("mine", "liked", "popular", "trending")
+
+
+def handle_trakt_lists(handle: int, params: dict) -> None:
+    """Plugin entry for Trakt lists as folders: the account's own or liked, popular or trending."""
+    try:
+        kind = params.get("kind", ["popular"])[0]
+        if kind not in _TRAKT_LIST_KINDS:
+            kind = "popular"
+        limit = int(params.get("limit", ["20"])[0])
+        page = int(params.get("page", ["1"])[0])
+
+        from lib.data.api.trakt import ApiTrakt
+        api = ApiTrakt()
+        if kind in ("mine", "liked") and not api.is_authorized():
+            warn_trakt_auth()
+            xbmcplugin.endOfDirectory(handle, succeeded=True)
+            return
+
+        from urllib.parse import urlencode
+        for entry in api.get_lists(kind, limit=limit, page=page):
+            list_id = (entry.get("ids") or {}).get("trakt")
+            owner = entry.get("user") or {}
+            user = "me" if kind == "mine" else (owner.get("ids") or {}).get("slug", "")
+            if not list_id or not user:
+                continue
+            count = str(entry.get("item_count") or "")
+            item = xbmcgui.ListItem(entry.get("name", ""), count, offscreen=True)
+            item.getVideoInfoTag().setPlot(entry.get("description") or "")
+            poster = trakt_image_url((entry.get("images") or {}).get("posters"))
+            if poster:
+                item.setArt({"poster": poster, "thumb": poster})
+            props = {
+                "user": owner.get("name") or owner.get("username") or "",
+                "item_count": count,
+                "likes": str(entry.get("likes") or ""),
+            }
+            for key, value in props.items():
+                if value:
+                    item.setProperty(key, value)
+            query = urlencode({"action": "trakt_list_items", "user": user, "list": list_id})
+            xbmcplugin.addDirectoryItem(
+                handle, f"plugin://script.skin.info.service/?{query}", item, True)
+
+        xbmcplugin.setContent(handle, "videos")
+        xbmcplugin.endOfDirectory(handle, succeeded=True)
+
+    except Exception as e:
+        import traceback
+        log("Plugin", f"Trakt Lists: Error - {e}", xbmc.LOGERROR)
+        log("Plugin", traceback.format_exc(), xbmc.LOGERROR)
+        xbmcplugin.endOfDirectory(handle, succeeded=False)
+
+
+def handle_trakt_list_items(handle: int, params: dict) -> None:
+    """Plugin entry for the movies and shows on one Trakt list, in its rank order."""
+    try:
+        user = params.get("user", [""])[0]
+        list_id = params.get("list", [""])[0]
+        if not user or not list_id:
+            log("Plugin", "Trakt List Items: Missing user or list", xbmc.LOGWARNING)
+            xbmcplugin.endOfDirectory(handle, succeeded=False)
+            return
+        media_type = params.get("type", [""])[0]
+        source = params.get("source", ["online"])[0]
+        limit = int(params.get("limit", ["20"])[0])
+        page = int(params.get("page", ["1"])[0])
+
+        from lib.data.api.trakt import ApiTrakt
+        api = ApiTrakt()
+        if user == "me" and not api.is_authorized():
+            warn_trakt_auth()
+            xbmcplugin.endOfDirectory(handle, succeeded=True)
+            return
+
+        normalized = []
+        for entry in api.get_list_items(user, list_id, media_type, limit=limit, page=page):
+            kind = entry.get("type")
+            media = entry.get(kind) if kind in ("movie", "show") else None
+            if isinstance(media, dict):
+                normalized.append(
+                    _normalize_trakt_item(media, "movie" if kind == "movie" else "tv"))
+
+        lookups: Dict[str, Dict[str, Dict[str, object]]] = {}
+        for item_type, kodi_type in (("movie", "movie"), ("tv", "tvshow")):
+            tmdb_ids = [n["tmdb_id"] for n in normalized
+                        if n["media_type"] == item_type and n.get("tmdb_id")]
+            lookups[item_type] = _get_library_lookup(kodi_type, tmdb_ids) if tmdb_ids else {}
+
+        for normalized_item in normalized:
+            lib_match = lookups[normalized_item["media_type"]].get(
+                str(normalized_item.get("tmdb_id", "")))
+            if source == "library" and not lib_match:
+                continue
+            url, listitem, is_folder = _create_listitem(normalized_item, lib_match)
+            xbmcplugin.addDirectoryItem(handle, url, listitem, is_folder)
+
+        item_types = {n["media_type"] for n in normalized}
+        content = {frozenset({"movie"}): "movies", frozenset({"tv"}): "tvshows"}.get(
+            frozenset(item_types), "videos")
+        xbmcplugin.setContent(handle, content)
+        xbmcplugin.endOfDirectory(handle, succeeded=True)
+
+    except Exception as e:
+        import traceback
+        log("Plugin", f"Trakt List Items: Error - {e}", xbmc.LOGERROR)
+        log("Plugin", traceback.format_exc(), xbmc.LOGERROR)
+        xbmcplugin.endOfDirectory(handle, succeeded=False)
+
+
+def _seed_tmdb_id(dbtype: str, params: dict) -> int:
+    """TMDB id of the item a list is seeded by, from `tmdb_id` or a library `dbid`; 0 if unknown."""
+    tmdb_id_str = params.get('tmdb_id', [''])[0]
+    if tmdb_id_str.isdigit():
+        return int(tmdb_id_str)
+    dbid_str = params.get('dbid', [''])[0]
+    if dbid_str.isdigit():
+        from lib.data.api.person import library_tmdb_id
+        return library_tmdb_id(dbtype, int(dbid_str)) or 0
+    return 0
+
+
 def handle_tmdb_recommendations(handle: int, params: dict) -> None:
-    """TMDB recommendations for a specific item; reads the cached `recommendations` block (no
-    extra API call), resolving `tmdb_id` from `dbid`+`dbtype` if needed."""
+    """Plugin entry for an item's TMDB recommendations, read from its complete TMDB data."""
     try:
         dbtype = params.get('dbtype', [''])[0]
-        tmdb_id_str = params.get('tmdb_id', [''])[0]
-        dbid_str = params.get('dbid', [''])[0]
         limit = int(params.get('limit', ['25'])[0])
         source = params.get('source', ['online'])[0]
 
@@ -370,22 +492,9 @@ def handle_tmdb_recommendations(handle: int, params: dict) -> None:
             xbmcplugin.endOfDirectory(handle, succeeded=False)
             return
 
-        tmdb_id = 0
-        if tmdb_id_str:
-            try:
-                tmdb_id = int(tmdb_id_str)
-            except (ValueError, TypeError):
-                tmdb_id = 0
+        xbmcplugin.setPluginCategory(handle, ADDON.getLocalizedString(32682))
 
-        if not tmdb_id and dbid_str:
-            from lib.data.api.person import resolve_tmdb_id
-            try:
-                dbid = int(dbid_str)
-                resolved = resolve_tmdb_id(dbtype, dbid)
-                tmdb_id = resolved or 0
-            except (ValueError, TypeError):
-                tmdb_id = 0
-
+        tmdb_id = _seed_tmdb_id(dbtype, params)
         if not tmdb_id:
             log("Plugin", "TMDB Recommendations: Could not resolve tmdb_id", xbmc.LOGWARNING)
             xbmcplugin.endOfDirectory(handle, succeeded=False)
@@ -407,12 +516,15 @@ def handle_tmdb_recommendations(handle: int, params: dict) -> None:
         kodi_media_type = 'movie' if media_type == 'movie' else 'tvshow'
         tmdb_type = 'movie' if media_type == 'movie' else 'tv'
 
-        library_lookup = _get_library_lookup(kodi_media_type)
         genre_map = api.get_genre_list(tmdb_type)
 
+        normalized_recs = [_normalize_tmdb_item(raw, media_type, genre_map) for raw in recs]
+        library_lookup = _get_library_lookup(
+            kodi_media_type, [n.get("tmdb_id") for n in normalized_recs]
+        )
+
         items: List[Tuple[str, xbmcgui.ListItem, bool]] = []
-        for raw in recs:
-            normalized = _normalize_tmdb_item(raw, media_type, genre_map)
+        for normalized in normalized_recs:
             tmdb_id_match = str(normalized.get("tmdb_id", ""))
             lib_match = library_lookup.get(tmdb_id_match)
 
@@ -430,10 +542,195 @@ def handle_tmdb_recommendations(handle: int, params: dict) -> None:
 
         log("Plugin",
             f"TMDB Recommendations: Returned {len(items)} items for {dbtype} tmdb={tmdb_id}",
-            xbmc.LOGINFO)
+            xbmc.LOGDEBUG)
 
     except Exception as e:
+        import traceback
         log("Plugin", f"TMDB Recommendations: Error - {e}", xbmc.LOGERROR)
+        log("Plugin", traceback.format_exc(), xbmc.LOGERROR)
+        xbmcplugin.endOfDirectory(handle, succeeded=False)
+
+
+def handle_tmdb_posters(handle: int, params: dict) -> None:
+    """Plugin entry for an item's TMDB posters, the metadata language first, then English."""
+    try:
+        dbtype = params.get('dbtype', [''])[0]
+        tmdb_id = _seed_tmdb_id(dbtype, params) if dbtype in ('movie', 'tvshow') else 0
+        if not tmdb_id:
+            log("Plugin", f"TMDB Posters: No tmdb_id for dbtype '{dbtype}'", xbmc.LOGWARNING)
+            xbmcplugin.endOfDirectory(handle, succeeded=False)
+            return
+
+        from lib.data.api.tmdb import ApiTmdb
+        from lib.artwork.utilities import get_language_display_name
+        from lib.kodi.formatters import format_rating
+        from lib.kodi.settings import KodiSettings
+
+        data = ApiTmdb().get_complete_data(dbtype, tmdb_id)
+        if not data:
+            xbmcplugin.endOfDirectory(handle, succeeded=False)
+            return
+
+        preferred = KodiSettings.online_metadata_language().split('-')[0]
+        order = {preferred: 0, 'en': 1, '': 2}
+        posters = [p for p in (data.get('images') or {}).get('posters') or []
+                   if p.get('file_path') and not p['file_path'].lower().endswith('.svg')]
+        posters.sort(key=lambda p: order.get(p.get('iso_639_1') or '', 3))
+        images_path = sys.argv[0] + sys.argv[2]
+
+        for poster in posters:
+            language = poster.get('iso_639_1') or ''
+            width = poster.get('width')
+            height = poster.get('height')
+            dimensions = f"{width}x{height}" if width and height else ''
+            item = xbmcgui.ListItem(get_language_display_name(language), dimensions,
+                                    offscreen=True)
+            url = tmdb_image_url(poster['file_path'], 'w780')
+            item.setArt({'thumb': url, 'poster': url, 'icon': url})
+            props = {
+                'language': get_language_display_name(language) if language else '',
+                'language_short': language,
+                'width': str(width or ''),
+                'height': str(height or ''),
+                'dimensions': dimensions,
+                'rating': format_rating(poster.get('vote_average')),
+                'votes': str(poster.get('vote_count') or ''),
+                'aspectratio': str(poster.get('aspect_ratio') or ''),
+                'images_path': images_path,
+            }
+            for key, value in props.items():
+                if value:
+                    item.setProperty(key, value)
+            xbmcplugin.addDirectoryItem(handle, '', item, False)
+
+        xbmcplugin.setContent(handle, 'images')
+        xbmcplugin.endOfDirectory(handle, succeeded=True)
+
+    except Exception as e:
+        import traceback
+        log("Plugin", f"TMDB Posters: Error - {e}", xbmc.LOGERROR)
+        log("Plugin", traceback.format_exc(), xbmc.LOGERROR)
+        xbmcplugin.endOfDirectory(handle, succeeded=False)
+
+
+_DISCOVER_SORTS: Final = {
+    "popularity": "popularity.desc", "votes": "vote_count.desc", "revenue": "revenue.desc",
+}
+
+
+def _directed_movies(seed: dict) -> list:
+    """Movies the seed's director directed, most popular first."""
+    from lib.data.api.person import get_person_data
+    crew = (seed.get("credits") or {}).get("crew") or []
+    director = next((c for c in crew if c.get("job") == "Director"), None)
+    if not director:
+        return []
+    person = get_person_data(int(director["id"])) or {}
+    credits = (person.get("combined_credits") or {}).get("crew") or []
+    movies = {c["id"]: c for c in credits
+              if c.get("job") == "Director" and c.get("media_type") == "movie"}
+    return sorted(movies.values(), key=lambda c: c.get("popularity") or 0, reverse=True)
+
+
+def _seeded_results(by: str, media_type: str, seed: dict, sort: str, page: int) -> list:
+    """Raw results sharing the seed's studio, network, genre, year, cast, director or collection."""
+    from lib.data.api.tmdb import ApiTmdb
+    api = ApiTmdb()
+    if by == "director":
+        return _directed_movies(seed) if media_type == "movie" else []
+    if by == "collection":
+        collection = seed.get("belongs_to_collection") or {}
+        parts = api.get_collection(int(collection["id"])) if collection.get("id") else []
+        return sorted(parts, key=lambda p: p.get("release_date") or "9999")
+
+    filters = {"sort_by": sort}
+    if by == "studio":
+        ids = [str(c["id"]) for c in seed.get("production_companies") or []][:1]
+        filters["with_companies"] = "".join(ids)
+    elif by == "network":
+        ids = [str(n["id"]) for n in seed.get("networks") or []][:1]
+        filters["with_networks"] = "".join(ids)
+    elif by == "genre":
+        ids = [str(g["id"]) for g in seed.get("genres") or []][:1]
+        filters["with_genres"] = "".join(ids)
+    elif by == "year":
+        year = (seed.get("release_date") or seed.get("first_air_date") or "")[:4]
+        filters["primary_release_year" if media_type == "movie" else "first_air_date_year"] = year
+    elif by == "cast" and media_type == "movie":
+        cast = (seed.get("credits") or {}).get("cast") or []
+        filters["with_cast"] = "|".join(str(c["id"]) for c in cast[:3])
+    else:
+        return []
+    if not all(filters.values()):
+        return []
+    return api.discover(media_type if media_type == "movie" else "tv", filters, page)
+
+
+def _genre_id(genre_map: Dict[int, str], name: str) -> Optional[int]:
+    """TMDB id of a genre by name, or by the part before ` & ` a URL's `&` cuts it to."""
+    wanted = name.strip().lower()
+    names = {gid: label.lower() for gid, label in genre_map.items()}
+    return (next((gid for gid, label in names.items() if label == wanted), None)
+            or next((gid for gid, label in names.items() if label.split(' & ')[0] == wanted),
+                    None))
+
+
+def handle_tmdb_discover(handle: int, params: dict) -> None:
+    """Plugin entry for TMDB discover: titles by seed trait or genre, or a sorted catalogue."""
+    try:
+        dbtype = params.get("dbtype", ["movie"])[0]
+        if dbtype not in ("movie", "tvshow"):
+            dbtype = "movie"
+        media_type = "movie" if dbtype == "movie" else "tv"
+        by = params.get("by", [""])[0]
+        sort_name = params.get("sort", ["popularity"])[0]
+        if sort_name == "revenue" and media_type != "movie":
+            sort_name = "popularity"
+        sort = _DISCOVER_SORTS.get(sort_name, _DISCOVER_SORTS["popularity"])
+        limit = int(params.get("limit", ["20"])[0])
+        page = int(params.get("page", ["1"])[0])
+        source = params.get("source", ["online"])[0]
+
+        genre = params.get("genre", [""])[0]
+
+        from lib.data.api.tmdb import ApiTmdb
+        api = ApiTmdb()
+        genre_map = api.get_genre_list(media_type)
+        seed_id = 0
+        if by:
+            seed_id = _seed_tmdb_id(dbtype, params)
+            seed = api.get_complete_data(dbtype, seed_id) if seed_id else None
+            raw_items = _seeded_results(by, media_type, seed, sort, page) if seed else []
+        elif genre:
+            genre_id = _genre_id(genre_map, genre)
+            raw_items = api.discover(
+                media_type, {"sort_by": sort, "with_genres": str(genre_id)}, page
+            ) if genre_id else []
+        else:
+            raw_items = api.discover(media_type, {"sort_by": sort}, page)
+
+        normalized_items = [_normalize_tmdb_item(raw, media_type, genre_map)
+                            for raw in raw_items if raw.get("id") != seed_id][:limit]
+        library_lookup = _get_library_lookup(
+            dbtype, [n.get("tmdb_id") for n in normalized_items])
+
+        count = 0
+        for normalized in normalized_items:
+            lib_match = library_lookup.get(str(normalized.get("tmdb_id", "")))
+            if source == "library" and not lib_match:
+                continue
+            url, listitem, is_folder = _create_listitem(normalized, lib_match)
+            xbmcplugin.addDirectoryItem(handle, url, listitem, is_folder)
+            count += 1
+
+        xbmcplugin.setContent(handle, "movies" if media_type == "movie" else "tvshows")
+        xbmcplugin.endOfDirectory(handle, succeeded=True)
+        log("Plugin", f"TMDB Discover: by={by or '-'} {dbtype} returned {count} items",
+            xbmc.LOGDEBUG)
+
+    except Exception as e:
+        import traceback
+        log("Plugin", f"TMDB Discover: Error - {e}", xbmc.LOGERROR)
         log("Plugin", traceback.format_exc(), xbmc.LOGERROR)
         xbmcplugin.endOfDirectory(handle, succeeded=False)
 
@@ -443,48 +740,48 @@ def _discover_url(action: str, media_type: str) -> str:
     return f"plugin://script.skin.info.service/?action={action}&type={media_type}"
 
 
-def handle_discover_menu(handle: int, params: dict) -> None:
-    """Render the top-level Discover menu (Movies / TV Shows)."""
-    items = [
-        (ADDON.getLocalizedString(32625),
-         "plugin://script.skin.info.service/?action=discover_movies_menu", "DefaultMovies.png"),
-        (ADDON.getLocalizedString(32626),
-         "plugin://script.skin.info.service/?action=discover_tvshows_menu", "DefaultTVShows.png"),
-    ]
+_DISCOVER_MENUS = {
+    "movie": {"action": "discover_movies_menu", "label": 32625, "icon": "DefaultMovies.png"},
+    "tv": {"action": "discover_tvshows_menu", "label": 32626, "icon": "DefaultTVShows.png"},
+}
 
-    for label, path, icon in items:
+
+def handle_discover_menu(handle: int, params: dict) -> None:
+    """Plugin entry for the top-level Discover menu: Movies and TV Shows."""
+    xbmcplugin.setPluginCategory(handle, ADDON.getLocalizedString(32619))
+    for menu in _DISCOVER_MENUS.values():
+        icon = menu["icon"]
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(menu["label"]), offscreen=True)
+        li.setArt({"icon": icon, "thumb": icon})
+        xbmcplugin.addDirectoryItem(
+            handle, f"plugin://script.skin.info.service/?action={menu['action']}",
+            li, isFolder=True)
+
+    xbmcplugin.endOfDirectory(handle, succeeded=True)
+
+
+def _render_discover_widgets(handle: int, media: str) -> None:
+    """Render every registry widget for the media type, marking the ones needing an account."""
+    xbmcplugin.setPluginCategory(handle, ADDON.getLocalizedString(_DISCOVER_MENUS[media]["label"]))
+    icon = _DISCOVER_MENUS[media]["icon"]
+    for action, config in WIDGET_REGISTRY.items():
+        if media not in config["types"]:
+            continue
+        label = ADDON.getLocalizedString(config["label"])
+        if config.get("auth") == "oauth":
+            label += " " + ADDON.getLocalizedString(32641)
         li = xbmcgui.ListItem(label, offscreen=True)
         li.setArt({"icon": icon, "thumb": icon})
-        xbmcplugin.addDirectoryItem(handle, path, li, isFolder=True)
+        xbmcplugin.addDirectoryItem(handle, _discover_url(action, media), li, isFolder=True)
 
     xbmcplugin.endOfDirectory(handle, succeeded=True)
 
 
 def handle_discover_movies_menu(handle: int, params: dict) -> None:
-    """Render the movies sub-menu listing every movie-capable widget from WIDGET_REGISTRY."""
-    for action, config in WIDGET_REGISTRY.items():
-        if "movie" not in config["types"]:
-            continue
-        label = ADDON.getLocalizedString(config["label"])
-        if config.get("auth") == "oauth":
-            label += " " + ADDON.getLocalizedString(32641)
-        li = xbmcgui.ListItem(label, offscreen=True)
-        li.setArt({"icon": "DefaultMovies.png", "thumb": "DefaultMovies.png"})
-        xbmcplugin.addDirectoryItem(handle, _discover_url(action, "movie"), li, isFolder=True)
-
-    xbmcplugin.endOfDirectory(handle, succeeded=True)
+    """Plugin entry for the movies Discover menu, one row per movie widget."""
+    _render_discover_widgets(handle, "movie")
 
 
 def handle_discover_tvshows_menu(handle: int, params: dict) -> None:
-    """Render the TV shows sub-menu listing every TV-capable widget from WIDGET_REGISTRY."""
-    for action, config in WIDGET_REGISTRY.items():
-        if "tv" not in config["types"]:
-            continue
-        label = ADDON.getLocalizedString(config["label"])
-        if config.get("auth") == "oauth":
-            label += " " + ADDON.getLocalizedString(32641)
-        li = xbmcgui.ListItem(label, offscreen=True)
-        li.setArt({"icon": "DefaultTVShows.png", "thumb": "DefaultTVShows.png"})
-        xbmcplugin.addDirectoryItem(handle, _discover_url(action, "tv"), li, isFolder=True)
-
-    xbmcplugin.endOfDirectory(handle, succeeded=True)
+    """Plugin entry for the TV shows Discover menu, one row per TV widget."""
+    _render_discover_widgets(handle, "tv")

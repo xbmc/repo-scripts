@@ -4,9 +4,9 @@ from __future__ import annotations
 import xbmc
 import xbmcgui
 from lib.kodi.client import request
+from lib.kodi.utilities import set_window_prop, clear_window_prop
 
-# Kodi resets these to default on skin change (ApplicationSkinHandling.cpp),
-# so they are skin-scoped and the only settings allowed to bypass confirmation.
+# settings Kodi resets on a skin change, the only ones that may skip the confirmation
 SKIN_SCOPED_SETTINGS = frozenset({
     'lookandfeel.skincolors',
     'lookandfeel.skintheme',
@@ -15,6 +15,7 @@ SKIN_SCOPED_SETTINGS = frozenset({
 
 
 def _setting_label(setting: str) -> str:
+    """Localized label for a Kodi setting, falling back to the id."""
     result = request('Settings.GetSettings', {'level': 'expert'})
     if result and 'result' in result:
         for item in result['result'].get('settings', []):
@@ -24,6 +25,7 @@ def _setting_label(setting: str) -> str:
 
 
 def _confirm(setting: str, value_text: str) -> bool:
+    """Ask the user to confirm a setting change, naming the setting."""
     heading = xbmc.getLocalizedString(5)  # Settings
     are_you_sure = xbmc.getLocalizedString(750)  # Are you sure?
     message = f'{_setting_label(setting)}: {value_text}\n{are_you_sure}'
@@ -31,22 +33,19 @@ def _confirm(setting: str, value_text: str) -> bool:
 
 
 def get_setting(setting: str, prefix: str = 'SkinInfo', window: str = 'home') -> None:
-    """Read a Kodi `setting` value and write it to `{prefix}.Setting.{setting}` window property."""
+    """Get a Kodi setting's value into a `Setting.*` window property."""
     result = request('Settings.GetSettingValue', {'setting': setting})
     prop_name = f'{prefix}.Setting.{setting}'
 
     if result and 'result' in result and 'value' in result['result']:
         value = result['result']['value']
-        xbmc.executebuiltin(f'SetProperty({prop_name},{value},{window})')
+        set_window_prop(prop_name, value, window)
     else:
-        xbmc.executebuiltin(f'ClearProperty({prop_name},{window})')
+        clear_window_prop(prop_name, window)
 
 
 def set_setting(setting: str, value: str | int | bool, noconfirm: bool = False) -> None:
-    """Set a Kodi setting after a Yes/No confirmation dialog.
-
-    `noconfirm` skips the dialog, but only for skin-scoped settings.
-    """
+    """Set a Kodi setting once the user confirms; a skin-scoped one may skip the prompt."""
     if isinstance(value, bool):
         value_text = xbmc.getLocalizedString(305 if value else 13106)  # Enabled / Disabled
     else:
@@ -56,10 +55,7 @@ def set_setting(setting: str, value: str | int | bool, noconfirm: bool = False) 
 
 
 def toggle_setting(setting: str, noconfirm: bool = False) -> None:
-    """Toggle a boolean Kodi setting after a Yes/No confirmation dialog.
-
-    `noconfirm` skips the dialog, but only for skin-scoped settings.
-    """
+    """Toggle a boolean Kodi setting once the user confirms; a skin-scoped one may skip it."""
     result = request('Settings.GetSettingValue', {'setting': setting})
     if not (result and 'result' in result and 'value' in result['result']):
         return
@@ -75,10 +71,7 @@ def toggle_setting(setting: str, noconfirm: bool = False) -> None:
 
 
 def reset_setting(setting: str, noconfirm: bool = False) -> None:
-    """Reset a Kodi setting to its default after a Yes/No confirmation dialog.
-
-    `noconfirm` skips the dialog, but only for skin-scoped settings.
-    """
+    """Reset a Kodi setting to its default once the user confirms; a skin-scoped one may skip it."""
     if (noconfirm and setting in SKIN_SCOPED_SETTINGS) or _confirm(
         setting, xbmc.getLocalizedString(571)  # Default
     ):

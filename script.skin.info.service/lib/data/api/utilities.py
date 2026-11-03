@@ -1,31 +1,33 @@
-"""Lightweight API helpers with no heavy dependencies.
-
-Importing from this module is cheap; it pulls no API client, database, or HTTP
-chain. Helpers that need those should live in their owning API module instead.
-"""
+"""API helpers that import no client, database or HTTP layer."""
 from __future__ import annotations
 
-from base64 import b64decode
-from typing import Optional
+from typing import Optional, Final
 
 
-TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p"
+TMDB_IMAGE_BASE: Final = "https://image.tmdb.org/t/p"
 
 
 def decode_key(blob: str) -> str:
     """Decode a built-in provider key."""
+    from base64 import b64decode
     return b64decode(blob).decode("ascii")
 
 
 def tmdb_image_url(path: Optional[str], size: str = "original") -> str:
-    """Build a TMDB CDN URL for `path` at `size`. Empty string if path is missing.
-
-    Common sizes: w185 (small thumb), w500 (poster), w780 (fanart), original (full).
-    `path` is the leading-slash form TMDB returns (e.g. `/abc.jpg`).
-    """
+    """Build a TMDB CDN URL for an image path at one size; empty when there is no path."""
     if not path:
         return ""
     return f"{TMDB_IMAGE_BASE}/{size}{path}"
+
+
+def trakt_image_url(paths: Optional[list]) -> str:
+    """Build a URL from the first of Trakt's image paths, which come without a scheme."""
+    if not paths or not isinstance(paths, list) or not paths[0]:
+        return ""
+    raw = paths[0]
+    if raw.startswith("http://") or raw.startswith("https://"):
+        return raw
+    return f"https://{raw}"
 
 
 def is_valid_tmdb_id(tmdb_id: Optional[str]) -> bool:

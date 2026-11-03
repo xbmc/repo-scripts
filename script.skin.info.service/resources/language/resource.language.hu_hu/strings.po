@@ -1,0 +1,2620 @@
+# Kodi strings for script.skin.info.service
+msgid ""
+msgstr ""
+"Project-Id-Version: script.skin.info.service\n"
+"POT-Creation-Date: 2024-10-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-18 05:42+0000\n"
+"Last-Translator: Frodo19 <bilbohu@gmail.com>\n"
+"Language-Team: Hungarian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skin-info-service/hu_hu/>\n"
+"Language: hu_hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2026.8.1\n"
+
+msgctxt "Addon Summary"
+msgid "Provides rich media info and artwork to skins."
+msgstr "Médiainformációkat és grafikákat biztosít a felszínekhez."
+
+msgctxt "Addon Description"
+msgid "Skin Info Service provides skins with rich metadata and artwork beyond what Kodi exposes by default. It adds extra properties such as ratings from multiple sources, artwork, stream details, and cast and plot information for movies, TV shows, episodes, sets, music videos, artists, and albums, drawing on both your library and online data. It also includes a tool to find and add animated GIF posters to your library."
+msgstr "A Skin Info Service gazdag metaadatokkal és grafikákkal látja el a felszíneket, amelyek túlmutatnak azon, amit a Kodi alapértelmezés szerint megjelenít. Extra tulajdonságokat ad hozzá, például értékeléseket több forrásból, grafikákat, streamelési részleteket, valamint szereplő- és cselekményinformációkat filmekhez, tévéműsorokhoz, epizódokhoz, díszletekhez, videoklipekhez, előadókhoz és albumokhoz, mind a médiatárad, mind az online adatok felhasználásával. Tartalmaz egy eszközt is, amellyel animált GIF-posztereket kereshetsz és adhatsz hozzá a médiatáradhoz."
+
+msgctxt "Addon Disclaimer"
+msgid "This add-on uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB."
+msgstr ""
+
+msgctxt "#32000"
+msgid "Animated Art"
+msgstr "Animált art"
+
+msgctxt "#32001"
+msgid "Key was not saved, please try again"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Gif filename patterns (exact/suffix)"
+msgstr "GIF fájlnév minták (pontos/utótag)"
+
+msgctxt "#32003"
+msgid "Comma-separated list of gif filename patterns. Matches exact filenames (e.g., 'poster.gif') or files ending with the pattern (e.g., 'movie.poster.gif')"
+msgstr "GIF fájlnév-minták vesszővel elválasztott listája. Pontosan megegyezik a fájlnevekkel (pl. 'poszter.gif'), vagy a mintával végződő fájlokkal (pl. 'film.poszter.gif')"
+
+msgctxt "#32004"
+msgid "Artwork"
+msgstr "Kép/grafika"
+
+#. Error shown when an edited rating is not a number in range; 7.3 is an example value
+msgctxt "#32005"
+msgid "Rating must be a number from 0 to 10, such as 7.3"
+msgstr ""
+
+#. Label for language dropdown in settings (used for both metadata and artwork language selection)
+msgctxt "#32006"
+msgid "Preferred language"
+msgstr "Előnyben részesített nyelv"
+
+msgctxt "#32007"
+msgid "Artwork in this language is prioritized for posters, logos, and other language-sensitive art."
+msgstr "Az ezen a nyelven készült képek/grafikák elsőbbséget élveznek a poszterek, logók és más nyelvérzékeny alkotások esetében."
+
+msgctxt "#32008"
+msgid "Prefer fanart in selected language"
+msgstr "Fanartok előnyben részesítése a kiválasztott nyelven"
+
+msgctxt "#32009"
+msgid "No artwork available from scrapers"
+msgstr "A leolvasók nem találtak képeket"
+
+msgctxt "#32010"
+msgid "No artwork matched language preferences"
+msgstr "A leolvasók nem találtak képeket a kiválasztott nyelven."
+
+msgctxt "#32011"
+msgid "Needs manual review"
+msgstr "Kézi beavatkozás szükséges"
+
+msgctxt "#32012"
+msgid "No images selected"
+msgstr "Nincs kép kiválasztva"
+
+msgctxt "#32013"
+msgid "Downloaded {0} files"
+msgstr "Letöltve {0} fájl"
+
+msgctxt "#32014"
+msgid "{0} files"
+msgstr "{0} fájl"
+
+msgctxt "#32015"
+msgid "{0} image(s) selected"
+msgstr "{0} kép kiválasztva"
+
+msgctxt "#32016"
+msgid "{0} seasons"
+msgstr "{0} évad"
+
+msgctxt "#32017"
+msgid "{0} episodes"
+msgstr "{0} epizód"
+
+#. Error shown when an edited year falls outside the accepted range
+msgctxt "#32018"
+msgid "Year must be between 1800 and 2100"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Add 'Download' option to missing artwork and pre-cache"
+msgstr "'Letöltés' opció hozzáadása a hiányzó képekhez és az előzetes gyorsítótárazáshoz"
+
+msgctxt "#32020"
+msgid "Show additional menu options to download artwork to filesystem during review and pre-cache operations"
+msgstr "További menüpontok megjelenítése a képek letöltéséhez az ellenőrzés és a gyorsítótár előtti műveletek során"
+
+#. Error shown when an edited runtime is not a whole number of minutes in range
+msgctxt "#32021"
+msgid "Runtime must be 0 to 10080 minutes"
+msgstr ""
+
+msgctxt "#32022"
+msgid "When File Already Exists"
+msgstr "Ha a fájl már létezik"
+
+msgctxt "#32023"
+msgid "What to do when artwork file already exists on filesystem"
+msgstr "Mi a teendő, ha a kép fájl már létezik a fájlrendszerben?"
+
+msgctxt "#32024"
+msgid "Skip (don't download)"
+msgstr "Kihagyás (ne töltsd le)"
+
+msgctxt "#32025"
+msgid "Overwrite existing file"
+msgstr "Létező fájl felülírása"
+
+#. Error shown when an edited Top 250 position falls outside the accepted range
+msgctxt "#32026"
+msgid "Top 250 must be 0-250"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Use Movie Filename Prefix"
+msgstr "Filmfájlnév előtag használata"
+
+msgctxt "#32028"
+msgid "Save as 'Avatar-poster.jpg' instead of 'poster.jpg' in movie folder"
+msgstr "Mentés 'Avatar-poster.jpg' néven a 'poster.jpg' helyett a filmmappába"
+
+msgctxt "#32029"
+msgid "Export to NFO"
+msgstr "Az NFO-ba exportálás"
+
+msgctxt "#32030"
+msgid "NFO file written"
+msgstr "NFO fájl írása"
+
+msgctxt "#32031"
+msgid "Could not write NFO file"
+msgstr "Az NFO nem írható"
+
+msgctxt "#32032"
+msgid "Processing cancelled"
+msgstr "Átvitel törölve"
+
+msgctxt "#32033"
+msgid "Art Fetcher - Cancelled"
+msgstr "Kép lekérés - törölve"
+
+#. Error shown when an edited duration is not a MM:SS time
+msgctxt "#32034"
+msgid "Duration must be in MM:SS format"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Always Ask"
+msgstr "Mindig rákérdez"
+
+msgctxt "#32036"
+msgid "GIF Scanner Mode"
+msgstr "GIF kereső mód"
+
+msgctxt "#32037"
+msgid "Scan mode for animated art scanner"
+msgstr "Szkennelési mód animált képekhez"
+
+msgctxt "#32038"
+msgid "Incremental"
+msgstr "Járulékos"
+
+msgctxt "#32039"
+msgid "Full Scan"
+msgstr "Teljes keresés"
+
+msgctxt "#32040"
+msgid "Download Report"
+msgstr "Letöltési riport"
+
+msgctxt "#32041"
+msgid "No download history found."
+msgstr "Nem található letöltési előzmény"
+
+msgctxt "#32042"
+msgid "Cancelled"
+msgstr "Törölve"
+
+msgctxt "#32043"
+msgid "No valid media types to download."
+msgstr "Nincsenek érvényes letölthető médiatípusok."
+
+msgctxt "#32044"
+msgid "API Keys"
+msgstr "API kulcsok"
+
+msgctxt "#32045"
+msgid "Downloaded:"
+msgstr "Letöltve:"
+
+msgctxt "#32046"
+msgid "Configure TMDB API Key"
+msgstr "TMDB API kulcs beállítása"
+
+msgctxt "#32047"
+msgid "Get your API key from https://www.themoviedb.org/settings/api"
+msgstr "Szerezz be API kulcsot a https://www.themoviedb.org/settings/api oldalon"
+
+msgctxt "#32048"
+msgid "Test Connection"
+msgstr "Teszt kapcsolódás"
+
+msgctxt "#32049"
+msgid "Clear API Key"
+msgstr "API kulcs törlése"
+
+msgctxt "#32050"
+msgid "MDBList"
+msgstr "MDBList"
+
+msgctxt "#32051"
+msgid "Configure MDBList API Key"
+msgstr "MDBList API kulcs beállítása"
+
+msgctxt "#32052"
+msgid "Get your API key from https://mdblist.com/preferences/"
+msgstr "Szerezz be API kulcsot a https://mdblist.com/preferences/ oldalon"
+
+msgctxt "#32053"
+msgid "OMDb"
+msgstr "OMDb"
+
+msgctxt "#32054"
+msgid "Configure OMDb API Key"
+msgstr "OMDb API kulcs beállítása"
+
+msgctxt "#32055"
+msgid "Get your API key from http://www.omdbapi.com/apikey.aspx"
+msgstr "Szerezz be API kulcsot a http://www.omdbapi.com/apikey.aspx oldalon"
+
+msgctxt "#32056"
+msgid "Fanart.tv · fanart.tv/get-an-api-key[CR]No key: 7 days · Personal: 2 days · VIP: immediate"
+msgstr "Fanart.tv · fanart.tv/get-an-api-key[CR]Kulcs nélkül: 7 nap · Személyes: 2 nap · VIP: azonnal"
+
+msgctxt "#32057"
+msgid "Configure Fanart.tv API Key"
+msgstr "Fanart.tv API kulcs beállítása"
+
+msgctxt "#32058"
+msgid "Filmography"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Trakt"
+msgstr "Trakt"
+
+msgctxt "#32060"
+msgid "Authorize Trakt"
+msgstr "Trakt engedélyezése"
+
+msgctxt "#32061"
+msgid "Authorize this addon to access your Trakt account"
+msgstr "Engedélyezd ennek a kiegészítőnek a Trakt-fiókodhoz való hozzáférést"
+
+msgctxt "#32062"
+msgid "Test Trakt Connection"
+msgstr "Trakt-kapcsolat tesztelése"
+
+msgctxt "#32063"
+msgid "Revoke Authorization"
+msgstr "Engedélyezés visszavonása"
+
+msgctxt "#32064"
+msgid "Ratings"
+msgstr "Értékelés"
+
+msgctxt "#32065"
+msgid "Not configured"
+msgstr "Nics beállítva"
+
+msgctxt "#32066"
+msgid "Stopped early: downloads stalled"
+msgstr "Korai leállás: a letöltések elakadtak"
+
+msgctxt "#32067"
+msgid "No progress for over {0} seconds. Run it again to finish the rest."
+msgstr "Nincs haladás több mint {0} másodperce. Futtasd újra a többi befejezéséhez."
+
+msgctxt "#32068"
+msgid "Press OK to read biography"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Birthplace"
+msgstr ""
+
+#. Follows a person's age, as in "53 years old"
+msgctxt "#32070"
+msgid "years old"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Upcoming Episodes"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Processing Artwork Queue"
+msgstr "Képek feldolgozási sora"
+
+msgctxt "#32073"
+msgid "Cache is empty"
+msgstr "Gyorsítótár üres"
+
+msgctxt "#32074"
+msgid "Default ratings source"
+msgstr "Alapértelmezett értékelési forrás"
+
+msgctxt "#32075"
+msgid "Primary source to display when multiple ratings are available"
+msgstr "Elsődleges forrás, amely akkor jelenik meg, ha több értékelés is elérhető"
+
+msgctxt "#32076"
+msgid "IMDb"
+msgstr "IMDb"
+
+msgctxt "#32077"
+msgid "TMDB"
+msgstr "TMDB"
+
+#. "Info" is the remote and keyboard button
+msgctxt "#32078"
+msgid "Info: view full size"
+msgstr ""
+
+#. "match" is the movie or TV show found for a programme, not a sports match
+msgctxt "#32079"
+msgid "Fix match"
+msgstr ""
+
+msgctxt "#32080"
+msgid "API Key"
+msgstr "API kulcs"
+
+msgctxt "#32081"
+msgid "Status: Authorized"
+msgstr "Állapot: Engedélyezett"
+
+msgctxt "#32082"
+msgid "Texture Cache Manager"
+msgstr "Textúra gyorsítótár-kezelő"
+
+msgctxt "#32083"
+msgid "Pre-Cache Library Artwork"
+msgstr "Előzetes gyorsítótár a médiatárhoz"
+
+msgctxt "#32084"
+msgid "Trakt Watchlist"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Statistics & Info"
+msgstr "Statisztikák, infók"
+
+msgctxt "#32086"
+msgid "View Last Report"
+msgstr "Legutóbbi jelentés megtekintése"
+
+msgctxt "#32087"
+msgid "Cleanup Textures"
+msgstr "Textúrák tisztítása"
+
+msgctxt "#32088"
+msgid "Library Artwork Orphans"
+msgstr "Elárvult médiatár képek"
+
+msgctxt "#32089"
+msgid "By Age (Older Than...)"
+msgstr "Kor szerint (Idősebb, mint...)"
+
+msgctxt "#32090"
+msgid "Identifying uncached artwork..."
+msgstr ""
+
+msgctxt "#32091"
+msgid "Finding orphaned textures..."
+msgstr ""
+
+msgctxt "#32092"
+msgid "Removing {0} orphaned textures..."
+msgstr ""
+
+msgctxt "#32093"
+msgid "Enter {0} API Key"
+msgstr "Adja meg az {0} API-kulcsot"
+
+msgctxt "#32094"
+msgid "Are you sure you want to clear the {0} API key?"
+msgstr "Biztosan törölni szeretnéd az {0} API-kulcsot?"
+
+msgctxt "#32095"
+msgid ""
+"Error testing connection:\n"
+"\n"
+"{0}"
+msgstr ""
+"Hiba a kapcsolat tesztelése során:\n"
+"\n"
+"{0}"
+
+msgctxt "#32096"
+msgid "Failed to get device code from Trakt."
+msgstr "Nem sikerült lekérni az eszközkódot a Trakt-tól."
+
+msgctxt "#32097"
+msgid ""
+"Error:\n"
+"\n"
+"{0}"
+msgstr ""
+"Hiba:\n"
+"\n"
+"{0}"
+
+msgctxt "#32098"
+msgid ""
+"Are you sure you want to revoke Trakt authorization?\n"
+"\n"
+"You will need to re-authorize to use Trakt ratings."
+msgstr ""
+"Biztosan visszavonod a Trakt-engedélyt?\n"
+"\n"
+"A Trakt-értékelések használatához újra engedélyezni kell."
+
+msgctxt "#32099"
+msgid "Downloaded {0} files ({1} MB)"
+msgstr "Letöltve {0} fájl ({1} MB)"
+
+#. Context menu item and settings group - opens artwork browser for selected item
+msgctxt "#32100"
+msgid "Manage Artwork"
+msgstr "Képek rendezése"
+
+msgctxt "#32101"
+msgid "Update Ratings"
+msgstr "Értékelések frissítése"
+
+msgctxt "#32102"
+msgid "Skin Info Tools"
+msgstr "Skin Info Tools"
+
+msgctxt "#32103"
+msgid "Edit Metadata"
+msgstr "Metaadat szerkesztése"
+
+msgctxt "#32104"
+msgid "{0} - Connection Test"
+msgstr "{0} - Kapcsolat tesztje"
+
+msgctxt "#32105"
+msgid ""
+"Connection successful!\n"
+"\n"
+"API key is valid and working."
+msgstr ""
+"Sikeres kapcsolódás!\n"
+"\n"
+"Az API-kulcs érvényes és működik."
+
+msgctxt "#32106"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please check your API key."
+msgstr ""
+"Sikertelen kapcsolódás.\n"
+"\n"
+"Ellenőrizd az API-kulcsot."
+
+msgctxt "#32107"
+msgid "Trakt Authorization Failed"
+msgstr "Trakt engedélyezése sikertelen"
+
+msgctxt "#32108"
+msgid "Trakt - Connection Test"
+msgstr "Trakt - Csatlakozási teszt"
+
+msgctxt "#32109"
+msgid ""
+"Authorization successful!\n"
+"\n"
+"Trakt is now connected."
+msgstr ""
+"Sikeres hitelesítés!\n"
+"\n"
+"A Trakt most már csatlakoztatva van."
+
+msgctxt "#32110"
+msgid ""
+"Authorization timed out.\n"
+"\n"
+"Please try again."
+msgstr ""
+"Engedélyezési időtúllépés.\n"
+"\n"
+"Próbáld újra."
+
+msgctxt "#32111"
+msgid "Context Menu Items"
+msgstr "Helyi menü elemei"
+
+msgctxt "#32112"
+msgid "Show Manage Artwork"
+msgstr "Kép kezelése megjelenítése"
+
+msgctxt "#32113"
+msgid "Show Update Ratings"
+msgstr "Értékelések frissítésének megjelenítése"
+
+msgctxt "#32114"
+msgid "Show Edit Metadata"
+msgstr "Metaadat szerkesztés megjelenítése"
+
+msgctxt "#32115"
+msgid ""
+"Connection successful!\n"
+"\n"
+"Trakt is authorized and working."
+msgstr ""
+"Sikeres kapcsolódás!\n"
+"\n"
+"A Trakt jogosultsággal rendelkezik, és működik."
+
+msgctxt "#32116"
+msgid ""
+"Connection failed.\n"
+"\n"
+"Please authorize Trakt first."
+msgstr ""
+"Sikertelen kapcsolódás.\n"
+"\n"
+"Először engedélyezd a Trakt szolgáltatást."
+
+msgctxt "#32117"
+msgid "Show Download Artwork"
+msgstr "Képek letöltésének megjelenítése"
+
+msgctxt "#32118"
+msgid "No HTTP artwork URLs found in {0} library items."
+msgstr "Nem találhatók HTTP kép URL-ek {0} médiatári elemben."
+
+msgctxt "#32119"
+msgid "Overwrite Mode Warning"
+msgstr "Felülírási mód figyelmeztetés"
+
+msgctxt "#32120"
+msgid "Change Language"
+msgstr "Nyelv kiválasztás"
+
+msgctxt "#32121"
+msgid "Download Complete"
+msgstr "Letöltés kész"
+
+msgctxt "#32122"
+msgid "Text-free / Untagged"
+msgstr "Szövegmentes / Címke nélküli"
+
+msgctxt "#32123"
+msgid "Trakt History"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Trakt In Progress"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Trakt Most Played"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Skip"
+msgstr "Átugrás"
+
+msgctxt "#32130"
+msgid "Multi-Art..."
+msgstr "Multi-kép..."
+
+msgctxt "#32131"
+msgid "Found {0} orphaned textures to remove.[CR][CR]Continue with removal?"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Source: All"
+msgstr "Forrás: mind"
+
+msgctxt "#32133"
+msgid "Source: TMDB"
+msgstr "Forrás: TMDB"
+
+msgctxt "#32134"
+msgid "Source: Fanart.tv"
+msgstr "Forrás: Fanart.tv"
+
+msgctxt "#32135"
+msgid "IMDb Ratings"
+msgstr "IMDb-értékelések"
+
+msgctxt "#32136"
+msgid "Auto-update"
+msgstr "Automatikus frissítés"
+
+msgctxt "#32137"
+msgid "Automatically update IMDb ratings in your library"
+msgstr "Az IMDb-értékelések automatikus frissítése a médiatáradban"
+
+msgctxt "#32139"
+msgid "After library scan"
+msgstr "Médiatári szkennelés után"
+
+msgctxt "#32140"
+msgid "When new ratings available"
+msgstr "Amikor új értékelések érhetők el"
+
+msgctxt "#32141"
+msgid "Both"
+msgstr "Mindkettő"
+
+msgctxt "#32142"
+msgid "Scope"
+msgstr "Szkóp"
+
+msgctxt "#32143"
+msgid "Which media types to include in auto-updates"
+msgstr "Mely médiatípusokat kell belefoglalni az automatikus frissítésekbe"
+
+msgctxt "#32144"
+msgid "All (Movies, TV Shows, Episodes)"
+msgstr "Összes (Filmek, Sorozatok, epizódok)"
+
+msgctxt "#32145"
+msgid "Movies and TV Shows only"
+msgstr "Csak Filmek és Sorozatok"
+
+msgctxt "#32146"
+msgid "Movies only"
+msgstr "Csak Filmek"
+
+msgctxt "#32150"
+msgid "Stinger Detection"
+msgstr "Stinger érzékelés"
+
+msgctxt "#32151"
+msgid "Enable stinger detection"
+msgstr "Stinger érzékelés engedélyezése"
+
+msgctxt "#32152"
+msgid "Notify about post-credits scenes during movie playback"
+msgstr "Értesítés a stáblista utáni jelenetekről filmlejátszás közben"
+
+msgctxt "#32156"
+msgid "Minutes before end"
+msgstr "Percekkel a vége előtt"
+
+msgctxt "#32157"
+msgid "For movies without chapters, notify this many minutes before the end"
+msgstr "Fejezet nélküli filmek esetén ennyi perccel a vége előtt értesíts"
+
+msgctxt "#32158"
+msgid "Notification duration (seconds)"
+msgstr "Értesítés időtartama (másodperc)"
+
+msgctxt "#32159"
+msgid "How long to display the notification"
+msgstr "Mennyi ideig jelenjen meg az értesítés"
+
+msgctxt "#32162"
+msgid "Wait For It..."
+msgstr "Várakozás..."
+
+msgctxt "#32163"
+msgid "Stay for scene during credits"
+msgstr "Maradj itt a stáblista alatt"
+
+msgctxt "#32164"
+msgid "Stay for scene after credits"
+msgstr "Maradj itt a stáblista után"
+
+msgctxt "#32165"
+msgid "Stay for scenes during and after credits"
+msgstr "Maradj itt a stáblista alatt és utána is"
+
+msgctxt "#32170"
+msgid "Operation failed"
+msgstr "Művelet sikertelen"
+
+msgctxt "#32171"
+msgid "No items to display"
+msgstr "Nincsenek megjelenítendő elemek"
+
+msgctxt "#32172"
+msgid "Task Already Running"
+msgstr "Feladat már fut"
+
+msgctxt "#32173"
+msgid "Found {0} library artwork URLs"
+msgstr ""
+
+msgctxt "#32180"
+msgid "Texture Cache Statistics"
+msgstr "Textúra gyorsítótár statisztikák"
+
+msgctxt "#32181"
+msgid "Failed to gather statistics"
+msgstr "Nem sikerült statisztikákat gyűjteni"
+
+msgctxt "#32182"
+msgid "No textures found in cache"
+msgstr "Nem találhatók textúrák a gyorsítótárban"
+
+msgctxt "#32183"
+msgid "Orphaned Textures Report"
+msgstr "Elárvult textúrák"
+
+msgctxt "#32184"
+msgid "Analysis Failed"
+msgstr "Analízis hiba"
+
+msgctxt "#32190"
+msgid "Art Fetcher Report"
+msgstr "Kép-lekérő jelentés"
+
+msgctxt "#32191"
+msgid "Art Fetcher - Detailed Report"
+msgstr "Kép-lekérő - részletes jelentés"
+
+msgctxt "#32192"
+msgid "Animated Art Scanner"
+msgstr "Animált kép szkenner"
+
+msgctxt "#32200"
+msgid "graphic"
+msgstr "grafikák/képek"
+
+msgctxt "#32201"
+msgid "a lot of"
+msgstr "sok"
+
+msgctxt "#32202"
+msgid "some"
+msgstr "néhány"
+
+msgctxt "#32203"
+msgid "a little"
+msgstr "kevés"
+
+msgctxt "#32204"
+msgid "very little"
+msgstr "nagyon kevés"
+
+msgctxt "#32210"
+msgid "violence or scares"
+msgstr "erőszakos vagy ijesztő"
+
+msgctxt "#32211"
+msgid "sexual content"
+msgstr "szexuális tertalom"
+
+#. Content advisory category - profanity/swearing (e.g., "Rated R for graphic language")
+msgctxt "#32212"
+msgid "language"
+msgstr "nyelv"
+
+msgctxt "#32213"
+msgid "substance use or smoking"
+msgstr "szerhasználat vagy dohányzás"
+
+msgctxt "#32220"
+msgid "Rated {0}+ for {1}"
+msgstr "{0}+ értékelés {1}"
+
+#. Conjunction between content advisory items - spaces are intentional (e.g., "violence and language")
+msgctxt "#32221"
+msgid " and "
+msgstr " és "
+
+msgctxt "#32250"
+msgid "Unsupported field type"
+msgstr "Nem támogatott típus"
+
+msgctxt "#32251"
+msgid "Failed to save"
+msgstr "Nem sikerült menteni"
+
+msgctxt "#32252"
+msgid "Rating Source (e.g., imdb, tmdb)"
+msgstr "Értékelés forrása (pl. imdb, tmdb)"
+
+msgctxt "#32253"
+msgid "Vote Count"
+msgstr "Szavazatszám"
+
+msgctxt "#32254"
+msgid "Invalid Value"
+msgstr "Érvénytelen érték"
+
+msgctxt "#32255"
+msgid "Invalid Date"
+msgstr "Érvénytelen dátum"
+
+msgctxt "#32256"
+msgid "Invalid Rating"
+msgstr "Érvénytelen értékelés"
+
+msgctxt "#32257"
+msgid "Already Exists"
+msgstr "Már létezik"
+
+#. Notification title for metadata editor operations
+msgctxt "#32258"
+msgid "Editor"
+msgstr "Szerkesztő"
+
+msgctxt "#32259"
+msgid "No valid item selected"
+msgstr "Nincs érvényes elem kiválasztva"
+
+msgctxt "#32260"
+msgid "Fix Library IDs"
+msgstr "Médiatári azonosítók javítása"
+
+msgctxt "#32261"
+msgid "All IDs are valid"
+msgstr "Minden azonosító érvényes"
+
+msgctxt "#32262"
+msgid "Failed to load item"
+msgstr "Nem sikerült betölteni az elemet"
+
+msgctxt "#32263"
+msgid "Unsupported type: {0}"
+msgstr "Nem támogatott típus: {0}"
+
+msgctxt "#32270"
+msgid "No path provided"
+msgstr "Nincs megadva elérési út"
+
+msgctxt "#32271"
+msgid "No items found in directory"
+msgstr "Nincsenek elemek a médiatárban"
+
+msgctxt "#32272"
+msgid "Select Actor"
+msgstr "Színész kiválasztása"
+
+#. Menu title and feature name - scans library for items without artwork
+msgctxt "#32273"
+msgid "Missing Artwork"
+msgstr "Hiányzó kép"
+
+msgctxt "#32274"
+msgid "Scan failed"
+msgstr "Szkennelési hiba"
+
+msgctxt "#32275"
+msgid "Select Artwork"
+msgstr "Kép kiválasztása"
+
+msgctxt "#32276"
+msgid "Loading artwork for {0}..."
+msgstr "{0} képek betöltése..."
+
+msgctxt "#32277"
+msgid "Preparing library scan..."
+msgstr "Médiatár szkennelés előkészítése..."
+
+msgctxt "#32278"
+msgid "Initializing..."
+msgstr "Inicializálás..."
+
+msgctxt "#32279"
+msgid "Processing complete!"
+msgstr "Feldolgozás befejezve!"
+
+msgctxt "#32280"
+msgid "Art Fetcher"
+msgstr "Kép szkenner"
+
+msgctxt "#32281"
+msgid "Art Fetcher - Complete"
+msgstr "Kép keresése - Kész"
+
+msgctxt "#32282"
+msgid "View Report"
+msgstr "Riport megtekintése"
+
+msgctxt "#32284"
+msgid "Processed: {0} items"
+msgstr "Feldolgozva: {0} elem"
+
+msgctxt "#32285"
+msgid "Auto-applied: {0}"
+msgstr "Automatikusan alkalmazva: {0}"
+
+msgctxt "#32286"
+msgid "Skipped: {0}"
+msgstr "Kihagyva: {0}"
+
+msgctxt "#32287"
+msgid "Errors: {0}"
+msgstr "Hibák: {0}"
+
+msgctxt "#32288"
+msgid "Found {0} TV shows. Checking which are not cached..."
+msgstr ""
+
+msgctxt "#32289"
+msgid "All TV shows are already cached."
+msgstr ""
+
+msgctxt "#32290"
+msgid "Download Artwork"
+msgstr "Alkotások letöltése"
+
+msgctxt "#32291"
+msgid "Preparing..."
+msgstr "Előkészítés..."
+
+msgctxt "#32292"
+msgid "Scanning library..."
+msgstr "Mádiatás szkennelése..."
+
+msgctxt "#32293"
+msgid "Building download list from {0} items..."
+msgstr "Letöltési lista készítése {0} elemből..."
+
+msgctxt "#32294"
+msgid "Starting download of {0} artwork files..."
+msgstr "{0} képfájl letöltésének megkezdése..."
+
+msgctxt "#32295"
+msgid "Scan complete. No missing artwork found."
+msgstr "A szkennelés befejeződött. Nem található hiányzó kép/grafika."
+
+msgctxt "#32296"
+msgid "No remote artwork to download"
+msgstr "Nincsenek letölthető távoli képek"
+
+msgctxt "#32297"
+msgid "Preparing download..."
+msgstr "Letöltés előkészítése..."
+
+msgctxt "#32298"
+msgid "Downloading artwork..."
+msgstr "Alkotások letöltése..."
+
+msgctxt "#32299"
+msgid "Loading seasons and episodes..."
+msgstr "Évadok és epizódok betöltése..."
+
+msgctxt "#32300"
+msgid "Ratings Updater"
+msgstr "Értékelésfrissítő"
+
+msgctxt "#32301"
+msgid "Remove Rating?"
+msgstr "Értékelés eltávolítása?"
+
+msgctxt "#32302"
+msgid "Remove {0} rating?"
+msgstr "Eltávolítod a(z) {0} értékelést?"
+
+msgctxt "#32304"
+msgid "Updating {0} {1}s..."
+msgstr "{0} {1} frissítése..."
+
+msgctxt "#32305"
+msgid "Downloading IMDb dataset..."
+msgstr "IMDb adatok letöltése..."
+
+msgctxt "#32306"
+msgid "Updating: {0}/{1} - {2}"
+msgstr "Frissítés: {0}/{1} - {2}"
+
+msgctxt "#32307"
+msgid "Updating: {0}/{1} items"
+msgstr "Frissítés: {0}/{1} elem"
+
+msgctxt "#32308"
+msgid "Finalizing: {0}/{1}"
+msgstr "Befejezés: {0}/{1}"
+
+msgctxt "#32309"
+msgid "Finalizing: {0}/{1} items"
+msgstr "Befejezés: {0}/{1} elem"
+
+msgctxt "#32310"
+msgid "Retrying failed items..."
+msgstr "Sikertelen elemek újrapróbálása..."
+
+msgctxt "#32311"
+msgid "Retrying: {0}/{1}"
+msgstr "Újrapróbálás: {0}/{1}"
+
+msgctxt "#32312"
+msgid "Updating episode data..."
+msgstr "Epizódadatok frissítése..."
+
+msgctxt "#32313"
+msgid "{0} - Rate Limit"
+msgstr "{0} - értékelés-korlát"
+
+msgctxt "#32314"
+msgid "Waiting to retry..."
+msgstr "Várakozás az újrapróbálkozásra..."
+
+msgctxt "#32315"
+msgid "Waiting {0}s before retry..."
+msgstr "{0} másodperc várakozás az újrapróbálkozás előtt..."
+
+msgctxt "#32316"
+msgid "Ratings Updated - {0}"
+msgstr "Értékelések frissítve - {0}"
+
+msgctxt "#32317"
+msgid "Ratings Updater - Complete"
+msgstr "Értékelésfrissítő - Teljes"
+
+msgctxt "#32318"
+msgid "IMDb Ratings Update"
+msgstr "IMDb értékelések frissítése"
+
+msgctxt "#32319"
+msgid "{0} IMDb ratings updated"
+msgstr "{0} IMDb értékelés frissítve"
+
+msgctxt "#32320"
+msgid "IMDb ratings up to date"
+msgstr "Az IMDb értékelések naprakészek"
+
+msgctxt "#32321"
+msgid "{0} rate limited, resuming in {1}s"
+msgstr ""
+
+msgctxt "#32323"
+msgid "Stopped: no sources reachable"
+msgstr ""
+
+msgctxt "#32324"
+msgid "Trakt will fetch {0} movies."
+msgstr ""
+
+msgctxt "#32325"
+msgid "Trakt will fetch {0} seasons."
+msgstr ""
+
+msgctxt "#32326"
+msgid "Trakt will fetch {0} shows."
+msgstr ""
+
+msgctxt "#32327"
+msgid "Trakt allows 500 requests every 5 minutes."
+msgstr ""
+
+msgctxt "#32328"
+msgid "Include Trakt in this update?"
+msgstr ""
+
+msgctxt "#32329"
+msgid "Include"
+msgstr ""
+
+msgctxt "#32330"
+msgid "Analyzing Textures"
+msgstr "Textúrák elemzése"
+
+msgctxt "#32331"
+msgid "Scanning texture cache..."
+msgstr "Textúra-gyorsítótár beolvasása..."
+
+msgctxt "#32332"
+msgid "Analyzing {0} textures..."
+msgstr "{0} textúra elemzése..."
+
+msgctxt "#32333"
+msgid "Cleanup Textures by Age"
+msgstr "Textúrák tisztítása kor szerint"
+
+msgctxt "#32334"
+msgid "Clean Orphaned Textures"
+msgstr "Elárvult textúrák tisztítása"
+
+msgctxt "#32335"
+msgid "Starting cleanup..."
+msgstr "Tisztítás indítása..."
+
+msgctxt "#32336"
+msgid "Starting..."
+msgstr "Kezdés..."
+
+msgctxt "#32350"
+msgid "Loading library..."
+msgstr "Médiatár betöltése..."
+
+msgctxt "#32351"
+msgid "Loading TV shows..."
+msgstr "Sorozatok betöltése..."
+
+msgctxt "#32352"
+msgid "Loading episodes..."
+msgstr "Epizódok betöltése..."
+
+msgctxt "#32353"
+msgid "Analyzing library..."
+msgstr "Médiatár analizálása..."
+
+msgctxt "#32354"
+msgid "Downloading IMDb episode data..."
+msgstr ""
+
+msgctxt "#32355"
+msgid "Matching episodes (IMDb dataset)... {0}/{1}"
+msgstr ""
+
+msgctxt "#32356"
+msgid "Fetching episodes (TMDB)... {0}/{1}"
+msgstr "Epizódok lekérése (TMDB)... {0}/{1}"
+
+msgctxt "#32357"
+msgid "Fixing TMDB IDs... {0}/{1}"
+msgstr "TMDB azonosítók javítása... {0}/{1}"
+
+msgctxt "#32358"
+msgid "Fetching {0}... {1}/{2}"
+msgstr "Lekérés {0}... {1}/{2}"
+
+msgctxt "#32359"
+msgid "No IDs could be fixed"
+msgstr "Egyetlen azonosítót sem lehetett javítani"
+
+msgctxt "#32370"
+msgid "Testing {0}"
+msgstr "Tesztelés {0"
+
+msgctxt "#32371"
+msgid "Connecting to API..."
+msgstr "Kapcsolódás az API-hoz..."
+
+msgctxt "#32372"
+msgid "Trakt Authorization"
+msgstr "Trakt engedélyezés"
+
+msgctxt "#32373"
+msgid "Requesting device code..."
+msgstr "Eszközkód kérése..."
+
+msgctxt "#32374"
+msgid "Testing Trakt"
+msgstr "Trakt tesztelése"
+
+msgctxt "#32390"
+msgid "No Library Values"
+msgstr "Nincsenek médiatár értékek"
+
+#. Displayed when user rating is 0 (no rating given by user)
+msgctxt "#32391"
+msgid "Not Rated"
+msgstr "Nem értékelt"
+
+#. Placeholder shown when a field has no value
+msgctxt "#32392"
+msgid "(Not Set)"
+msgstr "(Nincs beállítva)"
+
+msgctxt "#32393"
+msgid "Save Changes"
+msgstr "Mentés"
+
+msgctxt "#32394"
+msgid "Add {0}"
+msgstr "Hozzáadás {0}"
+
+msgctxt "#32395"
+msgid "Quick Edit: {0}"
+msgstr "Gyors szerkesztés: {0}"
+
+msgctxt "#32396"
+msgid "Select from Library"
+msgstr "Kiválasztás a médiatárból"
+
+msgctxt "#32397"
+msgid "Add/Remove Items"
+msgstr "Elemek törlése/hozzáadása"
+
+msgctxt "#32399"
+msgid "Edit {0} (comma-separated)"
+msgstr "{0} szerkesztése (vesszővel elválasztva)"
+
+msgctxt "#32400"
+msgid "No rating sources available. Please configure API keys in settings."
+msgstr "Nincsenek elérhető értékelési források. Kérjük, konfiguráld az API-kulcsokat a beállításokban."
+
+msgctxt "#32401"
+msgid "{0} not found"
+msgstr "{0} hiányzik"
+
+msgctxt "#32402"
+msgid "Updating ratings..."
+msgstr "Értékelések frissítése..."
+
+msgctxt "#32403"
+msgid "No changes needed"
+msgstr "Nem kell változtatni"
+
+msgctxt "#32404"
+msgid "Item skipped (no IDs or rate limit)"
+msgstr "Kihagyott elem (nincsenek azonosítók vagy értékelési korlátok)"
+
+msgctxt "#32405"
+msgid "Failed to update ratings"
+msgstr "Nem sikerült frissíteni az értékeléseket"
+
+msgctxt "#32406"
+msgid "Update Movies"
+msgstr "Filmek frissítése"
+
+msgctxt "#32407"
+msgid "Update TV Shows"
+msgstr "Sorozatok frissítése"
+
+msgctxt "#32408"
+msgid "Update Episodes"
+msgstr "Epizódok frissítése"
+
+msgctxt "#32409"
+msgid "Update All"
+msgstr "Összes frissítése"
+
+msgctxt "#32410"
+msgid "Run Mode"
+msgstr "Futtatás módja"
+
+msgctxt "#32411"
+msgid "Show progress dialog (Foreground)"
+msgstr "Folyamatjelző párbeszédpanel megjelenítése (előtér)"
+
+msgctxt "#32412"
+msgid "Run in background"
+msgstr "Háttérben fut"
+
+msgctxt "#32413"
+msgid "No {0}s found in library"
+msgstr "Nem található {0} a médiatárban"
+
+msgctxt "#32414"
+msgid "Fetching ratings batch {0}/{1}..."
+msgstr "Értékelések lekérése ({0}/{1})..."
+
+msgctxt "#32415"
+msgid "Retry Failed Items"
+msgstr "Sikertelen elemek újrapróbálása"
+
+msgctxt "#32416"
+msgid "{0} item(s) had temporary network issues."
+msgstr "{0} elemnél átmeneti hálózati problémák adódtak."
+
+msgctxt "#32417"
+msgid "Retry these items now?"
+msgstr "Újrapróbálod ezeket az elemeket most?"
+
+msgctxt "#32418"
+msgid "Network Issues"
+msgstr "Hálózati hibák"
+
+msgctxt "#32419"
+msgid "Items with network issues"
+msgstr "Elemek hálózati hibával"
+
+msgctxt "#32420"
+msgid "Retry: {0}/{1} succeeded"
+msgstr "Újrapróbálkozás: {0}/{1} sikeres"
+
+msgctxt "#32421"
+msgid "IMDb ID Corrections"
+msgstr "IMDb ID javítások"
+
+msgctxt "#32422"
+msgid "{0} item(s) have outdated IMDb ID(s) (redirects)."
+msgstr "{0} elem elavult IMDb azonosítóval rendelkezik (átirányítások)."
+
+msgctxt "#32423"
+msgid "Correct them in your library?"
+msgstr "Kijavítod őket a könyvtáradban?"
+
+msgctxt "#32424"
+msgid "No ratings update history found."
+msgstr "Nem található értékelésfrissítési előzmény."
+
+msgctxt "#32425"
+msgid "Calculating disk usage..."
+msgstr "Lemezhasználat kiszámítása..."
+
+msgctxt "#32426"
+msgid "Complete"
+msgstr "Kész"
+
+#. Button label meaning "display/reveal" (not TV Show)
+msgctxt "#32427"
+msgid "Show"
+msgstr "Mutasd"
+
+msgctxt "#32429"
+msgid "Retry"
+msgstr "Ismétlés"
+
+msgctxt "#32430"
+msgid "Ratings Update Report"
+msgstr "Értékelésfrissítési jelentés"
+
+msgctxt "#32440"
+msgid "Pre-Cache + Download"
+msgstr "Előzetes gyorsítótár + letöltés"
+
+msgctxt "#32441"
+msgid "Pre-Cache Artwork - Select Scope"
+msgstr "Előre tárolt kép – Hatókör kiválasztása"
+
+msgctxt "#32451"
+msgid "Pre-Cache + Download - Select Scope"
+msgstr "Előzetes gyorsítótár + Letöltés - Hatókör kiválasztása"
+
+msgctxt "#32455"
+msgid "Pre-Cache Artwork"
+msgstr "Előre tárolt kép"
+
+msgctxt "#32457"
+msgid "[B]{0}[/B] is currently running."
+msgstr "A(z) [B]{0}[/B] jelenleg fut."
+
+msgctxt "#32458"
+msgid "Cannot start another background task."
+msgstr "Nem lehet újabb háttérfeladatot elindítani."
+
+msgctxt "#32459"
+msgid "Pre-Cache Cancelled"
+msgstr "Előzetes gyorsítótár törölve"
+
+msgctxt "#32460"
+msgid "Pre-Cache Complete"
+msgstr "Előzetes gyorsítótár kész"
+
+msgctxt "#32461"
+msgid "Cleanup Cancelled"
+msgstr "Tisztítás törölve"
+
+msgctxt "#32462"
+msgid "Cleanup Complete"
+msgstr "Tisztítás kész"
+
+msgctxt "#32463"
+msgid "Total: {0}"
+msgstr "Teljes: {0}"
+
+msgctxt "#32464"
+msgid "Cached: {0}"
+msgstr "Gyorsítótárazva: {0}"
+
+msgctxt "#32465"
+msgid "Downloaded: {0} ({1:.1f} MB)"
+msgstr "Letöltve: {0} ({1:.1f} MB)"
+
+msgctxt "#32467"
+msgid "Failed: {0} cache, {1} download"
+msgstr "Sikertelen: {0} gyorsítótár, {1} letöltés"
+
+msgctxt "#32468"
+msgid "Already Cached: {0}"
+msgstr "Már gyorsítótárazva: {0}"
+
+msgctxt "#32469"
+msgid "Newly Cached: {0}"
+msgstr "Üjonnan gyorsítótárazva: {0}"
+
+msgctxt "#32470"
+msgid "Failed: {0}"
+msgstr "Hibás: {0}"
+
+msgctxt "#32471"
+msgid "Status: Cancelled"
+msgstr "Állapot: Lemondva"
+
+msgctxt "#32472"
+msgid "Gathering statistics..."
+msgstr "Statisztikák gyűjtése..."
+
+msgctxt "#32473"
+msgid "Remove textures not used in..."
+msgstr "Távolítsd el a nem használt textúrákat..."
+
+msgctxt "#32474"
+msgid "30 days"
+msgstr "30 nap"
+
+msgctxt "#32475"
+msgid "60 days"
+msgstr "60 nap"
+
+msgctxt "#32476"
+msgid "90 days"
+msgstr "90 nap"
+
+msgctxt "#32477"
+msgid "180 days"
+msgstr "180 nap"
+
+msgctxt "#32478"
+msgid "365 days (1 year)"
+msgstr "365 nap (1 év)"
+
+msgctxt "#32479"
+msgid "No Old Textures"
+msgstr "Nincs régi textúra"
+
+msgctxt "#32480"
+msgid "No textures found older than {0} days."
+msgstr "Nem találhatók {0} napnál régebbi textúrák."
+
+msgctxt "#32481"
+msgid "Total textures checked: {0}"
+msgstr "Összes ellenőrzött textúra: {0}"
+
+msgctxt "#32482"
+msgid "Confirm Cleanup"
+msgstr "Tisztítás megerősítése"
+
+msgctxt "#32483"
+msgid "Remove {0} textures older than {1} days?"
+msgstr "Eltávolítassz {0} textúrát, amelyek régebbiek, mint {1} nap?"
+
+msgctxt "#32484"
+msgid "Total: {0} | Oldest: {1}"
+msgstr "Összesen: {0} | Legrégebbi: {1}"
+
+msgctxt "#32485"
+msgid "Failed to analyze textures"
+msgstr ""
+
+msgctxt "#32486"
+msgid "Overwrite mode is enabled"
+msgstr ""
+
+#. {0} is a list such as "Movies: filename prefix"
+msgctxt "#32487"
+msgid "Filename pattern: {0}"
+msgstr ""
+
+msgctxt "#32488"
+msgid "Texture Cache - Last Run"
+msgstr "Textúra gyorsítótár - Utolsó futtatás"
+
+msgctxt "#32489"
+msgid "No previous operations found."
+msgstr "Nem található korábbi művelet."
+
+msgctxt "#32490"
+msgid "Fetching texture database..."
+msgstr "Textúra adatbázis lekérése..."
+
+msgctxt "#32492"
+msgid "Removing {0} old textures..."
+msgstr "{0} régi textúra eltávolítása..."
+
+msgctxt "#32493"
+msgid "Checked: {0} textures"
+msgstr "Ellenőrizve: {0} textúra"
+
+msgctxt "#32494"
+msgid "Older than {0} days: {1}"
+msgstr "{0} napnál régebbi: {1}"
+
+msgctxt "#32495"
+msgid "Removed: {0}"
+msgstr "Eltávolítva: {0}"
+
+msgctxt "#32496"
+msgid "Total Cached: {0} | Library: {1}"
+msgstr "Összesen gyorsítótárolva: {0} | Mádiatár: {1}"
+
+msgctxt "#32497"
+msgid "Orphaned Found: {0} | Removed: {1}"
+msgstr "Elárvult találat: {0} | Eltávolítva: {1}"
+
+msgctxt "#32498"
+msgid "{0} artwork files not found on disk.[CR]These are stale library entries pointing to missing files.[CR][CR]View the list?"
+msgstr "{0} képfájl nem található a lemezen.[CR]Ezek elavult könyvtárbejegyzések hiányzó fájlokra mutatnak.[CR][CR]Megtekinted a listát?"
+
+msgctxt "#32499"
+msgid "Missing Artwork Files"
+msgstr "Hiányzó képfájlok"
+
+msgctxt "#32500"
+msgid "Session Report"
+msgstr "Munkamenet-jelentés"
+
+msgctxt "#32501"
+msgid "Mismatches found: {0} files"
+msgstr ""
+
+msgctxt "#32502"
+msgid "Select Missing Artwork"
+msgstr "Hiányzó grafika kiválasztása"
+
+msgctxt "#32503"
+msgid "Select + Download Missing Artwork"
+msgstr "Hiányzó grafika kiválasztása + letöltése"
+
+msgctxt "#32504"
+msgid "Auto-Apply Missing Artwork"
+msgstr "Hiányzó grafika automatikus alkalmazása"
+
+msgctxt "#32505"
+msgid "View Session History"
+msgstr "Munkamenet-előzmények megtekintése"
+
+msgctxt "#32507"
+msgid "Browse & Choose Artwork - Select Library"
+msgstr "Képek/grafikák böngészése és kiválasztása - Médiatár kiválasztása"
+
+msgctxt "#32508"
+msgid "Browse & Choose + Download - Select Library"
+msgstr "Böngészés és kiválasztás + Letöltés - Médiatár kiválasztása"
+
+msgctxt "#32509"
+msgid "Auto-Fill Missing Artwork - Select Library"
+msgstr "Hiányzó grafika automatikus betöltése - Médiatár kiválasztása"
+
+msgctxt "#32510"
+msgid "Last Session (any library)"
+msgstr "Utolsó munkamenet (bármely médiatár)"
+
+msgctxt "#32511"
+msgid "Original artwork will be [B]deleted[/B] after a successful download."
+msgstr ""
+
+msgctxt "#32512"
+msgid "Session History"
+msgstr "Munkamenet-előzmények"
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32513"
+msgid "{0}: filename prefix"
+msgstr ""
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32514"
+msgid "{0}: no prefix"
+msgstr ""
+
+#. {0} is a library section such as "Movies"
+msgctxt "#32515"
+msgid "Loading {0}..."
+msgstr ""
+
+msgctxt "#32520"
+msgid "Artwork Download Report"
+msgstr "Képek letöltési jelentése"
+
+msgctxt "#32522"
+msgid "Download Artwork to Filesystem"
+msgstr "Grafika letöltése a fájlrendszerbe"
+
+msgctxt "#32523"
+msgid "Download Artwork - Select Scope"
+msgstr "Grafika letöltése - Hatókör kiválasztása"
+
+msgctxt "#32530"
+msgid "Tools"
+msgstr "Eszközök"
+
+msgctxt "#32532"
+msgid "Add/Fix IMDb & TMDB IDs"
+msgstr "IMDb és TMDB azonosítók hozzáadása/javítása"
+
+msgctxt "#32540"
+msgid "Scan for Animated Posters"
+msgstr "Animált poszterek keresése"
+
+msgctxt "#32541"
+msgid "View Cache Statistics"
+msgstr "Gyorsítótár statisztikáinak megtekintése"
+
+msgctxt "#32542"
+msgid "Reset GIF Cache"
+msgstr "GIF gyorsítótár visszaállítása"
+
+msgctxt "#32543"
+msgid "GIF Scanner - Last Run"
+msgstr "GIF szkenner - Utolsó futtatás"
+
+msgctxt "#32544"
+msgid "GIF Cache Statistics"
+msgstr "GIF gyorsítótár statisztikák"
+
+msgctxt "#32546"
+msgid "Clear {0} cached GIF entries?[CR][CR]Use this to troubleshoot cache issues.[CR][CR]Tip: Use 'Full Rescan' mode instead to re-process GIFs."
+msgstr "Törli a gyorsítótárban tárolt {0} GIF-bejegyzést?[CR][CR]Használd ezt a gyorsítótárral kapcsolatos problémák elhárításához.[CR][CR]Tipp: Használd a „Teljes újraszkennelés” módot a GIF-ek újrafeldolgozásához."
+
+msgctxt "#32547"
+msgid "GIF Cache"
+msgstr "GIF gyorsítótár"
+
+msgctxt "#32548"
+msgid "Reset complete - cleared {0} entries"
+msgstr "Visszaállítás kész - {0} bejegyzés törölve"
+
+msgctxt "#32549"
+msgid "Cache is already empty"
+msgstr "A gyorsítótár már üres"
+
+msgctxt "#32550"
+msgid "Auto-Applied Artwork Report"
+msgstr "Automatikusan alkalmazott grafika jelentés"
+
+msgctxt "#32551"
+msgid "Skipped Items Report"
+msgstr "Kihagyott elemek jelentése"
+
+msgctxt "#32552"
+msgid "Scan for GIF Posters"
+msgstr "GIF plakátok keresése"
+
+msgctxt "#32553"
+msgid "Select scan mode"
+msgstr "Szkennelési mód kiválasztása"
+
+msgctxt "#32554"
+msgid "Select Language"
+msgstr "Nyelvválasztás"
+
+msgctxt "#32555"
+msgid "Select Artwork Type - {0}"
+msgstr "Válassz grafika típust - {0}"
+
+msgctxt "#32556"
+msgid "Select {0}"
+msgstr "Kiválsztva {0}"
+
+msgctxt "#32557"
+msgid "Edit {0}"
+msgstr "Szerkesztve {0}"
+
+msgctxt "#32560"
+msgid "Edit: {0}"
+msgstr "Szerkesztés: {0}"
+
+msgctxt "#32561"
+msgid "Dialog Error"
+msgstr "Párbeszédhiba"
+
+msgctxt "#32562"
+msgid "File not found: {0}"
+msgstr "A fájl nem található: {0}"
+
+msgctxt "#32563"
+msgid "Failed to read file: {0}"
+msgstr "Nem sikerült beolvasni a következő fájlt: {0}"
+
+msgctxt "#32564"
+msgid "Rating source '{0}' already exists."
+msgstr "A(z) '{0}' értékelési forrás már létezik."
+
+msgctxt "#32565"
+msgid "Rating (0-10)"
+msgstr "Értékelés (0-10)"
+
+msgctxt "#32566"
+msgid "Continue"
+msgstr "Folytatás"
+
+msgctxt "#32567"
+msgid "Auto-Fill"
+msgstr "Automatikus kitöltés"
+
+msgctxt "#32569"
+msgid "Yes, Cancel It"
+msgstr "Igen, törlöm"
+
+msgctxt "#32570"
+msgid "No, Keep Running"
+msgstr "Nem, hagyd futni"
+
+msgctxt "#32571"
+msgid "Cancel Running Task?"
+msgstr "Futó feladat megszakítása?"
+
+msgctxt "#32574"
+msgid "Cancel to resume later"
+msgstr "Mégsem, hogy később folytathassa"
+
+msgctxt "#32575"
+msgid "Invalid scope: {0}"
+msgstr "Érvénytelen hatókör: {0}"
+
+msgctxt "#32576"
+msgid "Invalid scan mode: {0}"
+msgstr "Érvénytelen beolvasási mód: {0}"
+
+msgctxt "#32577"
+msgid "Resuming scan..."
+msgstr "Szkennelés folytatása..."
+
+msgctxt "#32579"
+msgid "All (Movies + TV Shows)"
+msgstr "Összes (filmek + sorozatok)"
+
+msgctxt "#32580"
+msgid "Movies Only"
+msgstr "Csak filmek"
+
+msgctxt "#32581"
+msgid "TV Shows Only"
+msgstr "Csak sorozatok"
+
+msgctxt "#32582"
+msgid "Incremental Scan"
+msgstr "Hozzáadásos szennelés"
+
+msgctxt "#32583"
+msgid "Skip unchanged GIFs, detect new/modified ones"
+msgstr "Változatlan GIF-ek kihagyása, új/módosított GIF-ek észlelése"
+
+msgctxt "#32584"
+msgid "Full Rescan"
+msgstr "Teljes újra szkennelés"
+
+msgctxt "#32585"
+msgid "Rescan all items, rebuild cache from scratch"
+msgstr "Az összes elem újraolvasása, a gyorsítótár újjáépítése a semmiből"
+
+msgctxt "#32586"
+msgid "{0} GIFs cached"
+msgstr "{0} GIF gyorsítótárazva"
+
+msgctxt "#32587"
+msgid "no cache"
+msgstr "nincs gyorsítótár"
+
+msgctxt "#32588"
+msgid "Total Cached GIFs: {0}"
+msgstr "Összes gyorsítótárazott GIF: {0}"
+
+msgctxt "#32589"
+msgid "Recently Scanned (Last {0}):"
+msgstr "Legutóbb beolvasva (utolsó {0}):"
+
+msgctxt "#32590"
+msgid "... and {0} more"
+msgstr "... és még {0} további"
+
+msgctxt "#32595"
+msgid "Automatically update IMDb Top 250 rankings in your library"
+msgstr ""
+
+msgctxt "#32600"
+msgid "IMDb Top 250"
+msgstr "IMDb Top 250"
+
+msgctxt "#32601"
+msgid "Fetching Top 250 from Trakt..."
+msgstr "A Trakt 250 legjobbjának lekérése..."
+
+msgctxt "#32602"
+msgid "Loading library..."
+msgstr "Médiatár betöltése..."
+
+msgctxt "#32603"
+msgid "Matching movies..."
+msgstr "Egyező filmek..."
+
+msgctxt "#32604"
+msgid "Updating: {0}/{1}"
+msgstr "Frissítés: {0}/{1}"
+
+msgctxt "#32605"
+msgid "Top 250 Update Complete"
+msgstr "Top 250 frissítés elkészült"
+
+msgctxt "#32606"
+msgid "Updated: {0} | Cleared: {1} | Already correct: {2}"
+msgstr "Frissítve: {0} | Törölve: {1} | Már javítva: {2}"
+
+msgctxt "#32607"
+msgid "Failed to fetch Top 250 list from Trakt."
+msgstr "Nem sikerült lekérni a 250 legnépszerűbb listát a Traktból."
+
+msgctxt "#32608"
+msgid "No movies found in library."
+msgstr "Nem találhatók filmek a médiatárban."
+
+msgctxt "#32609"
+msgid "Update IMDb Top 250?"
+msgstr "Frissíted az IMDb Top 250-et ?"
+
+msgctxt "#32610"
+msgid "Set/update: {0} movies[CR]Clear: {1} movies[CR]Already correct: {2} movies[CR][CR]This will overwrite existing Top 250 values."
+msgstr "Beállítás/frissítés: {0} filmek[CR]Törlés: {1} filmek[CR]Már helyes: {2} filmek[CR][CR]Ez felülírja a meglévő Top 250 értékeket."
+
+msgctxt "#32611"
+msgid "Cancelled. Updated: {0} | Cleared: {1} before cancellation."
+msgstr "Törölve. Frissítve: {0} | Tisztítva: {1} a törlés előtt."
+
+msgctxt "#32612"
+msgid "Trakt Not Signed In"
+msgstr "Trakt nincs bejelentkezve"
+
+msgctxt "#32613"
+msgid "Sign in to Trakt or remove this widget"
+msgstr "Jelentkezz be a Traktba, vagy távolítsd el ezt a widgetet"
+
+msgctxt "#32614"
+msgid "Search"
+msgstr "Keresés"
+
+msgctxt "#32615"
+msgid "Widgets"
+msgstr "Widgetek"
+
+msgctxt "#32616"
+msgid "Search Movies"
+msgstr "Filmek keresése"
+
+msgctxt "#32617"
+msgid "Search TV Shows"
+msgstr "Sorozatok keresése"
+
+msgctxt "#32618"
+msgid "Search People"
+msgstr "Emberek keresése"
+
+msgctxt "#32619"
+msgid "Discover"
+msgstr "Felfedezés"
+
+msgctxt "#32620"
+msgid "Next Up"
+msgstr "Next Up"
+
+msgctxt "#32621"
+msgid "Recent Episodes"
+msgstr "Legutóbbi epizódok"
+
+msgctxt "#32622"
+msgid "Seasonal"
+msgstr "Szezonális"
+
+msgctxt "#32623"
+msgid "Recommended Movies"
+msgstr "Ajánlott filmek"
+
+msgctxt "#32624"
+msgid "Recommended TV Shows"
+msgstr "Ajánlott sorozatok"
+
+msgctxt "#32625"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#32626"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#32627"
+msgid "TMDB Trending"
+msgstr "TMDB trendi"
+
+msgctxt "#32628"
+msgid "TMDB Popular"
+msgstr "TMDB népszerű"
+
+msgctxt "#32629"
+msgid "TMDB Top Rated"
+msgstr "TMDB top értékelt"
+
+msgctxt "#32630"
+msgid "TMDB Now Playing"
+msgstr "TMDB most játszott"
+
+msgctxt "#32631"
+msgid "TMDB Upcoming"
+msgstr "TMDB következik"
+
+msgctxt "#32632"
+msgid "TMDB Airing Today"
+msgstr "TMDB ma sugárzott"
+
+msgctxt "#32633"
+msgid "TMDB On The Air"
+msgstr "TMDB élőben"
+
+msgctxt "#32634"
+msgid "Trakt Trending"
+msgstr "Trakt trendi"
+
+msgctxt "#32635"
+msgid "Trakt Popular"
+msgstr "Trakt népszerű"
+
+msgctxt "#32636"
+msgid "Trakt Anticipated"
+msgstr "Trakt várható"
+
+msgctxt "#32637"
+msgid "Trakt Most Watched"
+msgstr "Trakt legnézettebb"
+
+msgctxt "#32638"
+msgid "Trakt Most Collected"
+msgstr "Trakt Legtöbbet Gyűjtött"
+
+msgctxt "#32639"
+msgid "Trakt Box Office"
+msgstr "Trakt Box Office"
+
+msgctxt "#32640"
+msgid "Trakt Recommendations"
+msgstr "Trakt ajánlások"
+
+msgctxt "#32641"
+msgid "(OAuth)"
+msgstr "(OAuth)"
+
+msgctxt "#32642"
+msgid "Christmas"
+msgstr "Karácsony"
+
+msgctxt "#32643"
+msgid "Halloween"
+msgstr "Halloween"
+
+msgctxt "#32644"
+msgid "Valentine's Day"
+msgstr "Valentin nap"
+
+msgctxt "#32645"
+msgid "Thanksgiving"
+msgstr "Hálaadás"
+
+msgctxt "#32646"
+msgid "Star Wars Day"
+msgstr "Star Wars nap"
+
+msgctxt "#32647"
+msgid "Star Trek"
+msgstr "Star Trek"
+
+msgctxt "#32648"
+msgid "New Year"
+msgstr "Újév"
+
+msgctxt "#32649"
+msgid "Easter"
+msgstr "Húsvét"
+
+msgctxt "#32650"
+msgid "Independence Day"
+msgstr "Függetlenség napja"
+
+# Recommended widget label, single-seed mode. {0} = seed title -> "Recommended based on Avatar"
+msgctxt "#32651"
+msgid "Recommended based on {0}"
+msgstr "Ajánlott a következő alapján: {0}"
+
+msgctxt "#32652"
+msgid "Recommended based on recent watches"
+msgstr "Legutóbbi megnézettek alapján ajánlott"
+
+# Artwork selection dialogs
+msgctxt "#32653"
+msgid "Current Extra Art (Click to Remove)"
+msgstr "Aktuális extra kép (Kattints az eltávolításhoz)"
+
+msgctxt "#32654"
+msgid "Available Art (Click to Add)"
+msgstr "Elérhető képek (Kattints a hozzáadáshoz)"
+
+msgctxt "#32655"
+msgid "Clear Selection"
+msgstr "Kiválasztás törlése"
+
+msgctxt "#32656"
+msgid "Apply"
+msgstr "Alkalmazás"
+
+msgctxt "#32657"
+msgid "Sort: Popularity"
+msgstr "Rendezés: népszerű"
+
+msgctxt "#32658"
+msgid "Sort: Resolution"
+msgstr "Rendezés: felbontás"
+
+# Colour picker dialog
+msgctxt "#32659"
+msgid "Colour Manager"
+msgstr "Színkezelő"
+
+msgctxt "#32660"
+msgid "Alpha"
+msgstr "Alfa"
+
+msgctxt "#32661"
+msgid "Enter Hex"
+msgstr "Hex hozzáadása"
+
+# Metadata editor, unique IDs
+msgctxt "#32663"
+msgid "Add ID"
+msgstr "ID hozzáadása"
+
+msgctxt "#32664"
+msgid "ID type (imdb, tmdb, tvdb...)"
+msgstr "Azonosító típusa (imdb, tmdb, tvdb...)"
+
+# {0} = id type, e.g. tmdb -> "tmdb ID (leave empty to remove)"
+msgctxt "#32665"
+msgid "{0} ID (leave empty to remove)"
+msgstr "{0} Azonosító (eltávolításhoz hagyd üresen)"
+
+msgctxt "#32666"
+msgid "Kodi won't remove the default ID. Change its value, or set another ID as default first."
+msgstr "A Kodi nem távolítja el az alapértelmezett azonosítót. Változtasd meg az értékét, vagy állíts be egy másik azonosítót alapértelmezettként."
+
+# {0} = id type, e.g. tmdb -> "Remove the tmdb ID?"
+msgctxt "#32667"
+msgid "Remove the {0} ID?"
+msgstr "Eltávolítod a(z) {0} azonosítót?"
+
+msgctxt "#32668"
+msgid "User Rating"
+msgstr "Felhasználói értékelés"
+
+msgctxt "#32669"
+msgid "External Ratings"
+msgstr "Külső értékelés"
+
+msgctxt "#32670"
+msgid "Display Artist"
+msgstr "Művész mutatása"
+
+msgctxt "#32671"
+msgid "Sort Artist"
+msgstr "Művészek rendezése"
+
+msgctxt "#32672"
+msgid "Record Label"
+msgstr "Felvételi címke"
+
+msgctxt "#32673"
+msgid "Album Type"
+msgstr "Album típus"
+
+msgctxt "#32674"
+msgid "Sort Name"
+msgstr "Név szerint"
+
+# Info dialog section headers with no Kodi core string
+msgctxt "#32675"
+msgid "Top Movies"
+msgstr "Top filmek"
+
+msgctxt "#32676"
+msgid "Top TV Shows"
+msgstr "Top sorozatok"
+
+msgctxt "#32677"
+msgid "In Your Library - Movies"
+msgstr "A médiatáradban - Filmek"
+
+msgctxt "#32678"
+msgid "In Your Library - TV Shows"
+msgstr "A médiatáradban - Sorozatok"
+
+msgctxt "#32679"
+msgid "All Credits"
+msgstr "Minden kredit"
+
+msgctxt "#32680"
+msgid "Crew Credits"
+msgstr "Stáb kredit"
+
+msgctxt "#32681"
+msgid "Images"
+msgstr "Képek"
+
+msgctxt "#32682"
+msgid "Recommendations"
+msgstr "Ajánlások"
+
+msgctxt "#32683"
+msgid "Similar in Library"
+msgstr "Hasonló a médiatárban"
+
+msgctxt "#32684"
+msgid "Crew"
+msgstr "Szereplők"
+
+msgctxt "#32685"
+msgid "Next Up (Favourites)"
+msgstr ""
+
+msgctxt "#32686"
+msgid "Recent Videos"
+msgstr ""
+
+msgctxt "#32687"
+msgid "Favourite Movies"
+msgstr ""
+
+msgctxt "#32688"
+msgid "Favourite TV Shows"
+msgstr ""
+
+msgctxt "#32689"
+msgid "Favourite Episodes"
+msgstr ""
+
+msgctxt "#32690"
+msgid "Favourite Music Videos"
+msgstr ""
+
+msgctxt "#32691"
+msgid "Music video thumb source"
+msgstr ""
+
+#. Options for which image fills an empty music video thumb during automatic fetching
+msgctxt "#32692"
+msgid "Video screenshots"
+msgstr ""
+
+msgctxt "#32693"
+msgid "Album cover"
+msgstr ""
+
+msgctxt "#32694"
+msgid "Artist thumb"
+msgstr ""
+
+msgctxt "#32695"
+msgid "Ratings sources to check (IMDb always on)"
+msgstr ""
+
+msgctxt "#32696"
+msgid "Continue Watching"
+msgstr ""
+
+msgctxt "#32697"
+msgid "Similar Artists"
+msgstr ""
+
+msgctxt "#32698"
+msgid "Wait 60s and Retry"
+msgstr ""
+
+msgctxt "#32699"
+msgid "Retry Tomorrow"
+msgstr ""
+
+msgctxt "#32700"
+msgid "Stop All Updates"
+msgstr ""
+
+#. {0} is the provider name, e.g. TRAKT
+msgctxt "#32701"
+msgid "Continue Without {0}"
+msgstr ""
+
+#. {0} is a web address, {1} a short code the user types there, {2} the seconds left
+msgctxt "#32702"
+msgid ""
+"1. Visit: {0}\n"
+"2. Enter code: [B]{1}[/B]\n"
+"3. Click Authorize on the website\n"
+"\n"
+"Waiting for authorization... ({2}s remaining)"
+msgstr ""
+
+msgctxt "#32703"
+msgid "Person Info"
+msgstr ""
+
+msgctxt "#32704"
+msgid "Scanning {0}"
+msgstr ""
+
+msgctxt "#32705"
+msgid "ETA {0}"
+msgstr ""
+
+msgctxt "#32706"
+msgid "Queued: {0}"
+msgstr ""
+
+msgctxt "#32707"
+msgid "Found: {0} | Cached: {1} | Existing: {2}"
+msgstr ""
+
+msgctxt "#32708"
+msgid "Option {0}"
+msgstr ""
+
+#. {2} is a language name
+msgctxt "#32709"
+msgid "{0} of {1} available ({2})"
+msgstr ""
+
+msgctxt "#32710"
+msgid "{0} available"
+msgstr ""
+
+#. {0} is an art type such as Fanart or Poster
+msgctxt "#32711"
+msgid "Multi-Art {0}"
+msgstr ""
+
+#. {0} is a media type, {1} a list of art types
+msgctxt "#32712"
+msgid "Art type not supported for {0}: {1}"
+msgstr ""
+
+msgctxt "#32713"
+msgid "No MusicBrainz ID for this artist"
+msgstr ""
+
+msgctxt "#32714"
+msgid "No MusicBrainz ID for this album"
+msgstr ""
+
+msgctxt "#32715"
+msgid "Failed to fetch artwork"
+msgstr ""
+
+#. {0} is a list of art types
+msgctxt "#32716"
+msgid "No {0} artwork found"
+msgstr ""
+
+msgctxt "#32717"
+msgid "Artwork updated"
+msgstr ""
+
+msgctxt "#32718"
+msgid "Applied: {0} | Skipped: {1} | Auto-skipped: {2}"
+msgstr ""
+
+#. {0} is a library name such as Movies
+msgctxt "#32719"
+msgid "{0} - Select Action"
+msgstr ""
+
+#. {0} is a library name such as Movies
+msgctxt "#32720"
+msgid "No report available for {0}"
+msgstr ""
+
+msgctxt "#32721"
+msgid "No reports available"
+msgstr ""
+
+#. {0} is a library name such as Movies
+msgctxt "#32722"
+msgid "Auto-Fill {0}"
+msgstr ""
+
+msgctxt "#32723"
+msgid "Automatically applies missing artwork without review.[CR]Only fills in missing artwork, won't replace existing.[CR]View results afterwards in Session History.[CR][CR]Continue?"
+msgstr ""
+
+msgctxt "#32724"
+msgid "Enter the date as YYYY-MM-DD"
+msgstr ""
+
+msgctxt "#32725"
+msgid "That date cannot exist"
+msgstr ""
+
+#. {0} is a field name such as Genre
+msgctxt "#32726"
+msgid "No existing {0} found in library.[CR]Use Quick Edit or Add/Remove instead."
+msgstr ""
+
+msgctxt "#32727"
+msgid "{0} votes"
+msgstr ""
+
+#. {0} is a field name such as Genre
+msgctxt "#32728"
+msgid "{0} updated"
+msgstr ""
+
+#. {0} is how many more values are not shown
+msgctxt "#32729"
+msgid "(+{0} more)"
+msgstr ""
+
+#. {0} is the name of the running task
+msgctxt "#32730"
+msgid "Cancel Current Task: {0}"
+msgstr ""
+
+#. {0} is the name of the running task
+msgctxt "#32731"
+msgid "[B]Currently Running:[/B] {0}"
+msgstr ""
+
+#. {0} is a time such as 5m 3s
+msgctxt "#32732"
+msgid "[B]Duration:[/B] {0}"
+msgstr ""
+
+#. {0} is a time such as 5m 3s
+msgctxt "#32733"
+msgid "[B]Last Activity:[/B] {0} ago"
+msgstr ""
+
+#. {0} is the name of the task about to start
+msgctxt "#32734"
+msgid "[B]New Task:[/B] {0}"
+msgstr ""
+
+msgctxt "#32735"
+msgid "Cancelling will stop the current task safely."
+msgstr ""
+
+msgctxt "#32736"
+msgid "Not set in Kodi's settings. This folder holds the artwork for movie sets.[CR][CR]Select a folder now?"
+msgstr ""
+
+msgctxt "#32737"
+msgid "Not set in Kodi's settings. This folder holds the artwork and metadata for artists.[CR][CR]Select a folder now?"
+msgstr ""
+
+msgctxt "#32738"
+msgid "Folder saved"
+msgstr ""
+
+msgctxt "#32739"
+msgid "Could not save the setting. Set the folder in Kodi's settings instead."
+msgstr ""
+
+#. {0} is the image's position in the list
+msgctxt "#32740"
+msgid "Profile Image {0}"
+msgstr ""
+
+#. {0} is a list of counts, such as "12 Movies, 3 TV shows"
+msgctxt "#32741"
+msgid "Missing IMDb IDs: {0}"
+msgstr ""
+
+#. {0} is a list of counts, such as "12 Movies, 3 TV shows"
+msgctxt "#32742"
+msgid "Invalid TMDB IDs: {0}"
+msgstr ""
+
+msgctxt "#32743"
+msgid "Fix these issues?"
+msgstr ""
+
+msgctxt "#32744"
+msgid "Added {0} IMDb IDs"
+msgstr ""
+
+msgctxt "#32745"
+msgid "Fixed {0} TMDB IDs"
+msgstr ""
+
+msgctxt "#32746"
+msgid "Creator"
+msgstr ""
+
+msgctxt "#32747"
+msgid "Enter 6 or 8 hex digits, as RRGGBB or AARRGGBB"
+msgstr ""
+
+msgctxt "#32901"
+msgid "Enable Debug Output"
+msgstr "Debug kimenet engedélyezése"
+
+msgctxt "#32930"
+msgid "English"
+msgstr "Angol"
+
+msgctxt "#32931"
+msgid "Spanish"
+msgstr "Spanyol"
+
+msgctxt "#32932"
+msgid "Portuguese (Brazil)"
+msgstr "Portuguese (Brazil)"
+
+msgctxt "#32933"
+msgid "Portuguese (Portugal)"
+msgstr "Portuguese (Portugal)"
+
+msgctxt "#32934"
+msgid "French"
+msgstr "Francia"
+
+msgctxt "#32935"
+msgid "German"
+msgstr "Német"
+
+msgctxt "#32936"
+msgid "Chinese (Simplified)"
+msgstr "Kínai"
+
+msgctxt "#32937"
+msgid "Chinese (Traditional)"
+msgstr "Kínai (hagyományos)"
+
+msgctxt "#32938"
+msgid "Italian"
+msgstr "Olasz"
+
+msgctxt "#32939"
+msgid "Polish"
+msgstr "Lengyel"
+
+msgctxt "#32940"
+msgid "Russian"
+msgstr "Orosz"
+
+msgctxt "#32941"
+msgid "Dutch"
+msgstr "Holland"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Svéd"
+
+msgctxt "#32943"
+msgid "Korean"
+msgstr "Koreai"
+
+msgctxt "#32944"
+msgid "Japanese"
+msgstr "Japán"
+
+msgctxt "#32950"
+msgid "Advanced API Configuration"
+msgstr "Speciális API-konfiguráció"
+
+msgctxt "#32951"
+msgid "Use Custom TMDb API Key"
+msgstr "Egyéni TMDb API-kulcs használata"
+
+msgctxt "#32952"
+msgid "A built-in TMDb API key is provided and works for most users. Enable this only if you need higher rate limits or want to use your own dedicated quota."
+msgstr "Egy beépített TMDb API-kulcs áll rendelkezésre, amely a legtöbb felhasználó számára elég. Csak akkor engedélyezd ezt, ha magasabb sebességre van szükséged, vagy saját dedikált kvótát szeretnél használni."
+
+msgctxt "#32960"
+msgid "Missing Artwork Types"
+msgstr "Hiányzó képtípusok"
+
+msgctxt "#32963"
+msgid "Clearlogo"
+msgstr "Clearlogo"
+
+msgctxt "#32964"
+msgid "Clearart"
+msgstr "Clearart"
+
+msgctxt "#32965"
+msgid "Thumb"
+msgstr ""
+
+msgctxt "#32966"
+msgid "Landscape"
+msgstr "Landscape"
+
+msgctxt "#32967"
+msgid "Discart"
+msgstr "Discart"
+
+msgctxt "#32968"
+msgid "Keyart"
+msgstr "Keyart"
+
+msgctxt "#32969"
+msgid "Characterart"
+msgstr "Characterart"
+
+msgctxt "#32970"
+msgid "Auto-download after Manage Artwork"
+msgstr "Automatikus letöltés a képek kezelése után"
+
+msgctxt "#32971"
+msgid "Automatically download selected artwork to filesystem after selection in Manage Artwork"
+msgstr "A kiválasztott kép automatikus letöltése a fájlrendszerbe a kép kezelése részben történő kiválasztás után"
+
+msgctxt "#32974"
+msgid "Download Settings"
+msgstr "Letöltési beállítások"
+
+#. Settings group - language for data from online APIs (TMDb titles, plots, etc.)
+msgctxt "#32976"
+msgid "Online Service"
+msgstr "Online elérés"
+
+msgctxt "#32977"
+msgid "Language for online metadata from TMDb, Last.fm, and TheAudioDB"
+msgstr "TMDb, Last.fm és TheAudioDB online metaadatainak nyelve"
+
+#. Actor image download feature (context menu)
+msgctxt "#32981"
+msgid "Downloading actor images..."
+msgstr "Színészek képeinek letöltése..."
+
+msgctxt "#32982"
+msgid "{0} actors"
+msgstr "{0} színész"
+
+msgctxt "#32983"
+msgid "Include TV Episode Guest Stars"
+msgstr "Vendégszereplők a sorozatokban"
+
+msgctxt "#32984"
+msgid "Download guest star images from TV show episodes (increases API calls)"
+msgstr "Vendégszereplők képeinek letöltése sorozat-epizódokból (növeli az API-hívások számát)"
+
+msgctxt "#32985"
+msgid "Include Episode Thumbnails"
+msgstr "Epizódbélyegképek belelfoglalása"
+
+msgctxt "#32986"
+msgid "Download episode thumbnail artwork during bulk operations"
+msgstr "Epizód bélyegképének letöltése tömeges műveletek során"
+
+msgctxt "#32987"
+msgid "Text too long to fully display"
+msgstr "A szöveg túl hosszú a teljes megjelenítéshez"
+
+msgctxt "#32988"
+msgid "Sync TV Show Metadata"
+msgstr "Sorozat metaadatainak szinkronizálása"
+
+msgctxt "#32989"
+msgid "Updates online metadata for every TV show in your library. Large libraries may take significantly longer."
+msgstr "Frissíti a médiatáradban található összes tévéműsor online metaadatait. A nagyobb tárak frissítése jelentősen tovább tarthat."
+
+msgctxt "#32990"
+msgid "Fetching {0:d} of {1:d}"
+msgstr "{0:d} / {1:d} lekérése"
+
+msgctxt "#32991"
+msgid "Updated: {0:d}[CR]Skipped: {1:d}[CR]Failed: {2:d}"
+msgstr "Frissítve: {0:d}[CR]Kihagyva: {1:d}[CR]Sikertelen: {2:d}"
+
+msgctxt "#32992"
+msgid "Library Maintenance"
+msgstr "Médiatár karbantartás"
+
+msgctxt "#32993"
+msgid "NFO Files"
+msgstr "NFO fájlok"
+
+msgctxt "#32994"
+msgid "Write metadata changes to NFO files"
+msgstr "Metaadat-változások írása NFO-fájlokba"
+
+msgctxt "#32995"
+msgid "When you edit metadata, also write the change to the item's local NFO file so it survives a library refresh or rescrape."
+msgstr "A metaadatok szerkesztésekor a módosításokat az elem helyi NFO-fájljába is írja, hogy azok a médiatár frissítése vagy újrabeolvasása esetén is érvényben maradjanak."
+
+msgctxt "#32996"
+msgid "Create an NFO file when none exists"
+msgstr "NFO fájl létrehozása, ha nincs ilyen"
+
+msgctxt "#32997"
+msgid "If the item has no NFO file yet, create one. When off, only existing NFO files are updated."
+msgstr "Ha az elemnek még nincs NFO fájlja, hozz létre egyet. Kikapcsolt állapotban csak a meglévő NFO fájlok frissülnek."
+
+msgctxt "#32998"
+msgid "Include watched state in NFO files"
+msgstr "Figyelt állapot belefoglalása az NFO fájlokba"
+
+msgctxt "#32999"
+msgid "Write playcount and last-played date to NFO files. Turn off to keep watched state out of your NFO files."
+msgstr "Lejátszási szám és utolsó lejátszás dátumának kiírása NFO fájlokba. Kapcsold ki, ha azt szeretnéd, hogy a figyelt állapot ne kerüljön be az NFO fájlokba."
+
+#~ msgctxt "#32593"
+#~ msgid "Scan cancelled. Found: {0} | Cached: {1} | Existing: {2}"
+#~ msgstr "Szkennelés megszakítva. Találat: {0} | Gyorsítótárazott: {1} | Meglévő: {2}"
+
+#~ msgctxt "#32594"
+#~ msgid "Scan complete! Found: {0} | Cached: {1} | Existing: {2}"
+#~ msgstr "A vizsgálat befejeződött! Találatok: {0} | Gyorsítótárban: {1} | Meglévő: {2}"
+
+#~ msgctxt "#32354"
+#~ msgid "Downloading episode data..."
+#~ msgstr "Epizódadatok letöltése..."
+
+#~ msgctxt "#32355"
+#~ msgid "Matching episodes (dataset)... {0}/{1}"
+#~ msgstr "Egyező epizódok (adatkészlet)... {0}/{1}"

@@ -1,8 +1,8 @@
-"""Person data coordination - matching actors to TMDB person IDs."""
+"""Match a Kodi actor or crew member to a TMDB person, and shape that person for display."""
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Callable, Dict, Optional
 
 import xbmc
 import xbmcgui
@@ -11,50 +11,45 @@ from lib.kodi.client import log, get_item_details, ADDON
 from lib.kodi.utilities import MULTI_VALUE_SEP
 from lib.data.api.tmdb import ApiTmdb
 from lib.data.api.utilities import tmdb_image_url
-from lib.data import database as db
+from lib.data.database import cache as db_cache
 
 
 def build_person_props(person_data: dict) -> Dict[str, str]:
-    """Build display properties from a TMDB person payload.
-
-    Shared by the actor info dialog (window properties) and the person plugin
-    handler (ListItem properties). Includes `ProfileImage` for consumers that
-    also want it as art.
-    """
-    props: Dict[str, str] = {'Name': person_data.get('name', 'Unknown')}
+    """Build the display properties a dialog or ListItem shows for a TMDB person."""
+    props: Dict[str, str] = {'name': person_data.get('name', 'Unknown')}
 
     if person_data.get('biography'):
-        props['Biography'] = person_data['biography']
+        props['biography'] = person_data['biography']
 
     birthday = person_data.get('birthday')
     deathday = person_data.get('deathday')
 
     if birthday:
-        props['Birthday'] = birthday
+        props['birthday'] = birthday
         try:
-            birth_date = datetime.strptime(birthday, '%Y-%m-%d')
-            end_date = datetime.strptime(deathday, '%Y-%m-%d') if deathday else datetime.now()
+            birth_date = datetime.fromisoformat(birthday)
+            end_date = datetime.fromisoformat(deathday) if deathday else datetime.now()
             age = end_date.year - birth_date.year
             if (end_date.month, end_date.day) < (birth_date.month, birth_date.day):
                 age -= 1
-            props['Age'] = str(age)
-            props['BirthdayFormatted'] = birth_date.strftime(xbmc.getRegion('dateshort'))
+            props['age'] = str(age)
+            props['birthdayformatted'] = birth_date.strftime(xbmc.getRegion('dateshort'))
         except (ValueError, TypeError):
             pass
 
     if deathday:
-        props['Deathday'] = deathday
+        props['deathday'] = deathday
         try:
-            death_date = datetime.strptime(deathday, '%Y-%m-%d')
-            props['DeathdayFormatted'] = death_date.strftime(xbmc.getRegion('dateshort'))
+            death_date = datetime.fromisoformat(deathday)
+            props['deathdayformatted'] = death_date.strftime(xbmc.getRegion('dateshort'))
         except (ValueError, TypeError):
             pass
 
     if person_data.get('place_of_birth'):
-        props['Birthplace'] = person_data['place_of_birth']
+        props['birthplace'] = person_data['place_of_birth']
 
     if person_data.get('known_for_department'):
-        props['KnownFor'] = person_data['known_for_department']
+        props['knownfor'] = person_data['known_for_department']
 
     if person_data.get('id'):
         props['person_id'] = str(person_data['id'])
@@ -64,22 +59,22 @@ def build_person_props(person_data: dict) -> Dict[str, str]:
 
     gender_text = {1: 'Female', 2: 'Male'}.get(person_data.get('gender') or 0)
     if gender_text:
-        props['Gender'] = gender_text
+        props['gender'] = gender_text
 
     external_ids = person_data.get('external_ids', {})
     for key in ('instagram_id', 'twitter_id', 'facebook_id', 'tiktok_id', 'youtube_id'):
         value = external_ids.get(key)
         if value:
-            props[key.replace('_id', '').title()] = value
+            props[key.replace('_id', '')] = value
 
     profile_path = person_data.get('profile_path')
     if profile_path:
-        props['ProfileImage'] = tmdb_image_url(profile_path)
+        props['profileimage'] = tmdb_image_url(profile_path)
 
     cast = person_data.get('combined_credits', {}).get('cast', [])
     if cast:
-        for media_type, title_key, prop in (('movie', 'title', 'TopMovies'),
-                                            ('tv', 'name', 'TopTVShows')):
+        for media_type, title_key, prop in (('movie', 'title', 'topmovies'),
+                                            ('tv', 'name', 'toptvshows')):
             entries = sorted((c for c in cast if c.get('media_type') == media_type),
                              key=lambda c: c.get('popularity', 0), reverse=True)
             seen: set = set()
@@ -96,8 +91,8 @@ def build_person_props(person_data: dict) -> Dict[str, str]:
     return props
 
 
-def resolve_tmdb_id(dbtype: str, dbid: int) -> Optional[int]:
-    """Get TMDB ID for library item, converting from IMDb/TVDB if needed."""
+def library_tmdb_id(dbtype: str, dbid: int) -> Optional[int]:
+    """Get a library item's TMDB id, converting an IMDb or TVDB id when that is all it has."""
     if dbtype in ('season', 'episode'):
         details = get_item_details(dbtype, dbid, ['tvshowid'])
         if not details:
@@ -105,13 +100,14 @@ def resolve_tmdb_id(dbtype: str, dbid: int) -> Optional[int]:
         tvshow_id = details.get('tvshowid')
         if not tvshow_id:
             return None
-        return resolve_tmdb_id('tvshow', tvshow_id)
+        return library_tmdb_id('tvshow', tvshow_id)
 
     details = get_item_details(dbtype, dbid, ['uniqueid'])
     if not details:
         return None
 
     uniqueid = details.get('uniqueid', {})
+    find_type = 'tvshow' if dbtype == 'tvshow' else 'movie'
 
     if uniqueid.get('tmdb'):
         try:
@@ -120,19 +116,19 @@ def resolve_tmdb_id(dbtype: str, dbid: int) -> Optional[int]:
             pass
 
     if uniqueid.get('imdb'):
-        tmdb_id = _convert_external_id(uniqueid['imdb'], 'imdb_id')
+        tmdb_id = _convert_external_id(uniqueid['imdb'], 'imdb_id', find_type)
         if tmdb_id:
             return tmdb_id
 
     if dbtype in ('tvshow', 'episode') and uniqueid.get('tvdb'):
-        tmdb_id = _convert_external_id(uniqueid['tvdb'], 'tvdb_id')
+        tmdb_id = _convert_external_id(uniqueid['tvdb'], 'tvdb_id', find_type)
         if tmdb_id:
             return tmdb_id
 
     # IMDb IDs stored under non-standard keys (e.g. "unknown")
     for value in uniqueid.values():
         if isinstance(value, str) and value.startswith('tt'):
-            tmdb_id = _convert_external_id(value, 'imdb_id')
+            tmdb_id = _convert_external_id(value, 'imdb_id', find_type)
             if tmdb_id:
                 return tmdb_id
 
@@ -141,10 +137,10 @@ def resolve_tmdb_id(dbtype: str, dbid: int) -> Optional[int]:
     return None
 
 
-def _convert_external_id(external_id: str, source: str) -> Optional[int]:
-    """Convert IMDB/TVDB ID to TMDB ID using TMDB Find API."""
+def _convert_external_id(external_id: str, source: str, media_type: str) -> Optional[int]:
+    """Convert an IMDb or TVDB id to a TMDB id through TMDB's find endpoint."""
     api = ApiTmdb()
-    result = api.find_by_external_id(external_id, source)
+    result = api.find_by_external_id(external_id, source, media_type)
     if result and "id" in result:
         return result["id"]
     return None
@@ -153,14 +149,10 @@ def _convert_external_id(external_id: str, source: str) -> Optional[int]:
 def match_actor_to_person_id(actor_name: str, actor_role: str, tmdb_id: int, dbtype: str,
                              dbid: int = 0, auto_search: bool = True,
                              online: bool = False) -> Optional[int]:
-    """Match actor to TMDB person ID using 5-stage strategy.
-
-    Shows dialog select on failure for user to choose correct person.
-    For episodes, tmdb_id is the tvshow TMDB ID. dbid is required for episodes/seasons.
-    online=True uses TMDB data directly; False matches Kodi scraper behavior.
-    """
+    """Match a person in the cast, then the crew, to a TMDB person id; may search on a miss."""
     api = ApiTmdb()
     credits = []
+    crew: list = []
 
     if dbtype == 'episode':
         details = get_item_details(dbtype, dbid, ['season', 'episode'])
@@ -183,6 +175,7 @@ def match_actor_to_person_id(actor_name: str, actor_role: str, tmdb_id: int, dbt
 
         episode_cast = episode_data.get('credits', {}).get('cast', [])
         episode_guests = episode_data.get('credits', {}).get('guest_stars', [])
+        crew = episode_data.get('credits', {}).get('crew') or []
 
         if online:
             credits = episode_cast + episode_guests
@@ -220,6 +213,7 @@ def match_actor_to_person_id(actor_name: str, actor_role: str, tmdb_id: int, dbt
             return None
 
         main_cast = season_data.get('aggregate_credits', {}).get('cast', [])
+        crew = season_data.get('aggregate_credits', {}).get('crew') or []
 
         all_guests = {}
         for episode in season_data.get('episodes', []):
@@ -242,30 +236,11 @@ def match_actor_to_person_id(actor_name: str, actor_role: str, tmdb_id: int, dbt
             log("Person", f"No credits found for {media_type} {tmdb_id}", xbmc.LOGWARNING)
             return None
 
-        credits = complete_data['credits'].get('cast', [])
+        credits = tmdb_cast(complete_data, media_type)
+        crew = complete_data['credits'].get('crew') or []
 
-    match = exact_match(credits, actor_name, actor_role)
+    match = match_credit(credits, actor_name, actor_role) or match_credit(crew, actor_name, '')
     if match:
-        log("Person", f"Matched '{actor_name}' via exact match (person_id={match['id']})",
-            xbmc.LOGDEBUG)
-        return match['id']
-
-    match = fuzzy_role_match(credits, actor_name, actor_role)
-    if match:
-        log("Person", f"Matched '{actor_name}' via fuzzy role (person_id={match['id']})",
-            xbmc.LOGDEBUG)
-        return match['id']
-
-    match = name_only_match(credits, actor_name)
-    if match:
-        log("Person", f"Matched '{actor_name}' via name only (person_id={match['id']})",
-            xbmc.LOGDEBUG)
-        return match['id']
-
-    match = fuzzy_name_match(credits, actor_name)
-    if match:
-        log("Person", f"Matched '{actor_name}' via fuzzy name (person_id={match['id']})",
-            xbmc.LOGDEBUG)
         return match['id']
 
     if auto_search:
@@ -279,12 +254,7 @@ def match_actor_to_person_id(actor_name: str, actor_role: str, tmdb_id: int, dbt
 
 
 def _flatten_aggregate_credits(aggregate_cast: list) -> list:
-    """Expand TMDB `aggregate_credits.cast` (one entry per actor with `roles[]`) into one entry
-    per role.
-
-    Each output entry preserves the actor fields plus a single `character` string,
-    matching the shape that the matcher chain (`exact_match`/`fuzzy_role_match`/...) expects.
-    """
+    """Expand aggregate credits, one entry per actor role, into the shape the matchers expect."""
     flat: list = []
     for actor in aggregate_cast:
         roles = actor.get('roles') or []
@@ -296,14 +266,24 @@ def _flatten_aggregate_credits(aggregate_cast: list) -> list:
     return flat
 
 
+def tmdb_cast(data: Optional[dict], media_type: str) -> list:
+    """Get the cast from a complete TMDB record, across all seasons for a TV show."""
+    data = data or {}
+    if media_type == 'tvshow':
+        aggregate = data.get('aggregate_credits', {}).get('cast', [])
+        if aggregate:
+            return _flatten_aggregate_credits(aggregate)
+    return data.get('credits', {}).get('cast', [])
+
+
 def normalize_name(name: str) -> str:
-    """Normalize name for matching by handling special characters and initials."""
+    """Normalize a name for matching, ignoring accents, apostrophe style and dots in initials."""
     import re
     import unicodedata
 
     normalized = unicodedata.normalize('NFD', name)
     normalized = ''.join(char for char in normalized if not unicodedata.combining(char))
-    normalized = re.sub(r"['']", "'", normalized)
+    normalized = re.sub("[\u2018\u2019]", "'", normalized)
     normalized = re.sub(r'([A-Z])\.\s*', r'\1 ', normalized)
     normalized = ' '.join(normalized.split())
 
@@ -361,22 +341,44 @@ def fuzzy_name_match(credits: list, name: str) -> Optional[dict]:
     return None
 
 
+def match_credit(credits: list, name: str, role: str,
+                 usable: Optional[Callable[[dict], bool]] = None) -> Optional[dict]:
+    """Match an actor to a credit, strictest matcher first, passing over unusable matches."""
+    matchers = (
+        ('exact match', lambda: exact_match(credits, name, role)),
+        ('fuzzy role', lambda: fuzzy_role_match(credits, name, role)),
+        ('name only', lambda: name_only_match(credits, name)),
+        ('fuzzy name', lambda: fuzzy_name_match(credits, name)),
+    )
+    for label, matcher in matchers:
+        match = matcher()
+        if match and (usable is None or usable(match)):
+            log("Person", f"Matched '{name}' via {label} (person_id={match.get('id')})",
+                xbmc.LOGDEBUG)
+            return match
+    return None
+
+
 def _search_with_dialog(name: str, api: ApiTmdb) -> Optional[int]:
-    """Search TMDB and show dialog for user selection."""
-    results = api.search_person(name)
+    """Search TMDB by name and let the user pick unless one result; None if none or on cancel."""
+    results = api.search(name, 'person')
 
     if not results:
         xbmcgui.Dialog().notification(
-            "Person Info",
-            f"Actor '{name}' not found",
+            ADDON.getLocalizedString(32703),
+            ADDON.getLocalizedString(32401).format(name),
             xbmcgui.NOTIFICATION_WARNING,
             3000
         )
         return None
+    if len(results) == 1:
+        log("Person", f"Single search result for '{name}' (person_id={results[0]['id']})",
+            xbmc.LOGDEBUG)
+        return results[0]['id']
 
     items = []
     for result in results[:10]:
-        item = xbmcgui.ListItem(result['name'])
+        item = xbmcgui.ListItem(result['name'], offscreen=True)
 
         known_for = result.get('known_for_department', '')
         if known_for:
@@ -403,8 +405,8 @@ def _search_with_dialog(name: str, api: ApiTmdb) -> Optional[int]:
 
 
 def get_person_data(person_id: int) -> Optional[dict]:
-    """Get complete person data, using cache if available."""
-    cached = db.get_cached_person_data(person_id)
+    """Get a TMDB person's full record, from the cache when it holds one."""
+    cached = db_cache.get_cached_person_data(person_id)
     if cached:
         log("Person", f"Loaded person {person_id} from cache", xbmc.LOGDEBUG)
         return cached
@@ -413,7 +415,7 @@ def get_person_data(person_id: int) -> Optional[dict]:
     data = api.get_person_details(person_id)
 
     if data:
-        db.cache_person_data(person_id, data)
+        db_cache.cache_person_data(person_id, data)
         log("Person", f"Fetched and cached person {person_id}", xbmc.LOGDEBUG)
 
     return data
@@ -426,7 +428,7 @@ def match_crew_to_person_id(
     dbtype: str,
     auto_search: bool = True
 ) -> Optional[int]:
-    """Match crew member to TMDB person ID. crew_type: 'director', 'writer', or 'creator'."""
+    """Match a director, writer or creator to a TMDB person id; may search on a miss."""
     api = ApiTmdb()
     normalized_name = normalize_name(crew_name)
 
@@ -462,22 +464,18 @@ def match_crew_to_person_id(
 
         crew = data["credits"].get("crew") or []
 
-        if crew_type == "director":
-            job_filter = {"Director"}
-        elif crew_type == "writer":
-            job_filter = {"Writer", "Screenplay", "Story", "Original Story"}
-        else:
+        if crew_type not in _CREW_JOBS:
             log("Person", f"Unknown crew_type '{crew_type}'", xbmc.LOGWARNING)
             return None
 
-        for member in crew:
-            member_name = member.get("name", "")
-            member_job = member.get("job", "")
-            if normalize_name(member_name) == normalized_name and member_job in job_filter:
-                person_id = member.get("id")
-                log("Person", f"Matched {crew_type} '{crew_name}' (person_id={person_id})",
-                    xbmc.LOGDEBUG)
-                return person_id
+        # Kodi credits people TMDB lists under other jobs, such as Novel or Director for a writer
+        member = next((m for m in crew
+                       if normalize_name(m.get("name", "")) == normalized_name), None)
+        if member:
+            person_id = member.get("id")
+            log("Person", f"Matched {crew_type} '{crew_name}' (person_id={person_id})",
+                xbmc.LOGDEBUG)
+            return person_id
 
         log("Person",
             f"{crew_type.title()} '{crew_name}' not found in crew for {media_type} {tmdb_id}",
@@ -489,6 +487,12 @@ def match_crew_to_person_id(
         return _search_with_dialog(crew_name, api)
 
     return None
+
+
+_CREW_JOBS = {
+    "director": {"Director"},
+    "writer": {"Writer", "Screenplay", "Story", "Original Story"},
+}
 
 
 _CREW_JOB_PRIORITY: dict[str, int] = {
@@ -520,15 +524,10 @@ _CREW_JOB_PRIORITY: dict[str, int] = {
 def get_crew_from_tmdb(
     crew_type: str,
     tmdb_id: int,
-    dbtype: str
+    dbtype: str,
+    abort_flag=None
 ) -> list[dict]:
-    """Get crew members from TMDB.
-
-    `crew_type` may be `director`, `writer`, `creator`, or empty/`all` for full crew
-    (deduped by person, multiple jobs joined as `Director, Producer`).
-
-    Returns list of dicts with id, name, profile_path, job.
-    """
+    """Get one crew type from TMDB, or the whole crew deduped with their jobs joined."""
     api = ApiTmdb()
 
     if crew_type == "creator":
@@ -536,7 +535,7 @@ def get_crew_from_tmdb(
             log("Person", f"Creator lookup only valid for TV shows, got {dbtype}", xbmc.LOGWARNING)
             return []
 
-        data = api.get_tv_details_extended(tmdb_id)
+        data = api.get_tv_details_extended(tmdb_id, abort_flag)
         if not data:
             return []
 
@@ -552,20 +551,15 @@ def get_crew_from_tmdb(
         ]
 
     media_type = "movie" if dbtype == "movie" else "tvshow"
-    data = api.get_complete_data(media_type, tmdb_id)
+    data = api.get_complete_data(media_type, tmdb_id, abort_flag=abort_flag)
 
     if not data or "credits" not in data:
         return []
 
     crew = data["credits"].get("crew") or []
 
-    if crew_type == "director":
-        job_filter: Optional[set[str]] = {"Director"}
-    elif crew_type == "writer":
-        job_filter = {"Writer", "Screenplay", "Story", "Original Story"}
-    elif crew_type in ("", "all"):
-        job_filter = None
-    else:
+    job_filter = _CREW_JOBS.get(crew_type)
+    if job_filter is None and crew_type not in ("", "all"):
         return []
 
     if job_filter is None:

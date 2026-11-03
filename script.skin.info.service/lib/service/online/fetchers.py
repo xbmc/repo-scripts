@@ -1,200 +1,114 @@
-"""Public fetchers for online data: combined TMDB + ratings, TMDB-only, music helpers."""
+"""Episode ratings for the focused or playing episode, published as properties."""
 from __future__ import annotations
 
-from typing import Dict, List, Optional, TYPE_CHECKING
+import threading
+from typing import Dict, Optional, Set
 
 import xbmc
 
+from lib.data.online import fetch_trakt_data
 from lib.kodi.client import log
-
-if TYPE_CHECKING:
-    from lib.service.online.main import ServiceAbortFlag
-
-
-def fetch_all_online_data(media_type: str, imdb_id: str, tmdb_id: str,
-                          abort_flag: Optional['ServiceAbortFlag'] = None,
-                          is_library_item: bool = True) -> Dict[str, str]:
-    """Fetch TMDB details + ratings (OMDb/MDBList/Trakt) and return as flat property dict.
-
-    `is_library_item=False` shortens TTL to 24h and skips season fetches.
-    """
-    from concurrent.futures import ThreadPoolExecutor, as_completed
-    from lib.data.api.tmdb import resolve_tmdb_id
-    from lib.plugin.online import (
-        fetch_omdb_data,
-        fetch_mdblist_data,
-        fetch_trakt_data,
-    )
-
-    props: Dict[str, str] = {}
-    is_episode = media_type == "episode"
-
-    if abort_flag and abort_flag.is_requested():
-        return props
-
-    resolved_tmdb_id = resolve_tmdb_id(
-        tmdb_id,
-        imdb_id,
-        "tvshow" if is_episode else media_type
-    )
-
-    if not imdb_id and not resolved_tmdb_id:
-        return props
-
-    if abort_flag and abort_flag.is_requested():
-        return props
-
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        futures = {}
-
-        if resolved_tmdb_id and not is_episode:
-            futures[executor.submit(
-                _fetch_tmdb_full_data,
-                media_type,
-                resolved_tmdb_id,
-                abort_flag,
-                is_library_item
-            )] = "tmdb"
-
-        if imdb_id:
-            futures[executor.submit(
-                fetch_omdb_data,
-                media_type,
-                imdb_id,
-                abort_flag
-            )] = "omdb"
-
-        if imdb_id or resolved_tmdb_id:
-            futures[executor.submit(
-                fetch_mdblist_data,
-                media_type,
-                imdb_id,
-                resolved_tmdb_id or "",
-                is_episode,
-                abort_flag
-            )] = "mdblist"
-
-            futures[executor.submit(
-                fetch_trakt_data,
-                media_type,
-                imdb_id,
-                resolved_tmdb_id or "",
-                is_episode,
-                None,
-                None,
-                abort_flag
-            )] = "trakt"
-
-        results: Dict[str, Dict[str, str]] = {}
-        for future in as_completed(futures):
-            if abort_flag and abort_flag.is_requested():
-                executor.shutdown(wait=False)
-                return props
-
-            source = futures[future]
-            try:
-                result = future.result()
-                if result:
-                    results[source] = result
-            except Exception as e:
-                log("Service", f"Online fetch error ({source}): {e}", xbmc.LOGWARNING)
-
-    # Merge in priority order: MDBList (richer aggregator) wins shared rating keys, OMDb
-    # only backfills.
-    for source in ("tmdb", "omdb", "mdblist", "trakt"):
-        if source in results:
-            props.update(results[source])
-
-    return props
+from lib.kodi.formatters import format_default_rating, format_rating_props
+from lib.kodi.utilities import batch_set_props
 
 
-def fetch_tmdb_online_data(
-    media_type: str,
-    imdb_id: str,
-    tmdb_id: str,
-    abort_flag: Optional['ServiceAbortFlag'] = None,
-    is_library_item: bool = True
-) -> Dict[str, str]:
-    """Fetch only TMDB data and return as property dictionary."""
-    from lib.data.api.tmdb import resolve_tmdb_id
-
-    is_episode = media_type == "episode"
-
-    if abort_flag and abort_flag.is_requested():
-        return {}
-
-    resolved_tmdb_id = resolve_tmdb_id(
-        tmdb_id, imdb_id, "tvshow" if is_episode else media_type
-    )
-    if not resolved_tmdb_id or is_episode:
-        return {}
-
-    return _fetch_tmdb_full_data(
-        media_type, resolved_tmdb_id, abort_flag, is_library_item=is_library_item
-    ) or {}
-
-
-def _fetch_tmdb_full_data(media_type: str, tmdb_id: str,
-                          abort_flag: Optional['ServiceAbortFlag'] = None,
-                          is_library_item: bool = True) -> Dict[str, str]:
-    """Fetch TMDB metadata and format as a property dict via `lib.kodi.formatters`."""
+def fetch_episode_ratings(show_imdb: str, show_tmdb: str, season: int, episode: int,
+                          episode_imdb: str = "", abort_flag=None) -> Dict[str, str]:
+    """Fetch an episode's IMDb, TMDB and Trakt ratings as `Rating.*`, the default as `Rating`."""
+    from lib.data.api.imdb import get_imdb_dataset
     from lib.data.api.tmdb import ApiTmdb
-    from lib.kodi.formatters import (
-        format_rating_props,
-        format_movie_props,
-        format_tvshow_props,
-        format_credits_props,
-        format_images_props,
-        format_extra_props,
-    )
 
     props: Dict[str, str] = {}
-
-    if abort_flag and abort_flag.is_requested():
-        return props
+    ids = {"imdb": show_imdb, "tmdb": show_tmdb, "season": str(season), "episode": str(episode)}
 
     try:
-        api = ApiTmdb()
-        data = api.get_complete_data(
-            media_type, int(tmdb_id), abort_flag=abort_flag, is_library_item=is_library_item
-        )
-
-        if abort_flag and abort_flag.is_requested():
-            return props
-
-        if not data:
-            return props
-
-        if media_type == "movie":
-            props.update(format_movie_props(data))
-        else:
-            props.update(format_tvshow_props(data))
-
-        vote_avg = data.get("vote_average")
-        vote_cnt = data.get("vote_count")
-        if vote_avg is not None and vote_cnt is not None:
-            props.update(format_rating_props("tmdb", float(vote_avg), int(vote_cnt)))
-
-        props.update(format_credits_props(data))
-        props.update(format_images_props(data))
-        props.update(format_extra_props(data))
-
+        dataset = get_imdb_dataset()
+        if not episode_imdb and show_imdb:
+            episode_imdb = dataset.get_episode_imdb_id(show_imdb, season, episode) or ""
+        imdb = dataset.get_rating(episode_imdb) if episode_imdb else None
+        if imdb:
+            props.update(format_rating_props("imdb", imdb["rating"], int(imdb["votes"])))
     except Exception as e:
-        log("Service", f"TMDb full fetch error: {e}", xbmc.LOGWARNING)
+        log("Service", f"IMDb episode rating error: {e}", xbmc.LOGWARNING)
 
+    if show_tmdb and not (abort_flag and abort_flag.is_requested()):
+        try:
+            api = ApiTmdb()
+            ratings = api.fetch_ratings("episode", ids, abort_flag=abort_flag)
+            if not ratings:
+                data = api.get_season_details(int(show_tmdb), season, abort_flag,
+                                              force_refresh=True)
+                if data:
+                    api.store_episode_ratings(int(show_tmdb), season, data)
+                    ratings = api.fetch_ratings("episode", ids, abort_flag=abort_flag)
+            tmdb = (ratings or {}).get("tmdb")
+            if tmdb:
+                props.update(format_rating_props("tmdb", tmdb["rating"], int(tmdb["votes"])))
+        except Exception as e:
+            log("Service", f"TMDB episode rating error: {e}", xbmc.LOGWARNING)
+
+    if not (abort_flag and abort_flag.is_requested()):
+        props.update({
+            k: v for k, v in fetch_trakt_data(
+                "episode", show_imdb, show_tmdb, True, season, episode, abort_flag
+            ).items() if k.startswith("Rating.")
+        })
+
+    props.update(format_default_rating(props))
     return props
 
 
-def get_playing_artist_mbids() -> List[str]:
-    """Return MusicBrainz artist IDs for the currently playing audio (or `[]`)."""
-    try:
-        player = xbmc.Player()
-        if not player.isPlayingAudio():
-            return []
-        tag = player.getMusicInfoTag()
-        mbids = tag.getMusicBrainzArtistID()
-        if isinstance(mbids, list):
-            return [m for m in mbids if m]
-        return []
-    except Exception:
-        return []
+class EpisodeRatings:
+    """The focused or playing episode's online ratings, published as `Rating.*` properties."""
+
+    def __init__(self, prefix: str, abort_flag):
+        self._prefix = prefix
+        self._abort_flag = abort_flag
+        self._dbid: Optional[str] = None
+        self._keys: Set[str] = set()
+
+    def owned(self) -> Set[str]:
+        """Get the keys, without the prefix, that the current episode's ratings occupy."""
+        return set(self._keys)
+
+    def reset(self) -> None:
+        """Reset the published ratings to blank, forgetting the current episode."""
+        if self._dbid is not None:
+            batch_set_props({f"{self._prefix}{k}": "" for k in self._keys})
+            self.forget()
+
+    def forget(self) -> None:
+        """Forget the current episode after its properties were cleared elsewhere."""
+        self._dbid = None
+        self._keys = set()
+
+    def update(self, dbid: str, season: str, episode: str, episode_imdb: str,
+               show_imdb: str, show_tmdb: str) -> None:
+        """Update the published ratings off-thread when the episode changes."""
+        if dbid == self._dbid:
+            return
+        self.reset()
+        if not season.isdigit() or not episode.isdigit():
+            return
+        self._dbid = dbid
+        threading.Thread(
+            target=self._worker,
+            args=(dbid, int(season), int(episode), episode_imdb, show_imdb, show_tmdb),
+            daemon=True,
+        ).start()
+
+    def _worker(self, dbid: str, season: int, episode: int, episode_imdb: str,
+                show_imdb: str, show_tmdb: str) -> None:
+        """Fetch one episode's ratings, publishing them only while it is still current."""
+        if not episode_imdb:
+            from lib.kodi.client import get_item_details
+            details = get_item_details("episode", int(dbid), ["uniqueid"],
+                                       cache_key=f"episode:{dbid}:uniqueid")
+            if isinstance(details, dict):
+                episode_imdb = (details.get("uniqueid") or {}).get("imdb") or ""
+        props = fetch_episode_ratings(
+            show_imdb, show_tmdb, season, episode, episode_imdb, self._abort_flag)
+        if self._dbid != dbid or self._abort_flag.is_requested():
+            return
+        self._keys = set(props)
+        batch_set_props({f"{self._prefix}{k}": v for k, v in props.items()})

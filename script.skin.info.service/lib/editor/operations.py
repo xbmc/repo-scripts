@@ -17,7 +17,7 @@ from lib.editor.config import get_field_def, get_properties_for_media_type
 
 
 def get_item_for_editing(dbid: int, media_type: str) -> dict[str, Any] | None:
-    """Fetch item with all editable properties."""
+    """Get the item with every editable property, None when Kodi does not return it."""
     method_info = KODI_GET_DETAILS_METHODS.get(media_type)
     if not method_info:
         log("Editor", f"Unknown media type: {media_type}", xbmc.LOGWARNING)
@@ -40,7 +40,7 @@ def save_field(
     dbid: int, media_type: str, field_name: str, value: Any,
     item: dict[str, Any] | None = None
 ) -> bool:
-    """Save a single field value."""
+    """Save one field to Kodi, setting premiered alongside year for a video item."""
     method_info = KODI_SET_DETAILS_METHODS.get(media_type)
     if not method_info:
         log("Editor", f"Cannot save - unknown media type: {media_type}", xbmc.LOGWARNING)
@@ -56,7 +56,11 @@ def save_field(
 
     params: dict[str, Any] = {id_key: dbid, api_name: value}
 
-    # Kodi ignores year if premiered exists, so set both (video types only)
+    # a song's mood is one string, read back split on Kodi's music item separator
+    if media_type == "song" and api_name == "mood" and isinstance(value, list):
+        params["mood"] = " / ".join(value)
+
+    # Kodi ignores year when premiered is set
     if field_name == "year" and isinstance(value, int) and media_type in (
         "movie", "tvshow", "episode", "musicvideo"
     ):
@@ -93,9 +97,11 @@ def fetch_library_genres(media_type: str) -> list[str]:
     return [g.get("label", "") for g in genres if g.get("label")]
 
 
-def fetch_library_tags() -> list[str]:
+def fetch_library_tags(media_type: str) -> list[str]:
     """Fetch existing tags from library."""
-    response = request("VideoLibrary.GetTags", {"type": "movie"})
+    if media_type not in ("movie", "tvshow", "musicvideo"):
+        return []
+    response = request("VideoLibrary.GetTags", {"type": media_type})
     tags = extract_result(response, "tags", [])
 
     if not tags:
@@ -105,7 +111,7 @@ def fetch_library_tags() -> list[str]:
 
 
 def _aggregate_field_values(media_type: str, field: str) -> list[str]:
-    """Aggregate unique values for a field from library items."""
+    """Aggregate a field's unique values across every library item."""
     method_map = {
         "movie": ("VideoLibrary.GetMovies", "movies"),
         "tvshow": ("VideoLibrary.GetTVShows", "tvshows"),
@@ -121,7 +127,7 @@ def _aggregate_field_values(media_type: str, field: str) -> list[str]:
         return []
 
     method, result_key = method_info
-    response = request(method, {"properties": [field], "limits": {"end": 500}})
+    response = request(method, {"properties": [field]})
     items = extract_result(response, result_key, [])
 
     if not items:
@@ -142,19 +148,17 @@ def fetch_library_values_for_field(
     field_name: str, media_type: str
 ) -> list[str]:
     """Fetch existing library values for a list field."""
-    if field_name == "genre":
+    field_def = get_field_def(field_name)
+    api_name = field_def["api_name"] if field_def else field_name
+
+    if api_name == "genre":
         return fetch_library_genres(media_type)
 
-    if field_name == "tag":
-        return fetch_library_tags()
+    if api_name == "tag":
+        return fetch_library_tags(media_type)
 
-    if field_name in ("studio", "director", "writer", "country"):
-        return _aggregate_field_values(media_type, field_name)
-
-    if field_name in ("style", "mood", "instrument", "yearsactive", "theme"):
-        return _aggregate_field_values(media_type, field_name)
-
-    if field_name == "artistlist":
-        return _aggregate_field_values(media_type, "artist")
+    if api_name in ("studio", "director", "writer", "country", "artist",
+                    "style", "mood", "instrument", "yearsactive", "theme"):
+        return _aggregate_field_values(media_type, api_name)
 
     return []

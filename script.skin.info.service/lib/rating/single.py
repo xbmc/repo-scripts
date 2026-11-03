@@ -3,23 +3,27 @@ from __future__ import annotations
 
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FuturesTimeoutError
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Final, List, Optional, Tuple
 
 import xbmc
 
 from lib.kodi.client import request, log, KODI_SET_DETAILS_METHODS
+from lib.kodi.settings import KodiSettings
 from lib.data.api.tmdb import resolve_tmdb_id
 from lib.data.api.imdb import get_imdb_dataset
 from lib.data.api.client import RateLimitHit, RetryableError
 from lib.data.api import tracker as usage_tracker
 from lib.data.database import workflow as db
 from lib.infrastructure.tasks import ShutdownAbortFlag
-from lib.rating.merger import merge_ratings, prepare_kodi_ratings
+from lib.rating.merger import (merge_ratings, prepare_kodi_ratings, has_alias_drift, default_moved,
+                               format_rating_change, rating_display_changed)
 from lib.rating.ids import (
     get_imdb_id_from_tmdb,
     build_external_ids,
     get_tvshow_uniqueid,
 )
+
+_MAX_TOTAL_WAIT: Final = 30.0
 
 
 def resolve_item_ids(item: Dict, media_type: str) -> Optional[Dict]:
@@ -67,7 +71,7 @@ def resolve_item_ids(item: Dict, media_type: str) -> Optional[Dict]:
             "tvdb": uniqueid.get("tvdb"),
         }
 
-    if not ids.get("tmdb") and not ids.get("imdb"):
+    if not ids.get("tmdb") and not ids.get("imdb") and not ids.get("imdb_episode"):
         return None
 
     return ids
@@ -138,25 +142,30 @@ def merge_and_apply_ratings(
             old_val = final_ratings[rating_name]["rating"]
             old_votes = final_ratings[rating_name]["votes"]
 
-            # a changed rating value must win even when the provider's vote
-            # count declined (providers renormalize their counts)
-            if new_votes > old_votes or abs(old_val - new_val) > 0.01:
+            # a changed value wins even on fewer votes; providers renormalize their counts
+            if new_votes > old_votes or rating_display_changed(old_val, new_val):
                 final_ratings[rating_name] = {"rating": new_val, "votes": new_votes}
-                if abs(old_val - new_val) > 0.01:
-                    updated_ratings.append(f"{rating_name} ({old_val:.1f} -> {new_val:.1f})")
+                if rating_display_changed(old_val, new_val):
+                    updated_ratings.append(format_rating_change(
+                        rating_name, old_val, int(old_votes), new_val, int(new_votes)))
         else:
             final_ratings[rating_name] = {"rating": new_val, "votes": new_votes}
             added_ratings.append(f"{rating_name} ({new_val:.1f})")
 
-    kodi_ratings = prepare_kodi_ratings(final_ratings, default_source="imdb")
+    supplied = set(merged)
+    kodi_ratings = prepare_kodi_ratings(
+        final_ratings, default_source=KodiSettings.ratings_default_source(), supplied=supplied)
 
     if added_ratings:
         log("Ratings", f"Added ratings: {', '.join(added_ratings)}", xbmc.LOGDEBUG)
     if updated_ratings:
-        log("Ratings", f"Updated ratings: {', '.join(updated_ratings)}", xbmc.LOGDEBUG)
+        log("Ratings", f"Updated ratings: {' | '.join(updated_ratings)}", xbmc.LOGDEBUG)
 
-    if not added_ratings and not updated_ratings:
-        db.update_synced_ratings(media_type, dbid, final_ratings, build_external_ids(ids))
+    if (not added_ratings and not updated_ratings
+            and not has_alias_drift(existing_ratings, supplied)
+            and not default_moved(existing_ratings, kodi_ratings)):
+        db.update_synced_ratings(
+            media_type, dbid, final_ratings, build_external_ids(ids, media_type))
         return True, {
             "title": title, "year": year,
             "sources_used": sources_used, "ratings_added": 0, "ratings_updated": 0,
@@ -173,7 +182,8 @@ def merge_and_apply_ratings(
     response = request(method, {id_key: dbid, "ratings": kodi_ratings})
 
     if response is not None:
-        db.update_synced_ratings(media_type, dbid, final_ratings, build_external_ids(ids))
+        db.update_synced_ratings(
+            media_type, dbid, final_ratings, build_external_ids(ids, media_type))
 
     item_stats = {
         "title": title, "year": year,
@@ -196,7 +206,7 @@ def update_single_item(
     abort_flag=None,
     force_refresh: bool = True,
 ) -> tuple[Optional[bool], Optional[Dict]]:
-    """Fetch ratings for one item (context-menu path); batch jobs use `RatingBatchExecutor`."""
+    """Update one item's ratings from the dataset and every source; batch runs use the executor."""
     if abort_flag is None:
         abort_flag = ShutdownAbortFlag()
 
@@ -221,10 +231,17 @@ def update_single_item(
 
     retryable_failures: list[dict] = []
 
-    MAX_TOTAL_WAIT = 30.0
+    if not sources:
+        return merge_and_apply_ratings(
+            media_type=media_type, dbid=dbid, title=title, year=year, ids=ids,
+            all_ratings=all_ratings, sources_used=sources_used,
+            existing_ratings=existing_ratings, retryable_failures=retryable_failures,
+        )
+
     start_time = time.time()
 
-    with ThreadPoolExecutor(max_workers=len(sources)) as executor:
+    executor = ThreadPoolExecutor(max_workers=len(sources))
+    try:
         futures = {
             executor.submit(
                 source.fetch_ratings, media_type, ids, abort_flag, force_refresh
@@ -235,24 +252,21 @@ def update_single_item(
 
         while pending:
             if abort_flag and abort_flag.is_requested():
-                executor.shutdown(wait=False)
                 return None, None
 
-            if (time.time() - start_time) > MAX_TOTAL_WAIT:
+            if (time.time() - start_time) > _MAX_TOTAL_WAIT:
                 for future in pending:
                     source = futures[future]
                     source_name = source.provider_name
                     retryable_failures.append({"source": source_name, "reason": "timeout"})
                     log("Ratings",
-                        f"   {source_name}: Timeout after {MAX_TOTAL_WAIT}s",
+                        f"   {source_name}: Timeout after {_MAX_TOTAL_WAIT}s",
                         xbmc.LOGDEBUG)
-                executor.shutdown(wait=False)
                 break
 
             try:
-                done = set()
                 for future in as_completed(pending, timeout=1.0):
-                    done.add(future)
+                    pending.discard(future)
                     source = futures[future]
                     source_name = source.provider_name
 
@@ -266,10 +280,8 @@ def update_single_item(
                         if action == "cancel_all":
                             if abort_flag:
                                 abort_flag.request()
-                            executor.shutdown(wait=False)
                             return None, None
                         if action == "cancel_batch":
-                            executor.shutdown(wait=False)
                             return None, None
                         if action == "retry":
                             retryable_failures.append(
@@ -284,10 +296,10 @@ def update_single_item(
                     except Exception as e:
                         log("Ratings", f"   {source_name}: Failed: {str(e)}", xbmc.LOGDEBUG)
 
-                pending -= done
-
             except FuturesTimeoutError:
                 continue
+    finally:
+        executor.shutdown(wait=False)
 
     return merge_and_apply_ratings(
         media_type=media_type,

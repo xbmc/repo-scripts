@@ -2,17 +2,19 @@
 from __future__ import annotations
 
 import threading
+from typing import Final
 
 import xbmc
 
 from lib.kodi.client import ADDON, log
-from lib.kodi.utilities import clear_prop, set_prop, wait_for_kodi_ready
+from lib.kodi.utilities import clear_prop, set_prop, wait_for_kodi_ready, skin_bool
 from lib.kodi.utilities import kodi_build_version
 
-SKIN_BOOL = "SkinInfo.Service"
-SKIN_BOOL_LIBRARY = "SkinInfo.Service.Library"
-SKIN_BOOL_ONLINE = "SkinInfo.Service.Online"
-POLL_INTERVAL = 1.0
+SKIN_BOOL: Final = "SkinInfo.Service"
+SKIN_BOOL_LIBRARY: Final = "SkinInfo.Service.Library"
+SKIN_BOOL_ONLINE: Final = "SkinInfo.Service.Online"
+POLL_INTERVAL: Final = 1.0
+_CLEANUP_INTERVAL: Final = 24 * 3600
 
 
 class OrchestratorMonitor(xbmc.Monitor):
@@ -23,6 +25,7 @@ class OrchestratorMonitor(xbmc.Monitor):
         self.settings_dirty = True  # force initial evaluation
 
     def onSettingsChanged(self) -> None:
+        """Drop the cached settings and flag them for re-evaluation."""
         from lib.kodi.settings import KodiSettings
         KodiSettings.clear_cache()
         self.settings_dirty = True
@@ -36,15 +39,15 @@ class Orchestrator:
         self._online_thread = None
         self._library_thread = None
         self._imdb_thread = None
+        self._top250_thread = None
         self._stinger_thread = None
 
     def run(self) -> None:
+        """Run the service orchestrator until Kodi aborts, then stop everything it started."""
         from lib.data.database._infrastructure import init_database
-        from lib.data.database.music import init_music_database
         from lib.service.slideshow import SlideshowMonitor
 
         init_database()
-        init_music_database()
 
         if not wait_for_kodi_ready(self.monitor):
             return
@@ -65,28 +68,46 @@ class Orchestrator:
         finally:
             self._stop_all()
             del slideshow_monitor
+            from lib.data.database._infrastructure import close_connections
+            close_connections()
             log("Service", "Orchestrator stopped", xbmc.LOGINFO)
 
     def _start_housekeeping(self) -> None:
-        """Expired cache cleanup in a daemon thread after startup."""
+        """Start housekeeping 30s in: a first DBID sync, then daily cleanup and an awards check."""
+        def _refresh_awards() -> None:
+            from lib.data.api.awards import refresh_awards_file
+            from lib.infrastructure.tasks import ShutdownAbortFlag
+            try:
+                if refresh_awards_file(ShutdownAbortFlag()):
+                    from lib.data.awards import forget
+                    forget()
+            except Exception as e:
+                log("Service", f"Awards check stopped: {e}", xbmc.LOGDEBUG)
+
         def _run() -> None:
-            # Delay so services get DB access first; avoids competing for locks during startup
+            # the services get the database first
             if self.monitor.waitForAbort(30):
                 return
             from lib.data.database.cache import clear_expired_cache
-            from lib.data.database.music import clear_expired_music_cache
+            from lib.data.database.rollcall import needs_id_backfill, sync_dbids
+            from lib.infrastructure.tasks import ShutdownAbortFlag
             clear_expired_cache()
-            clear_expired_music_cache()
+            if self.monitor.abortRequested():
+                return
+            if needs_id_backfill():
+                sync_dbids(ShutdownAbortFlag())
+            _refresh_awards()
+            while not self.monitor.waitForAbort(_CLEANUP_INTERVAL):
+                clear_expired_cache()
+                _refresh_awards()
 
         threading.Thread(target=_run, daemon=True).start()
 
     def _evaluate(self) -> None:
-        library_enabled = xbmc.getCondVisibility(
-            f'Skin.HasSetting({SKIN_BOOL}) | Skin.HasSetting({SKIN_BOOL_LIBRARY})'
-        )
-        online_enabled = xbmc.getCondVisibility(
-            f'Skin.HasSetting({SKIN_BOOL}) | Skin.HasSetting({SKIN_BOOL_ONLINE})'
-        )
+        """Start or stop each sub-service to match the skin bools and settings."""
+        any_enabled = skin_bool(SKIN_BOOL)
+        library_enabled = any_enabled or skin_bool(SKIN_BOOL_LIBRARY)
+        online_enabled = any_enabled or skin_bool(SKIN_BOOL_ONLINE)
         self._manage_skin_services(library_enabled, online_enabled)
 
         if self.monitor.settings_dirty:
@@ -94,7 +115,7 @@ class Orchestrator:
             self._manage_setting_services()
 
     def _ensure_started(self, attr: str, factory) -> None:
-        """Start thread on `self.<attr>` if not running. `factory` returns a new thread instance."""
+        """Start a service thread unless the one in that slot is still running."""
         thread = getattr(self, attr)
         if thread is None or not thread.is_alive():
             thread = factory()
@@ -108,6 +129,8 @@ class Orchestrator:
             return
         thread.abort.set()
         thread.join(timeout=2)
+        if thread.is_alive():
+            log("Service", f"{type(thread).__name__} still running after abort", xbmc.LOGWARNING)
         setattr(self, attr, None)
 
     def _manage_skin_services(self, library_enabled: bool, online_enabled: bool) -> None:
@@ -121,7 +144,7 @@ class Orchestrator:
             clear_prop("SkinInfo.Service.Library.Running")
 
         if online_enabled:
-            from lib.service.online import OnlineServiceMain
+            from lib.service.online.main import OnlineServiceMain
             self._ensure_started('_online_thread', OnlineServiceMain)
             set_prop("SkinInfo.Service.Online.Running", "true")
         else:
@@ -134,7 +157,9 @@ class Orchestrator:
             clear_prop("SkinInfo.Service.Running")
 
     def _manage_setting_services(self) -> None:
+        """Start or stop the services that only settings control."""
         imdb_enabled = ADDON.getSetting("imdb_auto_update") != "off"
+        top250_enabled = ADDON.getSetting("top250_auto_update") not in ("", "off")
         stinger_enabled = ADDON.getSettingBool("stinger_enabled")
 
         if imdb_enabled:
@@ -143,6 +168,12 @@ class Orchestrator:
         else:
             self._ensure_stopped('_imdb_thread')
 
+        if top250_enabled:
+            from lib.service.top250 import Top250UpdateService
+            self._ensure_started('_top250_thread', Top250UpdateService)
+        else:
+            self._ensure_stopped('_top250_thread')
+
         if stinger_enabled:
             from lib.service.stinger import StingerService
             self._ensure_started('_stinger_thread', StingerService)
@@ -150,13 +181,14 @@ class Orchestrator:
             self._ensure_stopped('_stinger_thread')
 
     def _stop_all(self) -> None:
-        # Signal abort on all threads first so they can shut down in parallel,
-        # then join to wait.
-        for attr in ('_stinger_thread', '_imdb_thread', '_online_thread', '_library_thread'):
+        """Abort every service thread, then wait for them all."""
+        attrs = ('_stinger_thread', '_top250_thread', '_imdb_thread',
+                 '_online_thread', '_library_thread')
+        for attr in attrs:
             thread = getattr(self, attr)
             if thread is not None:
                 thread.abort.set()
-        for attr in ('_stinger_thread', '_imdb_thread', '_online_thread', '_library_thread'):
+        for attr in attrs:
             self._ensure_stopped(attr)
 
 

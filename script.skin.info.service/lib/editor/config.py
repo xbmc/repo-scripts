@@ -10,12 +10,11 @@ from lib.kodi.client import ADDON
 
 
 class FieldType(Enum):
-    """Types of editable fields."""
+    """Types of editable fields, each with its own edit handler and display format."""
 
     TEXT = "text"
     TEXT_LONG = "text_long"
     INTEGER = "integer"
-    NUMBER = "number"
     DATE = "date"
     DATETIME = "datetime"
     LIST = "list"
@@ -26,38 +25,20 @@ class FieldType(Enum):
 
 
 class FieldDef(TypedDict):
-    """Definition for an editable field.
-
-    `display_name` resolves at render time: an int in 32000-32999 is our string,
-    any other int is a Kodi core string, a str is used verbatim.
-    """
+    """One editable field: its JSON-RPC name, label and type."""
 
     api_name: str
     display_name: int | str
     field_type: FieldType
-    category: str
-    get_property: str
 
 
-CATEGORY_CORE_TEXT = "Core Text"
-CATEGORY_DATES_NUMBERS = "Dates & Numbers"
-CATEGORY_LISTS = "Lists"
-CATEGORY_RATINGS = "Ratings"
-CATEGORY_IDS = "IDs"
-
-def field(api: str, display: int | str, ftype: FieldType, category: str) -> FieldDef:
-    """Build a FieldDef. `get_property` always mirrors `api`."""
-    return {
-        "api_name": api,
-        "display_name": display,
-        "field_type": ftype,
-        "category": category,
-        "get_property": api,
-    }
+def field(api: str, display: int | str, ftype: FieldType) -> FieldDef:
+    """Build a FieldDef, its label a string ID or literal text."""
+    return {"api_name": api, "display_name": display, "field_type": ftype}
 
 
 def get_display_name(field_def: FieldDef) -> str:
-    """Field label: str verbatim (Kodi terminology), 32000-32999 is ours, else a core string."""
+    """Get the field label: a str as-is, 32000-32999 from our strings, else Kodi's own."""
     name = field_def["display_name"]
     if isinstance(name, str):
         return name
@@ -67,64 +48,58 @@ def get_display_name(field_def: FieldDef) -> str:
 
 
 FIELD_DEFINITIONS: dict[str, FieldDef] = {
-    # Core Text
-    "title": field("title", 369, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "artist": field("artist", 557, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "plot": field("plot", 207, FieldType.TEXT_LONG, CATEGORY_CORE_TEXT),
-    "tagline": field("tagline", 202, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "sorttitle": field("sorttitle", 171, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "sortname": field("sortname", 32674, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "description": field("description", 21821, FieldType.TEXT_LONG, CATEGORY_CORE_TEXT),
-    "disambiguation": field("disambiguation", 39026, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "displayartist": field("displayartist", 32670, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "sortartist": field("sortartist", 32671, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "albumlabel": field("albumlabel", 32672, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "comment": field("comment", 569, FieldType.TEXT_LONG, CATEGORY_CORE_TEXT),
-    "disctitle": field("disctitle", 38076, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    "originaltitle": field("originaltitle", 20376, FieldType.TEXT, CATEGORY_CORE_TEXT),
-    # Dates Numbers
-    "year": field("year", 562, FieldType.INTEGER, CATEGORY_DATES_NUMBERS),
-    "premiered": field("premiered", 20473, FieldType.DATE, CATEGORY_DATES_NUMBERS),
-    "firstaired": field("firstaired", 20416, FieldType.DATE, CATEGORY_DATES_NUMBERS),
-    "runtime": field("runtime", 2050, FieldType.INTEGER, CATEGORY_DATES_NUMBERS),
-    "mpaa": field("mpaa", 20074, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "born": field("born", 21893, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "formed": field("formed", 21894, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "died": field("died", 21897, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "disbanded": field("disbanded", 21896, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "artisttype": field("type", 564, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "gender": field("gender", 39025, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "top250": field("top250", 13409, FieldType.INTEGER, CATEGORY_DATES_NUMBERS),
-    "track": field("track", 554, FieldType.INTEGER, CATEGORY_DATES_NUMBERS),
-    "disc": field("disc", 427, FieldType.INTEGER, CATEGORY_DATES_NUMBERS),
-    "duration": field("duration", 180, FieldType.INTEGER, CATEGORY_DATES_NUMBERS),
-    "bpm": field("bpm", 38080, FieldType.INTEGER, CATEGORY_DATES_NUMBERS),
-    "releasedate": field("releasedate", 172, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "originaldate": field("originaldate", 38079, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    "albumtype": field("type", 32673, FieldType.TEXT, CATEGORY_DATES_NUMBERS),
-    # Lists
-    "genre": field("genre", 515, FieldType.LIST, CATEGORY_LISTS),
-    "studio": field("studio", 572, FieldType.LIST, CATEGORY_LISTS),
-    "director": field("director", 20339, FieldType.LIST, CATEGORY_LISTS),
-    "writer": field("writer", 20417, FieldType.LIST, CATEGORY_LISTS),
-    "country": field("country", 21875, FieldType.LIST, CATEGORY_LISTS),
-    "tag": field("tag", 20459, FieldType.LIST, CATEGORY_LISTS),
-    "style": field("style", 176, FieldType.LIST, CATEGORY_LISTS),
-    "mood": field("mood", 175, FieldType.LIST, CATEGORY_LISTS),
-    "songmood": field("mood", 175, FieldType.LIST, CATEGORY_LISTS),
-    "instrument": field("instrument", 21892, FieldType.LIST, CATEGORY_LISTS),
-    "yearsactive": field("yearsactive", 21898, FieldType.LIST, CATEGORY_LISTS),
-    "theme": field("theme", 21895, FieldType.LIST, CATEGORY_LISTS),
-    "artistlist": field("artist", 557, FieldType.LIST, CATEGORY_LISTS),
-    # Ratings
-    "userrating": field("userrating", 32668, FieldType.USERRATING, CATEGORY_RATINGS),
-    "ratings": field("ratings", 32669, FieldType.RATINGS, CATEGORY_RATINGS),
-    # IDs
-    "uniqueid": field("uniqueid", "Unique IDs", FieldType.UNIQUEIDS, CATEGORY_IDS),
-    # Dates Numbers
-    "status": field("status", 126, FieldType.STATUS, CATEGORY_DATES_NUMBERS),
-    "playcount": field("playcount", 567, FieldType.INTEGER, CATEGORY_DATES_NUMBERS),
-    "lastplayed": field("lastplayed", 568, FieldType.DATETIME, CATEGORY_DATES_NUMBERS),
+    "title": field("title", 369, FieldType.TEXT),
+    "artist": field("artist", 557, FieldType.TEXT),
+    "plot": field("plot", 207, FieldType.TEXT_LONG),
+    "tagline": field("tagline", 202, FieldType.TEXT),
+    "sorttitle": field("sorttitle", 171, FieldType.TEXT),
+    "sortname": field("sortname", 32674, FieldType.TEXT),
+    "description": field("description", 21821, FieldType.TEXT_LONG),
+    "disambiguation": field("disambiguation", 39026, FieldType.TEXT),
+    "displayartist": field("displayartist", 32670, FieldType.TEXT),
+    "sortartist": field("sortartist", 32671, FieldType.TEXT),
+    "albumlabel": field("albumlabel", 32672, FieldType.TEXT),
+    "comment": field("comment", 569, FieldType.TEXT_LONG),
+    "disctitle": field("disctitle", 38076, FieldType.TEXT),
+    "originaltitle": field("originaltitle", 20376, FieldType.TEXT),
+    "year": field("year", 562, FieldType.INTEGER),
+    "premiered": field("premiered", 20473, FieldType.DATE),
+    "firstaired": field("firstaired", 20416, FieldType.DATE),
+    "runtime": field("runtime", 2050, FieldType.INTEGER),
+    "mpaa": field("mpaa", 20074, FieldType.TEXT),
+    "born": field("born", 21893, FieldType.TEXT),
+    "formed": field("formed", 21894, FieldType.TEXT),
+    "died": field("died", 21897, FieldType.TEXT),
+    "disbanded": field("disbanded", 21896, FieldType.TEXT),
+    "artisttype": field("type", 564, FieldType.TEXT),
+    "gender": field("gender", 39025, FieldType.TEXT),
+    "top250": field("top250", 13409, FieldType.INTEGER),
+    "track": field("track", 554, FieldType.INTEGER),
+    "disc": field("disc", 427, FieldType.INTEGER),
+    "duration": field("duration", 180, FieldType.INTEGER),
+    "bpm": field("bpm", 38080, FieldType.INTEGER),
+    "releasedate": field("releasedate", 172, FieldType.TEXT),
+    "originaldate": field("originaldate", 38079, FieldType.TEXT),
+    "albumtype": field("type", 32673, FieldType.TEXT),
+    "genre": field("genre", 515, FieldType.LIST),
+    "studio": field("studio", 572, FieldType.LIST),
+    "director": field("director", 20339, FieldType.LIST),
+    "writer": field("writer", 20417, FieldType.LIST),
+    "country": field("country", 21875, FieldType.LIST),
+    "tag": field("tag", 20459, FieldType.LIST),
+    "style": field("style", 176, FieldType.LIST),
+    "mood": field("mood", 175, FieldType.LIST),
+    "songmood": field("mood", 175, FieldType.LIST),
+    "instrument": field("instrument", 21892, FieldType.LIST),
+    "yearsactive": field("yearsactive", 21898, FieldType.LIST),
+    "theme": field("theme", 21895, FieldType.LIST),
+    "artistlist": field("artist", 557, FieldType.LIST),
+    "userrating": field("userrating", 32668, FieldType.USERRATING),
+    "ratings": field("ratings", 32669, FieldType.RATINGS),
+    "uniqueid": field("uniqueid", "Unique IDs", FieldType.UNIQUEIDS),
+    "status": field("status", 126, FieldType.STATUS),
+    "playcount": field("playcount", 567, FieldType.INTEGER),
+    "lastplayed": field("lastplayed", 568, FieldType.DATETIME),
 }
 
 MEDIA_TYPE_FIELDS: dict[str, list[str]] = {
@@ -199,6 +174,10 @@ MEDIA_TYPE_FIELDS: dict[str, list[str]] = {
         "userrating",
         "uniqueid",
     ],
+    "set": [
+        "title",
+        "plot",
+    ],
     "artist": [
         "artist",
         "sortname",
@@ -264,12 +243,9 @@ TVSHOW_STATUS_VALUES = [
     "ended",
 ]
 
-def get_fields_for_media_type(media_type: str) -> list[str]:
-    """Get list of editable fields for a media type.
 
-    tvshow `status` is included only on Kodi builds that can read it back (xbmc/xbmc#28520);
-    older builds reject it on Get, so exposing it would break the field's load/preselect.
-    """
+def get_fields_for_media_type(media_type: str) -> list[str]:
+    """Get the editable fields for a media type; tvshow status only where Kodi can read it back."""
     fields = list(MEDIA_TYPE_FIELDS.get(media_type, []))
     if media_type == "tvshow":
         from lib.kodi.utilities import tvshow_status_gettable
@@ -280,7 +256,7 @@ def get_fields_for_media_type(media_type: str) -> list[str]:
 
 
 def get_field_def(field_name: str) -> FieldDef | None:
-    """Get field definition by name."""
+    """Get a field's definition, None for a name the editor does not know."""
     return FIELD_DEFINITIONS.get(field_name)
 
 
@@ -303,13 +279,12 @@ def get_properties_for_media_type(media_type: str) -> list[str]:
     for field_name in get_fields_for_media_type(media_type):
         field_def = get_field_def(field_name)
         if field_def:
-            prop = field_def["get_property"]
+            prop = field_def["api_name"]
             if prop not in properties and prop not in unrequestable:
                 properties.append(prop)
     return properties
 
 
-# Validate at module load that every name in MEDIA_TYPE_FIELDS exists in FIELD_DEFINITIONS.
 for _mt, _fields in MEDIA_TYPE_FIELDS.items():
     for _f in _fields:
         if _f not in FIELD_DEFINITIONS:

@@ -1,9 +1,10 @@
 """Actor image download configuration and constants."""
 import sys
+from typing import Final
 
-ILLEGAL_CHARS_ALL = "/\\?"
-ILLEGAL_CHARS_WINDOWS = ':*"<>|'
-DEFAULT_EXTENSION = ".jpg"
+ILLEGAL_CHARS_ALL: Final = "/\\?"
+ILLEGAL_CHARS_WINDOWS: Final = ':*"<>|'
+DEFAULT_EXTENSION: Final = ".jpg"
 
 
 def sanitize_actor_filename(name: str, extension: str = DEFAULT_EXTENSION) -> str:

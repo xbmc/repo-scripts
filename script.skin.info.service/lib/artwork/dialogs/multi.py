@@ -1,10 +1,4 @@
-"""Multi-select ordered image chooser for extra art slots.
-
-Handles EXTRA art slots only (fanart1/fanart2, poster1/poster2, etc.).
-Main art slot (fanart, poster, etc.) is handled by dialogs/select.py
-
-Skinner control IDs and window/ListItem properties: DOCS/tools/artwork-review.md
-"""
+"""Multi-select ordered image chooser for the numbered extra art slots."""
 from __future__ import annotations
 
 import xbmc
@@ -12,18 +6,12 @@ import xbmcgui
 from typing import Optional, cast
 from lib.artwork.dialogs.base import ArtworkDialogBase
 from lib.artwork.utilities import parse_art_slot_index
-from lib.artwork.config import FANART_DIMENSIONS_VARIANTS
+from lib.artwork.config import FANART_DIMENSIONS_VARIANTS, inherited_art_url
 from lib.kodi.client import get_item_details, KODI_GET_DETAILS_METHODS, log, ADDON
 
 
 class ArtworkDialogMulti(ArtworkDialogBase):
-    """Dialog for managing extra art slots (fanart1/fanart2, poster1/poster2, etc.).
-
-    Uses a working set approach:
-    - List 100: Working set (click to remove)
-    - List 200: Available art not in working set (click to add)
-    - Apply: Saves working set as fanart1, fanart2, etc.
-    """
+    """Extra art slots managed as a working set; Apply returns them as fanart1, fanart2, etc."""
 
     CURRENT_ART_LIST = 100
     AVAILABLE_ART_LIST = 200
@@ -43,6 +31,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
 
         self.current_extra_art = {}
         self.current_main_art = None
+        self.inherited_art = ''
         self.available_art = []
         self.full_artwork_list = []
         self.working_art = []
@@ -51,7 +40,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
         self.source_pref = 'all'
 
     def onInit(self):
-        """Called when dialog opens."""
+        """Load the art, fill both lists, and publish the skin properties."""
         self.setProperty('multiart_dialog_active', 'true')
 
         if self.test_mode:
@@ -60,12 +49,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
             self._load_current_extra_art()
             self._fetch_available_art()
 
-        # Set window properties for XML
-        art_label = (
-            f"Multi-Art {self.art_type.title()}"
-            if self.art_type != 'fanart'
-            else "Multi-Art Fanart"
-        )
+        art_label = ADDON.getLocalizedString(32711).format(self.art_type.title())
         self.setProperty('heading', self.title)
         self.setProperty('arttype', art_label)
         self.setProperty('mediatype', self.media_type)
@@ -84,7 +68,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
         self._publish_source_pref_state()
 
     def _load_current_extra_art(self) -> None:
-        """Load current extra art URLs from library (numbered slots only) and main art."""
+        """Load the library's extra art URLs (numbered slots only), main and inherited art."""
         if self.media_type not in KODI_GET_DETAILS_METHODS:
             return
 
@@ -94,8 +78,8 @@ class ArtworkDialogMulti(ArtworkDialogBase):
 
         art = details.get('art', {})
 
-        # Load main art slot (e.g., 'fanart', 'poster')
         self.current_main_art = art.get(self.art_type)
+        self.inherited_art = inherited_art_url(self.media_type, self.art_type, art)
 
         for key, url in art.items():
             if key.startswith(self.art_type) and key != self.art_type:
@@ -111,7 +95,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
         self.working_art = [url for _, url in sorted_slots if url]
 
     def _fetch_available_art(self) -> None:
-        """Fetch available art from online sources (TMDB, fanart.tv)."""
+        """Fetch this art type from the providers, then filter by language and sort."""
         from lib.data.api.artwork import create_default_fetcher
         from lib.artwork.utilities import sort_artwork_by_popularity, filter_artwork_by_language
 
@@ -143,7 +127,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
             self.full_artwork_list = []
 
     def _load_test_data(self) -> None:
-        """Load dummy test data for skinning preview."""
+        """Load bundled sample images so a skinner can lay the dialog out without a library."""
         import xbmcvfs
 
         art_type_map = {
@@ -228,7 +212,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
         self.populate_list_batch(control, items)
 
     def create_artwork_listitem(self, art_info: dict, index: int) -> xbmcgui.ListItem:
-        """Override to add is_current property marking artwork already set as main art."""
+        """Create the base ListItem, flagging artwork already set as the main art or inherited."""
         item = super().create_artwork_listitem(art_info, index)
 
         if self.current_main_art:
@@ -243,6 +227,10 @@ class ArtworkDialogMulti(ArtworkDialogBase):
                 item.setProperty('is_current', 'false')
         else:
             item.setProperty('is_current', 'false')
+
+        inherited = bool(self.inherited_art) and (
+            self._normalize_url(self.inherited_art) == self._normalize_url(art_info.get('url', '')))
+        item.setProperty('is_inherited', 'true' if inherited else 'false')
 
         return item
 
@@ -264,7 +252,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
         self.populate_list_batch(control, items)
 
     def _update_selection_count(self) -> None:
-        """Update selection count property (matches regular artwork dialog format)."""
+        """Publish the working-set count and total for the dialog XML to label itself."""
         count = len(self.working_art)
         if count == 0:
             count_text = ADDON.getLocalizedString(32012)
@@ -276,7 +264,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
         self.setProperty('count_selected', str(count))
 
     def onClick(self, controlId):
-        """Handle button/list clicks."""
+        """Handle a click on either list or any of the dialog's buttons."""
         if controlId == self.AVAILABLE_ART_LIST:
             self._add_from_available()
 
@@ -300,11 +288,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
             self._toggle_source_pref()
 
     def _add_from_available(self) -> None:
-        """Move selected item from available list into working set.
-
-        Removes from the available list (active control, preserves focus)
-        and rebuilds the current list.
-        """
+        """Add the selected item to the working set; the active-list removal keeps focus."""
         try:
             available_control = cast(xbmcgui.ControlList, self.getControl(self.AVAILABLE_ART_LIST))
             item = available_control.getSelectedItem()
@@ -332,11 +316,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
             log("Artwork", f"Error adding from available: {str(e)}", xbmc.LOGERROR)
 
     def _remove_from_current(self) -> None:
-        """Remove selected item from working set, returning it to the available list.
-
-        Removes from the current list (active control, preserves focus)
-        and rebuilds the available list.
-        """
+        """Remove the selected item from the working set; the active-list removal keeps focus."""
         try:
             current_control = cast(xbmcgui.ControlList, self.getControl(self.CURRENT_ART_LIST))
             item = current_control.getSelectedItem()
@@ -370,7 +350,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
             log("Artwork", f"Error removing from current: {str(e)}", xbmc.LOGERROR)
 
     def _clear_all(self) -> None:
-        """Clear working set back to original state."""
+        """Reset the working set to the slots the item started with, and redraw both lists."""
         sorted_slots = sorted(
             self.current_extra_art.items(),
             key=lambda x: parse_art_slot_index(x[0])
@@ -382,7 +362,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
         self._update_selection_count()
 
     def _apply_changes(self) -> None:
-        """Apply working set as final extra art assignments."""
+        """Apply the working set as numbered slots, dropped ones as None; the caller saves."""
         art_dict = {}
         for idx, url in enumerate(self.working_art):
             slot = f"{self.art_type}{idx + 1}"
@@ -396,12 +376,12 @@ class ArtworkDialogMulti(ArtworkDialogBase):
         self.close()
 
     def close(self) -> None:
-        """Override close to clear active dialog property."""
+        """Clear the active-dialog property before closing, so the select dialog resumes."""
         self.setProperty('multiart_dialog_active', '')
         super().close()
 
     def _resort_artwork(self) -> None:
-        """Re-sort and filter artwork from full list, then refresh available panel."""
+        """Filter the full list by art-type language rules, sort it, redraw the available panel."""
         from lib.artwork.utilities import sort_artwork_by_popularity, filter_artwork_by_language
 
         filtered = filter_artwork_by_language(
@@ -424,11 +404,7 @@ class ArtworkDialogMulti(ArtworkDialogBase):
 def show_multiart_dialog(
     media_type: str, dbid: int, title: str, art_type: str = 'fanart', test_mode: bool = False
 ) -> Optional[dict]:
-    """Show multi-art dialog and return selected art dict.
-
-    Manages numbered slots only (e.g. fanart1, fanart2). Returns dict like
-    {'fanart1': 'url1', 'fanart2': 'url2'} or None if cancelled.
-    """
+    """Show the chooser; returns {'fanart1': url, ...} or None if cancelled."""
     addon_path = ADDON.getAddonInfo('path')
 
     dialog = ArtworkDialogMulti(

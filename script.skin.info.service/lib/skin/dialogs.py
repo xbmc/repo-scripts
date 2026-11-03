@@ -8,6 +8,8 @@ from lib.kodi.client import log, ADDON
 from lib.kodi.utilities import (
     resolve_infolabel as _resolve_infolabel,
     parse_pipe_list as _parse_list,
+    clear_window_prop,
+    read_labels,
 )
 from lib.infrastructure.dialogs import DialogProgress
 
@@ -17,8 +19,6 @@ TEST_DEFAULTS = {
     'text': ('This is test text content.\nLine 2\nLine 3\n'
              'You can test the scrolling and appearance of the text viewer dialog.'),
     'items': 'Option 1|Option 2|Option 3|Option 4|Option 5',
-    'nolabel': 'No',
-    'yeslabel': 'Yes',
     'customlabel': 'Custom',
 }
 
@@ -39,10 +39,24 @@ def _parse_int(value: str, default: int = 0) -> int:
 
 
 def _execute_builtin_list(builtins: str) -> None:
-    """Execute pipe-separated list of builtins."""
+    """Execute pipe-separated builtins, splitting only on pipes outside parentheses and quotes."""
     if not builtins:
         return
-    for builtin in _parse_list(builtins, '|'):
+    parts, current, depth, quoted = [], '', 0, False
+    for ch in builtins:
+        if ch == '"':
+            quoted = not quoted
+        elif not quoted and ch == '(':
+            depth += 1
+        elif not quoted and ch == ')' and depth:
+            depth -= 1
+        elif ch == '|' and not quoted and not depth:
+            parts.append(current)
+            current = ''
+            continue
+        current += ch
+    parts.append(current)
+    for builtin in (part.strip() for part in parts):
         if builtin:
             log('Dialogs', f"Executing builtin: {builtin}", xbmc.LOGDEBUG)
             xbmc.executebuiltin(builtin)
@@ -58,10 +72,10 @@ def _format_template(template: str, index: int, value: str) -> str:
 def _clear_dialog_properties(window: str = 'home') -> None:
     """Clear all Dialog.N.* properties used in property mode."""
     for i in range(1, 100):
-        xbmc.executebuiltin(f'ClearProperty(Dialog.{i}.Label,{window})')
-        xbmc.executebuiltin(f'ClearProperty(Dialog.{i}.Label2,{window})')
-        xbmc.executebuiltin(f'ClearProperty(Dialog.{i}.Icon,{window})')
-        xbmc.executebuiltin(f'ClearProperty(Dialog.{i}.Builtin,{window})')
+        clear_window_prop(f'Dialog.{i}.Label', window)
+        clear_window_prop(f'Dialog.{i}.Label2', window)
+        clear_window_prop(f'Dialog.{i}.Icon', window)
+        clear_window_prop(f'Dialog.{i}.Builtin', window)
 
 
 def _show_error(message: str) -> None:
@@ -109,11 +123,9 @@ def dialog_yesno(
     autoclose: str = '',
     **kwargs
 ) -> None:
-    """Show Yes/No dialog. `yesaction`/`noaction`/`cancel_action` are pipe-separated builtins."""
+    """Show a Yes/No dialog, then run the pipe-separated builtins for the answer."""
     heading = _resolve_infolabel(heading) or TEST_DEFAULTS['heading']
     message = _resolve_infolabel(message) or TEST_DEFAULTS['message']
-    yeslabel = yeslabel or TEST_DEFAULTS['yeslabel']
-    nolabel = nolabel or TEST_DEFAULTS['nolabel']
     autoclose_ms = _parse_int(autoclose, 0)
 
     log('Dialogs', f"dialog_yesno: heading='{heading}', autoclose={autoclose_ms}", xbmc.LOGDEBUG)
@@ -151,11 +163,9 @@ def dialog_yesnocustom(
     autoclose: str = '',
     **kwargs
 ) -> None:
-    """Show a Yes/No/Custom 3-button dialog. `*action` args are pipe-separated builtins."""
+    """Show a Yes/No/Custom dialog, then run the pipe-separated builtins for the answer."""
     heading = _resolve_infolabel(heading) or TEST_DEFAULTS['heading']
     message = _resolve_infolabel(message) or TEST_DEFAULTS['message']
-    yeslabel = yeslabel or TEST_DEFAULTS['yeslabel']
-    nolabel = nolabel or TEST_DEFAULTS['nolabel']
     customlabel = customlabel or TEST_DEFAULTS['customlabel']
     autoclose_ms = _parse_int(autoclose, 0)
 
@@ -179,7 +189,7 @@ def dialog_yesnocustom(
 
 
 def dialog_ok(heading: str = '', message: str = '', okaction: str = '', **kwargs) -> None:
-    """Show an OK dialog. `okaction` is pipe-separated builtins to run."""
+    """Show an OK dialog, then run its pipe-separated builtins."""
     heading = _resolve_infolabel(heading) or TEST_DEFAULTS['heading']
     message = _resolve_infolabel(message) or TEST_DEFAULTS['message']
 
@@ -199,12 +209,7 @@ def dialog_select(
     window: str = 'home',
     **kwargs
 ) -> None:
-    """Show a single-select dialog.
-
-    `items="properties"` reads from `Dialog.N.Label` window props; otherwise parse `items`
-    on `separator`. `executebuiltin` template uses `{index}`/`{value}` placeholders; per-index
-    overrides via `executebuiltin_N` kwargs.
-    """
+    """Show a single-select dialog from a list or `Dialog.N.*` properties, then run its builtin."""
     heading = _resolve_infolabel(heading) or TEST_DEFAULTS['heading']
     autoclose_ms = _parse_int(autoclose, 0)
     use_details = _parse_bool(usedetails, False)
@@ -282,7 +287,7 @@ def dialog_multiselect(
     window: str = 'home',
     **kwargs
 ) -> None:
-    """Show multiselect dialog. `executebuiltin` runs per selected item with `{index}`/`{value}`."""
+    """Show a multiselect dialog, running the builtin template once per selected item."""
     heading = _resolve_infolabel(heading) or TEST_DEFAULTS['heading']
     autoclose_ms = _parse_int(autoclose, 0)
     use_details = _parse_bool(usedetails, False)
@@ -353,7 +358,7 @@ def dialog_contextmenu(
     cancel_action: str = '',
     **kwargs
 ) -> None:
-    """Show a context-menu popup. Per-index actions via `executebuiltin_N` kwargs."""
+    """Show a context menu, running the chosen entry's own builtins or the shared template."""
     items_resolved = _resolve_infolabel(items) or TEST_DEFAULTS['items']
     item_list = _parse_list(items_resolved, separator)
 
@@ -392,7 +397,7 @@ def dialog_input(
     autoclose: str = '',
     **kwargs
 ) -> None:
-    """`type` input (alphanum/numeric/date/time/ipaddress/password); `doneaction` subs `{value}`."""
+    """Show a keyboard input of the given kind, passing the entry to the builtin as `{value}`."""
     heading = _resolve_infolabel(heading) or TEST_DEFAULTS['heading']
     default = _resolve_infolabel(default)
     is_hidden = _parse_bool(hidden, False)
@@ -442,7 +447,7 @@ def dialog_numeric(
     cancel_action: str = '',
     **kwargs
 ) -> None:
-    """Show numeric input. `type` is 0=number/1=date/2=time/3=ipaddress/4=password."""
+    """Show a numeric input: 0 number, 1 date, 2 time, 3 IP address, 4 password."""
     heading = _resolve_infolabel(heading) or TEST_DEFAULTS['heading']
     default = _resolve_infolabel(default)
     numeric_type = _parse_int(type, 0)
@@ -469,12 +474,15 @@ def dialog_textviewer(
     text: str = '',
     file: str = '',
     usemono: str = 'false',
+    headinginfo: str = '',
+    textinfo: str = '',
     **kwargs
 ) -> None:
-    """Show a textviewer dialog. `file` (if given) takes priority over `text`."""
+    """Show a text viewer with the given text or a named infolabel's, or a file's contents."""
     import xbmcvfs
 
-    heading = _resolve_infolabel(heading) or TEST_DEFAULTS['heading']
+    heading = (read_labels((headinginfo,))[headinginfo] if headinginfo
+               else _resolve_infolabel(heading)) or TEST_DEFAULTS['heading']
     use_mono = _parse_bool(usemono, False)
 
     if file:
@@ -493,7 +501,8 @@ def dialog_textviewer(
                                 ADDON.getLocalizedString(32563).format(str(e)))
             log('Dialogs', f"textviewer: Error reading file '{file_path}': {str(e)}", xbmc.LOGERROR)
     else:
-        text = _resolve_infolabel(text) or TEST_DEFAULTS['text']
+        text = (read_labels((textinfo,))[textinfo] if textinfo
+                else _resolve_infolabel(text)) or TEST_DEFAULTS['text']
         xbmcgui.Dialog().textviewer(heading, text, usemono=use_mono)
 
 
@@ -505,7 +514,7 @@ def dialog_notification(
     sound: str = 'true',
     **kwargs
 ) -> None:
-    """Show a toast notification. `icon` accepts `info`/`warning`/`error` or a custom image path."""
+    """Show a toast notification with an info, warning or error icon, or a custom image."""
     heading = _resolve_infolabel(heading) or 'Test'
     message = _resolve_infolabel(message) or 'Notification'
     icon_resolved = _resolve_infolabel(icon)
@@ -534,7 +543,7 @@ def dialog_browse(
     cancel_action: str = '',
     **kwargs
 ) -> None:
-    """Browse `type` directory/file/image/writable; `multiple=true` allows multi-pick."""
+    """Browse for a directory, file, image or writable path, one or several."""
     heading = _resolve_infolabel(heading) or 'Choose File'
     shares_str = _resolve_infolabel(shares)
     default_path = _resolve_infolabel(default)
@@ -604,7 +613,7 @@ def dialog_colorpicker(
     cancel_action: str = '',
     **kwargs
 ) -> None:
-    """Show Kodi's built-in color picker. `default` is AARRGGBB hex."""
+    """Show Kodi's built-in color picker, starting from an AARRGGBB color."""
     heading = _resolve_infolabel(heading) or 'Choose Color'
     default_color = _resolve_infolabel(default)
 
@@ -630,11 +639,7 @@ def dialog_progress(
     background: str = 'false',
     **kwargs
 ) -> None:
-    """Show a progress dialog that polls an InfoLabel (`progress_info`) for the current value.
-
-    Closes when value >= `max_value` or after `timeout` polling cycles.
-    `background=true` uses `DialogProgressBG`.
-    """
+    """Show a progress dialog polling an InfoLabel, closed at the maximum, on cancel or timeout."""
     heading = _resolve_infolabel(heading) or 'Progress'
     message = _resolve_infolabel(message) or 'Please wait...'
     max_val = _parse_int(max_value, 100)
@@ -664,8 +669,10 @@ def dialog_progress(
             if not is_background and dialog_normal and dialog_normal.iscanceled():
                 break
 
-            progress_str = (xbmc.getInfoLabel(progress_info)
-                            if progress_info.startswith('$') else progress_info)
+            reads = read_labels(label for label in (progress_info, message_info)
+                                if label and not label.isdigit())
+            progress_str = (progress_info if progress_info.isdigit()
+                            else reads.get(progress_info, ''))
             try:
                 progress_val = int(progress_str)
             except (ValueError, TypeError):
@@ -674,7 +681,7 @@ def dialog_progress(
             percentage = int((progress_val / max_val) * 100) if max_val > 0 else 0
             percentage = min(100, max(0, percentage))
 
-            dynamic_message = xbmc.getInfoLabel(message_info) if message_info else message
+            dynamic_message = reads.get(message_info, '') if message_info else message
 
             if is_background and dialog_bg:
                 dialog_bg.update(percentage, dynamic_message)
@@ -692,5 +699,3 @@ def dialog_progress(
             dialog_bg.close()
         elif dialog_normal:
             dialog_normal.close()
-
-

@@ -1,10 +1,4 @@
-"""Write library metadata to local NFO files, matching Kodi's exporter field-for-field.
-
-Mirrors `CVideoInfoTag::Save()` (Omega) element order, tags and value formats so the
-output imports into Kodi identically to its own export. Not byte-identical: Kodi's
-scraper `<thumb>`/`<fanart>` art XML and tinyxml2 whitespace can't be reproduced from
-JSON-RPC. Merge preserves any element we do not write (incl. those art blocks).
-"""
+"""Write library metadata to local NFO files, matching Kodi's exporter field for field."""
 from __future__ import annotations
 
 import re
@@ -16,7 +10,6 @@ import xbmcvfs
 
 from lib.kodi.client import get_item_details, decode_image_url, log, ADDON
 
-# Root NFO element per media type (episode uses "episodedetails").
 _ROOT_TAG = {
     'movie': 'movie',
     'tvshow': 'tvshow',
@@ -24,7 +17,6 @@ _ROOT_TAG = {
     'musicvideo': 'musicvideo',
 }
 
-# JSON-RPC properties needed to populate the NFO, per media type.
 _NFO_PROPERTIES = {
     'movie': [
         "title", "originaltitle", "sorttitle", "ratings", "userrating", "top250",
@@ -36,7 +28,7 @@ _NFO_PROPERTIES = {
     'tvshow': [
         "title", "originaltitle", "sorttitle", "ratings", "userrating", "season", "episode",
         "plot", "runtime", "mpaa", "playcount", "lastplayed", "episodeguide", "imdbnumber",
-        "uniqueid", "genre", "tag", "premiered", "year", "studio", "trailer", "cast",
+        "uniqueid", "genre", "tag", "premiered", "year", "studio", "cast",
         "dateadded", "file",
     ],
     'episode': [
@@ -54,12 +46,12 @@ _NFO_PROPERTIES = {
 
 
 def _sep(path: str) -> str:
-    """Path separator: '/' for URLs/POSIX paths, '\\' for pure Windows paths."""
+    """Get the path separator: '/' for URLs and POSIX paths, '\\' for pure Windows paths."""
     return '/' if '/' in path else '\\'
 
 
 def _nfo_path(media_type: str, media_file: str) -> Optional[str]:
-    """Resolve the NFO path: `<file>.nfo`, or `tvshow.nfo` in the show folder."""
+    """Resolve the NFO path, `tvshow.nfo` in a show's folder; None for a file with no extension."""
     if not media_file:
         return None
     if media_type == 'tvshow':
@@ -76,19 +68,23 @@ _ILLEGAL_XML = re.compile('[^\t\n\r\x20-\uD7FF\uE000-\uFFFD\U00010000-\U0010FFFF
 
 
 def _xml_safe(value: Any) -> str:
+    """Strip characters XML cannot carry."""
     return _ILLEGAL_XML.sub('', '' if value is None else str(value))
 
 
 def _set_str(parent: ET.Element, tag: str, value: Any) -> None:
+    """Set a string element, stripped of illegal XML."""
     ET.SubElement(parent, tag).text = _xml_safe(value)
 
 
 def _set_str_if(parent: ET.Element, tag: str, value: Any) -> None:
+    """Set a string element only when there is a value."""
     if value:
         ET.SubElement(parent, tag).text = _xml_safe(value)
 
 
 def _set_int(parent: ET.Element, tag: str, value: Any) -> None:
+    """Set an integer element, falling back to zero on bad input."""
     try:
         ET.SubElement(parent, tag).text = str(int(value or 0))
     except (TypeError, ValueError):
@@ -96,6 +92,7 @@ def _set_int(parent: ET.Element, tag: str, value: Any) -> None:
 
 
 def _set_float(parent: ET.Element, tag: str, value: Any) -> None:
+    """Set a float element, falling back to zero on bad input."""
     try:
         ET.SubElement(parent, tag).text = "%.6f" % float(value or 0)
     except (TypeError, ValueError):
@@ -103,6 +100,7 @@ def _set_float(parent: ET.Element, tag: str, value: Any) -> None:
 
 
 def _set_array(parent: ET.Element, tag: str, values: Any) -> None:
+    """Set one element per list value, skipping empties."""
     if isinstance(values, list):
         for v in values:
             if v:
@@ -110,10 +108,12 @@ def _set_array(parent: ET.Element, tag: str, values: Any) -> None:
 
 
 def _date_only(value: str) -> str:
+    """Date part of a timestamp."""
     return value[:10] if value else ''
 
 
 def _add_ratings(root: ET.Element, ratings: Dict[str, Any]) -> None:
+    """Write a rating element per source, max=10 since Kodi stores only that scale."""
     elem = ET.SubElement(root, "ratings")
     for name, data in ratings.items():
         if not isinstance(data, dict):
@@ -128,6 +128,7 @@ def _add_ratings(root: ET.Element, ratings: Dict[str, Any]) -> None:
 
 
 def _add_uniqueids(root: ET.Element, default_id: str, uniqueids: Dict[str, str]) -> None:
+    """Write the default id, then a uniqueid element per id with the default flagged."""
     _set_str_if(root, "id", default_id)
     for id_type, value in uniqueids.items():
         if not value:
@@ -140,6 +141,7 @@ def _add_uniqueids(root: ET.Element, default_id: str, uniqueids: Dict[str, str])
 
 
 def _add_streamdetails(root: ET.Element, streamdetails: Dict[str, Any]) -> None:
+    """Write every video, audio and subtitle stream into fileinfo/streamdetails."""
     video = streamdetails.get("video") or []
     audio = streamdetails.get("audio") or []
     subtitle = streamdetails.get("subtitle") or []
@@ -167,6 +169,7 @@ def _add_streamdetails(root: ET.Element, streamdetails: Dict[str, Any]) -> None:
 
 
 def _add_cast(root: ET.Element, cast: List[Dict[str, Any]]) -> None:
+    """Write an actor element per cast member, thumbnail included."""
     for member in cast:
         if not isinstance(member, dict):
             continue
@@ -180,7 +183,7 @@ def _add_cast(root: ET.Element, cast: List[Dict[str, Any]]) -> None:
 
 
 def _fetch_set_overview(setid: Any) -> str:
-    """The set overview lives on the set, not the movie, so resolve it by setid."""
+    """Fetch the movie set's overview, empty when the item is in no set."""
     try:
         sid = int(setid)
     except (TypeError, ValueError):
@@ -273,7 +276,7 @@ def _build_root(media_type: str, d: Dict[str, Any], include_watched: bool = True
 
 
 def _merge_preserve(fresh: ET.Element, existing: ET.Element) -> None:
-    """Append elements from `existing` whose tag the fresh write did not emit."""
+    """Merge in the existing file's elements whose tag the fresh write did not emit."""
     emitted = {child.tag for child in fresh}
     for child in list(existing):
         if child.tag not in emitted:
@@ -297,6 +300,7 @@ def _indent(elem: ET.Element, level: int = 0) -> None:
 
 
 def _read_existing(path: str) -> Optional[ET.Element]:
+    """Parse an existing NFO, returning nothing when it is missing or broken."""
     try:
         with xbmcvfs.File(path) as f:
             content = f.read()
@@ -308,6 +312,7 @@ def _read_existing(path: str) -> Optional[ET.Element]:
 
 
 def _write(path: str, root: ET.Element) -> bool:
+    """Write the XML tree to disk with an encoding declaration."""
     _indent(root)
     body = ET.tostring(root, encoding="unicode")
     content = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n' + body + '\n'
@@ -321,6 +326,7 @@ def _write(path: str, root: ET.Element) -> bool:
 
 def _write_one(path: str, media_type: str, details: Dict[str, Any],
                include_watched: bool, force_create: bool = False) -> bool:
+    """Write one NFO, merging into an existing file; a missing one is created only if allowed."""
     existing = _read_existing(path) if xbmcvfs.exists(path) else None
     if existing is None and not force_create and not ADDON.getSettingBool('nfo.create_missing'):
         return False
@@ -331,16 +337,19 @@ def _write_one(path: str, media_type: str, details: Dict[str, Any],
 
 
 def write_nfo(media_type: str, dbid: int, forced: bool = False) -> bool:
-    """Write/update the NFO for a library item, matching Kodi's export fields.
-
-    Gated by the `nfo.write_on_edit` setting unless `forced`. Returns True on write.
-    """
+    """Write the item's NFO and any movie.nfo beside it, when the setting or a force allows."""
     if not forced and not ADDON.getSettingBool('nfo.write_on_edit'):
         return False
     if media_type not in _ROOT_TAG:
         return False
 
-    details = get_item_details(media_type, dbid, _NFO_PROPERTIES[media_type])
+    properties = _NFO_PROPERTIES[media_type]
+    if media_type == 'tvshow':
+        from lib.kodi.utilities import tvshow_status_gettable, tvshow_version_fields
+        properties = properties + tvshow_version_fields()
+        if tvshow_status_gettable():
+            properties = properties + ["status"]
+    details = get_item_details(media_type, dbid, properties)
     if not isinstance(details, dict):
         log("Editor", f"NFO: no details for {media_type} {dbid}", xbmc.LOGWARNING)
         return False
@@ -354,7 +363,7 @@ def write_nfo(media_type: str, dbid: int, forced: bool = False) -> bool:
     include_watched = ADDON.getSettingBool('nfo.write_watched_state')
 
     targets: List[Tuple[str, str]] = [(path, media_type)]
-    # Movies also support a sibling movie.nfo; update it only if it already exists.
+    # Kodi also reads a movie.nfo beside the file
     if media_type == "movie":
         slash = max(media_file.rfind('/'), media_file.rfind('\\'))
         if slash != -1:

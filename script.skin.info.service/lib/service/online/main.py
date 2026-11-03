@@ -2,40 +2,27 @@
 from __future__ import annotations
 
 import threading
-from typing import Optional
+from typing import Final
 
 import xbmc
 
 from lib.kodi.client import log
-from lib.service.online.focus import FocusHandler
+from lib.infrastructure.tasks import ServiceAbortFlag
+from lib.kodi.utilities import LabelSnapshot
+from lib.service.online.focus import FOCUS_LABELS, FocusHandler
 from lib.service.online.player import PlayerHandler
 from lib.service.online.musicplayer import MusicPlayerHandler
+from lib.service.online.musicvideo import FOCUS_LABELS as MUSICVIDEO_LABELS
 from lib.service.online.musicvideo import MusicVideoFocusHandler
+from lib.service.online.pvr import FOCUS_LABELS as PVR_LABELS
+from lib.service.online.pvr import PvrFocusHandler, PvrPlayerHandler
+from lib.data.pvr import MATCH_CHANGED
 from lib.service.online.updater import UpdaterHandler
 
 
-ONLINE_POLL_INTERVAL = 0.10
+ONLINE_POLL_INTERVAL: Final = 0.10
 
-MAX_REQUEST_SECONDS = 30.0  # runaway backstop; shutdown handled by the connection watcher
-
-
-class ServiceAbortFlag:
-    """Abort flag for online API calls (Kodi abort + service stop).
-
-    max_request_seconds, when set, caps each request so a read can't outlast shutdown.
-    """
-
-    def __init__(self, abort_event: threading.Event,
-                 max_request_seconds: Optional[float] = None):
-        self._abort_event = abort_event
-        self._monitor = xbmc.Monitor()
-        self.max_request_seconds = max_request_seconds
-
-    def is_requested(self) -> bool:
-        """True if the service or Kodi is aborting."""
-        if self._monitor.abortRequested():
-            return True
-        return self._abort_event.is_set()
+MAX_REQUEST_SECONDS: Final = 30.0  # runaway backstop; shutdown handled by the connection watcher
 
 
 class CancelToken:
@@ -56,15 +43,19 @@ class CancelToken:
 
 
 class OnlineScanMonitor(xbmc.Monitor):
-    """Triggers online updater refresh when Kodi finishes a library scan."""
+    """Monitor asking for an updater refresh on a library scan and a PVR reread on a new match."""
 
     def __init__(self, online_service: "OnlineServiceMain"):
         super().__init__()
         self._online_service = online_service
 
     def onNotification(self, sender: str, method: str, data: str) -> None:
+        """Ask for an update once a library scan finishes; reread the programme on a new match."""
         if method == 'VideoLibrary.OnScanFinished':
             self._online_service.request_update()
+        elif method == f'Other.{MATCH_CHANGED}':
+            self._online_service.pvr.forget()
+            self._online_service.pvr_player.forget()
 
 
 class OnlineServiceMain(threading.Thread):
@@ -76,12 +67,14 @@ class OnlineServiceMain(threading.Thread):
         self.abort_flag = ServiceAbortFlag(self.abort)
         # focus/player fetches get the time cap; background work doesn't
         self.capped_abort_flag = ServiceAbortFlag(self.abort, MAX_REQUEST_SECONDS)
-        # GIL makes set add/discard/in atomic on CPython, no lock needed
+        # set add, discard and membership are atomic under the GIL
         self.updater_in_progress: set = set()
         self.focus = FocusHandler(self)
         self.player = PlayerHandler(self)
         self.music = MusicPlayerHandler(self)
         self.musicvideo = MusicVideoFocusHandler(self)
+        self.pvr = PvrFocusHandler(self)
+        self.pvr_player = PvrPlayerHandler(self)
         self.updater = UpdaterHandler(self)
 
     def new_cancel_token(self) -> CancelToken:
@@ -93,6 +86,7 @@ class OnlineServiceMain(threading.Thread):
         self.updater.request_restart()
 
     def run(self) -> None:
+        """Run the online service poll loop until Kodi aborts."""
         monitor = xbmc.Monitor()
         scan_monitor = OnlineScanMonitor(self)
         log("Service", "Online service started", xbmc.LOGINFO)
@@ -112,9 +106,12 @@ class OnlineServiceMain(threading.Thread):
             log("Service", "Online service stopped", xbmc.LOGINFO)
 
     def _loop(self) -> None:
-        self.focus.process()
+        """One pass over the focus, player, music, musicvideo and both PVR handlers."""
+        labels = LabelSnapshot((*FOCUS_LABELS, *MUSICVIDEO_LABELS, *PVR_LABELS))
+        self.focus.process(labels)
         self.player.process()
-        self.music.process_audio()
-        self.music.process_video()
+        self.music.process()
         self.music.rotate_fanart()
-        self.musicvideo.process()
+        self.musicvideo.process(labels)
+        self.pvr.process(labels)
+        self.pvr_player.process(labels)

@@ -1,9 +1,4 @@
-"""Global background task manager with automatic lifecycle management.
-
-Tracks a single active background task (e.g., pre-caching) with automatic
-heartbeat monitoring and stale detection. Uses Kodi Home window properties
-for cross-instance persistence.
-"""
+"""One background task slot shared across add-on processes, with heartbeat and stale checks."""
 from __future__ import annotations
 
 import threading
@@ -12,22 +7,21 @@ import time
 import uuid
 import xbmc
 import xbmcgui
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Final
 from lib.kodi.client import log, ADDON
 
-# Task is considered stale if no heartbeat for ~3x the heartbeat interval.
-HEARTBEAT_INTERVAL = 5
-STALE_TIMEOUT = 15
-STUCK_TIMEOUT = 60
-ABORT_POLL_INTERVAL = 1.0
+# stale after about three missed heartbeats
+HEARTBEAT_INTERVAL: Final = 5
+STALE_TIMEOUT: Final = 15
+STUCK_TIMEOUT: Final = 60
+ABORT_POLL_INTERVAL: Final = 1.0
+MAX_REQUEST_SECONDS: Final = 8.0
 
 _lock = threading.RLock()
-# Window 10000 is the Kodi Home window; properties survive across script invocations.
+# Home window properties survive between script runs
 _home_window = xbmcgui.Window(10000)
-# Task properties are namespaced with `SkinInfo.` so cleanup_stale_tasks won't collide
-# with properties owned by other addons sharing the same home window.
-_PROPERTY_TASK = 'SkinInfo.ActiveTask'
-_PROPERTY_ABORT = 'SkinInfo.CurrentAbortFlag'
+_PROPERTY_TASK: Final = 'SkinInfo.ActiveTask'
+_PROPERTY_ABORT: Final = 'SkinInfo.CurrentAbortFlag'
 
 
 def _read_task_data() -> Optional[Dict[str, Any]]:
@@ -46,13 +40,27 @@ def _write_task_data(data: Dict[str, Any]) -> None:
     _home_window.setProperty(_PROPERTY_TASK, json.dumps(data))
 
 
+class ServiceAbortFlag:
+    """Abort flag for online API calls, set on Kodi abort or service stop, with an optional cap."""
+
+    def __init__(self, abort_event: threading.Event,
+                 max_request_seconds: Optional[float] = None):
+        self._abort_event = abort_event
+        self._monitor = xbmc.Monitor()
+        self.max_request_seconds = max_request_seconds
+
+    def is_requested(self) -> bool:
+        """True if the service or Kodi is aborting."""
+        if self._monitor.abortRequested():
+            return True
+        return self._abort_event.is_set()
+
+
 class ShutdownAbortFlag:
-    """Abort flag for script paths that have no task to cancel, so only shutdown stops them.
+    """Abort flag for script work with no task to cancel; only shutdown or `request` stops it."""
 
-    Lets `RunScript` work pass a flag down into the API layer without registering a task.
-    """
-
-    def __init__(self) -> None:
+    def __init__(self, max_request_seconds: Optional[float] = None) -> None:
+        self.max_request_seconds = max_request_seconds
         self._monitor = xbmc.Monitor()
         self._requested = False
 
@@ -66,14 +74,11 @@ class ShutdownAbortFlag:
 
 
 class AbortFlag:
-    """Per-task abort flag stored in a shared Kodi home-window property.
+    """Per-task abort flag in a Home property, true only for the task it names or on shutdown."""
 
-    All tasks share one property; the value is the requesting task's ID so
-    `is_requested()` returns True only for the matching task (plus Kodi shutdown).
-    """
-
-    def __init__(self, task_id: str) -> None:
+    def __init__(self, task_id: str, max_request_seconds: Optional[float] = None) -> None:
         self.task_id = task_id
+        self.max_request_seconds = max_request_seconds
         self._monitor = xbmc.Monitor()
         self._poll_lock = threading.Lock()
         self._last_poll = 0.0
@@ -95,11 +100,11 @@ class AbortFlag:
                 _home_window.clearProperty(_PROPERTY_ABORT)
 
     def is_requested(self) -> bool:
-        """Check if abort was requested (either user cancel or Kodi shutdown)."""
+        """True when this task was cancelled or Kodi is shutting down; polled once a second."""
         if self._monitor.abortRequested():
             return True
 
-        # getProperty takes Kodi's global graphics lock, contended with the render thread.
+        # getProperty takes Kodi's global graphics lock, contended with the render thread
         now = time.monotonic()
         with self._poll_lock:
             if now - self._last_poll < ABORT_POLL_INTERVAL:
@@ -110,17 +115,12 @@ class AbortFlag:
 
 
 class TaskContext:
-    """Context-managed background task with heartbeat thread and stuck-operation detection.
+    """Registered background task with a heartbeat; `mark_progress` tells stuck from alive."""
 
-    On entry: registers the task, spawns a heartbeat thread. On exit: stops heartbeat
-    and clears task state. Call `mark_progress()` in the work loop so stuck-detection
-    can distinguish "process alive but stalled" from "process dead".
-    """
-
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, max_request_seconds: Optional[float] = None) -> None:
         self.name = name
         task_id = str(uuid.uuid4())
-        self.abort_flag = AbortFlag(task_id)
+        self.abort_flag = AbortFlag(task_id, max_request_seconds=max_request_seconds)
         self._heartbeat_thread: Optional[threading.Thread] = None
         self._stop_heartbeat = threading.Event()
         self._progress_lock = threading.Lock()
@@ -150,7 +150,7 @@ class TaskContext:
         return False
 
     def _heartbeat_loop(self) -> None:
-        """Background thread that updates heartbeat and progress timestamps."""
+        """Stamp heartbeat and progress times, re-registering the task if it was cleared."""
         while not self._stop_heartbeat.wait(HEARTBEAT_INTERVAL):
             with self._progress_lock:
                 last_progress = self.last_progress
@@ -172,7 +172,7 @@ class TaskContext:
 
 
 def _is_task_running_unlocked() -> bool:
-    """Internal helper that checks task status without acquiring lock."""
+    """True when a task is registered; the caller holds the lock."""
     task_json = _home_window.getProperty(_PROPERTY_TASK)
     return bool(task_json)
 
@@ -220,11 +220,7 @@ def is_task_running() -> bool:
 
 
 def acquire_task_slot(operation_name: str, use_background: bool) -> bool:
-    """Resolve a task collision before starting `operation_name`.
-
-    Background mode informs the user and bails. Foreground mode offers to cancel
-    the running task and waits for it to clear. Returns True when the caller may proceed.
-    """
+    """Resolve a task collision; background mode refuses, foreground offers to cancel and waits."""
     if not is_task_running():
         return True
 

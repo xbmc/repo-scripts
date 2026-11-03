@@ -1,65 +1,72 @@
-"""TV show / season runtime cache (storage CRUD)."""
+"""Cached runtime totals for TV shows and their seasons."""
 from __future__ import annotations
 
-from datetime import datetime
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Final
 
 from lib.data.database._infrastructure import get_db
 
+# season 0 is specials
+_WHOLE_SHOW: Final = -1
 
-def get_show_runtime(tvshowid: int) -> Optional[Tuple[int, int]]:
-    """Return (total_runtime_seconds, avg_episode_runtime_seconds) or None if not cached."""
+
+def get_show_runtime(tvshowid: int,
+                     episodes: Optional[int] = None) -> Optional[Tuple[int, int]]:
+    """Get a show's total and average episode runtime in seconds; None if uncached or stale."""
     with get_db() as cursor:
         cursor.execute(
-            "SELECT total_runtime, avg_episode_runtime FROM tvshow_runtime_cache "
-            "WHERE tvshowid = ? AND season = 0",
-            (tvshowid,),
+            "SELECT total, avg, episodes FROM tvshow_runtime WHERE tvshowid = ? AND season = ?",
+            (tvshowid, _WHOLE_SHOW),
         )
         row = cursor.fetchone()
-        if not row:
+        if not row or (episodes is not None and row["episodes"] != episodes):
             return None
-        return row["total_runtime"], row["avg_episode_runtime"]
+        return row["total"], row["avg"]
 
 
-def get_season_runtime(tvshowid: int, season: int) -> Optional[int]:
-    """Return total_runtime_seconds for a season, or None if not cached."""
+def get_season_runtime(tvshowid: int, season: int, episodes: Optional[int] = None) -> Optional[int]:
+    """Get a season's total runtime in seconds; None if uncached or stale."""
     with get_db() as cursor:
         cursor.execute(
-            "SELECT total_runtime FROM tvshow_runtime_cache "
-            "WHERE tvshowid = ? AND season = ?",
+            "SELECT total, episodes FROM tvshow_runtime WHERE tvshowid = ? AND season = ?",
             (tvshowid, season),
         )
         row = cursor.fetchone()
-        return row["total_runtime"] if row else None
+        if not row or (episodes is not None and row["episodes"] != episodes):
+            return None
+        return row["total"]
 
 
 def save_show_runtime(tvshowid: int, total: int, avg: int, episode_count: int) -> None:
+    """Save a show's total and average runtime."""
     with get_db() as cursor:
         cursor.execute(
-            "INSERT OR REPLACE INTO tvshow_runtime_cache "
-            "(tvshowid, season, total_runtime, avg_episode_runtime, episode_count, synced_at) "
-            "VALUES (?, 0, ?, ?, ?, ?)",
-            (tvshowid, total, avg, episode_count, datetime.now().isoformat()),
+            "INSERT INTO tvshow_runtime (tvshowid, season, total, avg, episodes) "
+            "VALUES (?, ?, ?, ?, ?) "
+            "ON CONFLICT (tvshowid, season) DO UPDATE SET "
+            "total = excluded.total, avg = excluded.avg, episodes = excluded.episodes",
+            (tvshowid, _WHOLE_SHOW, total, avg, episode_count),
         )
 
 
 def save_season_runtime(tvshowid: int, season: int, total: int, episode_count: int) -> None:
+    """Save one season's total runtime."""
     with get_db() as cursor:
         cursor.execute(
-            "INSERT OR REPLACE INTO tvshow_runtime_cache "
-            "(tvshowid, season, total_runtime, avg_episode_runtime, episode_count, synced_at) "
-            "VALUES (?, ?, ?, 0, ?, ?)",
-            (tvshowid, season, total, episode_count, datetime.now().isoformat()),
+            "INSERT INTO tvshow_runtime (tvshowid, season, total, avg, episodes) "
+            "VALUES (?, ?, ?, 0, ?) "
+            "ON CONFLICT (tvshowid, season) DO UPDATE SET "
+            "total = excluded.total, episodes = excluded.episodes",
+            (tvshowid, season, total, episode_count),
         )
 
 
 def invalidate_show_runtime(tvshowid: int) -> None:
-    """Drop all cached runtime entries for a show (whole + every season)."""
+    """Invalidate a show's cached runtimes, for the whole show and every season."""
     with get_db() as cursor:
-        cursor.execute("DELETE FROM tvshow_runtime_cache WHERE tvshowid = ?", (tvshowid,))
+        cursor.execute("DELETE FROM tvshow_runtime WHERE tvshowid = ?", (tvshowid,))
 
 
 def clear_all_runtime_cache() -> None:
-    """Drop every cached runtime entry."""
+    """Clear every cached runtime entry."""
     with get_db() as cursor:
-        cursor.execute("DELETE FROM tvshow_runtime_cache")
+        cursor.execute("DELETE FROM tvshow_runtime")

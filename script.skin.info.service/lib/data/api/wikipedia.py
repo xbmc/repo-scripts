@@ -1,11 +1,4 @@
-"""Wikipedia API client for track and album summaries.
-
-Uses Wikipedia core REST API for search (returns description field for validation)
-and MediaWiki action API for plain-text extracts. No API key required.
-
-Search: /w/rest.php/v1/search/page. HTTP error codes handled by ApiSession.
-Extract: /w/api.php. Always HTTP 200, errors in JSON body need manual handling.
-"""
+"""Song and album intro summaries from Wikipedia, which needs no API key."""
 from __future__ import annotations
 
 import re
@@ -44,6 +37,7 @@ _WIKI_LANG_MAP = {
 
 
 def _wiki_lang(lang: str) -> str:
+    """Wikipedia subdomain for a language code, regional variants folded to the base language."""
     return _WIKI_LANG_MAP.get(lang, lang)
 
 
@@ -60,6 +54,7 @@ class ApiWikipedia:
         )
 
     def _base_url(self, lang: str) -> str:
+        """Wikipedia host for one language."""
         return f"https://{_wiki_lang(lang)}.wikipedia.org"
 
     def _action_request(
@@ -68,10 +63,7 @@ class ApiWikipedia:
         lang: str = 'en',
         abort_flag=None,
     ) -> Optional[dict]:
-        """Make MediaWiki action API request with JSON-level error handling.
-
-        Action API always returns HTTP 200; errors are in the JSON body.
-        """
+        """Make a MediaWiki action request; errors arrive in a 200 body, transient ones raise."""
         url = f"{self._base_url(lang)}/w/api.php"
         all_params: Dict[str, Any] = {"format": "json"}
         all_params.update(params)
@@ -106,6 +98,7 @@ class ApiWikipedia:
         limit: int = 5,
         abort_flag=None,
     ) -> Optional[list]:
+        """Search one Wikipedia edition; pages carry the title, description and excerpt."""
         url = f"{self._base_url(lang)}/w/rest.php/v1/search/page"
         data = self.session.get(
             url, params={"q": query, "limit": limit}, abort_flag=abort_flag
@@ -123,6 +116,7 @@ class ApiWikipedia:
         lang: str = 'en',
         abort_flag=None,
     ) -> Optional[str]:
+        """Get one page's plain-text intro."""
         data = self._action_request(
             {
                 "action": "query",
@@ -153,6 +147,7 @@ class ApiWikipedia:
     def _validate_result(
         self, page: dict, item_name: str, artist: str, context: str = 'track',
     ) -> bool:
+        """Validate that a page is this artist's song or album, not a same-named article."""
         title = page.get('title', '')
         title_clean = _SMART_QUOTES.sub('', title).lower().strip()
         item_lower = item_name.lower().strip()
@@ -193,7 +188,7 @@ class ApiWikipedia:
         context: str,
         abort_flag=None,
     ) -> Optional[str]:
-        """Search Wikipedia, validate the first match, and return the intro extract."""
+        """Get the intro of the first search hit that passes validation."""
         pages = self._search(
             f'"{name}" "{artist}" {search_suffix}', lang=lang, abort_flag=abort_flag
         )
@@ -213,7 +208,7 @@ class ApiWikipedia:
         lang: str = 'en',
         abort_flag=None,
     ) -> Optional[str]:
-        """Return Wikipedia intro extract for a song; None if no valid match found."""
+        """Get the Wikipedia intro for a song; None without a valid match."""
         return self._get_summary(track, artist, lang, 'song', 'track', abort_flag)
 
     def get_album_summary(
@@ -223,5 +218,5 @@ class ApiWikipedia:
         lang: str = 'en',
         abort_flag=None,
     ) -> Optional[str]:
-        """Return Wikipedia intro extract for an album; None if no valid match found."""
+        """Get the Wikipedia intro for an album; None without a valid match."""
         return self._get_summary(album, artist, lang, 'album', 'album', abort_flag)

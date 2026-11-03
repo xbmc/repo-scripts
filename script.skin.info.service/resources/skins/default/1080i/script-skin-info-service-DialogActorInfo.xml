@@ -43,7 +43,7 @@
 							<font>font13</font>
 							<textcolor>silver</textcolor>
 							<textoffsetx>10</textoffsetx>
-							<label>$INFO[Window.Property(KnownFor)]$INFO[Window.Property(Gender), · ]$INFO[Window.Property(Age), · , $LOCALIZE[652]]</label>
+							<label>$INFO[Window.Property(KnownFor)]$INFO[Window.Property(Gender), · ]$INFO[Window.Property(Age), · , $ADDON[script.skin.info.service 32070]]</label>
 						</control>
 						<control type="label">
 							<top>80</top>
@@ -53,7 +53,7 @@
 							<textcolor>silver</textcolor>
 							<textoffsetx>10</textoffsetx>
 							<visible>!String.IsEmpty(Window.Property(Birthplace))</visible>
-							<label>$INFO[Window.Property(Birthplace)]</label>
+							<label>$ADDON[script.skin.info.service 32069]: $INFO[Window.Property(Birthplace)]</label>
 						</control>
 						<control type="label">
 							<top>120</top>
@@ -86,7 +86,7 @@
 								<texturefocus colordiffuse="40FFFFFF">white.png</texturefocus>
 								<texturenofocus />
 								<label />
-								<onclick>RunScript(script.skin.info.service,dialog=textviewer,heading=$ESCINFO[Window.Property(Name)],text=$ESCINFO[Window.Property(Biography)])</onclick>
+								<onclick>RunScript(script.skin.info.service,dialog=textviewer,headinginfo=Window.Property(Name),textinfo=Window.Property(Biography))</onclick>
 								<ondown>5000</ondown>
 							</control>
 						</control>

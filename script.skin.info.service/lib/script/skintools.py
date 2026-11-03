@@ -1,5 +1,4 @@
-"""Skinner tools to preview the artwork-selection and multi-art dialogs with mock data via
-RunScript."""
+"""Skinner tools: preview the artwork selection and multi-art dialogs with mock data."""
 from __future__ import annotations
 
 from typing import List, Dict, Any, Optional
@@ -37,8 +36,7 @@ def _select_art_type_menu(dialog_type: str, preselect: int = 0) -> tuple[Optiona
 
 
 def _loop_with_art_menu(dialog_label: str, art_type: Optional[str], runner) -> None:
-    """Show the art-type picker when `art_type` is None and call `runner(art_type)`; loops
-    in menu mode."""
+    """Run the test for the given art type, else keep asking for one until the picker is closed."""
     show_menu = art_type is None
     last_selected_index = 0
 
@@ -100,7 +98,7 @@ def test_multiart_dialog(art_type: Optional[str] = None) -> None:
 
 
 def _generate_mock_art_items(art_type: str, count: int = 12) -> List[Dict[str, Any]]:
-    """Produce `count` mock art-item dicts for dialog testing (uses bundled test images)."""
+    """Generate mock art-item dicts for dialog testing from the bundled test images."""
     import xbmcvfs
 
     art_type_map = {

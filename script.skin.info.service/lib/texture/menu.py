@@ -4,14 +4,14 @@ from __future__ import annotations
 import xbmc
 import xbmcgui
 from datetime import datetime
-from typing import Optional, List, Union, Dict, Any
+from typing import Optional, List, Union, Dict, Any, Final
 
-from lib.data.database import init_database
+from lib.data.database._infrastructure import init_database
 from lib.data.database.workflow import save_operation_stats, get_last_operation_stats
 from lib.infrastructure.dialogs import show_ok, show_textviewer, ProgressDialog, DialogProgress
 from lib.infrastructure.workers import STALL_TIMEOUT_SECONDS
 
-_RESUME_HINT = "[B]CANCEL TO RESUME LATER[/B]"
+_RESUME_HINT: Final = "[B]CANCEL TO RESUME LATER[/B]"
 from lib.kodi.client import log, ADDON
 from lib.kodi.settings import KodiSettings
 from lib.texture.cache import (
@@ -21,6 +21,7 @@ from lib.texture.cache import (
 )
 from lib.texture.library import get_cached_textures, remove_texture
 from lib.texture.stats import calculate_texture_statistics, format_statistics_report
+from lib.texture.utilities import report_url_lines
 
 
 def run_texture_maintenance() -> None:
@@ -64,7 +65,7 @@ def run_texture_maintenance() -> None:
 
 
 def _handle_precache():
-    """Handle pre-cache library artwork operation."""
+    """Handle pre-cache: pick a library scope, then a mode."""
     from lib.infrastructure.menus import Menu, MenuItem
 
     scope_menu = Menu(ADDON.getLocalizedString(32441), [
@@ -82,7 +83,7 @@ def _handle_precache():
 
 
 def _handle_precache_download():
-    """Handle pre-cache + download library artwork operation."""
+    """Handle pre-cache plus download: pick a library scope, then a mode."""
     from lib.infrastructure.menus import Menu, MenuItem
 
     scope_menu = Menu(ADDON.getLocalizedString(32451), [
@@ -100,7 +101,7 @@ def _handle_precache_download():
 
 
 def _run_precache(selected_types: Optional[List[str]], enable_download: bool):
-    """Execute precache with selected scope and mode."""
+    """Run pre-cache for the scope once the user picks foreground or background."""
     from lib.infrastructure.menus import run_with_mode_choice
 
     return run_with_mode_choice(
@@ -111,7 +112,7 @@ def _run_precache(selected_types: Optional[List[str]], enable_download: bool):
 
 def _execute_precache(selected_types: Optional[List[str]], enable_download: bool,
                       use_background: bool) -> None:
-    """Execute the actual precache operation."""
+    """Execute pre-cache as a task with progress, then show and save its report."""
     from lib.infrastructure import tasks as task_manager
 
     progress: Optional[ProgressDialog] = None
@@ -208,7 +209,7 @@ def _execute_precache(selected_types: Optional[List[str]], enable_download: bool
             ADDON.getLocalizedString(32460),
             ADDON.getLocalizedString(32498).format(len(failed_urls))
         ):
-            report_lines = sorted(failed_urls)
+            report_lines = report_url_lines(sorted(failed_urls))
             show_textviewer(ADDON.getLocalizedString(32499), "\n".join(report_lines))
 
     except Exception as e:
@@ -217,35 +218,23 @@ def _execute_precache(selected_types: Optional[List[str]], enable_download: bool
                 progress.close()
             except Exception:
                 pass
-        log("Texture",f"Pre-cache failed: {str(e)}", xbmc.LOGERROR)
+        log("Texture", f"Pre-cache failed: {str(e)}", xbmc.LOGERROR)
         dialog.ok(operation_name, f"{ADDON.getLocalizedString(32170)}:[CR]{str(e)}")
 
 
 def _show_cleanup_menu():
-    """Show cleanup submenu and handle selection."""
+    """Show the cleanup menu: orphaned textures or the advanced options."""
     from lib.infrastructure.menus import Menu, MenuItem
 
     menu = Menu(ADDON.getLocalizedString(32087), [
         MenuItem(ADDON.getLocalizedString(32088), _handle_standard_cleanup, loop=True),
-        MenuItem(ADDON.getLocalizedString(32092), _show_advanced_cleanup_menu, loop=True),
-    ])
-    return menu.show()
-
-
-def _show_advanced_cleanup_menu():
-    """Show advanced cleanup submenu and handle selection."""
-    from lib.infrastructure.menus import Menu, MenuItem
-
-    menu = Menu(ADDON.getLocalizedString(32092), [
         MenuItem(ADDON.getLocalizedString(32089), _handle_age_cleanup, loop=True),
-        MenuItem(ADDON.getLocalizedString(32090), _handle_usage_cleanup, loop=True),
-        MenuItem(ADDON.getLocalizedString(32091), _handle_pattern_cleanup, loop=True),
     ])
     return menu.show()
 
 
 def _handle_standard_cleanup():
-    """Handle standard orphaned texture cleanup."""
+    """Handle orphaned texture cleanup once the user picks a mode."""
     from lib.infrastructure.menus import run_with_mode_choice
 
     return run_with_mode_choice(
@@ -255,7 +244,7 @@ def _handle_standard_cleanup():
 
 
 def _execute_standard_cleanup(use_background: bool) -> None:
-    """Execute standard cleanup with selected mode."""
+    """Execute orphaned texture cleanup as a task, then save its stats and show the result."""
     from lib.infrastructure import tasks as task_manager
 
     progress: Optional[ProgressDialog] = None
@@ -312,7 +301,7 @@ def _execute_standard_cleanup(use_background: bool) -> None:
                 progress.close()
             except Exception:
                 pass
-        log("Texture",f"Cleanup failed: {str(e)}", xbmc.LOGERROR)
+        log("Texture", f"Cleanup failed: {str(e)}", xbmc.LOGERROR)
         dialog.ok(ADDON.getLocalizedString(32087),
                   f"{ADDON.getLocalizedString(32170)}:[CR]{str(e)}")
 
@@ -335,7 +324,7 @@ def _handle_stats() -> None:
             dialog.ok(ADDON.getLocalizedString(32180), ADDON.getLocalizedString(32181))
     except Exception as e:
         progress.close()
-        log("Texture",f" Stats failed: {str(e)}", xbmc.LOGERROR)
+        log("Texture", f" Stats failed: {str(e)}", xbmc.LOGERROR)
         dialog.ok(ADDON.getLocalizedString(32180),
                   f"{ADDON.getLocalizedString(32170)}:[CR]{str(e)}")
 
@@ -345,10 +334,7 @@ def cleanup_textures_by_age(age_days: int,
                                                             xbmcgui.DialogProgressBG]] = None,
                             task_context: Optional[Any] = None,
                             textures: Optional[List[Dict[str, Any]]] = None) -> Dict[str, int]:
-    """Remove cached textures unused in the last `age_days`. Returns counts.
-
-    `textures`: pre-fetched texture list; fetched fresh when omitted.
-    """
+    """Remove cached textures unused for the given days, fetching the list unless given one."""
     from datetime import datetime, timedelta
 
     stats = {
@@ -396,7 +382,7 @@ def cleanup_textures_by_age(age_days: int,
                 lastusetime = size.get('lastused')
                 if lastusetime:
                     try:
-                        last_used = datetime.strptime(lastusetime, '%Y-%m-%d %H:%M:%S')
+                        last_used = datetime.fromisoformat(lastusetime)
                         if last_used < cutoff_date:
                             old_textures.append(texture)
                             break
@@ -434,14 +420,14 @@ def cleanup_textures_by_age(age_days: int,
             progress_dialog.update(100, ADDON.getLocalizedString(32426))
 
     except Exception as e:
-        log("Texture",f" Age cleanup failed: {str(e)}", xbmc.LOGERROR)
+        log("Texture", f" Age cleanup failed: {str(e)}", xbmc.LOGERROR)
         raise
 
     return stats
 
 
 def _handle_age_cleanup():
-    """Handle age-based texture cleanup."""
+    """Handle age cleanup: pick how many days unused counts as old."""
     from lib.infrastructure.menus import Menu, MenuItem
 
     menu = Menu(ADDON.getLocalizedString(32473), [
@@ -455,7 +441,7 @@ def _handle_age_cleanup():
 
 
 def _execute_age_cleanup(age_days: int) -> None:
-    """Execute age-based cleanup."""
+    """Execute age cleanup: find textures unused past the cutoff, confirm, then pick a mode."""
     dialog = xbmcgui.Dialog()
     progress = DialogProgress()
     progress.create(ADDON.getLocalizedString(32330), ADDON.getLocalizedString(32331))
@@ -493,7 +479,7 @@ def _execute_age_cleanup(age_days: int) -> None:
                 lastusetime = size.get('lastused')
                 if lastusetime:
                     try:
-                        last_used = datetime.strptime(lastusetime, '%Y-%m-%d %H:%M:%S')
+                        last_used = datetime.fromisoformat(lastusetime)
                         if last_used < cutoff_date:
                             old_textures.append(texture)
                             if oldest_date is None or last_used < oldest_date:
@@ -512,7 +498,8 @@ def _execute_age_cleanup(age_days: int) -> None:
             )
             return
 
-        oldest_str = oldest_date.strftime('%Y-%m-%d') if oldest_date else "Unknown"
+        oldest_str = (oldest_date.strftime('%Y-%m-%d') if oldest_date
+                      else xbmc.getLocalizedString(13205))
 
         confirm = dialog.yesno(
             ADDON.getLocalizedString(32482),
@@ -525,8 +512,9 @@ def _execute_age_cleanup(age_days: int) -> None:
 
     except Exception as e:
         progress.close()
-        log("Texture",f" Analysis failed: {str(e)}", xbmc.LOGERROR)
-        dialog.ok(ADDON.getLocalizedString(32184), f"Failed to analyze textures:[CR]{str(e)}")
+        log("Texture", f" Analysis failed: {str(e)}", xbmc.LOGERROR)
+        dialog.ok(ADDON.getLocalizedString(32184),
+                  f"{ADDON.getLocalizedString(32485)}:[CR]{str(e)}")
         return
 
     from lib.infrastructure.menus import run_with_mode_choice
@@ -539,7 +527,7 @@ def _execute_age_cleanup(age_days: int) -> None:
 
 def _execute_age_cleanup_with_mode(age_days: int, use_background: bool,
                                    textures: Optional[List[Dict[str, Any]]] = None) -> None:
-    """Execute age cleanup with selected mode."""
+    """Execute age cleanup as a task, then save its stats and show the result."""
     from lib.infrastructure import tasks as task_manager
 
     progress: Optional[Union[xbmcgui.DialogProgress, xbmcgui.DialogProgressBG]] = None
@@ -596,31 +584,9 @@ def _execute_age_cleanup_with_mode(age_days: int, use_background: bool,
                 progress.close()
             except Exception:
                 pass
-        log("Texture",f" Age cleanup failed: {str(e)}", xbmc.LOGERROR)
+        log("Texture", f" Age cleanup failed: {str(e)}", xbmc.LOGERROR)
         dialog.ok(ADDON.getLocalizedString(32087),
                   f"{ADDON.getLocalizedString(32170)}:[CR]{str(e)}")
-
-
-def _handle_usage_cleanup() -> None:
-    """Handle usage-based texture cleanup."""
-    show_ok(
-        ADDON.getLocalizedString(32485),
-        f"{ADDON.getLocalizedString(32486)}[CR][CR]"
-        "Will remove textures accessed fewer than N times[CR]"
-        "(e.g., never used, used < 5 times)[CR][CR]"
-        "Useful for removing rarely-viewed images."
-    )
-
-
-def _handle_pattern_cleanup() -> None:
-    """Handle pattern-based force re-cache."""
-    show_ok(
-        ADDON.getLocalizedString(32487),
-        f"{ADDON.getLocalizedString(32486)}[CR][CR]"
-        "Will remove textures matching a URL pattern[CR]"
-        "(e.g., 'image.tmdb.org/t/p/original/')[CR][CR]"
-        "Forces Kodi to re-download matching images."
-    )
 
 
 def _format_completed_time(timestamp: str) -> str:
@@ -660,33 +626,34 @@ def _format_cleanup_report(stats: dict, timestamp: str) -> str:
     return "[CR]".join(lines)
 
 
+def _format_age_cleanup_report(stats: dict, timestamp: str) -> str:
+    """Format a `texture_age_cleanup` operation result for textviewer display."""
+    lines = [
+        f"[B]Operation: Clean Textures Unused for {stats.get('age_days', 0)} Days[/B]",
+        f"Completed: {_format_completed_time(timestamp)}",
+        (f"Removed: {stats.get('removed_count', 0)}/{stats.get('old_count', 0)} old "
+         f"of {stats.get('total_count', 0)} cached"),
+    ]
+    if stats.get('cancelled'):
+        lines.append("[B]Status: Cancelled[/B]")
+    return "[CR]".join(lines)
+
+
 _REPORT_FORMATTERS = {
     'texture_precache': _format_precache_report,
     'texture_cleanup': _format_cleanup_report,
+    'texture_age_cleanup': _format_age_cleanup_report,
 }
 
 
 def _show_last_report() -> None:
-    """Show last operation report."""
-    precache_stats = get_last_operation_stats('texture_precache')
-    cleanup_stats = get_last_operation_stats('texture_cleanup')
-
-    last_stats = None
-    if precache_stats and cleanup_stats:
-        precache_time = datetime.fromisoformat(precache_stats['timestamp'])
-        cleanup_time = datetime.fromisoformat(cleanup_stats['timestamp'])
-        last_stats = precache_stats if precache_time > cleanup_time else cleanup_stats
-    elif precache_stats:
-        last_stats = precache_stats
-    elif cleanup_stats:
-        last_stats = cleanup_stats
-
-    if last_stats:
-        formatter = _REPORT_FORMATTERS.get(last_stats['operation'])
-        if formatter:
-            report_text = formatter(last_stats['stats'], last_stats['timestamp'])
-            show_textviewer(ADDON.getLocalizedString(32488), report_text)
-            return
+    """Show the newest of the last pre-cache, cleanup and age cleanup reports."""
+    runs = [run for run in map(get_last_operation_stats, _REPORT_FORMATTERS) if run]
+    if runs:
+        last = max(runs, key=lambda run: datetime.fromisoformat(run['timestamp']))
+        report_text = _REPORT_FORMATTERS[last['operation']](last['stats'], last['timestamp'])
+        show_textviewer(ADDON.getLocalizedString(32488), report_text)
+        return
 
     show_ok(
         ADDON.getLocalizedString(32086),

@@ -3,15 +3,28 @@ from __future__ import annotations
 
 import threading
 import time
+from typing import Final
 
 import xbmc
 
 from lib.infrastructure import tasks as task_manager
 from lib.kodi.client import ADDON, log
+from lib.kodi.utilities import setting_float
 
 
-IMDB_CHECK_INTERVAL = 86400  # 24 hours
+IMDB_CHECK_INTERVAL: Final = 86400  # 24 hours
 _BACKOFF_SECONDS = (3600, 14400, 86400)  # 1h, 4h, 24h after consecutive refresh failures
+_SCOPE_TYPES: Final = {
+    "all": ("movie", "tvshow", "episode"),
+    "movies_tvshows": ("movie", "tvshow"),
+    "movies": ("movie",),
+}
+
+
+def _scope_types() -> tuple:
+    """Media types the auto-update scope setting covers."""
+    scope = ADDON.getSetting("imdb_auto_update_scope") or "movies_tvshows"
+    return _SCOPE_TYPES.get(scope, _SCOPE_TYPES["movies_tvshows"])
 
 
 class ImdbUpdateMonitor(xbmc.Monitor):
@@ -29,10 +42,7 @@ class ImdbUpdateMonitor(xbmc.Monitor):
 
 
 class ImdbUpdateService(threading.Thread):
-    """Auto-updates IMDb ratings. Gated by `imdb_auto_update` setting only.
-
-    Runs periodic dataset checks and reacts to `VideoLibrary.OnScanFinished`.
-    """
+    """Background IMDb rating updater, run daily or after a library scan as the setting chooses."""
 
     def __init__(self):
         super().__init__(daemon=True)
@@ -41,16 +51,8 @@ class ImdbUpdateService(threading.Thread):
         self._consecutive_failures = 0
         self._next_retry_at = 0.0
 
-    def _get_last_check(self) -> float:
-        stored = ADDON.getSetting("imdb_last_auto_check")
-        if stored:
-            try:
-                return float(stored)
-            except (ValueError, TypeError):
-                pass
-        return 0.0
-
     def _set_last_check(self) -> None:
+        """Stamp the daily check time in the settings."""
         ADDON.setSetting("imdb_last_auto_check", str(time.time()))
 
     def run(self) -> None:
@@ -67,13 +69,14 @@ class ImdbUpdateService(threading.Thread):
                 now = time.time()
                 if now < self._next_retry_at:
                     continue
-                if (now - self._get_last_check()) >= IMDB_CHECK_INTERVAL:
+                if (now - setting_float("imdb_last_auto_check")) >= IMDB_CHECK_INTERVAL:
                     if self._run_update(monitor):
                         self._set_last_check()
 
         log("Service", "IMDb auto-update service stopped", xbmc.LOGINFO)
 
     def _on_library_scan_finished(self) -> None:
+        """Start an IMDb update after a library scan when the setting asks for it."""
         setting = ADDON.getSetting("imdb_auto_update")
         if setting in ("library_scan", "both"):
             threading.Thread(
@@ -83,12 +86,7 @@ class ImdbUpdateService(threading.Thread):
             ).start()
 
     def _run_update(self, monitor: xbmc.Monitor) -> bool:
-        """Returns True if the daily-check timestamp should advance, False otherwise.
-
-        Returns False on collision (another task running) or transient dataset-refresh
-        failures; in the failure case `_next_retry_at` is set so the run loop backs off
-        (1h, 4h, then 24h) instead of hammering on every 5s tick.
-        """
+        """Run one pass; True when the daily check may advance, False on a collision or failure."""
         if task_manager.is_task_running():
             log("Service", "IMDb update deferred: another task is running", xbmc.LOGDEBUG)
             return False
@@ -100,7 +98,8 @@ class ImdbUpdateService(threading.Thread):
             from lib.data.database import workflow as db
 
             dataset = get_imdb_dataset()
-            if dataset.refresh_if_stale() == RefreshResult.Failed:
+            abort_flag = task_manager.ServiceAbortFlag(self.abort)
+            if dataset.refresh_if_stale(abort_flag) == RefreshResult.Failed:
                 idx = min(self._consecutive_failures, len(_BACKOFF_SECONDS) - 1)
                 backoff = _BACKOFF_SECONDS[idx]
                 self._consecutive_failures += 1
@@ -116,7 +115,7 @@ class ImdbUpdateService(threading.Thread):
             self._consecutive_failures = 0
             self._next_retry_at = 0.0
 
-            if db.get_synced_items_count() == 0:
+            if not db.has_synced_ratings():
                 self._run_full_update()
             else:
                 self._run_incremental(monitor)
@@ -127,45 +126,27 @@ class ImdbUpdateService(threading.Thread):
         return True
 
     def _run_incremental(self, monitor: xbmc.Monitor) -> None:
+        """Update only the IMDb ratings that changed, notifying when any moved."""
+        from lib.infrastructure.dialogs import notify_when_idle
         from lib.rating.imdb import update_changed_imdb_ratings
 
-        stats = update_changed_imdb_ratings(monitor=monitor)
-        updated = stats.get("updated", 0)
+        updated = 0
+        for media_type in _scope_types():
+            if monitor.abortRequested() or self.abort.is_set():
+                return
+            updated += update_changed_imdb_ratings(media_type, monitor).get("updated", 0)
         if updated > 0:
             message = ADDON.getLocalizedString(32319).format(updated)
         else:
             message = ADDON.getLocalizedString(32320)
-        self._notify_when_idle(
-            ADDON.getLocalizedString(32318),
-            message,
-            monitor,
-        )
+        notify_when_idle(ADDON.getLocalizedString(32318), message, monitor, self.abort)
 
     def _run_full_update(self) -> None:
+        """Run the IMDb rating update across whichever media the scope setting names."""
         from lib.rating.updater import update_library_ratings
 
-        scope = ADDON.getSetting("imdb_auto_update_scope") or "movies_tvshows"
-        log("Service", f"Starting IMDb full auto-update (scope={scope})", xbmc.LOGINFO)
-
-        if scope in ("all", "movies_tvshows", "movies"):
-            update_library_ratings("movie", [], use_background=True, source_mode="imdb")
-        if scope in ("all", "movies_tvshows"):
-            update_library_ratings("tvshow", [], use_background=True, source_mode="imdb")
-        if scope == "all":
-            update_library_ratings("episode", [], use_background=True, source_mode="imdb")
-
-    def _notify_when_idle(
-        self,
-        heading: str,
-        message: str,
-        monitor: xbmc.Monitor,
-    ) -> None:
-        """Show notification, deferring until playback stops."""
-        while xbmc.getCondVisibility("Player.HasVideo"):
-            if monitor.waitForAbort(30):
-                return
-            if self.abort.is_set():
-                return
-
-        from lib.infrastructure.dialogs import show_notification
-        show_notification(heading, message)
+        media_types = _scope_types()
+        log("Service", f"Starting IMDb full auto-update ({', '.join(media_types)})", xbmc.LOGINFO)
+        for media_type in media_types:
+            update_library_ratings(media_type, [], use_background=True, source_mode="imdb",
+                                   gated=True)
