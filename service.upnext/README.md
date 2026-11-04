@@ -16,6 +16,7 @@ The add-on has various settings to fine-tune the experience, however the default
 
   * Simple or fancy mode (defaults to fancy mode, but a more simple interface is possible)
   * Optional OK/Select access to playback controls alongside the next-episode popup. Press an arrow first to select Watch now or Close; press Up to return to playback-control focus. If Kodi hides the popup while controls are open, it is restored when the controls close. Normal episode-end advancement remains active.
+  * With the optional arrow-seeking mode enabled, arrows seek the video while playback controls have focus. Use the Context Menu action to switch between playback focus and the popup buttons; on some remotes this is a long press of OK. The default arrow behavior is unchanged when the option is disabled.
   * The notification time can be adjusted (defaults to 30 seconds before the end)
   * A credits delay can advance early when the provider supplies a credits offset (disabled by default). Back cancels the countdown and keeps the current episode playing; Pause freezes it with the video.
   * The default action can be configured, i.e. should it advance to the next episode (default) when the user does not respond, or stop
@@ -30,6 +31,19 @@ Credits autoplay uses the provider's absolute `notification_offset`; it does not
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
 
 ## Releases
+
+### v1.3.6 (2026-11-04)
+- Optionally seek with the arrow keys while the popup is open (with OK/Select playback controls on); the Context Menu action, a long press of OK on some remotes, switches between seeking and the popup buttons (@Drahy)
+- Optionally pause the current video while an add-on starts the next episode, so the end of the episode isn't missed during a slow source search (off by default) (@notoco)
+- Bring back an open popup that Kodi hid while the device was asleep (@Drahy)
+- Complete the Czech translation, including the add-on summary and description (@Drahy)
+- Update Polish translation (@notoco)
+
+### v1.3.5 (2026-11-03)
+- Continue a partly watched next library episode from where it was left, instead of from the start (setting on by default; idea from MoojMidge's fork) (@im85288)
+- Show the countdown in minutes and seconds when the popup opens more than a minute before it acts (e.g. from an add-on's or the credits' timing), and spread the simple popup's ring over the whole countdown, instead of showing no time until the last minute (@im85288)
+- Follow Kodi's "Show information for unwatched items" setting in the popup: hide the plot and/or picture of an unwatched next episode when Kodi hides them (@im85288)
+- Fall back to season art, or to add-on art without the tvshow. prefix, when the show has no fanart, landscape, poster, clearart or clearlogo (@im85288)
 
 ### v1.3.4 (2026-11-03)
 - Update Simplified Chinese translation (@wabisabi926)

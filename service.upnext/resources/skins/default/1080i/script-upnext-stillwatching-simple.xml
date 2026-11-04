@@ -39,9 +39,9 @@
                         <itemgap>10</itemgap>
                         <align>left</align>
                         <control type="button" id="10">
-                            <label>    $ADDON[service.upnext 30010]</label>
+                            <label>    $ADDON[service.upnext 30056]</label>
                             <onclick>SendClick(3012)</onclick>
-                            <visible>Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                            <visible>Integer.IsGreater(Window.Property(remaining),59)</visible>
                             <height>56</height>
                             <width min="50">auto</width>
                             <font>font20_title</font>
@@ -61,7 +61,7 @@
                         <control type="button" id="11">
                             <label>    $ADDON[service.upnext 30035]</label>
                             <onclick>SendClick(3012)</onclick>
-                            <visible>!Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                            <visible>!Integer.IsGreater(Window.Property(remaining),59)</visible>
                             <height>56</height>
                             <width min="50">auto</width>
                             <font>font20_title</font>
@@ -111,17 +111,8 @@
                         <width>46</width>
                         <height>46</height>
                         <aspect>keep</aspect>
-                        <texture colordiffuse="ddffffff">nextupicons/30.png</texture>
+                        <texture colordiffuse="ddffffff">$INFO[Window.Property(remaining_icon),nextupicons/,.png]</texture>
                         <animation effect="slide" end="13,5" time="0" condition="true">Conditional</animation>
-                        <visible>Integer.IsGreater(Player.TimeRemaining,30)</visible>
-                    </control>
-                    <control type="image">
-                        <width>46</width>
-                        <height>46</height>
-                        <aspect>keep</aspect>
-                        <texture colordiffuse="ddffffff">$INFO[Player.TimeRemaining(ss),nextupicons/,.png]</texture>
-                        <animation effect="slide" end="13,5" time="0" condition="true">Conditional</animation>
-                        <visible>!Integer.IsGreater(Player.TimeRemaining,30)</visible>
                     </control>
                 </control>
             </control>
