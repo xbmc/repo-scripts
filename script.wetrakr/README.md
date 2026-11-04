@@ -41,7 +41,21 @@ The addon is distributed as a single zip file. Download it from the latest [GitH
 | Rate after episode | off | Prompt to rate when an episode ends |
 | Debug logging | off | Verbose logs in Kodi log |
 
+| Context menu entry | on | Shows **WeTrakr** in the context menu of movies and episodes |
+| Ask for the date | on | Marking watched or rating from the context menu asks when (now, release date or a date and time you pick) |
+
 Advanced: the API URL can be overridden in the addon settings (default: `https://api.wetrakr.com`).
+
+## Context menu
+
+Open the context menu on a movie or an episode and pick **WeTrakr**:
+
+- **Rate this movie/episode**: 1 to 10. With "Ask for the date" on, you can also pick when you rated it. If "Date ratings with the watch date" is on in WeTrakr (Settings > Ratings), the rating follows the date you watched it instead.
+- **Remove rating**.
+- **Mark as Watched**: now, on the release date, or on a date and time you pick. If it was already watched, it adds a new play (a rewatch).
+- **Mark as Unwatched**: removes the last play, or every play of that title.
+
+The context menu only changes WeTrakr. With library sync on, Kodi picks the change up on the next sync.
 
 ## Next Episodes widget
 

@@ -87,6 +87,10 @@ class WeTrakrPlayer(xbmc.Player):
         self.scrobble_notified = False
         self.media_type = None
         self.last_progress = 0.0
+        # When last_progress was read (unix ts) and whether playback was paused
+        # then: lets _close_previous_item tell "ran out" from "skipped".
+        self._last_progress_at = 0.0
+        self._paused = False
         self.poster_art = None
         # Last 'playing' update sent: wall clock and playback position (s).
         self._last_playing_at = 0.0
@@ -103,9 +107,10 @@ class WeTrakrPlayer(xbmc.Player):
         return {
             "api_token": addon.getSetting("api_token"),
             "api_url": addon.getSetting("api_url") or "https://api.wetrakr.com",
-            "threshold": int(addon.getSetting("scrobble_threshold") or "80"),
+            "threshold": self._threshold(addon),
             "track_playing": addon.getSetting("track_playing") == "true",
             "track_watched": addon.getSetting("track_watched") == "true",
+            "library_only": addon.getSetting("scrobble_library_only") == "true",
             "debug": addon.getSetting("debug") == "true",
             # Notification toggles — default ON for backwards compatibility.
             "notify_playing": addon.getSetting("notify_playing") != "false",
@@ -113,6 +118,20 @@ class WeTrakrPlayer(xbmc.Player):
             "notify_scrobble": addon.getSetting("notify_scrobble") != "false",
             "resume_from_wetrakr": addon.getSetting("resume_from_wetrakr") != "false",
         }
+
+    @staticmethod
+    def _threshold(addon):
+        """Watched threshold (%): the one set in WeTrakr (Settings > Kodi) when
+        there is one, else the local setting. WeTrakr sends it back on every
+        event (see api.remember_server_threshold)."""
+        for key in ("server_threshold", "scrobble_threshold"):
+            try:
+                value = addon.getSetting(key)
+                if value:
+                    return int(float(value))
+            except (TypeError, ValueError):
+                pass
+        return 80
 
     def _get_api(self, settings=None):
         """Create a WeTrakrAPI instance from current settings."""
@@ -126,6 +145,16 @@ class WeTrakrPlayer(xbmc.Player):
     def _log(self, msg, level=xbmc.LOGINFO):
         xbmc.log("[WeTrakr] {}".format(msg), level)
 
+    @staticmethod
+    def _is_library_item(item):
+        """True when Kodi plays it from its video library (it has a dbid)."""
+        try:
+            if int(item.get("id") or 0) > 0:
+                return True
+        except (TypeError, ValueError):
+            pass
+        return utils._parse_int(xbmc.getInfoLabel("VideoPlayer.DBID")) is not None
+
     # -----------------------------------------------------------------
     # Callbacks
     # -----------------------------------------------------------------
@@ -133,6 +162,7 @@ class WeTrakrPlayer(xbmc.Player):
     def onAVStarted(self):
         """Called when audio/video stream is ready (preferred over onPlayBackStarted)."""
         self._log("onAVStarted triggered")
+        self._close_previous_item()
         self._reset_state()
 
         try:
@@ -164,6 +194,14 @@ class WeTrakrPlayer(xbmc.Player):
                 self._log("Ignoring non-video type: {}".format(item_type))
                 return
 
+            # Off by default. With a video add-on that scrobbles to WeTrakr on
+            # its own (Red Light, POV...), its streams would count twice: this
+            # leaves them to that add-on and keeps the library files here.
+            settings = self._get_settings()
+            if settings["library_only"] and not self._is_library_item(item):
+                self._log("Not a library item, scrobble_library_only is on: ignoring")
+                return
+
             self.current_item = item
             self.media_type = item_type
             self.total_time = self.getTotalTime() if self.isPlayingVideo() else 0
@@ -176,8 +214,6 @@ class WeTrakrPlayer(xbmc.Player):
             if item_type == "episode":
                 tvshow_id = item.get("tvshowid", -1)
                 self.current_show = utils.get_tvshow_details(tvshow_id)
-
-            settings = self._get_settings()
 
             self._maybe_resume_from_wetrakr(item, settings)
 
@@ -226,7 +262,8 @@ class WeTrakrPlayer(xbmc.Player):
         try:
             if self.current_item and not self.scrobbled:
                 progress = self._get_progress()
-                self.last_progress = progress
+                self._note_progress(progress)
+                self._paused = True
                 self._send_paused(progress)
         except Exception as e:
             self._log("onPlayBackPaused error: {}".format(str(e)), xbmc.LOGERROR)
@@ -236,6 +273,7 @@ class WeTrakrPlayer(xbmc.Player):
         self._log("onPlayBackResumed triggered")
         try:
             if self.current_item and not self.scrobbled:
+                self._paused = False
                 self._send_playing(self._get_progress())
         except Exception as e:
             self._log("onPlayBackResumed error: {}".format(str(e)), xbmc.LOGERROR)
@@ -273,6 +311,56 @@ class WeTrakrPlayer(xbmc.Player):
             self._flush_scrobble_notify()
             self._note_stopped()
             self._reset_state()
+
+    # Skipping the last RAN_OUT_MARGIN_S of a file (the credits) counts as
+    # reaching its end: one progress check, so a file that ran out between two
+    # checks is never taken for a skip.
+    RAN_OUT_MARGIN_S = 30.0
+
+    def _note_progress(self, progress):
+        import time
+        self.last_progress = progress
+        self._last_progress_at = time.time()
+
+    def _close_previous_item(self):
+        """Kodi started another item while the previous one is still open: it
+        moved on (next in the playlist, Up Next, a skip) without raising
+        onPlayBackEnded or onPlayBackStopped for it. Close it here like a stop,
+        or it stays "playing" in WeTrakr at 90-100 % and never gets marked
+        watched (same as the Jellyfin clients that skip the Stop, plugin 0.1.25).
+        No rating dialog: the next item is already playing."""
+        if not self.current_item:
+            return
+        try:
+            if self.scrobbled:
+                return
+            progress = self.last_progress
+            if self._ran_out():
+                progress = 100.0
+            settings = self._get_settings()
+            self._log("New item started without stop for the previous one: closing it at {:.1f}%".format(progress))
+            if progress >= settings["threshold"]:
+                self._send_scrobble(progress=progress)
+            else:
+                self._send_paused(progress, notify=False)
+        except Exception as e:
+            self._log("close previous item error: {}".format(str(e)), xbmc.LOGERROR)
+        finally:
+            self._flush_scrobble_notify()
+            self._note_stopped()
+
+    def _ran_out(self):
+        """Was the previous file at (or within RAN_OUT_MARGIN_S of) its end when
+        the next one started? Extrapolates from the last progress check unless
+        it was paused then."""
+        import time
+        total = self.total_time or 0
+        if total <= 0 or not self._last_progress_at:
+            return self.last_progress >= 99.0
+        position = total * self.last_progress / 100.0
+        if not self._paused:
+            position += max(0.0, time.time() - self._last_progress_at)
+        return total - position <= self.RAN_OUT_MARGIN_S
 
     def _note_stopped(self):
         """Tell the sync which library item just stopped (Kodi raises
@@ -326,7 +414,7 @@ class WeTrakrPlayer(xbmc.Player):
                 return
 
             progress = self._get_progress()
-            self.last_progress = progress
+            self._note_progress(progress)
             settings = self._get_settings()
 
             # "playing" update with the current progress, only when WeTrakr
@@ -507,7 +595,7 @@ class WeTrakrPlayer(xbmc.Player):
         except Exception:
             return 0.0
 
-    def _send_paused(self, progress=0.0):
+    def _send_paused(self, progress=0.0, notify=True):
         """Send a 'paused' event to WeTrakr (fire-and-forget)."""
         settings = self._get_settings()
         api = self._get_api(settings)
@@ -526,7 +614,7 @@ class WeTrakrPlayer(xbmc.Player):
 
         _dispatch_async(api.send_event, payload, debug=settings["debug"])
         self._log("Paused dispatched: {} ({:.0f}%)".format(title, progress))
-        if settings["notify_paused"]:
+        if notify and settings["notify_paused"]:
             _notify("Paused", "{} ({:.0f}%)".format(title, progress))
 
     def _send_scrobble(self, progress=0.0):
