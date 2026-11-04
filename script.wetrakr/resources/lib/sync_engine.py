@@ -284,6 +284,11 @@ class SyncEngine(object):
     def _remember_settings(state, settings, max_batch):
         if isinstance(settings, dict):
             state["settings"] = settings
+            # The single watched threshold, set in WeTrakr (also comes back on
+            # every scrobble event: see api.remember_server_threshold).
+            if "watched_percent" in settings:
+                from resources.lib.api import remember_server_threshold
+                remember_server_threshold(settings["watched_percent"])
         if max_batch:
             state["max_batch"] = max(1, min(int(max_batch), 1000))
 

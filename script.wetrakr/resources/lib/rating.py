@@ -8,6 +8,9 @@ lacks U+2605 — the fallback box made the stars look like dots.)
 
 Mouse hover via ACTION_MOUSE_MOVE with auto-scaled hit-testing.
 Mouse coordinates are auto-calibrated to the layout coordinate space.
+
+Half steps (Settings > Rating > rating_half_steps): ratings go 0.5-10 and
+the half star is a left-half PNG laid over the empty star.
 """
 
 import os
@@ -88,10 +91,13 @@ class RatingDialog(xbmcgui.WindowDialog):
 
     def __init__(self, title, year=None, poster_path=None):
         super().__init__()
+        self.half = xbmcaddon.Addon('script.wetrakr').getSetting('rating_half_steps') == 'true'
+        self.step = 0.5 if self.half else 1
         self.rating = 5
         self.confirmed = False
         self._name_label = None
         self._star_labels = []
+        self._half_labels = []
         self._star_rects = []
         self._last_mx = 0.0
         self._last_my = 0.0
@@ -218,6 +224,7 @@ class RatingDialog(xbmcgui.WindowDialog):
         addon_path = xbmcaddon.Addon('script.wetrakr').getAddonInfo('path')
         self._star_filled_path = os.path.join(addon_path, 'resources', 'media', 'star_filled.png')
         self._star_empty_path = os.path.join(addon_path, 'resources', 'media', 'star_empty.png')
+        star_half_path = os.path.join(addon_path, 'resources', 'media', 'star_half.png')
 
         ssz = int(dw * 0.07)
         gap = int(dw * 0.012)
@@ -233,6 +240,13 @@ class RatingDialog(xbmcgui.WindowDialog):
             self.addControl(img)
             self._star_labels.append(img)
             self._star_rects.append((bx, y, ssz, ssz))
+            if self.half:
+                half_img = xbmcgui.ControlImage(
+                    bx, y, ssz, ssz, star_half_path, aspectRatio=2,
+                )
+                self.addControl(half_img)
+                half_img.setVisible(False)
+                self._half_labels.append(half_img)
 
         y += ssz + int(H * 0.015)
 
@@ -262,17 +276,26 @@ class RatingDialog(xbmcgui.WindowDialog):
 
     # ── rendering ────────────────────────────────────────────────────
 
+    def _level(self):
+        """1-10 bucket for colour and name (6.5 rounds up, as on the web)."""
+        return max(1, min(10, int(self.rating + 0.5)))
+
     def _update_stars(self):
-        color = RATING_COLORS[self.rating - 1]
+        color = RATING_COLORS[self._level() - 1]
         for i, img in enumerate(self._star_labels):
             is_filled = (i + 1) <= self.rating
             img.setImage(self._star_filled_path if is_filled else self._star_empty_path)
             img.setColorDiffuse(color if is_filled else EMPTY_STAR_COLOR)
+            if self._half_labels:
+                is_half = not is_filled and (i + 0.5) <= self.rating
+                self._half_labels[i].setVisible(is_half)
+                if is_half:
+                    self._half_labels[i].setColorDiffuse(color)
 
-        nc = RATING_COLORS[self.rating - 1]
-        self._name_label.setLabel(
-            u'[COLOR {}][B]{}[/B][/COLOR]'.format(nc, RATING_NAMES[self.rating - 1])
-        )
+        name = RATING_NAMES[self._level() - 1]
+        if self.half:
+            name = u'{}  {}'.format(_fmt(self.rating), name)
+        self._name_label.setLabel(u'[COLOR {}][B]{}[/B][/COLOR]'.format(color, name))
 
     # ── hit testing ──────────────────────────────────────────────────
 
@@ -280,6 +303,8 @@ class RatingDialog(xbmcgui.WindowDialog):
         x, y = self._mouse_to_layout(raw_x, raw_y)
         for i, (sx, sy, sw, sh) in enumerate(self._star_rects):
             if sx <= x <= sx + sw and sy <= y <= sy + sh:
+                if self.half and x < sx + sw / 2.0:
+                    return i + 0.5
                 return i + 1
         return None
 
@@ -320,13 +345,13 @@ class RatingDialog(xbmcgui.WindowDialog):
             self.close()
             return
 
-        if aid == ACTION_MOVE_LEFT and self.rating > 1:
-            self.rating -= 1
+        if aid == ACTION_MOVE_LEFT and self.rating > self.step:
+            self.rating -= self.step
             self._update_stars()
             return
 
         if aid == ACTION_MOVE_RIGHT and self.rating < 10:
-            self.rating += 1
+            self.rating += self.step
             self._update_stars()
             return
 
@@ -355,7 +380,14 @@ class RatingDialog(xbmcgui.WindowDialog):
                 pass
 
     def get_rating(self):
-        return self.rating if self.confirmed else None
+        if not self.confirmed:
+            return None
+        # Whole values stay ints so payloads and "Rated 7/10" look as before.
+        return int(self.rating) if self.rating == int(self.rating) else self.rating
+
+
+def _fmt(value):
+    return u'{:g}'.format(value)
 
 
 def should_show_rating(media_type, progress):
@@ -374,8 +406,8 @@ def should_show_rating(media_type, progress):
 
 def show_rating_dialog(title, year=None, poster_path=None):
     """
-    Show a star-based rating dialog (1-10).
-    Returns the rating (1-10) or None if cancelled.
+    Show a star-based rating dialog (1-10, or 0.5-10 with half steps).
+    Returns the rating or None if cancelled.
     """
     dialog = RatingDialog(title, year=year, poster_path=poster_path)
     dialog.doModal()

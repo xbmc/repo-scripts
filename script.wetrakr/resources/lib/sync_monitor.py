@@ -62,6 +62,10 @@ class SyncMonitor(xbmc.Monitor):
         self.resnapshot_requested = False
         self.reset_requested = False
 
+    def onSettingsChanged(self):
+        # Show / hide the context-menu entry right away, not on the next poll.
+        utils.sync_context_menu_prop()
+
     # ─── Used by the engine / player ───────────────────────────────
 
     def expect(self, kind, dbid, playcount, userrating):
