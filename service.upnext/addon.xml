@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.upnext" name="Up Next" version="1.3.4" provider-name="im85288">
+<addon id="service.upnext" name="Up Next" version="1.3.6" provider-name="im85288">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
@@ -13,6 +13,10 @@
         <description lang="en_GB">A service add-on that shows a Netflix-style notification for watching the next episode. After a few automatic iterations it asks the user if they are still watching.
 
 A lot of existing add-ons already integrate with this service out-of-the-box.</description>
+        <summary lang="cs_CZ">Nabízí automatické přehrání další epizody</summary>
+        <description lang="cs_CZ">Doplněk zobrazí nabídku pro přehrání další epizody. Po několika automaticky přehrávaných dílech se může zeptat, zda stále sledujete.
+
+Mnoho doplňků už spolupráci s Up Next podporuje.</description>
         <summary lang="zh_CN">建议自动播放下一集</summary>
         <description lang="zh_CN">一个服务插件，以 Netflix 风格的通知提醒观看下一集。连续自动播放数集后，它会询问用户是否还在观看。
 
@@ -44,6 +48,18 @@ Muchos complementos existentes ya se integran con este servicio listo para usar.
         <platform>all</platform>
         <license>GPL-2.0-only</license>
         <news>
+v1.3.6 (2026-11-04)
+- Optional arrow-key seeking while the popup is open
+- Optional pause while an add-on starts the next episode
+- Bring back a popup hidden while the device was asleep
+- Update Czech and Polish translations
+
+v1.3.5 (2026-11-03)
+- Continue a partly watched next episode where it was left
+- Countdown in minutes when the popup opens more than a minute early
+- Follow Kodi's spoiler setting for unwatched episodes in the popup
+- Fall back to season or add-on art when the show lacks an image
+
 v1.3.4 (2026-11-03)
 - Update Simplified Chinese translation
 
@@ -69,19 +85,6 @@ v1.3.0 (2026-10-24)
 
 v1.2.3 (2026-10-21)
 - Close the popup when another episode starts while it is open
-
-v1.2.2 (2026-10-21)
-- New optional setting to play the next episode a set time into the credits
-- Keep tracking an episode started while the popup was open
-
-v1.2.1 (2026-10-20)
-- Fix the popup failing when an add-on sends a partial or missing date
-- New translation for Simplified Chinese
-
-v1.2.0 (2026-10-20)
-- Requires Kodi 19 (Matrix) or later; Kodi 18 (Leia) is no longer supported
-- Fix finding the TV show by title when the library has no show ID
-- Use gender-neutral wording in the description
         </news>
         <assets>
             <icon>resources/media/icon.png</icon>

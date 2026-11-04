@@ -98,7 +98,7 @@
                         <textcolor>eeffffff</textcolor>
                         <shadowcolor>00000000</shadowcolor>
                         <label>$ADDON[service.upnext 30036]</label>
-                        <visible>!String.IsEqual(Window.Property(credits_countdown),true) + !Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                        <visible>!String.IsEqual(Window.Property(credits_countdown),true) + !Integer.IsGreater(Window.Property(remaining),59)</visible>
                     </control>
                     <control type="label">
                         <width>auto</width>
@@ -107,8 +107,8 @@
                         <font>font25_title</font>
                         <textcolor>eeffffff</textcolor>
                         <shadowcolor>00000000</shadowcolor>
-                        <label>$ADDON[service.upnext 30008]</label>
-                        <visible>!String.IsEqual(Window.Property(credits_countdown),true) + Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                        <label>$ADDON[service.upnext 30054]</label>
+                        <visible>!String.IsEqual(Window.Property(credits_countdown),true) + Integer.IsGreater(Window.Property(remaining),59)</visible>
                     </control>
                     <control type="label" id="3015">
                         <width>auto</width>
@@ -117,7 +117,16 @@
                         <font>font25_title</font>
                         <textcolor>eeffffff</textcolor>
                         <label>$ADDON[service.upnext 30050]  ·  $ADDON[service.upnext 30051]</label>
-                        <visible>String.IsEqual(Window.Property(credits_countdown),true)</visible>
+                        <visible>String.IsEqual(Window.Property(credits_countdown),true) + !Integer.IsGreater(Window.Property(remaining),59)</visible>
+                    </control>
+                    <control type="label">
+                        <width>auto</width>
+                        <height>35</height>
+                        <aligny>center</aligny>
+                        <font>font25_title</font>
+                        <textcolor>eeffffff</textcolor>
+                        <label>$ADDON[service.upnext 30055]  ·  $ADDON[service.upnext 30051]</label>
+                        <visible>String.IsEqual(Window.Property(credits_countdown),true) + Integer.IsGreater(Window.Property(remaining),59)</visible>
                     </control>
                     <!-- Details -->
                     <control type="grouplist">

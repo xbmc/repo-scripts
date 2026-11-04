@@ -109,6 +109,18 @@ msgctxt "#30053"
 msgid "Skip recap"
 msgstr "Pomiń podsumowanie"
 
+msgctxt "#30054"
+msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "Następny za [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+
+msgctxt "#30055"
+msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "Następny odcinek za [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+
+msgctxt "#30056"
+msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "Kontynuuj oglądanie za [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr "[B]TRYB DEMO UP NEXT WŁĄCZONY[/B]"
@@ -230,6 +242,14 @@ msgstr "Od minuty"
 msgctxt "#30643"
 msgid "Mark an episode as watched when moving to the next one early"
 msgstr "Oznacz jako obejrzany przy wcześniejszym przejściu dalej"
+
+msgctxt "#30645"
+msgid "Continue a partly watched next episode where it was left"
+msgstr "Wznów następny odcinek od miejsca przerwania"
+
+msgctxt "#30647"
+msgid "Pause the video while an add-on starts the next episode"
+msgstr "Wstrzymaj odcinek, gdy dodatek uruchamia następny"
 
 msgctxt "#30700"
 msgid "Expert"

@@ -5,10 +5,14 @@ from time import monotonic
 from xbmc import executebuiltin, getCondVisibility
 from xbmcgui import ControlButton, getCurrentWindowDialogId
 from popup import Popup
-from utils import get_setting_bool, localize
+from utils import get_setting_bool, jsonrpc, localize
 
 ACTION_SHOW_OSD = 24
+ACTION_MOVE_LEFT = 1
+ACTION_MOVE_RIGHT = 2
 ACTION_MOVE_UP = 3
+ACTION_MOVE_DOWN = 4
+ACTION_CONTEXT_MENU = 117
 
 
 class UpNext(Popup):
@@ -44,7 +48,10 @@ class UpNext(Popup):
             target = self.getControl(20)  # Default skin's visible button group.
         except RuntimeError:
             target = self.getControl(3012)  # Skins with a direct Watch now button.
-        self.playback_control.setNavigation(target, target, target, target)
+        if get_setting_bool('seekWithArrows'):
+            self.playback_control.setNavigation(*(self.playback_control,) * 4)
+        else:
+            self.playback_control.setNavigation(target, target, target, target)
         self.setFocus(self.playback_control)
 
     def open_playback_controls(self):
@@ -80,6 +87,26 @@ class UpNext(Popup):
     def onAction(self, action):  # pylint: disable=invalid-name
         if action == ACTION_SHOW_OSD:
             self.open_playback_controls()
+        elif self.playback_control is not None and get_setting_bool('seekWithArrows'):
+            neutral = self.getFocusId() == self.playback_control.getId()
+            directions = {ACTION_MOVE_LEFT: 'smallbackward', ACTION_MOVE_RIGHT: 'smallforward',
+                          ACTION_MOVE_UP: 'bigforward', ACTION_MOVE_DOWN: 'bigbackward'}
+            if action == ACTION_CONTEXT_MENU:
+                if neutral:
+                    try:
+                        self.setFocus(self.getControl(20))
+                    except RuntimeError:
+                        self.setFocus(self.getControl(3012))
+                else:
+                    self.setFocus(self.playback_control)
+            elif neutral and any(action == direction for direction in directions):
+                direction = next(command for direction, command in directions.items() if action == direction)
+                players = jsonrpc(method='Player.GetActivePlayers').get('result') or []
+                player = next((item for item in players if item.get('type') == 'video'), None)
+                if player is not None:
+                    jsonrpc(method='Player.Seek', params={'playerid': player['playerid'], 'value': {'step': direction}})
+            else:
+                super().onAction(action)
         elif (action == ACTION_MOVE_UP and self.playback_control is not None
               and self.getFocusId() != self.playback_control.getId()):
             # Return from the horizontal Next/Close buttons to the neutral
@@ -92,7 +119,7 @@ class UpNext(Popup):
         self.setProperty('credits_countdown', 'true' if remaining is not None else '')
         self.setProperty('credits_remaining', str(remaining) if remaining is not None else '')
         if remaining is not None:
-            self.setProperty('remaining', '%02d' % remaining)
+            self.set_remaining(remaining)
 
     def set_watch_now(self, watchnow):
         self.watchnow = watchnow
