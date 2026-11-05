@@ -2,8 +2,8 @@
 
 **Retro cable TV from your own Kodi library. Flip channels, not menus.**
 
-> **Beta:** CableBox 42 is new and actively developed. It's tested on CoreELEC
-> (ODROID N2); reports from other devices are very welcome in the
+> **Now in the official Kodi add-on repository** (Kodi 21 Omega). It's tested
+> on CoreELEC (ODROID N2); reports from other devices are very welcome in the
 > [support thread](https://forum.kodi.tv/showthread.php?tid=389521) or on
 > [GitHub issues](https://github.com/SeadogMcGrog/script.cablebox42/issues).
 
@@ -19,6 +19,13 @@ but it's a separate implementation built for Kodi. It runs inside Kodi on
 anything Kodi 21 runs on, and plays every file through Kodi's own player, so
 hardware video decoding works exactly as it does for the rest of your library.
 
+> **New to CableBox?** The **[How-To Guide](HOWTO.md)** walks through
+> everything step by step: first lineup, station logos and clips, putting every
+> show on the right channel, captions, the planner, and fix-it recipes.
+> **What's new:** [changelog](changelog.txt) (1.1.0 adds station folders you can
+> see and repair, *Shows without a good channel*, captions in the main menu, and
+> more).
+
 ### ▶ See it in action
 
 | Part 1: the tour | Part 2: guide and weather |
@@ -27,6 +34,8 @@ hardware video decoding works exactly as it does for the rest of your library.
 | *Channel surfing and commercials* | *The TV Guide channel and the Weather Channel* |
 
 *Click a picture to watch on YouTube.*
+
+1.1.0: turning on, flipping channels, turning off — <https://youtu.be/9Z8imCcMTeg>
 
 | | |
 |---|---|
@@ -52,15 +61,16 @@ hardware video decoding works exactly as it does for the rest of your library.
 9. [Commercials, bumps, station IDs and sign-off clips](#commercials-bumps-station-ids-and-sign-off-clips)
 10. [Off the air](#off-the-air)
 11. [Holidays](#holidays)
-12. [The guide channel](#the-guide-channel)
-13. [The weather channel](#the-weather-channel)
-14. [CRT effect](#crt-effect)
-15. [Home screen, Favourites and phone remotes](#home-screen-favourites-and-phone-remotes)
-16. [Settings reference](#settings-reference)
-17. [Video formats and AV1](#video-formats-and-av1)
-18. [Files and hand-editing](#files-and-hand-editing)
-19. [Troubleshooting](#troubleshooting)
-20. [Credits and license](#credits-and-license)
+12. [Stations and logos](#stations-and-logos)
+13. [The guide channel](#the-guide-channel)
+14. [The weather channel](#the-weather-channel)
+15. [CRT effect](#crt-effect)
+16. [Home screen, Favourites and phone remotes](#home-screen-favourites-and-phone-remotes)
+17. [Settings reference](#settings-reference)
+18. [Video formats and AV1](#video-formats-and-av1)
+19. [Files and hand-editing](#files-and-hand-editing)
+20. [Troubleshooting](#troubleshooting)
+21. [Credits and license](#credits-and-license)
 
 ---
 
@@ -71,8 +81,7 @@ hardware video decoding works exactly as it does for the rest of your library.
 - **Real-time channels.** Programs start on the hour and half hour. The time
   left over in each slot is cut into commercial breaks, just like real cable.
 - **Automatic lineup builder.** One step creates a guide channel, a weather
-  channel, an everything station, genre networks, decade channels, movie
-  channels and studio showcases.
+  channel, genre networks, movie channels and studio showcases.
 - **Weekly planner.** A 7-day grid for each channel. Pin shows to fixed times,
   for example *Seinfeld, Fridays 8 PM, in order*. Each pinned slot picks up
   where it left off the week before.
@@ -112,10 +121,10 @@ hardware video decoding works exactly as it does for the rest of your library.
 
 ## Installing
 
-**From the official Kodi repository** (pending approval):
+**From the official Kodi repository** (recommended; updates arrive automatically):
 *Add-ons → Install from repository → Kodi Add-on repository → Program add-ons → CableBox 42*.
 
-**From a zip file:**
+**From a zip file** (for test builds, or Kodi without the official repository):
 
 1. Download the latest `script.cablebox42-x.y.z.zip` from this repository's
    releases, or build one by zipping the `script.cablebox42` folder.
@@ -132,22 +141,32 @@ settings are kept.
 
 1. Open **CableBox 42**. The first time, a welcome screen asks how to start:
    **Set it all up for me** (the steps below) or **I'll set it up myself**
-   (you get just the TV Guide on 2 and the Weather Channel on 3, and the
+   (you get just the TV Guide on 2 and Retrocast Weather on 25, and the
    Channel manager opens so you can add your own channels).
-2. If you have folders of old commercials and bumps, point it at them. You can
-   skip this and add them later in Settings.
-3. Type your city for the weather channel, or skip it if Kodi's own weather
+2. If you have a folder of old commercials, point it at it. Then choose how
+   **bumpers and station IDs** work: **one folder for every channel**, **a
+   folder for each channel** (it asks where, your media drive is best, and
+   makes a folder per channel with `bumps`, `ids` and `commercials` inside),
+   or **skip for now**. All of this can be changed later in Settings.
+3. If you have a folder of background music (smooth jazz, elevator music),
+   choose it for the guide and weather channels: the same folder for both, or
+   one each.
+4. Type your city for the weather channel, or skip it if Kodi's own weather
    service is already set up.
-4. Untick any suggested channels you don't want.
-5. Say **Yes** to the two recommended extras:
+5. Untick any suggested channels you don't want.
+6. Say **Yes** to the two recommended extras:
    - **Overnight sign-off:** channels go off the air from 12 AM to 5 AM with a
      *Please Stand By* card. The guide and weather channels stay on.
    - **Prime time:** from 8 to 11 PM, each channel airs its best shows in fixed
      weekly slots, and movie channels show a movie at 8.
-6. Choose **Start watching**.
+7. Read **What I set up**: every channel, where its shows come from, and its
+   station folders (*Channel manager → Lineup summary* shows it again later).
+8. Choose **Start watching**.
 
-That's it. To fine-tune, use the **Channel manager**, the **Weekly planner**
-and *Settings → Tools →* **Move shows between channels**.
+That's it. To fine-tune, use the **Channel manager** (start with **Shows
+without a good channel**), the **Weekly planner** and *Settings → Tools →*
+**Move shows between channels**. The [How-To Guide](HOWTO.md) walks through
+each of these.
 
 ---
 
@@ -160,8 +179,9 @@ and *Settings → Tools →* **Move shows between channels**.
 | **Left** | Last channel (jump back and forth) |
 | **Right** | "What's on now": every channel and its current show |
 | **OK / Info** | Show or hide the channel banner (now, next, progress) |
-| **Menu / Context** | What's on now, last channel, **sleep timer**, *Don't air this show here*, turn off |
-| **Back / Stop** | Turn off the TV (asks first, unless you switch that off in Settings) |
+| **Menu / Context** | **Closed captions** and caption options, what's on now, last channel, **sleep timer**, *Don't air this show here*, turn off |
+| **Subtitle / CC button** | Captions on or off (once *Settings → Tools → Remote CC button* is set up) |
+| **Back / Stop** | Turn off the TV |
 | **Volume / Mute** | Work as normal |
 | Pause, seek, skip | Ignored. It's live TV |
 
@@ -232,8 +252,12 @@ best. In order of priority:
    studio.
 3. The show's **main genre**. Kodi lists genres most important first, so *Good
    Eats* (Documentary, Comedy) lands on the documentary channel.
-4. Decade channels, then the catch-all "everything" channel, which gets
-   whatever fits nowhere else.
+4. Decade channels, if you made any.
+
+A show whose genres are all too small for a channel of their own (a lone
+western, say) goes on the biggest genre network, picked by name, so nothing in
+your library is left off the air. Move it anywhere you like with *Move shows
+between channels*.
 
 A channel left with almost nothing is topped up with a few shows that suit it
 nearly as well, so no channel runs the same two shows all day. Your pinned
@@ -263,7 +287,8 @@ on the same episode twice.
 |---|---|
 | **Watch TV** | Turn the TV on |
 | **What's on now** | Every channel with the show airing right now. Pick one to tune straight to it |
-| **Channel manager** | Add, edit, delete and renumber channels |
+| **Closed captions** | On or off for every programme - the same setting as Menu → Closed captions while watching |
+| **Channel manager** | Add, edit, delete and renumber channels. Also **Shows without a good channel** and **Lineup summary** (below) |
 | **Weekly planner** | Open a channel's 7-day grid |
 | **Settings and tools** | All settings, plus the **Tools** page below |
 | **Help** | |
@@ -279,22 +304,70 @@ Each button closes Settings and opens the tool.
 |---|---|
 | **Build my lineup automatically** | Create a lineup from your library: replace yours, or add to it |
 | **Quick setup** | For every channel at once: overnight sign-off hours on or off, and prime-time lineups built or removed, with your choice of hours |
+| **Station folders** | Makes what's missing of each channel's folder (bumps, ids, commercials, time blocks) - an existing folder is reused, never copied - then shows which folder every channel uses, what's in it, and folders no channel uses |
+| **Shows without a good channel** | Same as in the Channel manager: see below |
 | **Move shows between channels** | Pick a show or movie, then tick the channels it should air on. It airs exactly there |
 | **Check my videos** | Lists commercials, bumps and videos that can't be used, and why |
 | **Clean up my 'In progress' list** | Clears resume points left by channel surfing. You keep the ones you tick |
 | **Rebuild schedules** | Plan every channel again from now (episode progress is kept) |
+| **Start over (factory reset)** | Back to a fresh install: deletes channels, planner pins and schedules (optionally all settings too), then shows the welcome screen. Your videos, bumps, commercials and station folders are never touched. Handy for setting up the new stations cleanly |
+
+### Shows without a good channel
+
+*Channel manager → Shows without a good channel* (also on the Tools page)
+lists TV shows that no channel's programming picks up, and shows whose home
+channel is only a weak fit - a minor genre, a decade or catch-all channel, the
+automatic list of shows whose genres were too small for a channel, or a show
+moved so a small channel has enough to air. Each comes with its reason, for
+example *Western (main genre) → Tumbleweed TV* or *No channel's programming
+includes it*. Pick a show to put it on a channel (best fits listed first),
+mark it as fine, or keep it off a channel or off the air. Your own picks are
+never listed. (Movies are included when Settings → Programming gives every
+movie one channel.)
+
+### Lineup summary
+
+Shown at the end of the lineup builder and any time from the Channel
+manager: every channel with its station identity and where its programmes come
+from, the station folders and what's in them, and where to go next.
 
 ### What the lineup builder creates
 
 | Channel | Contents |
 |---|---|
 | 2 – TV Guide | The scrolling program guide |
-| 3 – Weather Channel | Your local forecast |
-| 4 – Channel 4 | Every TV show you own: your local independent station |
-| Genre networks | One per TV genre with 3 or more shows (Comedy Channel, Sci-Fi Channel, Cartoon Corner…) |
+| 3, 4, 5 – Keystone, Beacon, Horizon | Three broadcast networks with a real network day (below), when you have 12 or more TV shows |
+| Genre networks | One per TV genre with 5 or more shows, from channel 3 up (Drama Net, Western Channel, Game Show Channel…; some become built-in stations, below). A small library with no genre that big gets one channel with every show instead |
 | Studio showcases | When you have enough from one studio (Disney Showcase, Hanna-Barbera Showcase…) |
-| Retro 70s / 80s / 90s | TV shows from each decade |
 | Movie channels | Movie Channel, one per big movie genre, and Classic Movies (before 1990) |
+| 25 – Weather Channel | Your local forecast |
+| 42 – News 42 | When you have 5 or more news shows |
+
+### Broadcast networks
+
+Channels 3, 4 and 5 are Keystone, Beacon and Horizon, which work like the old broadcast networks. Each one runs a
+network day built from your library:
+
+| Time | Block |
+|---|---|
+| Weekdays 6–9 AM | Morning news and talk |
+| Weekdays 9 AM–noon | Game shows |
+| Weekdays noon–3 PM | Soaps |
+| Weekdays 3–5 PM | After-school cartoons |
+| Every day 5–8 PM | Sitcom reruns |
+| Every day 8–11 PM | Prime time: comedies and dramas, pinned to weekly slots if you chose a prime-time lineup |
+| Every day 11 PM–midnight | Late-night talk shows |
+| Saturdays 7 AM–noon | Saturday-morning cartoons |
+| Sundays 1–5 PM | The Sunday movie |
+
+A block only appears when you have shows for it (no soaps, no soap block);
+a block that comes up short borrows something close (dramas for soaps,
+sitcoms for late night). The three networks deal each block's shows out
+between them like cards, so each has its own game shows, soaps and prime-time
+lineup. The networks *share* shows with the cable channels - *Seinfeld* can be
+a network hit in prime time and a rerun on Comedy Corner - but a show is
+never on two channels at the same moment. Every block is an ordinary time
+block, so you can change or remove it in the channel editor.
 
 ### Channel types
 
@@ -507,6 +580,117 @@ Kodi is the surest way to get it into the holiday lineup. Out of season, items
 tagged with the holiday's own name (*halloween*, *thanksgiving*,
 *christmas*/*xmas*) are held back; horror and mystery air all year.
 
+## Stations and logos
+
+CableBox comes with a set of made-up stations, each with its own logo. The
+automatic setup gives them to matching channels:
+
+| Station | Goes to | Through the day |
+|---|---|---|
+| **Keystone**, **Beacon**, **Horizon** | the three broadcast networks on 3, 4 and 5 | |
+| **Retrocast Weather** | the weather channel, on **25** | |
+| **Animation Station** | the cartoon (Animation) channel | |
+| **Chameleon** | the kids' channel (Children, Kids or Family) | **CAM Jr.** 6 AM–noon · **Chameleon** · **Cam O Nite** 8 PM–6 AM |
+| **The Dexter Channel** | the Family channel | |
+| **PES** | public educational TV: documentary series, plus anything you tag *educational* (or *PBS*, *public TV*) in Kodi | |
+| **The Exploration Channel** | the documentary *movies* channel | |
+| **Comedy Corner** | the Comedy (or Sitcom) channel | |
+| **Curtain Call** | the Drama channel | |
+| **Heartstrings TV** | the Soap channel | |
+| **High Octane TV** | the Action channel | |
+| **Unscripted** | the Reality channel | |
+| **Jackpot TV** | the Game Show channel | |
+| **Siren TV** | the Crime channel | |
+| **Whodunit** | the Mystery channel | |
+| **Tumbleweed TV** | the Western channel | |
+| **Popcorn TV** | the main Movie Channel | |
+| **Picture Show** | the Classic Movies channel (before 1990) | |
+| **News 42** | the News channel, on **42** | |
+| **Orbit TV** | the Science Fiction channel | |
+| **Boombox TV** | a channel with "music" in its name | |
+
+**Shows go where they first aired.** Kodi keeps a TV show's network in its
+*Studio* field, and each station stands in for real networks, so a show's
+network outranks its genre when CableBox picks its home channel:
+
+| Station | Gets shows from |
+|---|---|
+| Chameleon | Nickelodeon, Nick Jr., Nicktoons, TeenNick, Noggin |
+| PES | PBS, PBS Kids, Discovery, National Geographic, History, Smithsonian, Science Channel, Animal Planet |
+| Animation Station | Cartoon Network, Adult Swim, Boomerang, Toonami |
+| The Dexter Channel | Disney Channel, Disney Junior, Disney XD, Toon Disney, ABC Family |
+| Comedy Corner | Comedy Central |
+| Keystone / Beacon / Horizon | NBC and the WB / CBS, UPN and the CW / ABC and FOX - their own shows lead their prime time, and stay on that network only |
+| Others | Syfy (Orbit TV), MTV, VH1 and CMT (Boombox TV), Bravo, E! and TLC (Unscripted), GSN (Jackpot TV), CNN and MSNBC (News 42), Court TV and truTV (Siren TV), Lifetime and SOAPnet (Heartstrings TV), INSP (Tumbleweed TV) |
+
+So *Rugrats* lands on Chameleon and *Mister Rogers' Neighborhood* on PES, even
+though both are filed under Children. With 5 or more shows from a station's
+networks, setup makes that station's channel even when no genre channel called
+for it. Cable shows never air on the broadcast networks, and cartoons stay out
+of their prime time. Names must match exactly ("NBC" doesn't catch "MSNBC").
+A Kodi tag still outranks all of this: tag a show **educational** and it airs
+on PES.
+
+Channels without a station keep their plain names. Change any of it in
+*Channel manager → channel*:
+
+- **Station:** pick a built-in station or *None*.
+- **Branding by time of day:** times when the channel goes by another name
+  and logo, like CAM Jr. in the mornings. The banner, the corner logo and the
+  guide switch over on their own.
+- **Station logo:** your own image.
+
+### Your own stations folder
+
+*Settings → Viewing → Stations folder*: one folder per channel, named after
+the channel's name, call letters or number. Everything inside is optional:
+
+```
+Stations/
+  Chameleon/
+    logo.png
+    bumps/   ids/   commercials/        used all day
+    CAM Jr./                            a time block's own folder
+      logo.png   bumps/   ids/   commercials/
+```
+
+**Settings → Tools → Station folders** makes this for every channel in one go,
+with empty `bumps`, `ids` and `commercials` folders and a folder for each time
+block, then lists which folder each channel uses and any folders no channel
+uses (often a channel renamed since). Then just drop clips in.
+
+A folder counts as a channel's when its name is the channel's name, its call
+letters, or its number written as `7`, `Channel 7` or `CH 7` - exactly, ignoring
+case and punctuation. A time block's folder may have more in front
+(`Morning - CAM Jr.`). Renaming a channel offers to rename its folder too.
+
+**Channel manager → a channel → Branding & clips** shows what that channel
+really uses right now - its logo, bumps, station IDs and commercials, each with
+where it comes from (station folder, the channel's own folder, the shared one in
+Settings, or the built-in station) and a warning when clips sit in a folder that
+is switched off for the channel. It can make or repair the channel's folders,
+browse them, or adopt an unused folder.
+
+What's in the folder beats the built-in station, and a time block's folder
+beats the channel's. A new logo shows within a couple of minutes; new clips go
+into the breaks CableBox plans from then on (channels are planned several hours
+ahead, so *Settings → Tools → Rebuild schedules* uses them straight away).
+
+### The corner logo ("bug")
+
+- It shows in a corner during programmes only, fading in a moment after the
+  show starts. It stays off commercials, bumps, station IDs and the guide,
+  like the real networks.
+- Choose the corner (bottom right by default) and the opacity (50% by
+  default) in *Settings → Viewing*.
+- In the channel banner, the logo replaces the call letters under the
+  channel number.
+- A plain **Logo folder** also works: images named after each channel's name,
+  call letters or number.
+
+Use PNG with a transparent background. Kodi can't show SVG, so convert SVG
+logos to PNG first. Real network logos are trademarks, so use your own images.
+
 ## The guide channel
 
 A scrolling grid of every channel with what's on now, in 30 minutes and in an
@@ -618,10 +802,16 @@ tap to tune. Yatse custom commands can call the `RunScript` actions above.
 |---|---|---|
 | Start on channel | 0 | 0 means the last channel watched |
 | Show channel banner for | 6 s | 3, 6 or 10 seconds |
+| TV turn-on and turn-off effect | On | Switching on: the picture warms up from a bright line, the CableBox 42 title card, then your channel - press any button to skip it. Switching off (Back, *Turn off* or the sleep timer): the picture shrinks to a dot - as a short clip on Windows, drawn over the picture elsewhere (a new video would make a TV that switches refresh rate blank out). Both with sound |
 | Static between channels / Static sound | On / On | |
+| Static between channels (how) | Automatic | *Quick*: Kodi interface sound over the picture, the fastest. *Video clip*: a short static clip with its own sound, slightly slower but picture and sound always match. *Automatic* uses the clip on Windows, which drops interface sounds between videos, unless *Adjust display refresh rate* is on. |
+| Stations folder | – | One folder per channel: logo, bumps, ids, commercials, and time-block subfolders (see [Stations and logos](#stations-and-logos)) |
+| Logo folder | – | Images named after each channel's name, call letters or number |
+| Station logo in the corner | On | Only shows when a channel has a logo |
+| Corner / Logo opacity | Bottom right / 50% | |
+| Show the logo in the channel banner | On | Replaces the call letters |
 | CRT effect | Off | Off / Subtle / Full |
 | Keep my watch progress untouched | On | Puts back resume points, watched status and last-played dates after CableBox plays something |
-| Ask before turning off | On | |
 | Go straight to TV when opened | Off | Skip the CableBox menu |
 | Turn the TV on when Kodi starts | Off | Only right after Kodi starts, and never if you've already started watching something else |
 | Sleep timer also puts the TV in standby (CEC) | Off | |
@@ -759,6 +949,15 @@ videos.** It's very likely AV1 on a device without AV1 hardware decoding. See
 the latest version. Early test builds didn't understand the content requests
 that some skins make for add-ons placed on their home menu.
 
+**No static sound when changing channel, or only the first time.** Some
+systems, Windows especially, reset their audio output between videos and drop
+Kodi's interface sounds. Set *Settings → Viewing → Static between channels* to
+**Video clip**. With *Quick*, CableBox handles Kodi's *Play GUI sounds* setting
+itself while the TV is on: button clicks stay silent during shows, the static
+still plays, and your own setting comes back when you turn the TV off. Avoid *Video clip* if your TV switches refresh rate
+for each video (*Adjust display refresh rate*), because it would blank the
+screen briefly on every change.
+
 **The guide says "Updating listings…"** That's normal right after installing or
 updating. Listings appear within a minute or two as each channel is prepared.
 
@@ -769,21 +968,28 @@ today's schedule*, or use *Rebuild schedules*.
 
 1. Turn on *Settings → System → Logging → Enable debug logging*.
 2. Reproduce the problem.
-3. Send the `kodi.log` (and `kodi.old.log` if Kodi restarted). On
-   LibreELEC/CoreELEC they're in the *Logfiles* network share or
-   `/storage/.kodi/temp/`.
+3. Upload the log and copy the link:
+   - **CoreELEC / LibreELEC:** over SSH, run `pastekodi`.
+   - **Anything else:** the **Kodi Logfile Uploader** add-on (*Program
+     add-ons* in the Kodi repository), or paste `kodi.log` at
+     <https://paste.kodi.tv/>.
+   - If Kodi restarted, upload `kodi.old.log` (the log from before the restart).
 
 CableBox's lines are tagged `script.cablebox42`.
 
-Please report issues in the
-[Kodi forum support thread](https://forum.kodi.tv/showthread.php?tid=389521) or at
-<https://github.com/SeadogMcGrog/script.cablebox42/issues>, with your Kodi
-version, device, what you were doing, and a link to your log on
-<https://paste.kodi.tv/>.
+**[Report a problem on GitHub Discussions](https://github.com/SeadogMcGrog/script.cablebox42/discussions/new?category=bug-reports)**
+— a short form asks for your CableBox and Kodi versions, your device, what
+happened, and the log link. Questions and chat are welcome in the
+[Kodi forum support thread](https://forum.kodi.tv/showthread.php?tid=389521),
+and ideas in [Discussions → Ideas](https://github.com/SeadogMcGrog/script.cablebox42/discussions/new?category=ideas).
 
 ---
 
 ## Credits and license
+
+The fictional station logos in `resources/stations` were made with an AI image
+generator and are released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/)
+(public domain): use them however you like. See `resources/stations/LICENSE.txt`.
 
 CableBox 42 is designed, tested and maintained by **Seadog McGrog**. Much of
 the code was written with the help of [Claude](https://www.anthropic.com/claude),

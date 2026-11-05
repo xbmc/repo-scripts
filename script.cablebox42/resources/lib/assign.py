@@ -65,6 +65,8 @@ def score(src, title, is_movie, meta, n_titles):
         return 80
     if t == "playlist":
         return 75
+    if t == "network":
+        return 74                             # the network it aired on beats its genre
     if t == "studio":
         return 70
     if t == "keyword":
@@ -88,10 +90,19 @@ def _metadata():
     return meta
 
 
-def compute(channels, md=None):
-    """{'home': {title: cid}, 'explicit': {cid: [titles]}, 'digest': {cid: str}, 'mode': md}"""
+def compute(channels, md=None, explain=False):
+    """{'home': {title: cid}, 'explicit': {cid: [titles]}, 'digest': {cid: str}, 'mode': md}
+
+    explain=True (the Finder) also returns 'why': {title: {cid: (score, source)}}
+    and 'first': {title: cid} - the home before balancing - for showing reasons.
+    Never saved to assign.json."""
+    why = {}
     md = mode() if md is None else md
-    progs = sorted([c for c in channels if c.get("type") in PROGRAM_TYPES], key=lambda c: c["number"])
+    # broadcast networks borrow shows from every channel: they never become a
+    # show's home and may air anything their time blocks ask for
+    nets = [c["id"] for c in channels if c.get("broadcast")]
+    progs = sorted([c for c in channels if c.get("type") in PROGRAM_TYPES and not c.get("broadcast")],
+                   key=lambda c: c["number"])
     meta = _metadata()
     cands = {}          # title -> {cid: score}
     movies = set()
@@ -114,11 +125,14 @@ def compute(channels, md=None):
                 if sc >= EXPLICIT:
                     explicit.setdefault(cid, set()).add(tl)
                 cur = cands.setdefault(tl, {})
+                if explain and sc > cur.get(cid, -1):
+                    why.setdefault(tl, {})[cid] = (sc, src)
                 cur[cid] = max(cur.get(cid, 0), sc)
     order = dict((c["id"], c["number"]) for c in progs)
     home = {}
     for tl, cs in cands.items():
         home[tl] = max(cs, key=lambda cid: (cs[cid], -order[cid]))
+    first = dict(home) if explain else None
     _balance(home, cands, order, movies, md)
     allowed = {}
     for tl, cid in home.items():
@@ -137,13 +151,16 @@ def compute(channels, md=None):
             take = [tl for _sc, tl in mine[:need]]
             shared[cid] = take
             allowed.setdefault(cid, set()).update(take)
-    open_ = []
+    open_ = list(nets)
     digest = {}
-    for ch in progs:
+    for ch in progs + [c for c in channels if c.get("broadcast")]:
         ts = sorted(allowed.get(ch["id"], set()))
         digest[ch["id"]] = hashlib.md5(("%d|%d|" % (md, ch["id"] in open_) + "\n".join(ts)).encode("utf-8")).hexdigest()[:10]
-    return {"home": home, "explicit": dict((k, sorted(v)) for k, v in explicit.items()),
-            "digest": digest, "mode": md, "open": open_, "shared": shared}
+    out = {"home": home, "explicit": dict((k, sorted(v)) for k, v in explicit.items()),
+           "digest": digest, "mode": md, "open": open_, "shared": shared}
+    if explain:
+        out.update(why=why, first=first, movies=sorted(movies))
+    return out
 
 
 def _balance(home, cands, order, movies, md):
