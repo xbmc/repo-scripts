@@ -60,10 +60,6 @@ msgctxt "#32014"
 msgid "Static sound"
 msgstr ""
 
-msgctxt "#32015"
-msgid "Ask before turning off"
-msgstr ""
-
 msgctxt "#32016"
 msgid "Go straight to TV when opened"
 msgstr ""
@@ -85,7 +81,7 @@ msgid "Weather data from"
 msgstr ""
 
 msgctxt "#32022"
-msgid "City or lat,lon (for Open-Meteo)"
+msgid "Your city or lat,lon (used instead of Kodi's weather location)"
 msgstr ""
 
 msgctxt "#32023"
@@ -288,6 +284,90 @@ msgctxt "#32072"
 msgid "Genres (comma separated)"
 msgstr ""
 
+msgctxt "#32073"
+msgid "Static between channels"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Automatic"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Quick (interface sound)"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Video clip (most reliable sound)"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Station logo in the corner during programmes"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Corner"
+msgstr ""
+
+msgctxt "#32079"
+msgid "Top left"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Top right"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Bottom left"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Bottom right"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Logo opacity"
+msgstr ""
+
+msgctxt "#32084"
+msgid "30%"
+msgstr ""
+
+msgctxt "#32085"
+msgid "50%"
+msgstr ""
+
+msgctxt "#32086"
+msgid "70%"
+msgstr ""
+
+msgctxt "#32087"
+msgid "100%"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Logo folder (images named after the channel, its call letters or number)"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Show the logo in the channel banner"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Stations folder (one folder per channel: logo, bumps, ids, commercials, time-block subfolders)"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Station folders: create, repair and see what each channel uses..."
+msgstr ""
+
+msgctxt "#32092"
+msgid "Start over (factory reset)..."
+msgstr ""
+
+msgctxt "#32093"
+msgid "TV turn-on and turn-off effect (with sound)"
+msgstr ""
+
 msgctxt "#32900"
 msgid "CHANNEL"
 msgstr ""
@@ -393,10 +473,6 @@ msgctxt "#32116"
 msgid "Reading TV shows"
 msgstr ""
 
-msgctxt "#32117"
-msgid "Grouping by decade"
-msgstr ""
-
 msgctxt "#32118"
 msgid "Reading movies"
 msgstr ""
@@ -435,10 +511,6 @@ msgstr ""
 
 msgctxt "#32127"
 msgid "%s Movies"
-msgstr ""
-
-msgctxt "#32128"
-msgid "Retro %02ds"
 msgstr ""
 
 msgctxt "#32129"
@@ -677,10 +749,6 @@ msgctxt "#32190"
 msgid "Commercials folder"
 msgstr ""
 
-msgctxt "#32191"
-msgid "Do you have a folder of bumps / station IDs?[CR](Short clips played right before the show comes back.)"
-msgstr ""
-
 msgctxt "#32192"
 msgid "Bumps folder"
 msgstr ""
@@ -697,9 +765,6 @@ msgctxt "#32195"
 msgid "I couldn't find any TV shows or movies in your Kodi library.[CR]Scan your media into the library first, or add folder channels in the Channel Manager."
 msgstr ""
 
-msgctxt "#32196"
-msgid "Your lineup is ready:[CR]%s[CR][CR]Start watching?"
-msgstr ""
 
 msgctxt "#32197"
 msgid "Rebuild every channel's schedule from now?[CR]Episode progress is kept."
@@ -1299,10 +1364,6 @@ msgstr ""
 
 msgctxt "#32352"
 msgid "Sleep: %s"
-msgstr ""
-
-msgctxt "#32353"
-msgid "Turn off the TV?"
 msgstr ""
 
 msgctxt "#32354"
@@ -2049,10 +2110,6 @@ msgctxt "#32549"
 msgid "Go to the menu. You'll be asked again next time."
 msgstr ""
 
-msgctxt "#32550"
-msgid "You have a TV Guide on 2 and the Weather Channel on 3.[CR][CR]Next: Channel manager > Add a channel.  Commercials, bumps and music folders are in Settings, and Settings > Tools > 'Build my lineup automatically' can still build channels for you any time."
-msgstr ""
-
 msgctxt "#32552"
 msgid "[B]Videos that wouldn't play[/B]  [COLOR grey]none[/COLOR]"
 msgstr ""
@@ -2081,6 +2138,914 @@ msgctxt "#32558"
 msgid "Kodi couldn't open it"
 msgstr ""
 
-msgctxt "#32559"
-msgid "[B]Remote control[/B]\nCH+ / CH-, Up / Down, Page Up / Down ... change channel\nNumber keys ...................................... go to channel\nLeft ................................................... last channel\nRight ................................................ what's on now\nOK / Info ........................................... channel banner\nMenu / Context ................................. sleep timer & more\nBack / Stop ...................................... turn off the TV\n\n[B]How the schedule works[/B]\nNothing to compile.  Each channel pulls from your Kodi library (shows, genres,\ndecades, movies, smart playlists) or from folders, and its schedule writes itself\nas time goes by.  'Same show same time every day' channels air a fixed daily\nlineup and series always continue with the next episode.  Time blocks let you put\ncartoons on Saturday mornings or movies in prime time.\n\nEdit a channel and its schedule rebuilds itself from now on - episode progress is kept.\n\n[B]One channel per show[/B]\nEach TV show has one home channel - the one it fits best (your own picks first,\nthen folders/tags/studios, then its main genre, then decades and the 'everything'\nchannel).  And the same show is never on two channels at the same time.\nSettings > Programming > 'Shows on more than one channel' changes this.\n\n[B]Menu and tools[/B]\nThe menu keeps to the everyday things: Watch TV, What's on now (tune straight to a\nshow), the Channel manager, the Weekly planner, Settings and Help.  Lineup tools\n(build a new lineup, quick setup, move shows) and maintenance (check my videos,\nclean up In progress, rebuild schedules) are on the Tools page in Settings.\n\n[B]Fine-tuning[/B]\nSettings > Tools > 'Move shows between channels': pick a show (say, Good Eats) and tick the channels it\nshould air on.\nUnticking hides it there even if the channel's genre includes it.\nEach channel also has 'What's on this channel' - a checklist of everything it airs.\n\n[B]Studio channels[/B]\nAdd programming > 'A studio / network' makes e.g. a Disney channel from every movie\nand show whose studio contains 'Disney'.  Kodi tags work the same way.\n\n[B]Weekly planner[/B]\nEach channel has a 7-day grid (Channel manager > channel > Weekly planner, or\nWeekly planner in the main menu).  Press OK on a half-hour to pin a show there -\ne.g. Seinfeld, Fridays 8:00 PM, one hour, in order: every week it continues with\nthe next episodes.  Pinned slots always start on time; the automatic scheduler\nfills everything else and never runs into them.  You can also paint off-air\nhours, copy a day to other days, or clear a day (Menu button).\n\n[B]Your watch progress[/B]\nCableBox puts back resume points, watched status and last-played dates after it\nairs something, so surfing doesn't fill your 'In progress' list (Settings >\nViewing).  Settings > Tools > 'Clean up my In progress list' tidies up an older list.\n\n[B]Quick setup[/B]\nSettings > Tools > Quick setup: overnight sign-off (default 12 AM - 5 AM) and automatic\nprime-time lineups (default 8 - 11 PM) for every channel at once.  Prime-time\nslots appear in the weekly planner; edit any of them and it becomes yours.\n\n[B]Holidays[/B]\nHalloween (October, all-out on the 31st), Thanksgiving Day and Christmas (from the day\nafter Thanksgiving, all-out on the 24th and 25th): each channel mixes in its own holiday\nepisodes and movies (Kodi tags first, then genres such as Horror and Mystery, then titles) - a few at\nfirst, more as the day gets closer, all day on the day itself.  Optional holiday\ncommercial and bump folders.  The rest of the year Christmas and Thanksgiving episodes\nare saved for their season.  Settings > Seasons.\n\n[B]Off the air[/B]\nOff-air hours show a 1950s 'Please stand by' test card (or color bars), with an\noptional sign-off clip (anthem, farewell) and sign-on clip from your own folders.\n\n[B]Station IDs[/B]\nGive a channel a folder of station ID clips (\"You're watching...\") and one plays\nbetween programs, right before the next show starts.\n\n[B]Commercials & bumps[/B]\nPoint Settings at a folder of commercials and (optionally) bumps.  Breaks are cut\ninto shows to fill each half hour, like real cable.  Movie channels play commercials\nbetween films.  Without commercials the gap is filled with an 'Up next' card.\n'Check my commercials & bumps' shows which clips can't be used.\n\n[B]Files[/B]\nYour lineup lives in userdata/addon_data/script.cablebox42/channels.json if you\nprefer editing it by hand.\n\n[B]About[/B]\nCableBox 42 is designed, tested and maintained by Seadog McGrog.  Much of the code\nwas written with the help of Claude, an AI assistant made by Anthropic.  Anthropic is\nnot affiliated with this project and has not reviewed or endorsed it.\nInspired by FieldStation42 by Shane Mason (no shared code)."
+msgctxt "#32563"
+msgid "%s (from the logo folder)"
+msgstr ""
+
+msgctxt "#32564"
+msgid "Station logo for %s"
+msgstr ""
+
+msgctxt "#32565"
+msgid "Choose an image..."
+msgstr ""
+
+msgctxt "#32566"
+msgid "Use the logo folder (matched by name, call letters or number)"
+msgstr ""
+
+msgctxt "#32567"
+msgid "No logo"
+msgstr ""
+
+msgctxt "#32568"
+msgid "Station logo (PNG with a transparent background looks best)"
+msgstr ""
+
+msgctxt "#32569"
+msgid "Station logo: %s"
+msgstr ""
+
+msgctxt "#32570"
+msgid "Kodi can't show SVG images.  Convert the logo to PNG (keeping the transparent background) and choose that instead."
+msgstr ""
+
+msgctxt "#32571"
+msgid "Set the logo folder first: Settings > Viewing > Logo folder."
+msgstr ""
+
+msgctxt "#32572"
+msgid "Music for the TV Guide channel"
+msgstr ""
+
+msgctxt "#32573"
+msgid "Use the same music for the Weather Channel?"
+msgstr ""
+
+msgctxt "#32574"
+msgid "Do you have a folder of background music?[CR][CR]It plays behind the TV Guide and Weather channels - smooth jazz and elevator music are the classic choice. You can add this later in Settings."
+msgstr ""
+
+msgctxt "#32575"
+msgid "Choose another folder"
+msgstr ""
+
+msgctxt "#32576"
+msgid "Yes, the same"
+msgstr ""
+
+msgctxt "#32577"
+msgid "Music for the Weather Channel"
+msgstr ""
+
+msgctxt "#32578"
+msgid "none (your own)"
+msgstr ""
+
+msgctxt "#32579"
+msgid "None - use the channel's own name and logo"
+msgstr ""
+
+msgctxt "#32580"
+msgid "Station for channel %d"
+msgstr ""
+
+msgctxt "#32581"
+msgid "Branding by time of day"
+msgstr ""
+
+msgctxt "#32582"
+msgid "You have a TV Guide on 2 and Retrocast Weather on 25.[CR][CR]Next: Channel manager > Add a channel.  Commercials, bumps and music folders are in Settings, and Settings > Tools > 'Build my lineup automatically' can still build channels for you any time."
+msgstr ""
+
+msgctxt "#32583"
+msgid "Name during this block (e.g. CAM Jr.)"
+msgstr ""
+
+msgctxt "#32584"
+msgid "Choose logo..."
+msgstr ""
+
+msgctxt "#32585"
+msgid "Station: %s"
+msgstr ""
+
+msgctxt "#32586"
+msgid "Branding by time of day: %s"
+msgstr ""
+
+msgctxt "#32587"
+msgid "Rename this channel to %s and use its logo and call letters?"
+msgstr ""
+
+msgctxt "#32588"
+msgid "Logo for %s"
+msgstr ""
+
+msgctxt "#32589"
+msgid "%s (station)"
+msgstr ""
+
+msgctxt "#32590"
+msgid "Stations folder"
+msgstr ""
+
+
+
+msgctxt "#32599"
+msgid "Bumpers and station IDs"
+msgstr ""
+
+msgctxt "#32600"
+msgid "One folder for every channel"
+msgstr ""
+
+msgctxt "#32601"
+msgid "Choose a folder of bumps / station IDs (short clips played right before the show comes back). All channels share it."
+msgstr ""
+
+msgctxt "#32602"
+msgid "A folder for each channel"
+msgstr ""
+
+msgctxt "#32603"
+msgid "Choose where (your media drive is best) - CableBox makes a folder per channel with bumps, ids and commercials inside, ready for clips."
+msgstr ""
+
+msgctxt "#32604"
+msgid "Skip for now"
+msgstr ""
+
+msgctxt "#32605"
+msgid "Add them later in Settings."
+msgstr ""
+
+msgctxt "#32606"
+msgid "Where should the channel folders go?"
+msgstr ""
+
+msgctxt "#32607"
+msgid "Also reset all CableBox settings?"
+msgstr ""
+
+msgctxt "#32608"
+msgid "CableBox has been reset"
+msgstr ""
+
+msgctxt "#32609"
+msgid "Start over with a fresh CableBox?[CR][CR]This deletes your channels, weekly-planner pins and schedules. Your videos, bumps, commercials and station folders are not touched."
+msgstr ""
+
+msgctxt "#32610"
+msgid "Keep my settings (commercials, bumps, music folders, weather...)"
+msgstr ""
+
+msgctxt "#32611"
+msgid "Reset settings to the defaults too"
+msgstr ""
+
+msgctxt "#32612"
+msgid "Last chance: this can't be undone.[CR][CR]Start over now?"
+msgstr ""
+
+msgctxt "#32613"
+msgid "Continue"
+msgstr ""
+
+msgctxt "#32614"
+msgid "Start over"
+msgstr ""
+
+
+msgctxt "#32617"
+msgid "Every TV show"
+msgstr ""
+
+msgctxt "#32618"
+msgid "Saturday Morning Cartoons"
+msgstr ""
+
+msgctxt "#32619"
+msgid "Sunday Movie"
+msgstr ""
+
+msgctxt "#32620"
+msgid "Morning News"
+msgstr ""
+
+msgctxt "#32621"
+msgid "Daytime Game Shows"
+msgstr ""
+
+msgctxt "#32622"
+msgid "Afternoon Soaps"
+msgstr ""
+
+msgctxt "#32623"
+msgid "After School"
+msgstr ""
+
+msgctxt "#32624"
+msgid "Early Evening"
+msgstr ""
+
+msgctxt "#32625"
+msgid "Late Night"
+msgstr ""
+
+msgctxt "#32626"
+msgid "Network %d"
+msgstr ""
+
+msgctxt "#32627"
+msgid "[B]Done[/B]"
+msgstr ""
+
+msgctxt "#32628"
+msgid "Back to the previous screen"
+msgstr ""
+
+msgctxt "#32629"
+msgid "[B]Close[/B]"
+msgstr ""
+
+msgctxt "#32630"
+msgid "%s saved"
+msgstr ""
+
+msgctxt "#32940"
+msgid "Remote CC button"
+msgstr ""
+
+msgctxt "#32941"
+msgid "Captions: show programmes in Kodi's full-screen player (needed on most TV boxes)"
+msgstr ""
+
+msgctxt "#32942"
+msgid "Captions: rewind 1 second so embedded subtitles appear"
+msgstr ""
+
+msgctxt "#32943"
+msgid "Automatic (CoreELEC only)"
+msgstr ""
+
+msgctxt "#32944"
+msgid "Always"
+msgstr ""
+
+msgctxt "#32945"
+msgid "Never"
+msgstr ""
+
+
+
+msgctxt "#32948"
+msgid "What I set up"
+msgstr ""
+
+msgctxt "#32949"
+msgid "Your lineup is ready.[CR][CR]Start watching?"
+msgstr ""
+
+msgctxt "#32950"
+msgid "[B]Your channels[/B]"
+msgstr ""
+
+msgctxt "#32951"
+msgid "[B]Next steps[/B]"
+msgstr ""
+
+msgctxt "#32952"
+msgid "  Channel manager > a channel > Branding & clips: logo, bumps, IDs, commercials in use"
+msgstr ""
+
+msgctxt "#32953"
+msgid "  Channel manager > Shows without a good channel: shows nothing picks up, or that only just fit"
+msgstr ""
+
+msgctxt "#32954"
+msgid "  Closed captions: main menu, or the Menu button while watching"
+msgstr ""
+
+msgctxt "#32955"
+msgid "  This summary again: Channel manager > Lineup summary"
+msgstr ""
+
+msgctxt "#32956"
+msgid "No logo found. Put a logo.png in the channel's folder, or choose one under Station logo."
+msgstr ""
+
+msgctxt "#32957"
+msgid " There's no logo.png, so the first image in the folder is used."
+msgstr ""
+
+msgctxt "#32958"
+msgid "Station folders"
+msgstr ""
+
+msgctxt "#32959"
+msgid "  [COLOR grey]built-in station[/COLOR]"
+msgstr ""
+
+msgctxt "#32960"
+msgid "[B]Station folders[/B]  not set up - Settings > Tools > 'Station folders' gives each channel a folder for its own logo, bumps, IDs and commercials."
+msgstr ""
+
+msgctxt "#32961"
+msgid "[B]Shows without a good channel[/B]  [COLOR grey]unplaced or weakly matched[/COLOR]"
+msgstr ""
+
+msgctxt "#32962"
+msgid "[B]Lineup summary[/B]  [COLOR grey]what's set up, and where[/COLOR]"
+msgstr ""
+
+msgctxt "#32963"
+msgid "Logo: %s"
+msgstr ""
+
+msgctxt "#32964"
+msgid "Station IDs"
+msgstr ""
+
+msgctxt "#32965"
+msgid "Select to switch them on."
+msgstr ""
+
+msgctxt "#32966"
+msgid " (its %s folder is empty)"
+msgstr ""
+
+msgctxt "#32967"
+msgid "%s: none"
+msgstr ""
+
+msgctxt "#32968"
+msgid "Rename its station folder too?[CR][CR]%s  ->  %s[CR][CR]Otherwise the channel stops using that folder's logo and clips."
+msgstr ""
+
+msgctxt "#32969"
+msgid "Leave it"
+msgstr ""
+
+msgctxt "#32970"
+msgid "Rename folder"
+msgstr ""
+
+msgctxt "#32971"
+msgid "[B]Station folders[/B]  [COLOR grey]%s[/COLOR]"
+msgstr ""
+
+msgctxt "#32972"
+msgid "%d new folders made - nothing that was already there was changed."
+msgstr ""
+
+msgctxt "#32973"
+msgid "[B]Folders no channel uses[/B]  [COLOR grey]renamed channels? Rename the folder to the channel's name, or use the channel's Branding & clips screen[/COLOR]"
+msgstr ""
+
+msgctxt "#32974"
+msgid "%s   [COLOR grey]%s[/COLOR]"
+msgstr ""
+
+msgctxt "#32975"
+msgid "        %s   logo: %s"
+msgstr ""
+
+msgctxt "#32976"
+msgid "        Program guide for every channel"
+msgstr ""
+
+msgctxt "#32977"
+msgid "        Local forecast (Settings > Weather)"
+msgstr ""
+
+msgctxt "#32978"
+msgid "shows whose genres are too small for a channel of their own"
+msgstr ""
+
+msgctxt "#32979"
+msgid "a share of every genre, in a network-style day"
+msgstr ""
+
+msgctxt "#32980"
+msgid "[B]Branding & clips[/B] (logo, bumps, IDs, commercials in use)"
+msgstr ""
+
+msgctxt "#32981"
+msgid "The image you chose in the channel editor (Station logo)."
+msgstr ""
+
+msgctxt "#32982"
+msgid "The image you chose for this time block."
+msgstr ""
+
+msgctxt "#32983"
+msgid "From the channel's station folder."
+msgstr ""
+
+msgctxt "#32984"
+msgid "From this time block's own folder."
+msgstr ""
+
+msgctxt "#32985"
+msgid "CableBox's built-in station logo. Put a logo.png in the channel's folder to use your own."
+msgstr ""
+
+msgctxt "#32986"
+msgid "Matched by name in the logo folder (Settings > Viewing)."
+msgstr ""
+
+msgctxt "#32987"
+msgid "Switched off in the channel editor (Station logo)."
+msgstr ""
+
+msgctxt "#32988"
+msgid " - %d clips in its folder aren't used"
+msgstr ""
+
+msgctxt "#32989"
+msgid "%s: off for this channel%s"
+msgstr ""
+
+msgctxt "#32990"
+msgid "%s: %d clips from the station folder"
+msgstr ""
+
+msgctxt "#32991"
+msgid "%s/%s - used before any other folder."
+msgstr ""
+
+msgctxt "#32992"
+msgid "%s: channel folder %s"
+msgstr ""
+
+msgctxt "#32993"
+msgid "Set in the channel editor."
+msgstr ""
+
+msgctxt "#32994"
+msgid "%s: shared folder %s"
+msgstr ""
+
+msgctxt "#32995"
+msgid "From Settings (all channels)."
+msgstr ""
+
+msgctxt "#32996"
+msgid "Breaks show an 'Up next' card. Add clips to the channel's commercials folder or set a folder in Settings."
+msgstr ""
+
+msgctxt "#32997"
+msgid "Add clips to the channel's %s folder."
+msgstr ""
+
+msgctxt "#32998"
+msgid "Station folder: not set up"
+msgstr ""
+
+msgctxt "#32999"
+msgid "Select to choose where channel folders go (Settings > Viewing > Stations folder)."
+msgstr ""
+
+msgctxt "#33000"
+msgid "[B]Create or repair this channel's folders[/B]"
+msgstr ""
+
+msgctxt "#33001"
+msgid "Adds what's missing (bumps, ids, commercials, time blocks). Never deletes anything."
+msgstr ""
+
+msgctxt "#33002"
+msgid "%s - branding & clips"
+msgstr ""
+
+msgctxt "#33003"
+msgid "Couldn't rename the folder (a folder with that name may already exist)."
+msgstr ""
+
+msgctxt "#33004"
+msgid "%s   [COLOR orange]no folder[/COLOR]"
+msgstr ""
+
+msgctxt "#33005"
+msgid "no programming yet"
+msgstr ""
+
+msgctxt "#33006"
+msgid "goes by %s at times"
+msgstr ""
+
+msgctxt "#33007"
+msgid "signs off %s"
+msgstr ""
+
+msgctxt "#33008"
+msgid "%d pinned shows"
+msgstr ""
+
+msgctxt "#33009"
+msgid "Station folder: none yet"
+msgstr ""
+
+msgctxt "#33010"
+msgid "%s (%s-%s): %s"
+msgstr ""
+
+msgctxt "#33011"
+msgid "No folder of its own - the channel's clips are used. Repair folders to make one."
+msgstr ""
+
+msgctxt "#33012"
+msgid "Use an existing folder for this channel..."
+msgstr ""
+
+msgctxt "#33013"
+msgid "        %s: %s"
+msgstr ""
+
+
+msgctxt "#33015"
+msgid "Station folder: %s"
+msgstr ""
+
+msgctxt "#33016"
+msgid "Select to look inside. "
+msgstr ""
+
+msgctxt "#33017"
+msgid "Looking for a folder named %s in %s. Select to make it."
+msgstr ""
+
+msgctxt "#33018"
+msgid "Own folder %s: %s"
+msgstr ""
+
+msgctxt "#33019"
+msgid "%d folders match no channel - e.g. one made before a rename."
+msgstr ""
+
+msgctxt "#33020"
+msgid "Closed captions: %s"
+msgstr ""
+
+msgctxt "#33021"
+msgid "Lineup summary"
+msgstr ""
+
+msgctxt "#33022"
+msgid "Closed captions on"
+msgstr ""
+
+msgctxt "#33023"
+msgid "Closed captions off"
+msgstr ""
+
+msgctxt "#33024"
+msgid "Nothing was missing"
+msgstr ""
+
+msgctxt "#33025"
+msgid "%d folders made"
+msgstr ""
+
+msgctxt "#33026"
+msgid "Which folder belongs to %s?"
+msgstr ""
+
+msgctxt "#33027"
+msgid "Switch %s on for %s?"
+msgstr ""
+
+msgctxt "#33028"
+msgid "Renamed to %s"
+msgstr ""
+
+msgctxt "#33029"
+msgid "Unknown language"
+msgstr ""
+
+msgctxt "#33030"
+msgid "Captions on - this programme has none"
+msgstr ""
+
+msgctxt "#33031"
+msgid "Done - press the subtitle button while watching"
+msgstr ""
+
+msgctxt "#33032"
+msgid "Captions off"
+msgstr ""
+
+msgctxt "#33033"
+msgid "Captions on"
+msgstr ""
+
+msgctxt "#33034"
+msgid "No captions for this programme"
+msgstr ""
+
+msgctxt "#33035"
+msgid "Captions: %s"
+msgstr ""
+
+msgctxt "#33036"
+msgid "Captions (CC)"
+msgstr ""
+
+msgctxt "#33037"
+msgid "The remote's subtitle button is set up for CableBox.[CR]Remove it?"
+msgstr ""
+
+msgctxt "#33038"
+msgid "Kodi only sends the remote's subtitle button to its own full-screen player. Add a small keymap so it switches captions on and off in CableBox too?[CR]Elsewhere in Kodi it toggles subtitles of a playing video."
+msgstr ""
+
+msgctxt "#33039"
+msgid "Captions off for this programme"
+msgstr ""
+
+msgctxt "#33040"
+msgid "Captions on: %s"
+msgstr ""
+
+msgctxt "#33041"
+msgid "Load a subtitle file..."
+msgstr ""
+
+msgctxt "#33042"
+msgid "Subtitle file"
+msgstr ""
+
+msgctxt "#33043"
+msgid "Removed"
+msgstr ""
+
+msgctxt "#33044"
+msgid "Couldn't write the keymap file."
+msgstr ""
+
+msgctxt "#33045"
+msgid "forced"
+msgstr ""
+
+msgctxt "#33046"
+msgid "hard of hearing"
+msgstr ""
+
+msgctxt "#33047"
+msgid "This programme has no captions of its own"
+msgstr ""
+
+msgctxt "#33048"
+msgid "Search online (Kodi's subtitle search)..."
+msgstr ""
+
+msgctxt "#33049"
+msgid "Press Menu for captions, sleep timer and more"
+msgstr ""
+
+msgctxt "#33050"
+msgid "Caption options..."
+msgstr ""
+
+msgctxt "#33051"
+msgid "Other source"
+msgstr ""
+
+msgctxt "#33052"
+msgid "very weak"
+msgstr ""
+
+msgctxt "#33053"
+msgid "minor genre"
+msgstr ""
+
+msgctxt "#33054"
+msgid "Auto-placed: its genres are too small for a channel of their own"
+msgstr ""
+
+msgctxt "#33055"
+msgid "All movies (catch-all)"
+msgstr ""
+
+msgctxt "#33056"
+msgid "Every show (catch-all)"
+msgstr ""
+
+msgctxt "#33057"
+msgid "strong"
+msgstr ""
+
+msgctxt "#33058"
+msgid "good"
+msgstr ""
+
+msgctxt "#33059"
+msgid "weak"
+msgstr ""
+
+msgctxt "#33060"
+msgid "Checking where every show airs..."
+msgstr ""
+
+msgctxt "#33061"
+msgid "Needs a look"
+msgstr ""
+
+msgctxt "#33062"
+msgid "Not on any channel"
+msgstr ""
+
+msgctxt "#33063"
+msgid "Weak matches"
+msgstr ""
+
+msgctxt "#33064"
+msgid "Marked as fine"
+msgstr ""
+
+msgctxt "#33065"
+msgid "Your pick"
+msgstr ""
+
+msgctxt "#33066"
+msgid "On a long show list"
+msgstr ""
+
+msgctxt "#33067"
+msgid "Folder %s"
+msgstr ""
+
+msgctxt "#33068"
+msgid "%s network match"
+msgstr ""
+
+msgctxt "#33069"
+msgid "Studio contains '%s'"
+msgstr ""
+
+msgctxt "#33070"
+msgid "Kodi tag %s"
+msgstr ""
+
+msgctxt "#33071"
+msgid "Playlist %s"
+msgstr ""
+
+msgctxt "#33072"
+msgid "Title contains '%s'"
+msgstr ""
+
+msgctxt "#33073"
+msgid "%s genre"
+msgstr ""
+
+msgctxt "#33074"
+msgid "Shows from the %ss"
+msgstr ""
+
+
+msgctxt "#33076"
+msgid "Put it on a channel..."
+msgstr ""
+
+msgctxt "#33077"
+msgid "Don't air it on any channel automatically"
+msgstr ""
+
+
+msgctxt "#33079"
+msgid "Shows without a good channel"
+msgstr ""
+
+msgctxt "#33080"
+msgid "main genre"
+msgstr ""
+
+msgctxt "#33081"
+msgid "2nd genre"
+msgstr ""
+
+msgctxt "#33082"
+msgid "3rd genre"
+msgstr ""
+
+msgctxt "#33083"
+msgid "%s (%s)"
+msgstr ""
+
+msgctxt "#33084"
+msgid "Movie set '%s'"
+msgstr ""
+
+msgctxt "#33085"
+msgid "Kodi tag '%s'"
+msgstr ""
+
+msgctxt "#33086"
+msgid "Movies from %s to %s"
+msgstr ""
+
+msgctxt "#33087"
+msgid "Moved here so %s has enough shows (best fit: %s, %s)"
+msgstr ""
+
+msgctxt "#33088"
+msgid "now - "
+msgstr ""
+
+msgctxt "#33089"
+msgid "Put %s on..."
+msgstr ""
+
+msgctxt "#33090"
+msgid "%s now airs on %s"
+msgstr ""
+
+msgctxt "#33091"
+msgid "%s hidden on %s"
+msgstr ""
+
+msgctxt "#33092"
+msgid "[COLOR orange]not on any channel[/COLOR]"
+msgstr ""
+
+msgctxt "#33093"
+msgid "Every show has a good home channel."
+msgstr ""
+
+msgctxt "#33094"
+msgid "Show"
+msgstr ""
+
+msgctxt "#33095"
+msgid "No channel of its own - only in %s's time blocks"
+msgstr ""
+
+msgctxt "#33096"
+msgid "No channel's programming includes it"
+msgstr ""
+
+msgctxt "#33097"
+msgid "Show it here again"
+msgstr ""
+
+msgctxt "#33098"
+msgid "Don't air it on %s"
+msgstr ""
+
+msgctxt "#33099"
+msgid "Keep %s off every channel's automatic programming?[CR][CR]It's hidden on %d channels. Pinned slots in the weekly planner still air it. 'What's on this channel' brings it back."
+msgstr ""
+
+
+
+msgctxt "#33102"
+msgid "Hidden on %s"
+msgstr ""
+
+msgctxt "#33103"
+msgid "It's fine on %s"
+msgstr ""
+
+msgctxt "#33104"
+msgid "Shows without a good channel (unplaced or weak matches)..."
+msgstr ""
+
+# Added in 1.1.0
+msgctxt "#33105"
+msgid "Shows that aired on %s"
+msgstr ""
+
+msgctxt "#33106"
+msgid "On or off for every programme. While watching: the Menu button"
+msgstr ""
+
+msgctxt "#33107"
+msgid "manual pick - none of its sources match"
+msgstr ""
+
+msgctxt "#33108"
+msgid "TV shows only (movies may repeat)."
+msgstr ""
+
+msgctxt "#33109"
+msgid "[B]Showing: %s (%d)[/B]"
+msgstr ""
+
+msgctxt "#33110"
+msgid "Select to change. Not on any channel %d, weak %d, marked as fine %d. %s"
+msgstr ""
+
+# Added in 1.0.15
+msgctxt "#33014"
+msgid "[B]What goes where[/B]  (in each channel's folder)[CR]  logo.png ............ the channel's logo (transparent PNG looks best)[CR]  bumps/ .............. short clips before the show comes back[CR]  ids/ .................. station IDs, between programmes[CR]  commercials/ ...... this channel's own commercials[CR]  <time block>/ ...... the same again, used only in that block (e.g. CAM Jr.)[CR]A folder is matched by the channel's name, call letters or number ('Channel 7'). A new logo shows within a couple of minutes; new clips go into the breaks CableBox plans from then on (Tools > Rebuild schedules uses them straight away)."
+msgstr ""
+
+msgctxt "#33075"
+msgid "[B]Remote control[/B]\nCH+ / CH-, Up / Down, Page Up / Down ... change channel\nNumber keys ...................................... go to channel\nLeft ................................................... last channel\nRight ................................................ what's on now\nOK / Info ........................................... channel banner\nMenu / Context ............ captions, sleep timer & more\nBack / Stop ...................................... turn off the TV\n\n[B]Closed captions[/B]\nMain menu > Closed captions, or the Menu button while watching, switches captions\non or off for every programme (like a TV's CC setting).  'Caption options' in that\nmenu picks a track or loads a subtitle file.  To use the remote's subtitle button,\nrun Settings > Tools > Remote CC button once.\n\n[B]Station folders[/B]\nSet a Stations folder (Settings > Viewing) and CableBox keeps one folder per channel,\nnamed after the channel (or its call letters, or 'Channel 7'): logo.png, bumps/,\nids/ and commercials/, plus a folder per time block such as CAM Jr.  Channel\nmanager > channel > Branding & clips shows what the channel really uses and where\nit comes from, and makes or repairs its folders.  Renaming a channel offers to\nrename its folder too.\n\n[B]How the schedule works[/B]\nNothing to compile.  Each channel pulls from your Kodi library (shows, genres,\ndecades, movies, smart playlists) or from folders, and its schedule writes itself\nas time goes by.  'Same show same time every day' channels air a fixed daily\nlineup and series always continue with the next episode.  Time blocks let you put\ncartoons on Saturday mornings or movies in prime time.\n\nEdit a channel and its schedule rebuilds itself from now on - episode progress is kept.\n\n[B]One channel per show[/B]\nEach TV show has one home channel - the one it fits best (your own picks first,\nthen folders/tags/studios, then its main genre).  A show whose genres are too\nsmall for a channel of their own goes on the biggest genre network.  And the same show is never on two channels at the same time.\nSettings > Programming > 'Shows on more than one channel' changes this.\n\n[B]Menu and tools[/B]\nThe menu keeps to the everyday things: Watch TV, What's on now (tune straight to a\nshow), the Channel manager, the Weekly planner, Settings and Help.  Lineup tools\n(build a new lineup, quick setup, move shows) and maintenance (check my videos,\nclean up In progress, rebuild schedules, start over) are on the Tools page in Settings.\n\n[B]Fine-tuning[/B]\nSettings > Tools > 'Move shows between channels': pick a show (say, Good Eats) and tick the channels it\nshould air on.\nUnticking hides it there even if the channel's genre includes it.\nEach channel also has 'What's on this channel' - a checklist of everything it airs.\nChannel manager > 'Shows without a good channel' lists shows no channel picks up\nand shows that only just fit where they are, with the reason, so you can move them.\n\n[B]Studio channels[/B]\nAdd programming > 'A studio / network' makes e.g. a Disney channel from every movie\nand show whose studio contains 'Disney'.  Kodi tags work the same way.\n\n[B]Weekly planner[/B]\nEach channel has a 7-day grid (Channel manager > channel > Weekly planner, or\nWeekly planner in the main menu).  Press OK on a half-hour to pin a show there -\ne.g. Seinfeld, Fridays 8:00 PM, one hour, in order: every week it continues with\nthe next episodes.  Pinned slots always start on time; the automatic scheduler\nfills everything else and never runs into them.  You can also paint off-air\nhours, copy a day to other days, or clear a day (Menu button).\n\n[B]Your watch progress[/B]\nCableBox puts back resume points, watched status and last-played dates after it\nairs something, so surfing doesn't fill your 'In progress' list (Settings >\nViewing).  Settings > Tools > 'Clean up my In progress list' tidies up an older list.\n\n[B]Quick setup[/B]\nSettings > Tools > Quick setup: overnight sign-off (default 12 AM - 5 AM) and automatic\nprime-time lineups (default 8 - 11 PM) for every channel at once.  Prime-time\nslots appear in the weekly planner; edit any of them and it becomes yours.\n\n[B]Holidays[/B]\nHalloween (October, all-out on the 31st), Thanksgiving Day and Christmas (from the day\nafter Thanksgiving, all-out on the 24th and 25th): each channel mixes in its own holiday\nepisodes and movies (Kodi tags first, then genres such as Horror and Mystery, then titles) - a few at\nfirst, more as the day gets closer, all day on the day itself.  Optional holiday\ncommercial and bump folders.  The rest of the year Christmas and Thanksgiving episodes\nare saved for their season.  Settings > Seasons.\n\n[B]Off the air[/B]\nOff-air hours show a 1950s 'Please stand by' test card (or color bars), with an\noptional sign-off clip (anthem, farewell) and sign-on clip from your own folders.\n\n[B]Station IDs[/B]\nGive a channel a folder of station ID clips (\"You're watching...\") and one plays\nbetween programs, right before the next show starts.\n\n[B]Commercials & bumps[/B]\nPoint Settings at a folder of commercials and (optionally) bumps.  Breaks are cut\ninto shows to fill each half hour, like real cable.  Movie channels play commercials\nbetween films.  Without commercials the gap is filled with an 'Up next' card.\n'Check my commercials & bumps' shows which clips can't be used.\n\n[B]Files[/B]\nYour lineup lives in userdata/addon_data/script.cablebox42/channels.json if you\nprefer editing it by hand.\n\n[B]Step-by-step guide[/B]\nHOWTO.md in the add-on's folder, or online:\ngithub.com/SeadogMcGrog/script.cablebox42/blob/main/HOWTO.md\n\n[B]About[/B]\nCableBox 42 is designed, tested and maintained by Seadog McGrog.  Much of the code\nwas written with the help of Claude, an AI assistant made by Anthropic.  Anthropic is\nnot affiliated with this project and has not reviewed or endorsed it.\nInspired by FieldStation42 by Shane Mason (no shared code)."
+msgstr ""
+
+msgctxt "#33078"
+msgid "Choose where your station folders should go.[CR][CR]CableBox makes one folder per channel, with bumps, ids and commercials inside - drop clips (and a logo.png) in and CableBox picks them up."
 msgstr ""

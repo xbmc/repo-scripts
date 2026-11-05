@@ -1,0 +1,88 @@
+v1.1.0 (2026-11-04) - everything since 1.0.0
+
+Broadcast networks and stations
+- Three broadcast networks on 3, 4 and 5 with a network-style day: morning news,
+  daytime game shows, afternoon soaps, after-school cartoons, prime time and
+  late-night talk, Saturday morning cartoons and a Sunday movie
+- Shows go to the station for the network they aired on (NBC to Keystone,
+  Nickelodeon to Chameleon, PBS to PES...), and a network's own shows never air
+  on another network
+- Built-in fictional stations with their own logos and call letters for most
+  channels; weather on 25, news on 42
+- Branding by time of day: a channel can go by another name and logo in a time
+  block (CAM Jr. in the mornings, Cam O Nite at night)
+- Station logo as a translucent "bug" in a corner during shows and in the banner
+
+Station folders (your own logos, bumps, station IDs and commercials)
+- One folder per channel, plus a folder per time block, in your Stations folder
+- Channel editor > Branding & clips: the logo, bumps, station IDs and
+  commercials a channel really uses, where each comes from, and a warning when
+  clips sit in a folder that is switched off for the channel; makes, repairs or
+  browses the channel's folders, or adopts an unused one
+- A channel no longer picks up another channel's folder (such as
+  "Disney Showcase 13" for channel 3): folders match the channel's name, call
+  letters or number ("7", "Channel 7", "CH 7") exactly
+- Settings > Tools > Station folders makes only what's missing, reuses existing
+  folders, and reports which folder each channel uses and which no channel uses
+- Renaming a channel (or its call letters or station) offers to rename its
+  folder too - never overwriting anything
+
+Finding the right channel for every show
+- Channel manager > Shows without a good channel (also on the Tools page):
+  shows no channel picks up, and shows that only just fit where they are, each
+  with the reason ("Western (main genre) -> Tumbleweed TV", "No channel's
+  programming includes it"); put a show on a channel, mark it as fine, or keep
+  it off a channel or off the air
+- Lineup summary after the lineup builder, and any time from the Channel
+  manager: every channel, where its shows come from, its folders, next steps
+
+Closed captions
+- CC on or off for every programme, like a TV's CC setting: main menu > Closed
+  captions, or the Menu button while watching
+- Caption options while a programme is on: choose the track, load a subtitle
+  file, search online (without pausing live TV)
+- Captions stay on through commercial breaks and channel changes, and come back
+  within moments of a channel change
+- Sidecar subtitle files (Movie.en.srt, Movie.en.forced.srt) are preferred over
+  a rip's own tracks, named and ranked the way Kodi reads them
+- Blu-ray rips: forced subtitles for foreign-language scenes show on TV boxes;
+  captions off keeps the forced track
+- Broadcast (CEA-608) captions picked up when they appear a few seconds in
+- TV boxes (CoreELEC, Android, Raspberry Pi): while captions are on, programmes
+  play in Kodi's full-screen player with CableBox's banner, logo and channel
+  number on top; CoreELEC subtitles inside the file now appear
+- Captions switched from a phone remote (Yatse, Kore) or Kodi's own menus count
+- "CC" in the channel banner for programmes that have captions
+- Settings > Tools > Remote CC button lets the remote's subtitle key work
+- A one-time tip in the TV points to the Menu button for captions and more
+
+The TV itself
+- Turn-on and turn-off effect with sound (Settings > Viewing); the turn-off
+  sound is heard in full, with the programme silenced first
+- Static between channels: Automatic, Quick or Video clip (fixes the sound on
+  Windows)
+- Stays in the TV window, with no loading wheel when changing channel
+- Weather Channel: its own retro icons; the city you type wins over Kodi's
+  weather location
+- Setup asks for guide and weather music
+- Disc images, Blu-ray folders and .strm files now work fully: captions, full
+  screen, and the static clears as soon as the picture is on
+- Fixed: after the guide or weather channel, changing channel could lose the
+  subtitle and audio track lists in Kodi, Yatse and Kore
+
+Documentation
+- HOWTO.md: step-by-step guide from installing to building your own stations
+- Help explains captions, station folders and the new tools
+
+v1.0.0 (2026-10-31) - first release
+- Builds a cable TV lineup from your Kodi library: genre, decade, studio and
+  movie channels, one home channel per show
+- Shows air on a real clock with commercial breaks, bumps and station IDs from
+  your own folders
+- Program guide channel and weather channel with background music
+- Weekly planner for pinned time slots, automatic prime time, overnight
+  sign-off with a "Please Stand By" card
+- Holiday programming for Halloween, Thanksgiving and Christmas
+- Short programmes packed into one time slot; CH 03 channel number and
+  optional CRT effect
+- Watch progress protection, AV1 and broken-file handling

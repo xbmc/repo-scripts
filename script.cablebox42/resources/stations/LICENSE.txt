@@ -1,0 +1,13 @@
+Station logos (the PNG files in this folder)
+
+The fictional station logos in this folder (Keystone, Beacon, Horizon, Retrocast
+Weather, Animation Station, Chameleon, CAM Jr., Cam O Nite, The Dexter Channel, The
+Exploration Channel, PES, Comedy Corner, Curtain Call, Heartstrings TV, Siren TV,
+High Octane TV, Unscripted, Jackpot TV, Whodunit, Tumbleweed TV, News 42, Popcorn
+TV, Picture Show, Orbit TV and Boombox TV) were created for CableBox 42 with the
+help of an AI image generator. To the extent any rights exist in them, they are
+dedicated to the public domain under CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/
+
+You may copy, modify and use them for any purpose without asking. The stations are
+fictional; any resemblance to real channels is not intended.
