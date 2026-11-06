@@ -593,9 +593,21 @@ msgctxt "#32125"
 msgid "Trakt Most Played"
 msgstr "Trakt Most Played"
 
+msgctxt "#32126"
+msgid "Select Country"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Country for the TMDB Now Playing and Upcoming lists"
+msgstr ""
+
 msgctxt "#32128"
 msgid "Skip"
 msgstr "Пропустить"
+
+msgctxt "#32129"
+msgid "Failed to load the country list"
+msgstr ""
 
 msgctxt "#32130"
 msgid "Multi-Art..."
@@ -628,6 +640,10 @@ msgstr "Автообновление"
 msgctxt "#32137"
 msgid "Automatically update IMDb ratings in your library"
 msgstr "Автоматически обновлять рейтинги IMDb в вашей медиатеке"
+
+msgctxt "#32138"
+msgid "Recommended"
+msgstr ""
 
 msgctxt "#32139"
 msgid "After library scan"

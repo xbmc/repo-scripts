@@ -1,12 +1,14 @@
-"""Settings-screen actions for the provider API keys and the Trakt authorization."""
+"""Settings-screen actions for the provider API keys, Trakt authorization and TMDB country."""
 from __future__ import annotations
+
+import unicodedata
 
 import xbmc
 import xbmcgui
 
 from lib.kodi.client import ADDON, log
 from lib.kodi.settings import KodiSettings
-from lib.infrastructure.dialogs import DialogProgress, show_notification
+from lib.infrastructure.dialogs import DialogProgress, show_notification, show_select
 
 
 def edit_api_key(provider: str) -> None:
@@ -135,6 +137,34 @@ def test_api_key(provider: str) -> None:
             ADDON.getLocalizedString(32104).format(config['name']),
             ADDON.getLocalizedString(32095).format(str(e))
         )
+
+
+def select_region() -> None:
+    """Select and store the country for TMDB's cinema lists from TMDB's own country list."""
+    from lib.data.api.client import RateLimitHit, RetryableError
+    from lib.data.api.tmdb import ApiTmdb
+
+    heading = xbmc.getLocalizedString(574)
+    try:
+        countries = ApiTmdb().get_countries()
+    except (RateLimitHit, RetryableError):
+        countries = []
+    if not countries:
+        show_notification(heading, ADDON.getLocalizedString(32129),
+                          xbmcgui.NOTIFICATION_ERROR, 4000)
+        return
+
+    countries.sort(key=lambda c: unicodedata.normalize("NFKD", c["native_name"]).casefold())
+    codes = [c["iso_3166_1"] for c in countries]
+    current = KodiSettings.tmdb_region()
+    choice = show_select(heading, [c["native_name"] for c in countries],
+                         preselect=codes.index(current) if current in codes else -1)
+    if choice < 0:
+        return
+
+    ADDON.getSettings().setString("tmdb_region", codes[choice])
+    ADDON.setSetting("tmdb_region", codes[choice])
+    KodiSettings.clear_cache()
 
 
 def authorize_trakt() -> None:
