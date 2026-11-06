@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.skin.info.service"
 	   name="Skin Info Service"
-	   version="2.0.1"
+	   version="2.0.2"
 	   provider-name="MikeSiLVO">
 	<requires>
 		<import addon="xbmc.python" version="3.0.1" />
@@ -36,25 +36,10 @@
 			<fanart>fanart.jpg</fanart>
 		</assets>
 		<news>
-2.0.1
-- New widgets: Continue Watching, Next Up (Favourites), Recent Videos, Favourites, Upcoming Episodes and TMDB Discover
-- Trakt widgets for watchlist, history, in progress, Next Up, most played and lists
-- Online properties for episodes and for widget items outside the library
-- Live TV properties for the guide, channels, recordings and timers, plus a Fix match context item
-- Player properties for the playing season, live TV, artist discography and similar artists
-- New properties: awards, Rotten Tomatoes counts, star ratings, HDR, audio and subtitle language, watch time, image color
-- Plugin path for numbered infolabels, such as hourly weather
-- Ratings sources can each be turned off, and the IMDb Top 250 can update daily
-- Artwork review covers episodes and music videos, plus Fanart.tv 4K backgrounds and season keyart
-- Estuary versions of the actor, video info, artwork and image dialogs
-- Actor info covers crew, and TMDB search can open the info dialog
-- Slideshow can follow a playlist or library node, and includes music videos
-- Metadata editor handles movie sets and song moods, NFO export adds TV show status (Piers+)
-- Fix a rare Kodi crash when closing a library window
-- Fix home properties and blur being cleared by modal dialogs
-- Fix ratings and awards on the wrong item when a movie and a show share a TMDB id
-- Fix Library.Refreshed for removals, library clean and scans
-- Fix texture cleanup keeping unused actor photos from .actors folders
+2.0.2
+- TMDB country setting for the Now Playing and Upcoming widgets
+- Estuary video and actor info show the full plot and match Estuary's sizes
+- Estuary video info: Director and Writer open person info, Recommended button label
 		</news>
 		<summary lang="cs_CZ">Poskytuje vzhledům podrobné informace o médiích a grafiku.</summary>
 		<summary lang="en_GB">Provides rich media info and artwork to skins.</summary>

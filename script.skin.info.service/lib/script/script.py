@@ -264,7 +264,7 @@ def _handle_export_nfo(args: dict) -> None:
 
 
 def _handle_settings_action(args: dict) -> None:
-    """Run an API key or Trakt authorization action from the add-on settings."""
+    """Run an API key, Trakt authorization or TMDB country action from the add-on settings."""
     from lib.data.api import settings as api_settings
     sub_action = args.get('sub_action')
     provider = args.get('provider')
@@ -280,6 +280,8 @@ def _handle_settings_action(args: dict) -> None:
         api_settings.test_trakt_connection()
     elif sub_action == "revoke_trakt_authorization":
         api_settings.revoke_trakt_authorization()
+    elif sub_action == "select_region":
+        api_settings.select_region()
 
 
 def _handle_arttest(args: dict) -> None:

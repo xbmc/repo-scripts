@@ -21,7 +21,7 @@
 			<height>1080</height>
 			<control type="group">
 				<left>66</left>
-				<top>150</top>
+				<top>154</top>
 				<animation type="Conditional" condition="String.IsEmpty(Window.Property(IsTop)) | Container(1500).IsUpdating | Container(1501).IsUpdating | Container(1502).IsUpdating | Container(1503).IsUpdating | Container(1505).IsUpdating | Container(1506).IsUpdating" reversible="false">
 					<effect type="fade" end="0" />
 					<effect type="slide" start="-320" end="-320" />
@@ -38,7 +38,7 @@
 					<left>-16</left>
 					<top>-16</top>
 					<width>566</width>
-					<height>841</height>
+					<height>837</height>
 					<texture>colors/black.png</texture>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 					<bordersize>20</bordersize>
@@ -47,7 +47,7 @@
 					<left>4</left>
 					<top>4</top>
 					<width>526</width>
-					<height>801</height>
+					<height>797</height>
 					<aspectratio>scale</aspectratio>
 					<texture fallback="DefaultActor.png" background="true">$INFO[Window.Property(ProfileImage)]</texture>
 				</control>
@@ -912,9 +912,17 @@
 					<left>40</left>
 					<top>493</top>
 					<width>670</width>
-					<height>363</height>
+					<height>368</height>
 					<label fallback="19055">$INFO[Window.Property(Biography)]</label>
 					<autoscroll delay="10000" time="5000" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
+				</control>
+				<control type="image">
+					<left>735</left>
+					<top>468</top>
+					<width>509</width>
+					<height>418</height>
+					<texture border="21">dialogs/dialog-bg.png</texture>
+					<visible>!String.StartsWith(System.BuildVersion,21)</visible>
 				</control>
 				<control type="image">
 					<left>735</left>
@@ -922,6 +930,7 @@
 					<width>512</width>
 					<height>418</height>
 					<texture border="21">dialogs/dialog-bg.png</texture>
+					<visible>String.StartsWith(System.BuildVersion,21)</visible>
 				</control>
 				<control type="grouplist" id="4000">
 					<orientation>vertical</orientation>
@@ -977,12 +986,12 @@
 				</control>
 				<control type="grouplist" id="5000">
 					<top>864</top>
-					<width>1248</width>
+					<width>1244</width>
 					<height>400</height>
 					<onleft>5000</onleft>
 					<onright>5000</onright>
 					<onup>138</onup>
-					<itemgap>-18</itemgap>
+					<itemgap>-19</itemgap>
 					<align>center</align>
 					<orientation>horizontal</orientation>
 					<scrolltime tween="quadratic">200</scrolltime>
