@@ -27,6 +27,14 @@ msgctxt "#32004"
 msgid "The most to list for each language. Past 100, each further 100 is one more request."
 msgstr ""
 
+msgctxt "#32005"
+msgid "Load subtitles when a video starts"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Loads the best match in your first subtitle language that has one, unless the video already has subtitles."
+msgstr ""
+
 msgctxt "#32011"
 msgid "SubtitleDB did not answer"
 msgstr ""
@@ -37,4 +45,8 @@ msgstr ""
 
 msgctxt "#32013"
 msgid "{0} lines"
+msgstr ""
+
+msgctxt "#32014"
+msgid "{0} subtitles loaded"
 msgstr ""
