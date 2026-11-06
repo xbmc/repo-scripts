@@ -253,6 +253,47 @@ def _resolve_by_field(field, operator):
     return fn
 
 
+def _resolve_network(src, pool):
+    """TV shows that aired on a network (Kodi keeps a show's network in its
+    Studio field).  Exact name, any capitalisation - "NBC" must not catch MSNBC."""
+    vals = src.get("value") or []
+    wanted = set(v.lower() for v in (vals if isinstance(vals, list) else [vals]) if v)
+    for s in all_tvshows_with("studio"):
+        if not any((x or "").lower() in wanted for x in s.get("studio", [])):
+            continue
+        ser = _series_from_show(s)
+        if ser:
+            pool["series"].append(ser)
+
+
+def network_counts():
+    """{network as Kodi spells it: number of TV shows}."""
+    out = {}
+    for s in all_tvshows_with("studio"):
+        for x in set(s.get("studio", [])):
+            if x:
+                out[x] = out.get(x, 0) + 1
+    return out
+
+
+def share(sources, part=None, own=None, not_genres=None):
+    """A broadcast network's pool: its share of the sources (see partition),
+    plus its own network's shows in full.  not_genres: kept out of the share
+    (no cartoons in prime time) - its own shows excepted."""
+    pool = resolve(sources)
+    if not_genres:
+        bad = set(g.lower() for g in not_genres)
+        kids = set(s["title"] for s in all_tvshows() if bad & set(g.lower() for g in s.get("genre", [])))
+        pool = {"series": [s for s in pool["series"] if s["title"] not in kids], "singles": pool["singles"]}
+    pool = partition(pool, part)
+    if not own:
+        return pool
+    mine = resolve(own)
+    keys = set(s["key"] for s in pool["series"])
+    return {"series": pool["series"] + [s for s in mine["series"] if s["key"] not in keys],
+            "singles": pool["singles"]}
+
+
 def _resolve_movie_titles(src, pool):
     wanted = set(t.lower() for t in (src.get("value") or []))
     for m in all_movies(MOVIE_PROPS):
@@ -409,6 +450,7 @@ def _resolve_alltv(src, pool):
 RESOLVERS = {
     "alltv": _resolve_alltv,
     "tvshow": _resolve_tvshow,
+    "network": _resolve_network,
     "tvgenre": _resolve_tvgenre,
     "tvdecade": _resolve_tvdecade,
     "movies": _resolve_movies,
@@ -503,6 +545,24 @@ def resolve(sources):
     pool = {"series": series, "singles": singles}
     _POOL_CACHE[key] = (time.time(), pool)
     return pool
+
+
+def partition(pool, part, min_each=2):
+    """One network's share of a pool: part = [i, n] deals the titles out like
+    cards (sorted by title, every n-th from i), so n networks each get their
+    own shows.  Too few titles to go round (fewer than min_each apiece): all
+    of them, and the clash rules keep networks from airing one at once."""
+    if not part:
+        return pool
+    i, n = int(part[0]), max(1, int(part[1]))
+
+    def deal(items):
+        if len(items) < n * min_each:
+            return items
+        ranked = sorted(items, key=lambda x: (x["title"].lower(), x.get("key", x.get("path", ""))))
+        mine = set(id(x) for x in ranked[i % n::n])
+        return [x for x in items if id(x) in mine]
+    return {"series": deal(pool["series"]), "singles": deal(pool["singles"])}
 
 
 def keep_titles(pool, allowed):

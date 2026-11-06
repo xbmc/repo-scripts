@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CableBox 42 - overlay over Kodi's own full-screen player.
+     Used while captions are on: on most TV boxes (CoreELEC/Amlogic, Android,
+     Raspberry Pi) Kodi draws subtitles only in its full-screen player, never
+     inside an add-on's video window.  The picture and the captions are Kodi's;
+     this dialog carries CableBox's overlays on top and takes the remote's
+     buttons.  Same controls and window properties as script-cablebox42-tv.xml
+     (tv.py mirrors every property here) - keep the two in step. -->
+<window>
+    <defaultcontrol>9000</defaultcontrol>
+    <controls>
+        <!-- ============ Station logo "bug" (Settings > Viewing): during programmes only ============ -->
+        <control type="group" id="350">
+            <visible>String.IsEqual(Window.Property(bug),1) + !String.IsEmpty(Window.Property(bug_logo)) + !String.IsEqual(Window.Property(banner),1) + !String.IsEqual(Window.Property(osd),1) + !String.IsEqual(Window.Property(static),1)</visible>
+            <animation effect="fade" start="0" end="100" time="900" delay="1500">Visible</animation>
+            <animation effect="fade" start="100" end="0" time="250">Hidden</animation>
+            <control type="image">
+                <left>96</left><top>60</top><width>220</width><height>120</height>
+                <aspectratio align="left" aligny="top">keep</aspectratio>
+                <texture>$INFO[Window.Property(bug_logo)]</texture>
+                <visible>String.IsEqual(Window.Property(bug_corner),tl)</visible>
+                <animation effect="fade" start="30" end="30" time="0" condition="String.IsEqual(Window.Property(bug_alpha),30)">Conditional</animation>
+                <animation effect="fade" start="50" end="50" time="0" condition="String.IsEqual(Window.Property(bug_alpha),50)">Conditional</animation>
+                <animation effect="fade" start="70" end="70" time="0" condition="String.IsEqual(Window.Property(bug_alpha),70)">Conditional</animation>
+            </control>
+            <control type="image">
+                <left>1604</left><top>60</top><width>220</width><height>120</height>
+                <aspectratio align="right" aligny="top">keep</aspectratio>
+                <texture>$INFO[Window.Property(bug_logo)]</texture>
+                <visible>String.IsEqual(Window.Property(bug_corner),tr)</visible>
+                <animation effect="fade" start="30" end="30" time="0" condition="String.IsEqual(Window.Property(bug_alpha),30)">Conditional</animation>
+                <animation effect="fade" start="50" end="50" time="0" condition="String.IsEqual(Window.Property(bug_alpha),50)">Conditional</animation>
+                <animation effect="fade" start="70" end="70" time="0" condition="String.IsEqual(Window.Property(bug_alpha),70)">Conditional</animation>
+            </control>
+            <control type="image">
+                <left>96</left><top>900</top><width>220</width><height>120</height>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                <texture>$INFO[Window.Property(bug_logo)]</texture>
+                <visible>String.IsEqual(Window.Property(bug_corner),bl)</visible>
+                <animation effect="fade" start="30" end="30" time="0" condition="String.IsEqual(Window.Property(bug_alpha),30)">Conditional</animation>
+                <animation effect="fade" start="50" end="50" time="0" condition="String.IsEqual(Window.Property(bug_alpha),50)">Conditional</animation>
+                <animation effect="fade" start="70" end="70" time="0" condition="String.IsEqual(Window.Property(bug_alpha),70)">Conditional</animation>
+            </control>
+            <control type="image">
+                <left>1604</left><top>900</top><width>220</width><height>120</height>
+                <aspectratio align="right" aligny="bottom">keep</aspectratio>
+                <texture>$INFO[Window.Property(bug_logo)]</texture>
+                <visible>String.IsEqual(Window.Property(bug_corner),br)</visible>
+                <animation effect="fade" start="30" end="30" time="0" condition="String.IsEqual(Window.Property(bug_alpha),30)">Conditional</animation>
+                <animation effect="fade" start="50" end="50" time="0" condition="String.IsEqual(Window.Property(bug_alpha),50)">Conditional</animation>
+                <animation effect="fade" start="70" end="70" time="0" condition="String.IsEqual(Window.Property(bug_alpha),70)">Conditional</animation>
+            </control>
+        </control>
+
+        <!-- ============ Static between channels ============ -->
+        <control type="multiimage" id="20">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <imagepath>static</imagepath>
+            <timeperimage>45</timeperimage>
+            <fadetime>0</fadetime>
+            <randomize>true</randomize>
+            <aspectratio>stretch</aspectratio>
+            <visible>String.IsEqual(Window.Property(static),1)</visible>
+        </control>
+
+        <!-- ============ Channel banner (now / next) ============ -->
+        <control type="group" id="200">
+            <visible>String.IsEqual(Window.Property(banner),1)</visible>
+            <animation effect="slide" start="0,260" end="0,0" time="250" tween="cubic" easing="out">Visible</animation>
+            <animation effect="slide" start="0,0" end="0,260" time="200">Hidden</animation>
+            <control type="image">
+                <left>0</left><top>800</top><width>1920</width><height>280</height>
+                <texture>banner_bg.png</texture>
+            </control>
+            <!-- left column, centred between the screen edge and the divider line at 270 -->
+            <control type="label">
+                <left>20</left><top>830</top><width>230</width><height>110</height>
+                <align>center</align>
+                <font>font60</font><textcolor>FFFFD24A</textcolor><shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[Window.Property(ch_number)]</label>
+            </control>
+            <control type="label">
+                <left>20</left><top>935</top><width>230</width><height>50</height>
+                <align>center</align>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(ch_call)]</label>
+                <visible>String.IsEmpty(Window.Property(banner_logo))</visible>
+            </control>
+            <control type="image">
+                <left>35</left><top>938</top><width>200</width><height>105</height>
+                <aspectratio align="center" aligny="center">keep</aspectratio>
+                <texture>$INFO[Window.Property(banner_logo)]</texture>
+                <visible>!String.IsEmpty(Window.Property(banner_logo))</visible>
+            </control>
+            <control type="label">
+                <left>300</left><top>830</top><width>1300</width><height>50</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(ch_name)]</label>
+            </control>
+            <control type="label">
+                <left>300</left><top>875</top><width>1300</width><height>70</height>
+                <font>font45</font><textcolor>FFFFFFFF</textcolor><shadowcolor>FF000000</shadowcolor>
+                <label>$INFO[Window.Property(now_title)]</label>
+            </control>
+            <control type="label">
+                <left>300</left><top>945</top><width>1300</width><height>45</height>
+                <font>font27</font><textcolor>FFDDE4FF</textcolor>
+                <label>$INFO[Window.Property(now_sub)]</label>
+            </control>
+            <control type="label">
+                <left>1550</left><top>830</top><width>300</width><height>50</height>
+                <align>right</align><font>font30_title</font><textcolor>FFFFFFFF</textcolor>
+                <label>$INFO[System.Time]</label>
+            </control>
+            <control type="label">
+                <left>1450</left><top>885</top><width>400</width><height>50</height>
+                <align>right</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(now_time)]</label>
+            </control>
+            <!-- "CC": this programme has closed captions -->
+            <control type="group">
+                <left>1782</left><top>947</top>
+                <visible>String.IsEqual(Window.Property(now_cc),1)</visible>
+                <control type="image">
+                    <left>0</left><top>0</top><width>68</width><height>38</height>
+                    <texture colordiffuse="F2FFFFFF">white.png</texture>
+                </control>
+                <control type="label">
+                    <left>0</left><top>0</top><width>68</width><height>38</height>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font27</font><textcolor>FF0E1726</textcolor>
+                    <label>CC</label>
+                </control>
+            </control>
+            <control type="progress" id="30">
+                <left>300</left><top>998</top><width>1550</width><height>10</height>
+                <texturebg colordiffuse="55FFFFFF">white.png</texturebg>
+                <midtexture colordiffuse="FFFFD24A">white.png</midtexture>
+            </control>
+            <control type="label">
+                <left>300</left><top>1018</top><width>1550</width><height>45</height>
+                <font>font27</font><textcolor>FFB8C4E0</textcolor>
+                <label>$INFO[Window.Property(next_line)]</label>
+            </control>
+        </control>
+
+        <!-- ============ VCR style channel number, top right ============ -->
+        <control type="group" id="300">
+            <visible>String.IsEqual(Window.Property(osd),1)</visible>
+            <!-- emitted by the tube, not pasted on: slight transparency + faint interference flicker -->
+            <animation effect="fade" start="92" end="78" time="120" condition="true" pulse="true">Conditional</animation>
+            <!-- "CH 03": stroke-style cable-box digits, left-aligned after the CH label -->
+            <control type="image">
+                <left>1290</left><top>60</top><width>230</width><height>140</height>
+                <texture colordiffuse="E6FFFFFF">digits/ch.png</texture>
+            </control>
+            <control type="image">
+                <left>1560</left><top>60</top><width>110</width><height>140</height>
+                <texture colordiffuse="E6FFFFFF">$INFO[Window.Property(d1)]</texture>
+            </control>
+            <control type="image">
+                <left>1652</left><top>60</top><width>110</width><height>140</height>
+                <texture colordiffuse="E6FFFFFF">$INFO[Window.Property(d2)]</texture>
+            </control>
+            <control type="image">
+                <left>1744</left><top>60</top><width>110</width><height>140</height>
+                <texture colordiffuse="E6FFFFFF">$INFO[Window.Property(d3)]</texture>
+            </control>
+        </control>
+
+        <!-- small toast (sleep timer etc.) -->
+        <control type="label">
+            <left>70</left><top>60</top><width>1300</width><height>60</height>
+            <font>font30_title</font><textcolor>FF33FF66</textcolor><shadowcolor>FF000000</shadowcolor>
+            <label>$INFO[Window.Property(toast)]</label>
+            <visible>!String.IsEmpty(Window.Property(toast))</visible>
+        </control>
+        <!-- ============ TV turn-off drawn over the picture (when no clip is played) ============
+             flash, the picture closing to a line from top and bottom, the line to a dot, the dot fading -->
+        <control type="group" id="450">
+            <visible>String.IsEqual(Window.Property(poweroff),1)</visible>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture colordiffuse="FFE8EEFF">white.png</texture>
+                <animation type="Visible" reversible="false">
+                    <effect type="fade" start="0" end="100" time="50"/>
+                    <effect type="fade" start="100" end="0" delay="70" time="260"/>
+                </animation>
+            </control>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>540</height>
+                <texture colordiffuse="FF000000">white.png</texture>
+                <animation effect="slide" start="0,-540" end="0,-4" delay="60" time="250" tween="quadratic" easing="in" reversible="false">Visible</animation>
+            </control>
+            <control type="image">
+                <left>0</left><top>540</top><width>1920</width><height>540</height>
+                <texture colordiffuse="FF000000">white.png</texture>
+                <animation effect="slide" start="0,540" end="0,4" delay="60" time="250" tween="quadratic" easing="in" reversible="false">Visible</animation>
+            </control>
+            <control type="image">
+                <left>0</left><top>536</top><width>1920</width><height>8</height>
+                <texture colordiffuse="FFF4F8FF">white.png</texture>
+                <animation type="Visible" reversible="false">
+                    <effect type="fade" start="0" end="100" delay="270" time="40"/>
+                    <effect type="zoom" start="100,100" end="1,100" center="960,540" delay="320" time="230" tween="quadratic" easing="in"/>
+                    <effect type="fade" start="100" end="0" delay="540" time="10"/>
+                </animation>
+            </control>
+            <control type="image">
+                <left>912</left><top>492</top><width>96</width><height>96</height>
+                <texture>power_dot.png</texture>
+                <animation type="Visible" reversible="false">
+                    <effect type="fade" start="0" end="100" delay="540" time="20"/>
+                    <effect type="fade" start="100" end="0" delay="600" time="420"/>
+                </animation>
+            </control>
+        </control>
+
+        <!-- CRT effect (Settings > Viewing): flat overlays only, the video itself is untouched -->
+        <control type="group" id="400">
+            <visible>!String.IsEmpty(Window.Property(crt))</visible>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture>crt_mask.png</texture>
+                <visible>String.IsEqual(Window.Property(crt),2)</visible>
+            </control>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture>scanlines.png</texture>
+            </control>
+            <control type="image">
+                <left>0</left><top>-260</top><width>1920</width><height>260</height>
+                <texture>crt_humbar.png</texture>
+                <visible>String.IsEqual(Window.Property(crt),2)</visible>
+                <animation effect="slide" start="0,1340" end="0,0" time="11000" condition="true" loop="true">Conditional</animation>
+            </control>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture>crt_vignette.png</texture>
+            </control>
+            <control type="image">
+                <left>0</left><top>0</top><width>1920</width><height>1080</height>
+                <texture>crt_bezel.png</texture>
+                <visible>String.IsEqual(Window.Property(crt),2)</visible>
+            </control>
+        </control>
+    </controls>
+</window>

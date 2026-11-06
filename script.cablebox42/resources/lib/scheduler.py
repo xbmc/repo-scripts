@@ -18,6 +18,7 @@ from . import library
 from . import channels as chmod
 from . import assign
 from . import seasons
+from . import stations
 from .kodiutil import _
 
 DAY = 86400
@@ -247,6 +248,13 @@ class ChannelSchedule(object):
                 return "dp%d" % i, dp.get("sources", []), False, window_end(t, dp)
         return "base", self.ch.get("sources", []), False, None
 
+    def _daypart_extra(self, key):
+        """(part, fallback sources) of a broadcast network's time block."""
+        if key and key.startswith("dp"):
+            dp = self.ch.get("dayparts", [])[int(key[2:])]
+            return dp.get("part"), dp.get("fallback"), dp.get("own"), dp.get("not_genres")
+        return self.ch.get("part"), None, self.ch.get("own"), self.ch.get("not_genres")
+
     def _add(self, s, e, kind, **kw):
         if e - s <= 0.05:
             return
@@ -331,7 +339,25 @@ class ChannelSchedule(object):
             if ch.get("bumps") else []
         ids = library.filler_pool(ch.get("ids_path")) if ch.get("ids_path") else []
         if t is not None:
+            ads, bumps, ids = self._station_fillers(t, ads, bumps, ids)
             ads, bumps = self._seasonal_fillers(t, ads, bumps)
+        return ads, bumps, ids
+
+    def _station_fillers(self, t, ads, bumps, ids):
+        """The viewer's station folder: <channel>/bumps, ids, commercials - and the
+        same inside a time block's folder (CAM Jr.'s own bumps in the morning)."""
+        ch = self.ch
+        try:
+            if ch.get("commercials"):
+                f = stations.clip_folder(ch, t, "commercials")
+                ads = (library.filler_pool(f) or ads) if f else ads
+            if ch.get("bumps"):
+                f = stations.clip_folder(ch, t, "bumps")
+                bumps = (library.filler_pool(f) or bumps) if f else bumps
+            f = stations.clip_folder(ch, t, "ids")
+            ids = (library.filler_pool(f) or ids) if f else ids
+        except Exception as exc:
+            log("station folders %s: %s" % (ch.get("name"), exc))
         return ads, bumps, ids
 
     def _seasonal_fillers(self, t, ads, bumps):
@@ -407,8 +433,10 @@ class ChannelSchedule(object):
             end = until if hard is None else min(until, hard)
             return self._offair(t, end, until)
 
-        full = library.without(library.resolve(sources), ch.get("exclude"))
+        part, fallback, own, not_genres = self._daypart_extra(key)
+        full = library.without(library.share(sources, part, own, not_genres), ch.get("exclude"))
         mine = full
+        self._fallback = (fallback, part)
         if key == "base":    # time blocks are the user's own choice - never filtered
             mine = library.keep_titles(full, assign.allowed_fn(self.assignment(), ch["id"]))
         room = (hard - t - 2) if hard else None
@@ -440,10 +468,14 @@ class ChannelSchedule(object):
 
     def _auto_pick(self, mine, full, t, key, room):
         prog = None
-        for i, cand in enumerate((mine, full, None, mine)):
+        fb, part = getattr(self, "_fallback", (None, None)) or (None, None)
+        backup = library.partition(library.resolve(fb), part) if fb else None
+        for i, cand in enumerate((mine, full, backup, None, mine)):
             if cand is None:
+                if i == 2:
+                    continue
                 cand = library.resolve([{"type": "alltv"}])
-            if i < 3:
+            if i < 4:
                 cand = self._clash_free(cand, t)
             self._cont = None
             prog = self._pick(cand, t, key, maxdur=room)
