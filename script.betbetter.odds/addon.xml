@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.betbetter.odds"
+       name="Odds Converter"
+       version="1.0.0"
+       provider-name="Bet Better">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">Convert sports odds and see the bookmaker margin</summary>
+    <description lang="en_GB">Type a price in American (-110, +150), decimal (1.91) or fractional (5/2) format and see it in every format with its implied probability. Enter every price in a market to see the bookmaker margin and the fair, no-margin chance of each outcome. Works offline: no network access and no data collected.</description>
+    <disclaimer lang="en_GB">For information only. Implied probabilities come from the prices you enter.</disclaimer>
+    <license>MIT</license>
+    <website>https://betbetter.world/tools/odds-converter</website>
+    <source>https://github.com/edushinka/script.betbetter.odds</source>
+    <email>hello@betbetter.world</email>
+    <news>v1.0.0 (2026-11-07)
+- First release: odds conversion, implied probability, market margin and fair chances</news>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon>

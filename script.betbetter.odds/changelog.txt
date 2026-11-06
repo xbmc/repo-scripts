@@ -1,0 +1,2 @@
+v1.0.0 (2026-11-07)
+- First release: odds conversion, implied probability, market margin and fair chances
