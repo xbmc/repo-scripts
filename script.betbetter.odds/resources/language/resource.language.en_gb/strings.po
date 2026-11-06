@@ -1,0 +1,39 @@
+# Kodi Media Center language file
+# Addon Name: Odds Converter
+# Addon id: script.betbetter.odds
+msgid ""
+msgstr ""
+"Project-Id-Version: script.betbetter.odds\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Odds Converter"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Convert one price"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Market margin and fair chances"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Enter a price (e.g. -110, +150, 1.91 or 5/2)"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Enter every price in the market, separated by spaces"
+msgstr ""
+
+msgctxt "#32020"
+msgid "That price was not recognised. Try -110, +150, 1.91 or 5/2."
+msgstr ""
+
+msgctxt "#32021"
+msgid "Enter at least two prices, separated by spaces."
+msgstr ""
