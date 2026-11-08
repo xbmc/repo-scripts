@@ -31,7 +31,12 @@ try:
     BOSSANOVA808_VERSION = xbmcaddon.Addon(id='script.module.bossanova808').getAddonInfo('version')
 except RuntimeError:
     BOSSANOVA808_VERSION = None
-OS_PLATFORM = platform.platform()
+# platform.platform() can shell out via subprocess on Windows, which raises AttributeError on stripped-down Python
+# builds lacking _winapi.CreateProcess (e.g. Kodi on Xbox/UWP) - it's only used for logging, so never let it be fatal
+try:
+    OS_PLATFORM = platform.platform()
+except Exception:
+    OS_PLATFORM = sys.platform
 # Update this periodically - some sites/CDNs reject requests from very old browser versions
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 HOME_WINDOW = xbmcgui.Window(10000)

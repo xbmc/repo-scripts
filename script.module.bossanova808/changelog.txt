@@ -1,3 +1,6 @@
+v1.0.6 (2026-11-08)
+- Fix crash on startup on platforms where platform.platform() fails (e.g. Kodi on Xbox, where subprocess is unavailable) - the OS is now only used for logging, and falls back to sys.platform
+
 v1.0.5 (2026-10-20)
 - Add ShowList (and title_key), a small persistent list of TV shows (a JSON file in the calling addon's profile folder) with a dialog to remove entries, for addons that keep a list of shows to ignore or treat specially
 
