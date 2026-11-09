@@ -1,0 +1,44 @@
+# Kodi Media Center language file
+# Addon Name: Loopz
+# Addon id: service.loopz
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ar_SA\n"
+
+msgctxt "#30000"
+msgid "Loopz"
+msgstr "Loopz"
+
+msgctxt "#30001"
+msgid "Link code"
+msgstr "رمز الربط"
+
+msgctxt "#30002"
+msgid "Type the 6-digit code from Loopz: Linking, Kodi"
+msgstr "اكتب الرمز من ستة أرقام من Loopz: الربط، Kodi"
+
+msgctxt "#30003"
+msgid "Status"
+msgstr "الحالة"
+
+msgctxt "#30010"
+msgid "Linked to Loopz"
+msgstr "مربوط بـ Loopz"
+
+msgctxt "#30011"
+msgid "Not linked"
+msgstr "غير مربوط"
+
+msgctxt "#30012"
+msgid "The code is wrong or expired. Get a new one in Loopz"
+msgstr "الرمز خطأ أو انتهى. خذ رمزاً جديداً من Loopz"
+
+msgctxt "#30013"
+msgid "Couldn't reach Loopz. Check the internet and type the code again"
+msgstr "تعذّر الوصول إلى Loopz. تأكد من الإنترنت واكتب الرمز مرة ثانية"
+
+msgctxt "#30014"
+msgid "Too many tries. Wait a minute"
+msgstr "محاولات كثيرة. انتظر دقيقة"
+
