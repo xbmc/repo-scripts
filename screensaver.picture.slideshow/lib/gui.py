@@ -14,8 +14,8 @@
 # *  http://www.gnu.org/copyleft/gpl.html
 
 import copy
-import random
 import threading
+import time
 from xml.dom.minidom import parse
 import exifread
 from iptcinfo3 import IPTCInfo
@@ -26,7 +26,7 @@ ADDON = xbmcaddon.Addon()
 SKINDIR = xbmc.getSkinDir()
 
 # images types that can contain exif/iptc data
-EXIF_TYPES  = ('.jpg', '.jpeg', '.tif', '.tiff')
+EXIF_TYPES  = ('.jpg', '.jpeg', '.tif', '.tiff', '.heic', '.heif')
 
 # random effect list to choose from
 EFFECTLIST = ["('conditional', 'effect=zoom start=100 end=400 center=auto time=%i condition=true'),",
@@ -42,13 +42,11 @@ EFFECTLIST = ["('conditional', 'effect=zoom start=100 end=400 center=auto time=%
 # get local dateformat to localize the exif date tag
 DATEFORMAT = xbmc.getRegion('dateshort')
 
-
 class BinaryFile(xbmcvfs.File):
     def read(self, numBytes: int = 0) -> bytes:
         if not numBytes:
             return b""
         return bytes(self.readBytes(numBytes))
-
 
 class Screensaver(xbmcgui.WindowXMLDialog):
     def __init__( self, *args, **kwargs ):
@@ -69,7 +67,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.adj_time = int(101000 * speedup)
         # get the images
         self._get_items()
-        if self.slideshow_type == 2 and not self.slideshow_random and self.slideshow_resume:
+        if self.slideshow_type == 2 and self.slideshow_resume:
             self._get_offset()
         if self.items:
             # hide startup splash
@@ -85,6 +83,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.stop = False
         self.startup = True
         self.offset = 0
+        self.start_time = None  # will be set when slideshow starts
 
     def _get_settings(self):
         # read addon settings
@@ -105,6 +104,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.slideshow_iptc = ADDON.getSettingBool('iptc')
         self.slideshow_music = ADDON.getSettingBool('music')
         self.slideshow_bg = ADDON.getSettingBool('background')
+        self.stop_after_enabled = ADDON.getSettingBool('stop_after_enabled')
+        self.stop_after_minutes = ADDON.getSettingInt('stop_after_minutes')
         # select which image controls from the xml we are going to use
         if self.slideshow_scale:
             self.image1 = self.getControl(3)
@@ -139,10 +140,61 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if self.slideshow_bg:
             self._set_prop('Background', 'show')
 
+    def _read_exif_tags(self, filepath, stop_tag=None):
+        # Opens filepath as a BinaryFile, runs exifread and returns the tags dict.
+        # Optionally accepts a stop_tag for faster partial reads.
+        tags = {}
+        try:
+            exiffile = BinaryFile(filepath)
+            try:
+                kwargs = {}
+                if stop_tag:
+                    kwargs['stop_tag'] = stop_tag
+                tags = exifread.process_file(exiffile, details=False, **kwargs)
+            except:
+                pass
+            exiffile.close()
+        except:
+            pass
+        return tags
+
+    def _get_exif_date(self, filepath):
+        # Returns a localized date string from exif data, or empty string if not found.
+        # Pass 1: fast path — stop as soon as DateTimeOriginal is found (covers ~90% of cameras)
+        val = ''
+        tags = self._read_exif_tags(filepath, stop_tag='DateTimeOriginal')
+        tag_val = str(tags.get('EXIF DateTimeOriginal', ''))
+        if tag_val and tag_val != '0000:00:00 00:00:00':
+            val = tag_val
+        # Pass 2: fallback — full read to check the two remaining tags
+        if not val:
+            tags = self._read_exif_tags(filepath)
+            for tag in ['EXIF DateTimeDigitized', 'Image DateTime']:
+                tag_val = str(tags.get(tag, ''))
+                if tag_val and tag_val != '0000:00:00 00:00:00':
+                    val = tag_val
+                    break
+        # localize the date format (YYYY:MM:DD HH:MM:SS)
+        if val:
+            try:
+                date = val[:10].split(':')
+                timepart = val[10:].strip()
+                if DATEFORMAT[1] == 'm':
+                    val = date[1] + '-' + date[2] + '-' + date[0] + ' ' + timepart
+                elif DATEFORMAT[1] == 'd':
+                    val = date[2] + '-' + date[1] + '-' + date[0] + ' ' + timepart
+                else:
+                    val = date[0] + '-' + date[1] + '-' + date[2] + ' ' + timepart
+            except:
+                pass
+        return val
+
     def _start_show(self, items):
-        # we need to start the update thread after the deep copy of self.items finishes
-        thread = img_update(data=self._get_items)
-        thread.start()
+        # start the background thread that checks for new/removed images every hour
+        self.thread = img_update(data=self._get_items)
+        self.thread.start()
+        # record when the slideshow started for timeout purposes
+        self.start_time = time.time()
         # start with image 1
         cur_img = self.image1
         order = [1,2]
@@ -167,8 +219,14 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     else:
                         self.image4.setImage(img[0],useCache)
                 # give xbmc some time to load the image
+                # use an interruptible loop instead of a single sleep call so that
+                # onScreensaverDeactivated can interrupt within 1 second
                 if not self.startup:
-                    xbmc.sleep(1000)
+                    sleep_secs = (self.slideshow_time - 1) if self.slideshow_effect == 3 else 1
+                    for _ in range(sleep_secs):
+                        if self.stop or self.Monitor.abortRequested():
+                            break
+                        xbmc.sleep(1000)
                 else:
                     self.startup = False
                 # get exif and iptc tags if enabled in settings and we have an image that can contain this data
@@ -183,36 +241,13 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if self.slideshow_type == 2 and (self.slideshow_date or self.slideshow_iptc) and (os.path.splitext(img[0])[1].lower() in EXIF_TYPES):
                     # get exif date
                     if self.slideshow_date:
-                        exiffile = BinaryFile(img[0])
-                        try:
-                            exiftags = exifread.process_file(exiffile, details=False, stop_tag='DateTimeOriginal')
-                            if 'EXIF DateTimeOriginal' in exiftags:
-                                datetime = exiftags['EXIF DateTimeOriginal'].values
-                                # sometimes exif date returns useless data, probably no date set on camera
-                                if datetime == '0000:00:00 00:00:00':
-                                    datetime = ''
-                                else:
-                                    try:
-                                        # localize the date format
-                                        date = datetime[:10].split(':')
-                                        time = datetime[10:]
-                                        if DATEFORMAT[1] == 'm':
-                                            datetime = date[1] + '-' + date[2] + '-' + date[0] + '  ' + time
-                                        elif DATEFORMAT[1] == 'd':
-                                            datetime = date[2] + '-' + date[1] + '-' + date[0] + '  ' + time
-                                        else:
-                                            datetime = date[0] + '-' + date[1] + '-' + date[2] + '  ' + time
-                                    except:
-                                        pass
-                                    exif = True
-                        except:
-                            pass
-                        exiffile.close()
+                        datetime = self._get_exif_date(img[0])
+                        if datetime:
+                            exif = True
                     # get iptc title, description and keywords
                     if self.slideshow_iptc:
-                        iptcfile = BinaryFile(img[0])
                         try:
-                            iptc = IPTCInfo(iptcfile)
+                            iptc = IPTCInfo(img[0], force=True)
                             if iptc['object name']:
                                 title = bytes(iptc['object name']).decode('utf-8')
                                 iptc_ti = True
@@ -227,26 +262,32 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                                 iptc_ke = True
                         except:
                             pass
-                        iptcfile.close()
                         # get xmp title, description and subject
                         if (not iptc_ti or not iptc_de or not iptc_ke):
                             try:
                                 xmpfile = xbmcvfs.File(img[0])
                                 data = xmpfile.readBytes().decode('cp437')
-                                xmpdata = re.search(r'<x:xmpmeta.*?>(.*?)</x:xmpmeta', data, flags=re.DOTALL)
-                                if xmpdata:
-                                    titlematch = re.search(r'<dc:title.*?rdf:Alt.*?rdf:li.*?>(.*?)<', xmpdata.group(1), flags=re.DOTALL)
-                                    if titlematch and not iptc_ti:
-                                        title = titlematch.group(1).encode('cp437').decode('utf-8')
-                                        iptc_ti = True
-                                    descmatch = re.search(r'<dc:description.*?rdf:Alt.*?rdf:li.*?>(.*?)<', xmpdata.group(1), flags=re.DOTALL)
-                                    if descmatch and not iptc_de:
-                                        description = descmatch.group(1).encode('cp437').decode('utf-8')
-                                        iptc_de = True
-                                    subjmatch = re.search(r'<dc:subject.*?rdf:Bag.*?>(.*?)</rdf:Bag', xmpdata.group(1), flags=re.DOTALL)
-                                    if subjmatch and not iptc_ke:
-                                        keywords = ', '.join(subjmatch.group(1).encode('cp437').decode('utf-8').split()).replace('<rdf:li>', '').replace('</rdf:li>', '')
-                                        iptc_ke = True
+                                xmpmeta = re.findall(r'<x:xmpmeta.*?>(.*?)</x:xmpmeta', data, flags=re.DOTALL)
+                                if xmpmeta:
+                                    for xmpdata in xmpmeta:
+                                        titlematch = re.search(r'<dc:title.*?rdf:Alt.*?rdf:li.*?>(.*?)<', xmpdata, flags=re.DOTALL)
+                                        if titlematch and not iptc_ti:
+                                            title = titlematch.group(1).encode('cp437').decode('utf-8')
+                                            iptc_ti = True
+                                            break
+                                    for xmpdata in xmpmeta:
+                                        descmatch = re.search(r'<dc:description.*?rdf:Alt.*?rdf:li.*?>(.*?)<', xmpdata, flags=re.DOTALL)
+                                        if descmatch and not iptc_de:
+                                            description = descmatch.group(1).encode('cp437').decode('utf-8')
+                                            iptc_de = True
+                                            break
+                                    for xmpdata in xmpmeta:
+                                        subjdata = re.findall(r'<rdf:li>(.*?)</rdf:li>', xmpdata, flags=re.DOTALL)
+                                        subjmatch = list(set(subjdata)) # remove duplicates
+                                        if subjmatch and not iptc_ke:
+                                            keywords = ', '.join(x.encode('cp437').decode('utf-8') for x in subjmatch)
+                                            iptc_ke = True
+                                            break
                             except:
                                 pass
                             xmpfile.close()
@@ -323,29 +364,50 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     cur_img = self.image1
                     order = [1,2]
                 # slideshow time in secs (we already slept for 1 second)
-                count = self.slideshow_time - 1
+                count = 1 if self.slideshow_effect == 3 else self.slideshow_time - 1
                 # display the image for the specified amount of time
                 while (not self.Monitor.abortRequested()) and (not self.stop) and count > 0:
                     count -= 1
                     xbmc.sleep(1000)
+                # check stop_after timeout after image display
+                if self.stop_after_enabled and self.start_time is not None:
+                    elapsed_minutes = (time.time() - self.start_time) / 60.0
+                    if elapsed_minutes >= self.stop_after_minutes:
+                        log('stop_after timeout reached (%i minutes), stopping slideshow' % self.stop_after_minutes)
+                        self._exit()
+                        return
                 # break out of the for loop if onScreensaverDeactivated is called
-                if  self.stop or self.Monitor.abortRequested():
+                if self.stop or self.Monitor.abortRequested():
                     break
                 self.position += 1
             self.offset = 0
+            # full cycle completed naturally: reshuffle and reload
+            # only reshuffle if we weren't interrupted — stop=True means user exited mid-cycle
+            if not self.stop and self.slideshow_type == 2 and self.slideshow_random:
+                hexfile = checksum(self.slideshow_path.encode('utf-8')) + '_' + str(self.slideshow_recursive) + '_' + str(self.slideshow_random)
+                create_cache(self.slideshow_path, hexfile, self.slideshow_random)
+                self.items = self._read_cache(hexfile)
             items = copy.deepcopy(self.items)
 
     def _get_items(self, update=False):
-        self.slideshow_type  = ADDON.getSettingInt('type')
+        self.slideshow_type = ADDON.getSettingInt('type')
         log('slideshow type: %i' % self.slideshow_type)
-	    # check if we have an image folder, else fallback to video fanart
+        # check if we have an image folder, else fallback to video fanart
         if self.slideshow_type == 2:
-            hexfile = checksum(self.slideshow_path.encode('utf-8')) + '_' + str(self.slideshow_recursive) # check if path has changed, so we can create a new cache at startup
+            hexfile = checksum(self.slideshow_path.encode('utf-8')) + '_' + str(self.slideshow_recursive) + '_' + str(self.slideshow_random)
             log('image path: %s' % self.slideshow_path)
             log('update: %s' % update)
-            if (not xbmcvfs.exists(CACHEFILE % hexfile)) or update: # create a new cache if no cache exits or during the background scan
+            if (not xbmcvfs.exists(CACHEFILE % hexfile)) or update:
                 log('create cache')
-                create_cache(self.slideshow_path, hexfile)
+                # when shuffle+resume are active and a cache already exists, preserve the existing
+                # order and only splice in new files / drop deleted ones — never reshuffle
+                cache_exists_now = xbmcvfs.exists(CACHEFILE % hexfile)
+                should_preserve = update and self.slideshow_random and self.slideshow_resume and cache_exists_now
+                if should_preserve:
+                    current_images = self._read_cache(hexfile)
+                else:
+                    current_images = None
+                create_cache(self.slideshow_path, hexfile, self.slideshow_random, current_images)
             self.items = self._read_cache(hexfile)
             log('items: %s' % len(self.items))
             if not self.items:
@@ -353,10 +415,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 # delete empty cache file
                 if xbmcvfs.exists(CACHEFILE % hexfile):
                     xbmcvfs.delete(CACHEFILE % hexfile)
-	    # video fanart
+        # video fanart
         if self.slideshow_type == 0:
             methods = [('VideoLibrary.GetMovies', 'movies'), ('VideoLibrary.GetTVShows', 'tvshows')]
-	    # music fanart
+        # music fanart
         elif self.slideshow_type == 1:
             methods = [('AudioLibrary.GetArtists', 'artists')]
         # query the db
@@ -369,10 +431,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     for item in json_response['result'][method[1]]:
                         if 'fanart' in item['art']:
                             self.items.append([item['art']['fanart'], item['label']])
-        # randomize
-        if self.slideshow_random:
-            random.seed()
-            random.shuffle(self.items)
+            # randomize
+            if self.slideshow_random:
+                random.seed()
+                random.shuffle(self.items)
 
     def _get_offset(self):
         try:
@@ -464,6 +526,9 @@ class Screensaver(xbmcgui.WindowXMLDialog):
     def _exit(self):
         # exit when onScreensaverDeactivated gets called
         self.stop = True
+        # stop the background update thread so it cannot interfere after we exit
+        if hasattr(self, 'thread'):
+            self.thread._exit()
         # clear our properties on exit
         self._clear_prop('Slide1')
         self._clear_prop('Slide2')
@@ -476,11 +541,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self._clear_prop('Music')
         self._clear_prop('Splash')
         self._clear_prop('Background')
-        # save the current position  to file
-        if self.slideshow_type == 2 and not self.slideshow_random and self.slideshow_resume:
+        # save the current position to file
+        if self.slideshow_type == 2 and self.slideshow_resume:
             self._save_offset()
         self.close()
-
 
 class img_update(threading.Thread):
     def __init__( self, *args, **kwargs ):
@@ -491,7 +555,7 @@ class img_update(threading.Thread):
 
     def run(self):
         while (not self.Monitor.abortRequested()) and (not self.stop):
-            # create a fresh index as quickly as possible after slidshow started
+            # create a fresh index as quickly as possible after slideshow started
             self._get_items(True)
             count = 0
             while count != 3600: # check for new images every hour
@@ -503,7 +567,6 @@ class img_update(threading.Thread):
     def _exit(self):
         # exit when onScreensaverDeactivated gets called
         self.stop = True
-
 
 class MyMonitor(xbmc.Monitor):
     def __init__( self, *args, **kwargs ):

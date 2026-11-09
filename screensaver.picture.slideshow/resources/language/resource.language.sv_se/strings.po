@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-10-24 13:11+0000\n"
-"Last-Translator: Robert Bylin <robert.bylin@gmail.com>\n"
+"PO-Revision-Date: 2026-03-04 11:13+0000\n"
+"Last-Translator: Daniel Nylander <daniel@danielnylander.se>\n"
 "Language-Team: Swedish <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/sv_se/>\n"
 "Language: sv_se\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.16.1\n"
 
 msgctxt "Addon Summary"
 msgid "Screensaver that displays an image slideshow"
@@ -95,7 +95,7 @@ msgstr "Visa bilder i slumpmässig ordning"
 
 msgctxt "#30017"
 msgid "Use full path"
-msgstr ""
+msgstr "Använd hela sökvägen"
 
 # empty string with id 30017
 msgctxt "#30018"
@@ -125,13 +125,21 @@ msgstr "Ytterligare"
 
 msgctxt "#30026"
 msgid "Resume slideshow from last position"
-msgstr ""
+msgstr "Återuppta bildspelet från senaste position"
 
 # empty strings from id 30027 to 30028
 msgctxt "#30029"
 msgid "Display background picture"
-msgstr ""
+msgstr "Visa bakgrundsbild"
 
 msgctxt "#30030"
 msgid "Use vignette overlay"
-msgstr ""
+msgstr "Använd vinjettöverlägg"
+
+msgctxt "#30031"
+msgid "Stop slideshow after a set time"
+msgstr "Stoppa bildspel efter en inställd tid"
+
+msgctxt "#30032"
+msgid "Stop after (minutes)"
+msgstr "Stoppa efter (minuter)"

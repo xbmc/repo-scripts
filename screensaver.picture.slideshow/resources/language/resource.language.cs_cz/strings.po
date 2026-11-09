@@ -7,23 +7,23 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-06-22 08:43+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2026-07-06 18:02+0000\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/cs_cz/>\n"
 "Language: cs_cz\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 2026.7\n"
 
 msgctxt "Addon Summary"
 msgid "Screensaver that displays an image slideshow"
-msgstr "Spořič obrazovky promítající obrázky"
+msgstr "Spořič obrazovky s prezentací obrázků"
 
 msgctxt "Addon Description"
 msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
-msgstr "Spořič obrazovky promítání vám bude promítat zvolené obrázky s použitím různých přechodových efektů. Může být nastaven k zobrazování fanart z vašich hudebních, či video knihoven, nebo vlastní složky obrázků"
+msgstr "Spořič obrazovky Slideshow zobrazí prezentaci obrázků s různými přechodovými efekty. Lze ho nastavit tak, aby zobrazoval fanart z vaší hudební nebo video knihovny, případně obrázky z vlastní složky."
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
@@ -35,11 +35,11 @@ msgstr "Složka"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr "Video Fanart"
+msgstr "Fanart videí"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr "Hudební Fanart"
+msgstr "Fanart hudby"
 
 msgctxt "#30004"
 msgid "Image Folder"
@@ -71,7 +71,7 @@ msgstr "Doba zobrazení každého obrázku (sekundy)"
 
 msgctxt "#30011"
 msgid "Scale images fullscreen"
-msgstr "Škálovat obrázek na rozlišení celé obrazovky"
+msgstr "Přizpůsobit obrázky na celou obrazovku"
 
 msgctxt "#30012"
 msgid "Display image name"
@@ -95,12 +95,12 @@ msgstr "Zobrazit obrázky v náhodném pořadí"
 
 msgctxt "#30017"
 msgid "Use full path"
-msgstr ""
+msgstr "Použít úplnou cestu"
 
 # empty string with id 30017
 msgctxt "#30018"
 msgid "Use folder- and filename"
-msgstr "Použij složku- a jméno souboru"
+msgstr "Použít název složky a souboru"
 
 # empty strings from id 30019 to 30020
 msgctxt "#30021"
@@ -125,7 +125,7 @@ msgstr "Další"
 
 msgctxt "#30026"
 msgid "Resume slideshow from last position"
-msgstr ""
+msgstr "Pokračovat v prezentaci od poslední pozice"
 
 # empty strings from id 30027 to 30028
 msgctxt "#30029"
@@ -134,4 +134,12 @@ msgstr "Zobrazit obrázek na pozadí"
 
 msgctxt "#30030"
 msgid "Use vignette overlay"
-msgstr ""
+msgstr "Použít vinětovací překryv"
+
+msgctxt "#30031"
+msgid "Stop slideshow after a set time"
+msgstr "Zastavit prezentaci po nastavené době"
+
+msgctxt "#30032"
+msgid "Stop after (minutes)"
+msgstr "Zastavit po (minuty)"

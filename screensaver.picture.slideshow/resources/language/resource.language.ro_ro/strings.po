@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-07-22 14:29+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2024-08-29 09:26+0000\n"
+"Last-Translator: Daniel <danny3@tutanota.com>\n"
 "Language-Team: Romanian <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/ro_ro/>\n"
 "Language: ro_ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7.2\n"
+"X-Generator: Weblate 5.6.2\n"
 
 msgctxt "Addon Summary"
 msgid "Screensaver that displays an image slideshow"
@@ -95,7 +95,7 @@ msgstr "Arată imaginile în ordine aleatoare"
 
 msgctxt "#30017"
 msgid "Use full path"
-msgstr ""
+msgstr "Folosește calea întreagă"
 
 # empty string with id 30017
 msgctxt "#30018"
@@ -105,11 +105,11 @@ msgstr "Folosește dosar- și nume fișier"
 # empty strings from id 30019 to 30020
 msgctxt "#30021"
 msgid "Display picture date"
-msgstr "Arata data imaginii"
+msgstr "Arată data imaginii"
 
 msgctxt "#30022"
 msgid "Display additional picture tags"
-msgstr "Arata informații adiționale ale imaginii"
+msgstr "Arată etichetele adiționale ale imaginii"
 
 msgctxt "#30023"
 msgid "Display music info during audio playback"
@@ -121,17 +121,25 @@ msgstr "De bază"
 
 msgctxt "#30025"
 msgid "Additional"
-msgstr "Adițional"
+msgstr "Adiționale"
 
 msgctxt "#30026"
 msgid "Resume slideshow from last position"
-msgstr ""
+msgstr "Reia diaporama de la ultima poziție"
 
 # empty strings from id 30027 to 30028
 msgctxt "#30029"
 msgid "Display background picture"
-msgstr ""
+msgstr "Afișează imaginea de fundal"
 
 msgctxt "#30030"
 msgid "Use vignette overlay"
+msgstr "Folosește acoperire vinietă"
+
+msgctxt "#30031"
+msgid "Stop slideshow after a set time"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Stop after (minutes)"
 msgstr ""
