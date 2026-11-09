@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: script.skin.info.service\n"
 "POT-Creation-Date: 2024-10-23 00:00+0000\n"
-"PO-Revision-Date: 2026-08-21 10:17+0000\n"
-"Last-Translator: wabisabi926 <wabisabi926@foxmail.com>\n"
+"PO-Revision-Date: 2026-11-09 11:52+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-autotranslate@weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-skin-info-service/zh_Hans/>\n"
 "Language: zh_cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2026.8.1\n"
+"X-Generator: Weblate 2026.11.1\n"
 
 msgctxt "Addon Summary"
 msgid "Provides rich media info and artwork to skins."
@@ -23,7 +23,7 @@ msgstr "皮肤信息服务为皮肤提供超出 Kodi 默认范围的丰富元数
 
 msgctxt "Addon Disclaimer"
 msgid "This add-on uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB."
-msgstr ""
+msgstr "本插件使用 TMDB 及 TMDB API，但未获得 TMDB 的认可、认证或以其他方式批准。"
 
 msgctxt "#32000"
 msgid "Animated Art"
@@ -48,7 +48,7 @@ msgstr "艺术图"
 #. Error shown when an edited rating is not a number in range; 7.3 is an example value
 msgctxt "#32005"
 msgid "Rating must be a number from 0 to 10, such as 7.3"
-msgstr ""
+msgstr "评分必须是 0 到 10 之间的数字，例如 7.3"
 
 #. Label for language dropdown in settings (used for both metadata and artwork language selection)
 msgctxt "#32006"
@@ -102,7 +102,7 @@ msgstr "{0} 集"
 #. Error shown when an edited year falls outside the accepted range
 msgctxt "#32018"
 msgid "Year must be between 1800 and 2100"
-msgstr ""
+msgstr "年份必须在 1800 到 2100 之间"
 
 msgctxt "#32019"
 msgid "Add 'Download' option to missing artwork and pre-cache"
@@ -115,7 +115,7 @@ msgstr "在审查和预缓存操作期间,显示附加菜单选项以将艺术�
 #. Error shown when an edited runtime is not a whole number of minutes in range
 msgctxt "#32021"
 msgid "Runtime must be 0 to 10080 minutes"
-msgstr ""
+msgstr "片长必须为 0 到 10080 分钟"
 
 msgctxt "#32022"
 msgid "When File Already Exists"
@@ -136,7 +136,7 @@ msgstr "覆盖现有文件"
 #. Error shown when an edited Top 250 position falls outside the accepted range
 msgctxt "#32026"
 msgid "Top 250 must be 0-250"
-msgstr ""
+msgstr "Top 250 排名必须在 0-250 之间"
 
 msgctxt "#32027"
 msgid "Use Movie Filename Prefix"
@@ -169,7 +169,7 @@ msgstr "艺术图获取器 - 已取消"
 #. Error shown when an edited duration is not a MM:SS time
 msgctxt "#32034"
 msgid "Duration must be in MM:SS format"
-msgstr ""
+msgstr "时长必须为 MM:SS 格式"
 
 msgctxt "#32035"
 msgid "Always Ask"
@@ -265,7 +265,7 @@ msgstr "配置 Fanart.tv API 密钥"
 
 msgctxt "#32058"
 msgid "Filmography"
-msgstr ""
+msgstr "作品列表"
 
 msgctxt "#32059"
 msgid "Trakt"
@@ -305,20 +305,20 @@ msgstr "超过 {0} 秒无进度。请再次运行以完成剩余部分。"
 
 msgctxt "#32068"
 msgid "Press OK to read biography"
-msgstr ""
+msgstr "按确定键阅读生平简介"
 
 msgctxt "#32069"
 msgid "Birthplace"
-msgstr ""
+msgstr "出生地"
 
 #. Follows a person's age, as in "53 years old"
 msgctxt "#32070"
 msgid "years old"
-msgstr ""
+msgstr "岁"
 
 msgctxt "#32071"
 msgid "Upcoming Episodes"
-msgstr ""
+msgstr "即将播出的剧集"
 
 msgctxt "#32072"
 msgid "Processing Artwork Queue"
@@ -347,12 +347,12 @@ msgstr "TMDB"
 #. "Info" is the remote and keyboard button
 msgctxt "#32078"
 msgid "Info: view full size"
-msgstr ""
+msgstr "信息键：查看完整尺寸"
 
 #. "match" is the movie or TV show found for a programme, not a sports match
 msgctxt "#32079"
 msgid "Fix match"
-msgstr ""
+msgstr "修正匹配"
 
 msgctxt "#32080"
 msgid "API Key"
@@ -372,7 +372,7 @@ msgstr "预缓存媒体库艺术图"
 
 msgctxt "#32084"
 msgid "Trakt Watchlist"
-msgstr ""
+msgstr "Trakt 观看列表"
 
 msgctxt "#32085"
 msgid "Statistics & Info"
@@ -396,15 +396,15 @@ msgstr "按时间(早于...)"
 
 msgctxt "#32090"
 msgid "Identifying uncached artwork..."
-msgstr ""
+msgstr "正在识别未缓存的艺术图…"
 
 msgctxt "#32091"
 msgid "Finding orphaned textures..."
-msgstr ""
+msgstr "正在查找孤立纹理…"
 
 msgctxt "#32092"
 msgid "Removing {0} orphaned textures..."
-msgstr ""
+msgstr "正在移除 {0} 个孤立纹理…"
 
 msgctxt "#32093"
 msgid "Enter {0} API Key"
@@ -562,8 +562,8 @@ msgid "Show Download Artwork"
 msgstr "显示“下载艺术图”"
 
 msgctxt "#32118"
-msgid "No HTTP artwork URLs found in {0} library items."
-msgstr "在 {0} 个媒体库项目中未找到 HTTP 艺术图 URL。"
+msgid "Nothing to download. Artwork for these {0} library items is already local."
+msgstr "没有需要下载的内容。这 {0} 个媒体库项目的艺术图已保存在本地。"
 
 msgctxt "#32119"
 msgid "Overwrite Mode Warning"
@@ -583,19 +583,31 @@ msgstr "无文字/未标记"
 
 msgctxt "#32123"
 msgid "Trakt History"
-msgstr ""
+msgstr "Trakt 历史记录"
 
 msgctxt "#32124"
 msgid "Trakt In Progress"
-msgstr ""
+msgstr "Trakt 观看中"
 
 msgctxt "#32125"
 msgid "Trakt Most Played"
-msgstr ""
+msgstr "Trakt 最常播放"
+
+msgctxt "#32126"
+msgid "Select Country"
+msgstr "选择国家/地区"
+
+msgctxt "#32127"
+msgid "Country for the TMDB Now Playing and Upcoming lists"
+msgstr "用于 TMDB 正在上映和即将上映列表的国家/地区"
 
 msgctxt "#32128"
 msgid "Skip"
 msgstr "跳过"
+
+msgctxt "#32129"
+msgid "Failed to load the country list"
+msgstr "加载国家/地区列表失败"
 
 msgctxt "#32130"
 msgid "Multi-Art..."
@@ -603,7 +615,7 @@ msgstr "多艺术图..."
 
 msgctxt "#32131"
 msgid "Found {0} orphaned textures to remove.[CR][CR]Continue with removal?"
-msgstr ""
+msgstr "找到 {0} 个可移除的孤立纹理。[CR][CR]是否继续移除？"
 
 msgctxt "#32132"
 msgid "Source: All"
@@ -628,6 +640,10 @@ msgstr "自动更新"
 msgctxt "#32137"
 msgid "Automatically update IMDb ratings in your library"
 msgstr "自动更新媒体库中的 IMDb 评分"
+
+msgctxt "#32138"
+msgid "Recommended"
+msgstr "推荐"
 
 msgctxt "#32139"
 msgid "After library scan"
@@ -719,7 +735,7 @@ msgstr "任务已在运行"
 
 msgctxt "#32173"
 msgid "Found {0} library artwork URLs"
-msgstr ""
+msgstr "找到 {0} 个媒体库艺术图链接"
 
 msgctxt "#32180"
 msgid "Texture Cache Statistics"
@@ -927,11 +943,11 @@ msgstr "错误:{0}"
 
 msgctxt "#32288"
 msgid "Found {0} TV shows. Checking which are not cached..."
-msgstr ""
+msgstr "找到 {0} 部电视剧。正在检查哪些尚未缓存…"
 
 msgctxt "#32289"
 msgid "All TV shows are already cached."
-msgstr ""
+msgstr "所有电视剧均已缓存。"
 
 msgctxt "#32290"
 msgid "Download Artwork"
@@ -1055,35 +1071,35 @@ msgstr "IMDb 评分已是最新"
 
 msgctxt "#32321"
 msgid "{0} rate limited, resuming in {1}s"
-msgstr ""
+msgstr "{0} 触发请求频率限制，{1} 秒后继续"
 
 msgctxt "#32323"
 msgid "Stopped: no sources reachable"
-msgstr ""
+msgstr "已停止：无法连接任何来源"
 
 msgctxt "#32324"
 msgid "Trakt will fetch {0} movies."
-msgstr ""
+msgstr "Trakt 将获取 {0} 部电影。"
 
 msgctxt "#32325"
 msgid "Trakt will fetch {0} seasons."
-msgstr ""
+msgstr "Trakt 将获取 {0} 季。"
 
 msgctxt "#32326"
 msgid "Trakt will fetch {0} shows."
-msgstr ""
+msgstr "Trakt 将获取 {0} 部电视剧。"
 
 msgctxt "#32327"
 msgid "Trakt allows 500 requests every 5 minutes."
-msgstr ""
+msgstr "Trakt 每 5 分钟允许 500 次请求。"
 
 msgctxt "#32328"
 msgid "Include Trakt in this update?"
-msgstr ""
+msgstr "本次更新是否包含 Trakt？"
 
 msgctxt "#32329"
 msgid "Include"
-msgstr ""
+msgstr "包含"
 
 msgctxt "#32330"
 msgid "Analyzing Textures"
@@ -1131,11 +1147,11 @@ msgstr "正在分析媒体库..."
 
 msgctxt "#32354"
 msgid "Downloading IMDb episode data..."
-msgstr ""
+msgstr "正在下载 IMDb 剧集数据…"
 
 msgctxt "#32355"
 msgid "Matching episodes (IMDb dataset)... {0}/{1}"
-msgstr ""
+msgstr "正在匹配剧集（IMDb 数据集）… {0}/{1}"
 
 msgctxt "#32356"
 msgid "Fetching episodes (TMDB)... {0}/{1}"
@@ -1458,16 +1474,16 @@ msgstr "总计:{0} | 最早:{1}"
 
 msgctxt "#32485"
 msgid "Failed to analyze textures"
-msgstr ""
+msgstr "分析纹理失败"
 
 msgctxt "#32486"
 msgid "Overwrite mode is enabled"
-msgstr ""
+msgstr "已启用覆盖模式"
 
 #. {0} is a list such as "Movies: filename prefix"
 msgctxt "#32487"
 msgid "Filename pattern: {0}"
-msgstr ""
+msgstr "文件名规则：{0}"
 
 msgctxt "#32488"
 msgid "Texture Cache - Last Run"
@@ -1519,7 +1535,7 @@ msgstr "会话报告"
 
 msgctxt "#32501"
 msgid "Mismatches found: {0} files"
-msgstr ""
+msgstr "发现不匹配：{0} 个文件"
 
 msgctxt "#32502"
 msgid "Select Missing Artwork"
@@ -1555,7 +1571,7 @@ msgstr "上次会话(任意媒体库)"
 
 msgctxt "#32511"
 msgid "Original artwork will be [B]deleted[/B] after a successful download."
-msgstr ""
+msgstr "下载成功后，原始艺术图将被[B]删除[/B]。"
 
 msgctxt "#32512"
 msgid "Session History"
@@ -1564,17 +1580,17 @@ msgstr "会话历史"
 #. {0} is a library section such as "Movies"
 msgctxt "#32513"
 msgid "{0}: filename prefix"
-msgstr ""
+msgstr "{0}：文件名前缀"
 
 #. {0} is a library section such as "Movies"
 msgctxt "#32514"
 msgid "{0}: no prefix"
-msgstr ""
+msgstr "{0}：无前缀"
 
 #. {0} is a library section such as "Movies"
 msgctxt "#32515"
 msgid "Loading {0}..."
-msgstr ""
+msgstr "正在加载 {0}…"
 
 msgctxt "#32520"
 msgid "Artwork Download Report"
@@ -1774,7 +1790,7 @@ msgstr "... 还有 {0} 个"
 
 msgctxt "#32595"
 msgid "Automatically update IMDb Top 250 rankings in your library"
-msgstr ""
+msgstr "自动更新媒体库中的 IMDb Top 250 排名"
 
 msgctxt "#32600"
 msgid "IMDb Top 250"
@@ -2162,32 +2178,32 @@ msgstr "艺术家缩略图"
 
 msgctxt "#32695"
 msgid "Ratings sources to check (IMDb always on)"
-msgstr ""
+msgstr "要检查的评分来源（IMDb 始终启用）"
 
 msgctxt "#32696"
 msgid "Continue Watching"
-msgstr ""
+msgstr "继续观看"
 
 msgctxt "#32697"
 msgid "Similar Artists"
-msgstr ""
+msgstr "相似艺人"
 
 msgctxt "#32698"
 msgid "Wait 60s and Retry"
-msgstr ""
+msgstr "等待 60 秒后重试"
 
 msgctxt "#32699"
 msgid "Retry Tomorrow"
-msgstr ""
+msgstr "明天重试"
 
 msgctxt "#32700"
 msgid "Stop All Updates"
-msgstr ""
+msgstr "停止所有更新"
 
 #. {0} is the provider name, e.g. TRAKT
 msgctxt "#32701"
 msgid "Continue Without {0}"
-msgstr ""
+msgstr "不使用 {0}，继续"
 
 #. {0} is a web address, {1} a short code the user types there, {2} the seconds left
 msgctxt "#32702"
@@ -2198,204 +2214,209 @@ msgid ""
 "\n"
 "Waiting for authorization... ({2}s remaining)"
 msgstr ""
+"1. 访问：{0}\n"
+"2. 输入代码：[B]{1}[/B]\n"
+"3. 在网站上点击“授权”\n"
+"\n"
+"正在等待授权…（剩余 {2} 秒）"
 
 msgctxt "#32703"
 msgid "Person Info"
-msgstr ""
+msgstr "人物信息"
 
 msgctxt "#32704"
 msgid "Scanning {0}"
-msgstr ""
+msgstr "正在扫描 {0}"
 
 msgctxt "#32705"
 msgid "ETA {0}"
-msgstr ""
+msgstr "预计剩余 {0}"
 
 msgctxt "#32706"
 msgid "Queued: {0}"
-msgstr ""
+msgstr "已排队：{0}"
 
 msgctxt "#32707"
 msgid "Found: {0} | Cached: {1} | Existing: {2}"
-msgstr ""
+msgstr "已找到：{0} | 已缓存：{1} | 已存在：{2}"
 
 msgctxt "#32708"
 msgid "Option {0}"
-msgstr ""
+msgstr "选项 {0}"
 
 #. {2} is a language name
 msgctxt "#32709"
 msgid "{0} of {1} available ({2})"
-msgstr ""
+msgstr "可用 {0}/{1}（{2}）"
 
 msgctxt "#32710"
 msgid "{0} available"
-msgstr ""
+msgstr "可用 {0}"
 
 #. {0} is an art type such as Fanart or Poster
 msgctxt "#32711"
 msgid "Multi-Art {0}"
-msgstr ""
+msgstr "多张{0}"
 
 #. {0} is a media type, {1} a list of art types
 msgctxt "#32712"
 msgid "Art type not supported for {0}: {1}"
-msgstr ""
+msgstr "{0} 不支持该图片类型：{1}"
 
 msgctxt "#32713"
 msgid "No MusicBrainz ID for this artist"
-msgstr ""
+msgstr "此艺术家没有 MusicBrainz ID"
 
 msgctxt "#32714"
 msgid "No MusicBrainz ID for this album"
-msgstr ""
+msgstr "此专辑没有 MusicBrainz ID"
 
 msgctxt "#32715"
 msgid "Failed to fetch artwork"
-msgstr ""
+msgstr "获取艺术图失败"
 
 #. {0} is a list of art types
 msgctxt "#32716"
 msgid "No {0} artwork found"
-msgstr ""
+msgstr "未找到 {0} 艺术图"
 
 msgctxt "#32717"
 msgid "Artwork updated"
-msgstr ""
+msgstr "艺术图已更新"
 
 msgctxt "#32718"
 msgid "Applied: {0} | Skipped: {1} | Auto-skipped: {2}"
-msgstr ""
+msgstr "已应用：{0} | 已跳过：{1} | 自动跳过：{2}"
 
 #. {0} is a library name such as Movies
 msgctxt "#32719"
 msgid "{0} - Select Action"
-msgstr ""
+msgstr "{0} - 选择操作"
 
 #. {0} is a library name such as Movies
 msgctxt "#32720"
 msgid "No report available for {0}"
-msgstr ""
+msgstr "{0} 没有可用的报告"
 
 msgctxt "#32721"
 msgid "No reports available"
-msgstr ""
+msgstr "没有可用的报告"
 
 #. {0} is a library name such as Movies
 msgctxt "#32722"
 msgid "Auto-Fill {0}"
-msgstr ""
+msgstr "自动填充 {0}"
 
 msgctxt "#32723"
 msgid "Automatically applies missing artwork without review.[CR]Only fills in missing artwork, won't replace existing.[CR]View results afterwards in Session History.[CR][CR]Continue?"
-msgstr ""
+msgstr "自动应用缺失的艺术图，无需审核。[CR]仅填充缺失的图片，不会替换现有艺术图。[CR]之后可在会话历史中查看结果。[CR][CR]是否继续？"
 
 msgctxt "#32724"
 msgid "Enter the date as YYYY-MM-DD"
-msgstr ""
+msgstr "请按 YYYY-MM-DD 格式输入日期"
 
 msgctxt "#32725"
 msgid "That date cannot exist"
-msgstr ""
+msgstr "该日期不存在"
 
 #. {0} is a field name such as Genre
 msgctxt "#32726"
 msgid "No existing {0} found in library.[CR]Use Quick Edit or Add/Remove instead."
-msgstr ""
+msgstr "媒体库中未找到现有的 {0}。[CR]请改用快速编辑或添加/删除。"
 
 msgctxt "#32727"
 msgid "{0} votes"
-msgstr ""
+msgstr "{0} 票"
 
 #. {0} is a field name such as Genre
 msgctxt "#32728"
 msgid "{0} updated"
-msgstr ""
+msgstr "{0} 已更新"
 
 #. {0} is how many more values are not shown
 msgctxt "#32729"
 msgid "(+{0} more)"
-msgstr ""
+msgstr "（还有 {0} 项）"
 
 #. {0} is the name of the running task
 msgctxt "#32730"
 msgid "Cancel Current Task: {0}"
-msgstr ""
+msgstr "取消当前任务：{0}"
 
 #. {0} is the name of the running task
 msgctxt "#32731"
 msgid "[B]Currently Running:[/B] {0}"
-msgstr ""
+msgstr "[B]当前运行：[/B] {0}"
 
 #. {0} is a time such as 5m 3s
 msgctxt "#32732"
 msgid "[B]Duration:[/B] {0}"
-msgstr ""
+msgstr "[B]用时：[/B] {0}"
 
 #. {0} is a time such as 5m 3s
 msgctxt "#32733"
 msgid "[B]Last Activity:[/B] {0} ago"
-msgstr ""
+msgstr "[B]最近活动：[/B] {0}前"
 
 #. {0} is the name of the task about to start
 msgctxt "#32734"
 msgid "[B]New Task:[/B] {0}"
-msgstr ""
+msgstr "[B]新任务：[/B] {0}"
 
 msgctxt "#32735"
 msgid "Cancelling will stop the current task safely."
-msgstr ""
+msgstr "取消操作会安全地停止当前任务。"
 
 msgctxt "#32736"
 msgid "Not set in Kodi's settings. This folder holds the artwork for movie sets.[CR][CR]Select a folder now?"
-msgstr ""
+msgstr "未在 Kodi 设置中指定。此文件夹用于存放电影集的艺术图。[CR][CR]现在选择文件夹吗？"
 
 msgctxt "#32737"
 msgid "Not set in Kodi's settings. This folder holds the artwork and metadata for artists.[CR][CR]Select a folder now?"
-msgstr ""
+msgstr "未在 Kodi 设置中指定。此文件夹用于存放艺术家的艺术图和元数据。[CR][CR]现在选择文件夹吗？"
 
 msgctxt "#32738"
 msgid "Folder saved"
-msgstr ""
+msgstr "文件夹已保存"
 
 msgctxt "#32739"
 msgid "Could not save the setting. Set the folder in Kodi's settings instead."
-msgstr ""
+msgstr "无法保存该设置。请在 Kodi 设置中指定文件夹。"
 
 #. {0} is the image's position in the list
 msgctxt "#32740"
 msgid "Profile Image {0}"
-msgstr ""
+msgstr "个人头像 {0}"
 
 #. {0} is a list of counts, such as "12 Movies, 3 TV shows"
 msgctxt "#32741"
 msgid "Missing IMDb IDs: {0}"
-msgstr ""
+msgstr "缺失的 IMDb ID：{0}"
 
 #. {0} is a list of counts, such as "12 Movies, 3 TV shows"
 msgctxt "#32742"
 msgid "Invalid TMDB IDs: {0}"
-msgstr ""
+msgstr "无效的 TMDB ID：{0}"
 
 msgctxt "#32743"
 msgid "Fix these issues?"
-msgstr ""
+msgstr "是否修复这些问题？"
 
 msgctxt "#32744"
 msgid "Added {0} IMDb IDs"
-msgstr ""
+msgstr "已添加 {0} 个 IMDb ID"
 
 msgctxt "#32745"
 msgid "Fixed {0} TMDB IDs"
-msgstr ""
+msgstr "已修复 {0} 个 TMDB ID"
 
 msgctxt "#32746"
 msgid "Creator"
-msgstr ""
+msgstr "创作者"
 
 msgctxt "#32747"
 msgid "Enter 6 or 8 hex digits, as RRGGBB or AARRGGBB"
-msgstr ""
+msgstr "请输入 6 位或 8 位十六进制数字，格式为 RRGGBB 或 AARRGGBB"
 
 msgctxt "#32901"
 msgid "Enable Debug Output"
@@ -2411,7 +2432,7 @@ msgstr "西班牙语"
 
 msgctxt "#32932"
 msgid "Portuguese (Brazil)"
-msgstr "葡萄牙语(巴西)"
+msgstr "葡萄牙语（巴西）"
 
 msgctxt "#32933"
 msgid "Portuguese (Portugal)"

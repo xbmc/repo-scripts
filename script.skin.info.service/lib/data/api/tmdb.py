@@ -738,12 +738,16 @@ class ApiTmdb(RatingSource):
         return self._get_list(f"/{media_type}/top_rated", page=page, abort_flag=abort_flag)
 
     def get_now_playing(self, page: int = 1, abort_flag=None) -> list:
-        """Get TMDB's movies now in theaters."""
-        return self._get_list("/movie/now_playing", page=page, abort_flag=abort_flag)
+        """Get TMDB's movies now in theaters in the configured country."""
+        return self._get_list("/movie/now_playing", page=page,
+                              extra_params={"region": KodiSettings.tmdb_region()},
+                              abort_flag=abort_flag)
 
     def get_upcoming(self, page: int = 1, abort_flag=None) -> list:
-        """Get TMDB's upcoming movies."""
-        return self._get_list("/movie/upcoming", page=page, abort_flag=abort_flag)
+        """Get TMDB's upcoming movies in the configured country."""
+        return self._get_list("/movie/upcoming", page=page,
+                              extra_params={"region": KodiSettings.tmdb_region()},
+                              abort_flag=abort_flag)
 
     def get_airing_today(self, page: int = 1, abort_flag=None) -> list:
         """Get TMDB's shows airing today."""
@@ -752,6 +756,12 @@ class ApiTmdb(RatingSource):
     def get_on_the_air(self, page: int = 1, abort_flag=None) -> list:
         """Get TMDB's shows with an episode airing this week."""
         return self._get_list("/tv/on_the_air", page=page, abort_flag=abort_flag)
+
+    def get_countries(self, abort_flag=None) -> list:
+        """Get the countries TMDB knows, named in the metadata language."""
+        params = {"api_key": self.get_api_key(), "language": _get_metadata_language()}
+        data = self.session.get("/configuration/countries", params=params, abort_flag=abort_flag)
+        return data if isinstance(data, list) else []
 
     def get_genre_list(self, media_type: str, force_refresh: bool = False) -> Dict[int, str]:
         """Get the TMDB genre id-to-name mapping for movies or TV, cached 24h."""

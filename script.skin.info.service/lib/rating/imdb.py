@@ -215,8 +215,8 @@ def update_changed_imdb_ratings(
             sync_batch = []
 
         delay_ms = _DRIP_DELAY.get(state, _DRIP_DELAY["idle"]).get(item_media_type, 100)
-        if delay_ms > 0:
-            xbmc.sleep(delay_ms)
+        if delay_ms > 0 and monitor.waitForAbort(delay_ms / 1000):
+            break
 
     progress.close()
 

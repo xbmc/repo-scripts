@@ -31,7 +31,7 @@
 			<height>1080</height>
 			<control type="group">
 				<left>66</left>
-				<top>150</top>
+				<top>154</top>
 				<animation type="Conditional" condition="String.IsEmpty(Window.Property(IsTop)) | Container(1510).IsUpdating | Container(1513).IsUpdating | Container(1511).IsUpdating | Container(1512).IsUpdating | Container(1519).IsUpdating" reversible="false">
 					<effect type="fade" end="0" />
 					<effect type="slide" start="-320" end="-320" />
@@ -48,7 +48,7 @@
 					<left>-16</left>
 					<top>-16</top>
 					<width>566</width>
-					<height>841</height>
+					<height>837</height>
 					<texture>colors/black.png</texture>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 					<bordersize>20</bordersize>
@@ -57,7 +57,7 @@
 					<left>4</left>
 					<top>4</top>
 					<width>526</width>
-					<height>801</height>
+					<height>797</height>
 					<aspectratio>scale</aspectratio>
 					<texture fallback="DefaultVideo.png" background="true">$INFO[Window.Property(Poster)]</texture>
 				</control>
@@ -689,7 +689,7 @@
 					<left>40</left>
 					<top>493</top>
 					<width>670</width>
-					<height>363</height>
+					<height>368</height>
 					<label fallback="19055">$INFO[Window.Property(Plot)]</label>
 					<autoscroll delay="10000" time="5000" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
 					<visible>String.StartsWith(System.BuildVersion,21)</visible>
@@ -698,9 +698,17 @@
 					<left>40</left>
 					<top>493</top>
 					<width>670</width>
-					<height>363</height>
+					<height>368</height>
 					<label fallback="19055">$INFO[Window.Property(Tagline),[B][I],[/I][/B][CR]]$INFO[Window.Property(Plot)]</label>
 					<autoscroll delay="10000" time="5000" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
+					<visible>!String.StartsWith(System.BuildVersion,21)</visible>
+				</control>
+				<control type="image">
+					<left>735</left>
+					<top>468</top>
+					<width>509</width>
+					<height>418</height>
+					<texture border="21">dialogs/dialog-bg.png</texture>
 					<visible>!String.StartsWith(System.BuildVersion,21)</visible>
 				</control>
 				<control type="image">
@@ -709,6 +717,7 @@
 					<width>512</width>
 					<height>418</height>
 					<texture border="21">dialogs/dialog-bg.png</texture>
+					<visible>String.StartsWith(System.BuildVersion,21)</visible>
 				</control>
 				<control type="grouplist" id="4000">
 					<orientation>vertical</orientation>
@@ -727,12 +736,20 @@
 						<param name="control_id" value="146" />
 						<param name="label" value="[COLOR button_focus]$LOCALIZE[20339]: [/COLOR]$INFO[Window.Property(Director)]" />
 						<param name="altlabel" value="$LOCALIZE[20339]: $INFO[Window.Property(Director)]" />
+						<param name="onclick_condition" value="true" />
+						<param name="onclick" value="RunScript(script.skin.info.service,action=dialog_actor_info,crew=director,tmdb_id=$INFO[Window.Property(tmdb_id)],dbid=$INFO[Window.Property(DBID)],dbtype=$INFO[Window.Property(MediaType)])" />
+						<param name="altclick_condition" value="true" />
+						<param name="altclick" value="RunScript(script.skin.info.service,action=dialog_actor_info,crew=director,tmdb_id=$INFO[Window.Property(tmdb_id)],dbid=$INFO[Window.Property(DBID)],dbtype=$INFO[Window.Property(MediaType)])" />
 						<param name="visible" value="!String.IsEmpty(Window.Property(Director))" />
 					</include>
 					<include content="InfoDialogMetadata">
 						<param name="control_id" value="147" />
 						<param name="label" value="[COLOR button_focus]$LOCALIZE[20417]: [/COLOR]$INFO[Window.Property(Writer)]" />
 						<param name="altlabel" value="$LOCALIZE[20417]: $INFO[Window.Property(Writer)]" />
+						<param name="onclick_condition" value="true" />
+						<param name="onclick" value="RunScript(script.skin.info.service,action=dialog_actor_info,crew=writer,tmdb_id=$INFO[Window.Property(tmdb_id)],dbid=$INFO[Window.Property(DBID)],dbtype=$INFO[Window.Property(MediaType)])" />
+						<param name="altclick_condition" value="true" />
+						<param name="altclick" value="RunScript(script.skin.info.service,action=dialog_actor_info,crew=writer,tmdb_id=$INFO[Window.Property(tmdb_id)],dbid=$INFO[Window.Property(DBID)],dbtype=$INFO[Window.Property(MediaType)])" />
 						<param name="visible" value="!String.IsEmpty(Window.Property(Writer))" />
 					</include>
 					<include content="InfoDialogMetadata">
@@ -804,12 +821,12 @@
 				</control>
 				<control type="grouplist" id="5000">
 					<top>864</top>
-					<width>1248</width>
+					<width>1244</width>
 					<height>400</height>
 					<onleft>5000</onleft>
 					<onright>5000</onright>
 					<onup>138</onup>
-					<itemgap>-18</itemgap>
+					<itemgap>-19</itemgap>
 					<align>center</align>
 					<orientation>horizontal</orientation>
 					<scrolltime tween="quadratic">200</scrolltime>
@@ -877,7 +894,7 @@
 						<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/infodialogs/extras.png</textureradiooffnofocus>
 						<textureradiooffdisabled colordiffuse="disabled">icons/infodialogs/extras.png</textureradiooffdisabled>
 						<textureradioondisabled colordiffuse="disabled">icons/infodialogs/extras.png</textureradioondisabled>
-						<label>$ADDON[script.skin.info.service 32682]</label>
+						<label>$ADDON[script.skin.info.service 32138]</label>
 						<onclick>SetProperty(Section,recommendations)</onclick>
 						<onclick>SetFocus(1511)</onclick>
 						<enable>Integer.IsGreater(Container(1511).NumItems,0)</enable>

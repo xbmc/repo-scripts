@@ -562,8 +562,8 @@ msgid "Show Download Artwork"
 msgstr "Afficher Télécharger les illustrations"
 
 msgctxt "#32118"
-msgid "No HTTP artwork URLs found in {0} library items."
-msgstr "Aucune URL d'illustration HTTP trouvée dans {0} éléments de la médiathèque."
+msgid "Nothing to download. Artwork for these {0} library items is already local."
+msgstr "Rien à télécharger. Les illustrations de ces {0} éléments de la médiathèque sont déjà enregistrées localement."
 
 msgctxt "#32119"
 msgid "Overwrite Mode Warning"
@@ -593,9 +593,21 @@ msgctxt "#32125"
 msgid "Trakt Most Played"
 msgstr ""
 
+msgctxt "#32126"
+msgid "Select Country"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Country for the TMDB Now Playing and Upcoming lists"
+msgstr ""
+
 msgctxt "#32128"
 msgid "Skip"
 msgstr "Ignorer"
+
+msgctxt "#32129"
+msgid "Failed to load the country list"
+msgstr ""
 
 msgctxt "#32130"
 msgid "Multi-Art..."
@@ -628,6 +640,10 @@ msgstr "Mise à jour automatique"
 msgctxt "#32137"
 msgid "Automatically update IMDb ratings in your library"
 msgstr "Mettre à jour automatiquement les notes IMDb dans votre médiathèque"
+
+msgctxt "#32138"
+msgid "Recommended"
+msgstr ""
 
 msgctxt "#32139"
 msgid "After library scan"

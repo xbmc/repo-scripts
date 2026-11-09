@@ -130,7 +130,8 @@ def get_library_items_for_download(media_types: List[str]) -> List[Dict[str, Any
     """Get library items that carry art, as `{dbid, media_type, title, file, art}` dicts."""
     def has_artwork(item: Dict[str, Any]) -> bool:
         art = item.get('art', {})
-        return bool(art and isinstance(art, dict))
+        # icon is Kodi's Default*.png fallback, not library art
+        return isinstance(art, dict) and any(art_type != 'icon' for art_type in art)
 
     try:
         log("Artwork", f"Querying library for media types: {', '.join(media_types)}", xbmc.LOGDEBUG)
