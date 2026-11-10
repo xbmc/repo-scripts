@@ -49,6 +49,7 @@ class UpNextMonitor(Monitor):
 
             self.restore_after_wake()
             self.playback_manager.check_previous_watched()
+            self.playback_manager.resume_next_episode()
             if not self.player.is_tracking():
                 self._waiting_for = None
                 self.skipper.reset()
@@ -262,6 +263,7 @@ class UpNextMonitor(Monitor):
             self.remember_for_sleep()
             return
         if method == 'System.OnWake':
+            self.playback_manager.request_popup_wake()
             self._wake_retries = 30 if self._sleep_state else 0
             return
         if method == 'Player.OnStop':

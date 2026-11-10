@@ -104,19 +104,31 @@ msgstr "Zpět: sledovat dál"
 
 msgctxt "#30052"
 msgid "Skip intro"
-msgstr ""
+msgstr "Přeskočit znělku"
 
 msgctxt "#30053"
 msgid "Skip recap"
-msgstr ""
+msgstr "Přeskočit shrnutí"
+
+msgctxt "#30054"
+msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "Další za [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+
+msgctxt "#30055"
+msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "Další díl za [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+
+msgctxt "#30056"
+msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "Pokračování za [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]UKÁZKOVÝ REŽIM UP NEXT JE ZAPNUTÝ[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]Epizody se automaticky přeskočí na konec.[/I]"
 
 
 ### SETTINGS
@@ -139,6 +151,10 @@ msgstr "Zobrazit tlačítko \"Zastavení\" místo \"Zavření\""
 msgctxt "#30507"
 msgid "Use OK/Select for playback controls"
 msgstr "Tlačítkem OK otevřít ovládání přehrávání"
+
+msgctxt "#30508"
+msgid "Use arrows to seek; hold OK for Up Next buttons"
+msgstr "Šipkami posouvat video; podržením OK vybrat tlačítka Up Next"
 
 msgctxt "#30600"
 msgid "Behaviour"
@@ -166,11 +182,11 @@ msgstr "Počet sekund zobrazení upozornění"
 
 msgctxt "#30611"
 msgid "Customize autoplay duration by episode length"
-msgstr "Upravit trvání automatického přehrávání podle délky epizod"
+msgstr "Přizpůsobit čas nabídky délce epizody"
 
 msgctxt "#30613"
 msgid "All episodes  [COLOR gray]any length[/COLOR]"
-msgstr "Všechny epizodyv  [COLOR gray]jakékoliv délce[/COLOR]"
+msgstr "Všechny epizody  [COLOR gray]jakékoliv délky[/COLOR]"
 
 msgctxt "#30615"
 msgid "Very short episodes  [COLOR gray]< 10 mins[/COLOR]"
@@ -198,19 +214,19 @@ msgstr "Za kolik sekund přejít během titulků (0 = vypnuto)"
 
 msgctxt "#30627"
 msgid "Intros and recaps"
-msgstr ""
+msgstr "Znělky a shrnutí"
 
 msgctxt "#30629"
 msgid "Show a Skip button when the add-on marks them"
-msgstr ""
+msgstr "Zobrazit tlačítko přeskočení, pokud je doplněk označí"
 
 msgctxt "#30631"
 msgid "Skip intros automatically"
-msgstr ""
+msgstr "Automaticky přeskočit znělky"
 
 msgctxt "#30633"
 msgid "Skip recaps automatically"
-msgstr ""
+msgstr "Automaticky přeskočit shrnutí"
 
 msgctxt "#30635"
 msgid "Ask if still watching after (minutes, 0 disables)"
@@ -227,6 +243,14 @@ msgstr "Hodina večerky"
 msgctxt "#30641"
 msgid "Bedtime minute"
 msgstr "Minuta večerky"
+
+msgctxt "#30643"
+msgid "Mark an episode as watched when moving to the next one early"
+msgstr "Při předčasném přechodu označit epizodu jako zhlédnutou"
+
+msgctxt "#30645"
+msgid "Continue a partly watched next episode where it was left"
+msgstr "Pokračovat v rozkoukaném dalším dílu od uložené pozice"
 
 msgctxt "#30700"
 msgid "Expert"
@@ -250,7 +274,7 @@ msgstr "Otestovat vzhled uživatelského rozhraní"
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "Zapnout ukázkový režim"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
@@ -270,4 +294,4 @@ msgstr "Zobrazit jednoduchý pop-up ověření pozornosti…"
 
 msgctxt "#30813"
 msgid "Test Skip button"
-msgstr ""
+msgstr "Vyzkoušet tlačítko přeskočení"
