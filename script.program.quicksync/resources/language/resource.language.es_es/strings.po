@@ -1,10 +1,10 @@
 # Kodi Media Center language file
-# Addon Name: Kodi QuickSync
+# Addon Name: QuickSync
 # Addon id: script.program.quicksync
 # Addon Provider: airam
 msgid ""
 msgstr ""
-"Project-Id-Version: Kodi QuickSync 1.0.0\n"
+"Project-Id-Version: QuickSync 1.1.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,6 +38,22 @@ msgstr "Bibliotecas"
 msgctxt "#30014"
 msgid "Result"
 msgstr "Resultado"
+
+msgctxt "#30015"
+msgid "Seconds before closing"
+msgstr "Segundos antes de cerrar"
+
+msgctxt "#30016"
+msgid "Kodi has no picture library: for pictures, the files in the picture sources are counted"
+msgstr "Kodi no tiene biblioteca de imágenes: de las imágenes se cuentan los archivos de sus fuentes"
+
+msgctxt "#30017"
+msgid "Close the summary automatically"
+msgstr "Cerrar el resumen automáticamente"
+
+msgctxt "#30018"
+msgid "Look for new pictures"
+msgstr "Buscar imágenes nuevas"
 
 msgctxt "#30020"
 msgid "No library selected in the add-on settings."
@@ -78,3 +94,67 @@ msgstr "Álbumes"
 msgctxt "#30034"
 msgid "Songs"
 msgstr "Canciones"
+
+msgctxt "#30035"
+msgid "Music videos"
+msgstr "Vídeos musicales"
+
+msgctxt "#30036"
+msgid "Artists"
+msgstr "Artistas"
+
+msgctxt "#30040"
+msgid "Closing in %d s"
+msgstr "Se cerrará en %d s"
+
+msgctxt "#30041"
+msgid "Automatic close stopped"
+msgstr "Cierre automático detenido"
+
+msgctxt "#30042"
+msgid "Not scanned: turned off in the add-on settings"
+msgstr "No se ha escaneado: desactivada en los ajustes del addon"
+
+msgctxt "#30043"
+msgid "Not scanned in this run"
+msgstr "No se ha escaneado en esta ejecución"
+
+msgctxt "#30044"
+msgid "Kodi did not scan it: there is no source with a content type set"
+msgstr "Kodi no la ha escaneado: no hay ninguna fuente con tipo de contenido"
+
+msgctxt "#30045"
+msgid "Video library"
+msgstr "Biblioteca de vídeo"
+
+msgctxt "#30046"
+msgid "Music library"
+msgstr "Biblioteca de música"
+
+msgctxt "#30047"
+msgid "Pictures"
+msgstr "Imágenes"
+
+msgctxt "#30048"
+msgid "There are no picture sources in Kodi"
+msgstr "No hay fuentes de imágenes en Kodi"
+
+msgctxt "#30049"
+msgid "First count: next time the new ones will show up"
+msgstr "Primer recuento: la próxima vez se verán las nuevas"
+
+msgctxt "#30050"
+msgid "Files"
+msgstr "Archivos"
+
+msgctxt "#30060"
+msgid "About"
+msgstr "Acerca de"
+
+msgctxt "#30061"
+msgid "Made with ♥ by jairamrb.com"
+msgstr "Made with ♥ by jairamrb.com"
+
+msgctxt "#30062"
+msgid "Look for new content now"
+msgstr "Buscar contenido nuevo ahora"
