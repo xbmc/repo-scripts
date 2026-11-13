@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The attention window: a serious problem and its fix. Same rules as the
+     setup and progress windows: every control inline, fonts font10/12/13,
+     textures white and tinted here, accent colours from window properties
+     set by attention_window.py. -->
+<window>
+    <zorder>1</zorder>
+    <defaultcontrol always="true">31</defaultcontrol>
+    <controls>
+        <control type="image">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <texture colordiffuse="E6060607">metamender/white.png</texture>
+            <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+        </control>
+        <control type="group">
+            <left>460</left><top>280</top><width>1000</width><height>520</height>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="300" delay="100"/>
+                <effect type="zoom" start="96" end="100" center="auto" tween="sine" easing="out" time="300" delay="100"/>
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="zoom" start="100" end="96" center="auto" tween="sine" easing="out" time="200"/>
+                <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="200"/>
+            </animation>
+            <!-- Without "Also" lines the panel is shorter and the buttons sit
+                 right under the problem text. -->
+            <animation effect="slide" end="0,45" time="0" condition="String.IsEmpty(Window.Property(MM.Also))">Conditional</animation>
+            <control type="group">
+                <visible>!String.IsEmpty(Window.Property(MM.Also))</visible>
+                <control type="image">
+                    <left>0</left><top>0</top><width>1000</width><height>520</height>
+                    <texture border="20" colordiffuse="FF1A1D23">metamender/panel.png</texture>
+                </control>
+                <control type="image">
+                    <left>0</left><top>0</top><width>1000</width><height>520</height>
+                    <texture border="20" colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/frame.png</texture>
+                </control>
+            </control>
+            <control type="group">
+                <visible>String.IsEmpty(Window.Property(MM.Also))</visible>
+                <control type="image">
+                    <left>0</left><top>0</top><width>1000</width><height>430</height>
+                    <texture border="20" colordiffuse="FF1A1D23">metamender/panel.png</texture>
+                </control>
+                <control type="image">
+                    <left>0</left><top>0</top><width>1000</width><height>430</height>
+                    <texture border="20" colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/frame.png</texture>
+                </control>
+            </control>
+
+            <!-- Heading: the heartbeat badge and the title, centred together. -->
+            <control type="grouplist">
+                <left>50</left><top>40</top><width>900</width><height>56</height>
+                <orientation>horizontal</orientation>
+                <align>center</align>
+                <itemgap>16</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="group">
+                    <top>6</top><width>44</width><height>44</height>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/badge.png</texture></control>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="FF060607">metamender/pulse.png</texture></control>
+                </control>
+                <control type="label">
+                    <width>auto</width><height>56</height>
+                    <aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>$INFO[Window.Property(MM.Accent)]</textcolor>
+                    <label>[B]$INFO[Window.Property(MM.Heading)][/B]</label>
+                </control>
+            </control>
+            <control type="image">
+                <left>100</left><top>106</top><width>800</width><height>3</height>
+                <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/divider.png</texture>
+                <animation effect="fade" start="70" end="70" time="0" condition="true">Conditional</animation>
+            </control>
+
+            <control type="textbox">
+                <left>80</left><top>136</top><width>840</width><height>150</height>
+                <align>center</align>
+                <font>font12</font>
+                <textcolor>FFF1F3F5</textcolor>
+                <label>$INFO[Window.Property(MM.Problem)]</label>
+            </control>
+            <control type="textbox">
+                <left>80</left><top>296</top><width>840</width><height>90</height>
+                <align>center</align>
+                <font>font10</font>
+                <textcolor>FFA8AEB8</textcolor>
+                <label>$INFO[Window.Property(MM.Also)]</label>
+            </control>
+
+            <!-- The fix button (only when the problem has one) and Later,
+                 centred together. -->
+            <control type="grouplist">
+                <left>50</left><top>404</top><width>900</width><height>72</height>
+                <animation effect="slide" end="0,-90" time="0" condition="String.IsEmpty(Window.Property(MM.Also))">Conditional</animation>
+                <orientation>horizontal</orientation>
+                <align>center</align>
+                <itemgap>28</itemgap>
+                <control type="button" id="31">
+                    <width>260</width><height>72</height>
+                    <visible>!String.IsEmpty(Window.Property(MM.Action))</visible>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>[B]$INFO[Window.Property(MM.Action)][/B]</label>
+                    <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                </control>
+                <control type="button" id="32">
+                    <width>260</width><height>72</height>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>$INFO[Window.Property(MM.Later)]</label>
+                    <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

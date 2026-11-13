@@ -1,0 +1,1416 @@
+# MetaMender language file
+# Addon id: script.metamender
+msgid ""
+msgstr ""
+"Project-Id-Version: script.metamender\n"
+"Report-Msgid-Bugs-To: https://github.com/Rouzax/script.metamender\n"
+"PO-Revision-Date: 2026-06-07 00:00+0000\n"
+"Last-Translator: Rouzax\n"
+"Language-Team: English\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# --- Providers (32001-32033) ---
+
+msgctxt "#32001"
+msgid "Providers"
+msgstr ""
+
+msgctxt "#32010"
+msgid "TMDB"
+msgstr ""
+
+msgctxt "#32011"
+msgid "TMDB API key"
+msgstr ""
+
+msgctxt "#32012"
+msgid "API key for The Movie Database (themoviedb.org). Required for metadata lookups."
+msgstr ""
+
+msgctxt "#32025"
+msgid "Source priority"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Rating source"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Which audience ratings to keep up to date, and which one Kodi shows. \"Follow your scraper\" keeps the rating Kodi's scraper chose to show for each item and refreshes it when it comes from TMDB or IMDb; both are kept up to date, and the shown rating never changes source. The other options prefer or use only TMDB or IMDb, and make that rating the one Kodi shows (except for items with an NFO file, which decides that itself)."
+msgstr ""
+
+msgctxt "#32030"
+msgid "Prefer TMDB"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Prefer IMDb"
+msgstr ""
+
+msgctxt "#32032"
+msgid "TMDB only"
+msgstr ""
+
+msgctxt "#32033"
+msgid "IMDb only"
+msgstr ""
+
+# --- Backfill (32100-32149) ---
+
+msgctxt "#32100"
+msgid "Backfill"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Fields"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Enable ratings backfill"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Backfill missing or stale ratings and vote counts for movies, TV shows, and episodes."
+msgstr ""
+
+msgctxt "#32104"
+msgid "Enable plots backfill"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Backfill missing plot summaries from TMDB or TheTVDB."
+msgstr ""
+
+msgctxt "#32106"
+msgid "Enable episode title backfill"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Backfill missing episode titles from TMDB or TheTVDB. Generic titles such as \"Episode 3\" count as missing and are never written."
+msgstr ""
+
+msgctxt "#32108"
+msgid "Enable certifications"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Fill and correct age certifications of movies and TV shows from TMDB and the national rating sites (FSK, BBFC, Medieraadet), in the rating system of the country chosen in the Certifications tab."
+msgstr ""
+
+msgctxt "#32110"
+msgid "Enable credits backfill"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Directors and writers, from TMDB."
+msgstr ""
+
+msgctxt "#32112"
+msgid "Enable trailers backfill"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Backfill missing trailer URLs from TMDB."
+msgstr ""
+
+msgctxt "#32114"
+msgid "Enable taglines backfill"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Backfill missing movie taglines from TMDB."
+msgstr ""
+
+msgctxt "#32116"
+msgid "Enable details backfill"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Genre, studio, country, runtime and first aired date, from TMDB."
+msgstr ""
+
+msgctxt "#32120"
+msgid "Freshness"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Staleness threshold (days)"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Folder languages"
+msgstr ""
+
+msgctxt "#32142"
+msgid "Set the language of folders whose titles and plots are in another language than the library language."
+msgstr ""
+
+# --- Certifications (32200-32268) ---
+
+msgctxt "#32200"
+msgid "Certifications"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Certification format"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Country"
+msgstr ""
+
+msgctxt "#32203"
+msgid "The rating system to fill in: its valid ratings, its prefix and how other countries' ratings are converted to it. Automatic uses the region of Kodi's interface language; certifications are skipped when that region has no rating system here."
+msgstr ""
+
+msgctxt "#32204"
+msgid "Override certification prefix"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Use a custom prefix instead of the default for the selected country. Enable this if your Kodi skin expects a specific prefix format."
+msgstr ""
+
+msgctxt "#32206"
+msgid "Custom prefix"
+msgstr ""
+
+msgctxt "#32207"
+msgid "The prefix written before every certification, at most 8 characters (for example \"de:\" or \"Rated \"). Leave empty for no prefix."
+msgstr ""
+
+msgctxt "#32210"
+msgid "Country scrapers"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Enable FSK lookup"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Ask the German FSK when TMDB has no certification. Its ratings count directly for Germany and are converted for the other countries."
+msgstr ""
+
+msgctxt "#32213"
+msgid "Enable BBFC lookup"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Ask the British Board of Film Classification when TMDB has no certification. Its ratings count directly for the United Kingdom and are converted for the other countries."
+msgstr ""
+
+msgctxt "#32215"
+msgid "Enable Medieraadet lookup"
+msgstr ""
+
+msgctxt "#32216"
+msgid "Ask the Danish Media Council (Medieraadet) when TMDB has no certification. It rates films only. Its ratings count directly for Denmark and are converted for the other countries."
+msgstr ""
+
+msgctxt "#32220"
+msgid "Correction"
+msgstr ""
+
+msgctxt "#32221"
+msgid "Replace incorrect certifications"
+msgstr ""
+
+msgctxt "#32222"
+msgid "Replace a certification from another country's system, such as \"Rated PG-13\" in a Dutch library. Ratings already in the selected country's system are kept, and ratings from an NFO file are never replaced. When disabled, only empty certifications are filled."
+msgstr ""
+
+msgctxt "#32230"
+msgid "Fallback"
+msgstr ""
+
+msgctxt "#32231"
+msgid "Apply certification when not found"
+msgstr ""
+
+msgctxt "#32232"
+msgid "When no source has a certification for an item after a year of monthly rechecks, write the value below, so the item shows it was checked. When disabled, such items stay empty."
+msgstr ""
+
+msgctxt "#32233"
+msgid "Not-found certification"
+msgstr ""
+
+msgctxt "#32234"
+msgid "The value written when no source has a certification, exactly as entered (no country prefix). Common values: NR, Not Rated, Unrated."
+msgstr ""
+
+# Country names
+
+msgctxt "#32260"
+msgid "NL - Kijkwijzer"
+msgstr ""
+
+msgctxt "#32261"
+msgid "BE - Kijkwijzer"
+msgstr ""
+
+msgctxt "#32262"
+msgid "DE - FSK"
+msgstr ""
+
+msgctxt "#32263"
+msgid "AT - JMK"
+msgstr ""
+
+msgctxt "#32264"
+msgid "GB - BBFC"
+msgstr ""
+
+msgctxt "#32265"
+msgid "US - MPAA"
+msgstr ""
+
+msgctxt "#32266"
+msgid "FR - CNC"
+msgstr ""
+
+msgctxt "#32267"
+msgid "DK - Medieraadet"
+msgstr ""
+
+msgctxt "#32268"
+msgid "SE - Mediemyndigheten"
+msgstr ""
+
+msgctxt "#32269"
+msgid "Automatic (Kodi's region)"
+msgstr ""
+
+# --- General (32300-32349) ---
+
+msgctxt "#32300"
+msgid "General"
+msgstr ""
+
+msgctxt "#32301"
+msgid "Schedule"
+msgstr ""
+
+msgctxt "#32302"
+msgid "Scan interval (hours)"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Hours between automatic background scans. Lower values keep the library fresher but increase API usage."
+msgstr ""
+
+msgctxt "#32304"
+msgid "API rate limit (seconds)"
+msgstr ""
+
+msgctxt "#32305"
+msgid "Minimum delay between external API calls. Increase this if you experience rate limiting or throttling from providers."
+msgstr ""
+
+msgctxt "#32310"
+msgid "Notifications"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Show notifications"
+msgstr ""
+
+msgctxt "#32312"
+msgid "Show a short notification after a background scan that changed something. Problems that need you are always shown."
+msgstr ""
+
+msgctxt "#32313"
+msgid "Resume interrupted scans"
+msgstr ""
+
+msgctxt "#32314"
+msgid "When enabled, a scan that was interrupted (for example, by a Kodi restart) will resume from where it left off instead of starting over."
+msgstr ""
+
+msgctxt "#32320"
+msgid "Debugging"
+msgstr ""
+
+msgctxt "#32321"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#32322"
+msgid "Write detailed diagnostic information to a log file in the addon data folder (addon_data/script.metamender/logs/)."
+msgstr ""
+
+msgctxt "#32330"
+msgid "Maintenance"
+msgstr ""
+
+msgctxt "#32331"
+msgid "Orphan retention (days)"
+msgstr ""
+
+msgctxt "#32332"
+msgid "After a full scan, remove tracker entries for items not seen in the library for this many days (for example, deleted movies or episodes). Set to 0 to never remove them."
+msgstr ""
+
+# Notifications
+msgctxt "#32341"
+msgid "Invalid TMDB API key"
+msgstr ""
+
+msgctxt "#32342"
+msgid "Cannot update this item type"
+msgstr ""
+
+msgctxt "#32343"
+msgid "Invalid item"
+msgstr ""
+
+msgctxt "#32344"
+msgid "A scan is already running"
+msgstr ""
+
+msgctxt "#32345"
+msgid "Item not found"
+msgstr ""
+
+msgctxt "#32346"
+msgid "No TMDB API key configured"
+msgstr ""
+
+msgctxt "#32347"
+msgid "Update failed"
+msgstr ""
+
+msgctxt "#32348"
+msgid "No changes"
+msgstr ""
+
+msgctxt "#32349"
+msgid "{} items updated"
+msgstr ""
+
+msgctxt "#32350"
+msgid "Updated: {}"
+msgstr ""
+
+msgctxt "#32351"
+msgid "No changes: {}"
+msgstr ""
+
+msgctxt "#32352"
+msgid "TheTVDB rejected the add-on's credentials; TV titles and plots from TheTVDB are paused"
+msgstr ""
+
+msgctxt "#32353"
+msgid "Could not check now: {}"
+msgstr ""
+
+# --- Reset tracker dialog (32360-32362) ---
+
+msgctxt "#32360"
+msgid "Reset tracker?"
+msgstr ""
+
+msgctxt "#32361"
+msgid "Clear all maturity tracking and refetch every field on the next scan? Locked fields and the original values MetaMender kept stay."
+msgstr ""
+
+msgctxt "#32362"
+msgid "Reset tracker: {} fields cleared"
+msgstr ""
+
+# --- Refetch schedule settings (32376-32380) ---
+
+msgctxt "#32376"
+msgid "Refresh schedule (days)"
+msgstr ""
+
+msgctxt "#32377"
+msgid "Days between the checks of new content, separated by commas. 7,30,90 checks again about a week after the first check, a month after that, then three months after that; one last check follows when the content reaches the staleness threshold."
+msgstr ""
+
+msgctxt "#32378"
+msgid "Reset tracker"
+msgstr ""
+
+msgctxt "#32379"
+msgid "Clear all maturity tracking so every field is re-fetched from scratch on the next scan. Use this after a misconfiguration or when you want to force a full refresh."
+msgstr ""
+
+msgctxt "#32380"
+msgid "Content age in days before metadata is treated as stable; older content is fetched once, newer content is refreshed on a schedule."
+msgstr ""
+
+# --- Text source settings (32390-32397) ---
+
+msgctxt "#32390"
+msgid "Text source order"
+msgstr ""
+
+msgctxt "#32391"
+msgid "Which provider to ask first for TV show plots and episode titles and plots in the source folder's language. If the first has nothing, the second is asked. \"Follow your scraper\" asks first the provider whose Kodi scraper added the show or episode, so its wording stays; TMDB first when that cannot be told. Movies always use TMDB."
+msgstr ""
+
+msgctxt "#32392"
+msgid "TMDB, then TheTVDB"
+msgstr ""
+
+msgctxt "#32393"
+msgid "TheTVDB, then TMDB"
+msgstr ""
+
+msgctxt "#32398"
+msgid "Follow your scraper"
+msgstr ""
+
+msgctxt "#32399"
+msgid "Manage show and movie titles"
+msgstr ""
+
+msgctxt "#32400"
+msgid "Replace show and movie titles with the title in the source folder's language from TMDB (and TheTVDB for shows), for example when a Dutch folder was scraped in English. Only a title the provider really has in that language is used; there is no fallback language. Titles from an NFO file are kept, and so are titles of items without a TMDB or IMDb id."
+msgstr ""
+
+msgctxt "#32401"
+msgid "Follow your scraper"
+msgstr ""
+
+msgctxt "#32396"
+msgid "Fallback language order"
+msgstr ""
+
+msgctxt "#32397"
+msgid "Which provider to ask first for TV show and episode text in a folder's fallback language, for folders that have one. Changing it fetches values filled from the fallback again."
+msgstr ""
+
+msgctxt "#32404"
+msgid "Back"
+msgstr ""
+
+msgctxt "#32405"
+msgid "Next"
+msgstr ""
+
+msgctxt "#32406"
+msgid "Finish"
+msgstr ""
+
+msgctxt "#32407"
+msgid "Save"
+msgstr ""
+
+msgctxt "#32408"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32410"
+msgid "TMDB API key"
+msgstr ""
+
+msgctxt "#32411"
+msgid "MetaMender reads metadata from TMDB, which needs your own free API key. Create an account on themoviedb.org, open Settings, then API, and copy the \"API Key\". The longer \"API Read Access Token\" does not work here."
+msgstr ""
+
+msgctxt "#32412"
+msgid "API key"
+msgstr ""
+
+msgctxt "#32413"
+msgid "Not entered"
+msgstr ""
+
+msgctxt "#32414"
+msgid "TMDB refused this key. Check that you copied the API Key, not the API Read Access Token."
+msgstr ""
+
+msgctxt "#32415"
+msgid "TMDB could not be reached, so the key was not checked. It is saved as entered; if it is wrong, the add-on log will say so on the first scan."
+msgstr ""
+
+msgctxt "#32420"
+msgid "Library language"
+msgstr ""
+
+msgctxt "#32421"
+msgid "The language MetaMender fills and refreshes titles, plots and other text in. The optional fallback language is used when a text does not exist in the library language. Folders in another language come next."
+msgstr ""
+
+msgctxt "#32422"
+msgid "Language"
+msgstr ""
+
+msgctxt "#32423"
+msgid "Fallback language"
+msgstr ""
+
+msgctxt "#32424"
+msgid "None"
+msgstr ""
+
+msgctxt "#32425"
+msgid "Folders in another language"
+msgstr ""
+
+msgctxt "#32426"
+msgid "Select a folder whose titles and plots are in another language, then choose its language. Select it again to use the library language. Folders you do not select use the library language."
+msgstr ""
+
+msgctxt "#32427"
+msgid "Kodi has no video sources yet. Add your folders to the library first; you can set their languages later from the add-on settings."
+msgstr ""
+
+msgctxt "#32428"
+msgid "Library language"
+msgstr ""
+
+msgctxt "#32429"
+msgid "Folder languages"
+msgstr ""
+
+msgctxt "#32430"
+msgid "What to fill"
+msgstr ""
+
+msgctxt "#32431"
+msgid "Choose what MetaMender may fill in and keep up to date. Values that come from an NFO file are never changed."
+msgstr ""
+
+msgctxt "#32432"
+msgid "Ratings"
+msgstr ""
+
+msgctxt "#32433"
+msgid "Audience ratings from TMDB and IMDb, kept up to date."
+msgstr ""
+
+msgctxt "#32434"
+msgid "Plots"
+msgstr ""
+
+msgctxt "#32435"
+msgid "Movie, show and episode plots in the folder's language."
+msgstr ""
+
+msgctxt "#32436"
+msgid "Episode titles"
+msgstr ""
+
+msgctxt "#32437"
+msgid "Episode titles in the folder's language."
+msgstr ""
+
+msgctxt "#32438"
+msgid "Show and movie titles"
+msgstr ""
+
+msgctxt "#32439"
+msgid "Replace the title with the one in the folder's language."
+msgstr ""
+
+msgctxt "#32440"
+msgid "Age certifications"
+msgstr ""
+
+msgctxt "#32441"
+msgid "Fill and correct certifications in one country's rating system."
+msgstr ""
+
+msgctxt "#32442"
+msgid "Credits"
+msgstr ""
+
+msgctxt "#32443"
+msgid "Directors and writers."
+msgstr ""
+
+msgctxt "#32444"
+msgid "Trailers"
+msgstr ""
+
+msgctxt "#32445"
+msgid "Trailer links from TMDB."
+msgstr ""
+
+msgctxt "#32446"
+msgid "Taglines"
+msgstr ""
+
+msgctxt "#32447"
+msgid "Movie taglines in the folder's language."
+msgstr ""
+
+msgctxt "#32448"
+msgid "Details"
+msgstr ""
+
+msgctxt "#32449"
+msgid "Genre, studio, country, runtime and first aired date."
+msgstr ""
+
+msgctxt "#32450"
+msgid "Certification country"
+msgstr ""
+
+msgctxt "#32451"
+msgid "Certifications are written in the rating system of one country. Automatic uses the region of Kodi's interface language."
+msgstr ""
+
+msgctxt "#32452"
+msgid "Automatic: {0}"
+msgstr ""
+
+msgctxt "#32453"
+msgid "Automatic: no rating system for this region, choose a country"
+msgstr ""
+
+msgctxt "#32455"
+msgid "Summary"
+msgstr ""
+
+msgctxt "#32456"
+msgid "Finish saves these settings and starts the first scan. Everything else can be changed later in the add-on settings, and this wizard can be run again from there."
+msgstr ""
+
+msgctxt "#32457"
+msgid "Finish saves these settings. They apply from the next scan."
+msgstr ""
+
+msgctxt "#32458"
+msgid "TMDB key"
+msgstr ""
+
+msgctxt "#32459"
+msgid "checked"
+msgstr ""
+
+msgctxt "#32460"
+msgid "not checked"
+msgstr ""
+
+msgctxt "#32461"
+msgid "Folder: {0}"
+msgstr ""
+
+msgctxt "#32462"
+msgid "Fill"
+msgstr ""
+
+msgctxt "#32463"
+msgid "Nothing"
+msgstr ""
+
+msgctxt "#32465"
+msgid "The folder languages could not be saved, so nothing was changed. The add-on log has the details."
+msgstr ""
+
+msgctxt "#32466"
+msgid "MetaMender needs setup. Open it from Add-ons."
+msgstr ""
+
+msgctxt "#32467"
+msgid "Run setup wizard"
+msgstr ""
+
+msgctxt "#32468"
+msgid "Walk through the TMDB key, the library and folder languages and what to fill, starting from your current settings."
+msgstr ""
+
+msgctxt "#32469"
+msgid "Setup finished"
+msgstr ""
+
+msgctxt "#32470"
+msgid "Refreshing {}"
+msgstr ""
+
+msgctxt "#32471"
+msgid "Refreshing {}, season {}"
+msgstr ""
+
+msgctxt "#32472"
+msgid "Show details"
+msgstr ""
+
+msgctxt "#32473"
+msgid "Season {}, episode {}: {}"
+msgstr ""
+
+msgctxt "#32474"
+msgid "{} of {} episodes"
+msgstr ""
+
+msgctxt "#32475"
+msgid "About {} minutes left"
+msgstr ""
+
+msgctxt "#32476"
+msgid "Less than a minute left"
+msgstr ""
+
+msgctxt "#32477"
+msgid "{} updated"
+msgstr ""
+
+msgctxt "#32478"
+msgid "{} unchanged"
+msgstr ""
+
+msgctxt "#32479"
+msgid "{} could not be checked"
+msgstr ""
+
+msgctxt "#32480"
+msgid "Stop"
+msgstr ""
+
+msgctxt "#32481"
+msgid "Background"
+msgstr ""
+
+msgctxt "#32482"
+msgid "Updated: {}, {} of {} changed"
+msgstr ""
+
+msgctxt "#32483"
+msgid "Stopped after {} of {} episodes: {}"
+msgstr ""
+
+msgctxt "#32484"
+msgid "Could not finish: {}"
+msgstr ""
+
+msgctxt "#32485"
+msgid "MetaMender: {}"
+msgstr ""
+
+msgctxt "#32486"
+msgid "Preparing IMDb ratings"
+msgstr ""
+
+msgctxt "#32487"
+msgid "Stopping: the episode in progress finishes first"
+msgstr ""
+
+msgctxt "#32490"
+msgid "MetaMender needs you"
+msgstr ""
+
+msgctxt "#32491"
+msgid "Setup has not been finished yet, so nothing is being updated."
+msgstr ""
+
+msgctxt "#32492"
+msgid "Setup is not finished"
+msgstr ""
+
+msgctxt "#32493"
+msgid "There is no TMDB key, so nothing is being updated."
+msgstr ""
+
+msgctxt "#32494"
+msgid "No TMDB key"
+msgstr ""
+
+msgctxt "#32495"
+msgid "Your TMDB key was rejected, so nothing is being updated until it is fixed."
+msgstr ""
+
+msgctxt "#32496"
+msgid "The TMDB key was rejected"
+msgstr ""
+
+msgctxt "#32497"
+msgid "The last background scans did not finish, so your library is not being kept up to date. The add-on log has the details."
+msgstr ""
+
+msgctxt "#32498"
+msgid "Background scans keep failing"
+msgstr ""
+
+msgctxt "#32499"
+msgid "This folder has been unreachable for 3 days or more, so its items are not being kept up to date: {}"
+msgstr ""
+
+msgctxt "#32500"
+msgid "A folder is unreachable: {}"
+msgstr ""
+
+msgctxt "#32501"
+msgid "Also: {}"
+msgstr ""
+
+msgctxt "#32502"
+msgid "Open setup"
+msgstr ""
+
+msgctxt "#32503"
+msgid "Later"
+msgstr ""
+
+msgctxt "#32504"
+msgid "1 item updated"
+msgstr ""
+
+msgctxt "#32510"
+msgid "Ids"
+msgstr ""
+
+msgctxt "#32511"
+msgid "Plot"
+msgstr ""
+
+msgctxt "#32512"
+msgid "Title"
+msgstr ""
+
+msgctxt "#32513"
+msgid "Rating"
+msgstr ""
+
+msgctxt "#32514"
+msgid "Runtime"
+msgstr ""
+
+msgctxt "#32515"
+msgid "Director"
+msgstr ""
+
+msgctxt "#32516"
+msgid "Writer"
+msgstr ""
+
+msgctxt "#32517"
+msgid "Genre"
+msgstr ""
+
+msgctxt "#32518"
+msgid "Studio"
+msgstr ""
+
+msgctxt "#32519"
+msgid "Country"
+msgstr ""
+
+msgctxt "#32520"
+msgid "Tagline"
+msgstr ""
+
+msgctxt "#32521"
+msgid "Trailer"
+msgstr ""
+
+msgctxt "#32522"
+msgid "Aired"
+msgstr ""
+
+msgctxt "#32523"
+msgid "Certification"
+msgstr ""
+
+msgctxt "#32524"
+msgid "Updated by MetaMender"
+msgstr ""
+
+msgctxt "#32525"
+msgid "Left as it is"
+msgstr ""
+
+msgctxt "#32526"
+msgid "Waiting"
+msgstr ""
+
+msgctxt "#32527"
+msgid "From"
+msgstr ""
+
+msgctxt "#32528"
+msgid "Replaced"
+msgstr ""
+
+msgctxt "#32529"
+msgid "Last checked"
+msgstr ""
+
+msgctxt "#32530"
+msgid "Next check"
+msgstr ""
+
+msgctxt "#32531"
+msgid "Why"
+msgstr ""
+
+msgctxt "#32532"
+msgid "{}, in {}"
+msgstr ""
+
+msgctxt "#32533"
+msgid "{}, in the fallback language"
+msgstr ""
+
+msgctxt "#32534"
+msgid "your scraper"
+msgstr ""
+
+msgctxt "#32535"
+msgid "your scraper's value"
+msgstr ""
+
+msgctxt "#32536"
+msgid "empty"
+msgstr ""
+
+msgctxt "#32537"
+msgid "updated before MetaMender kept the old value"
+msgstr ""
+
+msgctxt "#32538"
+msgid "settled, not checked again"
+msgstr ""
+
+msgctxt "#32539"
+msgid "at the next scan"
+msgstr ""
+
+msgctxt "#32540"
+msgid "Kodi already has this value, so nothing needed to change."
+msgstr ""
+
+msgctxt "#32541"
+msgid "Your NFO file sets this field, so MetaMender only fills it when it is empty."
+msgstr ""
+
+msgctxt "#32542"
+msgid "This folder has no language set, so MetaMender only fills empty fields and keeps this value."
+msgstr ""
+
+msgctxt "#32543"
+msgid "The sites MetaMender asks have nothing for this field yet."
+msgstr ""
+
+msgctxt "#32544"
+msgid "The sites could not be reached at the last check, so MetaMender tries again."
+msgstr ""
+
+msgctxt "#32545"
+msgid "You locked this field, so MetaMender leaves it alone."
+msgstr ""
+
+msgctxt "#32546"
+msgid "Not checked by MetaMender yet."
+msgstr ""
+
+msgctxt "#32547"
+msgid "settled"
+msgstr ""
+
+msgctxt "#32548"
+msgid "locked"
+msgstr ""
+
+msgctxt "#32549"
+msgid "NFO"
+msgstr ""
+
+msgctxt "#32550"
+msgid "scraper"
+msgstr ""
+
+msgctxt "#32551"
+msgid "not checked"
+msgstr ""
+
+msgctxt "#32552"
+msgid "next scan"
+msgstr ""
+
+msgctxt "#32553"
+msgid "{}, from Kodi"
+msgstr ""
+
+msgctxt "#32554"
+msgid "{}, matched by season and episode number"
+msgstr ""
+
+msgctxt "#32555"
+msgid "{}, from TMDB's id list"
+msgstr ""
+
+msgctxt "#32556"
+msgid "{}, found by MetaMender"
+msgstr ""
+
+msgctxt "#32557"
+msgid "Ids MetaMender found stay in its own records."
+msgstr ""
+
+msgctxt "#32558"
+msgid "No ids yet."
+msgstr ""
+
+msgctxt "#32559"
+msgid "matched by number"
+msgstr ""
+
+msgctxt "#32560"
+msgid "from Kodi"
+msgstr ""
+
+msgctxt "#32561"
+msgid "not matched"
+msgstr ""
+
+msgctxt "#32562"
+msgid "found by MetaMender"
+msgstr ""
+
+msgctxt "#32563"
+msgid "\"{}\", aired {}"
+msgstr ""
+
+msgctxt "#32564"
+msgid "Yours"
+msgstr ""
+
+msgctxt "#32565"
+msgid "The title and date did not agree, so nothing from {} was used."
+msgstr ""
+
+msgctxt "#32566"
+msgid "Conflict"
+msgstr ""
+
+msgctxt "#32567"
+msgid "TMDB and TheTVDB name different episodes, so neither was used."
+msgstr ""
+
+msgctxt "#32568"
+msgid "{} folder"
+msgstr ""
+
+msgctxt "#32569"
+msgid "No folder language"
+msgstr ""
+
+msgctxt "#32570"
+msgid "last looked at {}"
+msgstr ""
+
+msgctxt "#32571"
+msgid "not checked by MetaMender yet"
+msgstr ""
+
+msgctxt "#32572"
+msgid "{} min"
+msgstr ""
+
+msgctxt "#32573"
+msgid "{} ({} votes)"
+msgstr ""
+
+msgctxt "#32574"
+msgid "Empty"
+msgstr ""
+
+msgctxt "#32575"
+msgid "changed"
+msgstr ""
+
+msgctxt "#32576"
+msgid "Changed since MetaMender's update (your edit or a re-scrape)."
+msgstr ""
+
+msgctxt "#32577"
+msgid "You unlocked this field, so MetaMender checks it again at the next scan."
+msgstr ""
+
+msgctxt "#32578"
+msgid "Window colours"
+msgstr ""
+
+msgctxt "#32579"
+msgid "The colour scheme of the MetaMender setup, progress, attention and details windows."
+msgstr ""
+
+msgctxt "#32580"
+msgid "Golden Hour"
+msgstr ""
+
+msgctxt "#32581"
+msgid "Ultraviolet"
+msgstr ""
+
+msgctxt "#32582"
+msgid "Ember"
+msgstr ""
+
+msgctxt "#32583"
+msgid "Nightfall"
+msgstr ""
+
+msgctxt "#32585"
+msgid "{} · Season {}, episode {}"
+msgstr ""
+
+msgctxt "#32586"
+msgid "Restore original"
+msgstr ""
+
+msgctxt "#32587"
+msgid "Let MetaMender update this again"
+msgstr ""
+
+msgctxt "#32588"
+msgid "Update now"
+msgstr ""
+
+msgctxt "#32589"
+msgid "Close"
+msgstr ""
+
+msgctxt "#32590"
+msgid "Nothing was restored: the item changed since this window opened."
+msgstr ""
+
+msgctxt "#32591"
+msgid "Kodi did not accept the restore."
+msgstr ""
+
+msgctxt "#32592"
+msgid "Could not read this item's details."
+msgstr ""
+
+msgctxt "#32593"
+msgid "MetaMender"
+msgstr ""
+
+msgctxt "#32594"
+msgid "Details"
+msgstr ""
+
+msgctxt "#32595"
+msgid "Could not save the lock, so nothing was restored."
+msgstr ""
+
+msgctxt "#32596"
+msgid "Could not unlock this field."
+msgstr ""
+
+msgctxt "#32597"
+msgid "{}, matched by season and episode number (the dates agreed)"
+msgstr ""
+
+msgctxt "#32598"
+msgid "{}, matched by season and episode number (the titles agreed)"
+msgstr ""
+
+msgctxt "#32599"
+msgid "Kodi has only a TVmaze id."
+msgstr ""
+
+msgctxt "#32600"
+msgid "The sites MetaMender asks had nothing for this field."
+msgstr ""
+
+msgctxt "#32601"
+msgid "Kodi lost MetaMender's value (a refresh or a re-scrape), so the next scan fills it again."
+msgstr ""
+
+msgctxt "#32602"
+msgid "switched off"
+msgstr ""
+
+msgctxt "#32603"
+msgid "not while this field is switched off in the settings"
+msgstr ""
+
+msgctxt "#32604"
+msgid "You unlocked this field; MetaMender checks it again once the field is switched on in the settings."
+msgstr ""
+
+msgctxt "#32605"
+msgid "The show title was restored, but its episodes' records could not follow it."
+msgstr ""
+
+msgctxt "#32606"
+msgid "This field has no original to restore."
+msgstr ""
+
+msgctxt "#32607"
+msgid "Appearance"
+msgstr ""
+
+msgctxt "#32608"
+msgid "not while no age rating country is set up"
+msgstr ""
+
+msgctxt "#32609"
+msgid "no country"
+msgstr ""
+
+# Short month names and date formats of the details window
+msgctxt "#32610"
+msgid "Jan"
+msgstr ""
+
+msgctxt "#32611"
+msgid "Feb"
+msgstr ""
+
+msgctxt "#32612"
+msgid "Mar"
+msgstr ""
+
+msgctxt "#32613"
+msgid "Apr"
+msgstr ""
+
+msgctxt "#32614"
+msgid "May"
+msgstr ""
+
+msgctxt "#32615"
+msgid "Jun"
+msgstr ""
+
+msgctxt "#32616"
+msgid "Jul"
+msgstr ""
+
+msgctxt "#32617"
+msgid "Aug"
+msgstr ""
+
+msgctxt "#32618"
+msgid "Sep"
+msgstr ""
+
+msgctxt "#32619"
+msgid "Oct"
+msgstr ""
+
+msgctxt "#32620"
+msgid "Nov"
+msgstr ""
+
+msgctxt "#32621"
+msgid "Dec"
+msgstr ""
+
+msgctxt "#32622"
+msgid "{day} {month} {year}"
+msgstr ""
+
+msgctxt "#32623"
+msgid "{day} {month}"
+msgstr ""
+
+msgctxt "#32624"
+msgid "{} · {}"
+msgstr ""
+
+msgctxt "#32625"
+msgid "You unlocked this field; MetaMender checks it again once an age rating country is set up."
+msgstr ""
+
+msgctxt "#32626"
+msgid "Keep this value"
+msgstr ""
+
+msgctxt "#32627"
+msgid "Could not save the lock, so the field is not kept."
+msgstr ""
+
+msgctxt "#32628"
+msgid "AU - ACB"
+msgstr ""
+
+msgctxt "#32629"
+msgid "{}, converted"
+msgstr ""
+
+msgctxt "#32630"
+msgid "Which rating to show"
+msgstr ""
+
+msgctxt "#32631"
+msgid "Kodi shows one audience rating per movie or episode. MetaMender keeps it up to date while new votes come in. Items with an NFO file keep the rating the NFO chose."
+msgstr ""
+
+msgctxt "#32632"
+msgid "Follow your scraper"
+msgstr ""
+
+msgctxt "#32633"
+msgid "Show the rating your scraper chose (TMDB or IMDb). Both are kept up to date."
+msgstr ""
+
+msgctxt "#32634"
+msgid "Show TMDB's rating, or IMDb's when TMDB has none. Both are kept up to date."
+msgstr ""
+
+msgctxt "#32635"
+msgid "Show IMDb's rating, or TMDB's when IMDb has none. Both are kept up to date."
+msgstr ""
+
+msgctxt "#32636"
+msgid "Show and update only TMDB's rating. IMDb is never asked."
+msgstr ""
+
+msgctxt "#32637"
+msgid "Show and update only IMDb's rating. TMDB is never asked for ratings."
+msgstr ""
+
+msgctxt "#32638"
+msgid "Where plots and titles come from"
+msgstr ""
+
+msgctxt "#32639"
+msgid "For TV shows and episodes, MetaMender asks TMDB and TheTVDB, one after the other, until one has the text in the folder's language. Movies always come from TMDB."
+msgstr ""
+
+msgctxt "#32640"
+msgid "Ask the site your scraper used first, so its wording stays. TMDB first when that cannot be told."
+msgstr ""
+
+msgctxt "#32641"
+msgid "TMDB first, for every show."
+msgstr ""
+
+msgctxt "#32642"
+msgid "TheTVDB first, for every show."
+msgstr ""
+
+msgctxt "#32643"
+msgid "Replace other countries' ratings"
+msgstr ""
+
+msgctxt "#32644"
+msgid "Swap a rating like \"Rated PG-13\" for this country's. Off: only fill empty ones."
+msgstr ""
+
+msgctxt "#32645"
+msgid "Other countries' ratings"
+msgstr ""
+
+msgctxt "#32646"
+msgid "Replace"
+msgstr ""
+
+msgctxt "#32647"
+msgid "Keep"
+msgstr ""
+
+msgctxt "#32648"
+msgid "Rating shown"
+msgstr ""
+
+msgctxt "#32649"
+msgid "Plots and titles"
+msgstr ""

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Every control is inline: Kodi resolves includes and named colours from the active skin
+     only, never from a script's own skin folder. Fonts are limited to font10/12/13, which
+     every skin defines (Kodi falls back to font13 for any name a skin lacks). Textures are
+     white and tinted here; the accent colours come from window properties (MM.Accent,
+     MM.ButtonFocus, MM.ButtonTextFocused) set by setup_window.py. -->
+<window>
+    <zorder>1</zorder>
+    <!-- The list is filled in onInit, so it cannot take focus when the window opens. -->
+    <defaultcontrol always="true">21</defaultcontrol>
+    <controls>
+        <control type="image">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <texture colordiffuse="E6060607">metamender/white.png</texture>
+            <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+        </control>
+        <control type="group">
+            <left>340</left><top>110</top><width>1240</width><height>860</height>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="300" delay="100"/>
+                <effect type="zoom" start="96" end="100" center="auto" tween="sine" easing="out" time="300" delay="100"/>
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="zoom" start="100" end="96" center="auto" tween="sine" easing="out" time="200"/>
+                <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="200"/>
+            </animation>
+
+            <control type="image">
+                <left>0</left><top>0</top><width>1240</width><height>860</height>
+                <texture border="20" colordiffuse="FF1A1D23">metamender/panel.png</texture>
+            </control>
+            <control type="image">
+                <left>0</left><top>0</top><width>1240</width><height>860</height>
+                <texture border="20" colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/frame.png</texture>
+            </control>
+
+            <!-- Step dots, right-aligned: a slot shows while the wizard has that many
+                 steps and is lit once the step is reached. The Folder languages dialog
+                 sets no step total, so no slot shows. -->
+            <control type="grouplist">
+                <left>890</left><top>40</top><width>300</width><height>16</height>
+                <orientation>horizontal</orientation>
+                <align>right</align>
+                <itemgap>10</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="group">
+                    <width>16</width><height>16</height>
+                    <visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepTotal),1)</visible>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="33FFFFFF">metamender/dot.png</texture></control>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/dot.png</texture><visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepIndex),1)</visible></control>
+                </control>
+                <control type="group">
+                    <width>16</width><height>16</height>
+                    <visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepTotal),2)</visible>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="33FFFFFF">metamender/dot.png</texture></control>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/dot.png</texture><visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepIndex),2)</visible></control>
+                </control>
+                <control type="group">
+                    <width>16</width><height>16</height>
+                    <visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepTotal),3)</visible>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="33FFFFFF">metamender/dot.png</texture></control>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/dot.png</texture><visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepIndex),3)</visible></control>
+                </control>
+                <control type="group">
+                    <width>16</width><height>16</height>
+                    <visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepTotal),4)</visible>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="33FFFFFF">metamender/dot.png</texture></control>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/dot.png</texture><visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepIndex),4)</visible></control>
+                </control>
+                <control type="group">
+                    <width>16</width><height>16</height>
+                    <visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepTotal),5)</visible>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="33FFFFFF">metamender/dot.png</texture></control>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/dot.png</texture><visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepIndex),5)</visible></control>
+                </control>
+                <control type="group">
+                    <width>16</width><height>16</height>
+                    <visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepTotal),6)</visible>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="33FFFFFF">metamender/dot.png</texture></control>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/dot.png</texture><visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepIndex),6)</visible></control>
+                </control>
+                <control type="group">
+                    <width>16</width><height>16</height>
+                    <visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepTotal),7)</visible>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="33FFFFFF">metamender/dot.png</texture></control>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/dot.png</texture><visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepIndex),7)</visible></control>
+                </control>
+                <control type="group">
+                    <width>16</width><height>16</height>
+                    <visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepTotal),8)</visible>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="33FFFFFF">metamender/dot.png</texture></control>
+                    <control type="image"><width>16</width><height>16</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/dot.png</texture><visible>Integer.IsGreaterOrEqual(Window.Property(MM.StepIndex),8)</visible></control>
+                </control>
+            </control>
+
+            <!-- Heading: the heartbeat badge and the title, centred together. -->
+            <control type="grouplist">
+                <left>50</left><top>66</top><width>1140</width><height>56</height>
+                <orientation>horizontal</orientation>
+                <align>center</align>
+                <itemgap>16</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="group">
+                    <top>6</top><width>44</width><height>44</height>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/badge.png</texture></control>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="FF060607">metamender/pulse.png</texture></control>
+                </control>
+                <control type="label">
+                    <width>auto</width><height>56</height>
+                    <aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>$INFO[Window.Property(MM.Accent)]</textcolor>
+                    <label>[B]$INFO[Window.Property(MM.Heading)][/B]</label>
+                </control>
+            </control>
+            <control type="image">
+                <left>120</left><top>132</top><width>1000</width><height>3</height>
+                <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/divider.png</texture>
+                <animation effect="fade" start="70" end="70" time="0" condition="true">Conditional</animation>
+            </control>
+            <control type="textbox">
+                <left>80</left><top>150</top><width>1080</width><height>116</height>
+                <align>center</align>
+                <font>font12</font>
+                <textcolor>FFA8AEB8</textcolor>
+                <label>$INFO[Window.Property(MM.Text)]</label>
+                <autoscroll delay="6000" time="2000" repeat="8000">true</autoscroll>
+            </control>
+
+            <control type="list" id="100">
+                <left>50</left><top>282</top><width>1140</width><height>420</height>
+                <orientation>vertical</orientation>
+                <scrolltime>120</scrolltime>
+                <pagecontrol>101</pagecontrol>
+                <!-- Without an onup that is not the list itself, Up on the first row
+                     wraps to the last. -->
+                <onup>noop</onup>
+                <ondown>21</ondown>
+                <itemlayout width="1140" height="84">
+                    <control type="image">
+                        <left>0</left><top>0</top><width>1140</width><height>74</height>
+                        <texture border="12" colordiffuse="FF222731">metamender/row.png</texture>
+                    </control>
+                    <control type="image">
+                        <left>26</left><top>22</top><width>30</width><height>30</height>
+                        <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/check_on.png</texture>
+                        <visible>String.IsEqual(ListItem.Property(marker),check) + String.IsEqual(ListItem.Property(chosen),true)</visible>
+                    </control>
+                    <control type="image">
+                        <left>26</left><top>22</top><width>30</width><height>30</height>
+                        <texture colordiffuse="44FFFFFF">metamender/check_off.png</texture>
+                        <visible>String.IsEqual(ListItem.Property(marker),check) + !String.IsEqual(ListItem.Property(chosen),true)</visible>
+                    </control>
+                    <control type="image">
+                        <left>26</left><top>22</top><width>30</width><height>30</height>
+                        <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/radio_on.png</texture>
+                        <visible>String.IsEqual(ListItem.Property(marker),radio) + String.IsEqual(ListItem.Property(chosen),true)</visible>
+                    </control>
+                    <control type="image">
+                        <left>26</left><top>22</top><width>30</width><height>30</height>
+                        <texture colordiffuse="44FFFFFF">metamender/radio_off.png</texture>
+                        <visible>String.IsEqual(ListItem.Property(marker),radio) + !String.IsEqual(ListItem.Property(chosen),true)</visible>
+                    </control>
+                    <!-- The labels move right of the marker when the step shows one. -->
+                    <control type="group">
+                        <animation effect="slide" start="48,0" end="48,0" time="0" condition="!String.IsEmpty(ListItem.Property(marker))">Conditional</animation>
+                        <!-- A row without a detail line centres its label. -->
+                        <control type="label">
+                            <left>28</left><top>0</top><width>1040</width><height>74</height>
+                            <aligny>center</aligny>
+                            <font>font13</font>
+                            <textcolor>FFF1F3F5</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                            <visible>String.IsEmpty(ListItem.Property(detail))</visible>
+                        </control>
+                        <control type="label">
+                            <left>28</left><top>4</top><width>1040</width><height>36</height>
+                            <aligny>center</aligny>
+                            <font>font13</font>
+                            <textcolor>FFF1F3F5</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                            <visible>!String.IsEmpty(ListItem.Property(detail))</visible>
+                        </control>
+                        <control type="label">
+                            <left>28</left><top>38</top><width>1040</width><height>30</height>
+                            <aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>FF9299A6</textcolor>
+                            <label>$INFO[ListItem.Property(detail)]</label>
+                        </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="1140" height="84">
+                    <control type="image">
+                        <left>0</left><top>0</top><width>1140</width><height>74</height>
+                        <texture border="12" colordiffuse="FF222731">metamender/row.png</texture>
+                    </control>
+                    <control type="image">
+                        <left>0</left><top>0</top><width>1140</width><height>74</height>
+                        <texture border="12" colordiffuse="FF2E3440">metamender/row.png</texture>
+                        <visible>Control.HasFocus(100)</visible>
+                    </control>
+                    <control type="image">
+                        <left>0</left><top>0</top><width>6</width><height>74</height>
+                        <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/white.png</texture>
+                        <visible>Control.HasFocus(100)</visible>
+                    </control>
+                    <control type="image">
+                        <left>26</left><top>22</top><width>30</width><height>30</height>
+                        <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/check_on.png</texture>
+                        <visible>String.IsEqual(ListItem.Property(marker),check) + String.IsEqual(ListItem.Property(chosen),true)</visible>
+                    </control>
+                    <control type="image">
+                        <left>26</left><top>22</top><width>30</width><height>30</height>
+                        <texture colordiffuse="66FFFFFF">metamender/check_off.png</texture>
+                        <visible>String.IsEqual(ListItem.Property(marker),check) + !String.IsEqual(ListItem.Property(chosen),true)</visible>
+                    </control>
+                    <control type="image">
+                        <left>26</left><top>22</top><width>30</width><height>30</height>
+                        <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/radio_on.png</texture>
+                        <visible>String.IsEqual(ListItem.Property(marker),radio) + String.IsEqual(ListItem.Property(chosen),true)</visible>
+                    </control>
+                    <control type="image">
+                        <left>26</left><top>22</top><width>30</width><height>30</height>
+                        <texture colordiffuse="66FFFFFF">metamender/radio_off.png</texture>
+                        <visible>String.IsEqual(ListItem.Property(marker),radio) + !String.IsEqual(ListItem.Property(chosen),true)</visible>
+                    </control>
+                    <control type="group">
+                        <animation effect="slide" start="48,0" end="48,0" time="0" condition="!String.IsEmpty(ListItem.Property(marker))">Conditional</animation>
+                        <control type="label">
+                            <left>28</left><top>0</top><width>1040</width><height>74</height>
+                            <aligny>center</aligny>
+                            <font>font13</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                            <visible>String.IsEmpty(ListItem.Property(detail))</visible>
+                        </control>
+                        <control type="label">
+                            <left>28</left><top>4</top><width>1040</width><height>36</height>
+                            <aligny>center</aligny>
+                            <font>font13</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                            <visible>!String.IsEmpty(ListItem.Property(detail))</visible>
+                        </control>
+                        <control type="label">
+                            <left>28</left><top>38</top><width>1040</width><height>30</height>
+                            <aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>FFAAB0BA</textcolor>
+                            <label>$INFO[ListItem.Property(detail)]</label>
+                        </control>
+                    </control>
+                </focusedlayout>
+            </control>
+            <control type="scrollbar" id="101">
+                <left>1200</left><top>282</top><width>6</width><height>410</height>
+                <orientation>vertical</orientation>
+                <showonepage>false</showonepage>
+                <texturesliderbackground colordiffuse="FF222731">metamender/white.png</texturesliderbackground>
+                <texturesliderbar colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/white.png</texturesliderbar>
+                <texturesliderbarfocus colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/white.png</texturesliderbarfocus>
+                <textureslidernib></textureslidernib>
+                <textureslidernibfocus></textureslidernibfocus>
+                <onleft>100</onleft>
+            </control>
+
+            <!-- Back, Cancel and Next centred together; a hidden Back drops out of the
+                 group, so Cancel and Next re-centre on the first step. -->
+            <control type="grouplist" id="40">
+                <left>50</left><top>752</top><width>1140</width><height>72</height>
+                <orientation>horizontal</orientation>
+                <align>center</align>
+                <itemgap>28</itemgap>
+                <onup>100</onup>
+                <control type="button" id="22">
+                    <width>260</width><height>72</height>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>$INFO[Window.Property(MM.Back)]</label>
+                    <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                    <onup>100</onup>
+                    <visible>!String.IsEmpty(Window.Property(MM.Back))</visible>
+                </control>
+                <control type="button" id="23">
+                    <width>260</width><height>72</height>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>$INFO[Window.Property(MM.Cancel)]</label>
+                    <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                    <onup>100</onup>
+                </control>
+                <control type="button" id="21">
+                    <width>260</width><height>72</height>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>[B]$INFO[Window.Property(MM.Next)][/B]</label>
+                    <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                    <onup>100</onup>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>
