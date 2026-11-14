@@ -77,6 +77,28 @@
 					<control type="toggle"/>
 				</setting>
 			</group>
+			<group id="3">
+				<setting help="" id="stop_after_enabled" label="30031" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="stop_after_minutes" label="30032" type="integer">
+					<level>0</level>
+					<default>20</default>
+					<control format="string" type="spinner"/>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>120</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition operator="is" setting="stop_after_enabled">true</condition>
+						</dependency>
+					</dependencies>
+				</setting>
+			</group>
 		</category>
 		<category id="30025" label="30025">
 			<group id="1">
@@ -93,11 +115,6 @@
 				<setting help="" id="resume" label="30026" type="boolean">
 					<level>0</level>
 					<default>false</default>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="random">false</condition>
-						</dependency>
-					</dependencies>
 					<control type="toggle"/>
 				</setting>
 			</group>

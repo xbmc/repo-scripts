@@ -135,3 +135,11 @@ msgstr "배경 사진 표시"
 msgctxt "#30030"
 msgid "Use vignette overlay"
 msgstr "비네트 오버레이 사용"
+
+msgctxt "#30031"
+msgid "Stop slideshow after a set time"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Stop after (minutes)"
+msgstr ""

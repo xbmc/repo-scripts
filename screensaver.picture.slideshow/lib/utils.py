@@ -1,6 +1,7 @@
 import hashlib
 import os
 import json
+import random
 import re
 import sys
 import urllib
@@ -30,16 +31,33 @@ def log(txt):
 def checksum(path):
     return hashlib.md5(path).hexdigest()
 
-def create_cache(path, hexfile):
+def create_cache(path, hexfile, randomize, current_images=None):
     images = walk(path)
     if not xbmcvfs.exists(CACHEFOLDER):
         xbmcvfs.mkdir(CACHEFOLDER)
-    # remove old cache files
+    # remove old cache files, but preserve settings and the resume offset
     dirs, files = xbmcvfs.listdir(CACHEFOLDER)
+    preserve = {'settings.xml', os.path.basename(RESUMEFILE)}
     for item in files:
-        if item != 'settings.xml':
-            xbmcvfs.delete(os.path.join(CACHEFOLDER,item))
+        if item not in preserve:
+            xbmcvfs.delete(os.path.join(CACHEFOLDER, item))
     if images:
+        if randomize:
+            if current_images:
+                # preserve existing shuffle order: keep known images in place,
+                # insert new ones at random positions, drop removed ones
+                new_paths = set(img[0] for img in images)
+                images_by_path = {img[0]: img for img in images}
+                # retain existing order, removing any files that have since been deleted
+                ordered = [img for img in current_images if img[0] in new_paths]
+                # insert genuinely new files at random positions
+                added = [images_by_path[p] for p in new_paths - set(img[0] for img in current_images)]
+                for img in added:
+                    ordered.insert(random.randint(0, len(ordered)), img)
+                images = ordered
+            else:
+                random.seed()
+                random.shuffle(images)
         # create cache file
         try:
             cache = xbmcvfs.File(CACHEFILE % hexfile, 'w')

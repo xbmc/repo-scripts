@@ -1,3 +1,19 @@
+v7.0.7
+- exif support for heic and heif images 
+- added option to stop slideshow after a set time
+- persist shuffle order across screensaver sessions
+- fix  blocking sleep
+- improve EXIF date extraction
+
+v7.0.6
+- fix xmpdata
+
+v7.0.5
+- fix keywords
+
+v7.0.4
+- fix stray commas in keywords
+
 v7.0.3
 - bump for release
 

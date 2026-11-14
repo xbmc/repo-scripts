@@ -135,3 +135,11 @@ msgstr "Показувати зображення тла"
 msgctxt "#30030"
 msgid "Use vignette overlay"
 msgstr ""
+
+msgctxt "#30031"
+msgid "Stop slideshow after a set time"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Stop after (minutes)"
+msgstr ""

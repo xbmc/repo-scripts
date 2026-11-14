@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Kodi Translation Team\n"
-"Language-Team: Afrikaans (http://www.transifex.com/projects/p/xbmc-addons/language/af/)\n"
-"Language: af\n"
+"PO-Revision-Date: 2025-01-03 22:27+0000\n"
+"Last-Translator: Heiko Berner <berner.h@gmail.com>\n"
+"Language-Team: Afrikaans (South Africa) <https://kodi.weblate.cloud/projects/kodi-add-ons-look-and-feel/screensaver-picture-slideshow/af_za/>\n"
+"Language: af_za\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.9.2\n"
 
 msgctxt "Addon Summary"
 msgid "Screensaver that displays an image slideshow"
@@ -22,7 +23,7 @@ msgstr "Sluimerskerm wat prente vertoon as skyfievertoning"
 
 msgctxt "Addon Description"
 msgid "The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images"
-msgstr "Die Skyfievertoning sluimerskerm wys jou 'n skyfie vertoning met verskeie oorgang effekte. Dit kan gestel word om jou biblioteek se musiek of video aanhangerkuns, of 'n persoonlike lêer met prente te vertoon."
+msgstr "Die Skyfievertoning sluimerskerm wys jou 'n skyfie vertoning met verskeie oorgang effekte. Dit kan gestel word om jou biblioteek se musiek of video aanhangerkuns, of 'n persoonlike lêer met prente te vertoon"
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
@@ -94,12 +95,12 @@ msgstr "Vertoon beelde in lukraak volgorde"
 
 msgctxt "#30017"
 msgid "Use full path"
-msgstr ""
+msgstr "Gebruik volle pad"
 
 # empty string with id 30017
 msgctxt "#30018"
 msgid "Use folder- and filename"
-msgstr ""
+msgstr "Gebruik gids- en lêernaam"
 
 # empty strings from id 30019 to 30020
 msgctxt "#30021"
@@ -124,13 +125,21 @@ msgstr "Addisioneel"
 
 msgctxt "#30026"
 msgid "Resume slideshow from last position"
-msgstr ""
+msgstr "Hervat skyfievertoning vanaf laaste posisie"
 
 # empty strings from id 30027 to 30028
 msgctxt "#30029"
 msgid "Display background picture"
-msgstr ""
+msgstr "Vertoon agtergrond prent"
 
 msgctxt "#30030"
 msgid "Use vignette overlay"
+msgstr "Gebruik vignette overlay"
+
+msgctxt "#30031"
+msgid "Stop slideshow after a set time"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Stop after (minutes)"
 msgstr ""
