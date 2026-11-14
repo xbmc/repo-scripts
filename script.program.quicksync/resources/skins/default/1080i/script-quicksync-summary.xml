@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Summary dialog: taller than Kodi's OK dialog, with a countdown when it closes by itself.
+     Only uses its own texture and common font names, so it works with any skin
+     (Kodi falls back to font13 when a skin lacks one of them). -->
+<window>
+    <defaultcontrol always="true">10</defaultcontrol>
+    <animation effect="fade" time="200">WindowOpen</animation>
+    <animation effect="fade" time="200">WindowClose</animation>
+    <controls>
+        <control type="image">
+            <left>0</left>
+            <top>0</top>
+            <width>1920</width>
+            <height>1080</height>
+            <texture colordiffuse="A0000000">quicksync-white.png</texture>
+        </control>
+        <control type="group">
+            <centerleft>50%</centerleft>
+            <centertop>50%</centertop>
+            <width>1160</width>
+            <height>920</height>
+            <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>1160</width>
+                <height>920</height>
+                <texture colordiffuse="F2202226">quicksync-white.png</texture>
+            </control>
+            <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>1160</width>
+                <height>96</height>
+                <texture colordiffuse="FF2C2F36">quicksync-white.png</texture>
+            </control>
+            <control type="label" id="2">
+                <left>48</left>
+                <top>0</top>
+                <width>1064</width>
+                <height>96</height>
+                <font>font30_title</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <aligny>center</aligny>
+            </control>
+            <control type="textbox" id="3">
+                <left>48</left>
+                <top>124</top>
+                <width>1064</width>
+                <height>590</height>
+                <font>font13</font>
+                <textcolor>FFE6E6E6</textcolor>
+            </control>
+            <control type="label" id="4">
+                <left>48</left>
+                <top>740</top>
+                <width>760</width>
+                <height>90</height>
+                <font>font12</font>
+                <textcolor>FFAAAAAA</textcolor>
+                <aligny>center</aligny>
+            </control>
+            <control type="label">
+                <left>0</left>
+                <top>856</top>
+                <width>1160</width>
+                <height>50</height>
+                <font>font12</font>
+                <textcolor>80FFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>Made with ♥ by jairamrb.com</label>
+            </control>
+            <control type="button" id="10">
+                <left>852</left>
+                <top>740</top>
+                <width>260</width>
+                <height>90</height>
+                <label>186</label>
+                <font>font13</font>
+                <align>center</align>
+                <aligny>center</aligny>
+                <textcolor>FFFFFFFF</textcolor>
+                <focusedcolor>FFFFFFFF</focusedcolor>
+                <texturefocus colordiffuse="FF12A0C7">quicksync-white.png</texturefocus>
+                <texturenofocus colordiffuse="FF3A3D45">quicksync-white.png</texturenofocus>
+            </control>
+        </control>
+    </controls>
+</window>

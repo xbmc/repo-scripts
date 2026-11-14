@@ -1,9 +1,17 @@
 <settings>
     <category label="30013">
+        <setting type="lsep" label="30016"/>
         <setting id="scan_video" type="bool" label="30010" default="true"/>
-        <setting id="scan_music" type="bool" label="30011" default="true"/>
+        <setting id="scan_music" type="bool" label="30011" default="false"/>
+        <setting id="scan_pictures" type="bool" label="30018" default="false"/>
     </category>
     <category label="30014">
         <setting id="show_report" type="bool" label="30012" default="true"/>
+        <setting id="auto_close" type="bool" label="30017" default="true" visible="eq(-1,true)"/>
+        <setting id="report_timeout" type="slider" label="30015" default="15" range="5,5,120" option="int" visible="eq(-2,true)+eq(-1,true)"/>
+    </category>
+    <category label="30060">
+        <setting type="lsep" label="30061"/>
+        <setting type="action" label="30062" action="RunScript(script.program.quicksync)" option="close"/>
     </category>
 </settings>

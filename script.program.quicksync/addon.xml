@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.program.quicksync" name="Kodi QuickSync" version="1.0.0" provider-name="jairamrb.com">
+<addon id="script.program.quicksync" name="QuickSync" version="1.1.0" provider-name="jairamrb.com">
     <requires>
         <import addon="xbmc.python" version="3.0.1"/>
     </requires>
@@ -22,7 +22,18 @@
             <screenshot>resources/screenshot-02.jpg</screenshot>
             <screenshot>resources/screenshot-03.jpg</screenshot>
         </assets>
-        <news>Version 1.0.0
+        <news>Version 1.1.0
+- Taller summary window, with a countdown when it closes by itself
+- New settings: close the summary automatically, and after how many seconds (15 by default). Pressing up or down stops the countdown
+- The summary shows every library: music videos and artists are counted too, and a library that was not scanned says why
+- Pictures: Kodi has no picture library, so the add-on counts the files in the picture sources and shows how many are new since the last run
+- Music and pictures are off by default
+- New "About" section in the settings, with a button to look for new content right away
+- Launch options: report=dialog|notification|none and library=video|music|all
+- Other add-ons and JSON-RPC clients are notified when the scan starts and finishes, with the new items found
+- A second launch while a scan is running no longer starts another one
+
+Version 1.0.0
 - Manual video and music library scan
 - Summary with the new content found
 - English and Spanish translations</news>
