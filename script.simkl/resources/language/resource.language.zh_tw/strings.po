@@ -1,0 +1,661 @@
+# Kodi Media Center language file
+# Addon Name: Simkl TV Tracker
+# Addon id: script.simkl
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Simkl\n"
+"Language-Team: Chinese (Traditional)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr "即時記錄的百分比"
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr "即時記錄後顯示通知"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "即時記錄的最短檔案長度（分鐘）"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "Simkl 登入"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \ncomputer or phone and enter this code"
+msgstr "請用電腦或手機前往 {0}\n並輸入此代碼"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr "正在即時記錄：{0}"
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "登入成功，{0}"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "無法登入"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#32100"
+msgid "Account"
+msgstr "帳號"
+
+msgctxt "#32101"
+msgid "Simkl keeps track of what you watch. Sign up at simkl.com, then log in here with a code."
+msgstr "Simkl 會記錄您觀看的內容。請先在 simkl.com 註冊，再於此處以代碼登入。"
+
+msgctxt "#32102"
+msgid "Status"
+msgstr "狀態"
+
+msgctxt "#32103"
+msgid "Log in"
+msgstr "登入"
+
+msgctxt "#32104"
+msgid "Shows a code to enter on simkl.com/pin from any phone or computer."
+msgstr "顯示一組代碼，可用任何手機或電腦在 simkl.com/pin 輸入。"
+
+msgctxt "#32105"
+msgid "Log out"
+msgstr "登出"
+
+msgctxt "#32106"
+msgid "Forgets the Simkl login on this device."
+msgstr "清除此裝置上的 Simkl 登入資訊。"
+
+msgctxt "#32110"
+msgid "Scrobbling"
+msgstr "即時記錄"
+
+msgctxt "#32111"
+msgid "Track movies"
+msgstr "追蹤電影"
+
+msgctxt "#32112"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "播放時將您觀看的內容傳送至 Simkl。播放結束時若達到或超過下方的百分比，即標示為已觀看。"
+
+msgctxt "#32113"
+msgid "Track TV shows and anime"
+msgstr "追蹤電視節目與動畫"
+
+msgctxt "#32114"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "播放時將您觀看的內容傳送至 Simkl。播放結束時若達到或超過下方的百分比，即標示為已觀看。"
+
+msgctxt "#32115"
+msgid "A playback that stops at or past this point is marked as watched. Below it, Simkl keeps the position so you can continue later."
+msgstr "播放停止時若達到或超過此點，即標示為已觀看。未達此點時，Simkl 會保留播放位置，方便您稍後繼續觀看。"
+
+msgctxt "#32117"
+msgid "A notification when something is marked as watched on Simkl."
+msgstr "在 Simkl 上將項目標示為已觀看時顯示通知。"
+
+msgctxt "#32118"
+msgid "Log rewatches on Simkl (Pro or VIP)"
+msgstr "在 Simkl 上記錄重看（Pro 或 VIP）"
+
+msgctxt "#32119"
+msgid "Needs Simkl Pro or VIP (simkl.com/vip). Watching something again opens a new rewatch session on Simkl instead of keeping the first date, once at least 10% of it was really watched (replaying the ending is not a rewatch)."
+msgstr "需要 Simkl Pro 或 VIP（simkl.com/vip）。再次觀看某個項目且實際看過至少 10% 時，會在 Simkl 上開始新的一次重看，而不是保留第一次的日期（重播結尾不算重看）。"
+
+msgctxt "#32121"
+msgid "Send watched marks made in the Kodi library to Simkl"
+msgstr "將 Kodi 媒體櫃中的已觀看標示傳送至 Simkl"
+
+msgctxt "#32122"
+msgid "Marking a movie, episode, season or show as watched in Kodi marks it on Simkl too. A single unmark removes an episode from the Simkl history; for a movie you are asked whether to remove it (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched, and no answer keeps it. A movie with rewatch sessions on Simkl is never removed. Unmarking a whole season or show is not sent."
+msgstr "在 Kodi 中將電影、單集、季或節目標示為已觀看時，Simkl 上也會一併標示。單獨取消標示一集時，會將該集從 Simkl 觀看紀錄中移除；若是電影，則會詢問您要將其移除（評分與筆記也會一併刪除）、移至想看清單（評分與筆記保留，觀看日期刪除）或保留已觀看，未回答則保留已觀看。在 Simkl 上有重看的電影一律不會移除。取消標示整季或整部節目則不會傳送。"
+
+msgctxt "#32130"
+msgid "Sync from Simkl"
+msgstr "從 Simkl 同步"
+
+msgctxt "#32131"
+msgid "Sync updates from Simkl"
+msgstr "從 Simkl 同步更新"
+
+msgctxt "#32132"
+msgid "Marks in the Kodi library what was watched on Simkl since the last sync. The first run fetches the whole history; a run after new items were added to the library marks them from the kept copy of it. What you unmarked in Kodi stays unwatched until Simkl sees a newer watch of it."
+msgstr "在 Kodi 媒體櫃中標示上次同步後在 Simkl 上看過的內容。首次執行會擷取完整的觀看紀錄；媒體櫃新增項目後再執行時，會依保存的觀看紀錄副本標示這些項目。您在 Kodi 中取消標示的項目會維持未觀看，直到 Simkl 上出現該項目較新的觀看為止。"
+
+msgctxt "#32133"
+msgid "Reset and sync everything again"
+msgstr "重設並全部重新同步"
+
+msgctxt "#32134"
+msgid "Forgets what was synced and goes through the whole Simkl history again. Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "清除已同步的資訊，並重新處理完整的 Simkl 觀看紀錄。在 Kodi 中已觀看的項目會保留標示，其觀看日期則依 Simkl 更新。"
+
+msgctxt "#32135"
+msgid "Automatically sync updates from Simkl"
+msgstr "自動從 Simkl 同步更新"
+
+msgctxt "#32136"
+msgid "Checks Simkl at the interval below and marks what is new, whenever Kodi is running but nothing is playing; a device nobody used since the last check (no key press, no playback, no change of the library) waits for the next use. With a library shared by several Kodi devices, switch this on for one device only."
+msgstr "在 Kodi 執行中且未播放任何內容時，依下方的間隔檢查 Simkl 並標示新內容；自上次檢查後無人使用的裝置（沒有按鍵、沒有播放、媒體櫃沒有變更）會等到下次使用時再檢查。若多台 Kodi 裝置共用同一個媒體櫃，請只在其中一台裝置開啟此選項。"
+
+msgctxt "#32137"
+msgid "Check every"
+msgstr "檢查間隔"
+
+msgctxt "#32138"
+msgid "How often the automatic sync checks Simkl for new history."
+msgstr "自動同步檢查 Simkl 新觀看紀錄的頻率。"
+
+msgctxt "#32139"
+msgid "1 hour"
+msgstr "1 小時"
+
+msgctxt "#32140"
+msgid "3 hours"
+msgstr "3 小時"
+
+msgctxt "#32141"
+msgid "6 hours"
+msgstr "6 小時"
+
+msgctxt "#32142"
+msgid "12 hours"
+msgstr "12 小時"
+
+msgctxt "#32143"
+msgid "24 hours"
+msgstr "24 小時"
+
+msgctxt "#32144"
+msgid "Once a week"
+msgstr "每週一次"
+
+msgctxt "#32145"
+msgid "Continue watching: sync resume positions from Simkl"
+msgstr "繼續觀看：從 Simkl 同步續播位置"
+
+msgctxt "#32146"
+msgid "Where you paused in another Simkl app becomes a resume point in Kodi. Applied to items not yet watched in Kodi, and only when the Simkl pause is newer than Kodi's own last play."
+msgstr "您在其他 Simkl 應用程式中暫停的位置，會成為 Kodi 中的續播位置。僅套用於 Kodi 中尚未觀看的項目，且只在 Simkl 的暫停時間晚於 Kodi 本身最後一次播放時才套用。"
+
+msgctxt "#32147"
+msgid "Last sync"
+msgstr "上次同步"
+
+msgctxt "#32148"
+msgid "The result of the last sync."
+msgstr "上次同步的結果。"
+
+msgctxt "#32149"
+msgid "Start over"
+msgstr "重新開始"
+
+msgctxt "#32150"
+msgid "Exclusions"
+msgstr "排除項目"
+
+msgctxt "#32151"
+msgid "Don't track Live TV"
+msgstr "不追蹤直播電視"
+
+msgctxt "#32152"
+msgid "Nothing played from a PVR (pvr://) is sent to Simkl."
+msgstr "從 PVR（pvr://）播放的內容都不會傳送至 Simkl。"
+
+msgctxt "#32153"
+msgid "Don't track HTTP streams"
+msgstr "不追蹤 HTTP 串流"
+
+msgctxt "#32154"
+msgid "Nothing played from an http:// or https:// address is sent to Simkl."
+msgstr "從 http:// 或 https:// 位址播放的內容都不會傳送至 Simkl。"
+
+msgctxt "#32155"
+msgid "Don't track videos played through add-ons"
+msgstr "不追蹤透過附加元件播放的影片"
+
+msgctxt "#32156"
+msgid "Nothing played from a plugin:// path is sent to Simkl."
+msgstr "從 plugin:// 路徑播放的內容都不會傳送至 Simkl。"
+
+msgctxt "#32157"
+msgid "Exclude folder 1"
+msgstr "排除資料夾 1"
+
+msgctxt "#32158"
+msgid "Exclude folder 2"
+msgstr "排除資料夾 2"
+
+msgctxt "#32159"
+msgid "Exclude folder 3"
+msgstr "排除資料夾 3"
+
+msgctxt "#32160"
+msgid "Exclude folder 4"
+msgstr "排除資料夾 4"
+
+msgctxt "#32161"
+msgid "Exclude folder 5"
+msgstr "排除資料夾 5"
+
+msgctxt "#32162"
+msgid "Folder"
+msgstr "資料夾"
+
+msgctxt "#32163"
+msgid "Nothing played from this folder (or a folder inside it) is sent to Simkl, and marks made on its items are not sent either."
+msgstr "從此資料夾（或其子資料夾）播放的內容都不會傳送至 Simkl，對其中項目所做的標示也不會傳送。"
+
+msgctxt "#32170"
+msgid "Advanced"
+msgstr "進階"
+
+msgctxt "#32171"
+msgid "Debug logging"
+msgstr "除錯記錄"
+
+msgctxt "#32172"
+msgid "Writes what the add-on does to the Kodi log, without Kodi's own debug mode."
+msgstr "將附加元件的動作寫入 Kodi 記錄檔，無需開啟 Kodi 本身的除錯模式。"
+
+msgctxt "#32200"
+msgid "The code expires in {0}"
+msgstr "代碼將於 {0} 後過期"
+
+msgctxt "#32203"
+msgid "Log in from the add-on settings to start tracking what you watch"
+msgstr "請在附加元件設定中登入，以開始追蹤您觀看的內容"
+
+msgctxt "#32210"
+msgid "Simkl is not reachable right now, try again later"
+msgstr "目前無法連線至 Simkl，請稍後再試"
+
+msgctxt "#32211"
+msgid "Logged out of Simkl"
+msgstr "已登出 Simkl"
+
+msgctxt "#32212"
+msgid "Please reconnect in the add-on settings (Account) to keep tracking when the old sign-in is retired"
+msgstr "請在附加元件設定（帳號）中重新連線，以便在舊登入方式停用後繼續追蹤"
+
+msgctxt "#32213"
+msgid "Simkl rejected the stored login, please log in again in the add-on settings"
+msgstr "Simkl 拒絕了儲存的登入資訊，請在附加元件設定中重新登入"
+
+msgctxt "#32214"
+msgid "Logging rewatches needs Simkl Pro or VIP, the option was switched off"
+msgstr "記錄重看需要 Simkl Pro 或 VIP，此選項已關閉"
+
+msgctxt "#32215"
+msgid "Not connected"
+msgstr "未連線"
+
+msgctxt "#32216"
+msgid "Connected to Simkl as {0}"
+msgstr "已以 {0} 的身分連線至 Simkl"
+
+msgctxt "#32217"
+msgid "Connected to Simkl as {0} ({1})"
+msgstr "已以 {0}（{1}）的身分連線至 Simkl"
+
+msgctxt "#32224"
+msgid "Log in to Simkl first"
+msgstr "請先登入 Simkl"
+
+msgctxt "#32225"
+msgid "A sync is already running"
+msgstr "同步已在進行中"
+
+msgctxt "#32226"
+msgid "The code expired before the login was completed, start again"
+msgstr "代碼在登入完成前已過期，請重新開始"
+
+msgctxt "#32227"
+msgid "The login was denied on Simkl"
+msgstr "登入在 Simkl 上遭到拒絕"
+
+msgctxt "#32228"
+msgid "A sync ran a moment ago, try again in two minutes"
+msgstr "剛剛才同步過，請兩分鐘後再試"
+
+msgctxt "#32229"
+msgid "Nothing new on Simkl since the last sync."
+msgstr "自上次同步後，Simkl 上沒有新內容。"
+
+msgctxt "#32230"
+msgid "Marked {0} movies and {1} episodes as watched, {2} already watched."
+msgstr "已將 {0} 部電影和 {1} 集標示為已觀看，{2} 個項目原本就已觀看。"
+
+msgctxt "#32231"
+msgid "Sync failed: {0}"
+msgstr "同步失敗：{0}"
+
+msgctxt "#32232"
+msgid "Syncing from Simkl..."
+msgstr "正在從 Simkl 同步..."
+
+msgctxt "#32233"
+msgid "Reading the Kodi library..."
+msgstr "正在讀取 Kodi 媒體櫃..."
+
+msgctxt "#32234"
+msgid "Fetching the Simkl history..."
+msgstr "正在擷取 Simkl 觀看紀錄..."
+
+msgctxt "#32235"
+msgid "Updating the library..."
+msgstr "正在更新媒體櫃..."
+
+msgctxt "#32236"
+msgid "Connected to Simkl"
+msgstr "已連線至 Simkl"
+
+msgctxt "#32237"
+msgid "{0} minutes"
+msgstr "{0} 分鐘"
+
+msgctxt "#32238"
+msgid "{0} seconds"
+msgstr "{0} 秒"
+
+msgctxt "#32239"
+msgid "A Simkl login is already in progress"
+msgstr "Simkl 登入已在進行中"
+
+msgctxt "#32240"
+msgid "Couldn't start the Simkl login"
+msgstr "無法開始 Simkl 登入"
+
+msgctxt "#32241"
+msgid "Watch history is sent again once Simkl is reachable"
+msgstr "待 Simkl 可連線時，會重新傳送觀看紀錄"
+
+msgctxt "#32242"
+msgid "Connected as {0} with the old sign-in: press Reconnect"
+msgstr "已透過舊登入方式以 {0} 的身分連線：請按「重新連線」"
+
+msgctxt "#32243"
+msgid "{0} resume positions updated."
+msgstr "已更新 {0} 個續播位置。"
+
+msgctxt "#32244"
+msgid "Simkl refused the request: this history is too large for one call"
+msgstr "Simkl 拒絕了請求：此觀看紀錄過大，無法一次傳送"
+
+msgctxt "#32245"
+msgid "Simkl is rate limiting requests, try again later"
+msgstr "Simkl 正在限制請求頻率，請稍後再試"
+
+msgctxt "#32246"
+msgid "Simkl did not answer (unreachable or timed out)"
+msgstr "Simkl 沒有回應（無法連線或逾時）"
+
+msgctxt "#32247"
+msgid "Simkl answered HTTP {0}"
+msgstr "Simkl 回應 HTTP {0}"
+
+msgctxt "#32248"
+msgid "Everything synced again."
+msgstr "已全部重新同步。"
+
+msgctxt "#32250"
+msgid "Mark as watched on Simkl"
+msgstr "在 Simkl 上標示為已觀看"
+
+msgctxt "#32251"
+msgid "Remove from Simkl history"
+msgstr "從 Simkl 觀看紀錄移除"
+
+msgctxt "#32252"
+msgid "Add to Plan to watch on Simkl"
+msgstr "加入 Simkl 想看清單"
+
+msgctxt "#32253"
+msgid "Sync updates from Simkl"
+msgstr "從 Simkl 同步更新"
+
+msgctxt "#32254"
+msgid "Added to Plan to watch: {0}"
+msgstr "已加入想看清單：{0}"
+
+msgctxt "#32255"
+msgid "Marked as watched on Simkl: {0}"
+msgstr "已在 Simkl 上標示為已觀看：{0}"
+
+msgctxt "#32256"
+msgid "Removed from the Simkl history: {0}"
+msgstr "已從 Simkl 觀看紀錄移除：{0}"
+
+msgctxt "#32257"
+msgid "Nothing to send: Simkl needs ids that Kodi does not have for this item"
+msgstr "沒有可傳送的內容：Simkl 需要此項目的 ID，但 Kodi 沒有"
+
+msgctxt "#32259"
+msgid "{0} watch dates refreshed from Simkl."
+msgstr "已依 Simkl 更新 {0} 個觀看日期。"
+
+msgctxt "#32260"
+msgid "Forget what was synced and go through the whole Simkl history again? Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "要清除已同步的資訊，並重新處理完整的 Simkl 觀看紀錄嗎？在 Kodi 中已觀看的項目會保留標示，其觀看日期則依 Simkl 更新。"
+
+msgctxt "#32261"
+msgid "Log out of Simkl on this device? Watch history that could not be sent yet is discarded."
+msgstr "要在此裝置上登出 Simkl 嗎？尚未傳送的觀看紀錄將會捨棄。"
+
+msgctxt "#32262"
+msgid "{0} episodes"
+msgstr "{0} 集"
+
+msgctxt "#32263"
+msgid "Simkl does not know {0}"
+msgstr "Simkl 上找不到 {0}"
+
+msgctxt "#32264"
+msgid "Simkl refused the request: {0}"
+msgstr "Simkl 拒絕了請求：{0}"
+
+msgctxt "#32265"
+msgid "the Simkl login was rejected, log in again"
+msgstr "Simkl 登入遭到拒絕，請重新登入"
+
+msgctxt "#32266"
+msgid "Kodi is shutting down"
+msgstr "Kodi 正在關閉"
+
+msgctxt "#32267"
+msgid "{0} library writes failed, the sync runs again next time"
+msgstr "{0} 筆媒體櫃寫入失敗，下次會再次同步"
+
+msgctxt "#32268"
+msgid "{0} items changed in Kodi during the sync were left alone."
+msgstr "同步期間在 Kodi 中變更的 {0} 個項目維持不變。"
+
+msgctxt "#32269"
+msgid "the Kodi library could not be read"
+msgstr "無法讀取 Kodi 媒體櫃"
+
+msgctxt "#32270"
+msgid "A whole show or season can be marked only when it is in the Kodi library; use Add to Plan to watch for a show from an add-on"
+msgstr "整部節目或整季只有在 Kodi 媒體櫃中時才能標示；來自附加元件的節目請使用「加入 Simkl 想看清單」"
+
+msgctxt "#32271"
+msgid "An episode from an add-on can be marked only when the add-on provides the show's ids"
+msgstr "來自附加元件的單集，只有在附加元件提供節目的 ID 時才能標示"
+
+msgctxt "#32273"
+msgid "Reconnect with the new sign-in"
+msgstr "以新登入方式重新連線"
+
+msgctxt "#32274"
+msgid "The old sign-in is being retired. Shows a code to enter on simkl.com/pin; the account stays the same."
+msgstr "舊登入方式即將停用。會顯示一組代碼供您在 simkl.com/pin 輸入；帳號維持不變。"
+
+msgctxt "#32275"
+msgid "Rate on Simkl"
+msgstr "在 Simkl 上評分"
+
+msgctxt "#32276"
+msgid "Remove the rating"
+msgstr "移除評分"
+
+msgctxt "#32277"
+msgid "Rated {0} {1}/10 on Simkl"
+msgstr "已在 Simkl 上為 {0} 評分 {1}/10"
+
+msgctxt "#32278"
+msgid "Rating removed on Simkl: {0}"
+msgstr "已在 Simkl 上移除評分：{0}"
+
+msgctxt "#32279"
+msgid "Not in the Kodi library"
+msgstr "不在 Kodi 媒體櫃中"
+
+msgctxt "#32280"
+msgid "{0} movies, {1} shows, {2} episodes"
+msgstr "{0} 部電影、{1} 部節目、{2} 集"
+
+msgctxt "#32281"
+msgid "What the last sync found watched on Simkl but could not place in the Kodi library."
+msgstr "上次同步在 Simkl 上找到已觀看、但無法對應到 Kodi 媒體櫃的項目。"
+
+msgctxt "#32282"
+msgid "Scan with your phone"
+msgstr "用手機掃描"
+
+msgctxt "#32283"
+msgid "{0} episodes, {1} movies marked"
+msgstr "已標示 {0} 集、{1} 部電影"
+
+msgctxt "#32284"
+msgid "{0} dates refreshed"
+msgstr "已更新 {0} 個日期"
+
+msgctxt "#32285"
+msgid "{0} resume points"
+msgstr "{0} 個續播位置"
+
+msgctxt "#32286"
+msgid "Show the Simkl log"
+msgstr "顯示 Simkl 記錄檔"
+
+msgctxt "#32287"
+msgid "The Kodi log, Simkl lines only (switch debug logging on first for the details). What is shown is also saved as simkl.log next to the add-on's settings, ready for a bug report."
+msgstr "Kodi 記錄檔中僅與 Simkl 相關的行（如需詳細資訊，請先開啟除錯記錄）。顯示的內容也會另存為 simkl.log，放在附加元件的設定旁，可直接用於錯誤回報。"
+
+msgctxt "#32288"
+msgid "Kodi log"
+msgstr "Kodi 記錄檔"
+
+msgctxt "#32289"
+msgid "Simkl log"
+msgstr "Simkl 記錄檔"
+
+msgctxt "#32290"
+msgid "Saved to {0}"
+msgstr "已儲存至 {0}"
+
+msgctxt "#32291"
+msgid "No Simkl lines in the Kodi log yet"
+msgstr "Kodi 記錄檔中尚無 Simkl 相關內容"
+
+msgctxt "#32292"
+msgid "Ask for a rating after a movie"
+msgstr "電影看完後詢問評分"
+
+msgctxt "#32294"
+msgid "Send ratings made in Kodi to Simkl"
+msgstr "將 Kodi 中的評分傳送至 Simkl"
+
+msgctxt "#32295"
+msgid "A rating set in Kodi's information dialog for a movie or a show goes to Simkl (1-10, 0 removes it). Episodes are not sent, nor the rating of a movie Kodi has as unwatched: Simkl files a rated movie as watched."
+msgstr "在 Kodi 資訊視窗中為電影或節目設定的評分會傳送至 Simkl（1-10，0 表示移除）。單集評分不會傳送，Kodi 中為未觀看的電影評分也不會傳送：Simkl 會將已評分的電影歸為已觀看。"
+
+msgctxt "#32296"
+msgid "Bring Simkl ratings into Kodi"
+msgstr "將 Simkl 評分匯入 Kodi"
+
+msgctxt "#32297"
+msgid "Your Simkl rating of a movie or a show becomes the Kodi library's user rating (1-10). Nothing is removed in Kodi; episodes have no ratings on Simkl."
+msgstr "您在 Simkl 上對電影或節目的評分，會成為 Kodi 媒體櫃中的使用者評分（1-10）。Kodi 中不會移除任何內容；Simkl 上的單集沒有評分。"
+
+msgctxt "#32298"
+msgid "{0} ratings updated."
+msgstr "已更新 {0} 個評分。"
+
+msgctxt "#32299"
+msgid "Simkl would mark {0} as watched: rate it once you have watched it"
+msgstr "Simkl 會將 {0} 標示為已觀看：請在看完後再評分"
+
+msgctxt "#32300"
+msgid "Not now"
+msgstr "稍後再說"
+
+msgctxt "#32301"
+msgid "That is another Simkl account ({0}); log out first to switch"
+msgstr "那是另一個 Simkl 帳號（{0}）；如要切換，請先登出"
+
+msgctxt "#32302"
+msgid "{0} unmarked in Kodi, left unwatched."
+msgstr "{0} 個項目已在 Kodi 中取消標示，維持未觀看。"
+
+msgctxt "#32303"
+msgid "Watches sent to Simkl: {0}"
+msgstr "已傳送至 Simkl 的觀看項目：{0}"
+
+msgctxt "#32304"
+msgid "Shorter add-on streams and files named by Simkl's file search (trailers, clips) are ignored. Items of the Kodi library are always tracked."
+msgstr "較短的附加元件串流，以及經 Simkl 檔案搜尋判定為預告片或短片的檔案會被略過。Kodi 媒體櫃中的項目一律會追蹤。"
+
+msgctxt "#32305"
+msgid "{0} is unwatched in Kodi now. On Simkl: remove it from your history (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched?"
+msgstr "{0} 現已在 Kodi 中標示為未觀看。要在 Simkl 上將其從您的觀看紀錄移除（評分與筆記也會一併刪除）、移至想看清單（評分與筆記保留，觀看日期刪除），還是保留已觀看？"
+
+msgctxt "#32306"
+msgid "Remove"
+msgstr "移除"
+
+msgctxt "#32307"
+msgid "Plan to watch"
+msgstr "想看清單"
+
+msgctxt "#32308"
+msgid "Keep watched"
+msgstr "保留已觀看"
+
+msgctxt "#32309"
+msgid "Kept on Simkl, it has rewatch sessions there: {0}"
+msgstr "已在 Simkl 上保留（該項目在 Simkl 上有重看）：{0}"
+
+msgctxt "#32310"
+msgid "Not in your Simkl history, nothing to change: {0}"
+msgstr "不在您的 Simkl 觀看紀錄中，無需變更：{0}"
+
+msgctxt "#32311"
+msgid "{0} unsent Simkl updates older than 30 days were dropped"
+msgstr "已捨棄 {0} 筆超過 30 天仍未傳送的 Simkl 更新"
+
+msgctxt "#32312"
+msgid "When a movie ends at or past the percentage, a 1-10 pick appears and goes to Simkl. A movie you rated in Kodi or watched before is not asked, nor are shows and episodes."
+msgstr "電影播放結束時若達到或超過該百分比，會出現 1-10 的評分選擇並傳送至 Simkl。已在 Kodi 中評分或曾看過的電影不會詢問，節目與單集也不會。"
+
+msgctxt "#32313"
+msgid "the kept copy of the Simkl history could not be saved"
+msgstr "無法儲存 Simkl 觀看紀錄的保存副本"
+
+msgctxt "#32314"
+msgid "{0} is already watched in Kodi, so it was not moved to Plan to watch"
+msgstr "{0} 在 Kodi 中已觀看，因此未移至想看清單"

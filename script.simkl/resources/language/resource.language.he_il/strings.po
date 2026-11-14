@@ -1,0 +1,661 @@
+# Kodi Media Center language file
+# Addon Name: Simkl TV Tracker
+# Addon id: script.simkl
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Simkl\n"
+"Language-Team: Hebrew\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr "דיווח צפייה באחוז"
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr "הצגת בועה בעת דיווח צפייה"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "אורך קובץ מינימלי לדיווח צפייה (דקות)"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "התחברות ל-Simkl"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \ncomputer or phone and enter this code"
+msgstr "נא להיכנס אל {0} \nממחשב או מטלפון ולהזין את הקוד הזה"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr "דיווח צפייה: {0}"
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "ההתחברות הצליחה, {0}"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "ההתחברות נכשלה"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "ביטול"
+
+msgctxt "#32100"
+msgid "Account"
+msgstr "חשבון"
+
+msgctxt "#32101"
+msgid "Simkl keeps track of what you watch. Sign up at simkl.com, then log in here with a code."
+msgstr "Simkl עוקב אחר מה שאתה צופה בו. הירשם ב-simkl.com ולאחר מכן התחבר כאן באמצעות קוד."
+
+msgctxt "#32102"
+msgid "Status"
+msgstr "מצב"
+
+msgctxt "#32103"
+msgid "Log in"
+msgstr "התחבר"
+
+msgctxt "#32104"
+msgid "Shows a code to enter on simkl.com/pin from any phone or computer."
+msgstr "מציג קוד להזנה ב-simkl.com/pin מכל טלפון או מחשב."
+
+msgctxt "#32105"
+msgid "Log out"
+msgstr "התנתק"
+
+msgctxt "#32106"
+msgid "Forgets the Simkl login on this device."
+msgstr "מוחק את פרטי ההתחברות ל-Simkl במכשיר זה."
+
+msgctxt "#32110"
+msgid "Scrobbling"
+msgstr "דיווח צפייה"
+
+msgctxt "#32111"
+msgid "Track movies"
+msgstr "מעקב אחר סרטים"
+
+msgctxt "#32112"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "שולח ל-Simkl את מה שאתה צופה בו בזמן הניגון. ניגון שמסתיים באחוז שלהלן או אחריו מסומן כנצפה."
+
+msgctxt "#32113"
+msgid "Track TV shows and anime"
+msgstr "מעקב אחר סדרות טלוויזיה ואנימה"
+
+msgctxt "#32114"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "שולח ל-Simkl את מה שאתה צופה בו בזמן הניגון. ניגון שמסתיים באחוז שלהלן או אחריו מסומן כנצפה."
+
+msgctxt "#32115"
+msgid "A playback that stops at or past this point is marked as watched. Below it, Simkl keeps the position so you can continue later."
+msgstr "ניגון שנעצר בנקודה זו או אחריה מסומן כנצפה. לפניה, Simkl שומר את המיקום כדי שתוכל להמשיך מאוחר יותר."
+
+msgctxt "#32117"
+msgid "A notification when something is marked as watched on Simkl."
+msgstr "התראה כאשר פריט מסומן כנצפה ב-Simkl."
+
+msgctxt "#32118"
+msgid "Log rewatches on Simkl (Pro or VIP)"
+msgstr "רישום צפיות חוזרות ב-Simkl (Pro או VIP)"
+
+msgctxt "#32119"
+msgid "Needs Simkl Pro or VIP (simkl.com/vip). Watching something again opens a new rewatch session on Simkl instead of keeping the first date, once at least 10% of it was really watched (replaying the ending is not a rewatch)."
+msgstr "דורש Simkl Pro או VIP (simkl.com/vip). צפייה נוספת בפריט פותחת ב-Simkl צפייה חוזרת חדשה במקום לשמור את התאריך הראשון, לאחר שלפחות 10% ממנו נצפו בפועל (ניגון חוזר של הסוף אינו צפייה חוזרת)."
+
+msgctxt "#32121"
+msgid "Send watched marks made in the Kodi library to Simkl"
+msgstr "שליחת סימוני נצפה מספריית Kodi ל-Simkl"
+
+msgctxt "#32122"
+msgid "Marking a movie, episode, season or show as watched in Kodi marks it on Simkl too. A single unmark removes an episode from the Simkl history; for a movie you are asked whether to remove it (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched, and no answer keeps it. A movie with rewatch sessions on Simkl is never removed. Unmarking a whole season or show is not sent."
+msgstr "סימון סרט, פרק, עונה או סדרה כנצפה ב-Kodi מסמן אותו גם ב-Simkl. ביטול סימון בודד מסיר פרק מהיסטוריית Simkl; עבור סרט תוצג שאלה אם להסיר אותו (גם הדירוג וההערה שלו יוסרו), להעביר אותו ל\"מתוכנן לצפייה\" (הם יישמרו, תאריך הצפייה יוסר) או להשאיר אותו כנצפה, וללא תשובה הוא נשאר כנצפה. סרט עם צפיות חוזרות ב-Simkl לעולם אינו מוסר. ביטול סימון של עונה או סדרה שלמה אינו נשלח."
+
+msgctxt "#32130"
+msgid "Sync from Simkl"
+msgstr "סנכרון מ-Simkl"
+
+msgctxt "#32131"
+msgid "Sync updates from Simkl"
+msgstr "סנכרן עדכונים מ-Simkl"
+
+msgctxt "#32132"
+msgid "Marks in the Kodi library what was watched on Simkl since the last sync. The first run fetches the whole history; a run after new items were added to the library marks them from the kept copy of it. What you unmarked in Kodi stays unwatched until Simkl sees a newer watch of it."
+msgstr "מסמן בספריית Kodi את מה שנצפה ב-Simkl מאז הסנכרון האחרון. ההרצה הראשונה מורידה את כל ההיסטוריה; הרצה לאחר שנוספו פריטים חדשים לספרייה מסמנת אותם מתוך העותק המקומי של ההיסטוריה. פריט שביטלת את סימונו ב-Kodi נשאר לא נצפה עד ש-Simkl מזהה צפייה חדשה יותר בו."
+
+msgctxt "#32133"
+msgid "Reset and sync everything again"
+msgstr "אפס וסנכרן הכול מחדש"
+
+msgctxt "#32134"
+msgid "Forgets what was synced and goes through the whole Simkl history again. Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "שוכח מה סונכרן ועובר שוב על כל היסטוריית Simkl. פריטים שכבר נצפו ב-Kodi שומרים על הסימון שלהם; תאריכי הצפייה שלהם מרועננים מ-Simkl."
+
+msgctxt "#32135"
+msgid "Automatically sync updates from Simkl"
+msgstr "סנכרון אוטומטי של עדכונים מ-Simkl"
+
+msgctxt "#32136"
+msgid "Checks Simkl at the interval below and marks what is new, whenever Kodi is running but nothing is playing; a device nobody used since the last check (no key press, no playback, no change of the library) waits for the next use. With a library shared by several Kodi devices, switch this on for one device only."
+msgstr "בודק את Simkl במרווח שלהלן ומסמן את מה שחדש, בכל פעם ש-Kodi פועל ושום דבר אינו מתנגן; מכשיר שאיש לא השתמש בו מאז הבדיקה האחרונה (ללא לחיצת מקש, ללא ניגון, ללא שינוי בספרייה) ממתין לשימוש הבא. כשהספרייה משותפת לכמה מכשירי Kodi, הפעל אפשרות זו במכשיר אחד בלבד."
+
+msgctxt "#32137"
+msgid "Check every"
+msgstr "בדיקה כל"
+
+msgctxt "#32138"
+msgid "How often the automatic sync checks Simkl for new history."
+msgstr "באיזו תדירות הסנכרון האוטומטי בודק ב-Simkl אם יש היסטוריה חדשה."
+
+msgctxt "#32139"
+msgid "1 hour"
+msgstr "שעה"
+
+msgctxt "#32140"
+msgid "3 hours"
+msgstr "3 שעות"
+
+msgctxt "#32141"
+msgid "6 hours"
+msgstr "6 שעות"
+
+msgctxt "#32142"
+msgid "12 hours"
+msgstr "12 שעות"
+
+msgctxt "#32143"
+msgid "24 hours"
+msgstr "24 שעות"
+
+msgctxt "#32144"
+msgid "Once a week"
+msgstr "פעם בשבוע"
+
+msgctxt "#32145"
+msgid "Continue watching: sync resume positions from Simkl"
+msgstr "המשך צפייה: סנכרון נקודות המשך מ-Simkl"
+
+msgctxt "#32146"
+msgid "Where you paused in another Simkl app becomes a resume point in Kodi. Applied to items not yet watched in Kodi, and only when the Simkl pause is newer than Kodi's own last play."
+msgstr "המקום שבו השהית את הניגון ביישום Simkl אחר הופך לנקודת המשך ב-Kodi. חל על פריטים שעדיין לא נצפו ב-Kodi, ורק כאשר ההשהיה ב-Simkl חדשה יותר מהניגון האחרון ב-Kodi עצמו."
+
+msgctxt "#32147"
+msgid "Last sync"
+msgstr "סנכרון אחרון"
+
+msgctxt "#32148"
+msgid "The result of the last sync."
+msgstr "תוצאת הסנכרון האחרון."
+
+msgctxt "#32149"
+msgid "Start over"
+msgstr "התחל מחדש"
+
+msgctxt "#32150"
+msgid "Exclusions"
+msgstr "החרגות"
+
+msgctxt "#32151"
+msgid "Don't track Live TV"
+msgstr "ללא מעקב אחר טלוויזיה חיה"
+
+msgctxt "#32152"
+msgid "Nothing played from a PVR (pvr://) is sent to Simkl."
+msgstr "שום דבר שמנוגן מ-PVR (pvr://) אינו נשלח ל-Simkl."
+
+msgctxt "#32153"
+msgid "Don't track HTTP streams"
+msgstr "ללא מעקב אחר הזרמות HTTP"
+
+msgctxt "#32154"
+msgid "Nothing played from an http:// or https:// address is sent to Simkl."
+msgstr "שום דבר שמנוגן מכתובת http:// או https:// אינו נשלח ל-Simkl."
+
+msgctxt "#32155"
+msgid "Don't track videos played through add-ons"
+msgstr "ללא מעקב אחר סרטונים שמנוגנים דרך הרחבות"
+
+msgctxt "#32156"
+msgid "Nothing played from a plugin:// path is sent to Simkl."
+msgstr "שום דבר שמנוגן מנתיב plugin:// אינו נשלח ל-Simkl."
+
+msgctxt "#32157"
+msgid "Exclude folder 1"
+msgstr "החרגת תיקייה 1"
+
+msgctxt "#32158"
+msgid "Exclude folder 2"
+msgstr "החרגת תיקייה 2"
+
+msgctxt "#32159"
+msgid "Exclude folder 3"
+msgstr "החרגת תיקייה 3"
+
+msgctxt "#32160"
+msgid "Exclude folder 4"
+msgstr "החרגת תיקייה 4"
+
+msgctxt "#32161"
+msgid "Exclude folder 5"
+msgstr "החרגת תיקייה 5"
+
+msgctxt "#32162"
+msgid "Folder"
+msgstr "תיקייה"
+
+msgctxt "#32163"
+msgid "Nothing played from this folder (or a folder inside it) is sent to Simkl, and marks made on its items are not sent either."
+msgstr "שום דבר שמנוגן מתיקייה זו (או מתיקייה שבתוכה) אינו נשלח ל-Simkl, וגם סימונים שבוצעו בפריטים שלה אינם נשלחים."
+
+msgctxt "#32170"
+msgid "Advanced"
+msgstr "מתקדם"
+
+msgctxt "#32171"
+msgid "Debug logging"
+msgstr "רישום ניפוי שגיאות"
+
+msgctxt "#32172"
+msgid "Writes what the add-on does to the Kodi log, without Kodi's own debug mode."
+msgstr "כותב ליומן Kodi את מה שההרחבה עושה, ללא מצב ניפוי השגיאות של Kodi עצמו."
+
+msgctxt "#32200"
+msgid "The code expires in {0}"
+msgstr "תוקף הקוד יפוג בעוד {0}"
+
+msgctxt "#32203"
+msgid "Log in from the add-on settings to start tracking what you watch"
+msgstr "התחבר דרך הגדרות ההרחבה כדי להתחיל לעקוב אחר מה שאתה צופה בו"
+
+msgctxt "#32210"
+msgid "Simkl is not reachable right now, try again later"
+msgstr "אין גישה ל-Simkl כרגע, נסה שוב מאוחר יותר"
+
+msgctxt "#32211"
+msgid "Logged out of Simkl"
+msgstr "התנתקת מ-Simkl"
+
+msgctxt "#32212"
+msgid "Please reconnect in the add-on settings (Account) to keep tracking when the old sign-in is retired"
+msgstr "נא להתחבר מחדש בהגדרות ההרחבה (חשבון) כדי להמשיך במעקב כאשר שיטת הכניסה הישנה תופסק"
+
+msgctxt "#32213"
+msgid "Simkl rejected the stored login, please log in again in the add-on settings"
+msgstr "Simkl דחה את פרטי ההתחברות השמורים, נא להתחבר שוב בהגדרות ההרחבה"
+
+msgctxt "#32214"
+msgid "Logging rewatches needs Simkl Pro or VIP, the option was switched off"
+msgstr "רישום צפיות חוזרות דורש Simkl Pro או VIP, האפשרות כובתה"
+
+msgctxt "#32215"
+msgid "Not connected"
+msgstr "לא מחובר"
+
+msgctxt "#32216"
+msgid "Connected to Simkl as {0}"
+msgstr "מחובר ל-Simkl בתור {0}"
+
+msgctxt "#32217"
+msgid "Connected to Simkl as {0} ({1})"
+msgstr "מחובר ל-Simkl בתור {0} ({1})"
+
+msgctxt "#32224"
+msgid "Log in to Simkl first"
+msgstr "התחבר תחילה ל-Simkl"
+
+msgctxt "#32225"
+msgid "A sync is already running"
+msgstr "כבר מתבצע סנכרון"
+
+msgctxt "#32226"
+msgid "The code expired before the login was completed, start again"
+msgstr "תוקף הקוד פג לפני שההתחברות הושלמה, התחל מחדש"
+
+msgctxt "#32227"
+msgid "The login was denied on Simkl"
+msgstr "ההתחברות נדחתה ב-Simkl"
+
+msgctxt "#32228"
+msgid "A sync ran a moment ago, try again in two minutes"
+msgstr "סנכרון בוצע לפני רגע, נסה שוב בעוד שתי דקות"
+
+msgctxt "#32229"
+msgid "Nothing new on Simkl since the last sync."
+msgstr "אין שום דבר חדש ב-Simkl מאז הסנכרון האחרון."
+
+msgctxt "#32230"
+msgid "Marked {0} movies and {1} episodes as watched, {2} already watched."
+msgstr "{0} סרטים ו-{1} פרקים סומנו כנצפים, {2} כבר נצפו."
+
+msgctxt "#32231"
+msgid "Sync failed: {0}"
+msgstr "הסנכרון נכשל: {0}"
+
+msgctxt "#32232"
+msgid "Syncing from Simkl..."
+msgstr "מסנכרן מ-Simkl..."
+
+msgctxt "#32233"
+msgid "Reading the Kodi library..."
+msgstr "קורא את ספריית Kodi..."
+
+msgctxt "#32234"
+msgid "Fetching the Simkl history..."
+msgstr "מוריד את היסטוריית Simkl..."
+
+msgctxt "#32235"
+msgid "Updating the library..."
+msgstr "מעדכן את הספרייה..."
+
+msgctxt "#32236"
+msgid "Connected to Simkl"
+msgstr "מחובר ל-Simkl"
+
+msgctxt "#32237"
+msgid "{0} minutes"
+msgstr "{0} דקות"
+
+msgctxt "#32238"
+msgid "{0} seconds"
+msgstr "{0} שניות"
+
+msgctxt "#32239"
+msgid "A Simkl login is already in progress"
+msgstr "התחברות ל-Simkl כבר מתבצעת"
+
+msgctxt "#32240"
+msgid "Couldn't start the Simkl login"
+msgstr "לא ניתן להתחיל את ההתחברות ל-Simkl"
+
+msgctxt "#32241"
+msgid "Watch history is sent again once Simkl is reachable"
+msgstr "היסטוריית הצפייה תישלח שוב כאשר Simkl יהיה זמין"
+
+msgctxt "#32242"
+msgid "Connected as {0} with the old sign-in: press Reconnect"
+msgstr "מחובר בתור {0} בשיטת הכניסה הישנה: לחץ על \"התחבר מחדש\""
+
+msgctxt "#32243"
+msgid "{0} resume positions updated."
+msgstr "{0} נקודות המשך עודכנו."
+
+msgctxt "#32244"
+msgid "Simkl refused the request: this history is too large for one call"
+msgstr "Simkl סירב לבקשה: ההיסטוריה הזו גדולה מדי לקריאה אחת"
+
+msgctxt "#32245"
+msgid "Simkl is rate limiting requests, try again later"
+msgstr "Simkl מגביל את קצב הבקשות, נסה שוב מאוחר יותר"
+
+msgctxt "#32246"
+msgid "Simkl did not answer (unreachable or timed out)"
+msgstr "Simkl לא הגיב (אינו זמין או שפג הזמן הקצוב)"
+
+msgctxt "#32247"
+msgid "Simkl answered HTTP {0}"
+msgstr "Simkl השיב HTTP {0}"
+
+msgctxt "#32248"
+msgid "Everything synced again."
+msgstr "הכול סונכרן מחדש."
+
+msgctxt "#32250"
+msgid "Mark as watched on Simkl"
+msgstr "סמן כנצפה ב-Simkl"
+
+msgctxt "#32251"
+msgid "Remove from Simkl history"
+msgstr "הסר מהיסטוריית Simkl"
+
+msgctxt "#32252"
+msgid "Add to Plan to watch on Simkl"
+msgstr "הוסף ל\"מתוכנן לצפייה\" ב-Simkl"
+
+msgctxt "#32253"
+msgid "Sync updates from Simkl"
+msgstr "סנכרן עדכונים מ-Simkl"
+
+msgctxt "#32254"
+msgid "Added to Plan to watch: {0}"
+msgstr "נוסף ל\"מתוכנן לצפייה\": {0}"
+
+msgctxt "#32255"
+msgid "Marked as watched on Simkl: {0}"
+msgstr "סומן כנצפה ב-Simkl: {0}"
+
+msgctxt "#32256"
+msgid "Removed from the Simkl history: {0}"
+msgstr "הוסר מהיסטוריית Simkl: {0}"
+
+msgctxt "#32257"
+msgid "Nothing to send: Simkl needs ids that Kodi does not have for this item"
+msgstr "אין מה לשלוח: Simkl צריך מזהים שאין ל-Kodi עבור פריט זה"
+
+msgctxt "#32259"
+msgid "{0} watch dates refreshed from Simkl."
+msgstr "{0} תאריכי צפייה רועננו מ-Simkl."
+
+msgctxt "#32260"
+msgid "Forget what was synced and go through the whole Simkl history again? Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "לשכוח מה סונכרן ולעבור שוב על כל היסטוריית Simkl? פריטים שכבר נצפו ב-Kodi שומרים על הסימון שלהם; תאריכי הצפייה שלהם מרועננים מ-Simkl."
+
+msgctxt "#32261"
+msgid "Log out of Simkl on this device? Watch history that could not be sent yet is discarded."
+msgstr "להתנתק מ-Simkl במכשיר זה? היסטוריית צפייה שעדיין לא ניתן היה לשלוח תימחק."
+
+msgctxt "#32262"
+msgid "{0} episodes"
+msgstr "{0} פרקים"
+
+msgctxt "#32263"
+msgid "Simkl does not know {0}"
+msgstr "Simkl לא מכיר את {0}"
+
+msgctxt "#32264"
+msgid "Simkl refused the request: {0}"
+msgstr "Simkl סירב לבקשה: {0}"
+
+msgctxt "#32265"
+msgid "the Simkl login was rejected, log in again"
+msgstr "ההתחברות ל-Simkl נדחתה, התחבר שוב"
+
+msgctxt "#32266"
+msgid "Kodi is shutting down"
+msgstr "Kodi נסגר"
+
+msgctxt "#32267"
+msgid "{0} library writes failed, the sync runs again next time"
+msgstr "{0} כתיבות לספרייה נכשלו, הסנכרון ירוץ שוב בפעם הבאה"
+
+msgctxt "#32268"
+msgid "{0} items changed in Kodi during the sync were left alone."
+msgstr "{0} פריטים שהשתנו ב-Kodi במהלך הסנכרון נשארו כפי שהם."
+
+msgctxt "#32269"
+msgid "the Kodi library could not be read"
+msgstr "לא ניתן היה לקרוא את ספריית Kodi"
+
+msgctxt "#32270"
+msgid "A whole show or season can be marked only when it is in the Kodi library; use Add to Plan to watch for a show from an add-on"
+msgstr "ניתן לסמן סדרה או עונה שלמה רק כאשר היא נמצאת בספריית Kodi; לסדרה מהרחבה, השתמש בהוספה ל\"מתוכנן לצפייה\""
+
+msgctxt "#32271"
+msgid "An episode from an add-on can be marked only when the add-on provides the show's ids"
+msgstr "ניתן לסמן פרק מהרחבה רק כאשר ההרחבה מספקת את המזהים של הסדרה"
+
+msgctxt "#32273"
+msgid "Reconnect with the new sign-in"
+msgstr "התחבר מחדש בשיטת הכניסה החדשה"
+
+msgctxt "#32274"
+msgid "The old sign-in is being retired. Shows a code to enter on simkl.com/pin; the account stays the same."
+msgstr "שיטת הכניסה הישנה מופסקת. מציג קוד להזנה ב-simkl.com/pin; החשבון נשאר אותו חשבון."
+
+msgctxt "#32275"
+msgid "Rate on Simkl"
+msgstr "דרג ב-Simkl"
+
+msgctxt "#32276"
+msgid "Remove the rating"
+msgstr "הסר את הדירוג"
+
+msgctxt "#32277"
+msgid "Rated {0} {1}/10 on Simkl"
+msgstr "{0} דורג {1}/10 ב-Simkl"
+
+msgctxt "#32278"
+msgid "Rating removed on Simkl: {0}"
+msgstr "הדירוג הוסר ב-Simkl: {0}"
+
+msgctxt "#32279"
+msgid "Not in the Kodi library"
+msgstr "לא בספריית Kodi"
+
+msgctxt "#32280"
+msgid "{0} movies, {1} shows, {2} episodes"
+msgstr "{0} סרטים, {1} סדרות, {2} פרקים"
+
+msgctxt "#32281"
+msgid "What the last sync found watched on Simkl but could not place in the Kodi library."
+msgstr "מה שהסנכרון האחרון מצא כנצפה ב-Simkl אך לא הצליח למקם בספריית Kodi."
+
+msgctxt "#32282"
+msgid "Scan with your phone"
+msgstr "סרוק בטלפון"
+
+msgctxt "#32283"
+msgid "{0} episodes, {1} movies marked"
+msgstr "{0} פרקים, {1} סרטים סומנו"
+
+msgctxt "#32284"
+msgid "{0} dates refreshed"
+msgstr "{0} תאריכים רועננו"
+
+msgctxt "#32285"
+msgid "{0} resume points"
+msgstr "{0} נקודות המשך"
+
+msgctxt "#32286"
+msgid "Show the Simkl log"
+msgstr "הצג את יומן Simkl"
+
+msgctxt "#32287"
+msgid "The Kodi log, Simkl lines only (switch debug logging on first for the details). What is shown is also saved as simkl.log next to the add-on's settings, ready for a bug report."
+msgstr "יומן Kodi, שורות Simkl בלבד (לפרטים, הפעל תחילה את רישום ניפוי השגיאות). מה שמוצג נשמר גם בשם simkl.log לצד ההגדרות של ההרחבה, מוכן לדיווח על באג."
+
+msgctxt "#32288"
+msgid "Kodi log"
+msgstr "יומן Kodi"
+
+msgctxt "#32289"
+msgid "Simkl log"
+msgstr "יומן Simkl"
+
+msgctxt "#32290"
+msgid "Saved to {0}"
+msgstr "נשמר ב-{0}"
+
+msgctxt "#32291"
+msgid "No Simkl lines in the Kodi log yet"
+msgstr "אין עדיין שורות Simkl ביומן Kodi"
+
+msgctxt "#32292"
+msgid "Ask for a rating after a movie"
+msgstr "בקשת דירוג לאחר סרט"
+
+msgctxt "#32294"
+msgid "Send ratings made in Kodi to Simkl"
+msgstr "שליחת דירוגים מ-Kodi ל-Simkl"
+
+msgctxt "#32295"
+msgid "A rating set in Kodi's information dialog for a movie or a show goes to Simkl (1-10, 0 removes it). Episodes are not sent, nor the rating of a movie Kodi has as unwatched: Simkl files a rated movie as watched."
+msgstr "דירוג שנקבע בחלון המידע של Kodi לסרט או לסדרה נשלח ל-Simkl (1-10, 0 מסיר אותו). פרקים אינם נשלחים, וגם לא דירוג של סרט שמסומן ב-Kodi כלא נצפה: Simkl מתייק סרט מדורג כנצפה."
+
+msgctxt "#32296"
+msgid "Bring Simkl ratings into Kodi"
+msgstr "ייבוא דירוגי Simkl ל-Kodi"
+
+msgctxt "#32297"
+msgid "Your Simkl rating of a movie or a show becomes the Kodi library's user rating (1-10). Nothing is removed in Kodi; episodes have no ratings on Simkl."
+msgstr "הדירוג שלך ב-Simkl לסרט או לסדרה הופך לדירוג המשתמש בספריית Kodi (1-10). שום דבר אינו מוסר ב-Kodi; לפרקים אין דירוגים ב-Simkl."
+
+msgctxt "#32298"
+msgid "{0} ratings updated."
+msgstr "{0} דירוגים עודכנו."
+
+msgctxt "#32299"
+msgid "Simkl would mark {0} as watched: rate it once you have watched it"
+msgstr "Simkl יסמן את {0} כנצפה: דרג אותו לאחר שצפית בו"
+
+msgctxt "#32300"
+msgid "Not now"
+msgstr "לא עכשיו"
+
+msgctxt "#32301"
+msgid "That is another Simkl account ({0}); log out first to switch"
+msgstr "זהו חשבון Simkl אחר ({0}); התנתק תחילה כדי להחליף"
+
+msgctxt "#32302"
+msgid "{0} unmarked in Kodi, left unwatched."
+msgstr "{0} פריטים שסימונם בוטל ב-Kodi נותרו לא נצפים."
+
+msgctxt "#32303"
+msgid "Watches sent to Simkl: {0}"
+msgstr "צפיות שנשלחו ל-Simkl: {0}"
+
+msgctxt "#32304"
+msgid "Shorter add-on streams and files named by Simkl's file search (trailers, clips) are ignored. Items of the Kodi library are always tracked."
+msgstr "הזרמות מהרחבות וקבצים שזוהו לפי שם בחיפוש הקבצים של Simkl, אם הם קצרים יותר (טריילרים, קטעים), אינם נלקחים בחשבון. פריטים מספריית Kodi נמצאים תמיד במעקב."
+
+msgctxt "#32305"
+msgid "{0} is unwatched in Kodi now. On Simkl: remove it from your history (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched?"
+msgstr "{0} מסומן עכשיו ב-Kodi כלא נצפה. ב-Simkl: להסיר אותו מההיסטוריה שלך (גם הדירוג וההערה שלו יוסרו), להעביר אותו ל\"מתוכנן לצפייה\" (הם יישמרו, תאריך הצפייה יוסר) או להשאיר אותו כנצפה?"
+
+msgctxt "#32306"
+msgid "Remove"
+msgstr "הסר"
+
+msgctxt "#32307"
+msgid "Plan to watch"
+msgstr "מתוכנן לצפייה"
+
+msgctxt "#32308"
+msgid "Keep watched"
+msgstr "השאר כנצפה"
+
+msgctxt "#32309"
+msgid "Kept on Simkl, it has rewatch sessions there: {0}"
+msgstr "נשמר ב-Simkl, יש לו שם צפיות חוזרות: {0}"
+
+msgctxt "#32310"
+msgid "Not in your Simkl history, nothing to change: {0}"
+msgstr "לא בהיסטוריית Simkl שלך, אין מה לשנות: {0}"
+
+msgctxt "#32311"
+msgid "{0} unsent Simkl updates older than 30 days were dropped"
+msgstr "{0} עדכוני Simkl שלא נשלחו וישנים מ-30 יום נמחקו"
+
+msgctxt "#32312"
+msgid "When a movie ends at or past the percentage, a 1-10 pick appears and goes to Simkl. A movie you rated in Kodi or watched before is not asked, nor are shows and episodes."
+msgstr "כאשר סרט מסתיים באחוז שנקבע או אחריו, מופיעה בחירה של 1-10 שנשלחת ל-Simkl. לא תוצג שאלה עבור סרט שדירגת ב-Kodi או שצפית בו בעבר, וגם לא עבור סדרות ופרקים."
+
+msgctxt "#32313"
+msgid "the kept copy of the Simkl history could not be saved"
+msgstr "לא ניתן היה לשמור את העותק המקומי של היסטוריית Simkl"
+
+msgctxt "#32314"
+msgid "{0} is already watched in Kodi, so it was not moved to Plan to watch"
+msgstr "{0} כבר נצפה ב-Kodi, ולכן לא הועבר ל\"מתוכנן לצפייה\""

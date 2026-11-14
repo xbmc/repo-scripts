@@ -1,3 +1,16 @@
+v 4.0.0
+- new sign-in with a code on simkl.com/pin or a QR code for the phone (the old PIN login could hang forever); existing logins keep working, reconnect from the settings
+- real-time tracking: start, pause and stop are sent as they happen, the position is kept on Simkl when you stop early
+- watched marks made in the Kodi library are mirrored on Simkl; a single unmark removes an episode from the history, for a movie you are asked (remove, Plan to watch or keep)
+- sync from Simkl into the Kodi library: watched marks, by hand or on a schedule; optional resume positions from other Simkl apps
+- rewatch logging for Simkl Pro or VIP accounts
+- Simkl entry in the context menu: mark as watched, remove from history, add to Plan to watch, rate, sync updates from Simkl
+- ratings: a 1-10 prompt after a movie (optional), and ratings set in Kodi's information dialog go to Simkl
+- a watch that could not be sent (offline, Simkl down) is kept and sent later
+- exclusions (Live TV, HTTP, add-ons, folders), trailers and clips are skipped, specials are no longer sent as movies
+- YouTube and other items without ids are no longer guessed by title
+- new settings page
+
 v 3.2.4
 - fixed bubble recursive call
 

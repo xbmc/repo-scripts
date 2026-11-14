@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="9999">
+  <defaultcontrol always="true">203</defaultcontrol>
+  <animation effect="fade" time="300">WindowOpen</animation>
+  <animation effect="fade" time="300">WindowClose</animation>
+  <coordinates>
+    <posx>240</posx>
+    <posy>160</posy>
+  </coordinates>
+  <controls>
+    <control type="group">
+      <control type="image">
+        <description>Background</description>
+        <posx>0</posx>
+        <posy>0</posy>
+        <width>800</width>
+        <height>400</height>
+        <texture>bg_simkl.jpg</texture>
+      </control>
+      <control type="label">
+        <description>Header</description>
+        <posx>0</posx>
+        <posy>18</posy>
+        <width>800</width>
+        <height>25</height>
+        <label>$ADDON[script.simkl 32021]</label>
+        <font>font13</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFa7a7a7</textcolor>
+      </control>
+      <control type="label" id="201">
+        <description>Code</description>
+        <posx>20</posx>
+        <posy>55</posy>
+        <width>520</width>
+        <height>90</height>
+        <label>-</label>
+        <font>font_MainMenu</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+      <control type="label" id="202">
+        <description>Instructions</description>
+        <posx>40</posx>
+        <posy>150</posy>
+        <width>480</width>
+        <height>90</height>
+        <label></label>
+        <font>font13</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <wrapmultiline>true</wrapmultiline>
+        <textcolor>FFf0f0f0</textcolor>
+      </control>
+      <control type="label" id="204">
+        <description>Countdown</description>
+        <posx>20</posx>
+        <posy>250</posy>
+        <width>520</width>
+        <height>25</height>
+        <label></label>
+        <font>font13</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFa7a7a7</textcolor>
+      </control>
+      <control type="image" id="207">
+        <description>QR code of the pin link</description>
+        <posx>575</posx>
+        <posy>62</posy>
+        <width>200</width>
+        <height>200</height>
+        <aspectratio>keep</aspectratio>
+        <texture></texture>
+      </control>
+      <control type="label" id="208">
+        <description>QR caption</description>
+        <posx>560</posx>
+        <posy>268</posy>
+        <width>230</width>
+        <height>25</height>
+        <label></label>
+        <font>font12</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFc0c0c0</textcolor>
+      </control>
+      <control type="button" id="203">
+        <description>Cancel</description>
+        <posx>190</posx>
+        <posy>325</posy>
+        <width>180</width>
+        <height>36</height>
+        <label>$ADDON[script.simkl 32034]</label>
+        <font>font13</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFededed</textcolor>
+        <focusedcolor>FFFFFFFF</focusedcolor>
+        <texturenofocus>button_nofocus.png</texturenofocus>
+        <texturefocus>button_focus.png</texturefocus>
+      </control>
+    </control>
+  </controls>
+</window>

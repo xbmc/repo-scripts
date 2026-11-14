@@ -1,0 +1,661 @@
+# Kodi Media Center language file
+# Addon Name: Simkl TV Tracker
+# Addon id: script.simkl
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Simkl\n"
+"Language-Team: Korean\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32006"
+msgid "Scrobble at percentage"
+msgstr "스크로블 기준 비율"
+
+msgctxt "#32008"
+msgid "Show bubble when scrobbled"
+msgstr "스크로블 시 알림 표시"
+
+msgctxt "#32012"
+msgid "Minimum file length for scrobbling (minutes)"
+msgstr "스크로블 최소 파일 길이(분)"
+
+msgctxt "#32021"
+msgid "Simkl login"
+msgstr "Simkl 로그인"
+
+msgctxt "#32022"
+msgid "Please visit {0} on \ncomputer or phone and enter this code"
+msgstr "컴퓨터나 휴대폰에서 {0}에 접속하여 \n이 코드를 입력하세요"
+
+msgctxt "#32028"
+msgid "Scrobbling {0}"
+msgstr "스크로블 중: {0}"
+
+msgctxt "#32030"
+msgid "Login successful, {0}"
+msgstr "{0}님, 로그인되었습니다"
+
+msgctxt "#32031"
+msgid "Couldn't log in"
+msgstr "로그인하지 못했습니다"
+
+msgctxt "#32034"
+msgid "Cancel"
+msgstr "취소"
+
+msgctxt "#32100"
+msgid "Account"
+msgstr "계정"
+
+msgctxt "#32101"
+msgid "Simkl keeps track of what you watch. Sign up at simkl.com, then log in here with a code."
+msgstr "Simkl은 시청하는 항목을 추적합니다. simkl.com에서 가입한 다음 여기에서 코드로 로그인하세요."
+
+msgctxt "#32102"
+msgid "Status"
+msgstr "상태"
+
+msgctxt "#32103"
+msgid "Log in"
+msgstr "로그인"
+
+msgctxt "#32104"
+msgid "Shows a code to enter on simkl.com/pin from any phone or computer."
+msgstr "어느 휴대폰이나 컴퓨터에서든 simkl.com/pin에 입력할 수 있는 코드를 표시합니다."
+
+msgctxt "#32105"
+msgid "Log out"
+msgstr "로그아웃"
+
+msgctxt "#32106"
+msgid "Forgets the Simkl login on this device."
+msgstr "이 기기에 저장된 Simkl 로그인 정보를 삭제합니다."
+
+msgctxt "#32110"
+msgid "Scrobbling"
+msgstr "스크로블"
+
+msgctxt "#32111"
+msgid "Track movies"
+msgstr "영화 추적"
+
+msgctxt "#32112"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "시청하는 항목을 재생과 동시에 Simkl로 전송합니다. 아래 비율 이상에서 재생이 끝나면 시청함으로 표시됩니다."
+
+msgctxt "#32113"
+msgid "Track TV shows and anime"
+msgstr "TV 프로그램 및 애니메이션 추적"
+
+msgctxt "#32114"
+msgid "Sends what you watch to Simkl as it plays. A playback that ends at or past the percentage below is marked as watched."
+msgstr "시청하는 항목을 재생과 동시에 Simkl로 전송합니다. 아래 비율 이상에서 재생이 끝나면 시청함으로 표시됩니다."
+
+msgctxt "#32115"
+msgid "A playback that stops at or past this point is marked as watched. Below it, Simkl keeps the position so you can continue later."
+msgstr "이 지점 이상에서 재생을 멈추면 시청함으로 표시됩니다. 그 전에 멈추면 Simkl이 위치를 저장하여 나중에 이어서 볼 수 있습니다."
+
+msgctxt "#32117"
+msgid "A notification when something is marked as watched on Simkl."
+msgstr "Simkl에서 항목이 시청함으로 표시되면 알림을 표시합니다."
+
+msgctxt "#32118"
+msgid "Log rewatches on Simkl (Pro or VIP)"
+msgstr "Simkl에 재시청 기록(Pro 또는 VIP)"
+
+msgctxt "#32119"
+msgid "Needs Simkl Pro or VIP (simkl.com/vip). Watching something again opens a new rewatch session on Simkl instead of keeping the first date, once at least 10% of it was really watched (replaying the ending is not a rewatch)."
+msgstr "Simkl Pro 또는 VIP가 필요합니다(simkl.com/vip). 다시 시청할 때 실제로 10% 이상 시청하면 첫 시청 날짜를 유지하는 대신 Simkl에서 새 재시청 세션이 시작됩니다(결말을 다시 재생하는 것은 재시청이 아닙니다)."
+
+msgctxt "#32121"
+msgid "Send watched marks made in the Kodi library to Simkl"
+msgstr "Kodi 라이브러리의 시청함 표시를 Simkl로 전송"
+
+msgctxt "#32122"
+msgid "Marking a movie, episode, season or show as watched in Kodi marks it on Simkl too. A single unmark removes an episode from the Simkl history; for a movie you are asked whether to remove it (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched, and no answer keeps it. A movie with rewatch sessions on Simkl is never removed. Unmarking a whole season or show is not sent."
+msgstr "Kodi에서 영화, 에피소드, 시즌 또는 TV 프로그램을 시청함으로 표시하면 Simkl에도 표시됩니다. 에피소드 하나를 시청 안 함으로 표시하면 Simkl 시청 기록에서 제거됩니다. 영화는 제거할지(평점과 메모도 함께 제거), 볼 예정으로 옮길지(평점과 메모는 유지, 시청 날짜는 제거), 시청함으로 유지할지 묻고, 응답이 없으면 시청함으로 유지합니다. Simkl에 재시청 세션이 있는 영화는 제거되지 않습니다. 시즌이나 TV 프로그램 전체를 시청 안 함으로 표시하면 전송되지 않습니다."
+
+msgctxt "#32130"
+msgid "Sync from Simkl"
+msgstr "Simkl에서 동기화"
+
+msgctxt "#32131"
+msgid "Sync updates from Simkl"
+msgstr "Simkl의 변경 사항 동기화"
+
+msgctxt "#32132"
+msgid "Marks in the Kodi library what was watched on Simkl since the last sync. The first run fetches the whole history; a run after new items were added to the library marks them from the kept copy of it. What you unmarked in Kodi stays unwatched until Simkl sees a newer watch of it."
+msgstr "마지막 동기화 이후 Simkl에서 시청한 항목을 Kodi 라이브러리에 시청함으로 표시합니다. 처음 실행할 때는 전체 시청 기록을 가져오며, 라이브러리에 새 항목이 추가된 후 실행하면 보관해 둔 시청 기록 사본으로 새 항목을 표시합니다. Kodi에서 시청 안 함으로 표시한 항목은 Simkl에서 더 최근의 시청이 확인될 때까지 시청 안 함으로 유지됩니다."
+
+msgctxt "#32133"
+msgid "Reset and sync everything again"
+msgstr "초기화 후 모두 다시 동기화"
+
+msgctxt "#32134"
+msgid "Forgets what was synced and goes through the whole Simkl history again. Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "동기화 정보를 초기화하고 Simkl 시청 기록 전체를 다시 확인합니다. Kodi에서 이미 시청함 상태인 항목은 표시가 유지되며, 시청 날짜는 Simkl 기준으로 갱신됩니다."
+
+msgctxt "#32135"
+msgid "Automatically sync updates from Simkl"
+msgstr "Simkl의 변경 사항 자동 동기화"
+
+msgctxt "#32136"
+msgid "Checks Simkl at the interval below and marks what is new, whenever Kodi is running but nothing is playing; a device nobody used since the last check (no key press, no playback, no change of the library) waits for the next use. With a library shared by several Kodi devices, switch this on for one device only."
+msgstr "Kodi가 실행 중이고 재생 중인 것이 없을 때 아래 간격마다 Simkl을 확인하여 새 항목을 표시합니다. 마지막 확인 이후 아무도 사용하지 않은 기기(키 입력, 재생, 라이브러리 변경 없음)는 다음에 사용할 때까지 기다립니다. 여러 Kodi 기기가 라이브러리를 공유하는 경우 한 기기에서만 켜세요."
+
+msgctxt "#32137"
+msgid "Check every"
+msgstr "확인 간격"
+
+msgctxt "#32138"
+msgid "How often the automatic sync checks Simkl for new history."
+msgstr "자동 동기화가 Simkl의 새 시청 기록을 확인하는 빈도입니다."
+
+msgctxt "#32139"
+msgid "1 hour"
+msgstr "1시간"
+
+msgctxt "#32140"
+msgid "3 hours"
+msgstr "3시간"
+
+msgctxt "#32141"
+msgid "6 hours"
+msgstr "6시간"
+
+msgctxt "#32142"
+msgid "12 hours"
+msgstr "12시간"
+
+msgctxt "#32143"
+msgid "24 hours"
+msgstr "24시간"
+
+msgctxt "#32144"
+msgid "Once a week"
+msgstr "주 1회"
+
+msgctxt "#32145"
+msgid "Continue watching: sync resume positions from Simkl"
+msgstr "계속 시청: Simkl에서 이어보기 지점 동기화"
+
+msgctxt "#32146"
+msgid "Where you paused in another Simkl app becomes a resume point in Kodi. Applied to items not yet watched in Kodi, and only when the Simkl pause is newer than Kodi's own last play."
+msgstr "다른 Simkl 앱에서 일시 정지한 위치가 Kodi의 이어보기 지점이 됩니다. Kodi에서 아직 시청함 상태가 아닌 항목에만 적용되며, Simkl의 일시 정지 시점이 Kodi 자체의 마지막 재생보다 최근일 때만 적용됩니다."
+
+msgctxt "#32147"
+msgid "Last sync"
+msgstr "마지막 동기화"
+
+msgctxt "#32148"
+msgid "The result of the last sync."
+msgstr "마지막 동기화 결과입니다."
+
+msgctxt "#32149"
+msgid "Start over"
+msgstr "처음부터 다시"
+
+msgctxt "#32150"
+msgid "Exclusions"
+msgstr "제외 항목"
+
+msgctxt "#32151"
+msgid "Don't track Live TV"
+msgstr "라이브 TV 추적 안 함"
+
+msgctxt "#32152"
+msgid "Nothing played from a PVR (pvr://) is sent to Simkl."
+msgstr "PVR(pvr://)에서 재생한 항목은 Simkl로 전송하지 않습니다."
+
+msgctxt "#32153"
+msgid "Don't track HTTP streams"
+msgstr "HTTP 스트림 추적 안 함"
+
+msgctxt "#32154"
+msgid "Nothing played from an http:// or https:// address is sent to Simkl."
+msgstr "http:// 또는 https:// 주소에서 재생한 항목은 Simkl로 전송하지 않습니다."
+
+msgctxt "#32155"
+msgid "Don't track videos played through add-ons"
+msgstr "애드온으로 재생한 비디오 추적 안 함"
+
+msgctxt "#32156"
+msgid "Nothing played from a plugin:// path is sent to Simkl."
+msgstr "plugin:// 경로에서 재생한 항목은 Simkl로 전송하지 않습니다."
+
+msgctxt "#32157"
+msgid "Exclude folder 1"
+msgstr "제외 폴더 1"
+
+msgctxt "#32158"
+msgid "Exclude folder 2"
+msgstr "제외 폴더 2"
+
+msgctxt "#32159"
+msgid "Exclude folder 3"
+msgstr "제외 폴더 3"
+
+msgctxt "#32160"
+msgid "Exclude folder 4"
+msgstr "제외 폴더 4"
+
+msgctxt "#32161"
+msgid "Exclude folder 5"
+msgstr "제외 폴더 5"
+
+msgctxt "#32162"
+msgid "Folder"
+msgstr "폴더"
+
+msgctxt "#32163"
+msgid "Nothing played from this folder (or a folder inside it) is sent to Simkl, and marks made on its items are not sent either."
+msgstr "이 폴더(또는 하위 폴더)에서 재생한 항목은 Simkl로 전송하지 않으며, 그 안의 항목에 한 표시도 전송하지 않습니다."
+
+msgctxt "#32170"
+msgid "Advanced"
+msgstr "고급"
+
+msgctxt "#32171"
+msgid "Debug logging"
+msgstr "디버그 로깅"
+
+msgctxt "#32172"
+msgid "Writes what the add-on does to the Kodi log, without Kodi's own debug mode."
+msgstr "Kodi 자체 디버그 모드 없이도 애드온의 동작을 Kodi 로그에 기록합니다."
+
+msgctxt "#32200"
+msgid "The code expires in {0}"
+msgstr "{0} 후 코드가 만료됩니다"
+
+msgctxt "#32203"
+msgid "Log in from the add-on settings to start tracking what you watch"
+msgstr "시청 항목 추적을 시작하려면 애드온 설정에서 로그인하세요"
+
+msgctxt "#32210"
+msgid "Simkl is not reachable right now, try again later"
+msgstr "지금은 Simkl에 연결할 수 없습니다. 나중에 다시 시도하세요"
+
+msgctxt "#32211"
+msgid "Logged out of Simkl"
+msgstr "Simkl에서 로그아웃했습니다"
+
+msgctxt "#32212"
+msgid "Please reconnect in the add-on settings (Account) to keep tracking when the old sign-in is retired"
+msgstr "기존 로그인 방식이 종료된 후에도 계속 추적하려면 애드온 설정(계정)에서 다시 연결하세요"
+
+msgctxt "#32213"
+msgid "Simkl rejected the stored login, please log in again in the add-on settings"
+msgstr "Simkl이 저장된 로그인 정보를 거부했습니다. 애드온 설정에서 다시 로그인하세요"
+
+msgctxt "#32214"
+msgid "Logging rewatches needs Simkl Pro or VIP, the option was switched off"
+msgstr "재시청을 기록하려면 Simkl Pro 또는 VIP가 필요하므로 이 옵션을 껐습니다"
+
+msgctxt "#32215"
+msgid "Not connected"
+msgstr "연결되지 않음"
+
+msgctxt "#32216"
+msgid "Connected to Simkl as {0}"
+msgstr "Simkl에 연결됨: {0}"
+
+msgctxt "#32217"
+msgid "Connected to Simkl as {0} ({1})"
+msgstr "Simkl에 연결됨: {0} ({1})"
+
+msgctxt "#32224"
+msgid "Log in to Simkl first"
+msgstr "먼저 Simkl에 로그인하세요"
+
+msgctxt "#32225"
+msgid "A sync is already running"
+msgstr "이미 동기화가 진행 중입니다"
+
+msgctxt "#32226"
+msgid "The code expired before the login was completed, start again"
+msgstr "로그인이 완료되기 전에 코드가 만료되었습니다. 다시 시작하세요"
+
+msgctxt "#32227"
+msgid "The login was denied on Simkl"
+msgstr "Simkl에서 로그인이 거부되었습니다"
+
+msgctxt "#32228"
+msgid "A sync ran a moment ago, try again in two minutes"
+msgstr "방금 동기화가 실행되었습니다. 2분 후에 다시 시도하세요"
+
+msgctxt "#32229"
+msgid "Nothing new on Simkl since the last sync."
+msgstr "마지막 동기화 이후 Simkl에 새로운 항목이 없습니다."
+
+msgctxt "#32230"
+msgid "Marked {0} movies and {1} episodes as watched, {2} already watched."
+msgstr "영화 {0}편과 에피소드 {1}개를 시청함으로 표시했으며, {2}개는 이미 시청함 상태였습니다."
+
+msgctxt "#32231"
+msgid "Sync failed: {0}"
+msgstr "동기화 실패: {0}"
+
+msgctxt "#32232"
+msgid "Syncing from Simkl..."
+msgstr "Simkl에서 동기화하는 중..."
+
+msgctxt "#32233"
+msgid "Reading the Kodi library..."
+msgstr "Kodi 라이브러리를 읽는 중..."
+
+msgctxt "#32234"
+msgid "Fetching the Simkl history..."
+msgstr "Simkl 시청 기록을 가져오는 중..."
+
+msgctxt "#32235"
+msgid "Updating the library..."
+msgstr "라이브러리를 업데이트하는 중..."
+
+msgctxt "#32236"
+msgid "Connected to Simkl"
+msgstr "Simkl에 연결됨"
+
+msgctxt "#32237"
+msgid "{0} minutes"
+msgstr "{0}분"
+
+msgctxt "#32238"
+msgid "{0} seconds"
+msgstr "{0}초"
+
+msgctxt "#32239"
+msgid "A Simkl login is already in progress"
+msgstr "이미 Simkl 로그인이 진행 중입니다"
+
+msgctxt "#32240"
+msgid "Couldn't start the Simkl login"
+msgstr "Simkl 로그인을 시작하지 못했습니다"
+
+msgctxt "#32241"
+msgid "Watch history is sent again once Simkl is reachable"
+msgstr "Simkl에 연결되면 시청 기록을 다시 전송합니다"
+
+msgctxt "#32242"
+msgid "Connected as {0} with the old sign-in: press Reconnect"
+msgstr "기존 로그인 방식으로 연결됨: {0}. '다시 연결'을 누르세요"
+
+msgctxt "#32243"
+msgid "{0} resume positions updated."
+msgstr "이어보기 지점 {0}개를 업데이트했습니다."
+
+msgctxt "#32244"
+msgid "Simkl refused the request: this history is too large for one call"
+msgstr "Simkl이 요청을 거부했습니다: 이 시청 기록은 너무 커서 한 번의 요청으로 보낼 수 없습니다"
+
+msgctxt "#32245"
+msgid "Simkl is rate limiting requests, try again later"
+msgstr "Simkl이 요청 수를 제한하고 있습니다. 나중에 다시 시도하세요"
+
+msgctxt "#32246"
+msgid "Simkl did not answer (unreachable or timed out)"
+msgstr "Simkl이 응답하지 않았습니다(연결 불가 또는 시간 초과)"
+
+msgctxt "#32247"
+msgid "Simkl answered HTTP {0}"
+msgstr "Simkl 응답: HTTP {0}"
+
+msgctxt "#32248"
+msgid "Everything synced again."
+msgstr "모두 다시 동기화했습니다."
+
+msgctxt "#32250"
+msgid "Mark as watched on Simkl"
+msgstr "Simkl에서 시청함으로 표시"
+
+msgctxt "#32251"
+msgid "Remove from Simkl history"
+msgstr "Simkl 시청 기록에서 제거"
+
+msgctxt "#32252"
+msgid "Add to Plan to watch on Simkl"
+msgstr "Simkl의 볼 예정에 추가"
+
+msgctxt "#32253"
+msgid "Sync updates from Simkl"
+msgstr "Simkl의 변경 사항 동기화"
+
+msgctxt "#32254"
+msgid "Added to Plan to watch: {0}"
+msgstr "볼 예정에 추가됨: {0}"
+
+msgctxt "#32255"
+msgid "Marked as watched on Simkl: {0}"
+msgstr "Simkl에서 시청함으로 표시됨: {0}"
+
+msgctxt "#32256"
+msgid "Removed from the Simkl history: {0}"
+msgstr "Simkl 시청 기록에서 제거됨: {0}"
+
+msgctxt "#32257"
+msgid "Nothing to send: Simkl needs ids that Kodi does not have for this item"
+msgstr "전송할 내용 없음: Simkl에 필요한 ID가 Kodi의 이 항목에 없습니다"
+
+msgctxt "#32259"
+msgid "{0} watch dates refreshed from Simkl."
+msgstr "Simkl에서 시청 날짜 {0}개를 갱신했습니다."
+
+msgctxt "#32260"
+msgid "Forget what was synced and go through the whole Simkl history again? Items already watched in Kodi keep their mark; their watch dates are refreshed from Simkl."
+msgstr "동기화 정보를 초기화하고 Simkl 시청 기록 전체를 다시 확인하시겠습니까? Kodi에서 이미 시청함 상태인 항목은 표시가 유지되며, 시청 날짜는 Simkl 기준으로 갱신됩니다."
+
+msgctxt "#32261"
+msgid "Log out of Simkl on this device? Watch history that could not be sent yet is discarded."
+msgstr "이 기기의 Simkl 계정에서 로그아웃하시겠습니까? 아직 전송하지 못한 시청 기록은 삭제됩니다."
+
+msgctxt "#32262"
+msgid "{0} episodes"
+msgstr "에피소드 {0}개"
+
+msgctxt "#32263"
+msgid "Simkl does not know {0}"
+msgstr "Simkl에서 찾을 수 없음: {0}"
+
+msgctxt "#32264"
+msgid "Simkl refused the request: {0}"
+msgstr "Simkl이 요청을 거부했습니다: {0}"
+
+msgctxt "#32265"
+msgid "the Simkl login was rejected, log in again"
+msgstr "Simkl 로그인이 거부되었습니다. 다시 로그인하세요"
+
+msgctxt "#32266"
+msgid "Kodi is shutting down"
+msgstr "Kodi가 종료되는 중입니다"
+
+msgctxt "#32267"
+msgid "{0} library writes failed, the sync runs again next time"
+msgstr "라이브러리 쓰기 {0}건이 실패했습니다. 다음에 다시 동기화합니다"
+
+msgctxt "#32268"
+msgid "{0} items changed in Kodi during the sync were left alone."
+msgstr "동기화 중 Kodi에서 변경된 항목 {0}개는 그대로 두었습니다."
+
+msgctxt "#32269"
+msgid "the Kodi library could not be read"
+msgstr "Kodi 라이브러리를 읽을 수 없습니다"
+
+msgctxt "#32270"
+msgid "A whole show or season can be marked only when it is in the Kodi library; use Add to Plan to watch for a show from an add-on"
+msgstr "TV 프로그램이나 시즌 전체는 Kodi 라이브러리에 있을 때만 표시할 수 있습니다. 애드온의 TV 프로그램에는 'Simkl의 볼 예정에 추가'를 사용하세요"
+
+msgctxt "#32271"
+msgid "An episode from an add-on can be marked only when the add-on provides the show's ids"
+msgstr "애드온의 에피소드는 애드온이 TV 프로그램의 ID를 제공할 때만 표시할 수 있습니다"
+
+msgctxt "#32273"
+msgid "Reconnect with the new sign-in"
+msgstr "새 로그인 방식으로 다시 연결"
+
+msgctxt "#32274"
+msgid "The old sign-in is being retired. Shows a code to enter on simkl.com/pin; the account stays the same."
+msgstr "기존 로그인 방식은 곧 종료됩니다. simkl.com/pin에 입력할 코드를 표시하며, 계정은 그대로 유지됩니다."
+
+msgctxt "#32275"
+msgid "Rate on Simkl"
+msgstr "Simkl에서 평점 매기기"
+
+msgctxt "#32276"
+msgid "Remove the rating"
+msgstr "평점 제거"
+
+msgctxt "#32277"
+msgid "Rated {0} {1}/10 on Simkl"
+msgstr "Simkl에서 {0}에 {1}/10점을 매겼습니다"
+
+msgctxt "#32278"
+msgid "Rating removed on Simkl: {0}"
+msgstr "Simkl에서 평점 제거됨: {0}"
+
+msgctxt "#32279"
+msgid "Not in the Kodi library"
+msgstr "Kodi 라이브러리에 없음"
+
+msgctxt "#32280"
+msgid "{0} movies, {1} shows, {2} episodes"
+msgstr "영화 {0}편, TV 프로그램 {1}개, 에피소드 {2}개"
+
+msgctxt "#32281"
+msgid "What the last sync found watched on Simkl but could not place in the Kodi library."
+msgstr "마지막 동기화에서 Simkl에서 시청함으로 확인되었지만 Kodi 라이브러리에서 찾지 못한 항목입니다."
+
+msgctxt "#32282"
+msgid "Scan with your phone"
+msgstr "휴대폰으로 스캔하세요"
+
+msgctxt "#32283"
+msgid "{0} episodes, {1} movies marked"
+msgstr "에피소드 {0}개, 영화 {1}편 표시됨"
+
+msgctxt "#32284"
+msgid "{0} dates refreshed"
+msgstr "날짜 {0}개 갱신됨"
+
+msgctxt "#32285"
+msgid "{0} resume points"
+msgstr "이어보기 지점 {0}개"
+
+msgctxt "#32286"
+msgid "Show the Simkl log"
+msgstr "Simkl 로그 보기"
+
+msgctxt "#32287"
+msgid "The Kodi log, Simkl lines only (switch debug logging on first for the details). What is shown is also saved as simkl.log next to the add-on's settings, ready for a bug report."
+msgstr "Kodi 로그에서 Simkl 관련 줄만 표시합니다(자세한 내용을 보려면 먼저 디버그 로깅을 켜세요). 표시된 내용은 애드온 설정 옆에 simkl.log로도 저장되어 버그 신고에 바로 사용할 수 있습니다."
+
+msgctxt "#32288"
+msgid "Kodi log"
+msgstr "Kodi 로그"
+
+msgctxt "#32289"
+msgid "Simkl log"
+msgstr "Simkl 로그"
+
+msgctxt "#32290"
+msgid "Saved to {0}"
+msgstr "저장 위치: {0}"
+
+msgctxt "#32291"
+msgid "No Simkl lines in the Kodi log yet"
+msgstr "아직 Kodi 로그에 Simkl 관련 줄이 없습니다"
+
+msgctxt "#32292"
+msgid "Ask for a rating after a movie"
+msgstr "영화 시청 후 평점 묻기"
+
+msgctxt "#32294"
+msgid "Send ratings made in Kodi to Simkl"
+msgstr "Kodi에서 매긴 평점을 Simkl로 전송"
+
+msgctxt "#32295"
+msgid "A rating set in Kodi's information dialog for a movie or a show goes to Simkl (1-10, 0 removes it). Episodes are not sent, nor the rating of a movie Kodi has as unwatched: Simkl files a rated movie as watched."
+msgstr "Kodi 정보 창에서 영화나 TV 프로그램에 매긴 평점은 Simkl로 전송됩니다(1-10, 0은 평점 제거). 에피소드 평점과 Kodi에서 시청 안 함 상태인 영화의 평점은 전송되지 않습니다. Simkl은 평점을 매긴 영화를 시청함으로 처리하기 때문입니다."
+
+msgctxt "#32296"
+msgid "Bring Simkl ratings into Kodi"
+msgstr "Simkl 평점을 Kodi로 가져오기"
+
+msgctxt "#32297"
+msgid "Your Simkl rating of a movie or a show becomes the Kodi library's user rating (1-10). Nothing is removed in Kodi; episodes have no ratings on Simkl."
+msgstr "영화나 TV 프로그램에 매긴 Simkl 평점이 Kodi 라이브러리의 사용자 평점(1-10)이 됩니다. Kodi에서는 아무것도 제거되지 않으며, Simkl에는 에피소드 평점이 없습니다."
+
+msgctxt "#32298"
+msgid "{0} ratings updated."
+msgstr "평점 {0}개를 업데이트했습니다."
+
+msgctxt "#32299"
+msgid "Simkl would mark {0} as watched: rate it once you have watched it"
+msgstr "평점을 매기면 Simkl이 {0}을(를) 시청함으로 표시합니다. 시청한 후에 평점을 매기세요"
+
+msgctxt "#32300"
+msgid "Not now"
+msgstr "나중에"
+
+msgctxt "#32301"
+msgid "That is another Simkl account ({0}); log out first to switch"
+msgstr "다른 Simkl 계정({0})입니다. 계정을 바꾸려면 먼저 로그아웃하세요"
+
+msgctxt "#32302"
+msgid "{0} unmarked in Kodi, left unwatched."
+msgstr "Kodi에서 시청 안 함으로 표시한 항목 {0}개는 시청 안 함으로 유지했습니다."
+
+msgctxt "#32303"
+msgid "Watches sent to Simkl: {0}"
+msgstr "Simkl로 전송한 시청 수: {0}"
+
+msgctxt "#32304"
+msgid "Shorter add-on streams and files named by Simkl's file search (trailers, clips) are ignored. Items of the Kodi library are always tracked."
+msgstr "이보다 짧은 애드온 스트림과 Simkl 파일 검색으로 식별된 파일(예고편, 클립)은 무시됩니다. Kodi 라이브러리의 항목은 항상 추적합니다."
+
+msgctxt "#32305"
+msgid "{0} is unwatched in Kodi now. On Simkl: remove it from your history (its rating and note go too), move it to Plan to watch (they stay, the watch date goes) or keep it watched?"
+msgstr "{0}이(가) 이제 Kodi에서 시청 안 함 상태입니다. Simkl 시청 기록에서 제거하거나(평점과 메모도 함께 제거), 볼 예정으로 옮기거나(평점과 메모는 유지, 시청 날짜는 제거), 시청함으로 유지하시겠습니까?"
+
+msgctxt "#32306"
+msgid "Remove"
+msgstr "제거"
+
+msgctxt "#32307"
+msgid "Plan to watch"
+msgstr "볼 예정"
+
+msgctxt "#32308"
+msgid "Keep watched"
+msgstr "시청함 유지"
+
+msgctxt "#32309"
+msgid "Kept on Simkl, it has rewatch sessions there: {0}"
+msgstr "Simkl에 재시청 세션이 있어 유지했습니다: {0}"
+
+msgctxt "#32310"
+msgid "Not in your Simkl history, nothing to change: {0}"
+msgstr "Simkl 시청 기록에 없어 변경할 내용이 없습니다: {0}"
+
+msgctxt "#32311"
+msgid "{0} unsent Simkl updates older than 30 days were dropped"
+msgstr "30일이 지난 미전송 Simkl 업데이트 {0}개를 폐기했습니다"
+
+msgctxt "#32312"
+msgid "When a movie ends at or past the percentage, a 1-10 pick appears and goes to Simkl. A movie you rated in Kodi or watched before is not asked, nor are shows and episodes."
+msgstr "영화가 기준 비율 이상에서 끝나면 1-10 평점 선택 창이 나타나며, 선택한 평점은 Simkl로 전송됩니다. Kodi에서 평점을 매겼거나 이전에 시청한 영화는 묻지 않으며, TV 프로그램과 에피소드도 묻지 않습니다."
+
+msgctxt "#32313"
+msgid "the kept copy of the Simkl history could not be saved"
+msgstr "보관해 둔 Simkl 시청 기록 사본을 저장할 수 없습니다"
+
+msgctxt "#32314"
+msgid "{0} is already watched in Kodi, so it was not moved to Plan to watch"
+msgstr "{0}은(는) Kodi에서 이미 시청함 상태이므로 볼 예정으로 옮기지 않았습니다"
