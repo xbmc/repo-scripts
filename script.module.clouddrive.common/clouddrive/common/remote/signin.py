@@ -74,10 +74,14 @@ class Signin(object):
     def _headers(self):
         return {'addon' : self.get_addon_header(), 'user-agent': self.get_user_agent()}
 
-    def create_pin(self, provider_name, request_params=None):
+    def create_pin(self, provider_name, request_params=None, own_client=False):
         request_params = Utils.default(request_params, {})
         headers = self._headers()
-        body = urllib.parse.urlencode({'provider': provider_name})
+        params = {'provider': provider_name}
+        if own_client:
+            # This add-on version can refresh the tokens of the user's own OAuth app: the sign-in page may offer it.
+            params['own_client'] = '1'
+        body = urllib.parse.urlencode(params)
         return Request(KodiUtils.get_signin_server() + '/pin', body, headers, **request_params).request_json()
     
     def _on_exception(self, request, e, original_on_exception):
