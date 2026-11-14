@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.metamender"
+       name="MetaMender"
+       version="1.1.0"
+       provider-name="Rouzax">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1" />
+        <import addon="script.module.requests" version="2.28.0" />
+        <import addon="script.module.imdbratings" version="1.0.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.python.library" library="resources/lib" />
+    <extension point="kodi.context.item">
+        <menu id="kodi.core.main">
+            <!-- Kodi shows a submenu while any of its items is visible; the
+                 schema allows no condition on the submenu itself. -->
+            <menu>
+                <label>32593</label>
+                <item library="context.py">
+                    <label>32588</label>
+                    <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)</visible>
+                </item>
+                <item library="context_details.py">
+                    <label>32594</label>
+                    <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow)</visible>
+                </item>
+            </menu>
+        </menu>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">No gaps. No stale scores. Age ratings you can trust.</summary>
+        <description lang="en_GB">MetaMender quietly improves your video library in the background. It fills in what your scraper left empty (plots, episode titles, credits, taglines, genres and more) from TMDB and TheTVDB, in each folder's own language, with an optional fallback language for empty fields. It keeps scores up to date while new movies and episodes collect votes, from TMDB and IMDb, then leaves them alone once they settle. And it gives movies and TV shows an age rating in your own country's system, for ten countries. Items with an NFO file keep their values, and the Details window in the context menu shows where each value came from, can put an original back and can keep a value as it is. A short setup asks for a free TMDB API key, your library's languages and what to fill; nothing changes before it is finished.</description>
+        <platform>all</platform>
+        <license>GPL-3.0-only</license>
+        <website>https://rouzax.github.io/script.metamender/</website>
+        <source>https://github.com/Rouzax/script.metamender</source>
+        <forum>https://forum.kodi.tv/showthread.php?tid=389809</forum>
+        <news>v1.1.0 (2026-11-13)
+- Setup now asks which rating Kodi shows: your scraper's, TMDB's or IMDb's
+- Setup now asks where TV show plots and titles come from first
+- Setup asks whether to replace other countries' age ratings
+
+v1.0.1 (2026-11-13)
+- Closes promptly when Kodi quits during Update now
+- Small changes asked for by the official Kodi repository review
+
+v1.0.0 (2026-11-12)
+- First release: fills missing plots, titles, credits and more in each folder's language
+- Keeps new movies' and episodes' scores up to date while their votes come in
+- Age ratings in your own country's system, for ten countries
+- The Details window shows where every value came from, and lets you restore or keep one
+- Update now refreshes a movie, show, season or episode from the context menu</news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The item details window: the item's ids and fields on the left, the
+     focused entry's story on the right, the buttons below. Same rules as
+     the setup, progress and attention windows: every control inline, fonts
+     font10/12/13, textures white and tinted here, accent colours from
+     window properties set by details_window.py. The list's items carry a
+     "heading" property for the group headings, which are drawn without a
+     row box and stepped over in Python. -->
+<window>
+    <zorder>1</zorder>
+    <defaultcontrol always="true">50</defaultcontrol>
+    <controls>
+        <control type="image">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <texture colordiffuse="E6060607">metamender/white.png</texture>
+            <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+        </control>
+        <control type="group">
+            <left>210</left><top>100</top><width>1500</width><height>880</height>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="300" delay="100"/>
+                <effect type="zoom" start="96" end="100" center="auto" tween="sine" easing="out" time="300" delay="100"/>
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="zoom" start="100" end="96" center="auto" tween="sine" easing="out" time="200"/>
+                <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="200"/>
+            </animation>
+            <control type="image">
+                <left>0</left><top>0</top><width>1500</width><height>880</height>
+                <texture border="20" colordiffuse="FF1A1D23">metamender/panel.png</texture>
+            </control>
+            <control type="image">
+                <left>0</left><top>0</top><width>1500</width><height>880</height>
+                <texture border="20" colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/frame.png</texture>
+            </control>
+
+            <!-- Header: the badge and the item, with one short line under it. -->
+            <control type="grouplist">
+                <left>50</left><top>30</top><width>1400</width><height>56</height>
+                <orientation>horizontal</orientation>
+                <itemgap>16</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="group">
+                    <top>6</top><width>44</width><height>44</height>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/badge.png</texture></control>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="FF060607">metamender/pulse.png</texture></control>
+                </control>
+                <control type="label">
+                    <width>1320</width><height>56</height>
+                    <aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>$INFO[Window.Property(MM.Accent)]</textcolor>
+                    <label>[B]$INFO[Window.Property(MM.Heading)][/B]</label>
+                </control>
+            </control>
+            <control type="label">
+                <left>110</left><top>84</top><width>1340</width><height>34</height>
+                <aligny>center</aligny>
+                <font>font10</font>
+                <textcolor>FFA8AEB8</textcolor>
+                <label>$INFO[Window.Property(MM.Sub)]</label>
+            </control>
+            <control type="image">
+                <left>50</left><top>130</top><width>1400</width><height>3</height>
+                <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/divider.png</texture>
+                <animation effect="fade" start="70" end="70" time="0" condition="true">Conditional</animation>
+            </control>
+
+            <!-- Left: Ids, then the fields under their group headings. -->
+            <control type="list" id="50">
+                <left>50</left><top>156</top><width>500</width><height>570</height>
+                <onright condition="!String.IsEmpty(Window.Property(MM.RowAction))">31</onright>
+                <onright condition="String.IsEmpty(Window.Property(MM.RowAction))">32</onright>
+                <ondown>9001</ondown>
+                <onleft>noop</onleft>
+                <onup>noop</onup>
+                <scrolltime tween="sine" easing="out">200</scrolltime>
+                <orientation>vertical</orientation>
+                <!-- One layout per state: Kodi does not pick condition-selected
+                     layouts here, so a heading and a row are told apart by
+                     ListItem.Property(heading) on each control. -->
+                <itemlayout height="56">
+                    <control type="label">
+                        <left>10</left><top>18</top><width>480</width><height>38</height>
+                        <visible>!String.IsEmpty(ListItem.Property(heading))</visible>
+                        <aligny>center</aligny>
+                        <font>font10</font>
+                        <textcolor>$INFO[Window.Property(MM.Accent)]</textcolor>
+                        <label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
+                    </control>
+                    <control type="group">
+                        <visible>String.IsEmpty(ListItem.Property(heading))</visible>
+                        <control type="image">
+                            <left>0</left><top>4</top><width>500</width><height>48</height>
+                            <texture border="20" colordiffuse="FF222731">metamender/button.png</texture>
+                        </control>
+                        <control type="label">
+                            <left>20</left><top>4</top><width>300</width><height>48</height>
+                            <aligny>center</aligny>
+                            <font>font12</font>
+                            <textcolor>FFF1F3F5</textcolor>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <left>300</left><top>4</top><width>180</width><height>48</height>
+                            <align>right</align><aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>FF7D8592</textcolor>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                        <!-- The padlock of a locked field, just left of its "locked" hint. -->
+                        <control type="image">
+                            <left>380</left><top>18</top><width>20</width><height>20</height>
+                            <visible>!String.IsEmpty(ListItem.Property(locked))</visible>
+                            <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/lock.png</texture>
+                        </control>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="56">
+                    <control type="label">
+                        <left>10</left><top>18</top><width>480</width><height>38</height>
+                        <visible>!String.IsEmpty(ListItem.Property(heading))</visible>
+                        <aligny>center</aligny>
+                        <font>font10</font>
+                        <textcolor>$INFO[Window.Property(MM.Accent)]</textcolor>
+                        <label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
+                    </control>
+                    <!-- The selected row: the button colour while the list has
+                         focus, a lighter row while the buttons have it. -->
+                    <control type="group">
+                        <visible>String.IsEmpty(ListItem.Property(heading))</visible>
+                        <control type="image">
+                            <left>0</left><top>4</top><width>500</width><height>48</height>
+                            <texture border="20" colordiffuse="FF353B47">metamender/button.png</texture>
+                        </control>
+                        <control type="image">
+                            <left>0</left><top>4</top><width>500</width><height>48</height>
+                            <visible>Control.HasFocus(50)</visible>
+                            <texture border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texture>
+                        </control>
+                        <control type="label">
+                            <left>20</left><top>4</top><width>300</width><height>48</height>
+                            <aligny>center</aligny>
+                            <font>font12</font>
+                            <textcolor>FFF1F3F5</textcolor>
+                            <visible>!Control.HasFocus(50)</visible>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                        <control type="label">
+                            <left>20</left><top>4</top><width>300</width><height>48</height>
+                            <aligny>center</aligny>
+                            <font>font12</font>
+                            <textcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</textcolor>
+                            <visible>Control.HasFocus(50)</visible>
+                            <label>[B]$INFO[ListItem.Label][/B]</label>
+                        </control>
+                        <control type="label">
+                            <left>300</left><top>4</top><width>180</width><height>48</height>
+                            <align>right</align><aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>FFA8AEB8</textcolor>
+                            <visible>!Control.HasFocus(50)</visible>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                        <control type="label">
+                            <left>300</left><top>4</top><width>180</width><height>48</height>
+                            <align>right</align><aligny>center</aligny>
+                            <font>font10</font>
+                            <textcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</textcolor>
+                            <visible>Control.HasFocus(50)</visible>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control>
+                        <!-- The padlock of a locked field, just left of its "locked" hint. -->
+                        <control type="image">
+                            <left>380</left><top>18</top><width>20</width><height>20</height>
+                            <visible>!String.IsEmpty(ListItem.Property(locked)) + !Control.HasFocus(50)</visible>
+                            <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/lock.png</texture>
+                        </control>
+                        <control type="image">
+                            <left>380</left><top>18</top><width>20</width><height>20</height>
+                            <visible>!String.IsEmpty(ListItem.Property(locked)) + Control.HasFocus(50)</visible>
+                            <texture colordiffuse="$INFO[Window.Property(MM.ButtonTextFocused)]">metamender/lock.png</texture>
+                        </control>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <!-- Right: the focused entry's story. A field's whole value sits
+                 in its own box; the Ids entry has none. -->
+            <control type="group">
+                <left>580</left><top>156</top><width>870</width><height>570</height>
+                <control type="image">
+                    <left>0</left><top>0</top><width>870</width><height>570</height>
+                    <texture border="20" colordiffuse="FF222731">metamender/panel.png</texture>
+                </control>
+                <control type="label">
+                    <left>28</left><top>18</top><width>814</width><height>44</height>
+                    <aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <label>[B]$INFO[Window.Property(MM.RowTitle)][/B]</label>
+                </control>
+                <control type="group">
+                    <visible>!String.IsEmpty(Window.Property(MM.RowValue))</visible>
+                    <control type="image">
+                        <left>20</left><top>72</top><width>830</width><height>220</height>
+                        <texture border="20" colordiffuse="FF1A1D23">metamender/panel.png</texture>
+                    </control>
+                    <control type="textbox">
+                        <left>40</left><top>86</top><width>790</width><height>192</height>
+                        <font>font12</font>
+                        <textcolor>FFF1F3F5</textcolor>
+                        <autoscroll delay="5000" time="2000" repeat="8000">true</autoscroll>
+                        <label>$INFO[Window.Property(MM.RowValue)]</label>
+                    </control>
+                    <control type="textbox">
+                        <left>28</left><top>312</top><width>814</width><height>240</height>
+                        <font>font12</font>
+                        <textcolor>FFCFD3DA</textcolor>
+                        <autoscroll delay="5000" time="2000" repeat="8000">true</autoscroll>
+                        <label>$INFO[Window.Property(MM.RowLines)]</label>
+                    </control>
+                </control>
+                <control type="textbox">
+                    <left>28</left><top>76</top><width>814</width><height>476</height>
+                    <visible>String.IsEmpty(Window.Property(MM.RowValue))</visible>
+                    <font>font12</font>
+                    <textcolor>FFCFD3DA</textcolor>
+                    <autoscroll delay="5000" time="2000" repeat="8000">true</autoscroll>
+                    <label>$INFO[Window.Property(MM.RowLines)]</label>
+                </control>
+            </control>
+
+            <!-- Restore or unlock (only when the focused row has one), Update
+                 now and Close, centred together. -->
+            <control type="grouplist" id="9001">
+                <left>50</left><top>766</top><width>1400</width><height>72</height>
+                <onup>50</onup>
+                <onleft>50</onleft>
+                <orientation>horizontal</orientation>
+                <align>center</align>
+                <itemgap>28</itemgap>
+                <control type="button" id="31">
+                    <width>640</width><height>72</height>
+                    <visible>!String.IsEmpty(Window.Property(MM.RowAction))</visible>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>$INFO[Window.Property(MM.RowAction)]</label>
+                    <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                </control>
+                <control type="button" id="32">
+                    <width>260</width><height>72</height>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>$INFO[Window.Property(MM.UpdateNow)]</label>
+                    <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                </control>
+                <control type="button" id="33">
+                    <width>260</width><height>72</height>
+                    <align>center</align><aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>FFF1F3F5</textcolor>
+                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <label>$INFO[Window.Property(MM.Close)]</label>
+                    <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

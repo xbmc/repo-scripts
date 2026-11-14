@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings version="1">
+    <section id="script.metamender">
+        <!-- Tab 1: Providers -->
+        <category id="providers" label="32001">
+            <group id="tmdb" label="32010">
+                <setting id="tmdb_api_key" type="string" label="32011" help="32012">
+                    <default></default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32011</heading>
+                        <hidden>true</hidden>
+                    </control>
+                </setting>
+            </group>
+            <group id="source_priority" label="32025">
+                <setting id="rating_source" type="integer" label="32026" help="32027">
+                    <default>4</default>
+                    <constraints>
+                        <options>
+                            <option label="32401">4</option>
+                            <option label="32030">0</option>
+                            <option label="32031">1</option>
+                            <option label="32032">2</option>
+                            <option label="32033">3</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string" />
+                </setting>
+                <setting id="text_source_order" type="integer" label="32390" help="32391">
+                    <default>2</default>
+                    <constraints>
+                        <options>
+                            <option label="32398">2</option>
+                            <option label="32392">0</option>
+                            <option label="32393">1</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string" />
+                </setting>
+                <setting id="fallback_order" type="integer" label="32396" help="32397">
+                    <level>2</level>
+                    <default>0</default>
+                    <constraints>
+                        <options>
+                            <option label="32393">0</option>
+                            <option label="32392">1</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string" />
+                </setting>
+            </group>
+        </category>
+
+        <!-- Tab 2: Backfill -->
+        <category id="backfill" label="32100">
+            <group id="fields" label="32101">
+                <setting id="enable_ratings" type="boolean" label="32102" help="32103">
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_plots" type="boolean" label="32104" help="32105">
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_episode_titles" type="boolean" label="32106" help="32107">
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_main_titles" type="boolean" label="32399" help="32400">
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_certifications" type="boolean" label="32108" help="32109">
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_credits" type="boolean" label="32110" help="32111">
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_trailers" type="boolean" label="32112" help="32113">
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_taglines" type="boolean" label="32114" help="32115">
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_details" type="boolean" label="32116" help="32117">
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+            </group>
+            <group id="freshness" label="32120">
+                <setting id="stale_threshold_days" type="integer" label="32125" help="32380">
+                    <default>365</default>
+                    <constraints>
+                        <minimum>30</minimum>
+                        <maximum>3650</maximum>
+                        <step>30</step>
+                    </constraints>
+                    <control type="slider" format="integer" />
+                </setting>
+                <setting id="refetch_schedule" type="string" label="32376" help="32377">
+                    <level>2</level>
+                    <default>7,30,90</default>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32376</heading>
+                    </control>
+                </setting>
+            </group>
+            <group id="sources" label="32140">
+                <setting id="run_setup_wizard" type="action" label="32467" help="32468">
+                    <data>RunScript(script.metamender,wizard)</data>
+                    <!-- Closing saves the settings dialog first; while it is open,
+                         Kodi routes the wizard's setSetting calls into the dialog
+                         instead of saving them. -->
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+                <setting id="configure_sources" type="action" label="32141" help="32142">
+                    <data>RunScript(script.metamender,folders)</data>
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+                <!-- Set by the wizard's Finish; until then the service does not scan. -->
+                <setting id="setup_complete" type="boolean" label="32469">
+                    <level>4</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+            </group>
+        </category>
+
+        <!-- Tab 3: Certifications -->
+        <category id="certifications" label="32200">
+            <group id="cert_format" label="32201">
+                <setting id="country" type="integer" label="32202" help="32203">
+                    <default>0</default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                    </dependencies>
+                    <constraints>
+                        <options>
+                            <option label="32269">0</option>
+                            <option label="32260">1</option>
+                            <option label="32261">2</option>
+                            <option label="32262">3</option>
+                            <option label="32263">4</option>
+                            <option label="32264">5</option>
+                            <option label="32265">6</option>
+                            <option label="32266">7</option>
+                            <option label="32267">8</option>
+                            <option label="32268">9</option>
+                            <option label="32628">10</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string" />
+                </setting>
+                <setting id="override_prefix" type="boolean" label="32204" help="32205">
+                    <level>2</level>
+                    <default>false</default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+                <setting id="rating_prefix" type="string" label="32206" help="32207">
+                    <level>2</level>
+                    <default></default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                        <dependency type="visible" setting="override_prefix">true</dependency>
+                    </dependencies>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32206</heading>
+                    </control>
+                </setting>
+            </group>
+            <group id="scrapers" label="32210">
+                <setting id="enable_fsk" type="boolean" label="32211" help="32212">
+                    <default>true</default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_bbfc" type="boolean" label="32213" help="32214">
+                    <default>true</default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+                <setting id="enable_medieraadet" type="boolean" label="32215" help="32216">
+                    <default>true</default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+            </group>
+            <group id="correction" label="32220">
+                <setting id="replace_incorrect" type="boolean" label="32221" help="32222">
+                    <default>true</default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+            </group>
+            <group id="fallback" label="32230">
+                <setting id="enable_fallback" type="boolean" label="32231" help="32232">
+                    <default>false</default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                    </dependencies>
+                    <control type="toggle" />
+                </setting>
+                <setting id="fallback_rating" type="string" label="32233" help="32234">
+                    <default>NR</default>
+                    <dependencies>
+                        <dependency type="enable" setting="enable_certifications">true</dependency>
+                        <dependency type="visible" setting="enable_fallback">true</dependency>
+                    </dependencies>
+                    <constraints>
+                        <allowempty>false</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32233</heading>
+                    </control>
+                </setting>
+            </group>
+        </category>
+
+        <!-- Tab 4: General -->
+        <category id="general" label="32300">
+            <group id="schedule" label="32301">
+                <setting id="scan_interval" type="integer" label="32302" help="32303">
+                    <default>24</default>
+                    <constraints>
+                        <minimum>1</minimum>
+                        <maximum>168</maximum>
+                        <step>1</step>
+                    </constraints>
+                    <control type="slider" format="integer" />
+                </setting>
+                <setting id="rate_limit" type="number" label="32304" help="32305">
+                    <level>2</level>
+                    <default>0.25</default>
+                    <constraints>
+                        <minimum>0.1</minimum>
+                        <maximum>5.0</maximum>
+                        <step>0.05</step>
+                    </constraints>
+                    <control type="slider" format="number" />
+                </setting>
+            </group>
+            <group id="notifications" label="32310">
+                <setting id="show_notifications" type="boolean" label="32311" help="32312">
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
+                <setting id="resume_interrupted" type="boolean" label="32313" help="32314">
+                    <default>true</default>
+                    <control type="toggle" />
+                </setting>
+            </group>
+            <group id="appearance" label="32607">
+                <setting id="theme" type="integer" label="32578" help="32579">
+                    <default>0</default>
+                    <constraints>
+                        <options>
+                            <option label="32580">0</option>
+                            <option label="32581">1</option>
+                            <option label="32582">2</option>
+                            <option label="32583">3</option>
+                        </options>
+                    </constraints>
+                    <control type="list" format="string" />
+                </setting>
+            </group>
+            <group id="maintenance" label="32330">
+                <setting id="orphan_retention_days" type="integer" label="32331" help="32332">
+                    <default>30</default>
+                    <constraints>
+                        <minimum>0</minimum>
+                        <maximum>365</maximum>
+                        <step>1</step>
+                    </constraints>
+                    <control type="slider" format="integer" />
+                </setting>
+                <setting id="reset_tracker" type="action" label="32378" help="32379">
+                    <level>2</level>
+                    <data>RunScript(script.metamender,reset_tracker)</data>
+                    <control type="button" format="action">
+                        <heading>32378</heading>
+                    </control>
+                </setting>
+            </group>
+            <group id="debugging" label="32320">
+                <setting id="logging" type="boolean" label="32321" help="32322">
+                    <level>2</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
+            </group>
+        </category>
+    </section>
+</settings>
