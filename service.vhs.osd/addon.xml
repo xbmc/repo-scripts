@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.vhs.osd" name="VHS Slideshow Stamp" version="3.0.0" provider-name="Chris">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1"/>
+    <import addon="resource.font.supervcrmono" version="1.0.0"/>
+  </requires>
+  <extension point="xbmc.service" library="service.py"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">A VCR display and camcorder date stamp for slideshows</summary>
+    <description lang="en_GB">Makes a slideshow look like an old home video played on a VCR. PLAY, PAUSE, FF and REW show top left as the slideshow runs, and the time and date each photo or home video was taken is stamped bottom right in the Super-VCR Mono typeface, ticking along while a video plays. Works with any skin.</description>
+    <platform>all</platform>
+    <license>GPL-2.0-or-later</license>
+    <source>https://github.com/sunlollyking/service.vhs.osd</source>
+    <news>v3.0.0: uses the Super-VCR Mono font from resource.font.supervcrmono</news>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon>
