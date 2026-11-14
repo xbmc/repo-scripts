@@ -126,13 +126,18 @@ def _via(verb, hint: Hint, opts: Options, tier: str) -> Result | None:
         # A full page even for a small limit, so the ranking keeps the best few rows
         # and not the first few.
         title, subs = _bundle_page(fetch_one, opts.languages, max(opts.limit, PAGE))
+        # The limit holds per language, so a second language is not crowded out by the
+        # first one's long list.
+        ranked: Ranked = rank(subs, hint,
+                              replace(opts, limit=opts.limit * max(1, len(opts.languages))))
     except SubtitleDbError as err:
         if err.fallthrough:
             return None
         raise
-    # The limit holds per language, so a second language is not crowded out by the
-    # first one's long list.
-    ranked: Ranked = rank(subs, hint, replace(opts, limit=opts.limit * max(1, len(opts.languages))))
+    except (AttributeError, KeyError, TypeError, ValueError) as err:
+        # A field of the wrong shape or type. Callers catch SubtitleDbError alone, and a
+        # plugin runs inside someone's media server, where our bug must not crash theirs.
+        raise SubtitleDbError("the API sent an answer that cannot be read: %s" % err) from err
     return Result(
         candidates=ranked.candidates,
         title=title,
