@@ -1,0 +1,173 @@
+# Kodi Media Center language file
+# Addon Name: CoworkingView
+# Addon id: script.coworkingview
+# Addon Provider: CoworkingView
+msgid ""
+msgstr ""
+"Project-Id-Version: script.coworkingview\n"
+"Report-Msgid-Bugs-To: info@coworkingview.com\n"
+"POT-Creation-Date: 2026-11-03 12:00+0000\n"
+"PO-Revision-Date: 2026-11-03 12:00+0000\n"
+"Last-Translator: CoworkingView\n"
+"Language-Team: English (United Kingdom)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Language"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Currency"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Last city"
+msgstr ""
+
+msgctxt "#32004"
+msgid "City currency keeps each figure in the currency CoworkingView publishes for that city."
+msgstr ""
+
+msgctxt "#32010"
+msgid "English"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Spanish"
+msgstr ""
+
+msgctxt "#32012"
+msgid "German"
+msgstr ""
+
+msgctxt "#32020"
+msgid "City currency"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Choose a city"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Loading the price index"
+msgstr ""
+
+msgctxt "#32023"
+msgid "The price index could not be loaded."
+msgstr ""
+
+msgctxt "#32024"
+msgid "No published city was returned."
+msgstr ""
+
+msgctxt "#32025"
+msgid "{name} ({code})"
+msgstr ""
+
+msgctxt "#32026"
+msgid "{name}"
+msgstr ""
+
+msgctxt "#32027"
+msgid "{city} price index"
+msgstr ""
+
+msgctxt "#32028"
+msgid "As of {date}"
+msgstr ""
+
+msgctxt "#32029"
+msgid "{label}: {median} {currency} per {unit}"
+msgstr ""
+
+msgctxt "#32030"
+msgid "{label}: {median} {currency}"
+msgstr ""
+
+msgctxt "#32031"
+msgid "25th to 75th percentile {p25} to {p75} {currency}. Sample of {count}."
+msgstr ""
+
+msgctxt "#32032"
+msgid "Sample of {count}."
+msgstr ""
+
+msgctxt "#32033"
+msgid "Fewer than 10 prices, so this figure is low confidence."
+msgstr ""
+
+msgctxt "#32034"
+msgid "{spaces} spaces, {operators} operators."
+msgstr ""
+
+msgctxt "#32035"
+msgid "{spaces} spaces."
+msgstr ""
+
+msgctxt "#32036"
+msgid "{operators} operators."
+msgstr ""
+
+msgctxt "#32037"
+msgid "Flexible desk"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Fixed desk"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Private office"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Exclusive area"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Day pass"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Meeting room"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Event space"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Virtual office"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Membership"
+msgstr ""
+
+msgctxt "#32046"
+msgid "month"
+msgstr ""
+
+msgctxt "#32047"
+msgid "day"
+msgstr ""
+
+msgctxt "#32048"
+msgid "hour"
+msgstr ""
+
+msgctxt "#32049"
+msgid "No price index is published for this city yet."
+msgstr ""
+
+msgctxt "#32050"
+msgid "The server sent a response that could not be read."
+msgstr ""
