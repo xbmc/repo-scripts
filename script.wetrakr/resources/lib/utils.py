@@ -26,6 +26,18 @@ def user_agent():
     return "WeTrakr-Kodi/{}".format(version)
 
 
+def sync_context_menu_prop():
+    """addon.xml shows the context-menu entry unless this Home property is
+    'off': context-menu visibility cannot read add-on settings directly."""
+    try:
+        import xbmcaddon
+        import xbmcgui
+        enabled = xbmcaddon.Addon("script.wetrakr").getSetting("context_menu_enabled") != "false"
+        xbmcgui.Window(10000).setProperty("wetrakr.context_menu", "on" if enabled else "off")
+    except Exception as e:
+        xbmc.log("[WeTrakr] Context menu property error: {}".format(e), xbmc.LOGWARNING)
+
+
 def get_json_rpc(method, params):
     """Execute a Kodi JSON-RPC call and return the parsed result."""
     request = json.dumps({

@@ -33,6 +33,45 @@ def _flag_auth_invalid():
         pass
 
 
+def local_threshold():
+    """The add-on's own scrobble threshold (%) from its settings."""
+    try:
+        return int(xbmcaddon.Addon("script.wetrakr").getSetting("scrobble_threshold") or "80")
+    except Exception:
+        return 80
+
+
+def remember_server_threshold(value):
+    """Store the watched threshold WeTrakr says to apply (Settings > Kodi in the
+    web). None = the user did not set one there: the local one applies.
+
+    There is a single threshold and it lives in WeTrakr. The add-on sends its
+    local one with every event so WeTrakr can show it until the user picks one
+    in the web, and from then on applies the web's (see player._get_settings).
+    """
+    try:
+        if value is None:
+            stored = ""
+        else:
+            stored = str(max(50, min(100, int(round(float(value))))))
+        addon = xbmcaddon.Addon("script.wetrakr")
+        if addon.getSetting("server_threshold") != stored:
+            addon.setSetting("server_threshold", stored)
+    except Exception:
+        pass
+
+
+def _read_server_threshold(response):
+    """Pick watched_percent from a webhook response, if the API sent it
+    (WeTrakr API from 2026-11)."""
+    try:
+        data = json.loads(response.read().decode("utf-8") or "{}")
+        if isinstance(data, dict) and "watched_percent" in data:
+            remember_server_threshold(data["watched_percent"])
+    except Exception:
+        pass
+
+
 class WeTrakrAPI:
     """Simple HTTP client for the WeTrakr Kodi webhook endpoint."""
 
@@ -54,6 +93,8 @@ class WeTrakrAPI:
             xbmc.log("[WeTrakr] API URL not configured", xbmc.LOGWARNING)
             return False
 
+        if "threshold" not in payload:
+            payload = dict(payload, threshold=local_threshold())
         body = json.dumps(payload).encode("utf-8")
 
         req = Request(self.url, data=body, method="POST")
@@ -68,6 +109,8 @@ class WeTrakrAPI:
             status = response.getcode()
             if debug:
                 xbmc.log("[WeTrakr] Response: {}".format(status), xbmc.LOGINFO)
+            if 200 <= status < 300:
+                _read_server_threshold(response)
             return 200 <= status < 300
         except HTTPError as e:
             if e.code in (401, 403):

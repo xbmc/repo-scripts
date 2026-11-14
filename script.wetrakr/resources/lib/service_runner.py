@@ -13,6 +13,7 @@ import xbmc
 import xbmcaddon
 
 from resources.lib import auth
+from resources.lib import utils
 from resources.lib.player import WeTrakrPlayer
 from resources.lib.notification import notify as _notify
 from resources.lib.sync_monitor import SyncMonitor
@@ -92,6 +93,7 @@ def run():
             retry.record(auth.AUTH_OFFLINE)
 
     while not monitor.abortRequested():
+        utils.sync_context_menu_prop()
         # Never open the auth dialog while a video is playing: a WindowDialog
         # mid-playback renegotiates the renderer and can freeze passthrough
         # audio. A rejected token (401/403 on a scrobble or a sync) gets one

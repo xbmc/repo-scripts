@@ -7,13 +7,19 @@
     <!-- Set to "true" by api.py when the server rejects the token (HTTP 401/403);
          is_authenticated() then returns False so the service forces a re-login. -->
     <setting id="auth_invalid" type="bool" label="Auth invalid" default="false" visible="false" />
+    <!-- Watched threshold set in WeTrakr (Settings > Kodi), from the webhook
+         response or /changes. Empty = not set there: scrobble_threshold applies. -->
+    <setting id="server_threshold" type="text" label="WeTrakr threshold" default="" visible="false" />
     <setting type="action" label="Connect to WeTrakr" action="RunScript(script.wetrakr, login)" option="close" />
   </category>
 
   <category label="Scrobbling">
     <setting id="track_watched" type="bool" label="Mark as watched" default="true" />
     <setting id="track_playing" type="bool" label="Send 'now playing' event" default="true" />
-    <setting id="scrobble_threshold" type="number" label="Scrobble threshold (%)" default="80" />
+    <!-- Hidden since 1.3.8: the threshold is set in WeTrakr (Settings > Kodi).
+         Still sent with every event, so WeTrakr starts from each user's value. -->
+    <setting id="scrobble_threshold" type="number" label="Scrobble threshold (%)" default="80" visible="false" />
+    <setting id="scrobble_library_only" type="bool" label="Only scrobble Kodi library files (leave add-on streams to their own add-on)" default="false" />
   </category>
 
   <category label="Library sync">
@@ -36,6 +42,12 @@
   <category label="Rating">
     <setting id="rate_after_movie" type="bool" label="Rate Movie after watching" default="true" />
     <setting id="rate_after_episode" type="bool" label="Rate Episode after watching" default="false" />
+    <setting id="rating_half_steps" type="bool" label="Allow half-star ratings (e.g. 6.5)" default="false" />
+  </category>
+
+  <category label="Context menu">
+    <setting id="context_menu_enabled" type="bool" label="Show the WeTrakr entry in the context menu" default="true" />
+    <setting id="context_ask_date" type="bool" label="Ask for the date when marking watched or rating" default="true" enable="eq(-1,true)" />
   </category>
 
   <category label="Notifications">
