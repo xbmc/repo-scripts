@@ -14,11 +14,20 @@
     <category label="32010">
         <setting id="start_channel" type="number" label="32011" default="0"/>
         <setting id="banner_secs" type="labelenum" label="32012" values="3|6|10" default="6"/>
+        <setting id="power_effect" type="bool" label="32093" default="true"/>
         <setting id="static_effect" type="bool" label="32013" default="true"/>
         <setting id="static_sound" type="bool" label="32014" default="true" enable="eq(-1,true)"/>
+        <setting id="static_mode" type="enum" label="32073" lvalues="32074|32075|32076" default="0" enable="eq(-2,true)+eq(-1,true)"/>
         <setting id="crt_mode" type="enum" label="32031" lvalues="32032|32033|32034" default="0"/>
+        <setting id="cc_fullscreen" type="bool" label="32941" default="true"/>
+        <setting id="cc_nudge" type="enum" label="32942" lvalues="32943|32944|32945" default="0"/>
+        <setting id="stations_folder" type="folder" label="32090" source="files" default=""/>
+        <setting id="logo_folder" type="folder" label="32088" source="pictures" default=""/>
+        <setting id="logo_bug" type="bool" label="32077" default="true"/>
+        <setting id="logo_corner" type="enum" label="32078" lvalues="32079|32080|32081|32082" default="3" enable="eq(-1,true)"/>
+        <setting id="logo_opacity" type="enum" label="32083" lvalues="32084|32085|32086|32087" default="1" enable="eq(-2,true)"/>
+        <setting id="logo_banner" type="bool" label="32089" default="true"/>
         <setting id="keep_progress" type="bool" label="32043" default="true"/>
-        <setting id="confirm_exit" type="bool" label="32015" default="true"/>
         <setting id="skip_menu" type="bool" label="32016" default="false"/>
         <setting id="autostart" type="bool" label="32017" default="false"/>
         <setting id="sleep_cec" type="bool" label="32018" default="false"/>
@@ -59,9 +68,13 @@
         <setting id="tool_wizard" type="action" label="32050" action="RunScript(script.cablebox42,tool,wizard)" option="close"/>
         <setting id="tool_quick" type="action" label="32051" action="RunScript(script.cablebox42,tool,quick)" option="close"/>
         <setting id="tool_shows" type="action" label="32052" action="RunScript(script.cablebox42,tool,shows)" option="close"/>
+        <setting id="tool_finder" type="action" label="33104" action="RunScript(script.cablebox42,tool,finder)" option="close"/>
+        <setting id="tool_folders" type="action" label="32091" action="RunScript(script.cablebox42,tool,folders)" option="close"/>
         <setting label="32053" type="lsep"/>
         <setting id="tool_fillers" type="action" label="32054" action="RunScript(script.cablebox42,tool,fillers)" option="close"/>
+        <setting id="tool_cckeys" type="action" label="32940" action="RunScript(script.cablebox42,tool,cckeys)" option="close"/>
         <setting id="tool_progress" type="action" label="32055" action="RunScript(script.cablebox42,tool,progress)" option="close"/>
         <setting id="tool_rebuild" type="action" label="32056" action="RunScript(script.cablebox42,tool,rebuild)" option="close"/>
+        <setting id="tool_reset" type="action" label="32092" action="RunScript(script.cablebox42,tool,reset)" option="close"/>
     </category>
 </settings>

@@ -27,21 +27,62 @@ from .kodiutil import _
 PAGES = ("current", "forecast", "extended", "almanac")
 PAGE_SECS = 10
 REFRESH_SECS = 15 * 60
-ICON = "resource://resource.images.weathericons.default/%s.png"
+NODATA_AFTER = 3.0          # seconds of blank screen before "weather is not set up"
+ICON = "wx/%s.png"          # CableBox's own icons (skin media), so they always show
 
-# WMO weather code -> (text, kodi icon day, kodi icon night)
+# WMO weather code (Open-Meteo) -> (text, icon by day, icon by night)
 WMO = {
-    0: (_("Sunny"), 32, 31), 1: (_("Mostly Sunny"), 34, 33), 2: (_("Partly Cloudy"), 30, 29),
-    3: (_("Cloudy"), 26, 26), 45: (_("Fog"), 20, 20), 48: (_("Freezing Fog"), 20, 20),
-    51: (_("Light Drizzle"), 9, 9), 53: (_("Drizzle"), 9, 9), 55: (_("Heavy Drizzle"), 9, 9),
-    56: (_("Freezing Drizzle"), 8, 8), 57: (_("Freezing Drizzle"), 8, 8),
-    61: (_("Light Rain"), 11, 11), 63: (_("Rain"), 12, 12), 65: (_("Heavy Rain"), 12, 12),
-    66: (_("Freezing Rain"), 10, 10), 67: (_("Freezing Rain"), 10, 10),
-    71: (_("Light Snow"), 14, 14), 73: (_("Snow"), 16, 16), 75: (_("Heavy Snow"), 16, 16), 77: (_("Snow Grains"), 13, 13),
-    80: (_("Rain Showers"), 11, 11), 81: (_("Rain Showers"), 12, 12), 82: (_("Heavy Showers"), 12, 12),
-    85: (_("Snow Showers"), 14, 14), 86: (_("Snow Showers"), 14, 14),
-    95: (_("Thunderstorms"), 4, 4), 96: (_("T-Storms & Hail"), 3, 3), 99: (_("Severe T-Storms"), 3, 3),
+    0: (_("Sunny"), "sunny", "clear_night"), 1: (_("Mostly Sunny"), "mostly_sunny", "mostly_clear_night"),
+    2: (_("Partly Cloudy"), "partly_cloudy", "partly_cloudy_night"), 3: (_("Cloudy"), "cloudy", "cloudy"),
+    45: (_("Fog"), "fog", "fog"), 48: (_("Freezing Fog"), "fog", "fog"),
+    51: (_("Light Drizzle"), "drizzle", "drizzle"), 53: (_("Drizzle"), "drizzle", "drizzle"),
+    55: (_("Heavy Drizzle"), "drizzle", "drizzle"),
+    56: (_("Freezing Drizzle"), "freezing_rain", "freezing_rain"), 57: (_("Freezing Drizzle"), "freezing_rain", "freezing_rain"),
+    61: (_("Light Rain"), "rain", "rain"), 63: (_("Rain"), "rain", "rain"), 65: (_("Heavy Rain"), "heavy_rain", "heavy_rain"),
+    66: (_("Freezing Rain"), "freezing_rain", "freezing_rain"), 67: (_("Freezing Rain"), "freezing_rain", "freezing_rain"),
+    71: (_("Light Snow"), "snow", "snow"), 73: (_("Snow"), "snow", "snow"), 75: (_("Heavy Snow"), "heavy_snow", "heavy_snow"),
+    77: (_("Snow Grains"), "snow", "snow"),
+    80: (_("Rain Showers"), "rain", "rain"), 81: (_("Rain Showers"), "rain", "rain"),
+    82: (_("Heavy Showers"), "heavy_rain", "heavy_rain"),
+    85: (_("Snow Showers"), "snow", "snow"), 86: (_("Snow Showers"), "heavy_snow", "heavy_snow"),
+    95: (_("Thunderstorms"), "thunderstorm", "thunderstorm"), 96: (_("T-Storms & Hail"), "thunderstorm", "thunderstorm"),
+    99: (_("Severe T-Storms"), "thunderstorm", "thunderstorm"),
 }
+
+# Kodi's weather icon numbers (the codes weather add-ons report) -> our icons
+KODI_ICONS = {}
+for _names, _codes in (("thunderstorm", (0, 1, 2, 3, 4, 37, 38, 39, 45, 47)), ("sleet", (5, 6, 7, 18, 35)),
+                       ("freezing_rain", (8, 10, 17)), ("drizzle", (9,)), ("rain", (11, 12, 40)),
+                       ("snow", (13, 14, 15, 16, 42, 46)), ("heavy_snow", (41, 43)), ("fog", (19, 20, 21, 22)),
+                       ("windy", (23, 24)), ("cloudy", (25, 26)), ("partly_cloudy_night", (27, 29)),
+                       ("partly_cloudy", (28, 30, 44)), ("clear_night", (31,)), ("sunny", (32, 36)),
+                       ("mostly_clear_night", (33,)), ("mostly_sunny", (34,))):
+    for _c in _codes:
+        KODI_ICONS[_c] = _names
+# words in a condition -> icon, for anything without a usable icon number
+WORD_ICONS = (("thunder", "thunderstorm"), ("t-storm", "thunderstorm"), ("sleet", "sleet"),
+              ("freezing", "freezing_rain"), ("heavy snow", "heavy_snow"), ("snow", "snow"), ("flurr", "snow"),
+              ("heavy rain", "heavy_rain"), ("drizzle", "drizzle"), ("rain", "rain"), ("shower", "rain"),
+              ("fog", "fog"), ("mist", "fog"), ("haze", "fog"), ("smok", "fog"), ("wind", "windy"),
+              ("breez", "windy"), ("partly", "partly_cloudy"), ("mostly cloudy", "cloudy"), ("cloud", "cloudy"),
+              ("overcast", "cloudy"), ("mostly sunny", "mostly_sunny"), ("fair", "mostly_sunny"),
+              ("clear", "sunny"), ("sun", "sunny"))
+
+
+def icon(value, cond=""):
+    """Our icon for whatever a weather source gave: one of ours, a Kodi
+    weather icon (…/32.png), or failing that the words of the condition."""
+    v = (value or "").strip()
+    if v.startswith("wx/"):
+        return v
+    base = os.path.splitext(os.path.basename(v.replace("\\", "/")))[0]
+    if base.isdigit() and int(base) in KODI_ICONS:
+        return ICON % KODI_ICONS[int(base)]
+    c = (cond or "").lower()
+    for word, name in WORD_ICONS:
+        if word in c:
+            return ICON % name
+    return ""
 COMPASS = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
 
 
@@ -148,14 +189,24 @@ def _save_cache(c):
         K.log_err("weather cache: %s" % exc)
 
 
+def _where():
+    """Which place the forecast is for: your city, or wherever Kodi's weather is set."""
+    city = K.setting("weather_location", "").strip().lower()
+    return ("city:" + city) if city else "kodi"
+
+
 def remember(d):
     c = _cache()
-    c["last"] = {"at": time.time(), "data": d}
+    c["last"] = {"at": time.time(), "data": d, "where": _where()}
     _save_cache(c)
 
 
 def last_good(max_age=STALE_OK):
+    """The last forecast - only if it's for the place you're set to now
+    (change the city and the old town's weather doesn't come back)."""
     hit = _cache().get("last") or {}
+    if hit.get("where", "kodi") != _where():
+        return None
     if hit.get("data") and time.time() - float(hit.get("at") or 0) < max_age:
         return hit["data"]
     return None
@@ -239,7 +290,7 @@ def parse_open_meteo(raw, name, f):
     spd = "mph" if f else "km/h"
     c = raw.get("current", {})
     code = int(c.get("weather_code", 3))
-    text, iday, inight = WMO.get(code, ("", 26, 26))
+    text, iday, inight = WMO.get(code, ("", "cloudy", "cloudy"))
     wd = c.get("wind_direction_10m")
     wind = _("Calm")
     if c.get("wind_speed_10m"):
@@ -253,7 +304,7 @@ def parse_open_meteo(raw, name, f):
     daily = []
     for i, ts in enumerate(dly.get("time", [])):
         dc = int(dly["weather_code"][i] or 3)
-        dt, di, _night = WMO.get(dc, ("", 26, 26))
+        dt, di, _night = WMO.get(dc, ("", "cloudy", "cloudy"))
         daily.append({"name": time.strftime("%a", time.localtime(ts + 43200)), "ts": ts,
                       "hi": "%d%s" % (round(dly["temperature_2m_max"][i]), deg),
                       "lo": "%d%s" % (round(dly["temperature_2m_min"][i]), deg),
@@ -322,17 +373,22 @@ def _safe(fn, *a):
 def fetch():
     """Best forecast available right now.
 
-    Automatic: Kodi's weather if it's complete; if it's missing, broken or
-    half-filled (a weather add-on that crashed part-way), Open-Meteo for your
-    city - or, with no city typed in, for the place Kodi's weather is set to.
-    A partial Kodi forecast is still used when nothing better is reachable."""
+    Automatic, with a city typed in (setup asks for one): Open-Meteo for that
+    city - your city wins over wherever Kodi's own weather happens to be set.
+    Automatic, no city: Kodi's weather if it's complete; if it's missing,
+    broken or half-filled, Open-Meteo for the place Kodi's weather is set to."""
     src = K.setting_int("weather_source", 0)  # 0 auto, 1 kodi only, 2 open-meteo only
     if src == 1:
         return _safe(from_kodi)
+    city = K.setting("weather_location", "").strip()
+    if src == 0 and city:
+        # not Kodi's weather as a fallback: that's another town; the last
+        # forecast for your city (kept by the weather screen) is better
+        return _safe(from_open_meteo, city)
     kd = _safe(from_kodi) if src == 0 else None
     if quality(kd) >= COMPLETE:
         return kd
-    place = K.setting("weather_location", "").strip() or kodi_place()
+    place = city or kodi_place()
     om = _safe(from_open_meteo, place) if place else None
     if om and quality(om) >= quality(kd):
         return om
@@ -348,6 +404,8 @@ class WeatherScreen(object):
         self.fetching = False
         self.page_at = 0
         self.page = 0
+        self.tuned_at = 0           # when the weather channel came on screen
+        self.nodata_shown = False
 
     def _fetch(self):
         try:
@@ -367,6 +425,13 @@ class WeatherScreen(object):
         self.render()
 
     def tick(self, now, force=False):
+        if force:
+            self.tuned_at = now
+            self.nodata_shown = False
+            if not self.data:
+                self.data = last_good()     # the last forecast straight away; the fresh one follows
+        if not self.data and not self.nodata_shown and now - self.tuned_at >= NODATA_AFTER:
+            self.render()                   # still nothing after a few seconds: say so
         if (force or now - self.fetched_at > REFRESH_SECS) and not self.fetching:
             self.fetching = True
             t = threading.Thread(target=self._fetch)
@@ -392,7 +457,14 @@ class WeatherScreen(object):
         P = w.setProperty
         P("wx_title", K.setting("weather_title", _("Your Local Forecast")))
         d = self.data
+        if not d and time.time() - self.tuned_at < NODATA_AFTER:
+            # still loading: leave the screen blank rather than flash "not set up"
+            P("wx_page", "")
+            P("wx_location", "")
+            P("wx_ticker", "")
+            return
         if not d:
+            self.nodata_shown = True
             P("wx_page", "nodata")
             P("wx_location", "")
             P("wx_ticker", _("Weather is not set up yet.   Choose a weather service in Kodi (Settings > "
@@ -404,7 +476,7 @@ class WeatherScreen(object):
         n = d["now"]
         P("wx_temp", n.get("temp", ""))
         P("wx_cond", n.get("cond", ""))
-        P("wx_icon", n.get("icon", ""))
+        P("wx_icon", icon(n.get("icon"), n.get("cond")))
         rows = [(_("Humidity"), n.get("humidity")), (_("Dewpoint"), n.get("dew")), (_("Feels Like"), n.get("feels")),
                 (_("Wind"), n.get("wind")), (_("Pressure"), n.get("pressure")), (_("UV Index"), n.get("uv"))]
         rows = [r for r in rows if r[1]][:6]
@@ -415,7 +487,7 @@ class WeatherScreen(object):
         for i in range(4):
             day = days[i] if i < len(days) else {}
             P("wx_d%d_name" % (i + 1), (day.get("name") or "").upper()[:3])
-            P("wx_d%d_icon" % (i + 1), day.get("icon", ""))
+            P("wx_d%d_icon" % (i + 1), icon(day.get("icon"), day.get("cond")))
             P("wx_d%d_cond" % (i + 1), day.get("cond", ""))
             P("wx_d%d_hi" % (i + 1), day.get("hi", ""))
             P("wx_d%d_lo" % (i + 1), day.get("lo", ""))

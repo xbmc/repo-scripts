@@ -77,7 +77,17 @@ def _manual_busy(c):
 def _ranked_shows(c, assignment):
     ok = assign.allowed_fn(assignment, c["id"])
     hidden = set(x.lower() for x in c.get("exclude", []))
-    pool = library.resolve(c.get("sources", []))
+    # shows parked here only because no channel fits them never make prime time
+    pool = library.resolve([x for x in c.get("sources", []) if not x.get("orphans")])
+    own = set()
+    if c.get("broadcast"):
+        # a network's prime time comes from its own prime-time block
+        dp = next((d for d in c.get("dayparts", []) if d.get("prime")), None)
+        if dp:
+            pool = library.share(dp.get("sources", []), dp.get("part"), dp.get("own"), dp.get("not_genres"))
+            if dp.get("own"):
+                own = set(x["title"] for x in library.resolve(dp["own"])["series"])
+        ok = lambda _t, _m: True
     meta = dict((s["title"].lower(), s) for s in library.all_tvshows())
     shows = []
     for ser in pool["series"]:
@@ -88,9 +98,9 @@ def _ranked_shows(c, assignment):
         if mins > 90:
             continue
         info = meta.get(tl, {})
-        shows.append((float(info.get("rating") or 0), len(ser["episodes"]), ser["title"], mins))
-    shows.sort(key=lambda x: (-x[0], -x[1], x[2]))
-    return [(title, mins) for _r, _n, title, mins in shows]
+        shows.append((ser["title"] not in own, float(info.get("rating") or 0), len(ser["episodes"]), ser["title"], mins))
+    shows.sort(key=lambda x: (x[0], -x[1], -x[2], x[3]))      # the network's own hits first
+    return [(title, mins) for _o, _r, _n, title, mins in shows]
 
 
 def prime_time(chans, assignment, start=PRIME_START, end=PRIME_END):
@@ -99,7 +109,9 @@ def prime_time(chans, assignment, start=PRIME_START, end=PRIME_END):
     p0, p1 = _m(start), _m(end)
     length = (p1 - p0) % 1440 or 180
     made = {}
-    for c in chans:
+    net_pinned = set()
+    # networks first, so their prime-time hits aren't also pinned on cable
+    for c in sorted(chans, key=lambda c: (not c.get("broadcast"), c.get("number", 0))):
         if c.get("type") == "movies" and c.get("sources"):
             busy = _manual_busy(c)
             days = [d for d in range(7) if (d * 1440 + p0) not in busy]
@@ -112,7 +124,8 @@ def prime_time(chans, assignment, start=PRIME_START, end=PRIME_END):
             continue
         if c.get("type") not in TV_TYPES:
             continue
-        shows = _ranked_shows(c, assignment)
+        # a show a network airs in prime time isn't pinned anywhere else
+        shows = [x for x in _ranked_shows(c, assignment) if x[0] not in net_pinned]
         if len(shows) < 2:
             continue
         busy = _manual_busy(c)
@@ -137,6 +150,8 @@ def prime_time(chans, assignment, start=PRIME_START, end=PRIME_END):
                 if not any(((st + k) % (7 * 1440)) in busy for k in range(0, mins, 30)):
                     nightly.setdefault((title, _hhmm(p0 + t), mins), []).append(d)
                 t += mins
+        if c.get("broadcast"):
+            net_pinned.update(k[0] for k in nightly)
         for (title, hhmm, mins), days in sorted(nightly.items(), key=lambda kv: (kv[0][1], kv[0][0])):
             c.setdefault("slots", []).append({
                 "id": uuid.uuid4().hex[:6], "label": title, "start": hhmm, "minutes": mins,
