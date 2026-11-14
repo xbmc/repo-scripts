@@ -1,0 +1,36 @@
+# Seenr for Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: service.seenr\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "#30000"
+msgid "Connection"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Seenr connection URL"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Copy it from Seenr: Account, Auto-tracking, Kodi. It contains your private token, so treat it like a password."
+msgstr ""
+
+msgctxt "#30003"
+msgid "Notify when a title is sent"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Shows a short toast once a movie or episode has been reported to Seenr."
+msgstr ""
+
+msgctxt "#30010"
+msgid "Seenr refused the connection. Generate a new URL in your settings."
+msgstr ""
+
+msgctxt "#30011"
+msgid "Sent to Seenr"
+msgstr ""
