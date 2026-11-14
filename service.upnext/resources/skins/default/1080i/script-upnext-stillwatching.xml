@@ -157,9 +157,9 @@
                         <bottom>20</bottom>
                         <itemgap>10</itemgap>
                         <control type="button" id="10">
-                            <label>    $ADDON[service.upnext 30010]</label>
+                            <label>    $ADDON[service.upnext 30056]</label>
                             <onclick>SendClick(3012)</onclick>
-                            <visible>Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                            <visible>Integer.IsGreater(Window.Property(remaining),59)</visible>
                             <height>56</height>
                             <width min="50">auto</width>
                             <font>font20_title</font>
@@ -179,7 +179,7 @@
                         <control type="button" id="11">
                             <label>    $ADDON[service.upnext 30035]</label>
                             <onclick>SendClick(3012)</onclick>
-                            <visible>!Integer.IsGreater(Player.TimeRemaining,59)</visible>
+                            <visible>!Integer.IsGreater(Window.Property(remaining),59)</visible>
                             <height>56</height>
                             <width min="50">auto</width>
                             <font>font20_title</font>
