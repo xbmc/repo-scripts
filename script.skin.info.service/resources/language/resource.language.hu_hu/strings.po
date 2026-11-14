@@ -562,8 +562,8 @@ msgid "Show Download Artwork"
 msgstr "Képek letöltésének megjelenítése"
 
 msgctxt "#32118"
-msgid "No HTTP artwork URLs found in {0} library items."
-msgstr "Nem találhatók HTTP kép URL-ek {0} médiatári elemben."
+msgid "Nothing to download. Artwork for these {0} library items is already local."
+msgstr "Nincs mit letölteni. A(z) {0} médiatári elem képei már helyben megtalálhatók."
 
 msgctxt "#32119"
 msgid "Overwrite Mode Warning"
@@ -593,9 +593,21 @@ msgctxt "#32125"
 msgid "Trakt Most Played"
 msgstr ""
 
+msgctxt "#32126"
+msgid "Select Country"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Country for the TMDB Now Playing and Upcoming lists"
+msgstr ""
+
 msgctxt "#32128"
 msgid "Skip"
 msgstr "Átugrás"
+
+msgctxt "#32129"
+msgid "Failed to load the country list"
+msgstr ""
 
 msgctxt "#32130"
 msgid "Multi-Art..."
@@ -628,6 +640,10 @@ msgstr "Automatikus frissítés"
 msgctxt "#32137"
 msgid "Automatically update IMDb ratings in your library"
 msgstr "Az IMDb-értékelések automatikus frissítése a médiatáradban"
+
+msgctxt "#32138"
+msgid "Recommended"
+msgstr ""
 
 msgctxt "#32139"
 msgid "After library scan"
@@ -1155,7 +1171,7 @@ msgstr "Egyetlen azonosítót sem lehetett javítani"
 
 msgctxt "#32370"
 msgid "Testing {0}"
-msgstr "Tesztelés {0"
+msgstr "Tesztelés {0}"
 
 msgctxt "#32371"
 msgid "Connecting to API..."

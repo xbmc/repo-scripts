@@ -210,6 +210,18 @@
 					</constraints>
 					<control type="list" format="string" />
 				</setting>
+				<setting id="tmdb_region" type="string" label="574">
+					<default>US</default>
+					<control type="edit" format="string" />
+					<dependencies>
+						<dependency type="enable" setting="tmdb_always_false">true</dependency>
+					</dependencies>
+				</setting>
+				<setting id="tmdb_region_action" type="action" label="32126" help="32127">
+					<control type="button" format="action">
+						<data>RunScript(script.skin.info.service,action=settings_action,sub_action=select_region)</data>
+					</control>
+				</setting>
 			</group>
 			<group id="2" label="32004">
 				<setting id="preferred_language" type="string" label="32006" help="32007">

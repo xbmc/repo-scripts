@@ -562,8 +562,8 @@ msgid "Show Download Artwork"
 msgstr "Show Download Artwork"
 
 msgctxt "#32118"
-msgid "No HTTP artwork URLs found in {0} library items."
-msgstr "No HTTP artwork URLs found in {0} library items."
+msgid "Nothing to download. Artwork for these {0} library items is already local."
+msgstr "Nothing to download. Artwork for these {0} library items is already local."
 
 msgctxt "#32119"
 msgid "Overwrite Mode Warning"
@@ -593,9 +593,21 @@ msgctxt "#32125"
 msgid "Trakt Most Played"
 msgstr "Trakt Most Played"
 
+msgctxt "#32126"
+msgid "Select Country"
+msgstr "Select Country"
+
+msgctxt "#32127"
+msgid "Country for the TMDB Now Playing and Upcoming lists"
+msgstr "Country for the TMDB Now Playing and Upcoming lists"
+
 msgctxt "#32128"
 msgid "Skip"
 msgstr "Skip"
+
+msgctxt "#32129"
+msgid "Failed to load the country list"
+msgstr "Failed to load the country list"
 
 msgctxt "#32130"
 msgid "Multi-Art..."
@@ -628,6 +640,10 @@ msgstr "Auto-update"
 msgctxt "#32137"
 msgid "Automatically update IMDb ratings in your library"
 msgstr "Automatically update IMDb ratings in your library"
+
+msgctxt "#32138"
+msgid "Recommended"
+msgstr "Recommended"
 
 msgctxt "#32139"
 msgid "After library scan"

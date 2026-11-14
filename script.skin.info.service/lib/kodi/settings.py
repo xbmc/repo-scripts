@@ -76,6 +76,11 @@ class KodiSettings:
         return cls.get_string('online.metadata_language') or 'en'
 
     @classmethod
+    def tmdb_region(cls) -> str:
+        """Get the ISO 3166-1 country code for TMDB's cinema lists."""
+        return cls.get_string('tmdb_region')
+
+    @classmethod
     def enable_combo_workflows(cls) -> bool:
         """Whether the download combo workflows are enabled."""
         return cls.get_bool('download.enable_combo_workflows')
