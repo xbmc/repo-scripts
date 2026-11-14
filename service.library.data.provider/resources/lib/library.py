@@ -301,11 +301,11 @@ class LibraryFunctions():
             favs = json.loads(self.json_query("Favourites.GetFavourites", unplayed=False,
                                               properties=[], sort=None, query_filter=None, limit=None))
             if favs['result']['favourites'] is None:
-                return None
+                return ""
             shows = json.loads(self.json_query("VideoLibrary.GetTVShows", unplayed=True,
                                                properties=self.tvshow_properties, limit=None))
             if "result" not in shows or 'tvshows' not in shows['result']:
-                return None
+                return ""
             fav_unwatched = [show for show in shows['result']['tvshows']
                              if show['title'] in set([fav['title']
                                                      for fav in favs['result']['favourites']
