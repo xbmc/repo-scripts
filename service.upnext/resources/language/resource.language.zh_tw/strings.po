@@ -170,7 +170,7 @@ msgstr "依據影片長度制定自動播放的時間"
 
 msgctxt "#30613"
 msgid "All episodes  [COLOR gray]any length[/COLOR]"
-msgstr "所有影集"
+msgstr "所有影集  [COLOR gray]不限長度[/COLOR]"
 
 msgctxt "#30615"
 msgid "Very short episodes  [COLOR gray]< 10 mins[/COLOR]"

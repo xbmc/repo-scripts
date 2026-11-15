@@ -113,11 +113,11 @@ msgstr ""
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr "[B]MOD DEMO ACTIVAT UP NEXT"
+msgstr "[B]MOD DEMO ACTIVAT UP NEXT[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr "[I]Episoadele se derulează automat către sfârșit"
+msgstr "[I]Episoadele se derulează automat către sfârșit.[/I]"
 
 
 ### SETTINGS

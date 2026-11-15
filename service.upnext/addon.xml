@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.upnext" name="Up Next" version="1.3.7" provider-name="im85288">
+<addon id="service.upnext" name="Up Next" version="1.4.0" provider-name="im85288">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
@@ -48,6 +48,14 @@ Muchos complementos existentes ya se integran con este servicio listo para usar.
         <platform>all</platform>
         <license>GPL-2.0-only</license>
         <news>
+v1.4.0 (2026-11-15)
+- New default popups: the show's logo, the next episode's details and still
+- Binge mode: skip intros and recaps and move on during the credits
+- Fix an error on every stop with Kodi 22
+- Fix the next episode not playing when an add-on opened the current one directly
+- Load the Hindi translation and fix Romanian and Traditional Chinese labels
+- Update French translation
+
 v1.3.7 (2026-11-10)
 - Fix the service failing to start on Xbox
 - Update Simplified Chinese translation
@@ -76,11 +84,6 @@ v1.3.3 (2026-11-02)
 
 v1.3.2 (2026-11-01)
 - Optional Still Watching prompts based on viewing time or bedtime
-
-v1.3.1 (2026-11-01)
-- Fix the popup not appearing when an add-on starts the next episode itself
-- Optional OK/Select access to playback controls while the popup is open
-- Update Simplified Chinese translation
         </news>
         <assets>
             <icon>resources/media/icon.png</icon>
