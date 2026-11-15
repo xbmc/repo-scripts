@@ -122,6 +122,10 @@ msgctxt "#30056"
 msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
 msgstr ""
 
+msgctxt "#30057"
+msgid "Now finishing"
+msgstr ""
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr ""
@@ -254,6 +258,14 @@ msgstr ""
 
 msgctxt "#30647"
 msgid "Pause the video while an add-on starts the next episode"
+msgstr ""
+
+msgctxt "#30649"
+msgid "Binge mode"
+msgstr ""
+
+msgctxt "#30651"
+msgid "[COLOR gray]Skips intros and recaps, plays next and moves on during the credits[/COLOR]"
 msgstr ""
 
 msgctxt "#30700"

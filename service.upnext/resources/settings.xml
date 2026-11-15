@@ -7,7 +7,9 @@
         <setting label="30508" type="bool" id="seekWithArrows" default="false" enable="eq(-1,true)"/>
     </category>
     <category label="30600"> <!-- Behaviour -->
-        <setting label="30603" type="enum" id="autoPlayMode" lvalues="30040|30041" default="0"/>
+        <setting label="30649" type="bool" id="bingeMode" default="false"/>
+        <setting label="30651" type="lsep"/> <!-- Binge mode: what it overrides -->
+        <setting label="30603" type="enum" id="autoPlayMode" lvalues="30040|30041" default="0" enable="eq(-2,false)"/>
         <setting label="30032" type="bool" id="enablePlaylist" default="false"/>
         <setting label="30605" type="bool" id="includeWatched" default="false"/>
         <setting label="30643" type="bool" id="markWatchedEarly" default="true"/>
@@ -28,9 +30,9 @@
         <setting label="30623" type="slider" id="autoPlayTimeXL" default="60" range="0,5,300" option="int" subsetting="true" visible="eq(-6,true)"/>
         <setting label="30625" type="slider" id="autoPlayCreditsTime" default="0" range="0,1,120" option="int"/>
         <setting label="30627" type="lsep"/> <!-- Intros and recaps -->
-        <setting label="30629" type="bool" id="enableSkipSegments" default="true"/>
-        <setting label="30631" type="bool" id="autoSkipIntro" default="false" subsetting="true" visible="eq(-1,true)"/>
-        <setting label="30633" type="bool" id="autoSkipRecap" default="false" subsetting="true" visible="eq(-2,true)"/>
+        <setting label="30629" type="bool" id="enableSkipSegments" default="true" enable="eq(-23,false)"/>
+        <setting label="30631" type="bool" id="autoSkipIntro" default="false" subsetting="true" visible="eq(-1,true)" enable="eq(-24,false)"/>
+        <setting label="30633" type="bool" id="autoSkipRecap" default="false" subsetting="true" visible="eq(-2,true)" enable="eq(-25,false)"/>
     </category>
     <category label="30700"> <!-- Expert -->
         <setting label="30703" type="bool" id="disableNextUp" default="false"/>

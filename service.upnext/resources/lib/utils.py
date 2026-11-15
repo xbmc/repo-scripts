@@ -104,6 +104,12 @@ def get_setting_bool(key, default=None):
         return default
 
 
+def binge_mode():
+    """Return whether binge mode is on: it skips intros and recaps, plays the next episode by default
+    and moves on during the end credits, whatever those settings say"""
+    return get_setting_bool('bingeMode', default=False)
+
+
 def get_setting_int(key, default=None):
     """Get an add-on setting as integer"""
     try:

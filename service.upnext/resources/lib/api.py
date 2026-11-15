@@ -2,8 +2,11 @@
 # GNU General Public License v2.0 (see COPYING or https://www.gnu.org/licenses/gpl-2.0.txt)
 
 from xbmc import sleep, PLAYLIST_VIDEO, PLAYLIST_MUSIC
-from utils import event, get_int, get_setting_bool, get_setting_int, jsonrpc, log as ulog
+from utils import binge_mode, event, get_int, get_setting_bool, get_setting_int, jsonrpc, log as ulog
 
+
+# Binge mode moves on this many seconds into the end credits when the setting is 0
+BINGE_CREDITS_DELAY = 10
 
 # Episode details shown in the popup
 EPISODE_PROPERTIES = ['art', 'dateadded', 'episode', 'file', 'firstaired', 'lastplayed',
@@ -14,6 +17,8 @@ EPISODE_PROPERTIES = ['art', 'dateadded', 'episode', 'file', 'firstaired', 'last
 def credits_autoplay_deadline(data, play_time, total_time):
     """Return an opt-in playback deadline only when a credits offset is known."""
     delay = get_setting_int('autoPlayCreditsTime')
+    if delay <= 0 and binge_mode():
+        delay = BINGE_CREDITS_DELAY
     if delay <= 0:
         return None
     try:
@@ -46,6 +51,29 @@ def playing_episode_id():
         return None
     item = (jsonrpc(method='Player.GetItem', params={'playerid': video[0]}).get('result') or {}).get('item') or {}
     return item.get('id') if item.get('type') == 'episode' else None
+
+
+def playlist_position():
+    """Return the playing video's position in its playlist: -1 when Kodi didn't play it from one (an
+    add-on opened it with Player.Open, for example), None when there is no answer"""
+    playerid = Api._get_playerid(playerid_cache=[None])  # pylint: disable=protected-access
+    if playerid is None:
+        return None
+    result = jsonrpc(method='Player.GetProperties', params={'playerid': playerid, 'properties': ['position']})
+    return get_int(result.get('result'), 'position', None)
+
+
+def play_queued_item():
+    """Open the item Up Next queued, the playlist's last, directly"""
+    playlistid = Api.get_playlistid()
+    if playlistid < 0:
+        playlistid = Api.PLAYER_PLAYLIST['video']
+    result = jsonrpc(method='Playlist.GetItems', params={'playlistid': playlistid})
+    items = (result.get('result') or {}).get('items') or []
+    if not items:
+        return False
+    jsonrpc(method='Player.Open', params={'item': {'playlistid': playlistid, 'position': len(items) - 1}})
+    return True
 
 
 def mark_watched(episodeid, playcount):

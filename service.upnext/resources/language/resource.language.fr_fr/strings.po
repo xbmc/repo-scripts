@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: service.upnext\n"
 "Report-Msgid-Bugs-To: https://github.com/im85288/service.upnext\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-01-15 09:09+0100\n"
+"PO-Revision-Date: 2026-11-11 09:00+0100\n"
 "Last-Translator: Kévin Commaille <zecakeh@pm.me>\n"
 "Language-Team: Français\n"
 "MIME-Version: 1.0\n"
@@ -98,27 +98,39 @@ msgstr "Prochain épisode"
 
 msgctxt "#30050"
 msgid "Next episode in $INFO[Window.Property(credits_remaining)] s"
-msgstr ""
+msgstr "Prochain épisode dans $INFO[Window.Property(credits_remaining)] s"
 
 msgctxt "#30051"
 msgid "Back: keep watching"
-msgstr ""
+msgstr "Retour : continuer à regarder"
 
 msgctxt "#30052"
 msgid "Skip intro"
-msgstr ""
+msgstr "Passer l’intro"
 
 msgctxt "#30053"
 msgid "Skip recap"
-msgstr ""
+msgstr "Passer le récapitulatif"
+
+msgctxt "#30054"
+msgid "Up next in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "À suivre dans [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+
+msgctxt "#30055"
+msgid "Next episode in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "Prochain épisode dans [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+
+msgctxt "#30056"
+msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
+msgstr "Continuer à regarder dans [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
 
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
-msgstr ""
+msgstr "[B]MODE DÉMO UP NEXT ACTIVÉ[/B]"
 
 msgctxt "#30061"
 msgid "[I]Episodes automatically skip to end.[/I]"
-msgstr ""
+msgstr "[I]Les épisodes passent automatiquement à la fin.[/I]"
 
 
 ### SETTINGS
@@ -140,7 +152,11 @@ msgstr "Afficher un bouton Arrêter au lieu d’un bouton Fermer"
 
 msgctxt "#30507"
 msgid "Use OK/Select for playback controls"
-msgstr ""
+msgstr "Utiliser OK/Sélectionner pour les commandes de lecture"
+
+msgctxt "#30508"
+msgid "Use arrows to seek; hold OK for Up Next buttons"
+msgstr "Utiliser les flèches pour avancer/reculer ; maintenir OK pour les boutons Up Next"
 
 msgctxt "#30600"
 msgid "Behaviour"
@@ -172,11 +188,11 @@ msgstr "Personnaliser la durée de la lecture automatique en fonction de la long
 
 msgctxt "#30613"
 msgid "All episodes  [COLOR gray]any length[/COLOR]"
-msgstr "Tous les épisodes  [COLOR gray]quelque soit la durée[/COLOR]"
+msgstr "Tous les épisodes  [COLOR gray]quelle que soit la durée[/COLOR]"
 
 msgctxt "#30615"
 msgid "Very short episodes  [COLOR gray]< 10 mins[/COLOR]"
-msgstr "Épdisodes très courts  [COLOR gray]< 10 min[/COLOR]"
+msgstr "Épisodes très courts  [COLOR gray]< 10 min[/COLOR]"
 
 msgctxt "#30617"
 msgid "Short episodes  [COLOR gray]> 10 mins[/COLOR]"
@@ -196,23 +212,51 @@ msgstr "Épisodes très longs  [COLOR gray]> 60 min[/COLOR]"
 
 msgctxt "#30625"
 msgid "Advance during credits after (seconds, 0 disables)"
-msgstr ""
+msgstr "Avancer pendant le générique après (secondes, 0 pour désactiver)"
 
 msgctxt "#30627"
 msgid "Intros and recaps"
-msgstr ""
+msgstr "Intros et récapitulatifs"
 
 msgctxt "#30629"
 msgid "Show a Skip button when the add-on marks them"
-msgstr ""
+msgstr "Afficher un bouton Passer lorsque l’add-on les repère"
 
 msgctxt "#30631"
 msgid "Skip intros automatically"
-msgstr ""
+msgstr "Passer les intros automatiquement"
 
 msgctxt "#30633"
 msgid "Skip recaps automatically"
-msgstr ""
+msgstr "Passer les récapitulatifs automatiquement"
+
+msgctxt "#30635"
+msgid "Ask if still watching after (minutes, 0 disables)"
+msgstr "Demander si vous regardez toujours après (minutes, 0 pour désactiver)"
+
+msgctxt "#30637"
+msgid "Ask if still watching after bedtime"
+msgstr "Demander si vous regardez toujours après l’heure du coucher"
+
+msgctxt "#30639"
+msgid "Bedtime hour"
+msgstr "Heure du coucher"
+
+msgctxt "#30641"
+msgid "Bedtime minute"
+msgstr "Minute du coucher"
+
+msgctxt "#30643"
+msgid "Mark an episode as watched when moving to the next one early"
+msgstr "Marquer un épisode comme vu en passant au suivant avant la fin"
+
+msgctxt "#30645"
+msgid "Continue a partly watched next episode where it was left"
+msgstr "Reprendre un épisode suivant partiellement vu là où il a été laissé"
+
+msgctxt "#30647"
+msgid "Pause the video while an add-on starts the next episode"
+msgstr "Mettre la vidéo en pause pendant qu’un add-on lance l’épisode suivant"
 
 msgctxt "#30700"
 msgid "Expert"
@@ -236,7 +280,7 @@ msgstr "Tester l’apparence de l’interface utilisateur"
 
 msgctxt "#30803"
 msgid "Enable DEMO mode"
-msgstr ""
+msgstr "Activer le mode DÉMO"
 
 msgctxt "#30805"
 msgid "Show an UpNext pop-up…"
@@ -256,4 +300,4 @@ msgstr "Afficher une notification StillWatchingSimple…"
 
 msgctxt "#30813"
 msgid "Test Skip button"
-msgstr ""
+msgstr "Tester le bouton Passer"

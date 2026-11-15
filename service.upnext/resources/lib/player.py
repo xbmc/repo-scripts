@@ -6,12 +6,20 @@ from api import Api
 from state import State
 from utils import get_setting_bool
 
+# Times the viewer stopped playback. It lives here rather than on UpNextPlayer because Kodi 22 doesn't
+# allow assigning class attributes of an xbmc.Player subclass.
+_STOP_COUNT = [0]
+
+
+def stop_count():
+    """Return how many times the viewer has stopped playback"""
+    return _STOP_COUNT[0]
+
 
 class UpNextPlayer(Player):
     """Service class for playback monitoring"""
     last_file = None
     track = False
-    stop_count = 0  # times the viewer stopped playback, shared by every instance
 
     def __init__(self):
         self.api = Api()
@@ -79,7 +87,7 @@ class UpNextPlayer(Player):
 
     def onPlayBackStopped(self):  # pylint: disable=invalid-name
         """Will be called when user stops playing a file"""
-        UpNextPlayer.stop_count += 1
+        _STOP_COUNT[0] += 1
         self.reset_queue()
         self.api.reset_addon_data()
         self.state = State()  # Reset state
