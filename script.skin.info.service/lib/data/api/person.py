@@ -146,6 +146,42 @@ def _convert_external_id(external_id: str, source: str, media_type: str) -> Opti
     return None
 
 
+def _episode_data(api: ApiTmdb, tmdb_id: int, dbid: int, abort_flag=None) -> Optional[dict]:
+    """Fetch a library episode's TMDB details, credits included, by its show's TMDB id."""
+    details = get_item_details('episode', dbid, ['season', 'episode'])
+    if not details:
+        log("Person", f"Failed to get episode details for dbid {dbid}", xbmc.LOGWARNING)
+        return None
+
+    season_num = details.get('season')
+    episode_num = details.get('episode')
+    if season_num is None or episode_num is None:
+        log("Person", f"Missing season/episode for dbid {dbid}", xbmc.LOGWARNING)
+        return None
+
+    episode_data = api.get_episode_details_extended(tmdb_id, season_num, episode_num,
+                                                    abort_flag=abort_flag)
+    if not episode_data or 'credits' not in episode_data:
+        log("Person", f"No episode data found for TV {tmdb_id} S{season_num}E{episode_num}",
+            xbmc.LOGWARNING)
+        return None
+    return episode_data
+
+
+def _title_crew(api: ApiTmdb, tmdb_id: int, dbtype: str, dbid: int = 0,
+                abort_flag=None) -> Optional[list]:
+    """Get the crew of a movie, show or library episode; None when no TMDB credits are found."""
+    if dbtype == 'episode' and dbid:
+        episode_data = _episode_data(api, tmdb_id, dbid, abort_flag)
+        return (episode_data['credits'].get('crew') or []) if episode_data else None
+
+    media_type = "movie" if dbtype == "movie" else "tvshow"
+    data = api.get_complete_data(media_type, tmdb_id, abort_flag=abort_flag)
+    if not data or "credits" not in data:
+        return None
+    return data["credits"].get("crew") or []
+
+
 def match_actor_to_person_id(actor_name: str, actor_role: str, tmdb_id: int, dbtype: str,
                              dbid: int = 0, auto_search: bool = True,
                              online: bool = False) -> Optional[int]:
@@ -155,22 +191,8 @@ def match_actor_to_person_id(actor_name: str, actor_role: str, tmdb_id: int, dbt
     crew: list = []
 
     if dbtype == 'episode':
-        details = get_item_details(dbtype, dbid, ['season', 'episode'])
-        if not details:
-            log("Person", f"Failed to get episode details for dbid {dbid}", xbmc.LOGWARNING)
-            return None
-
-        season_num = details.get('season')
-        episode_num = details.get('episode')
-        if season_num is None or episode_num is None:
-            log("Person", f"Missing season/episode for dbid {dbid}", xbmc.LOGWARNING)
-            return None
-
-        episode_data = api.get_episode_details_extended(tmdb_id, season_num, episode_num)
-        if not episode_data or 'credits' not in episode_data:
-            log("Person",
-                f"No episode data found for TV {tmdb_id} S{season_num}E{episode_num}",
-                xbmc.LOGWARNING)
+        episode_data = _episode_data(api, tmdb_id, dbid)
+        if not episode_data:
             return None
 
         episode_cast = episode_data.get('credits', {}).get('cast', [])
@@ -426,7 +448,8 @@ def match_crew_to_person_id(
     crew_type: str,
     tmdb_id: int,
     dbtype: str,
-    auto_search: bool = True
+    auto_search: bool = True,
+    dbid: int = 0
 ) -> Optional[int]:
     """Match a director, writer or creator to a TMDB person id; may search on a miss."""
     api = ApiTmdb()
@@ -455,14 +478,10 @@ def match_crew_to_person_id(
             xbmc.LOGDEBUG)
 
     else:
-        media_type = "movie" if dbtype == "movie" else "tvshow"
-        data = api.get_complete_data(media_type, tmdb_id)
-
-        if not data or "credits" not in data:
-            log("Person", f"No credits found for {media_type} {tmdb_id}", xbmc.LOGWARNING)
+        crew = _title_crew(api, tmdb_id, dbtype, dbid)
+        if crew is None:
+            log("Person", f"No credits found for {dbtype} {tmdb_id}", xbmc.LOGWARNING)
             return None
-
-        crew = data["credits"].get("crew") or []
 
         if crew_type not in _CREW_JOBS:
             log("Person", f"Unknown crew_type '{crew_type}'", xbmc.LOGWARNING)
@@ -478,7 +497,7 @@ def match_crew_to_person_id(
             return person_id
 
         log("Person",
-            f"{crew_type.title()} '{crew_name}' not found in crew for {media_type} {tmdb_id}",
+            f"{crew_type.title()} '{crew_name}' not found in crew for {dbtype} {tmdb_id}",
             xbmc.LOGDEBUG)
 
     if auto_search:
@@ -491,7 +510,7 @@ def match_crew_to_person_id(
 
 _CREW_JOBS = {
     "director": {"Director"},
-    "writer": {"Writer", "Screenplay", "Story", "Original Story"},
+    "writer": {"Writer", "Screenplay", "Teleplay", "Story", "Original Story"},
 }
 
 
@@ -525,7 +544,8 @@ def get_crew_from_tmdb(
     crew_type: str,
     tmdb_id: int,
     dbtype: str,
-    abort_flag=None
+    abort_flag=None,
+    dbid: int = 0
 ) -> list[dict]:
     """Get one crew type from TMDB, or the whole crew deduped with their jobs joined."""
     api = ApiTmdb()
@@ -550,13 +570,7 @@ def get_crew_from_tmdb(
             for c in created_by if c.get("id")
         ]
 
-    media_type = "movie" if dbtype == "movie" else "tvshow"
-    data = api.get_complete_data(media_type, tmdb_id, abort_flag=abort_flag)
-
-    if not data or "credits" not in data:
-        return []
-
-    crew = data["credits"].get("crew") or []
+    crew = _title_crew(api, tmdb_id, dbtype, dbid, abort_flag) or []
 
     job_filter = _CREW_JOBS.get(crew_type)
     if job_filter is None and crew_type not in ("", "all"):
