@@ -154,6 +154,15 @@ def _handle_exec_search(handle: int, params: dict) -> None:
     xbmc.executebuiltin(f'RunScript(script.skin.info.service,action=tmdb_search,dbtype={dbtype})')
 
 
+def _handle_exec_video_info(handle: int, params: dict) -> None:
+    """End the directory, then hand off to the video info dialog for one TMDB item."""
+    dbtype = params.get('dbtype', ['movie'])[0]
+    tmdb_id = params.get('tmdb_id', [''])[0]
+    xbmcplugin.endOfDirectory(handle, succeeded=False)
+    xbmc.executebuiltin(f'RunScript(script.skin.info.service,action=dialog_video_info,'
+                        f'dbtype={dbtype},tmdb_id={tmdb_id})')
+
+
 def _handle_path_stats(handle: int, params: dict) -> None:
     from lib.plugin.pathstats import handle_path_stats
     handle_path_stats(handle, params)
@@ -378,6 +387,7 @@ _HANDLERS = {
     'menu_favourites': _wrap_menu(_handle_favourites_menu),
     'exec_tools': _handle_exec_tools,
     'exec_search': _handle_exec_search,
+    'exec_video_info': _handle_exec_video_info,
     'get_cast': _handle_get_cast,
     'get_cast_player': _handle_get_cast_player,
     'path_stats': _handle_path_stats,

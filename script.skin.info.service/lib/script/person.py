@@ -58,7 +58,7 @@ def _parent_tmdb_id(tmdb_id: Optional[str], dbtype: str) -> Optional[int]:
 def resolve_via_crew(person_api, name: str, dbid: Optional[str], dbtype: str, crew: str,
                      separator: str, auto_search: bool,
                      tmdb_id: Optional[str] = None) -> Optional[tuple]:
-    """Resolve `(person_id, name)` via TMDB crew listing. Returns None on failure."""
+    """Resolve `(person_id, name)` via TMDB crew listing, may ask the user; None on failure."""
     if crew not in ('director', 'writer', 'creator'):
         log(
             "General",
@@ -70,6 +70,7 @@ def resolve_via_crew(person_api, name: str, dbid: Optional[str], dbtype: str, cr
     if dbtype == 'set':
         return _resolve_set_crew(person_api, dbid, crew, name, separator, auto_search)
 
+    dbid_int = 0
     parent_tmdb_id = _parent_tmdb_id(tmdb_id, dbtype)
     if not parent_tmdb_id:
         if not dbid:
@@ -90,10 +91,10 @@ def resolve_via_crew(person_api, name: str, dbid: Optional[str], dbtype: str, cr
             return None
 
     if not name:
-        return _resolve_crew_from_tmdb(person_api, parent_tmdb_id, dbtype, crew)
+        return _resolve_crew_from_tmdb(person_api, parent_tmdb_id, dbtype, crew, dbid_int)
 
     return _resolve_crew_from_name(person_api, parent_tmdb_id, dbtype, crew, name, separator,
-                                   auto_search)
+                                   auto_search, dbid_int)
 
 
 def _set_credits(setid: Optional[str], crew: str) -> Dict[str, int]:
@@ -200,9 +201,10 @@ def _pick_crew(crew: str, members: List[dict]) -> Optional[dict]:
     return members[selected] if selected >= 0 else None
 
 
-def _resolve_crew_from_tmdb(person_api, tmdb_id, dbtype: str, crew: str) -> Optional[tuple]:
+def _resolve_crew_from_tmdb(person_api, tmdb_id, dbtype: str, crew: str,
+                            dbid: int) -> Optional[tuple]:
     """Resolve a crew member from TMDB's crew list, asking only when there are several."""
-    crew_list = person_api.get_crew_from_tmdb(crew, tmdb_id, dbtype)
+    crew_list = person_api.get_crew_from_tmdb(crew, tmdb_id, dbtype, dbid=dbid)
     if not crew_list:
         log("General", f"person_info: No {crew}s found for TMDB {tmdb_id}", xbmc.LOGDEBUG)
         return None
@@ -233,15 +235,15 @@ def _resolve_crew_from_tmdb(person_api, tmdb_id, dbtype: str, crew: str) -> Opti
 
 
 def _resolve_crew_from_name(person_api, tmdb_id, dbtype: str, crew: str, name: str,
-                            separator: str, auto_search: bool) -> Optional[tuple]:
-    """Match a crew member by name (with optional separator-split picker)."""
+                            separator: str, auto_search: bool, dbid: int) -> Optional[tuple]:
+    """Resolve a crew member by name, asking when several are listed; may search on a miss."""
     selected_name = pick_name(name, separator, _crew_heading(crew))
     if not selected_name:
         log("General", f"person_info: No {crew} name picked", xbmc.LOGDEBUG)
         return None
 
     person_id = person_api.match_crew_to_person_id(
-        selected_name, crew, tmdb_id, dbtype, auto_search=auto_search
+        selected_name, crew, tmdb_id, dbtype, auto_search=auto_search, dbid=dbid
     )
     if not person_id:
         log("General", f"person_info: Could not match {crew} '{selected_name}'", xbmc.LOGDEBUG)

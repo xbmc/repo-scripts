@@ -1,15 +1,12 @@
 """Widget handlers that resolve Kodi favourites back to library items."""
 from __future__ import annotations
 
-import re
 from typing import Final
 
 import xbmc
 import xbmcplugin
 
 from lib.kodi.client import ADDON, request, extract_result
-
-_WINDOW_TVSHOW = re.compile(r'videodb://tvshows/titles/(\d+)')
 
 _MEDIA_TYPES = ('movie', 'episode', 'musicvideo')
 
@@ -71,8 +68,8 @@ def handle_favourites(handle: int, params: dict) -> None:
     from lib.plugin.widgets.music import _create_musicvideo_listitem, _MUSICVIDEO_PROPERTIES
     from lib.plugin.widgets.video import (_create_movie_listitem, _create_tvshow_listitem,
                                           _episode_item_from_show, _tvshows_by_id,
-                                          _EPISODE_PROPERTIES, _FULL_SHOW_PROPERTIES,
-                                          _MOVIE_PROPERTIES)
+                                          _EPISODE_PROPERTIES, _FAVOURITE_TVSHOW,
+                                          _FULL_SHOW_PROPERTIES, _MOVIE_PROPERTIES)
 
     dbtype = params.get('dbtype', [''])[0].lower()
     limit = int(params.get('limit', ['0'])[0])
@@ -81,7 +78,7 @@ def handle_favourites(handle: int, params: dict) -> None:
     favourites = _favourite_entries()
     wanted_shows, wanted_paths = set(), []
     for favourite in favourites:
-        match = _WINDOW_TVSHOW.search(favourite.get('windowparameter') or '')
+        match = _FAVOURITE_TVSHOW.search(favourite.get('windowparameter') or '')
         if match:
             wanted_shows.add(int(match.group(1)))
         elif favourite.get('path'):
@@ -107,7 +104,7 @@ def handle_favourites(handle: int, params: dict) -> None:
         if limit and added >= limit:
             break
 
-        match = _WINDOW_TVSHOW.search(favourite.get('windowparameter') or '')
+        match = _FAVOURITE_TVSHOW.search(favourite.get('windowparameter') or '')
         if match:
             # a favourited season carries its show's id too
             show_id = int(match.group(1))

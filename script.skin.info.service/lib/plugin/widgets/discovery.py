@@ -145,7 +145,7 @@ def _normalize_trakt_item(media: dict, media_type: str) -> dict:
 def _create_listitem(normalized: dict,
                      library_match: Optional[Dict[str, object]]
                      ) -> Tuple[str, xbmcgui.ListItem, bool]:
-    """Build a `(url, ListItem, is_folder)` triple for one normalized discovery result."""
+    """Create a `(url, ListItem, is_folder)` triple for one normalized discovery result."""
     title = normalized.get("title", "")
     listitem = xbmcgui.ListItem(title, offscreen=True)
     video_tag = listitem.getVideoInfoTag()
@@ -196,6 +196,10 @@ def _create_listitem(normalized: dict,
         video_tag.setDbId(dbid)
         listitem.setProperty("isinlibrary", "true")
         url = str(library_match.get("file", ""))
+    elif normalized.get("tmdb_id"):
+        url = (f"plugin://script.skin.info.service/?action=exec_video_info"
+               f"&dbtype={'movie' if is_movie else 'tvshow'}&tmdb_id={normalized['tmdb_id']}")
+        is_folder = False
 
     return url, listitem, is_folder
 
