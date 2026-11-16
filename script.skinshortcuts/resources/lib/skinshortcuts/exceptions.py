@@ -8,7 +8,7 @@ class SkinShortcutsError(Exception):
 
 
 class ConfigError(SkinShortcutsError):
-    """Error in configuration file."""
+    """Error in a configuration file, already reported to the skinner when raised."""
 
     def __init__(self, file_path: str, message: str, line: int | None = None):
         """Prefix the message with the file, and the line when it is known."""

@@ -16,6 +16,12 @@ except ImportError:
 
 ADDON_PATTERN = re.compile(r"\$ADDON\[([^\s\]]+)\s+(\d+)\]")
 LOCALIZE_PATTERN = re.compile(r"\$LOCALIZE\[(\d+)\]")
+NUMBER_PATTERN = re.compile(r"\$NUMBER\[([0-9]+)\]")
+
+
+def number_label(text: str) -> str:
+    """Wrap a digit-only label in $NUMBER; Kodi reads a bare one as a string ID."""
+    return f"$NUMBER[{text}]" if text.isascii() and text.isdigit() else text
 
 
 def LANGUAGE(string_id: int) -> str:
@@ -26,11 +32,10 @@ def LANGUAGE(string_id: int) -> str:
 
 
 def resolve_label(label: str) -> str:
-    """Resolve a $LOCALIZE, $ADDON or bare string ID to its localized value; text passes through."""
+    """Resolve $LOCALIZE, $ADDON, $NUMBER or bare string ID; plain text passes through."""
     if not label or not IN_KODI:
         return label
 
-    # Must check $ADDON before generic $ since getInfoLabel doesn't support $ADDON
     if label.startswith("$ADDON["):
         match = ADDON_PATTERN.match(label)
         if match:
@@ -54,13 +59,17 @@ def resolve_label(label: str) -> str:
 
         return LOCALIZE_PATTERN.sub(_resolve, label)
 
+    number = NUMBER_PATTERN.fullmatch(label)
+    if number:
+        return number.group(1)
+
     if label.startswith("$"):
         result = xbmc.getInfoLabel(label)
         if result:
             return result
         return label
 
-    if label.isdigit():
+    if label.isdecimal():
         num = int(label)
         if 32000 <= num < 33000:
             result = xbmcaddon.Addon().getLocalizedString(num)

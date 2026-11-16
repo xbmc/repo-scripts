@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import os
 import shutil
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -18,19 +18,18 @@ except ImportError:
     IN_KODI = False
 
 from .conditions import check_visible
-from .constants import DEFAULT_ICON
+from .constants import DATA_DIR, DEFAULT_ICON
 from .log import get_logger
 from .models.menu import Action, IconOverrides, Menu, MenuItem
-
 
 log = get_logger("UserData")
 
 
 def get_userdata_path() -> str:
-    """Get path to userdata file for current skin."""
+    """Get path to userdata file for current skin; empty outside Kodi."""
     if IN_KODI:
         skin_dir = xbmc.getSkinDir()
-        data_path = xbmcvfs.translatePath("special://profile/addon_data/script.skinshortcuts/")
+        data_path = xbmcvfs.translatePath(DATA_DIR)
         return str(Path(data_path) / f"{skin_dir}.userdata.json")
     return ""
 
@@ -212,25 +211,28 @@ def load_userdata(path: str | None = None) -> UserData:
 
 
 def save_userdata(userdata: UserData, path: str | None = None) -> bool:
-    """Save user data to JSON file."""
+    """Save user data to JSON file, retrying once; False when it fails."""
     if path is None:
         path = get_userdata_path()
 
     if not path:
         return False
 
-    try:
-        file_path = Path(path)
-        file_path.parent.mkdir(parents=True, exist_ok=True)
-        # write beside the target and swap, so a kill mid-write cannot truncate userdata
-        temp_path = file_path.with_name(f"{file_path.name}.tmp")
-        with open(temp_path, "w", encoding="utf-8") as f:
-            json.dump(userdata.to_dict(), f, indent=2)
-        os.replace(temp_path, file_path)
-        return True
-    except OSError as e:
-        log.error(f"Failed to save userdata to {path}: {e}")
-        return False
+    file_path = Path(path)
+    temp_path = file_path.with_name(f"{file_path.name}.tmp")
+    for attempt in range(2):
+        try:
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(temp_path, "w", encoding="utf-8") as f:
+                json.dump(userdata.to_dict(), f, indent=2)
+            os.replace(temp_path, file_path)
+            return True
+        except OSError as e:
+            # one retry for a transient lock from an indexer, antivirus or sync client
+            if attempt or (IN_KODI and xbmc.Monitor().waitForAbort(0.5)):
+                log.error(f"Failed to save userdata to {path}: {e}")
+                return False
+    return False
 
 
 def merge_items(
@@ -298,30 +300,14 @@ def merge_menu(
     hidden = {
         item.name for item in default_menu.items if not check_visible(item.dialog_visible)
     }
-    return Menu(
-        name=default_menu.name,
-        items=[
-            item for item in merge_items(default_menu, diff, icon_overrides)
-            if item.name not in hidden
-        ],
-        defaults=default_menu.defaults,
-        container=default_menu.container,
-        allow=default_menu.allow,
-        is_submenu=default_menu.is_submenu,
-        menu_type=default_menu.menu_type,
-        controltype=default_menu.controltype,
-        icons=default_menu.icons,
-        startid=default_menu.startid,
-        template_only=default_menu.template_only,
-        build=default_menu.build,
-        action=default_menu.action,
-        standalone=default_menu.standalone,
-        submenu_path=default_menu.submenu_path,
-    )
+    return replace(default_menu, items=[
+        item for item in merge_items(default_menu, diff, icon_overrides)
+        if item.name not in hidden
+    ])
 
 
 def _apply_diff(item: MenuItem, diff: MenuItemDiff) -> MenuItem:
-    """Apply a user diff to a menu item."""
+    """Apply a user diff to a menu item, returning a new item."""
     properties = {**item.properties, **diff.properties}
     for key in diff.removed_properties:
         properties.pop(key, None)
@@ -338,7 +324,7 @@ def _apply_diff(item: MenuItem, diff: MenuItemDiff) -> MenuItem:
         protection=item.protection,
         properties=properties,
         submenu=diff.submenu if diff.submenu is not None else item.submenu,
-        original_action=item.action,  # Store original for protection matching
+        original_action=item.original_action,
         includes=item.includes,
     )
 
@@ -346,7 +332,7 @@ def _apply_diff(item: MenuItem, diff: MenuItemDiff) -> MenuItem:
 def _create_item_from_diff(
     diff: MenuItemDiff, icon_overrides: IconOverrides | None = None
 ) -> MenuItem:
-    """Create a new menu item from a user diff."""
+    """Create a new menu item from a user diff, filling unset fields with defaults."""
     fallback = (icon_overrides or IconOverrides()).get(DEFAULT_ICON, DEFAULT_ICON)
     return MenuItem(
         name=diff.name,
@@ -355,6 +341,6 @@ def _create_item_from_diff(
         icon=diff.icon or fallback,
         visible=diff.visible or "",
         disabled=diff.disabled or False,
-        properties=diff.properties,
+        properties=dict(diff.properties),
         submenu=diff.submenu,
     )

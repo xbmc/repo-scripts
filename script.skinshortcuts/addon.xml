@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.5" provider-name="MikeSiLVO">
+<addon id="script.skinshortcuts" name="Skin Shortcuts" version="3.0.6" provider-name="MikeSiLVO">
     <requires>
         <import addon="xbmc.python" version="3.0.2"/>
     </requires>
     <extension point="xbmc.python.script" library="default.py"/>
     <extension point="xbmc.addon.metadata">
         <news>
-3.0.5
-  - Fix: a skin made for Skin Shortcuts v2 shows a modal leading to the skin setting or Add-ons
-  - Fix: the menu shows on the first start after a Kodi upgrade
-  - Add: a visible condition on property options
-  - Add: more reset labels for skins
-  - Add: template content that cannot be built is reported, with the fix in the log
-  - Fix: PVR channel shortcuts play the channel
-  - Fix: edits to an item a visible condition hides are kept on save
-  - Fix: a damaged userdata file falls back to skin defaults, keeping a .bak copy
-  - Fix: picking a new shortcut replaces the previous item's visible condition
-  - Fix: custom widget includes are built for every widget slot
-  - Fix: editing in a subdialog stays on the item it was opened for
+3.0.6
+  - Add: broken or repeated definitions in the config files are reported, with the fix in the log
+  - Add: property buttons take a heading for every dialog they open
+  - Add: schema names are case-insensitive
+  - Deprecated: title on property buttons, use heading instead; title will be removed in a future version
+  - Deprecated: template_only, use templateOnly instead; template_only will be removed in a future version
+  - Fix: widgets and backgrounds from skin items and menu defaults keep their path, label and type
+  - Fix: custom widget menus add widgets and survive a submenu reset
+  - Fix: a reset or restored item shows its widget and background straight away
+  - Fix: closing a subdialog opens its menu without showing the main dialog first
+  - Fix: items with a visible attribute show or hide when its result changes
+  - Fix: digit-only labels and the id property are wrapped in $NUMBER
+  - Fix: actor, director, studio and tag shortcuts open the right library list
+  - Fix: icon overrides apply to shortcut groupings and grouped backgrounds
+  - Fix: an allow element leaves unlisted features allowed
+  - Fix: special:// paths work in the path and output arguments
+  - Fix: a templates.xml with only submenu templates builds them
+  - Fix: true/false attribute values are case-insensitive
+  - Fix: addons content with a games target lists game add-ons
   - Misc fixes and improvements
 
         </news>
@@ -36,6 +43,7 @@
         <summary lang="it_IT">Menu personalizzati, proprietà e grafica per le skin</summary>
         <summary lang="pl_PL">Niestandardowe menu, właściwości i grafika dla skór</summary>
         <summary lang="ru_RU">Пользовательские меню, свойства и иллюстрации для обложек</summary>
+        <summary lang="sv_SE">Anpassade menyer, egenskaper och bilder för skal</summary>
         <summary lang="zh_CN">皮肤自定义菜单、属性与艺术图</summary>
         <description lang="ar_SA">إضافة مخصصه للمظهر لتوفير إدارة بسيطة للودجيت &quot;الأقسام&quot; و الاختصارات على الشاشة (تتطلب دعم المظهر لها)</description>
         <description lang="bs_BA">Dodatak za skinove koji omogućava jednostavno upravljanje i prikaz korisničkih prečica (potrebna je podrška za skinove)</description>

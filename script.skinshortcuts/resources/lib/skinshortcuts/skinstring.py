@@ -12,6 +12,7 @@ try:
 except ImportError:
     IN_KODI = False
 
+from .constants import MENUS_FILE, WIDGETS_FILE
 from .dialog.pickers import PickersMixin
 from .loaders.menu import load_menus
 from .loaders.widget import load_widgets
@@ -60,40 +61,29 @@ def pick_widget_skinstring(shortcuts_path: str, params: dict[str, str]) -> None:
     if not IN_KODI:
         return
 
-    widget_config = load_widgets(Path(shortcuts_path) / "widgets.xml")
-    menu_config = load_menus(Path(shortcuts_path) / "menus.xml")
+    widget_config = load_widgets(Path(shortcuts_path) / WIDGETS_FILE)
+    menu_config = load_menus(Path(shortcuts_path) / MENUS_FILE)
     picker = _StandalonePicker(shortcuts_path, menu_config.icon_overrides)
 
-    if widget_config.groupings:
-        result = picker._pick_widget_from_groups(widget_config.groupings, {})
-    elif widget_config.widgets:
-        flat = [(w.name, w.label, w.icon) for w in widget_config.widgets]
-        result = picker._pick_widget_flat(flat, {})
-    else:
+    if not widget_config.groupings:
         xbmcgui.Dialog().notification(LANGUAGE(32147), LANGUAGE(32148))
         return
 
+    result = picker._pick_widget_from_groups(widget_config.groupings, {})
     if result is None:
         return
 
-    skin_path = params.get("skinPath", "")
-    skin_label = params.get("skinLabel", "")
-    skin_type = params.get("skinType", "")
-    skin_target = params.get("skinTarget", "")
-
+    keys = [params.get(k, "") for k in ("skinPath", "skinLabel", "skinType", "skinTarget")]
     if result is False:
-        for key in (skin_path, skin_label, skin_type, skin_target):
-            if key:
-                xbmc.executebuiltin(f"Skin.Reset({key})")
-        return
+        values = ["", "", "", ""]
+    else:
+        values = [result.path, resolve_label(result.label), result.type, result.target]
 
-    if skin_path and result.path:
-        xbmc.executebuiltin(f"Skin.SetString({skin_path},{result.path})")
-    if skin_label and result.label:
-        xbmc.executebuiltin(
-            f"Skin.SetString({skin_label},{resolve_label(result.label)})"
-        )
-    if skin_type and result.type:
-        xbmc.executebuiltin(f"Skin.SetString({skin_type},{result.type})")
-    if skin_target and result.target:
-        xbmc.executebuiltin(f"Skin.SetString({skin_target},{result.target})")
+    for key, value in zip(keys, values, strict=True):
+        if not key:
+            continue
+        if value:
+            quoted = value.replace("\\", "\\\\").replace('"', '\\"')
+            xbmc.executebuiltin(f'Skin.SetString({key},"{quoted}")')
+        else:
+            xbmc.executebuiltin(f"Skin.Reset({key})")

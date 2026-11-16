@@ -23,7 +23,6 @@ class ViewExpressionBuilder:
         self.userdata = userdata
         self.prefix = config.prefix
         self._view_conditions: dict[str, list[str]] = {}
-        self._content_has_overrides: set[str] = set()
 
     def build(self) -> list[ET.Element]:
         """Build all view expressions."""
@@ -32,13 +31,11 @@ class ViewExpressionBuilder:
 
         expressions: list[ET.Element] = []
         self._view_conditions = {v.id: [] for v in self.config.views}
-        self._content_has_overrides.clear()
 
         for content in self.config.content_rules:
             plugin_overrides = self._get_effective_plugin_overrides(content)
             if plugin_overrides:
                 content_name = _sanitize_name(content.name)
-                self._content_has_overrides.add(content_name)
                 expressions.extend(self._build_plugin_helpers(content_name, plugin_overrides))
 
             self._collect_view_conditions(content, plugin_overrides)

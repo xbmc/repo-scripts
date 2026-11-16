@@ -14,18 +14,17 @@ from ..models.background import (
     BrowseSource,
     PlaylistSource,
 )
+from ..models.menu import IconOverrides
 from .base import (
     get_attr,
     get_bool,
     get_text,
     iter_nested,
-    parse_content,
     parse_name_overrides,
     parse_xml,
+    report_missing,
     warn_duplicate_names,
 )
-
-from ..models.menu import IconOverrides
 
 TYPE_MAP = {
     "static": BackgroundType.STATIC,
@@ -62,12 +61,15 @@ def load_backgrounds(
     for child in root:
         if child.tag == "background":
             bg = _parse_background(child, str(path), overrides)
-            backgrounds.append(bg)
-            groupings.append(bg)
+            if bg:
+                backgrounds.append(bg)
+                groupings.append(bg)
         elif child.tag == "group":
-            group = _parse_background_group(child, str(path))
+            group = _parse_background_group(child, str(path), overrides)
             if group:
                 groupings.append(group)
+        elif child.tag == "content":
+            _report_content(child, str(path))
 
     warn_duplicate_names(
         (b.name for b in iter_nested(groupings, Background, BackgroundGroup)),
@@ -78,28 +80,29 @@ def load_backgrounds(
     return BackgroundConfig(
         backgrounds=backgrounds,
         groupings=groupings,
-        overrides=parse_name_overrides(root, "background"),
+        overrides=parse_name_overrides(root, "background", path),
     )
 
 
 def _parse_background(
     elem, path: str, icon_overrides: IconOverrides | None = None
-) -> Background:
-    """Parse a background element; name and label are required."""
+) -> Background | None:
+    """Parse a background, reporting a missing field; drops path beside browse sources."""
     bg_name = get_attr(elem, "name")
-    if not bg_name:
-        raise BackgroundConfigError(path, "Background missing 'name' attribute")
-
     label = get_attr(elem, "label")
-    if not label:
-        raise BackgroundConfigError(path, f"Background '{bg_name}' missing 'label' attribute")
-
     bg_path = get_text(elem, "path")
     type_str = get_attr(elem, "type", "static")
     bg_type = TYPE_MAP.get(type_str.lower(), BackgroundType.STATIC)
 
+    if not bg_name:
+        report_missing("Background Error", path, elem, "name")
+        return None
+    if not label:
+        report_missing("Background Error", path, elem, "label")
+        return None
     if not bg_path and bg_type not in OPTIONAL_PATH_TYPES:
-        raise BackgroundConfigError(path, f"Background '{bg_name}' missing <path>")
+        report_missing("Background Error", path, elem, "<path>")
+        return None
 
     if (
         bg_path
@@ -121,6 +124,12 @@ def _parse_background(
         source_label = get_attr(source_elem, "label", "")
         source_path = source_elem.text.strip() if source_elem.text else ""
         if not source_path:
+            notify(
+                "Background Error",
+                f"'{bg_name}' has an empty source",
+                f'{path}: <background name="{bg_name}"> has a <source> with no path; source '
+                "skipped; write the path as its text",
+            )
             continue
 
         if bg_type in (BackgroundType.BROWSE, BackgroundType.MULTI):
@@ -153,18 +162,28 @@ def _parse_background(
     )
 
 
-def _parse_background_group(elem, path: str) -> BackgroundGroup | None:
-    """Parse a background group element (supports nested groups, backgrounds, and content)."""
+def _report_content(elem, path: str, group: str = "") -> None:
+    """Report a <content> element, which backgrounds.xml does not support; the caller skips it."""
+    source = get_attr(elem, "source")
+    owner = f"group '{group}'" if group else "the root"
+    notify(
+        "Background Error",
+        f"'{group or 'backgrounds'}' uses <content>",
+        f"{path}: <content source=\"{source}\"> in {owner} is not supported; skipped; "
+        "use a playlist or browse background with <source>",
+    )
+
+
+def _parse_background_group(
+    elem, path: str, icon_overrides: IconOverrides | None = None
+) -> BackgroundGroup | None:
+    """Parse a background group element (supports nested groups and backgrounds)."""
     group_name = get_attr(elem, "name")
     label = get_attr(elem, "label")
     flat = get_bool(elem, "flat")
 
     if not group_name:
-        notify(
-            "Background Group Error",
-            "group missing 'name'",
-            f"{path}: <group> has no name; group skipped; add name=\"...\"",
-        )
+        report_missing("Background Group Error", path, elem, "name")
         return None
     if not label and not flat:
         notify(
@@ -182,16 +201,15 @@ def _parse_background_group(elem, path: str) -> BackgroundGroup | None:
 
     for child in elem:
         if child.tag == "background":
-            bg = _parse_background(child, path)
-            items.append(bg)
+            bg = _parse_background(child, path, icon_overrides)
+            if bg:
+                items.append(bg)
         elif child.tag == "group":
-            nested = _parse_background_group(child, path)
+            nested = _parse_background_group(child, path, icon_overrides)
             if nested:
                 items.append(nested)
         elif child.tag == "content":
-            content = parse_content(child)
-            if content:
-                items.append(content)
+            _report_content(child, path, group_name)
 
     return BackgroundGroup(
         name=group_name,

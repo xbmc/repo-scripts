@@ -3,11 +3,19 @@
 from __future__ import annotations
 
 import copy
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from itertools import chain
 from pathlib import Path
 
 from .builders.includes import IncludesBuilder
+from .constants import (
+    BACKGROUNDS_FILE,
+    MENUS_FILE,
+    PROPERTIES_FILE,
+    TEMPLATES_FILE,
+    VIEWS_FILE,
+    WIDGETS_FILE,
+)
 from .loaders.background import load_backgrounds
 from .loaders.base import iter_nested
 from .loaders.menu import load_menus
@@ -17,7 +25,7 @@ from .loaders.views import load_views
 from .loaders.widget import load_widgets
 from .migrations import apply_overrides
 from .models.background import Background, BackgroundConfig, BackgroundGroup
-from .models.menu import IconOverrides, Menu, MenuItem, SubDialog
+from .models.menu import IconOverrides, Menu, MenuItem, SubDialog, submenu_key
 from .models.override import Override
 from .models.property import PropertySchema
 from .models.template import TemplateSchema
@@ -45,6 +53,7 @@ class SkinConfig:
     property_schema: PropertySchema = field(default_factory=PropertySchema)
     subdialogs: list[SubDialog] = field(default_factory=list)
     icon_overrides: IconOverrides = field(default_factory=IconOverrides)
+    action_overrides: list[Override] = field(default_factory=list)
     submenu_path_all: bool = False
     userdata_path: str | None = None
     migrated: int = 0
@@ -81,17 +90,17 @@ class SkinConfig:
         load_user: bool = True,
         userdata_path: str | None = None,
     ) -> SkinConfig:
-        """Load configuration from shortcuts directory."""
+        """Load configuration from shortcuts directory, merged with userdata unless skipped."""
         path = Path(shortcuts_path)
 
-        menu_config = load_menus(path / "menus.xml")
-        widgets = load_widgets(path / "widgets.xml")
+        menu_config = load_menus(path / MENUS_FILE)
+        widgets = load_widgets(path / WIDGETS_FILE)
         backgrounds = load_backgrounds(
-            path / "backgrounds.xml", icon_overrides=menu_config.icon_overrides
+            path / BACKGROUNDS_FILE, icon_overrides=menu_config.icon_overrides
         )
-        templates = load_templates(path / "templates.xml")
-        property_schema = load_properties(path / "properties.xml")
-        views = load_views(path / "views.xml")
+        templates = load_templates(path / TEMPLATES_FILE)
+        property_schema = load_properties(path / PROPERTIES_FILE)
+        views = load_views(path / VIEWS_FILE)
 
         userdata = load_userdata(userdata_path) if load_user else UserData()
         migrated = (
@@ -127,21 +136,18 @@ class SkinConfig:
                 merged = (
                     merge_menu(menu, diff, menu_config.icon_overrides) if diff else menu
                 )
-                _apply_action_overrides(merged, menu_config.action_overrides)
                 menus.append(merged)
                 continue
             diff = userdata.menus.get(menu.name)
             merged = merge_menu(menu, diff, menu_config.icon_overrides)
-            _apply_action_overrides(merged, menu_config.action_overrides)
             menus.append(merged)
 
             for item in merged.items:
                 template_name = item.submenu or ""
                 template = template_map.get(template_name) if template_name else None
-                key = f"{merged.name}/{item.name}"
+                key = submenu_key(merged.name, item.name)
                 instance_diff = userdata.menus.get(key)
                 if template is None:
-                    # No template means item owns its submenu without seed defaults.
                     if instance_diff is None:
                         continue
                     instance = Menu(name=key, is_submenu=True)
@@ -153,18 +159,18 @@ class SkinConfig:
                     instance = merge_menu(template, instance_diff, menu_config.icon_overrides)
                     instance.name = key
                     instance.template_origin = template_name
-                _apply_action_overrides(instance, menu_config.action_overrides)
                 menus.append(instance)
 
         for menu_name, menu_diff in userdata.menus.items():
             if menu_name in skin_menu_names:
                 continue
-            # Per-item submenu entries already expanded above; skip duplicates.
+            # per-item submenu entries already expanded above; skip duplicates
             if "/" in menu_name:
                 parent_name, _, _ = menu_name.partition("/")
                 if parent_name in skin_menu_names:
                     continue
-            user_menu = Menu(name=menu_name, is_submenu=True)
+            menu_type = "widgets" if menu_name.startswith("custom-") else None
+            user_menu = Menu(name=menu_name, is_submenu=True, menu_type=menu_type)
             for item_diff in menu_diff.items:
                 user_menu.items.append(
                     _create_item_from_diff(item_diff, menu_config.icon_overrides)
@@ -182,6 +188,7 @@ class SkinConfig:
             property_schema=property_schema,
             subdialogs=menu_config.subdialogs,
             icon_overrides=menu_config.icon_overrides,
+            action_overrides=menu_config.action_overrides,
             submenu_path_all=menu_config.submenu_path_all,
             userdata_path=userdata_path,
             migrated=migrated,
@@ -218,9 +225,10 @@ class SkinConfig:
     def build_includes_from_menus(
         self, output_path: str | Path, menus: list[Menu]
     ) -> None:
-        """Build and write includes.xml from provided menus."""
+        """Build and write includes.xml; sub-properties filled in place, overrides on copies."""
         for menu in menus:
             self.resolve_item_properties(menu)
+        menus = [_apply_action_overrides(menu, self.action_overrides) for menu in menus]
 
         builder = IncludesBuilder(
             menus=menus,
@@ -264,24 +272,38 @@ class SkinConfig:
 
         return {self.property_schema.declared_name(k): v for k, v in derived.items() if v}
 
+    def inherited_item_properties(self, item: MenuItem, defaults: dict[str, str]) -> dict[str, str]:
+        """Sub-properties of default widgets and backgrounds in slots the item leaves unset."""
+        own = {k.lower() for k in item.properties}
+        picks = {k: v for k, v in defaults.items() if k.lower() not in own}
+        return self.derived_item_properties(replace(item, properties=picks))
+
     def resolve_item_properties(self, menu: Menu) -> None:
-        """Fill widget/background sub-properties, keeping any the user set."""
+        """Fill widget/background sub-properties; user keys win, defaults beat inherited ones."""
+        defaults = menu.defaults.properties
+        written = {k.lower() for k in defaults}
         for item in menu.items:
             present = {k.lower() for k in item.properties}
             for key, value in self.derived_item_properties(item).items():
                 if key.lower() not in present:
                     item.properties[key] = value
+            for key, value in self.inherited_item_properties(item, defaults).items():
+                if key.lower() not in present and key.lower() not in written:
+                    item.properties[key] = value
 
 
-def _apply_action_overrides(menu: Menu, overrides: list[Override]) -> None:
-    """Apply action overrides to all items in a menu."""
+def _apply_action_overrides(menu: Menu, overrides: list[Override]) -> Menu:
+    """Apply action overrides to a copy of the menu, one hop per action; the menu is unchanged."""
     if not overrides:
-        return
+        return menu
 
     override_map = {o.replace.lower(): o.value for o in overrides}
 
+    items = []
     for item in menu.items:
-        for action in item.actions:
-            action_lower = action.action.lower()
-            if action_lower in override_map:
-                action.action = override_map[action_lower]
+        actions = [
+            replace(action, action=override_map.get(action.action.lower(), action.action))
+            for action in item.actions
+        ]
+        items.append(replace(item, actions=actions) if actions != item.actions else item)
+    return replace(menu, items=items)

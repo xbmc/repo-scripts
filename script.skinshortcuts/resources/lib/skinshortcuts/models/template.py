@@ -23,14 +23,6 @@ class Expression:
 
 
 @dataclass
-class TemplateParam:
-    """Parameter for parameterized includes or raw templates."""
-
-    name: str
-    default: str = ""
-
-
-@dataclass
 class TemplateProperty:
     """Property assignment in a template."""
 
@@ -202,7 +194,6 @@ class Template:
 
     outputs: list[TemplateOutput] = field(default_factory=list)
     conditions: list[str] = field(default_factory=list)  # ANDed together
-    params: list[TemplateParam] = field(default_factory=list)  # For build="true"
     properties: list[TemplateProperty] = field(default_factory=list)
     vars: list[TemplateVar] = field(default_factory=list)  # Internal context resolution
     property_groups: list[PropertyGroupReference] = field(default_factory=list)

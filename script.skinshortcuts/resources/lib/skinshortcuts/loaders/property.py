@@ -5,8 +5,9 @@ from __future__ import annotations
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from ..conditions import suffix_condition
 from ..exceptions import PropertyConfigError
-from ..log import get_logger
+from ..log import notify
 from ..models.property import (
     ButtonMapping,
     FallbackRule,
@@ -16,10 +17,14 @@ from ..models.property import (
     SchemaOption,
     SchemaProperty,
 )
-from ..conditions import suffix_condition
-from .base import get_bool, parse_name_overrides
-
-log = get_logger("PropertyLoader")
+from .base import (
+    get_attr,
+    get_bool,
+    keep_first,
+    parse_name_overrides,
+    parse_xml,
+    report_missing,
+)
 
 
 class PropertyLoader:
@@ -34,34 +39,22 @@ class PropertyLoader:
         if not self.path.exists():
             return PropertySchema()
 
-        try:
-            tree = ET.parse(str(self.path))
-            root = tree.getroot()
-        except ET.ParseError as e:
-            raise PropertyConfigError(
-                str(self.path), f"XML parse error: {e}", e.position[0]
-            ) from e
-        except Exception as e:
-            raise PropertyConfigError(str(self.path), f"Failed to load file: {e}") from e
-
-        if root.tag != "properties":
-            raise PropertyConfigError(
-                str(self.path), f"Root element must be <properties>, got <{root.tag}>"
-            )
-
+        root = parse_xml(self.path, "properties", PropertyConfigError)
         self._parse_includes(root)
 
         properties = {}
         for elem in root.findall("property"):
             prop = self._parse_property(elem)
-            properties[prop.name] = prop
+            if prop:
+                keep_first(properties, prop.name, prop, "property", self.path)
 
         fallbacks = {}
         fallbacks_elem = root.find("fallbacks")
         if fallbacks_elem is not None:
             for fb_elem in fallbacks_elem.findall("fallback"):
                 fb = self._parse_fallback(fb_elem)
-                fallbacks[fb.property_name] = fb
+                if fb:
+                    keep_first(fallbacks, fb.property_name, fb, "fallback", self.path)
 
         buttons = {}
         buttons_elem = root.find("buttons")
@@ -71,17 +64,13 @@ class PropertyLoader:
                 if child.tag == "button":
                     btn = self._parse_button(child, default_suffix)
                     if btn:
-                        buttons[btn.button_id] = btn
+                        keep_first(buttons, btn.button_id, btn, "button", self.path)
                 elif child.tag == "group":
-                    group_suffix_attr = child.get("suffix")
-                    if group_suffix_attr is not None:
-                        group_suffix = group_suffix_attr.lower() == "true"
-                    else:
-                        group_suffix = default_suffix
+                    group_suffix = get_bool(child, "suffix", default_suffix)
                     for btn_elem in child.findall("button"):
                         btn = self._parse_button(btn_elem, group_suffix)
                         if btn:
-                            buttons[btn.button_id] = btn
+                            keep_first(buttons, btn.button_id, btn, "button", self.path)
 
         self._check_rename_buttons(properties, buttons)
 
@@ -89,7 +78,7 @@ class PropertyLoader:
             properties=properties,
             fallbacks=fallbacks,
             buttons=buttons,
-            overrides=parse_name_overrides(root, "property"),
+            overrides=parse_name_overrides(root, "property", self.path),
         )
 
     def _check_rename_buttons(
@@ -102,10 +91,12 @@ class PropertyLoader:
             prop = properties.get(button.property_name)
             effective_type = button.type or (prop.type if prop else "")
             if effective_type != "widget":
-                log.error(
-                    f"{self.path}: button {button.button_id} has rename=\"true\" but type is "
-                    f"'{effective_type or 'unset'}' - rename only applies to "
-                    'type="widget", ignoring'
+                notify(
+                    "Property Button Error",
+                    f"'{button.button_id}' rename needs a widget",
+                    f'{self.path}: <button id="{button.button_id}" rename="true"> has type '
+                    f"'{effective_type or 'unset'}'; rename ignored; rename applies to "
+                    'type="widget" only',
                 )
 
     def _parse_includes(self, root: ET.Element) -> None:
@@ -114,28 +105,31 @@ class PropertyLoader:
         if includes_section is None:
             return
         for include_elem in includes_section.findall("include"):
-            name = (include_elem.get("name") or "").strip()
+            name = get_attr(include_elem, "name")
             if not name:
-                log.warning(f"{self.path}: <include> definition missing 'name' attribute, skipping")
+                report_missing("Property Error", self.path, include_elem, "name")
                 continue
-            self._includes[name] = list(include_elem)
+            keep_first(self._includes, name, list(include_elem), "property include", self.path)
 
-    def _expand_include(
-        self, include_elem: ET.Element, suffix: str = ""
-    ) -> list[ET.Element]:
-        """Expand an include reference."""
-        content_name = (include_elem.get("content") or "").strip()
-        if not content_name or content_name not in self._includes:
+    def _expand_include(self, include_elem: ET.Element) -> list[ET.Element]:
+        """Expand an include to suffixed element copies, reporting one unnamed or undefined."""
+        content_name = get_attr(include_elem, "content")
+        suffix = include_elem.get("suffix") or ""
+        if not content_name:
+            report_missing("Property Error", self.path, include_elem, "content", key="content")
             return []
-
-        suffix = suffix or include_elem.get("suffix") or ""
-
-        result = []
-        for elem in self._includes[content_name]:
-            copied = self._copy_element_with_suffix(elem, suffix)
-            result.append(copied)
-
-        return result
+        if content_name not in self._includes:
+            notify(
+                "Property Error",
+                f"include '{content_name}' not defined",
+                f'{self.path}: <include content="{content_name}"> names no include in '
+                "<includes>; nothing included; define the include, or correct the name",
+            )
+            return []
+        return [
+            self._copy_element_with_suffix(elem, suffix)
+            for elem in self._includes[content_name]
+        ]
 
     def _copy_element_with_suffix(self, elem: ET.Element, suffix: str) -> ET.Element:
         """Deep copy element, applying suffix transform to conditions."""
@@ -154,27 +148,28 @@ class PropertyLoader:
 
         return new_elem
 
-    def _parse_property(self, elem: ET.Element) -> SchemaProperty:
-        """Parse a property element."""
-        name = (elem.get("name") or "").strip()
+    def _parse_property(self, elem: ET.Element) -> SchemaProperty | None:
+        """Parse a property element, reporting one with no name."""
+        name = get_attr(elem, "name")
         if not name:
-            raise PropertyConfigError(str(self.path), "Property missing name attribute")
+            report_missing("Property Error", self.path, elem, "name")
+            return None
 
-        template_only = get_bool(elem, "templateonly")
-        prop_type = (elem.get("type") or "").strip()  # "widget", "background", "toggle"
+        template_only = get_bool(elem, "templateOnly")
+        prop_type = get_attr(elem, "type")
 
-        requires = (elem.get("requires") or "").strip()
+        requires = get_attr(elem, "requires")
         if not requires:
             requires_elem = elem.find("requires")
             if requires_elem is not None:
-                requires = (requires_elem.get("property") or "").strip()
+                requires = get_attr(requires_elem, "property")
 
         options = []
         options_elem = elem.find("options")
         if options_elem is not None:
             options = self._parse_options(options_elem)
 
-        value = (elem.get("value") or "").strip()
+        value = get_attr(elem, "value")
 
         return SchemaProperty(
             name=name,
@@ -188,45 +183,40 @@ class PropertyLoader:
     def _parse_button(
         self, elem: ET.Element, default_suffix: bool = False
     ) -> ButtonMapping | None:
-        """Parse a button element from the buttons section."""
-        button_id_str = (elem.get("id") or "").strip()
+        """Parse a button element, reporting one with no numeric id or no property."""
+        button_id_str = get_attr(elem, "id")
         if not button_id_str:
-            log.warning(f"{self.path}: <button> mapping missing 'id' attribute, skipping")
+            report_missing("Property Button Error", self.path, elem, "id", key="id")
             return None
 
-        try:
-            button_id = int(button_id_str)
-        except ValueError:
-            raise PropertyConfigError(
-                str(self.path),
-                f"Invalid button id '{button_id_str}'",
-            ) from None
-
-        property_name = (elem.get("property") or "").strip()
-        if not property_name:
-            raise PropertyConfigError(
-                str(self.path),
-                f"Button {button_id} missing property attribute",
+        if not button_id_str.isdecimal():
+            notify(
+                "Property Button Error",
+                f"'{button_id_str}' is not a control id",
+                f'{self.path}: <button id="{button_id_str}"> is not a number; button skipped; '
+                "use the id of the dialog control",
             )
+            return None
+        button_id = int(button_id_str)
 
-        suffix_attr = elem.get("suffix")
-        if suffix_attr is not None:
-            suffix = suffix_attr.lower() == "true"
-        else:
-            suffix = default_suffix
+        property_name = get_attr(elem, "property")
+        if not property_name:
+            report_missing("Property Button Error", self.path, elem, "property", key="id")
+            return None
 
-        title = (elem.get("title") or "").strip()
-        show_none = (elem.get("showNone") or "true").lower() != "false"
-        show_icons = (elem.get("showIcons") or "true").lower() != "false"
-        prop_type = (elem.get("type") or "").strip()
-        requires = (elem.get("requires") or "").strip()
+        suffix = get_bool(elem, "suffix", default_suffix)
+        heading = get_attr(elem, "heading")
+        show_none = get_bool(elem, "showNone", True)
+        show_icons = get_bool(elem, "showIcons", True)
+        prop_type = get_attr(elem, "type")
+        requires = get_attr(elem, "requires")
         rename = get_bool(elem, "rename")
 
         return ButtonMapping(
             button_id=button_id,
             property_name=property_name,
             suffix=suffix,
-            title=title,
+            heading=heading,
             show_none=show_none,
             show_icons=show_icons,
             type=prop_type,
@@ -251,15 +241,15 @@ class PropertyLoader:
 
     def _parse_option(self, elem: ET.Element) -> SchemaOption:
         """Parse an option with its property condition, Kodi visibility condition and icons."""
-        value = (elem.get("value") or "").strip()
-        label = (elem.get("label") or "").strip()
-        condition = (elem.get("condition") or "").strip()
-        visible = (elem.get("visible") or "").strip()
+        value = get_attr(elem, "value")
+        label = get_attr(elem, "label")
+        condition = get_attr(elem, "condition")
+        visible = get_attr(elem, "visible")
 
         icons = []
         for icon_elem in elem.findall("icon"):
             icon_path = (icon_elem.text or "").strip()
-            icon_condition = (icon_elem.get("condition") or "").strip()
+            icon_condition = get_attr(icon_elem, "condition")
             if icon_path:
                 icons.append(IconVariant(path=icon_path, condition=icon_condition))
 
@@ -271,13 +261,12 @@ class PropertyLoader:
             icons=icons,
         )
 
-    def _parse_fallback(self, elem: ET.Element) -> PropertyFallback:
-        """Parse a fallback element."""
-        property_name = (elem.get("property") or "").strip()
+    def _parse_fallback(self, elem: ET.Element) -> PropertyFallback | None:
+        """Parse a fallback element, reporting one with no property."""
+        property_name = get_attr(elem, "property")
         if not property_name:
-            raise PropertyConfigError(
-                str(self.path), "Fallback missing property attribute"
-            )
+            report_missing("Property Error", self.path, elem, "property", key="property")
+            return None
 
         rules = []
 

@@ -9,12 +9,13 @@ from typing import TYPE_CHECKING
 import xbmc
 import xbmcvfs
 
+from ..localize import number_label
 from ..log import get_logger
 from ..playlists import parse_smart_playlist, playlists_base_path, unpack_multipath
 from .browse import normalize_image
 
 if TYPE_CHECKING:
-    from ..models.menu import IconOverrides, Content
+    from ..models.menu import Content, IconOverrides
 
 log = get_logger("ContentProvider")
 
@@ -37,7 +38,7 @@ _SOURCES_TARGET_ALIASES: dict[str, str] = {
     "program": "programs",
 }
 
-# Addons.GetAddons content accepts: video, audio, image, executable, game
+# Addons.GetAddons content accepts: video, audio, image, executable; game goes by type
 _ADDONS_TARGET_ALIASES: dict[str, str] = {
     "video": "video",
     "videos": "video",
@@ -347,7 +348,7 @@ class ContentProvider:
         return shortcuts
 
     def _resolve_addons(self, target: str) -> list[ResolvedShortcut]:
-        """Resolve installed addons by content type. Empty target defaults to video."""
+        """Resolve enabled addons by content type, video by default."""
         cache_key = f"addons_{target}"
         if cache_key in self._cache:
             return self._cache[cache_key]
@@ -371,17 +372,20 @@ class ContentProvider:
             "game": "games",
         }
 
-        # content ignored without type; type = first extension point, so query both
+        if content == "game":
+            queries = [{"type": "kodi.addon.game"}]
+        else:
+            # type matches only an add-on's first extension point
+            queries = [
+                {"type": addon_type, "content": content}
+                for addon_type in ("xbmc.python.pluginsource", "xbmc.python.script")
+            ]
+
         addons: dict[str, dict] = {}
-        for addon_type in ("xbmc.python.pluginsource", "xbmc.python.script"):
+        for query in queries:
             result = self._jsonrpc(
                 "Addons.GetAddons",
-                {
-                    "type": addon_type,
-                    "content": content,
-                    "enabled": True,
-                    "properties": ["name", "thumbnail"],
-                },
+                {**query, "enabled": True, "properties": ["name", "thumbnail"]},
             )
             for addon in _collection(result, "addons"):
                 addon_id = addon.get("addonid", "")
@@ -594,21 +598,19 @@ class ContentProvider:
         elif target_lower == "tvyears":
             shortcuts = self._get_video_years("tvshow")
         elif target_lower in ("studios", "moviestudios"):
-            shortcuts = self._get_video_property("movie", "studio", "Studios")
+            shortcuts = self._get_video_node("movies", "studios", "DefaultStudios.png")
         elif target_lower == "tvstudios":
-            shortcuts = self._get_video_property("tvshow", "studio", "Studios")
+            shortcuts = self._get_video_node("tvshows", "studios", "DefaultStudios.png")
         elif target_lower in ("tags", "movietags"):
-            shortcuts = self._get_video_property("movie", "tag", "Tags")
+            shortcuts = self._get_video_node("movies", "tags", "DefaultTags.png")
         elif target_lower == "tvtags":
-            shortcuts = self._get_video_property("tvshow", "tag", "Tags")
+            shortcuts = self._get_video_node("tvshows", "tags", "DefaultTags.png")
         elif target_lower in ("actors", "movieactors"):
-            shortcuts = self._get_video_actors("movie")
+            shortcuts = self._get_video_node("movies", "actors", "DefaultActor.png")
         elif target_lower == "tvactors":
-            shortcuts = self._get_video_actors("tvshow")
+            shortcuts = self._get_video_node("tvshows", "actors", "DefaultActor.png")
         elif target_lower in ("directors", "moviedirectors"):
-            shortcuts = self._get_video_directors("movie")
-        elif target_lower == "tvdirectors":
-            shortcuts = self._get_video_directors("tvshow")
+            shortcuts = self._get_video_node("movies", "directors", "DefaultDirector.png")
         elif target_lower == "artists":
             shortcuts = self._get_music_artists()
         elif target_lower == "albums":
@@ -759,110 +761,34 @@ class ContentProvider:
             path = f"videodb://{db_type}/years/{year}/"
             shortcuts.append(
                 ResolvedShortcut(
-                    label=str(year),
+                    label=number_label(str(year)),
                     action=f"ActivateWindow(Videos,{path},return)",
                     icon="DefaultYear.png",
                 )
             )
         return shortcuts
 
-    def _get_video_property(
-        self, media_type: str, prop: str, icon_suffix: str
-    ) -> list[ResolvedShortcut]:
-        """Get video library property values (studios, tags)."""
-        if media_type == "movie":
-            result = self._jsonrpc("VideoLibrary.GetMovies", {"properties": [prop]})
-            items = _collection(result, "movies")
-            db_type = "movies"
-        else:
-            result = self._jsonrpc("VideoLibrary.GetTVShows", {"properties": [prop]})
-            items = _collection(result, "tvshows")
-            db_type = "tvshows"
-
-        values: set[str] = set()
-        for item in items:
-            prop_value = item.get(prop, [])
-            if isinstance(prop_value, list):
-                values.update(prop_value)
-            elif prop_value:
-                values.add(prop_value)
-
+    def _get_video_node(self, db_type: str, node: str, icon: str) -> list[ResolvedShortcut]:
+        """Get each entry of a videodb node (actors, studios, tags, directors) by its id path."""
+        result = self._jsonrpc(
+            "Files.GetDirectory",
+            {
+                "directory": f"videodb://{db_type}/{node}/",
+                "media": "video",
+                "properties": ["thumbnail"],
+            },
+        )
         shortcuts = []
-        for value in sorted(values):
-            path = f"videodb://{db_type}/{prop}s/{value}/"
+        for entry in _collection(result, "files"):
+            path = entry.get("file", "")
+            label = entry.get("label", "")
+            if not path or not label:
+                continue
             shortcuts.append(
                 ResolvedShortcut(
-                    label=value,
-                    action=f"ActivateWindow(Videos,{path},return)",
-                    icon=f"Default{icon_suffix}.png",
-                )
-            )
-        return shortcuts
-
-    def _get_video_actors(self, media_type: str) -> list[ResolvedShortcut]:
-        """Get actors from video library."""
-        if media_type == "movie":
-            result = self._jsonrpc(
-                "VideoLibrary.GetMovies", {"properties": ["cast"], "limits": {"end": 100}}
-            )
-            items = _collection(result, "movies")
-            db_type = "movies"
-        else:
-            result = self._jsonrpc(
-                "VideoLibrary.GetTVShows", {"properties": ["cast"], "limits": {"end": 100}}
-            )
-            items = _collection(result, "tvshows")
-            db_type = "tvshows"
-
-        actors: dict[str, str] = {}
-        for item in items:
-            for actor in _collection(item, "cast"):
-                name = actor.get("name", "")
-                if name and name not in actors:
-                    actors[name] = actor.get("thumbnail", "")
-
-        shortcuts = []
-        for name in sorted(actors.keys()):
-            path = f"videodb://{db_type}/actors/{name}/"
-            shortcuts.append(
-                ResolvedShortcut(
-                    label=name,
-                    action=f"ActivateWindow(Videos,{path},return)",
-                    icon=actors[name] or "DefaultActor.png",
-                )
-            )
-        return shortcuts
-
-    def _get_video_directors(self, media_type: str) -> list[ResolvedShortcut]:
-        """Get directors from the video library; episodes carry them, so tvshows query those."""
-        if media_type == "movie":
-            result = self._jsonrpc(
-                "VideoLibrary.GetMovies", {"properties": ["director"]}
-            )
-            items = _collection(result, "movies")
-            db_type = "movies"
-        else:
-            result = self._jsonrpc(
-                "VideoLibrary.GetEpisodes",
-                {"properties": ["director"], "limits": {"end": 500}},
-            )
-            items = _collection(result, "episodes")
-            db_type = "tvshows"
-
-        directors: set[str] = set()
-        for item in items:
-            for director in _collection(item, "director"):
-                if director:
-                    directors.add(director)
-
-        shortcuts = []
-        for name in sorted(directors):
-            path = f"videodb://{db_type}/directors/{name}/"
-            shortcuts.append(
-                ResolvedShortcut(
-                    label=name,
-                    action=f"ActivateWindow(Videos,{path},return)",
-                    icon="DefaultDirector.png",
+                    label=label,
+                    action=f'ActivateWindow(Videos,"{path}",return)',
+                    icon=normalize_image(entry.get("thumbnail", "")) or icon,
                 )
             )
         return shortcuts

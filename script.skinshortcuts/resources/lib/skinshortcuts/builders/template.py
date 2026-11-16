@@ -17,7 +17,9 @@ from ..conditions import (
 )
 from ..constants import extract_path_from_action
 from ..expressions import process_if_expressions, process_math_expressions
+from ..loaders.base import get_bool
 from ..log import get_logger, notify
+from ..models.menu import submenu_key
 from ..models.template import BuildMode, TemplateProperty
 
 log = get_logger("TemplateBuilder")
@@ -63,13 +65,13 @@ class TemplateBuilder:
         self._assigned_templates: set[str] = self._collect_assigned_templates()
 
     def _collect_assigned_templates(self) -> set[str]:
-        """Collect template include names that are actually assigned to menu items."""
+        """Collect template include names assigned to menu items."""
         assigned: set[str] = set()
         include_pattern = re.compile(r"\$INCLUDE\[skinshortcuts-template-([^\]]+)\]")
 
         for menu in self.menus:
             for item in menu.items:
-                for _prop_name, prop_value in item.properties.items():
+                for prop_value in item.properties.values():
                     if not prop_value:
                         continue
                     for match in include_pattern.finditer(prop_value):
@@ -174,7 +176,7 @@ class TemplateBuilder:
         submenu_tpl: SubmenuTemplate,
         include_elem: ET.Element,
     ) -> None:
-        """Build a level-based submenu template."""
+        """Build a level-based submenu template, per enabled mainmenu item that has a submenu."""
         main_menu = self._menu_map.get("mainmenu")
         if not main_menu:
             log.debug("Main menu not found for level-based submenu template")
@@ -184,8 +186,7 @@ class TemplateBuilder:
             if item.disabled:
                 continue
 
-            submenu_key = f"{main_menu.name}/{item.name}"
-            submenu = self._menu_map.get(submenu_key)
+            submenu = self._menu_map.get(submenu_key(main_menu.name, item.name))
             if not submenu:
                 continue
 
@@ -531,7 +532,7 @@ class TemplateBuilder:
                     )
 
     def _combine_suffixes(self, base_suffix: str, ref_suffix: str) -> str:
-        """Combine output suffix with reference suffix."""
+        """Combine the suffixes: the reference's when it has one, else the output's."""
         return ref_suffix if ref_suffix else base_suffix
 
     def _build_context(
@@ -563,20 +564,19 @@ class TemplateBuilder:
 
         self._apply_fallbacks(item, context)
 
-        # First match wins for same-named properties
         resolved_props: set[str] = set()
         for prop in template.properties:
             if prop.name in resolved_props:
                 continue
             value = self._resolve_property(prop, item, context, output.suffix)
             if value is not None:
-                context[prop.name] = value
+                self._set_template_value(context, prop.name, value)
                 resolved_props.add(prop.name)
 
         for var in template.vars:
             value = self._resolve_var(var, item, context, output.suffix)
             if value is not None:
-                context[var.name] = value
+                self._set_template_value(context, var.name, value)
 
         for ref in template.preset_refs:
             effective_suffix = self._combine_suffixes(output.suffix, ref.suffix)
@@ -623,7 +623,7 @@ class TemplateBuilder:
         parent_context: dict[str, str] | None = None,
         parent_item: MenuItem | None = None,
     ) -> ET.Element | None:
-        """Build a Kodi <variable> element, $PARENT[] and $MATH[] resolving in items scope."""
+        """Build a Kodi <variable> element, $PARENT[] resolving in items scope."""
         if var_def.condition:
             condition = self._expand_expressions(var_def.condition)
             if not self._eval_condition(condition, item, context):
@@ -642,7 +642,7 @@ class TemplateBuilder:
             output_name = self._substitute_property_refs(raw_name, item, context)
 
         var_elem.set("name", output_name)
-        # output/condition are build-time directives; drop them so they don't leak into Kodi XML
+        # output/condition are build-time directives, not Kodi attributes
         if "output" in var_elem.attrib:
             del var_elem.attrib["output"]
         if "condition" in var_elem.attrib:
@@ -698,7 +698,7 @@ class TemplateBuilder:
     @staticmethod
     def _resolve_iterate_suffixes(expr: str, item: MenuItem) -> list[str]:
         """Resolve an iterate expression to its suffix list, by count or by the slots present."""
-        if expr.isdigit():
+        if expr.isdecimal():
             return [f".{i}" if i > 1 else "" for i in range(1, int(expr) + 1)]
         return slot_suffixes(expr, item.properties)
 
@@ -880,7 +880,7 @@ class TemplateBuilder:
         context: dict[str, str],
         suffix: str = "",
     ) -> str | None:
-        """Resolve a property value, applying any suffix to the names in its conditions."""
+        """Resolve a property value, applying any suffix to its condition and source names."""
         if prop.condition:
             condition = self._expand_expressions(prop.condition)
             if suffix:
@@ -890,7 +890,7 @@ class TemplateBuilder:
 
         if prop.from_source:
             source = suffix_property(prop.from_source, suffix)
-            return self._get_from_source(source, item, context, suffix)
+            return self._get_from_source(source, item, context)
 
         value = prop.value
         if "$PROPERTY[" in value:
@@ -950,13 +950,7 @@ class TemplateBuilder:
             return value
         return None
 
-    def _get_from_source(
-        self,
-        source: str,
-        item: MenuItem,
-        context: dict[str, str],
-        suffix: str = "",
-    ) -> str:
+    def _get_from_source(self, source: str, item: MenuItem, context: dict[str, str]) -> str:
         """Get value from a source (built-in or item property)."""
         if source in ("index", "name", "menu", "id", "idprefix"):
             return context.get(source, "")
@@ -994,12 +988,12 @@ class TemplateBuilder:
                 continue
             resolved_props.add(prop.name)
             if from_source or prop.name not in context:
-                context[prop.name] = value
+                self._set_template_value(context, prop.name, value)
 
         for var in prop_group.vars:
             value = self._resolve_var(var, item, context, suffix)
             if value is not None:
-                context[var.name] = value
+                self._set_template_value(context, var.name, value)
 
     def _apply_preset(
         self,
@@ -1008,7 +1002,7 @@ class TemplateBuilder:
         context: dict[str, str],
         override_suffix: str = "",
     ) -> None:
-        """Apply preset values as properties, a suffix hitting conditions not the preset name."""
+        """Apply preset values to unset properties, suffixing conditions but not the preset name."""
         preset = self.schema.get_preset(ref.name)
         if not preset:
             return
@@ -1023,12 +1017,12 @@ class TemplateBuilder:
                 if self._eval_condition(condition, item, context):
                     for attr_name, attr_value in row.values.items():
                         if attr_name not in context:
-                            context[attr_name] = attr_value
+                            self._set_template_value(context, attr_name, attr_value)
                     return
             else:
                 for attr_name, attr_value in row.values.items():
                     if attr_name not in context:
-                        context[attr_name] = attr_value
+                        self._set_template_value(context, attr_name, attr_value)
                 return
 
     def _apply_preset_group(
@@ -1060,13 +1054,20 @@ class TemplateBuilder:
                     if values:
                         for attr_name, attr_value in values.items():
                             if attr_name not in context:
-                                context[attr_name] = attr_value
+                                self._set_template_value(context, attr_name, attr_value)
                         return
             elif child.values:
                 for attr_name, attr_value in child.values.items():
                     if attr_name not in context:
-                        context[attr_name] = attr_value
+                        self._set_template_value(context, attr_name, attr_value)
                 return
+
+    def _set_template_value(self, context: dict[str, str], name: str, value: str) -> None:
+        """Set a template-computed property, also under the output's suffix for its conditions."""
+        context[name] = value
+        slot_name = suffix_property(name, context.get("suffix", ""))
+        if slot_name != name:
+            context[slot_name] = value
 
     def _get_preset_values(
         self,
@@ -1281,7 +1282,7 @@ class TemplateBuilder:
         menu: Menu,
         variable_map: dict[str, ET.Element] | None = None,
     ) -> None:
-        """Recursively process an element, applying substitutions."""
+        """Recursively process an element, resolving markers and applying substitutions."""
         if elem.tag == "skinshortcuts":
             if elem.text and elem.text.strip() == "visibility":
                 if menu.container:
@@ -1300,7 +1301,9 @@ class TemplateBuilder:
                 elem.text = ""
             include_name = elem.get("include")
             if include_name:
-                condition = elem.get("condition")
+                condition = suffix_condition(
+                    self._expand_expressions(elem.get("condition", "")), context["suffix"]
+                )
                 if condition and not self._eval_condition(condition, item, context):
                     elem.set("_skinshortcuts_remove", "true")
                     elem.attrib.pop("include", None)
@@ -1315,9 +1318,7 @@ class TemplateBuilder:
                     return
                 if include_def.controls is not None:
                     elem.set("_skinshortcuts_include", include_name)
-                    wrap_attr = elem.get("wrap") or ""
-                    wrap = wrap_attr.lower() == "true"
-                    if wrap:
+                    if get_bool(elem, "wrap"):
                         elem.set("_skinshortcuts_wrap", "true")
                     elem.attrib.pop("include", None)
                     elem.attrib.pop("condition", None)
