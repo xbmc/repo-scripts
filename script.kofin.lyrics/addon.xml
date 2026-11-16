@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.kofin.lyrics" name="Kofin Lyrics" version="0.3.3" provider-name="kontell">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1"/>
+  </requires>
+  <extension point="xbmc.python.lyrics" library="default.py"/>
+  <extension point="xbmc.service" library="service.py"/>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <license>GPL-2.0-or-later</license>
+    <source>https://github.com/kontell/script.kofin.lyrics</source>
+    <forum>https://forum.kodi.tv/showthread.php?tid=388267</forum>
+    <website>https://github.com/kontell/plugin.video.kofin/wiki/Lyrics</website>
+    <summary lang="en_GB">Song lyrics from your Jellyfin server</summary>
+    <summary lang="ca_ES">Lletres de cançons del vostre servidor Jellyfin</summary>
+    <summary lang="cs_CZ">Texty skladeb z vašeho serveru Jellyfin</summary>
+    <summary lang="da_DK">Sangtekster fra din Jellyfin-server</summary>
+    <summary lang="de_DE">Songtexte von deinem Jellyfin-Server</summary>
+    <summary lang="el_GR">Στίχοι τραγουδιών από τον διακομιστή σας Jellyfin</summary>
+    <summary lang="es_ES">Letras de canciones desde tu servidor Jellyfin</summary>
+    <summary lang="es_MX">Letras de canciones desde tu servidor Jellyfin</summary>
+    <summary lang="fi_FI">Kappaleiden sanoitukset Jellyfin-palvelimeltasi</summary>
+    <summary lang="fr_CA">Paroles de chansons depuis votre serveur Jellyfin</summary>
+    <summary lang="fr_FR">Paroles de chansons depuis votre serveur Jellyfin</summary>
+    <summary lang="hu_HU">Dalszövegek a Jellyfin-kiszolgálójáról</summary>
+    <summary lang="it_IT">Testi dei brani dal tuo server Jellyfin</summary>
+    <summary lang="ja_JP">Jellyfin サーバーの曲の歌詞</summary>
+    <summary lang="ko_KR">Jellyfin 서버의 노래 가사</summary>
+    <summary lang="nb_NO">Sangtekster fra Jellyfin-serveren din</summary>
+    <summary lang="nl_NL">Songteksten van je Jellyfin-server</summary>
+    <summary lang="pl_PL">Teksty utworów z serwera Jellyfin</summary>
+    <summary lang="pt_BR">Letras de músicas do seu servidor Jellyfin</summary>
+    <summary lang="pt_PT">Letras de músicas do seu servidor Jellyfin</summary>
+    <summary lang="ro_RO">Versuri de pe serverul dvs. Jellyfin</summary>
+    <summary lang="ru_RU">Тексты песен с вашего сервера Jellyfin</summary>
+    <summary lang="sk_SK">Texty piesní z vášho servera Jellyfin</summary>
+    <summary lang="sv_SE">Låttexter från din Jellyfin-server</summary>
+    <summary lang="uk_UA">Тексти пісень із вашого сервера Jellyfin</summary>
+    <summary lang="zh_CN">来自 Jellyfin 服务器的歌词</summary>
+    <summary lang="zh_TW">來自 Jellyfin 伺服器的歌詞</summary>
+    <description lang="en_GB">Shows lyrics from a Jellyfin server, either in a window drawn by this add-on or handed to a skin.</description>
+    <description lang="ca_ES">Mostra lletres d'un servidor Jellyfin, ja sigui en una finestra que dibuixa aquest complement o passant-les a una aparença.</description>
+    <description lang="cs_CZ">Zobrazuje texty skladeb ze serveru Jellyfin, buď v okně, které vykresluje tento doplněk, nebo je předá vzhledu.</description>
+    <description lang="da_DK">Viser sangtekster fra en Jellyfin-server, enten i et vindue, som denne tilføjelse tegner, eller overdraget til et skin.</description>
+    <description lang="de_DE">Zeigt Songtexte von einem Jellyfin-Server an – entweder in einem eigenen Fenster dieses Add-ons oder über einen Skin, der sie darstellt.</description>
+    <description lang="el_GR">Εμφανίζει στίχους από έναν διακομιστή Jellyfin, είτε σε ένα παράθυρο που σχεδιάζει αυτό το πρόσθετο είτε παραδίδοντάς τους σε ένα κέλυφος.</description>
+    <description lang="es_ES">Muestra letras desde un servidor Jellyfin, ya sea en una ventana dibujada por este complemento o pasándoselas a un skin.</description>
+    <description lang="es_MX">Muestra letras desde un servidor Jellyfin, ya sea en una ventana dibujada por este complemento o pasándoselas a un skin.</description>
+    <description lang="fi_FI">Näyttää sanoitukset Jellyfin-palvelimelta joko tämän lisäosan omassa ikkunassa tai ulkoasun piirtämänä.</description>
+    <description lang="fr_CA">Affiche les paroles depuis un serveur Jellyfin, soit dans une fenêtre dessinée par cette extension, soit en les transmettant à un habillage.</description>
+    <description lang="fr_FR">Affiche les paroles depuis un serveur Jellyfin, soit dans une fenêtre dessinée par cette extension, soit en les transmettant à un habillage.</description>
+    <description lang="hu_HU">Dalszövegeket jelenít meg egy Jellyfin-kiszolgálóról, a kiegészítő saját ablakában vagy egy skinnek átadva.</description>
+    <description lang="it_IT">Mostra i testi da un server Jellyfin, in una finestra disegnata da questo add-on oppure passandoli a una skin.</description>
+    <description lang="ja_JP">Jellyfin サーバーの歌詞を、このアドオンが描画するウィンドウで表示するか、スキンに渡して表示させます。</description>
+    <description lang="ko_KR">Jellyfin 서버의 가사를 이 애드온이 그리는 창에 표시하거나 스킨에 넘겨 표시합니다.</description>
+    <description lang="nb_NO">Viser sangtekster fra en Jellyfin-server, enten i et vindu som dette tillegget tegner, eller overlevert til et skall.</description>
+    <description lang="nl_NL">Toont songteksten van een Jellyfin-server, in een eigen venster van deze add-on of doorgegeven aan een skin.</description>
+    <description lang="pl_PL">Wyświetla teksty utworów z serwera Jellyfin – w oknie rysowanym przez ten dodatek albo przekazując je skórce.</description>
+    <description lang="pt_BR">Mostra letras de um servidor Jellyfin, em uma janela desenhada por este add-on ou entregando-as a uma skin.</description>
+    <description lang="pt_PT">Mostra letras de um servidor Jellyfin, numa janela desenhada por este add-on ou entregando-as a uma skin.</description>
+    <description lang="ro_RO">Afișează versuri de pe un server Jellyfin, fie într-o fereastră desenată de acest supliment, fie predate interfeței.</description>
+    <description lang="ru_RU">Показывает тексты песен с сервера Jellyfin — в окне, которое рисует само дополнение, или передавая их обложке.</description>
+    <description lang="sk_SK">Zobrazuje texty piesní zo servera Jellyfin, buď v okne, ktoré vykresľuje tento doplnok, alebo ich odovzdá vzhľadu.</description>
+    <description lang="sv_SE">Visar låttexter från en Jellyfin-server, antingen i ett fönster som det här tillägget ritar eller överlämnade till en skin.</description>
+    <description lang="uk_UA">Показує тексти пісень із сервера Jellyfin — у вікні, яке малює сам додаток, або передаючи їх скіну.</description>
+    <description lang="zh_CN">显示来自 Jellyfin 服务器的歌词，可在本插件绘制的窗口中显示，也可交给皮肤显示。</description>
+    <description lang="zh_TW">顯示 Jellyfin 伺服器上的歌詞，可在本外掛繪製的視窗中顯示，或交給外觀佈景顯示。</description>
+    <news>v0.3.3
+• Added fanart
+• Tidied the code for the Kodi repository's add-on check</news>
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>

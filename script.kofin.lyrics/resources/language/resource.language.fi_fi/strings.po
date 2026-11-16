@@ -1,0 +1,61 @@
+# Kodi Media Center language file
+# Addon Name: Kofin Lyrics
+# Addon id: script.kofin.lyrics
+# Addon Provider: kontell
+# Note: machine-translated (LLM), pending native review.
+msgid ""
+msgstr ""
+"Project-Id-Version: script.kofin.lyrics\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Claude (machine translation) <noreply@anthropic.com>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Song lyrics from your Jellyfin server"
+msgstr "Kappaleiden sanoitukset Jellyfin-palvelimeltasi"
+
+msgctxt "Addon Description"
+msgid "Shows lyrics from a Jellyfin server, either in a window drawn by this add-on or handed to a skin."
+msgstr "Näyttää sanoitukset Jellyfin-palvelimelta joko tämän lisäosan omassa ikkunassa tai ulkoasun piirtämänä."
+
+msgctxt "#30001"
+msgid "Show lyrics automatically"
+msgstr "Näytä sanoitukset automaattisesti"
+
+msgctxt "#30002"
+msgid "Show lyrics as each song starts, not only when the lyrics button is pressed."
+msgstr "Näytä sanoitukset jokaisen kappaleen alkaessa, ei vain sanoituspainiketta painettaessa."
+
+msgctxt "#30003"
+msgid "Show lyrics that have no timings"
+msgstr "Näytä synkronoimattomat sanoitukset"
+
+msgctxt "#30004"
+msgid "Untimed lyrics stay still instead of following the song."
+msgstr "Synkronoimattomat sanoitukset pysyvät paikallaan eivätkä seuraa kappaletta."
+
+msgctxt "#30005"
+msgid "Timing offset (seconds)"
+msgstr "Ajoituksen siirtymä (sekuntia)"
+
+msgctxt "#30006"
+msgid "Raise it if lines come too early, lower it if they come too late."
+msgstr "Kasvata arvoa, jos rivit tulevat liian aikaisin, ja pienennä sitä, jos ne tulevat liian myöhään."
+
+msgctxt "#30009"
+msgid "Lyrics window height (pixels)"
+msgstr "Sanoitusikkunan korkeus (pikseliä)"
+
+msgctxt "#30010"
+msgid "From the top of the screen. 480 clears the now-playing info; 800 is full height."
+msgstr "Näytön yläreunasta. 480 jättää toistotiedot näkyviin; 800 on koko korkeus."
+
+msgctxt "#30011"
+msgid "No lyrics to show for this song"
+msgstr "Tälle kappaleelle ei ole näytettäviä sanoituksia"
