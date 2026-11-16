@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This addon's own lyrics window. Stock textures only: the skin may not have
+     any to lend. A plain list, so a song starts at the top. The geometry here
+     is the largest the panel gets; window.py sizes it. -->
+<window>
+	<controls>
+		<control type="group">
+			<animation type="WindowOpen" reversible="false">
+				<effect type="fade" start="0" end="100" time="300"/>
+			</animation>
+			<animation type="WindowClose" reversible="false">
+				<effect type="fade" start="100" end="0" time="300"/>
+			</animation>
+			<right>40</right>
+			<width>1240</width>
+			<top>100</top>
+			<height>800</height>
+			<control type="image" id="101">
+				<left>0</left>
+				<top>0</top>
+				<width>1240</width>
+				<height>800</height>
+				<texture colordiffuse="CC000000">white.png</texture>
+				<aspectratio>stretch</aspectratio>
+			</control>
+			<control type="label" id="102">
+				<left>20</left>
+				<top>10</top>
+				<width>1200</width>
+				<height>44</height>
+				<font>font13</font>
+				<textcolor>FF00A4DC</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<!-- Artist and title often run wider than the lyrics. -->
+				<scroll>true</scroll>
+				<label>$INFO[MusicPlayer.Artist] - $INFO[MusicPlayer.Title]</label>
+			</control>
+			<control type="list" id="100">
+				<left>20</left>
+				<top>60</top>
+				<width>1200</width>
+				<height>720</height>
+				<scrolltime tween="sine" easing="out">350</scrolltime>
+				<onup>100</onup>
+				<ondown>100</ondown>
+				<onleft>100</onleft>
+				<onright>100</onright>
+				<itemlayout height="60" width="1200">
+					<control type="label">
+						<width>1200</width>
+						<height>60</height>
+						<font>font13</font>
+						<textcolor>B3FFFFFF</textcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+						<scroll>true</scroll>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout height="60" width="1200">
+					<control type="label">
+						<width>1200</width>
+						<height>60</height>
+						<font>font14</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+						<scroll>true</scroll>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+		<!-- Rulers for LyricsWindow.refit: auto width sizes each to the measure
+		     property's text, hidden or not; see MEASURE_ID_FIRST. font14 is the
+		     focused row's font, the widest a line renders. -->
+		<control type="label" id="3901"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3902"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3903"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3904"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3905"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3906"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3907"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3908"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3909"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3910"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3911"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3912"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3913"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3914"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3915"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3916"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3917"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3918"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3919"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3920"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3921"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3922"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3923"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3924"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3925"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3926"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3927"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3928"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3929"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3930"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3931"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3932"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3933"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3934"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3935"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3936"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3937"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3938"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3939"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<control type="label" id="3940"><left>0</left><top>0</top><width>auto</width><height>60</height><font>font14</font><visible>false</visible><label>$INFO[Window(Home).Property(kofin.lyric.measure)]</label></control>
+		<!-- See SENTINEL_ID. -->
+		<control type="label" id="3999"><left>0</left><top>0</top><width>10</width><height>10</height><font>font14</font><visible>false</visible><label>-</label></control>
+	</controls>
+</window>

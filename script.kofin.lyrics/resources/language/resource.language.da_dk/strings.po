@@ -1,0 +1,61 @@
+# Kodi Media Center language file
+# Addon Name: Kofin Lyrics
+# Addon id: script.kofin.lyrics
+# Addon Provider: kontell
+# Note: machine-translated (LLM), pending native review.
+msgid ""
+msgstr ""
+"Project-Id-Version: script.kofin.lyrics\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Claude (machine translation) <noreply@anthropic.com>\n"
+"Language-Team: Danish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da_DK\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Song lyrics from your Jellyfin server"
+msgstr "Sangtekster fra din Jellyfin-server"
+
+msgctxt "Addon Description"
+msgid "Shows lyrics from a Jellyfin server, either in a window drawn by this add-on or handed to a skin."
+msgstr "Viser sangtekster fra en Jellyfin-server, enten i et vindue, som denne tilføjelse tegner, eller overdraget til et skin."
+
+msgctxt "#30001"
+msgid "Show lyrics automatically"
+msgstr "Vis sangtekster automatisk"
+
+msgctxt "#30002"
+msgid "Show lyrics as each song starts, not only when the lyrics button is pressed."
+msgstr "Vis sangteksten, når hver sang starter, ikke kun når der trykkes på sangtekstknappen."
+
+msgctxt "#30003"
+msgid "Show lyrics that have no timings"
+msgstr "Vis usynkroniserede sangtekster"
+
+msgctxt "#30004"
+msgid "Untimed lyrics stay still instead of following the song."
+msgstr "Usynkroniserede sangtekster står stille i stedet for at følge sangen."
+
+msgctxt "#30005"
+msgid "Timing offset (seconds)"
+msgstr "Tidsforskydning (sekunder)"
+
+msgctxt "#30006"
+msgid "Raise it if lines come too early, lower it if they come too late."
+msgstr "Hæv den, hvis linjerne kommer for tidligt, og sænk den, hvis de kommer for sent."
+
+msgctxt "#30009"
+msgid "Lyrics window height (pixels)"
+msgstr "Højde på sangtekstvinduet (pixels)"
+
+msgctxt "#30010"
+msgid "From the top of the screen. 480 clears the now-playing info; 800 is full height."
+msgstr "Fra toppen af skærmen. 480 holder afspilningsinfoen fri; 800 er fuld højde."
+
+msgctxt "#30011"
+msgid "No lyrics to show for this song"
+msgstr "Ingen sangtekst at vise til denne sang"

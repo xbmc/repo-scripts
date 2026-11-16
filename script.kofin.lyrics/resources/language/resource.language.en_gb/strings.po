@@ -1,0 +1,55 @@
+# Kodi Media Center language file
+# Addon Name: Kofin Lyrics
+# Addon id: script.kofin.lyrics
+# Addon Provider: kontell
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_GB\n"
+
+# Kodi shows the add-on's summary and description from addon.xml; these copies
+# are what gets translated. Keep them in step with addon.xml, in every language.
+
+msgctxt "Addon Summary"
+msgid "Song lyrics from your Jellyfin server"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Shows lyrics from a Jellyfin server, either in a window drawn by this add-on or handed to a skin."
+msgstr ""
+
+msgctxt "#30001"
+msgid "Show lyrics automatically"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Show lyrics as each song starts, not only when the lyrics button is pressed."
+msgstr ""
+
+msgctxt "#30003"
+msgid "Show lyrics that have no timings"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Untimed lyrics stay still instead of following the song."
+msgstr ""
+
+msgctxt "#30005"
+msgid "Timing offset (seconds)"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Raise it if lines come too early, lower it if they come too late."
+msgstr ""
+
+msgctxt "#30009"
+msgid "Lyrics window height (pixels)"
+msgstr ""
+
+msgctxt "#30010"
+msgid "From the top of the screen. 480 clears the now-playing info; 800 is full height."
+msgstr ""
+
+msgctxt "#30011"
+msgid "No lyrics to show for this song"
+msgstr ""

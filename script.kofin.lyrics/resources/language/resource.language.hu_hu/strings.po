@@ -1,0 +1,61 @@
+# Kodi Media Center language file
+# Addon Name: Kofin Lyrics
+# Addon id: script.kofin.lyrics
+# Addon Provider: kontell
+# Note: machine-translated (LLM), pending native review.
+msgid ""
+msgstr ""
+"Project-Id-Version: script.kofin.lyrics\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Claude (machine translation) <noreply@anthropic.com>\n"
+"Language-Team: Hungarian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu_HU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Song lyrics from your Jellyfin server"
+msgstr "Dalszövegek a Jellyfin-kiszolgálójáról"
+
+msgctxt "Addon Description"
+msgid "Shows lyrics from a Jellyfin server, either in a window drawn by this add-on or handed to a skin."
+msgstr "Dalszövegeket jelenít meg egy Jellyfin-kiszolgálóról, a kiegészítő saját ablakában vagy egy skinnek átadva."
+
+msgctxt "#30001"
+msgid "Show lyrics automatically"
+msgstr "Dalszövegek automatikus megjelenítése"
+
+msgctxt "#30002"
+msgid "Show lyrics as each song starts, not only when the lyrics button is pressed."
+msgstr "Minden dal elején megjeleníti a dalszöveget, nem csak akkor, amikor megnyomja a dalszöveg gombját."
+
+msgctxt "#30003"
+msgid "Show lyrics that have no timings"
+msgstr "Szinkronizálatlan dalszövegek megjelenítése"
+
+msgctxt "#30004"
+msgid "Untimed lyrics stay still instead of following the song."
+msgstr "A szinkronizálatlan dalszövegek egy helyben maradnak, és nem követik a dalt."
+
+msgctxt "#30005"
+msgid "Timing offset (seconds)"
+msgstr "Időeltolás (másodperc)"
+
+msgctxt "#30006"
+msgid "Raise it if lines come too early, lower it if they come too late."
+msgstr "Növelje, ha a sorok túl korán jönnek, és csökkentse, ha túl későn."
+
+msgctxt "#30009"
+msgid "Lyrics window height (pixels)"
+msgstr "A dalszövegablak magassága (képpont)"
+
+msgctxt "#30010"
+msgid "From the top of the screen. 480 clears the now-playing info; 800 is full height."
+msgstr "A képernyő tetejétől. A 480 szabadon hagyja a lejátszási információkat; a 800 a teljes magasság."
+
+msgctxt "#30011"
+msgid "No lyrics to show for this song"
+msgstr "Nincs megjeleníthető dalszöveg ehhez a dalhoz"

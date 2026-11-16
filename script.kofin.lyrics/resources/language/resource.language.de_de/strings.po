@@ -1,0 +1,61 @@
+# Kodi Media Center language file
+# Addon Name: Kofin Lyrics
+# Addon id: script.kofin.lyrics
+# Addon Provider: kontell
+# Note: machine-translated (LLM), pending native review.
+msgid ""
+msgstr ""
+"Project-Id-Version: script.kofin.lyrics\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-11-03 00:00+0000\n"
+"Last-Translator: Claude (machine translation) <noreply@anthropic.com>\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Song lyrics from your Jellyfin server"
+msgstr "Songtexte von deinem Jellyfin-Server"
+
+msgctxt "Addon Description"
+msgid "Shows lyrics from a Jellyfin server, either in a window drawn by this add-on or handed to a skin."
+msgstr "Zeigt Songtexte von einem Jellyfin-Server an – entweder in einem eigenen Fenster dieses Add-ons oder über einen Skin, der sie darstellt."
+
+msgctxt "#30001"
+msgid "Show lyrics automatically"
+msgstr "Songtexte automatisch anzeigen"
+
+msgctxt "#30002"
+msgid "Show lyrics as each song starts, not only when the lyrics button is pressed."
+msgstr "Songtexte zu Beginn jedes Titels anzeigen, nicht nur, wenn die Songtext-Schaltfläche gedrückt wird."
+
+msgctxt "#30003"
+msgid "Show lyrics that have no timings"
+msgstr "Nicht synchronisierte Songtexte anzeigen"
+
+msgctxt "#30004"
+msgid "Untimed lyrics stay still instead of following the song."
+msgstr "Nicht synchronisierte Songtexte stehen still, statt dem Titel zu folgen."
+
+msgctxt "#30005"
+msgid "Timing offset (seconds)"
+msgstr "Zeitversatz (Sekunden)"
+
+msgctxt "#30006"
+msgid "Raise it if lines come too early, lower it if they come too late."
+msgstr "Erhöhe ihn, wenn Zeilen zu früh kommen, und senke ihn, wenn sie zu spät kommen."
+
+msgctxt "#30009"
+msgid "Lyrics window height (pixels)"
+msgstr "Höhe des Songtextfensters (Pixel)"
+
+msgctxt "#30010"
+msgid "From the top of the screen. 480 clears the now-playing info; 800 is full height."
+msgstr "Ab dem oberen Bildschirmrand. 480 lässt die Infos zur aktuellen Wiedergabe frei; 800 ist die volle Höhe."
+
+msgctxt "#30011"
+msgid "No lyrics to show for this song"
+msgstr "Kein Songtext zum Anzeigen für diesen Titel"
