@@ -34,7 +34,7 @@ class ButtonMapping:
     button_id: int
     property_name: str
     suffix: bool = False  # If True, append property_suffix to property name at runtime
-    title: str = ""
+    heading: str = ""
     show_none: bool = True
     show_icons: bool = True  # Show icons in select dialog (useDetails=True)
     type: str = ""  # "widget", "background", "toggle", "text", "number", or "select"

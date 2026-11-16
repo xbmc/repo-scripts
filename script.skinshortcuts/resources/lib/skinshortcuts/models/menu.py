@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-
-from .override import Override
 from pathlib import Path
 from typing import TYPE_CHECKING
+
+from .override import Override
 
 try:
     import xbmc
@@ -121,13 +121,18 @@ def display_action(actions: list[Action]) -> str:
     return last or (actions[0].action if actions else "")
 
 
+def submenu_key(parent_menu_name: str, item_name: str) -> str:
+    """Per-item submenu key for a given item, its menu name in config, the manager and userdata."""
+    return f"{parent_menu_name}/{item_name}"
+
+
 @dataclass
 class IncludeRef:
-    """A reference to an include, output as <include>name</include>."""
+    """A reference to an include, output as <include>name</include> before or after the onclicks."""
 
     name: str
     condition: str = ""
-    position: str = "end"
+    after_onclick: bool = False
 
 
 @dataclass
@@ -293,13 +298,6 @@ class Menu:
                 return item
         return None
 
-    def add_item(self, item: MenuItem, position: int | None = None) -> None:
-        """Add item at position (or end if None)."""
-        if position is None:
-            self.items.append(item)
-        else:
-            self.items.insert(position, item)
-
     def remove_item(self, item_name: str) -> bool:
         """Remove item by name. Returns True if found."""
         for i, item in enumerate(self.items):
@@ -363,10 +361,9 @@ class ContextMenu:
 
 @dataclass
 class MenuConfig:
-    """Menu configuration including menus, groupings, and icon sources."""
+    """Menu configuration including menus, dialog settings and icon sources."""
 
     menus: list[Menu] = field(default_factory=list)
-    groupings: list[Shortcut | ShortcutGroup | Content | Input] = field(default_factory=list)
     icon_sources: list[IconSource] = field(default_factory=list)
     subdialogs: list[SubDialog] = field(default_factory=list)
     action_overrides: list[Override] = field(default_factory=list)

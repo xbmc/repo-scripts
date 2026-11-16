@@ -325,7 +325,7 @@ def _get_video_plugins() -> list[tuple[str, str]]:
     if "error" in response:
         log.warning(f"JSON-RPC error for {request['method']}: {response['error']}")
     found = (response.get("result") or {}).get("addons") or []
-    plugins = [(plugin["addonid"], plugin["name"]) for plugin in found]
+    plugins = [(plugin["addonid"], plugin.get("name") or plugin["addonid"]) for plugin in found]
     return sorted(plugins, key=lambda x: x[1].lower())
 
 

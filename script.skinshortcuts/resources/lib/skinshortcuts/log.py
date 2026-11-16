@@ -88,3 +88,10 @@ def notify(heading: str, message: str, detail: str) -> None:
     import xbmcgui
 
     xbmcgui.Dialog().notification(heading, f"{message} (see log)")
+
+
+def log_renamed(detail: str) -> None:
+    """Log an old name a skin still writes, at info with no toast, once per identical text."""
+    if detail not in _logged:
+        _logged.add(detail)
+        get_logger().info(detail)

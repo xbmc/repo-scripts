@@ -7,7 +7,7 @@ from typing import Any
 
 from .constants import BACKGROUND_SIBLINGS, WIDGET_EXTRAS, WIDGET_SIBLINGS
 from .loaders.base import iter_nested
-from .log import get_logger
+from .log import get_logger, notify
 from .models.background import Background, BackgroundConfig, BackgroundGroup
 from .models.override import Override
 from .models.property import PropertySchema
@@ -24,6 +24,8 @@ RESERVED = (
 )
 
 MAX_PASSES = 5
+
+FILES = {"property": "properties.xml", "widget": "widgets.xml", "background": "backgrounds.xml"}
 
 
 def apply_overrides(
@@ -60,30 +62,35 @@ def apply_overrides(
 
 
 def _usable(override: Override, kind: str, known: Any) -> bool:
-    """Reject an override that would rewrite userdata to something the skin cannot use."""
+    """True when an override leaves userdata the skin can use; notifies on a refusal."""
     if not override.replace:
         return False
 
-    if override.value == override.replace:
-        log.error(f"{kind} override '{override.replace}' replaces itself, ignored")
-        return False
-
-    if override.value and override.value not in known:
-        log.error(
-            f"{kind} override '{override.replace}' targets undefined '{override.value}', ignored"
+    def refuse(problem: str, fix: str) -> bool:
+        notify(
+            "Override Error",
+            f"'{override.replace}' {problem}",
+            f'{FILES[kind]}: <{kind} replace="{override.replace}"> {problem}; '
+            f"override ignored; {fix}",
         )
         return False
+
+    if override.value == override.replace:
+        return refuse("replaces itself", "remove it")
+
+    if override.value and override.value not in known:
+        return refuse(
+            f"points at undefined '{override.value}'", f"point it at a {kind} the skin defines"
+        )
 
     if kind == "property" and (
         override.replace.partition(".")[0] in RESERVED
         or override.value.partition(".")[0] in RESERVED
     ):
-        log.error(f"property override '{override.replace}' names a script-owned key, ignored")
-        return False
+        return refuse("names a picker-owned key", "remove it")
 
     if override.replace in known:
-        log.error(f"{kind} override '{override.replace}' is still defined by the skin, ignored")
-        return False
+        return refuse("is still defined", "correct replace=, or remove the old definition")
 
     return True
 

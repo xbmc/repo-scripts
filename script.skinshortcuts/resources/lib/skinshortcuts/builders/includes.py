@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from ..conditions import lookup, slot_suffixes, with_defaults
 from ..constants import extract_path_from_action
+from ..models.menu import submenu_key
 
 if TYPE_CHECKING:
     from ..models.menu import Menu, MenuItem, SubDialog
@@ -42,8 +43,6 @@ class IncludesBuilder:
     def build(self) -> ET.Element:
         """Build the includes XML tree."""
         root = ET.Element("includes")
-
-        # root menus only; <submenu> definitions and templated menus get no raw include
 
         template_menu_names: set[str] = set()
         if self.templates:
@@ -105,7 +104,7 @@ class IncludesBuilder:
             root.append(include)
             emitted_submenu_names.add(include_name)
 
-        if self.templates and self.templates.templates:
+        if self.templates and (self.templates.templates or self.templates.submenus):
             from .template import TemplateBuilder
 
             template_builder = TemplateBuilder(
@@ -147,8 +146,7 @@ class IncludesBuilder:
         for parent_item in parent_menu.items:
             if parent_item.disabled:
                 continue
-            submenu_key = f"{parent_menu.name}/{parent_item.name}"
-            submenu = self._menu_map.get(submenu_key)
+            submenu = self._menu_map.get(submenu_key(parent_menu.name, parent_item.name))
             if not submenu:
                 continue
             for idx, sub_item in enumerate(submenu.items, start=1):
@@ -248,8 +246,8 @@ class IncludesBuilder:
             ET.SubElement(elem, "thumb").text = item.thumb
 
         all_includes = menu.defaults.includes + item.includes
-        before_includes = [i for i in all_includes if i.position == "before-onclick"]
-        after_includes = [i for i in all_includes if i.position == "after-onclick"]
+        before_includes = [i for i in all_includes if not i.after_onclick]
+        after_includes = [i for i in all_includes if i.after_onclick]
 
         for inc in before_includes:
             include_elem = ET.SubElement(elem, "include")
@@ -291,7 +289,7 @@ class IncludesBuilder:
 
         if not menu.controltype:
             builtins = {
-                "id": str(idx),
+                "id": f"$NUMBER[{idx}]",
                 "name": item.name,
                 "menu": menu.template_origin or menu.name,
                 "action": item.action,
@@ -299,8 +297,7 @@ class IncludesBuilder:
                 "submenuVisibility": item.name,
             }
 
-            submenu_key = f"{menu.name}/{item.name}"
-            submenu = self._menu_map.get(submenu_key)
+            submenu = self._menu_map.get(submenu_key(menu.name, item.name))
             if submenu and submenu.items:
                 builtins["hasSubmenu"] = "True"
 

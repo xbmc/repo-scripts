@@ -18,6 +18,7 @@ from .base import (
     parse_content,
     parse_name_overrides,
     parse_xml,
+    report_missing,
     warn_duplicate_names,
 )
 
@@ -36,14 +37,15 @@ def load_widgets(path: str | Path) -> WidgetConfig:
     for child in root:
         if child.tag == "widget":
             widget = _parse_widget(child, str(path))
-            widgets.append(widget)
-            groupings.append(widget)
+            if widget:
+                widgets.append(widget)
+                groupings.append(widget)
         elif child.tag == "group":
             group = _parse_widget_group(child, str(path))
             if group:
                 groupings.append(group)
         elif child.tag == "content":
-            content = parse_content(child)
+            content = parse_content(child, str(path), "Widget Error")
             if content:
                 groupings.append(content)
 
@@ -53,25 +55,26 @@ def load_widgets(path: str | Path) -> WidgetConfig:
     return WidgetConfig(
         widgets=widgets,
         groupings=groupings,
-        overrides=parse_name_overrides(root, "widget"),
+        overrides=parse_name_overrides(root, "widget", path),
     )
 
 
-def _parse_widget(elem, path: str, default_source: str = "") -> Widget:
-    """Parse a widget element; only a custom widget may leave out its path."""
+def _parse_widget(elem, path: str, default_source: str = "") -> Widget | None:
+    """Parse a widget element, reporting one that lacks a field; only a custom one needs no path."""
     widget_name = get_attr(elem, "name")
-    if not widget_name:
-        raise WidgetConfigError(path, "Widget missing 'name' attribute")
-
     label = get_attr(elem, "label")
-    if not label:
-        raise WidgetConfigError(path, f"Widget '{widget_name}' missing 'label' attribute")
-
     widget_type = get_attr(elem, "type") or ""
     widget_path = get_text(elem, "path") or ""
 
+    if not widget_name:
+        report_missing("Widget Error", path, elem, "name")
+        return None
+    if not label:
+        report_missing("Widget Error", path, elem, "label")
+        return None
     if not widget_path and widget_type != "custom":
-        raise WidgetConfigError(path, f"Widget '{widget_name}' missing <path>")
+        report_missing("Widget Error", path, elem, "<path>")
+        return None
 
     source = get_attr(elem, "source") or default_source
 
@@ -105,11 +108,7 @@ def _parse_widget_group(elem, path: str, default_source: str = "") -> WidgetGrou
     flat = get_bool(elem, "flat")
 
     if not group_name:
-        notify(
-            "Widget Group Error",
-            "group missing 'name'",
-            f"{path}: <group> has no name; group skipped; add name=\"...\"",
-        )
+        report_missing("Widget Group Error", path, elem, "name")
         return None
     if not label and not flat:
         notify(
@@ -127,13 +126,14 @@ def _parse_widget_group(elem, path: str, default_source: str = "") -> WidgetGrou
     for child in elem:
         if child.tag == "widget":
             widget = _parse_widget(child, path, default_source=source)
-            items.append(widget)
+            if widget:
+                items.append(widget)
         elif child.tag == "group":
             nested = _parse_widget_group(child, path, default_source=source)
             if nested:
                 items.append(nested)
         elif child.tag == "content":
-            content = parse_content(child)
+            content = parse_content(child, path, "Widget Error")
             if content:
                 items.append(content)
 

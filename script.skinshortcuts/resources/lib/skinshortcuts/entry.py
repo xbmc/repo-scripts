@@ -6,7 +6,7 @@ import json
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from urllib.parse import parse_qs
+from urllib.parse import parse_qsl
 
 try:
     import xbmc
@@ -17,7 +17,15 @@ try:
 except ImportError:
     IN_KODI = False
 
-from .constants import INCLUDES_FILE, MENUS_FILE, VIEWS_FILE, get_shortcuts_path
+from .constants import (
+    DATA_DIR,
+    INCLUDES_FILE,
+    MENUS_FILE,
+    VIEWS_FILE,
+    WIDGET_EXTRAS,
+    WIDGET_SIBLINGS,
+    get_shortcuts_path,
+)
 from .hashing import generate_config_hashes, hash_file, needs_rebuild, write_hashes
 from .localize import LANGUAGE
 from .log import get_logger
@@ -61,7 +69,7 @@ def get_output_paths() -> list[str]:
 
 def _unsupported_marker() -> Path:
     """Per-skin marker; present means the user chose to ignore the unsupported-skin warning."""
-    data = xbmcvfs.translatePath("special://profile/addon_data/script.skinshortcuts/")
+    data = xbmcvfs.translatePath(DATA_DIR)
     return Path(data) / f"{xbmc.getSkinDir()}.unsupported-ack"
 
 
@@ -126,6 +134,8 @@ def build_includes(
     force: bool = False,
 ) -> bool:
     """Build includes.xml from skin config files, reloading the skin when the output changes."""
+    from .exceptions import ConfigError
+
     log.debug(f"build_includes called: path={shortcuts_path}, output={output_path}, force={force}")
 
     home = xbmcgui.Window(10000) if IN_KODI else None
@@ -219,6 +229,8 @@ def build_includes(
 
         return True
 
+    except ConfigError:
+        return False
     except Exception as e:
         log.error(f"Error building includes: {e}")
         import traceback
@@ -237,7 +249,9 @@ def clear_custom_widget(
     property_name: str = "",
     shortcuts_path: str | None = None,
 ) -> bool:
-    """Clear a custom widget menu and optionally reset related properties."""
+    """Clear an item's custom widget menu and optionally its widget properties; save and rebuild."""
+    from .exceptions import ConfigError
+
     if not menu or not item:
         log.warning("clear_custom_widget: menu and item are required")
         return False
@@ -255,30 +269,20 @@ def clear_custom_widget(
         manager.clear_custom_widget(menu, item, suffix)
 
         if property_name:
-            working_item = manager._get_working_item(menu, item)
-            if working_item:
-                prop_suffix = suffix or ""
-                props_to_clear = [
-                    f"{property_name}{prop_suffix}",
-                    f"{property_name}Name{prop_suffix}",
-                    f"{property_name}Path{prop_suffix}",
-                    f"{property_name}Type{prop_suffix}",
-                    f"{property_name}Target{prop_suffix}",
-                    f"{property_name}Label{prop_suffix}",
-                ]
-                for prop in props_to_clear:
-                    if prop in working_item.properties:
-                        del working_item.properties[prop]
-                manager._changed = True
-                log.debug(f"Cleared {property_name} properties on item: {item}")
+            schema = manager.config.property_schema
+            for part in ("", *WIDGET_SIBLINGS, *WIDGET_EXTRAS):
+                name = schema.declared_name(f"{property_name}{part}{suffix}")
+                manager.set_custom_property(menu, item, name, None)
+            log.debug(f"Cleared {property_name} properties on item: {item}")
 
-        if manager.has_changes():
-            manager.save()
+        if manager.has_changes() and manager.save():
             log.debug("Saved changes after clearing")
             build_includes(shortcuts_path, force=True)
 
         return True
 
+    except ConfigError:
+        return False
     except Exception as e:
         log.error(f"Error clearing custom widget: {e}")
         import traceback
@@ -408,7 +412,7 @@ def reset_menus(shortcuts_path: str | None = None) -> bool:
 
 def play_channel(channel: str) -> None:
     """Play a PVR channel by its ID, logging a warning when it does not play."""
-    if not channel.isdigit():
+    if not channel.isdecimal():
         log.warning(f"playchannel: '{channel}' is not a channel ID")
         return
     request = {
@@ -426,7 +430,9 @@ def play_channel(channel: str) -> None:
 
 
 def main() -> None:
-    """Main entry point for RunScript."""
+    """Main entry point for RunScript; sets prop/value pairs on Home until the action ends."""
+    from .exceptions import ConfigError
+
     log.debug("Skin Shortcuts started")
 
     args: dict[str, str] = {}
@@ -442,20 +448,15 @@ def main() -> None:
         else:
             args[key] = value
 
-    if len(sys.argv) > 1:
-        if "&" in sys.argv[1] or len(sys.argv) == 2:
-            query = sys.argv[1].lstrip("?")
-            for k, values in parse_qs(query).items():
-                if k in ("prop", "value"):
-                    for v in values:
-                        _store(k, v)
-                else:
-                    _store(k, values[0])
-        else:
-            for arg in sys.argv[1:]:
-                if "=" in arg:
-                    key, value = arg.split("=", 1)
-                    _store(key, value)
+    argv = sys.argv[1:]
+    if argv and ("&" in argv[0] or len(argv) == 1):
+        for key, value in parse_qsl(argv[0].lstrip("?"), keep_blank_values=True):
+            _store(key, value)
+        argv = argv[1:]
+    for arg in argv:
+        if "=" in arg:
+            key, value = arg.split("=", 1)
+            _store(key, value)
 
     window_props = {
         name: prop_values[i] if i < len(prop_values) else "true"
@@ -468,6 +469,8 @@ def main() -> None:
 
     try:
         _dispatch(args)
+    except ConfigError:
+        pass
     finally:
         if home is not None:
             for name in window_props:
@@ -475,7 +478,12 @@ def main() -> None:
 
 
 def _dispatch(args: dict[str, str]) -> None:
-    """Dispatch the named action, building by default; on a v2 skin only the build runs."""
+    """Dispatch the named action, building by default; skip a skin without v3 config."""
+    if IN_KODI:
+        for key in ("path", "output"):
+            if args.get(key):
+                args[key] = xbmcvfs.translatePath(args[key])
+
     action = args.get("type", "buildxml")
     if action != "buildxml":
         # v2 skins run hidesubmenu from a list onback; every Back press would raise the modal
@@ -541,8 +549,8 @@ def _dispatch(args: dict[str, str]) -> None:
                     manager.reset_menu_tree(menu)
                 else:
                     manager.reset_menu(menu)
-                manager.save()
-                build_includes(shortcuts_path, force=True)
+                if manager.save():
+                    build_includes(shortcuts_path, force=True)
     elif action == "resetsubmenus":
         import xbmcgui
         if xbmcgui.Dialog().yesno(
@@ -553,8 +561,8 @@ def _dispatch(args: dict[str, str]) -> None:
             shortcuts_path = args.get("path") or get_shortcuts_path()
             manager = MenuManager(shortcuts_path)
             manager.reset_all_submenus()
-            manager.save()
-            build_includes(shortcuts_path, force=True)
+            if manager.save():
+                build_includes(shortcuts_path, force=True)
     elif action == "clear":
         clear_custom_widget(
             menu=args.get("menu", ""),

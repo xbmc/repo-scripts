@@ -12,11 +12,11 @@ from xml.sax.saxutils import escape
 import xbmc
 import xbmcvfs
 
+from .constants import DATA_DIR
 from .log import get_logger
 
 log = get_logger("playlists")
 
-DATA_DIR = "special://profile/addon_data/script.skinshortcuts/"
 PLAYLISTS_SUBDIR = "playlists"
 FILENAME_PREFIX = "source-"
 DEFAULT_PLAYLISTS_PATH = "special://profile/playlists/"
@@ -46,6 +46,7 @@ def playlists_base_path() -> str:
         return DEFAULT_PLAYLISTS_PATH
     return base if base.endswith("/") else f"{base}/"
 
+
 _PROBE_METHODS: dict[str, str] = {
     "movies": "VideoLibrary.GetMovies",
     "tvshows": "VideoLibrary.GetTVShows",
@@ -55,6 +56,7 @@ _PROBE_METHODS: dict[str, str] = {
     "songs": "AudioLibrary.GetSongs",
     "artists": "AudioLibrary.GetArtists",
 }
+
 
 @dataclass(frozen=True)
 class DisplayOption:

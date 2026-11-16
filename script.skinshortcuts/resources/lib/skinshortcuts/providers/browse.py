@@ -10,7 +10,6 @@ from dataclasses import dataclass
 import xbmc
 
 from ..log import get_logger
-
 from ..models.menu import IconOverrides
 
 log = get_logger("BrowseProvider")

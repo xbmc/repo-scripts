@@ -6,8 +6,9 @@ from pathlib import Path
 
 from ..constants import DEFAULT_VIEW_PREFIX
 from ..exceptions import ViewConfigError
+from ..log import notify
 from ..models.views import View, ViewConfig, ViewContent
-from .base import get_attr, parse_xml, warn_duplicate_names
+from .base import get_attr, get_text, parse_xml, report_missing, warn_duplicate_names
 
 
 def load_views(path: str | Path) -> ViewConfig:
@@ -34,17 +35,18 @@ def load_views(path: str | Path) -> ViewConfig:
 
 
 def _parse_views(root, path: str) -> list[View]:
-    """Parse view definitions from direct children of root."""
+    """Parse top-level view definitions, reporting one with no id or label."""
     views = []
 
     for elem in root.findall("view"):
         view_id = get_attr(elem, "id")
-        if not view_id:
-            raise ViewConfigError(path, "View missing 'id' attribute")
-
         label = get_attr(elem, "label")
+        if not view_id:
+            report_missing("View Error", path, elem, "id", key="id")
+            continue
         if not label:
-            raise ViewConfigError(path, f"View '{view_id}' missing 'label' attribute")
+            report_missing("View Error", path, elem, "label", key="id")
+            continue
 
         views.append(View(
             id=view_id,
@@ -73,44 +75,61 @@ def _parse_rules(root, path: str, views: list[View]) -> list[ViewContent]:
 
 
 def _parse_content_rule(elem, path: str, valid_view_ids: set[str]) -> ViewContent | None:
-    """Parse a content element into a view content rule."""
+    """Parse a content rule, reporting a missing field or undefined view."""
     name = get_attr(elem, "name")
-    if not name:
-        raise ViewConfigError(path, "Content rule missing 'name' attribute")
-
     label = get_attr(elem, "label")
-    if not label:
-        raise ViewConfigError(path, f"Content '{name}' missing 'label' attribute")
-
     library_default = get_attr(elem, "library")
-    if not library_default:
-        raise ViewConfigError(path, f"Content '{name}' missing 'library' attribute")
+    visible = get_text(elem, "visible")
+    views_text = get_text(elem, "views")
+    required = (
+        ("name", name), ("label", label), ("library", library_default),
+        ("<visible>", visible), ("<views>", views_text),
+    )
+    for field, value in required:
+        if not value:
+            report_missing("View Error", path, elem, field)
+            return None
 
-    visible_elem = elem.find("visible")
-    if visible_elem is None or not visible_elem.text:
-        raise ViewConfigError(path, f"Content '{name}' missing <visible> element")
-    visible = visible_elem.text.strip()
-
-    views_elem = elem.find("views")
-    if views_elem is None or not views_elem.text:
-        raise ViewConfigError(path, f"Content '{name}' missing <views> element")
-
-    view_ids = [v.strip() for v in views_elem.text.split(",")]
-    view_ids = [v for v in view_ids if v and v in valid_view_ids]
+    written = f'<content name="{name}">'
+    view_ids = []
+    for view_id in filter(None, (v.strip() for v in views_text.split(","))):
+        if view_id in valid_view_ids:
+            view_ids.append(view_id)
+        else:
+            notify(
+                "View Error",
+                f"'{name}' lists undefined view '{view_id}'",
+                f"{path}: {written} <views> lists '{view_id}', which is not a defined view id; "
+                "it is skipped; use a defined view id",
+            )
 
     if not view_ids:
-        raise ViewConfigError(path, f"Content '{name}' has no valid view IDs")
+        notify(
+            "View Error",
+            f"'{name}' lists no defined view",
+            f"{path}: {written} <views> names no defined view id; content skipped; "
+            "list the ids of defined views",
+        )
+        return None
 
     if library_default not in valid_view_ids:
-        raise ViewConfigError(
-            path, f"Content '{name}' library default '{library_default}' is not a defined view"
+        notify(
+            "View Error",
+            f"'{name}' library view not defined",
+            f'{path}: {written} has library="{library_default}", which is not a defined view id; '
+            "content skipped; use a defined view id",
         )
+        return None
 
     plugin_default = get_attr(elem, "plugin") or ""
     if plugin_default and plugin_default not in valid_view_ids:
-        raise ViewConfigError(
-            path, f"Content '{name}' plugin default '{plugin_default}' is not a defined view"
+        notify(
+            "View Error",
+            f"'{name}' plugin view not defined",
+            f'{path}: {written} has plugin="{plugin_default}", which is not a defined view id; '
+            "plugin default ignored; use a defined view id",
         )
+        plugin_default = ""
 
     return ViewContent(
         name=name,

@@ -4,17 +4,18 @@ from __future__ import annotations
 
 import copy
 import uuid
+from dataclasses import replace
 from pathlib import Path
 
 from .conditions import check_visible
 from .config import SkinConfig
 from .localize import resolve_label
 from .log import get_logger
-from .models.menu import Action, Menu, MenuItem
+from .models.menu import Action, Menu, MenuItem, submenu_key
 from .playlists import cleanup_orphan_playlists
 from .userdata import (
-    MenuItemDiff,
     MenuDiff,
+    MenuItemDiff,
     UserData,
     merge_items,
     save_userdata,
@@ -40,33 +41,12 @@ class MenuManager:
 
         self.config = SkinConfig.load(shortcuts_path, load_user=True, userdata_path=userdata_path)
 
-        # referenced templates are seed sources; per-item copies live under "{parent}/{item}"
-        referenced_templates = self._referenced_submenu_templates()
-
-        self.working: dict[str, Menu] = {}
-        for menu in self.config.menus:
-            if menu.is_submenu and menu.name in referenced_templates:
-                continue
-            self.working[menu.name] = copy.deepcopy(menu)
+        self.working = {menu.name: copy.deepcopy(menu) for menu in self.config.menus}
         for menu in self.working.values():
             self.config.resolve_item_properties(menu)
         self._hidden = self._hidden_items()
 
         self._changed = False
-
-    def _referenced_submenu_templates(self) -> set[str]:
-        """Set of submenu template names any item references, the seeds for per-item copies."""
-        referenced: set[str] = set()
-        for menu in self.config.default_menus:
-            for item in menu.items:
-                if item.submenu:
-                    referenced.add(item.submenu)
-        for menu_diff in self.config.userdata.menus.values():
-            for item_diff in menu_diff.items:
-                if item_diff.submenu:
-                    referenced.add(item_diff.submenu)
-        submenu_names = {m.name for m in self.config.default_menus if m.is_submenu}
-        return referenced & submenu_names
 
     def get_menu_ids(self) -> list[str]:
         """Get all available menu names."""
@@ -77,10 +57,6 @@ class MenuManager:
         if menu_id in self.working:
             return self.working[menu_id].items
         return []
-
-    def get_widgets(self) -> list[tuple[str, str]]:
-        """Get available widgets as (name, label) tuples."""
-        return [(w.name, w.label) for w in self.config.widgets]
 
     def _get_working_item(self, menu_id: str, item_name: str) -> MenuItem | None:
         """Get item from working copy."""
@@ -129,16 +105,11 @@ class MenuManager:
             full.insert(at, item)
         return full
 
-    def _ensure_working_menu(self, menu_id: str) -> Menu:
-        """Ensure menu exists in working copy, create if needed."""
+    def ensure_working_menu(self, menu_id: str) -> Menu:
+        """Ensure menu exists in working copy, created as an empty submenu if missing."""
         if menu_id not in self.working:
             self.working[menu_id] = Menu(name=menu_id, is_submenu=True)
         return self.working[menu_id]
-
-    @staticmethod
-    def submenu_key(parent_menu_name: str, item_name: str) -> str:
-        """Per-item submenu working key for a given item."""
-        return f"{parent_menu_name}/{item_name}"
 
     @staticmethod
     def submenu_template(item: MenuItem) -> str:
@@ -147,7 +118,7 @@ class MenuManager:
 
     def ensure_item_submenu(self, parent_menu_name: str, item: MenuItem) -> Menu:
         """Ensure the item has its own submenu, seeded from the template on first access."""
-        key = self.submenu_key(parent_menu_name, item.name)
+        key = submenu_key(parent_menu_name, item.name)
         if key not in self.working:
             template_name = self.submenu_template(item)
             default = self.config.get_default_menu(template_name)
@@ -162,7 +133,7 @@ class MenuManager:
 
     def drop_item_submenu(self, parent_menu_name: str, item_name: str) -> None:
         """Discard the per-item submenu so the next access reseeds from the template."""
-        key = self.submenu_key(parent_menu_name, item_name)
+        key = submenu_key(parent_menu_name, item_name)
         self._hidden.pop(key, None)
         if key in self.working:
             del self.working[key]
@@ -194,14 +165,6 @@ class MenuManager:
 
         return cw_menu_id
 
-    def get_custom_widget_menu(self, menu_id: str, item_id: str, suffix: str = "") -> str:
-        """Get the custom widget menu ID for an item."""
-        item = self._get_working_item(menu_id, item_id)
-        if not item:
-            return ""
-        prop_name = f"customWidget{suffix}"
-        return item.properties.get(prop_name, "")
-
     def clear_custom_widget(self, menu_id: str, item_id: str, suffix: str = "") -> bool:
         """Clear a custom widget menu and remove the reference."""
         item = self._get_working_item(menu_id, item_id)
@@ -228,8 +191,8 @@ class MenuManager:
         label: str = "",
         item: MenuItem | None = None,
     ) -> MenuItem:
-        """Add a new item to a menu."""
-        menu = self._ensure_working_menu(menu_id)
+        """Add item to menu after the index or at end; one built unlabeled is a placeholder."""
+        menu = self.ensure_working_menu(menu_id)
 
         if item:
             new_item = item
@@ -260,26 +223,21 @@ class MenuManager:
 
     def remove_item(self, menu_id: str, item_id: str) -> bool:
         """Remove an item from a menu."""
-        if menu_id not in self.working:
+        menu = self.working.get(menu_id)
+        if menu is None or not menu.remove_item(item_id):
             return False
-
-        menu = self.working[menu_id]
-        for i, item in enumerate(menu.items):
-            if item.name == item_id:
-                menu.items.pop(i)
-                self._changed = True
-                return True
-
-        return False
+        self._changed = True
+        return True
 
     def restore_item(self, menu_id: str, item: MenuItem) -> bool:
-        """Restore a previously deleted item."""
-        menu = self._ensure_working_menu(menu_id)
+        """Restore a deleted item, dropping any empty placeholder."""
+        menu = self.ensure_working_menu(menu_id)
 
         menu.items[:] = [i for i in menu.items if not (i.is_placeholder and not i.actions)]
 
         restored = copy.deepcopy(item)
         menu.items.append(restored)
+        self.config.resolve_item_properties(menu)
         self._changed = True
         return True
 
@@ -295,6 +253,7 @@ class MenuManager:
         for i, item in enumerate(self.working[menu_id].items):
             if item.name == item_id:
                 self.working[menu_id].items[i] = copy.deepcopy(default_item)
+                self.config.resolve_item_properties(self.working[menu_id])
                 self._changed = True
                 return True
 
@@ -348,7 +307,7 @@ class MenuManager:
             for item in menu.items:
                 template_name = self.submenu_template(item)
                 if self.config.get_default_menu(template_name):
-                    submenu_refs.append(self.submenu_key(menu_id, item.name))
+                    submenu_refs.append(submenu_key(menu_id, item.name))
 
         changed = self.reset_menu(menu_id)
 
@@ -359,10 +318,11 @@ class MenuManager:
         return changed
 
     def reset_all_submenus(self) -> bool:
-        """Reset all submenus (menus defined with <submenu> tag)."""
+        """Reset every <submenu> menu and its per-item copies; menus with no skin default stay."""
         changed = False
-        for menu in self.working.values():
-            if menu.is_submenu and self.reset_menu(menu.name):
+        for menu_id in list(self.working):
+            default = self._default_menu(menu_id)
+            if default is not None and default.is_submenu and self.reset_menu(menu_id):
                 changed = True
         return changed
 
@@ -372,20 +332,13 @@ class MenuManager:
         if not working_item:
             return False
 
-        default_item = self._default_item(menu_id, item_id)
-        if not default_item:
+        default_menu = self._default_menu(menu_id)
+        default_item = default_menu.get_item(item_id) if default_menu else None
+        if not default_menu or not default_item:
             return False
 
-        if working_item.label != default_item.label:
-            return True
-        if working_item.actions != default_item.actions:
-            return True
-        if working_item.icon != default_item.icon:
-            return True
-        if working_item.disabled != default_item.disabled:
-            return True
-
-        return working_item.properties != default_item.properties
+        defaults = default_menu.defaults.properties
+        return self._diff_item(working_item, default_item, defaults) is not None
 
     def get_removed_items(self, menu_id: str) -> list[MenuItem]:
         """Get default items that have been removed from working copy."""
@@ -413,28 +366,9 @@ class MenuManager:
 
     def move_item(self, menu_id: str, item_id: str, direction: int) -> bool:
         """Move an item up or down in the menu."""
-        if menu_id not in self.working:
+        menu = self.working.get(menu_id)
+        if menu is None or not menu.move_item(item_id, direction):
             return False
-
-        items = self.working[menu_id].items
-        if not items:
-            return False
-
-        current_index = None
-        for i, item in enumerate(items):
-            if item.name == item_id:
-                current_index = i
-                break
-
-        if current_index is None:
-            return False
-
-        new_index = current_index + direction
-        if new_index < 0 or new_index >= len(items):
-            return False
-
-        items[current_index], items[new_index] = items[new_index], items[current_index]
-
         self._changed = True
         return True
 
@@ -522,20 +456,6 @@ class MenuManager:
         ]
         cleanup_orphan_playlists(actions)
 
-    def reload(self) -> None:
-        """Reload config and userdata from disk, rebuild working copy."""
-        self.config = SkinConfig.load(
-            self.shortcuts_path, load_user=True, userdata_path=self.userdata_path
-        )
-        referenced_templates = self._referenced_submenu_templates()
-        self.working = {}
-        for menu in self.config.menus:
-            if menu.is_submenu and menu.name in referenced_templates:
-                continue
-            self.working[menu.name] = copy.deepcopy(menu)
-        self._hidden = self._hidden_items()
-        self._changed = False
-
     def _cleanup_orphaned_menus(self) -> None:
         """Remove menus that are not in defaults and have no parent reference."""
         default_menu_names = {m.name for m in self.config.default_menus}
@@ -543,7 +463,7 @@ class MenuManager:
         referenced_menus: set[str] = set()
         for menu in self.working.values():
             for item in menu.items:
-                referenced_menus.add(self.submenu_key(menu.name, item.name))
+                referenced_menus.add(submenu_key(menu.name, item.name))
                 for key, value in item.properties.items():
                     if key.startswith("customWidget") and value:
                         referenced_menus.add(value)
@@ -621,7 +541,7 @@ class MenuManager:
                     None
                 )
                 position_changed = default_idx != idx
-                item_diff = self._diff_item(working_item, default_item)
+                item_diff = self._diff_item(working_item, default_item, default.defaults.properties)
 
                 if item_diff or position_changed:
                     if item_diff is None:
@@ -633,8 +553,10 @@ class MenuManager:
             return None
         return diff
 
-    def _diff_item(self, working: MenuItem, default: MenuItem) -> MenuItemDiff | None:
-        """Diff for a single item, changed fields only."""
+    def _diff_item(
+        self, working: MenuItem, default: MenuItem, defaults: dict[str, str]
+    ) -> MenuItemDiff | None:
+        """Diff for a single item, changed fields only, None when unchanged."""
         diff = MenuItemDiff(name=working.name)
         has_changes = False
 
@@ -654,8 +576,10 @@ class MenuManager:
             diff.disabled = working.disabled
             has_changes = True
 
-        # derived props recompute on build; saving them would freeze the skin's paths and labels
-        derived = self.config.derived_item_properties(working)
+        # siblings follow the skin only on slots still holding the item's default pick
+        picks = {k: v for k, v in working.properties.items() if default.properties.get(k) == v}
+        derived = self.config.derived_item_properties(replace(working, properties=picks))
+        derived.update(self.config.inherited_item_properties(working, defaults))
         diff_props = {
             k: v for k, v in working.properties.items()
             if default.properties.get(k) != v and not _is_derived(derived, k, v)

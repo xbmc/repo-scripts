@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import contextlib
 import time
+import zlib
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable, Literal
 
@@ -16,17 +17,21 @@ except ImportError:
     IN_KODI = False
 
 
+from ..conditions import check_visible, evaluate_condition
 from ..constants import (
     ADDONS_SOURCE_MAP,
+    MENUS_FILE,
     TARGET_MAP,
     WINDOW_MAP,
     extract_path_from_action,
     extract_window_from_action,
 )
-from ..conditions import check_visible, evaluate_condition
 from ..loaders.menu import load_groupings
-from ..localize import LANGUAGE, resolve_label
+from ..localize import LANGUAGE, number_label, resolve_label
 from ..log import get_logger
+from ..models.background import Background, BackgroundGroup, BackgroundType
+from ..models.menu import Action, Content, IconOverrides, Input, MenuItem, Shortcut, ShortcutGroup
+from ..models.widget import Widget, WidgetGroup
 from ..playlists import (
     SORT_OPTIONS,
     SortOption,
@@ -36,9 +41,6 @@ from ..playlists import (
     save_playlist,
     unpack_multipath,
 )
-from ..models.background import Background, BackgroundGroup, BackgroundType
-from ..models.menu import Action, Content, IconOverrides, Input, MenuItem, Shortcut, ShortcutGroup
-from ..models.widget import Widget, WidgetGroup
 from ..providers.browse import get_browse_provider
 from ..providers.content import ContentProvider, library_node_type
 
@@ -57,6 +59,11 @@ SLOW_RESOLVE_MS = 250
 def _elapsed_ms(start: float) -> float:
     """Elapsed milliseconds, for the picker's timing lines."""
     return (time.monotonic() - start) * 1000
+
+
+def _name_hash(text: str) -> str:
+    """Hash a string for a generated item name, the same across Kodi restarts."""
+    return f"{zlib.crc32(text.encode()):08x}"
 
 
 def _log_slow_resolve(content: Content, rows: int, start: float) -> None:
@@ -253,7 +260,7 @@ class PickersMixin:
         if not item:
             return
 
-        menus_path = Path(self.shortcuts_path) / "menus.xml"
+        menus_path = Path(self.shortcuts_path) / MENUS_FILE
         groups = load_groupings(menus_path, self.menu_id)
 
         if not groups:
@@ -411,6 +418,7 @@ class PickersMixin:
         items: list[WidgetGroup | Widget | Content],
         item_props: dict[str, str],
         slot: str = "",
+        title: str = "",
     ) -> Widget | None | Literal[False]:
         """Pick a widget from groupings. False when the user picks "None"."""
         current_widget = item_props.get(slot, "")
@@ -419,7 +427,7 @@ class PickersMixin:
         result = self._pick_from_hierarchy(
             items,
             item_props,
-            title=LANGUAGE(32044),
+            title=title or LANGUAGE(32044),
             leaf_types=(Widget,),
             group_types=(WidgetGroup,),
             default_leaf_icon="DefaultAddonNone.png",
@@ -437,46 +445,6 @@ class PickersMixin:
         )
 
         return result
-
-    def _pick_widget_flat(
-        self, widgets: list, item_props: dict[str, str] | None = None, slot: str = ""
-    ) -> Widget | None | Literal[False]:
-        """Pick from a flat widget list. False when the user picks "None"."""
-        current_widget = item_props.get(slot, "") if item_props else ""
-        preselect = -1
-        overrides = self._icon_overrides()
-
-        listitems = []
-        none_item = xbmcgui.ListItem(xbmc.getLocalizedString(231), offscreen=True)
-        none_icon = overrides.get("DefaultAddonNone.png", "DefaultAddonNone.png")
-        none_item.setArt({"icon": resolve_label(none_icon)})
-        listitems.append(none_item)
-
-        for i, w in enumerate(widgets):
-            listitem = xbmcgui.ListItem(resolve_label(w[1]), offscreen=True)
-            icon = w[2] if len(w) > 2 and w[2] else "DefaultAddonNone.png"
-            listitem.setArt({"icon": resolve_label(overrides.get(icon, icon))})
-            if self.manager is not None:
-                widget_obj = self.manager.config.get_widget(w[0])
-                if widget_obj is not None:
-                    stamp_picker_props(listitem, widget_obj)
-            listitems.append(listitem)
-            if preselect == -1 and w[0] == current_widget:
-                preselect = i + 1  # +1 for "None" option
-
-        selected = picker_select(
-            "widget", LANGUAGE(32044), listitems, useDetails=True, preselect=preselect
-        )
-
-        if selected == -1:
-            return None
-        if selected == 0:
-            return False
-
-        widget_name = widgets[selected - 1][0]
-        if self.manager is None:
-            return None
-        return self.manager.config.get_widget(widget_name)
 
     def _get_content_provider(self) -> ContentProvider:
         """One provider per dialog, so its cache outlives a single picker redraw."""
@@ -642,7 +610,7 @@ class PickersMixin:
         widget_target = self._map_widget_type_to_target(widget_type, widget.target or "videos")
 
         return Widget(
-            name=f"browse-{hash(path)}",
+            name=f"browse-{_name_hash(path)}",
             label=label,
             path=path,
             type=widget_type,
@@ -665,7 +633,6 @@ class PickersMixin:
         current_value: str = "",
         content_resolver: Callable[[Content], list] | None = None,
         create_folder_group: Callable[[str, list, str, str], Any] | None = None,
-        custom_action: tuple[str, str, Callable[[], Any | None]] | None = None,
         positions: dict[str, int] | None = None,
     ) -> Any | None | Literal[False]:
         """Pick from a hierarchy with back navigation. False when the user picks "None"."""
@@ -723,12 +690,6 @@ class PickersMixin:
                 stamp_picker_props(listitem, vis_item, item_props, content_resolver)
                 listitems.append(listitem)
 
-            if custom_action:
-                action_label, action_icon, _callback = custom_action
-                action_item = xbmcgui.ListItem(action_label, offscreen=True)
-                action_item.setArt({"icon": resolve_label(overrides.get(action_icon, action_icon))})
-                listitems.append(action_item)
-
             selected = picker_select(
                 picker_kind(leaf_types),
                 title or LANGUAGE(32181),
@@ -742,13 +703,6 @@ class PickersMixin:
 
             if show_none and selected == 0:
                 return False
-
-            if custom_action and selected == len(listitems) - 1:
-                _label, _icon, callback = custom_action
-                result = callback()
-                if result is not None:
-                    return result
-                continue
 
             preselect = selected
             positions[""] = selected
@@ -1008,21 +962,21 @@ class PickersMixin:
 
         if input_item.for_ == "action":
             return Shortcut(
-                name=f"custom-input-{hash(result)}",
+                name=f"custom-input-{_name_hash(result)}",
                 label=input_item.label,
                 actions=[Action(action=result)],
                 icon=input_item.icon,
             )
         if input_item.for_ == "label":
             return Shortcut(
-                name=f"custom-input-{hash(result)}",
-                label=result,
+                name=f"custom-input-{_name_hash(result)}",
+                label=number_label(result),
                 actions=[Action(action="noop")],
                 icon=input_item.icon,
             )
         if input_item.for_ == "path":
             return Shortcut(
-                name=f"custom-input-{hash(result)}",
+                name=f"custom-input-{_name_hash(result)}",
                 label=input_item.label,
                 actions=[Action(action=f"ActivateWindow(Videos,{result},return)")],
                 icon=input_item.icon,
@@ -1119,7 +1073,7 @@ class PickersMixin:
 
         selected_path, label, icon = result
         return Shortcut(
-            name=f"browse-{hash(selected_path)}",
+            name=f"browse-{_name_hash(selected_path)}",
             label=label,
             actions=[Action(action=f"ActivateWindow({target_window},{selected_path},return)")],
             icon=icon,
@@ -1166,6 +1120,7 @@ class PickersMixin:
         item_props: dict[str, str],
         current_value: str = "",
         positions: dict[str, int] | None = None,
+        title: str = "",
     ) -> Background | None | Literal[False]:
         """Pick a background from groupings. False when the user picks "None"."""
         if not self.manager:
@@ -1179,7 +1134,7 @@ class PickersMixin:
         return self._pick_from_hierarchy(
             groupings,
             item_props,
-            title=LANGUAGE(32045),
+            title=title or LANGUAGE(32045),
             leaf_types=(Background,),
             group_types=(BackgroundGroup,),
             default_leaf_icon="DefaultPicture.png",
