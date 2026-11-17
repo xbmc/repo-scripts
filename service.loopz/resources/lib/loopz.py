@@ -45,7 +45,8 @@ def log(msg):
 
 
 def notify(string_id, error=False):
-    icon = xbmcgui.NOTIFICATION_ERROR if error else xbmcgui.NOTIFICATION_INFO
+    # the add-on's own icon (the Loopz logo) on confirmations; errors keep Kodi's red icon so they read as errors
+    icon = xbmcgui.NOTIFICATION_ERROR if error else addon().getAddonInfo("icon")
     xbmcgui.Dialog().notification("Loopz", tr(string_id), icon, 5000)
 
 
