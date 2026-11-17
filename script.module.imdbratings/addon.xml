@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.imdbratings"
   name="IMDb Ratings"
-  version="1.0.0"
+  version="1.1.0"
   provider-name="Team Kodi">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -12,8 +12,18 @@
     <description lang="en_GB">IMDb ratings and vote counts from IMDb's ratings dataset, updated when IMDb publishes a new one.</description>
     <disclaimer lang="en_GB">Information courtesy of IMDb (https://www.imdb.com). Used with permission.</disclaimer>
     <news>
-1.0.0
-- Initial release
+1.1.0
+- New lookup() reads a stored rating without updating, and StoreError separates a store problem from a missing rating
+- Works from any thread of an add-on, not only the one that first used it
+- A damaged store is rebuilt and the dataset downloaded again
+- Only a dataset newer than the stored one is loaded
+- A stopped download or a failing abort callback no longer delays updates for every add-on
+- A failed first download retries after 15 minutes, doubling up to 6 hours
+- Kodi stopping an add-on during the update check no longer starts a download
+- A download stopped by Kodi's kill no longer leaves the store locked
+- Malformed or oversized ids return None instead of raising or matching another title
+- One malformed row no longer fails the whole download
+- Repeated store errors are logged once
     </news>
     <platform>all</platform>
     <license>GPL-3.0-or-later</license>
