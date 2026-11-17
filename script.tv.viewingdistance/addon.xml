@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.tv.viewingdistance" name="TV Viewing Distance Calculator" version="1.0.0" provider-name="GetMediaWall">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Recommended viewing distance, TV size and mount height for your room</summary>
+    <description lang="en_GB">Enter your TV screen size (diagonal) and get the recommended seating distance for a 30 degree viewing angle (SMPTE) and a 40 degree viewing angle (THX), the screen width and height of a 16:9 TV, and a suggested mount height so the centre of the screen is near seated eye level. You can also enter your seating distance to get the TV size range that fits it. All values are in inches and centimetres. Results are typical guidelines, not a substitute for the TV maker's instructions.</description>
+    <disclaimer lang="en_GB">Guideline values only. Check the TV and mount manuals and anchor the mount into studs or masonry.</disclaimer>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://getmediawall.com/design-your-wall</website>
+    <source>https://github.com/getmediawall/script.tv.viewingdistance</source>
+    <email>team@getmediawall.com</email>
+    <news>v1.0.0 - first release</news>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
