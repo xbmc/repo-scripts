@@ -18,6 +18,7 @@
     <news>v1.0.0 - first release</news>
     <assets>
       <icon>icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
     </assets>
   </extension>
 </addon>
