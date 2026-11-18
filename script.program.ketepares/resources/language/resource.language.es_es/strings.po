@@ -1,0 +1,392 @@
+# Kodi Media Center language file
+# Addon Name: Ketepares
+# Addon id: script.program.ketepares
+# Addon Provider: jairamrb.com
+msgid ""
+msgstr ""
+"Project-Id-Version: Ketepares 1.1.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgctxt "Addon Summary"
+msgid "Shut down Kodi or your device on a schedule"
+msgstr "Apaga Kodi o el equipo a la hora que digas"
+
+msgctxt "Addon Description"
+msgid "The Kodi version of Ketepares. Choose what to do (shut down the device, close Kodi, restart, suspend, hibernate, log off, stop playback...), the time and the days of the week, and Ketepares does it for you, once or every week.[CR][CR]Before acting it shows a countdown you can cancel or snooze, or it can act silently. It can also wait for the video you are watching to finish.[CR][CR]Open it from Add-ons > Program add-ons to see what is scheduled, act right now or open its settings.[CR][CR]Developed by jairamrb.com"
+msgstr "La versión para Kodi de Ketepares. Eliges qué hacer (apagar el equipo, cerrar Kodi, reiniciar, suspender, hibernar, cerrar sesión, detener la reproducción...), la hora y los días de la semana, y Ketepares lo hace por ti, una vez o todas las semanas.[CR][CR]Antes de actuar muestra una cuenta atrás que puedes cancelar o posponer, o puede hacerlo en silencio. También puede esperar a que termine el vídeo que estás viendo.[CR][CR]Ábrelo desde Add-ons > Complementos de programa para ver lo que hay programado, ejecutarlo ya o abrir sus ajustes.[CR][CR]Desarrollado por jairamrb.com"
+
+msgctxt "#30010"
+msgid "Shut down the device"
+msgstr "Apagar el equipo"
+
+msgctxt "#30011"
+msgid "Close Kodi"
+msgstr "Cerrar Kodi"
+
+msgctxt "#30012"
+msgid "Restart the device"
+msgstr "Reiniciar el equipo"
+
+msgctxt "#30013"
+msgid "Suspend"
+msgstr "Suspender"
+
+msgctxt "#30014"
+msgid "Hibernate"
+msgstr "Hibernar"
+
+msgctxt "#30015"
+msgid "Log off (profile)"
+msgstr "Cerrar sesión (perfil)"
+
+msgctxt "#30016"
+msgid "Stop playback"
+msgstr "Detener la reproducción"
+
+msgctxt "#30017"
+msgid "Start the screensaver"
+msgstr "Activar el salvapantallas"
+
+msgctxt "#30018"
+msgid "Just remind me"
+msgstr "Solo avisar"
+
+msgctxt "#30020"
+msgid "Mo"
+msgstr "L"
+
+msgctxt "#30021"
+msgid "Tu"
+msgstr "M"
+
+msgctxt "#30022"
+msgid "We"
+msgstr "X"
+
+msgctxt "#30023"
+msgid "Th"
+msgstr "J"
+
+msgctxt "#30024"
+msgid "Fr"
+msgstr "V"
+
+msgctxt "#30025"
+msgid "Sa"
+msgstr "S"
+
+msgctxt "#30026"
+msgid "Su"
+msgstr "D"
+
+msgctxt "#30030"
+msgid "Monday"
+msgstr "lunes"
+
+msgctxt "#30031"
+msgid "Tuesday"
+msgstr "martes"
+
+msgctxt "#30032"
+msgid "Wednesday"
+msgstr "miércoles"
+
+msgctxt "#30033"
+msgid "Thursday"
+msgstr "jueves"
+
+msgctxt "#30034"
+msgid "Friday"
+msgstr "viernes"
+
+msgctxt "#30035"
+msgid "Saturday"
+msgstr "sábado"
+
+msgctxt "#30036"
+msgid "Sunday"
+msgstr "domingo"
+
+msgctxt "#30040"
+msgid "Monday"
+msgstr "Lunes"
+
+msgctxt "#30041"
+msgid "Tuesday"
+msgstr "Martes"
+
+msgctxt "#30042"
+msgid "Wednesday"
+msgstr "Miércoles"
+
+msgctxt "#30043"
+msgid "Thursday"
+msgstr "Jueves"
+
+msgctxt "#30044"
+msgid "Friday"
+msgstr "Viernes"
+
+msgctxt "#30045"
+msgid "Saturday"
+msgstr "Sábado"
+
+msgctxt "#30046"
+msgid "Sunday"
+msgstr "Domingo"
+
+msgctxt "#30050"
+msgid "Shut down now"
+msgstr "Apagar ahora"
+
+msgctxt "#30051"
+msgid "Close Kodi now"
+msgstr "Cerrar Kodi ahora"
+
+msgctxt "#30052"
+msgid "Restart now"
+msgstr "Reiniciar ahora"
+
+msgctxt "#30053"
+msgid "Suspend now"
+msgstr "Suspender ahora"
+
+msgctxt "#30054"
+msgid "Hibernate now"
+msgstr "Hibernar ahora"
+
+msgctxt "#30055"
+msgid "Log off now"
+msgstr "Cerrar sesión"
+
+msgctxt "#30056"
+msgid "Stop now"
+msgstr "Detener ahora"
+
+msgctxt "#30057"
+msgid "Screensaver now"
+msgstr "Salvapantallas"
+
+msgctxt "#30058"
+msgid "Remind me now"
+msgstr "Avisar ahora"
+
+msgctxt "#30100"
+msgid "Schedule"
+msgstr "Programación"
+
+msgctxt "#30101"
+msgid "Schedule the action"
+msgstr "Programar la acción"
+
+msgctxt "#30102"
+msgid "Action"
+msgstr "Acción"
+
+msgctxt "#30103"
+msgid "Time"
+msgstr "Hora"
+
+msgctxt "#30104"
+msgid "Repeat on the selected days (otherwise, only once)"
+msgstr "Repetir los días seleccionados (si no, solo una vez)"
+
+msgctxt "#30105"
+msgid "Start when Kodi starts (keep the schedule after a restart)"
+msgstr "Iniciar al arrancar Kodi (mantener la programación al reiniciar)"
+
+msgctxt "#30106"
+msgid "What to do and when"
+msgstr "Qué hacer y a qué hora"
+
+msgctxt "#30107"
+msgid "Days of the week"
+msgstr "Días de la semana"
+
+msgctxt "#30108"
+msgid "Repeat and startup"
+msgstr "Repetición y arranque"
+
+msgctxt "#30109"
+msgid "Change the action…"
+msgstr "Cambiar la acción…"
+
+msgctxt "#30200"
+msgid "Warning"
+msgstr "Aviso"
+
+msgctxt "#30201"
+msgid "Silent (no countdown)"
+msgstr "Apagado silencioso (sin cuenta atrás)"
+
+msgctxt "#30202"
+msgid "Countdown (seconds)"
+msgstr "Cuenta atrás (segundos)"
+
+msgctxt "#30203"
+msgid "Wait for playback to finish"
+msgstr "Esperar a que termine la reproducción"
+
+msgctxt "#30204"
+msgid "Show what is scheduled when Kodi starts"
+msgstr "Avisar al iniciar Kodi de lo que hay programado"
+
+msgctxt "#30205"
+msgid "Before acting"
+msgstr "Antes de actuar"
+
+msgctxt "#30206"
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgctxt "#30207"
+msgid "Offer to snooze after cancelling (minutes, 0 = never)"
+msgstr "Ofrecer posponer al cancelar (minutos, 0 = no)"
+
+msgctxt "#30300"
+msgid "About"
+msgstr "Acerca de"
+
+msgctxt "#30301"
+msgid "Made with ♥ by jairamrb.com"
+msgstr "Made with ♥ by jairamrb.com"
+
+msgctxt "#30302"
+msgid "Open Ketepares now"
+msgstr "Abrir Ketepares ahora"
+
+msgctxt "#30304"
+msgid "Version"
+msgstr "Versión"
+
+msgctxt "#30305"
+msgid "Website"
+msgstr "Web"
+
+msgctxt "#30401"
+msgid "Settings"
+msgstr "Ajustes"
+
+msgctxt "#30403"
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgctxt "#30404"
+msgid "Scheduled: [B]{action}[/B] at [B]{time}[/B]"
+msgstr "Programado: [B]{action}[/B] a las [B]{time}[/B]"
+
+msgctxt "#30405"
+msgid "Nothing is scheduled."
+msgstr "No hay nada programado."
+
+msgctxt "#30406"
+msgid "Set up: {action} at {time}"
+msgstr "Configurado: {action} a las {time}"
+
+msgctxt "#30407"
+msgid "Days: {days} · {mode}"
+msgstr "Días: {days} · {mode}"
+
+msgctxt "#30408"
+msgid "every week"
+msgstr "cada semana"
+
+msgctxt "#30409"
+msgid "only once"
+msgstr "solo una vez"
+
+msgctxt "#30410"
+msgid "Next time: {when}"
+msgstr "Próxima vez: {when}"
+
+msgctxt "#30411"
+msgid "today"
+msgstr "hoy"
+
+msgctxt "#30412"
+msgid "tomorrow"
+msgstr "mañana"
+
+msgctxt "#30413"
+msgid "every day"
+msgstr "todos los días"
+
+msgctxt "#30414"
+msgid "Warning: {n} s countdown"
+msgstr "Aviso: cuenta atrás de {n} s"
+
+msgctxt "#30415"
+msgid "Warning: silent (no countdown)"
+msgstr "Aviso: silencioso (sin cuenta atrás)"
+
+msgctxt "#30416"
+msgid "[B]{action}[/B] in {n}"
+msgstr "[B]{action}[/B] en {n}"
+
+msgctxt "#30417"
+msgid "Press Cancel to stop it."
+msgstr "Pulsa Cancelar para impedirlo."
+
+msgctxt "#30418"
+msgid "Cancelled: {action}"
+msgstr "Cancelado: {action}"
+
+msgctxt "#30419"
+msgid "Schedule turned off"
+msgstr "Programación desactivada"
+
+msgctxt "#30420"
+msgid "{action}: {when}"
+msgstr "{action}: {when}"
+
+msgctxt "#30421"
+msgid "{action}: waiting for playback to finish"
+msgstr "{action}: esperando a que termine la reproducción"
+
+msgctxt "#30422"
+msgid "This system can't do: {action}"
+msgstr "Este sistema no permite: {action}"
+
+msgctxt "#30423"
+msgid "It's time! ({time})"
+msgstr "¡Es la hora! ({time})"
+
+msgctxt "#30424"
+msgid "Snooze {n} min"
+msgstr "Posponer {n} min"
+
+msgctxt "#30426"
+msgid "No"
+msgstr "No"
+
+msgctxt "#30427"
+msgid "Snooze it for {n} minutes?"
+msgstr "¿Lo pospones {n} minutos?"
+
+msgctxt "#30428"
+msgid "{action}: snoozed until {time}"
+msgstr "{action}: pospuesto hasta las {time}"
+
+msgctxt "#30429"
+msgid "Drop it"
+msgstr "Anular"
+
+msgctxt "#30431"
+msgid "Waiting for playback to finish"
+msgstr "Esperando a que termine la reproducción"
+
+msgctxt "#30432"
+msgid "Snoozed until {time}"
+msgstr "Pospuesto hasta las {time}"
+
+msgctxt "#30433"
+msgid "Ketepares: invalid call ({args})"
+msgstr "Ketepares: llamada no válida ({args})"
+
+msgctxt "#30434"
+msgid "Timer: {action} at {time}"
+msgstr "Temporizador: {action} a las {time}"

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.program.ketepares" name="Ketepares" version="1.1.0" provider-name="jairamrb.com">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en_GB">Shut down Kodi or your device on a schedule</summary>
+        <summary lang="es_ES">Apaga Kodi o el equipo a la hora que digas</summary>
+        <description lang="en_GB">The Kodi version of Ketepares. Choose what to do (shut down the device, close Kodi, restart, suspend, hibernate, log off, stop playback...), the time and the days of the week, and Ketepares does it for you, once or every week.[CR][CR]Before acting it shows a countdown you can cancel or snooze, or it can act silently. It can also wait for the video you are watching to finish.[CR][CR]Open it from Add-ons > Program add-ons to see what is scheduled, act right now or open its settings.[CR][CR]Developed by jairamrb.com</description>
+        <description lang="es_ES">La versión para Kodi de Ketepares. Eliges qué hacer (apagar el equipo, cerrar Kodi, reiniciar, suspender, hibernar, cerrar sesión, detener la reproducción...), la hora y los días de la semana, y Ketepares lo hace por ti, una vez o todas las semanas.[CR][CR]Antes de actuar muestra una cuenta atrás que puedes cancelar o posponer, o puede hacerlo en silencio. También puede esperar a que termine el vídeo que estás viendo.[CR][CR]Ábrelo desde Add-ons > Complementos de programa para ver lo que hay programado, ejecutarlo ya o abrir sus ajustes.[CR][CR]Desarrollado por jairamrb.com</description>
+        <license>GPL-2.0-or-later</license>
+        <website>https://jairamrb.com/ketepares/#kodi</website>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+            <screenshot>resources/screenshot-01.jpg</screenshot>
+            <screenshot>resources/screenshot-02.jpg</screenshot>
+            <screenshot>resources/screenshot-03.jpg</screenshot>
+        </assets>
+        <news>Version 1.1.0
+- Only the actions this system can do are offered (e.g. no shut down on Android)
+- Can be called from other add-ons, keymaps or JSON-RPC with parameters: action, delay or time, silent, countdown, wait for playback, remember the settings
+- Cancel a timer from outside; status published in Home window properties
+- Countdown from 10 to 60 seconds (15 by default)
+- The third button of the dialog opens the settings
+
+Version 1.0.0
+- First release
+- Shut down the device or just close Kodi; also restart, suspend, hibernate, log off, stop playback, start the screensaver or just remind you
+- Selected days of the week, once or every week
+- Countdown you can cancel or snooze, or silent mode
+- Can wait for playback to finish
+- English and Spanish translations</news>
+    </extension>
+</addon>
