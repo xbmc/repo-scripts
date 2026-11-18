@@ -1,3 +1,18 @@
+v4.1.0
+- BROKEN: as of december 1st 2026, last.fm requires a paid subscription to use their API service
+
+v4.0.7
+- added option to submit single artist on multi-artist tracks
+
+v4.0.6
+- fix syntax warning
+
+v4.0.5
+- fallback to albumartist if artist tag is empty
+
+v4.0.4
+- cosmetics
+
 v4.0.3
 - v19a2 update
 - fix crash on first run

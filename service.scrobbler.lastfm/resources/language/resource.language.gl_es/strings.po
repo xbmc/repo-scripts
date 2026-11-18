@@ -1,0 +1,94 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/xbmc-addons/language/gl/)\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Last.fm scrobbler"
+msgstr "Last.fm scrobbler"
+
+msgctxt "Addon Description"
+msgid "The Last.fm scrobbler will submit info of the songs you've been listening to in Kodi to last.fm"
+msgstr "O Last.fm scrobbler enviará info. das cancións que está a escotar no Kodi a last.fm"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Xeral"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "Enviar cancións a Last.fm"
+
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Enviar fluxo de radio a Last.fm"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "Usuario Last.fm"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "Contrasinal Last.fm"
+
+msgctxt "#30005"
+msgid "Confirm Love submissions"
+msgstr "Confirmar envió de Favoritos/Exclusión"
+
+msgctxt "#30006"
+msgid "Submit music videos to Last.fm"
+msgstr ""
+
+# empty strings with id 300007
+msgctxt "#30008"
+msgid "Advanced"
+msgstr ""
+
+# empty strings from id 300007 to 32008
+msgctxt "#30009"
+msgid "Enable logging"
+msgstr ""
+
+msgctxt "#30010"
+msgid "In case of multiple artists, only use the first one"
+msgstr ""
+
+# empty strings from id 300010 to 32010
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "Last.fm"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "Quere engadir a pista actual ás súas pistas favoritas?"
+
+# empty string with id 32013
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "Engadida ás súas pistas favoritas: '%s'."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "Non se puido engadir '%s' ás súas pistas favoritas."
+
+# empty strings from id 32016 to 32025
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Fallou a conexión a Last.fm"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Sen nome de usuario ou contrasinal"

@@ -29,9 +29,10 @@ class Main():
         songs = settings['songs']
         videos = settings['videos']
         radio = settings['radio']
+        singleartist = settings['singleartist']
         self.sesskey = settings['sesskey']
         # init the player class (re-init when settings have changed)
-        self.player = MyPlayer(action=self._lastfm_submit, user=user, pwd=pwd, songs=songs, videos=videos, radio=radio, sesskey=self.sesskey)
+        self.player = MyPlayer(action=self._lastfm_submit, user=user, pwd=pwd, songs=songs, videos=videos, radio=radio, singleartist=singleartist, sesskey=self.sesskey)
         # init the monitor class (re-init when settings have changed)
         self.monitor = MyMonitor(action=self._get_settings, user=user, pwd=pwd)
 
@@ -184,6 +185,7 @@ class MyPlayer(xbmc.Player):
         self.songs = kwargs['songs']
         self.videos = kwargs['videos']
         self.radio = kwargs['radio']
+        self.singleartist = kwargs['singleartist']
         self.Audio = False
 
     def onAVStarted(self):
@@ -227,6 +229,8 @@ class MyPlayer(xbmc.Player):
         if self.isPlayingAudio():
             tags = self.getMusicInfoTag()
             artist = tags.getArtist()
+            if not artist:
+                artist = tags.getAlbumArtist()
             albumartist = tags.getAlbumArtist()
         elif self.isPlayingVideo():
             tags = self.getVideoInfoTag()
@@ -288,6 +292,8 @@ class MyPlayer(xbmc.Player):
                 return None
             # previous clauses did not return, so we have either a local play with the songs setting enabled, or a remote play with the radio setting enabled,
             # and therefore can scrobble
+            if self.singleartist:
+                artist = artist.split(' / ')[0]
             tracktags = dict(artist=artist, album=album, albumartist=albumartist, title=title, duration=duration, track=track, mbid=mbid, path=path, timestamp=timestamp, streamid=streamid, user=userselected)
             log('tracktags: %s' % tracktags, SESSION)
             return tracktags

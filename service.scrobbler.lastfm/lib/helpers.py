@@ -10,13 +10,13 @@ def is_local(path):
     if not parse_result.netloc:
         return True  # assume a lack of network location implies a private address
     # regex reference: http://stackoverflow.com/a/692457/577298
-    elif re.match("127\.\d{1,3}\.\d{1,3}\.\d{1,3}", parse_result.netloc, flags=0):
+    elif re.match(r"127\.\d{1,3}\.\d{1,3}\.\d{1,3}", parse_result.netloc, flags=0):
         return True
-    elif re.match("192\.168\.\d{1,3}\.\d{1,3}", parse_result.netloc, flags=0):
+    elif re.match(r"192\.168\.\d{1,3}\.\d{1,3}", parse_result.netloc, flags=0):
         return True
-    elif re.match("10\.\d{1,3}\.\d{1,3}\.\d{1,3}", parse_result.netloc, flags=0):
+    elif re.match(r"10\.\d{1,3}\.\d{1,3}\.\d{1,3}", parse_result.netloc, flags=0):
         return True
-    elif re.match("172\.(1[6-9]|2[0-9]|3[0-1])\.[0-9]{1,3}\.[0-9]{1,3}", parse_result.netloc, flags=0):
+    elif re.match(r"172\.(1[6-9]|2[0-9]|3[0-1])\.[0-9]{1,3}\.[0-9]{1,3}", parse_result.netloc, flags=0):
         return True
     elif parse_result.netloc.startswith("fe80:"):  # link-local IPv6 address
         return True

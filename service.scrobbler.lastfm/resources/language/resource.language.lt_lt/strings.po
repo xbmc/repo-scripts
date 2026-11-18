@@ -1,0 +1,94 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Lithuanian (http://www.transifex.com/projects/p/xbmc-addons/language/lt/)\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "Addon Summary"
+msgid "Last.fm scrobbler"
+msgstr "Last.fm scrobbler"
+
+msgctxt "Addon Description"
+msgid "The Last.fm scrobbler will submit info of the songs you've been listening to in Kodi to last.fm"
+msgstr "Last.fm scrobbler pateiks last.fm informaciją apie jūsų per Kodi klausomas dainas"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Pagrindinis"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "Pateikti dainas Last.fm"
+
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Pateikti transliuojamas radijo stotis Last.fm"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "Last.fm naudotojo vardas"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "Last.fm slaptažodis"
+
+msgctxt "#30005"
+msgid "Confirm Love submissions"
+msgstr "Patvirtinti Mėgstu/Blokuoti pateikimus"
+
+msgctxt "#30006"
+msgid "Submit music videos to Last.fm"
+msgstr ""
+
+# empty strings with id 300007
+msgctxt "#30008"
+msgid "Advanced"
+msgstr ""
+
+# empty strings from id 300007 to 32008
+msgctxt "#30009"
+msgid "Enable logging"
+msgstr ""
+
+msgctxt "#30010"
+msgid "In case of multiple artists, only use the first one"
+msgstr ""
+
+# empty strings from id 300010 to 32010
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "Last.fm"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "Ar norite pridėti pasirinktą takelį prie mėgstamų takelių?"
+
+# empty string with id 32013
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "Pridėta prie mėgstamų takelių: '%s'."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "Negalima pridėti '%s' prie mėgstamų takelių."
+
+# empty strings from id 32016 to 32025
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Nepavyko prisijungti prie Last.fm"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Nepateiktas vartotojo vardas arba slaptažodis"
