@@ -1,0 +1,97 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-05-24 21:16+0000\n"
+"Last-Translator: Heiko Berner <berner.h@gmail.com>\n"
+"Language-Team: Afrikaans (South Africa) <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-scrobbler-lastfm/af_za/>\n"
+"Language: af_za\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2026.5\n"
+
+#, fuzzy
+msgctxt "Addon Summary"
+msgid "Last.fm scrobbler"
+msgstr "Last.fm scrobbler"
+
+msgctxt "Addon Description"
+msgid "The Last.fm scrobbler will submit info of the songs you've been listening to in Kodi to last.fm"
+msgstr "Die Last.fm scrobbler sal inligting van die liedjies wat jy na geluister het in Kodi indien by last.fm"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "Dien liedjies in by Last.fm"
+
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Dien stromende radio in by Last.fm"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "Last.fm gebruikersnaam"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "Last.fm wagwoord"
+
+msgctxt "#30005"
+msgid "Confirm Love submissions"
+msgstr "Bevestig Hou van/Verban indienings"
+
+msgctxt "#30006"
+msgid "Submit music videos to Last.fm"
+msgstr "Dien musiek video's in by Last.fm"
+
+# empty strings with id 300007
+#, fuzzy
+msgctxt "#30008"
+msgid "Advanced"
+msgstr "Gevorderd"
+
+# empty strings from id 300007 to 32008
+msgctxt "#30009"
+msgid "Enable logging"
+msgstr "Stel loghouding in staat"
+
+msgctxt "#30010"
+msgid "In case of multiple artists, only use the first one"
+msgstr "In die geval van veelvuldige kunstenaars, gebruik slegs die eerste een"
+
+# empty strings from id 300010 to 32010
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "Last.fm"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "Wil jy die huidige snit byvoeg by jou gunsteling snitte?"
+
+# empty string with id 32013
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "Bygevoeg by jou gunsteling snitte: '%s'."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "Kon nie '%s' byvoeg by jou gunsteling snitte."
+
+# empty strings from id 32016 to 32025
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Konnekteer aan Last.fm het gefaal"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Geen gebruikernaam of wagwoord verskaf nie"

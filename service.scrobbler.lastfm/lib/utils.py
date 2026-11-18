@@ -17,8 +17,8 @@ ADDONID = ADDON.getAddonInfo('id')
 
 APIURL = 'http://ws.audioscrobbler.com/2.0/'
 AUTHURL = 'https://ws.audioscrobbler.com/2.0/'
-HEADERS = {'User-Agent': 'Kodi Media center', 'Accept-Charset': 'utf-8'}
-STATUS = 'YzkxMGMwOTlkMzY3MTdlMzM2ZmMwZDAwOTVhMGM4YWRhMjJhNzI1ZmMwODE2MWVmNzYyMGM5MDI2NTkxMzA1ZQ=='
+HEADERS = {'User-Agent': '', 'Accept-Charset': 'utf-8'}
+STATUS = ''
 
 LANGUAGE = ADDON.getLocalizedString
 ADDONVERSION = ADDON.getAddonInfo('version')
@@ -44,6 +44,7 @@ def read_settings(session, puser=False, ppwd=False):
     videos = ADDON.getSettingBool('lastfmsubmitvideos')
     confirm = ADDON.getSettingBool('lastfmconfirm')
     sesskey = ADDON.getSettingString('lastfmkey')
+    singleartist = ADDON.getSettingBool('lastfmsingleartist')
     # if puser or ppwd is true, we were called by onSettingsChanged
     if puser or ppwd:
         # check if user has changed it's username or password
@@ -85,6 +86,7 @@ def read_settings(session, puser=False, ppwd=False):
     settings['videos'] = videos
     settings['confirm'] = confirm
     settings['sesskey'] = sesskey
+    settings['singleartist'] = singleartist
     if sesskey:
         set_prop('LastFM.CanLove', 'True')
         set_prop('LastFM.CanBan', 'True')

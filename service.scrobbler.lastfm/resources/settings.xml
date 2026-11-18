@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <settings version="1">
-	<section id="addon">
+	<section id="service.scrobbler.lastfm">
 		<category id="30000" label="30000">
 			<group id="1">
 				<setting help="" id="lastfmsubmitsongs" label="30001" type="boolean">
@@ -44,11 +44,6 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="" id="Debug" label="30009" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
 				<setting help="" id="lastfmkey" label="" type="string">
 					<visible>false</visible>
 					<level>4</level>
@@ -59,6 +54,20 @@
 					<control format="string" type="edit">
 						<heading></heading>
 					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="30001" label="30008">
+			<group id="1">
+				<setting help="" id="lastfmsingleartist" label="30010" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="" id="Debug" label="30009" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
 		</category>

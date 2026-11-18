@@ -1,0 +1,95 @@
+# Kodi Media Center language file
+# Addon Name: Last.fm
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-04-25 15:10+0000\n"
+"Last-Translator: rimasx <riks_12@hot.ee>\n"
+"Language-Team: Estonian <https://kodi.weblate.cloud/projects/kodi-add-ons-services/service-scrobbler-lastfm/et_ee/>\n"
+"Language: et_ee\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.4.3\n"
+
+msgctxt "Addon Summary"
+msgid "Last.fm scrobbler"
+msgstr "Last.fm kraasija"
+
+msgctxt "Addon Description"
+msgid "The Last.fm scrobbler will submit info of the songs you've been listening to in Kodi to last.fm"
+msgstr "Last.fm kraasija saadab last.fm teenusele teabe nende lugude kohta, mida oled Kodis kuulanud"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Üldine"
+
+msgctxt "#30001"
+msgid "Submit songs to Last.fm"
+msgstr "Saada lugude andmed Last.fm teenusele"
+
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Saada voogesitusraadio teave Last.fm teenusele"
+
+msgctxt "#30003"
+msgid "Last.fm username"
+msgstr "Last.fm kasutajanimi"
+
+msgctxt "#30004"
+msgid "Last.fm password"
+msgstr "Last.fm parool"
+
+msgctxt "#30005"
+msgid "Confirm Love submissions"
+msgstr "Kinnita 'Meeldib' esitamine"
+
+msgctxt "#30006"
+msgid "Submit music videos to Last.fm"
+msgstr "Saada muusikavideod Last.fm teenusele"
+
+# empty strings with id 300007
+msgctxt "#30008"
+msgid "Advanced"
+msgstr ""
+
+# empty strings from id 300007 to 32008
+msgctxt "#30009"
+msgid "Enable logging"
+msgstr "Luba logimine"
+
+msgctxt "#30010"
+msgid "In case of multiple artists, only use the first one"
+msgstr ""
+
+# empty strings from id 300010 to 32010
+msgctxt "#32011"
+msgid "Last.fm"
+msgstr "Last.fm"
+
+msgctxt "#32012"
+msgid "Do you want to add the current track to your loved tracks?"
+msgstr "Kas lisada praegune lugu meeldinud lugude hulka?"
+
+# empty string with id 32013
+msgctxt "#32014"
+msgid "Added to your loved tracks: '%s'."
+msgstr "Lisati meeldinud hulka: %s'."
+
+msgctxt "#32015"
+msgid "Could not add '%s' to your loved tracks."
+msgstr "%s' ei õnnestunud meeldinud lugude hulka lisada."
+
+# empty strings from id 32016 to 32025
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Last.fm teenusega ühenduse loomine nurjus"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Kasutajanime ega parooli pole antud"
