@@ -1,0 +1,36 @@
+<settings>
+    <category label="30100">
+        <setting type="lsep" label="30106"/>
+        <setting id="enabled" type="bool" label="30101" default="false"/>
+        <setting id="action" type="text" default="0" visible="false"/>
+        <setting id="action_label" type="text" label="30102" default="" enable="false"/>
+        <setting type="action" label="30109" action="RunScript(script.program.ketepares,choose)" option="close"/>
+        <setting id="time" type="time" label="30103" default="23:00"/>
+        <setting type="lsep" label="30107"/>
+        <setting id="day0" type="bool" label="30040" default="true"/>
+        <setting id="day1" type="bool" label="30041" default="true"/>
+        <setting id="day2" type="bool" label="30042" default="true"/>
+        <setting id="day3" type="bool" label="30043" default="true"/>
+        <setting id="day4" type="bool" label="30044" default="true"/>
+        <setting id="day5" type="bool" label="30045" default="true"/>
+        <setting id="day6" type="bool" label="30046" default="true"/>
+        <setting type="lsep" label="30108"/>
+        <setting id="repeat" type="bool" label="30104" default="true"/>
+        <setting id="autostart" type="bool" label="30105" default="true"/>
+    </category>
+    <category label="30200">
+        <setting type="lsep" label="30205"/>
+        <setting id="silent" type="bool" label="30201" default="false"/>
+        <setting id="countdown" type="slider" label="30202" default="15" range="10,1,60" option="int" enable="eq(-1,false)"/>
+        <setting id="snooze" type="slider" label="30207" default="10" range="0,5,60" option="int" enable="eq(-2,false)"/>
+        <setting id="wait_playback" type="bool" label="30203" default="false"/>
+        <setting type="lsep" label="30206"/>
+        <setting id="notify" type="bool" label="30204" default="true"/>
+    </category>
+    <category label="30300">
+        <setting type="lsep" label="30301"/>
+        <setting id="about_version" type="text" label="30304" default="1.1.0" enable="false"/>
+        <setting id="about_web" type="text" label="30305" default="jairamrb.com/ketepares" enable="false"/>
+        <setting type="action" label="30302" action="RunScript(script.program.ketepares)" option="close"/>
+    </category>
+</settings>
