@@ -18,12 +18,17 @@
 #-------------------------------------------------------------------------------
 
 import hashlib
+import re
 import time
 import urllib.parse
+from urllib.error import HTTPError
 
+from clouddrive.common.exception import ExceptionUtils, RequestException
 from clouddrive.common.remote.oauth2 import OAuth2
 from clouddrive.common.remote.request import Request
 from clouddrive.common.remote.signin import Signin
+from clouddrive.common.ui.logger import Logger
+from clouddrive.common.ui.utils import KodiUtils
 from clouddrive.common.utils import Utils
 
 
@@ -75,6 +80,11 @@ class Provider(OAuth2):
     # server then hands Kodi that app's client_id and client_secret with the tokens, and Kodi refreshes them here
     # itself. None when users always sign in with the sign-in server's app.
     own_client_token_url = None
+    # Refresh errors that don't change until the user signs in again: the token was revoked or expired, or belongs to
+    # another or a deleted app (as the sign-in server's FINAL_REFRESH_ERRORS). Kodi keeps the refusal with the tokens
+    # and doesn't ask again for REFUSED_RETRY_S, instead of asking with every request to the service.
+    REFUSED_REFRESH_ERRORS = ('invalid_grant', 'unauthorized_client', 'deleted_client')
+    REFUSED_RETRY_S = 24 * 60 * 60
     _signin = Signin()
     _account_manager = None
     _driveid = None
@@ -122,16 +132,40 @@ class Provider(OAuth2):
     
     def refresh_access_tokens(self, request_params=None):
         tokens = self.get_access_tokens()
-        if self.uses_own_client(tokens):
-            body = urllib.parse.urlencode({'client_id': tokens['client_id'], 'client_secret': tokens['client_secret'],
-                                           'grant_type': 'refresh_token', 'refresh_token': tokens['refresh_token']})
-            headers = {'content-type': 'application/x-www-form-urlencoded'}
-            tokens_info = Request(self.own_client_token_url, body, headers, **Utils.default(request_params, {})).request_json()
-        else:
-            tokens_info = self._signin.refresh_tokens(self.name, tokens['refresh_token'], request_params)
+        own_client = self.uses_own_client(tokens)
+        url = self.own_client_token_url if own_client else KodiUtils.get_signin_server() + '/refresh'
+        refused = Utils.get_safe_value(tokens, 'refresh_refused')
+        if refused and time.time() < refused['date'] + self.REFUSED_RETRY_S:
+            Logger.notice('Not refreshing: the token was refused (%s), the account has to sign in again.' % refused['error'])
+            raise RequestException('Refresh refused earlier: ' + refused['error'], HTTPError(url, refused['status'], refused['error'], None, None),
+                                   'Request URL: %s (not sent: refused earlier)' % url, '{"error": "%s"}' % refused['error'])
+        try:
+            if own_client:
+                body = urllib.parse.urlencode({'client_id': tokens['client_id'], 'client_secret': tokens['client_secret'],
+                                               'grant_type': 'refresh_token', 'refresh_token': tokens['refresh_token']})
+                headers = {'content-type': 'application/x-www-form-urlencoded'}
+                tokens_info = Request(url, body, headers, **Utils.default(request_params, {})).request_json()
+            else:
+                tokens_info = self._signin.refresh_tokens(self.name, tokens['refresh_token'], request_params)
+        except RequestException as e:
+            refusal = self._refusal(e)
+            if refusal:
+                tokens['refresh_refused'] = refusal
+                self.persist_access_tokens(tokens)
+            raise
         if tokens_info:
             tokens_info['date'] = time.time()
+            # prepare_request merges these into the account's tokens: a refresh that works clears an earlier refusal.
+            tokens_info['refresh_refused'] = None
         return tokens_info
+
+    def _refusal(self, rex):
+        """The refusal to keep when a refresh failed with one of REFUSED_REFRESH_ERRORS, or None."""
+        httpex = ExceptionUtils.extract_exception(rex, HTTPError)
+        found = re.search(r'"error"\s*:\s*"([a-z_]+)"', Utils.str(rex.response))
+        if not httpex or httpex.code not in (400, 401) or not found or found.group(1) not in self.REFUSED_REFRESH_ERRORS:
+            return None
+        return {'error': found.group(1), 'status': httpex.code, 'date': time.time()}
     
     def uses_own_client(self, tokens):
         """True when the account signed in with the user's own OAuth app, whose tokens Kodi refreshes itself."""
