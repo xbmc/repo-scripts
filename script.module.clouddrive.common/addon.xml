@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.clouddrive.common" name="Cloud Drive Common Module" version="1.5.20" provider-name="Carlos Guzman (cguZZman)">
+<addon id="script.module.clouddrive.common" name="Cloud Drive Common Module" version="1.5.21" provider-name="Carlos Guzman (cguZZman)">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.dateutil"/>
@@ -19,7 +19,10 @@
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
-		<news>v1.5.20 released Nov 2, 2026:
+		<news>v1.5.21 released Nov 3, 2026:
+- When an account's sign-in has ended for good, Kodi stops renewing it until the user signs in again, instead of asking the sign-in server with every request
+
+v1.5.20 released Nov 2, 2026:
 - Accounts can sign in with the user's own OAuth app (Google Drive: your own Google Cloud project), and Kodi renews their sign-in with the provider directly
 
 v1.5.19 released Nov 2, 2026:
@@ -39,14 +42,7 @@ v1.5.15 released Oct 30, 2026:
 - Dropbox shows a drive's exports after its files
 
 v1.5.14 released Oct 30, 2026:
-- Exports whose account was removed are skipped with one notice, instead of an "Unknown error" every minute
-
-v1.5.13 released Oct 30, 2026:
-- Big folders open a page at a time (Items per page in each add-on's Advanced settings), and going back to a folder doesn't load it again for a few minutes
-- Auto-refreshed slideshow: shows every picture of the folder, and notices replaced pictures
-
-v1.5.12 released Oct 30, 2026:
-- Music folders can also be sorted by track number and by file name</news>
+- Exports whose account was removed are skipped with one notice, instead of an "Unknown error" every minute</news>
 		<disclaimer lang="en_GB">
 This cloud drive addon uses a third-party authentication mechanism commonly known as OAuth 2.0.
 If you want to know more about OAuth 2.0 you can visit the following pages:
