@@ -11,6 +11,7 @@ import re
 
 from subtitledb import (
     PER_LANGUAGE,
+    TIER_TITLE,
     Client,
     Hint,
     Options,
@@ -160,9 +161,10 @@ def hint_from(info):
         )
     return Hint(
         imdb_id=imdb_of(info),
-        # Only for a film: an episode's TMDB id is the episode's, and the map the API
-        # reads is keyed by the film's.
-        tmdb_id=to_int(info.get("tmdb")),
+        # Only for a film, asked on the movie path: an episode's TMDB id is the
+        # episode's, so a video with a show name but no numbers sends none.
+        tmdb_id=None if info.get("tvshow") else to_int(info.get("tmdb")),
+        tmdb_type="movie",
         title=info.get("title") or info.get("original_title") or None,
         year=to_int(info.get("year")),
         release=video_name(info.get("path")),
@@ -178,16 +180,110 @@ def search(client, info, languages, limit=PER_LANGUAGE, log=None):
     return [list_item(c, result.tier) for c in result.candidates]
 
 
+#: A stream rather than a file: its name is no release name, and its title is
+#: whatever the page called it.
+_STREAM = re.compile(r"^(?:https?|rtmpe?|rtsp|mms|udp|plugin)://", re.I)
+#: Shorter than this is a trailer or a clip, not the film or episode it is labelled as.
+SHORTEST = 300
+#: What Kodi calls a subtitle stream whose language nobody wrote down.
+_UNKNOWN = {"", "und", "unk", "unknown", "undetermined"}
+
+
+def worth_looking_up(hint, path="", seconds=0):
+    """True when enough is known about a video to load a subtitle for it unasked.
+
+    An id is enough. Without one, a title is enough when it came with a year, or with
+    a season and an episode, and when it came from a file: a stream's title is
+    whatever the site called it, and a guess there loads a stranger's subtitles.
+    """
+    if 0 < seconds < SHORTEST:
+        return False
+    if hint.imdb_id or hint.tmdb_id or hint.series_imdb_id:
+        return True
+    if not hint.title or _STREAM.match(path or ""):
+        return False
+    return bool(hint.year or (hint.season and hint.episode))
+
+
+def year_fits(hint, result):
+    """False when a film found by its title resolved to one from another year.
+
+    The title lookup takes no year, so a remake or another film of that name can come
+    back, also when the film's ids were tried first and the index has neither. One
+    year either way allows for a festival year or a release across the new year.
+    """
+    if result.tier != TIER_TITLE or hint.season or hint.episode or not hint.year:
+        return True
+    try:
+        return abs(int((result.title or {}).get("year")) - hint.year) <= 1
+    except (TypeError, ValueError):
+        return False
+
+
+def covered(streams, languages):
+    """True when the video already carries a subtitle the viewer may want.
+
+    ``streams`` are the English names of the subtitle streams Kodi has for the video,
+    and ``languages`` the viewer's. A stream with no language is most often a file the
+    viewer put beside the video themselves, so it counts too.
+    """
+    wanted = {str(name).strip().lower() for name in languages}
+    for name in streams:
+        name = str(name or "").strip().lower()
+        if name in _UNKNOWN or name in wanted:
+            return True
+    return False
+
+
+def instant(client, info, languages, streams, limit=PER_LANGUAGE, seconds=0, log=None):
+    """The subtitle to load the moment a video starts, and why; or None and why not.
+
+    The viewer's languages are tried in their order, one at a time, and the first that
+    has a match gives the best of its list, so a viewer with English first and
+    Spanish second gets English whenever there is any.
+    """
+    languages = [name for name in languages if name]
+    if not languages:
+        return None, "no subtitle languages are set in Kodi"
+    if covered(streams, languages):
+        return None, "the video already has subtitles"
+    hint = hint_from(info)
+    if not worth_looking_up(hint, info.get("path") or "", seconds):
+        return None, "not enough is known about the video"
+    for language in languages:
+        codes = to_codes([language])
+        if not codes:
+            continue
+        result = find(client, hint, Options(languages=codes, formats=FORMATS, limit=limit))
+        if log:
+            log(resolved(result))
+        if result.candidates and not year_fits(hint, result):
+            return None, "another film of that name: %s" % answered(result)
+        # A file with no lines would load as an empty track.
+        usable = [c for c in result.candidates if int(c.subtitle.get("cues") or 0) > 0]
+        if usable:
+            return list_item(usable[0], result.tier), answered(result)
+        if not result.title:
+            # No title, so no other language will find one either.
+            return None, "no title for it: %s" % answered(result)
+    return None, "no subtitles in %s" % ", ".join(languages)
+
+
 def resolved(result):
     """One line for the log saying which title the search was answered for.
 
     A file played from outside the library is known by its name alone, and the name
     can resolve to the wrong title. The list gives no sign of that; this line does.
     """
+    return "resolved to " + answered(result)
+
+
+def answered(result):
+    """The title a search was answered for, by which rung, and how many it found."""
     title = result.title or {}
     if not title:
-        return "resolved to nothing via %s" % result.tier
-    return "resolved to %s (%s) %s via %s, %d candidates" % (
+        return "nothing via %s" % result.tier
+    return "%s (%s) %s via %s, %d candidates" % (
         title.get("name"), title.get("year"), title.get("imdb"), result.tier,
         len(result.candidates))
 
@@ -235,13 +331,24 @@ def filename_for(item):
     """What the downloaded file is called.
 
     The extension has to be the real one: Kodi picks its parser from it, and a
-    subtitle saved as .srt that is actually ASS renders as a screen of tag soup.
+    subtitle saved as .srt that is actually ASS renders as a screen of tag soup. The
+    language code before it is where Kodi reads the language of a file handed
+    straight to the player, as the lookup on play does; without it the subtitle
+    menu calls the stream unknown.
     """
     ext = (item.get("format") or "srt").lower()
     if ext not in FORMATS:
         ext = "srt"
+    code = str(item.get("language_code") or "").lower()
+    if re.fullmatch(r"[a-z]{2,3}", code):
+        return "subtitledb-%d.%s.%s" % (item.get("id") or 0, code, ext)
     return "subtitledb-%d.%s" % (item.get("id") or 0, ext)
 
 
-def make_client(api_base=None):
-    return Client(api_base=api_base or "https://api.thesubtitledb.org", client="kodi")
+#: Kodi kills a service still running 5 s after it asks it to stop, and a request
+#: waiting on a socket cannot be interrupted, so the lookup on play waits less.
+ON_PLAY_TIMEOUT_S = 4.0
+
+
+def make_client(api_base=None, **options):
+    return Client(api_base=api_base or "https://api.thesubtitledb.org", client="kodi", **options)
