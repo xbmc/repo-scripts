@@ -1,7 +1,7 @@
 """Language codes, in every spelling the hosts hand us.
 
-The API speaks two-letter codes with four OpenSubtitles additions (``pb``, ``ze``,
-``zt``, ``pm``) that are not ISO at all. The hosts do not:
+The API speaks two-letter codes with six OpenSubtitles additions (``pb``, ``ze``,
+``zt``, ``ea``, ``sp``, ``pm``) that are not ISO at all. The hosts do not:
 
     Bazarr      babelfish alpha3, ``pob`` for Brazilian Portuguese
     Kodi        English display names, "Portuguese (Brazil)"
@@ -14,18 +14,20 @@ five times over. The display names are the same ones packages/core/src/languages
 ships to the web players, kept in step by plugins/shared/match-cases.json.
 
 An unrecognised two-letter code passes through untouched. The corpus carries 185
-distinct codes and this table names 74 of them; resolving the rest to nothing
+distinct codes and this table names 70 of them; resolving the rest to nothing
 would hide subtitles that exist, and resolving them to English would be a lie.
 """
 
 from __future__ import annotations
 
-# ISO639-1 (plus the four OpenSubtitles codes) to English display name.
+# ISO639-1 (plus the six OpenSubtitles codes) to English display name.
 NAMES: dict[str, str] = {
     # OpenSubtitles conventions, not ISO639.
     "pb": "Portuguese (Brazil)",
-    "ze": "Chinese (bilingual)",
-    "zt": "Chinese (traditional)",
+    "ze": "Chinese and English",
+    "zt": "Chinese (Traditional)",
+    "ea": "Spanish (Latin America)",
+    "sp": "Spanish (Spain)",
     "pm": "Portuguese (Mozambique)",
     "ar": "Arabic",
     "bg": "Bulgarian",
@@ -204,8 +206,6 @@ ALIASES: dict[str, str] = {
     "zh-cn": "zh",
     "sr-latn": "sr",
     "sr-cyrl": "sr",
-    "es-419": "es",
-    "es-mx": "es",
     "en-us": "en",
     "en-gb": "en",
     # Written out, as Kodi and hand configuration give them.
@@ -220,6 +220,16 @@ ALIASES: dict[str, str] = {
     "greek modern": "el",
     "serbo croatian": "sr",
 }
+
+#: Spanish regions the API files under `ea`, Latin American Spanish, checked live with
+#: ?lang= on 2026-10-18. 419 is Latin America. Every other region, es-ES included, is
+#: `es`, and so are the UN subregions 005, 013 and 029.
+LATIN_AMERICAN_SPANISH = (
+    "419", "ar", "bo", "cl", "co", "cr", "cu", "do", "ec", "gt", "hn",
+    "mx", "ni", "pa", "pe", "pr", "py", "sv", "us", "uy", "ve",
+)
+for _region in LATIN_AMERICAN_SPANISH:
+    ALIASES["es-" + _region] = "ea"
 
 # Display name back to code, so "Portuguese (Brazil)" resolves the way Kodi sends it.
 _BY_NAME: dict[str, str] = {}
@@ -253,9 +263,13 @@ def to_code(value: str | None) -> str | None:
         return ALPHA3[v]
     if v in _BY_NAME:
         return _BY_NAME[v]
-    # A region we do not have a rule for: keep the base language.
     if "-" in v:
-        return to_code(v.split("-", 1)[0])
+        parts = v.split("-")
+        # A script subtag is skipped, as the API does: es-latn-mx is es-mx.
+        if len(parts) >= 3 and len(parts[1]) == 4 and parts[1].isalpha():
+            return to_code("%s-%s" % (parts[0], parts[2]))
+        # A region we do not have a rule for: keep the base language.
+        return to_code(parts[0])
     # Names with punctuation, "Chinese (traditional)" arriving as "chinese traditional".
     plain = " ".join(v.replace("(", " ").replace(")", " ").split())
     if plain != v:

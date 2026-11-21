@@ -126,13 +126,18 @@ def _via(verb, hint: Hint, opts: Options, tier: str) -> Result | None:
         # A full page even for a small limit, so the ranking keeps the best few rows
         # and not the first few.
         title, subs = _bundle_page(fetch_one, opts.languages, max(opts.limit, PAGE))
+        # The limit holds per language, so a second language is not crowded out by the
+        # first one's long list.
+        ranked: Ranked = rank(subs, hint,
+                              replace(opts, limit=opts.limit * max(1, len(opts.languages))))
     except SubtitleDbError as err:
         if err.fallthrough:
             return None
         raise
-    # The limit holds per language, so a second language is not crowded out by the
-    # first one's long list.
-    ranked: Ranked = rank(subs, hint, replace(opts, limit=opts.limit * max(1, len(opts.languages))))
+    except (AttributeError, KeyError, TypeError, ValueError) as err:
+        # A field of the wrong shape or type. Callers catch SubtitleDbError alone, and a
+        # plugin runs inside someone's media server, where our bug must not crash theirs.
+        raise SubtitleDbError("the API sent an answer that cannot be read: %s" % err) from err
     return Result(
         candidates=ranked.candidates,
         title=title,
@@ -146,11 +151,15 @@ def find(client: Client, hint: Hint, opts: Options | None = None) -> Result:
     """Walk the ladder and return what to show, best first."""
     opts = opts or Options()
 
-    # Rung 1: an explicit TMDB id, the headline key. The imdb->tmdb map is only partial
-    # in production, so this 404s for many ids and falls through to imdb.
+    # Rung 1: an explicit TMDB id, the headline key. Not every title has one, so this
+    # 404s for some ids and falls through to imdb. TMDB numbers films and shows apart,
+    # so the typed path is used: the hint's own type, else "tv" for an episode.
     if hint.tmdb_id is not None:
+        episodic = hint.season is not None or hint.episode is not None
+        kind = hint.tmdb_type or ("tv" if episodic else None)
         out = _via(
-            lambda p: client.by_tmdb(hint.tmdb_id, season=hint.season, episode=hint.episode, **p),
+            lambda p: client.by_tmdb(
+                hint.tmdb_id, season=hint.season, episode=hint.episode, media_type=kind, **p),
             hint, opts, TIER_TMDB,
         )
         if out is not None:

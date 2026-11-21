@@ -31,6 +31,10 @@ from .languages import language_name
 EXACT_RELEASE = 0.95
 
 _NON_ALNUM = re.compile(r"[^a-z0-9]+")
+# A year, or an episode marker: S01, S01E02, S01E02E03, E02, 1x02.
+_MARKER = re.compile(r"^((19|20)\d\d|s\d+(e\d+)*|e\d+|\d+x\d+)$")
+# Says nothing about the encode: a bare number or a library id tag.
+_NOISE = re.compile(r"^(\d+|tt\d+|(imdb|tmdb|tvdb)(id)?)$")
 
 
 def normalise(value: str) -> str:
@@ -65,12 +69,33 @@ def similarity(a: str, b: str) -> float:
     return (2 * overlap) / total
 
 
+def carries_release(
+    release: str | None, title: str | None = None, episode_title: str | None = None
+) -> bool:
+    """Whether a file name says anything about the encode beyond title, year and episode.
+
+    "The Matrix (1999)" does not, so a subtitle named "The.Matrix.1999" agrees with it
+    on the title alone, which is not a release match. The title's and episode title's
+    words are skipped, then everything up to the first year or episode marker, which
+    is still the title when the host gave none.
+    """
+    skip = set(normalise(title or "").split()) | set(normalise(episode_title or "").split())
+    words = [w for w in normalise(release or "").split() if w not in skip]
+    for i, w in enumerate(words):
+        if _MARKER.match(w):
+            words = words[i + 1 :]
+            break
+    return any(not _MARKER.match(w) and not _NOISE.match(w) for w in words)
+
+
 @dataclass
 class Hint:
     """What the host told us about the file being played. Every field is optional."""
 
     imdb_id: str | None = None
     tmdb_id: int | None = None
+    #: "movie" or "tv": which TMDB numbering ``tmdb_id`` is in. None with a season is "tv".
+    tmdb_type: str | None = None
     series_imdb_id: str | None = None
     title: str | None = None
     episode_title: str | None = None
@@ -147,7 +172,7 @@ def score_subtitle(sub: dict, hint: Hint, opts: Options) -> tuple[float, str]:
             score -= 15
 
     release = str(sub.get("release_name") or "").strip()
-    if release and hint.release:
+    if release and hint.release and carries_release(hint.release, hint.title, hint.episode_title):
         sim = similarity(release, hint.release)
         if sim >= EXACT_RELEASE:
             score += 60
