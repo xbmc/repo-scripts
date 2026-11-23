@@ -45,6 +45,13 @@ LIBRARIES = {
 
 REPORT_MODES = ("dialog", "notification", "none")
 
+# Scanning only adds: what is no longer on disk stays in the library until it is cleaned
+CLEAN_METHOD = {"video": "VideoLibrary.Clean", "music": "AudioLibrary.Clean"}
+
+GREEN = "FF7FD36E"
+RED = "FFE06C6C"
+GREY = "FFAAAAAA"
+
 SCAN_START_TIMEOUT = 3.0
 POLL_INTERVAL = 0.5
 
@@ -80,6 +87,7 @@ def parse_args(argv):
 
     report=dialog|notification|none  how to show the result (default: the add-on settings)
     library=video|music|pictures|all libraries to scan (default: the add-on settings)
+    clean=true|false                  remove what is no longer available (default: the add-on settings)
     """
     options = {}
     for arg in argv:
@@ -160,11 +168,11 @@ def is_scanning(kind):
     return xbmc.getCondVisibility(SCANNING_FLAG[kind])
 
 
-def run_scan(kind, monitor):
-    """Returns False when Kodi did not start the scan (no source with a content type, for example)."""
-    log("Triggering UpdateLibrary(%s)" % kind)
-    xbmc.executebuiltin("UpdateLibrary(%s)" % kind)
+def wait_for_job(kind, monitor):
+    """Waits for the scan or clean just requested. Returns False when Kodi did not start it.
 
+    Library.IsScanningVideo/Music is also true while the library is being cleaned.
+    """
     # waitForAbort() returns True as soon as Kodi asks add-ons to stop
     deadline = time.monotonic() + SCAN_START_TIMEOUT
     while time.monotonic() < deadline:
@@ -172,63 +180,110 @@ def run_scan(kind, monitor):
             while is_scanning(kind):
                 if monitor.waitForAbort(POLL_INTERVAL):
                     return True
-            log("Scan of %s finished" % kind)
             return True
         if monitor.waitForAbort(0.25):
             return True
+    return False
 
+
+def run_scan(kind, monitor):
+    """Returns False when Kodi did not start the scan (no source with a content type, for example)."""
+    log("Triggering UpdateLibrary(%s)" % kind)
+    xbmc.executebuiltin("UpdateLibrary(%s)" % kind)
+    if wait_for_job(kind, monitor):
+        log("Scan of %s finished" % kind)
+        return True
     log("Kodi did not start the %s scan (nothing to update)" % kind)
     return False
+
+
+def run_clean(kind, monitor):
+    """Removes from the library the items whose files are gone. Kodi keeps the items of a source it
+    cannot reach (a network share that is off), so they are not lost.
+
+    JSON-RPC with showdialogs=false: the CleanLibrary() builtin opens a modal progress dialog.
+    """
+    log("Cleaning the %s library" % kind)
+    payload = {"jsonrpc": "2.0", "id": "quicksync", "method": CLEAN_METHOD[kind],
+               "params": {"showdialogs": False}}
+    xbmc.executeJSONRPC(json.dumps(payload))
+    # A clean with nothing to do can be over before it is seen: the counts tell what it did anyway
+    wait_for_job(kind, monitor)
+    log("Clean of %s finished" % kind)
 
 
 def enabled_in_settings(kind):
     return ADDON.getSetting("scan_" + kind) == "true"
 
 
-def build_report(kinds, before, after, started, pictures=None):
-    """Summary of every library: the scanned ones with their totals and what is new, the others with why not.
+def clean_enabled(options):
+    value = options.get("clean")
+    if value in ("true", "false"):
+        return value == "true"
+    return ADDON.getSetting("clean_library") != "false"
 
-    Returns (text with Kodi formatting tags, plain text, new items, added per type).
+
+def count_line(label, total, added, removed):
+    line = "%s: %d" % (label, total)
+    if added > 0:
+        line += "  [COLOR %s](+%d)[/COLOR]" % (GREEN, added)
+    if removed > 0:
+        line += "  [COLOR %s](-%d)[/COLOR]" % (RED, removed)
+    return line
+
+
+def build_report(kinds, before, scanned, after, started, pictures=None, cleaned=False):
+    """Summary of every library: the scanned ones with their totals, what is new and what was removed,
+    the others with why not.
+
+    before/scanned/after are the totals before the scan, after the scan and after the clean: the scan
+    only adds and the clean only removes, so a movie replaced by another one shows up in both.
+
+    Returns (text with Kodi formatting tags, plain text, new items, added per type, removed items,
+    removed per type).
     """
     lines = []
     added = {}
+    removed = {}
     for kind in KINDS:
         if lines:
             lines.append("")
         lines.append("[B]%s[/B]" % _(LIBRARY_LABEL[kind]))
         if kind not in kinds:
             # 30042: off in the settings; 30043: on, but this launch asked for other libraries
-            lines.append("[COLOR FFAAAAAA]%s[/COLOR]" % _(30043 if enabled_in_settings(kind) else 30042))
+            lines.append("[COLOR %s]%s[/COLOR]" % (GREY, _(30043 if enabled_in_settings(kind) else 30042)))
             continue
         if kind == "pictures":
             total, previous = pictures or (None, None)
             if total is None:
-                lines.append("[COLOR FFAAAAAA]%s[/COLOR]" % _(30048))
+                lines.append("[COLOR %s]%s[/COLOR]" % (GREY, _(30048)))
             elif previous is None:
                 lines.append("%s: %d" % (_(30050), total))
-                lines.append("[COLOR FFAAAAAA]%s[/COLOR]" % _(30049))
+                lines.append("[COLOR %s]%s[/COLOR]" % (GREY, _(30049)))
             else:
+                # Only the total is known: a picture replaced by another one is not seen
                 delta = total - previous
                 added["pictures"] = max(delta, 0)
-                if delta > 0:
-                    lines.append("%s: %d  [COLOR FF7FD36E](+%d)[/COLOR]" % (_(30050), total, delta))
-                else:
-                    lines.append("%s: %d" % (_(30050), total))
+                removed["pictures"] = max(-delta, 0)
+                lines.append(count_line(_(30050), total, delta, -delta))
             continue
         if not started.get(kind, True):
-            lines.append("[COLOR FFAAAAAA]%s[/COLOR]" % _(30044))
+            lines.append("[COLOR %s]%s[/COLOR]" % (GREY, _(30044)))
         for label_id, method, key in LIBRARIES[kind]:
-            delta = after[method] - before[method]
-            added[key] = max(delta, 0)
-            if delta > 0:
-                lines.append("%s: %d  [COLOR FF7FD36E](+%d)[/COLOR]" % (_(label_id), after[method], delta))
-            else:
-                lines.append("%s: %d" % (_(label_id), after[method]))
+            added[key] = max(scanned[method] - before[method], 0)
+            removed[key] = max(scanned[method] - after[method], 0)
+            lines.append(count_line(_(label_id), after[method], added[key], removed[key]))
     new_items = sum(added.values())
+    removed_items = sum(removed.values())
     lines.append("")
     lines.append("[B]%s[/B]" % (fmt(30022, new_items) if new_items else _(30024)))
+    if removed_items:
+        lines.append("[B]%s[/B]" % fmt(30025, removed_items))
+    elif cleaned:
+        lines.append("[COLOR %s]%s[/COLOR]" % (GREY, _(30026)))
     text = "\n".join(lines)
-    return text, re.sub(r"\[/?(B|COLOR[^\]]*)\]", "", text), new_items, added
+    plain = re.sub(r"\[/?(B|COLOR[^\]]*)\]", "", text)
+    return text, plain, new_items, added, removed_items, removed
 
 
 def selected_kinds(options):
@@ -353,7 +408,8 @@ def main(argv=None):
 
     home.setProperty(RUNNING_PROPERTY, "true")
     try:
-        log("Starting (libraries: %s, report: %s)" % (", ".join(kinds), mode))
+        clean = clean_enabled(options)
+        log("Starting (libraries: %s, report: %s, clean: %s)" % (", ".join(kinds), mode, clean))
         notify_all("OnScanStarted", {"libraries": kinds})
         before = snapshot(kinds)
         started = {}
@@ -371,12 +427,25 @@ def main(argv=None):
                 log("Kodi is shutting down, skipping the summary")
                 return
 
-        after = snapshot(kinds)
-        report, plain, new_items, added = build_report(kinds, before, after, started, pictures)
+        scanned = snapshot(kinds)
+        cleaned = False
+        if clean:
+            for kind in kinds:
+                if kind in CLEAN_METHOD:
+                    run_clean(kind, monitor)
+                    cleaned = True
+                    if monitor.abortRequested():
+                        log("Kodi is shutting down, skipping the summary")
+                        return
+        after = snapshot(kinds) if cleaned else scanned
+
+        report, plain, new_items, added, removed_items, removed = build_report(
+            kinds, before, scanned, after, started, pictures, cleaned)
         log(plain.replace("\n", " | "))
         skipped = [kind for kind in KINDS if kind not in kinds]
         notify_all("OnScanFinished", {"status": "done", "libraries": kinds, "skipped": skipped,
-                                      "new": new_items, "added": added})
+                                      "new": new_items, "added": added, "cleaned": cleaned,
+                                      "removed_total": removed_items, "removed": removed})
     finally:
         # Cleared before the summary: a dialog left open must not block the next scan
         home.clearProperty(RUNNING_PROPERTY)
@@ -384,9 +453,11 @@ def main(argv=None):
     if mode == "dialog":
         show_dialog(report, plain, report_timeout(), monitor)
     elif mode == "notification":
-        if new_items > 0:
-            xbmcgui.Dialog().notification(
-                ADDON_NAME, fmt(30022, new_items), xbmcgui.NOTIFICATION_INFO, 5000)
+        if new_items > 0 or removed_items > 0:
+            parts = [fmt(30022, new_items) if new_items else _(30023)]
+            if removed_items:
+                parts.append(fmt(30027, removed_items))
+            xbmcgui.Dialog().notification(ADDON_NAME, ", ".join(parts), xbmcgui.NOTIFICATION_INFO, 5000)
         else:
             xbmcgui.Dialog().notification(ADDON_NAME, _(30023), xbmcgui.NOTIFICATION_INFO, 4000)
 
