@@ -129,11 +129,11 @@ msgid "Features"
 msgstr ""
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "通知モード"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "\"もう良い\"ボタンの代わりに\"停止\"ボタンを表示する。"
 
 msgctxt "#30507"
@@ -149,7 +149,7 @@ msgid "Features"
 msgstr ""
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "何も選択しなかったら"
 
 msgctxt "#30605"
@@ -157,15 +157,15 @@ msgid "Include already watched episodes"
 msgstr "観たエピソードを含む"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "何個のエピソードを観てから\"続いて観る?\"と聞きましょうか。"
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "通知を表示する時間(秒)"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "カスタマイズ"
 
 msgctxt "#30613"
@@ -193,7 +193,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "[COLOR gray]60分以上[/COLOR]の超長いエピソード"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr ""
 
 msgctxt "#30627"
@@ -201,7 +201,7 @@ msgid "Intros and recaps"
 msgstr ""
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr ""
 
 msgctxt "#30631"

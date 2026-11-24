@@ -129,11 +129,11 @@ msgid "Features"
 msgstr "विशेषताएं"
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "सूचनाओं के लिए प्रदर्शन मोड सेट करें"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "बंद करने के पहले रुकने का बटन दिखाए"
 
 msgctxt "#30507"
@@ -149,7 +149,7 @@ msgid "Features"
 msgstr "विशेषताएं"
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "कुछ नहीं चुने जाने पर डिफ़ॉल्ट कार्रवाई"
 
 msgctxt "#30605"
@@ -157,15 +157,15 @@ msgid "Include already watched episodes"
 msgstr "पहले से देखे गए एपिसोड शामिल करें"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "\"मौजूद?\" से पहले एपिसोड की संख्या"
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "सूचना दिखाने के लिए सेकंड में अवधि"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "एपिसोड की लंबाई के आधार पर ऑटोप्ले की अवधि को अनुकूलित करें"
 
 msgctxt "#30613"
@@ -193,7 +193,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "काफी लम्बे एपिसोड  [COLOR gray]> 60 min[/COLOR]"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr ""
 
 msgctxt "#30627"
@@ -201,7 +201,7 @@ msgid "Intros and recaps"
 msgstr ""
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr ""
 
 msgctxt "#30631"

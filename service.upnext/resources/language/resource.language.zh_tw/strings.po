@@ -129,11 +129,11 @@ msgid "Features"
 msgstr "功能"
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "設定提醒的模式"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "顯示 \"停止播放\" 按鈕而非 \"關閉\" 按鈕"
 
 msgctxt "#30507"
@@ -149,7 +149,7 @@ msgid "Features"
 msgstr "功能"
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "無作為時的預設動作"
 
 msgctxt "#30605"
@@ -157,20 +157,20 @@ msgid "Include already watched episodes"
 msgstr "包括已觀看的影集"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "在詢問 \"還在嗎？\" 之前的集數"
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "顯示提醒的時間"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "依據影片長度制定自動播放的時間"
 
 msgctxt "#30613"
 msgid "All episodes  [COLOR gray]any length[/COLOR]"
-msgstr "所有影集"
+msgstr "所有影集  [COLOR gray]不限長度[/COLOR]"
 
 msgctxt "#30615"
 msgid "Very short episodes  [COLOR gray]< 10 mins[/COLOR]"
@@ -193,7 +193,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "非常長影集  [COLOR gray]> 60 分鐘[/COLOR]"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr ""
 
 msgctxt "#30627"
@@ -201,7 +201,7 @@ msgid "Intros and recaps"
 msgstr ""
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr ""
 
 msgctxt "#30631"

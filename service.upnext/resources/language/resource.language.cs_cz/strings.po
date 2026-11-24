@@ -141,11 +141,11 @@ msgid "Features"
 msgstr "Funkce"
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "Nastavit vzhled pro upozornění"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "Zobrazit tlačítko \"Zastavení\" místo \"Zavření\""
 
 msgctxt "#30507"
@@ -153,7 +153,7 @@ msgid "Use OK/Select for playback controls"
 msgstr "Tlačítkem OK otevřít ovládání přehrávání"
 
 msgctxt "#30508"
-msgid "Use arrows to seek; hold OK for Up Next buttons"
+msgid "Seek with the arrow keys"
 msgstr "Šipkami posouvat video; podržením OK vybrat tlačítka Up Next"
 
 msgctxt "#30600"
@@ -165,7 +165,7 @@ msgid "Features"
 msgstr "Funkce"
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "Výchozí akce pokud není nic vybráno"
 
 msgctxt "#30605"
@@ -173,15 +173,15 @@ msgid "Include already watched episodes"
 msgstr "Zahrnout i zhlédnuté epizody"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "Počet epizod před zobrazením dotazu \"Stále sleduješ?\""
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "Počet sekund zobrazení upozornění"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "Přizpůsobit čas nabídky délce epizody"
 
 msgctxt "#30613"
@@ -209,7 +209,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "Velmi dlouhé epizody  [COLOR gray]> 60 min[/COLOR]"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr "Za kolik sekund přejít během titulků (0 = vypnuto)"
 
 msgctxt "#30627"
@@ -217,7 +217,7 @@ msgid "Intros and recaps"
 msgstr "Znělky a shrnutí"
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr "Zobrazit tlačítko přeskočení, pokud je doplněk označí"
 
 msgctxt "#30631"
@@ -229,11 +229,11 @@ msgid "Skip recaps automatically"
 msgstr "Automaticky přeskočit shrnutí"
 
 msgctxt "#30635"
-msgid "Ask if still watching after (minutes, 0 disables)"
+msgid "After this many minutes"
 msgstr "Zeptat se, zda stále sleduji, po (minuty; 0 = vypnuto)"
 
 msgctxt "#30637"
-msgid "Ask if still watching after bedtime"
+msgid "After bedtime"
 msgstr "Zeptat se, zda stále sleduji, po večerce"
 
 msgctxt "#30639"
@@ -245,11 +245,11 @@ msgid "Bedtime minute"
 msgstr "Minuta večerky"
 
 msgctxt "#30643"
-msgid "Mark an episode as watched when moving to the next one early"
+msgid "Mark watched when moving on early"
 msgstr "Při předčasném přechodu označit epizodu jako zhlédnutou"
 
 msgctxt "#30645"
-msgid "Continue a partly watched next episode where it was left"
+msgid "Resume the next episode"
 msgstr "Pokračovat v rozkoukaném dalším dílu od uložené pozice"
 
 msgctxt "#30700"

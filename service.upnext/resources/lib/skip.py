@@ -10,7 +10,7 @@ Credits are left to the Up Next popup, which ``notification_offset`` times.
 """
 
 from xbmcgui import WindowXMLDialog
-from utils import addon_path, get_setting_bool, is_armv7, localize, log as ulog
+from utils import addon_path, binge_mode, get_setting_bool, is_armv7, localize, log as ulog
 
 SKIPPABLE = ('intro', 'recap')
 LABELS = {'intro': 30052, 'recap': 30053}
@@ -115,7 +115,7 @@ class Skipper:
         self.player.seekTime(segment[2])
 
     def update(self, data, play_time):
-        if not get_setting_bool('enableSkipSegments', default=True):
+        if not (binge_mode() or get_setting_bool('enableSkipSegments', default=True)):
             self.hide()
             return
         segment = active_segment(parse_segments(data), play_time)
@@ -128,7 +128,7 @@ class Skipper:
             self.handled.add(segment)
             self.hide()
             return
-        if get_setting_bool(AUTO_SKIP_SETTINGS[segment[0]], default=False):
+        if binge_mode() or get_setting_bool(AUTO_SKIP_SETTINGS[segment[0]], default=False):
             self.skip(segment)
             return
         if self.button is None:

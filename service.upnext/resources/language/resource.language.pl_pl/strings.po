@@ -140,11 +140,11 @@ msgid "Features"
 msgstr "Funkcje"
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "Tryb wyświetlania powiadomień"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "Pokaż przycisk \"Zatrzymaj\" zamiast \"Zamknij\""
 
 msgctxt "#30507"
@@ -160,7 +160,7 @@ msgid "Features"
 msgstr "Funkcje"
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "Domyślna akcja, gdy nic nie wybrano"
 
 msgctxt "#30605"
@@ -168,15 +168,15 @@ msgid "Include already watched episodes"
 msgstr "Uwzględnij obejrzane odcinki"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "Liczba odcinków przed \"Wciąż jesteś?\""
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "Czas powiadomienia przed końcem (sekundy)"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "Osobny czas dla różnej długości odcinków"
 
 msgctxt "#30613"
@@ -204,7 +204,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "Bardzo długie odcinki [COLOR gray]> 60 minut[/COLOR]"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr "Następny odcinek po (s napisów, 0 wyłącza)"
 
 msgctxt "#30627"
@@ -212,7 +212,7 @@ msgid "Intros and recaps"
 msgstr "Czołówki i podsumowania"
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr "Pokazuj przycisk Pomiń, jeśli dodatek poda czasy"
 
 msgctxt "#30631"
@@ -224,11 +224,11 @@ msgid "Skip recaps automatically"
 msgstr "Automatycznie pomijaj podsumowania"
 
 msgctxt "#30635"
-msgid "Ask if still watching after (minutes, 0 disables)"
+msgid "After this many minutes"
 msgstr "Pytaj, czy nadal oglądasz, po (minuty, 0 wyłącza)"
 
 msgctxt "#30637"
-msgid "Ask if still watching after bedtime"
+msgid "After bedtime"
 msgstr "Pytaj, czy nadal oglądasz, w nocy"
 
 msgctxt "#30639"
@@ -240,15 +240,15 @@ msgid "Bedtime minute"
 msgstr "Od minuty"
 
 msgctxt "#30643"
-msgid "Mark an episode as watched when moving to the next one early"
+msgid "Mark watched when moving on early"
 msgstr "Oznacz jako obejrzany przy wcześniejszym przejściu dalej"
 
 msgctxt "#30645"
-msgid "Continue a partly watched next episode where it was left"
+msgid "Resume the next episode"
 msgstr "Wznów następny odcinek od miejsca przerwania"
 
 msgctxt "#30647"
-msgid "Pause the video while an add-on starts the next episode"
+msgid "Pause until the next episode starts"
 msgstr "Wstrzymaj odcinek, gdy dodatek uruchamia następny"
 
 msgctxt "#30700"

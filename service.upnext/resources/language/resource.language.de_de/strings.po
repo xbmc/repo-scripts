@@ -130,11 +130,11 @@ msgid "Features"
 msgstr "Funktionen"
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "Anzeigemodus der Benachrichtigung"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "\"Stopp\"-Button statt \"Schließen\"-Button anzeigen"
 
 msgctxt "#30507"
@@ -150,7 +150,7 @@ msgid "Features"
 msgstr "Funktionen"
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "Standardaktion wenn nichts ausgewählt wird"
 
 msgctxt "#30605"
@@ -158,15 +158,15 @@ msgid "Include already watched episodes"
 msgstr "Gesehene Episoden mit einschließen"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "Anzahl der Episoden bevor der \"Noch da?\" Dialog eingeblendet wird"
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "Restlaufzeit bevor Benachrichtigung eingeblendet wird (Sekunden)"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "Automatisch Abspielen anhand Episodenlänge festlegen"
 
 msgctxt "#30613"
@@ -194,7 +194,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "Sehr lange Episoden  [COLOR gray]> 60 min[/COLOR]"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr ""
 
 msgctxt "#30627"
@@ -202,7 +202,7 @@ msgid "Intros and recaps"
 msgstr ""
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr ""
 
 msgctxt "#30631"
