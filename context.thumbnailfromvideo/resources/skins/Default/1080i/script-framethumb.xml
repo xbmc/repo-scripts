@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Frame picker overlay: bottom panel with title/time, seek bar,
+     "Make thumbnail" (follows the slider nub), button row (with Settings). Buttons use btn_nf/btn_fo.png in Estuary's dialog-button style (flat face,
+     3 px corners; focus tinted with the skin colour, 50% black otherwise). -->
+<window>
+  <defaultcontrol always="true">10</defaultcontrol>
+  <!-- draw above Kodi's seek bar / player controls, which the skin shows
+       while the video is paused -->
+  <zorder>3</zorder>
+  <animation effect="fade" time="200">WindowOpen</animation>
+  <animation effect="fade" time="200">WindowClose</animation>
+  <controls>
+    <!-- the video itself, full screen (the picker is its own window, so
+         Kodi's full-screen video window and its seek bar are not shown) -->
+    <control type="videowindow">
+      <left>0</left><top>0</top><width>1920</width><height>1080</height>
+      <!-- a click on a videowindow makes Kodi switch to its full-screen video
+           window (hiding the picker): move its click area off screen -->
+      <hitrect x="-100" y="-100" w="1" h="1"/>
+    </control>
+    <!-- hidden while the add-on settings dialog is open -->
+    <control type="group">
+    <visible>String.IsEmpty(Window.Property(settings_open))</visible>
+    <!-- bottom panel -->
+    <control type="image">
+      <left>0</left><top>822</top><width>1920</width><height>258</height>
+      <texture>panel.png</texture>
+    </control>
+
+    <!-- "Choose thumbnail:  <title>" and time -->
+    <control type="label" id="100">
+      <left>48</left><top>830</top><width>1480</width><height>56</height>
+      <font>font13</font><textcolor>FFFFFFFF</textcolor><aligny>center</aligny>
+    </control>
+    <control type="label" id="101">
+      <left>1476</left><top>830</top><width>400</width><height>56</height>
+      <font>font13</font><textcolor>FFFFFFFF</textcolor>
+      <align>right</align><aligny>center</aligny>
+    </control>
+
+    <!-- seek bar: progress fill with a small slider handle on top -->
+    <control type="progress" id="11">
+      <left>48</left><top>899</top><width>1828</width><height>14</height>
+      <texturebg colordiffuse="FF5C5C5C">white.png</texturebg>
+      <midtexture colordiffuse="$INFO[Window.Property(focus_color)]">white.png</midtexture>
+      <info>Player.Progress</info>
+    </control>
+    <control type="slider" id="10">
+      <left>36</left><top>894</top><width>1852</width><height>24</height>
+      <texturesliderbar>sliderbar.png</texturesliderbar>
+      <textureslidernib>nib.png</textureslidernib>
+      <textureslidernibfocus colordiffuse="$INFO[Window.Property(focus_light)]">nib.png</textureslidernibfocus>
+      <onup>20</onup>
+      <ondown>25</ondown>
+    </control>
+
+    <!-- main action: moved by the script so it sits right under the slider nub,
+         joined to it by a small pointer (two copies: focused / not focused) -->
+    <control type="image" id="33">
+      <left>950</left><top>932</top><width>20</width><height>10</height>
+      <texture colordiffuse="$INFO[Window.Property(focus_color)]">pointer.png</texture>
+      <visible>Control.HasFocus(10) | Control.HasFocus(30)</visible>
+    </control>
+    <control type="image" id="34">
+      <left>950</left><top>932</top><width>20</width><height>10</height>
+      <texture colordiffuse="38FFFFFF">pointer.png</texture>
+      <visible>!Control.HasFocus(10) + !Control.HasFocus(30)</visible>
+    </control>
+    <control type="image" id="35"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),30)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),30)">Conditional</animation>
+      <left>830</left><top>942</top><width>260</width><height>54</height>
+      <texture border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texture>
+      <visible>Control.HasFocus(10) | Control.HasFocus(30)</visible>
+    </control>
+    <control type="image" id="36"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),30)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),30)">Conditional</animation>
+      <left>830</left><top>942</top><width>260</width><height>54</height>
+      <texture border="6">btn_nf.png</texture>
+      <visible>!Control.HasFocus(10) + !Control.HasFocus(30)</visible>
+    </control>
+    <control type="button" id="30"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),30)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),30)">Conditional</animation>
+      <left>830</left><top>942</top><width>260</width><height>54</height>
+      <font>font25_title</font><align>center</align><aligny>center</aligny>
+      <textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor>
+      <texturefocus>-</texturefocus>
+      <texturenofocus>-</texturenofocus>
+      <label>[B]$ADDON[context.thumbnailfromvideo 30114][/B]</label>
+      <onup>10</onup>
+      <ondown>25</ondown>
+    </control>
+
+    <!-- seek / playback buttons -->
+    <control type="grouplist" id="20">
+      <left>478</left><top>1012</top><width>1442</width><height>50</height>
+      <!-- left-aligned so that Play / Pause sits in the middle of the screen -->
+      <orientation>horizontal</orientation><align>left</align><itemgap>8</itemgap>
+      <onup>10</onup><ondown>10</ondown>
+      <onleft>31</onleft><onright>32</onright>
+      <control type="button" id="21"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),21)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),21)">Conditional</animation><width>122</width><height>50</height><font>font12</font><align>right</align><textoffsetx>20</textoffsetx><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]10 s[/B]</label></control>
+      <control type="button" id="22"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),22)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),22)">Conditional</animation><width>122</width><height>50</height><font>font12</font><align>right</align><textoffsetx>33</textoffsetx><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]1 s[/B]</label></control>
+      <control type="button" id="23"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),23)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),23)">Conditional</animation><width>122</width><height>50</height><font>font12</font><align>right</align><textoffsetx>20</textoffsetx><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]0.1 s[/B]</label></control>
+      <control type="button" id="25"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),25)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),25)">Conditional</animation><width>185</width><height>50</height><font>font12</font><align>center</align><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]$ADDON[context.thumbnailfromvideo 30112][/B]</label></control>
+      <control type="button" id="26"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),26)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),26)">Conditional</animation><width>122</width><height>50</height><font>font12</font><align>left</align><textoffsetx>20</textoffsetx><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]$ADDON[context.thumbnailfromvideo 30113][/B]</label></control>
+      <control type="button" id="27"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),27)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),27)">Conditional</animation><width>122</width><height>50</height><font>font12</font><align>left</align><textoffsetx>33</textoffsetx><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]1 s[/B]</label></control>
+      <control type="button" id="28"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),28)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),28)">Conditional</animation><width>122</width><height>50</height><font>font12</font><align>left</align><textoffsetx>20</textoffsetx><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]10 s[/B]</label></control>
+    </control>
+
+    <!-- bold arrows drawn over the seek buttons (font arrows are too small) -->
+    <control type="image"><animation effect="zoom" start="100" end="92" center="539,1037" time="80" condition="String.IsEqual(Window.Property(pressed),21)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),21)">Conditional</animation><left>502</left><top>1026</top><width>20</width><height>21</height><texture>arrow_l2.png</texture></control>
+    <control type="image"><animation effect="zoom" start="100" end="92" center="669,1037" time="80" condition="String.IsEqual(Window.Property(pressed),22)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),22)">Conditional</animation><left>644</left><top>1026</top><width>11</width><height>21</height><texture>arrow_l1.png</texture></control>
+    <control type="image"><animation effect="zoom" start="100" end="92" center="799,1037" time="80" condition="String.IsEqual(Window.Property(pressed),23)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),23)">Conditional</animation><left>763</left><top>1026</top><width>11</width><height>21</height><texture>arrow_l1.png</texture></control>
+    <control type="image"><animation effect="zoom" start="100" end="92" center="1122,1037" time="80" condition="String.IsEqual(Window.Property(pressed),26)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),26)">Conditional</animation><left>1147</left><top>1026</top><width>11</width><height>21</height><texture>arrow_r1.png</texture></control>
+    <control type="image"><animation effect="zoom" start="100" end="92" center="1252,1037" time="80" condition="String.IsEqual(Window.Property(pressed),27)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),27)">Conditional</animation><left>1267</left><top>1026</top><width>11</width><height>21</height><texture>arrow_r1.png</texture></control>
+    <control type="image"><animation effect="zoom" start="100" end="92" center="1382,1037" time="80" condition="String.IsEqual(Window.Property(pressed),28)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),28)">Conditional</animation><left>1399</left><top>1026</top><width>20</width><height>21</height><texture>arrow_r2.png</texture></control>
+
+    <!-- Settings / Cancel: outside the grouplist, 32 px after it -->
+    <control type="button" id="32"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),32)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),32)">Conditional</animation><left>1475</left><top>1012</top><width>145</width><height>50</height><font>font12</font><align>center</align><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]$ADDON[context.thumbnailfromvideo 30118][/B]</label><onleft>28</onleft><onright>31</onright><onup>10</onup><ondown>10</ondown></control>
+    <control type="button" id="31"><animation effect="zoom" start="100" end="92" center="auto" time="80" condition="String.IsEqual(Window.Property(pressed),31)">Conditional</animation><animation effect="fade" start="100" end="65" time="80" condition="String.IsEqual(Window.Property(pressed),31)">Conditional</animation><left>1628</left><top>1012</top><width>122</width><height>50</height><font>font12</font><align>center</align><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor><texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus><texturenofocus border="6">btn_nf.png</texturenofocus><label>[B]$ADDON[context.thumbnailfromvideo 30111][/B]</label><onleft>32</onleft><onright>21</onright><onup>10</onup><ondown>10</ondown></control>
+    </control>
+  </controls>
+</window>

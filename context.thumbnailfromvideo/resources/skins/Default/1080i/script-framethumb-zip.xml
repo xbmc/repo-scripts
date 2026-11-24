@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Folder thumbnail backup / restore: heading with the folder, a line
+     naming the ZIP, the list of thumbnails, and Start / Cancel on the right.
+     Window properties: heading, save_as, start_label, focus_color. -->
+<window>
+  <defaultcontrol always="true">10</defaultcontrol>
+  <animation effect="fade" time="150">WindowOpen</animation>
+  <animation effect="fade" time="150">WindowClose</animation>
+  <controls>
+    <!-- dim what is behind -->
+    <control type="image">
+      <left>0</left><top>0</top><width>1920</width><height>1080</height>
+      <texture colordiffuse="99000000">white.png</texture>
+    </control>
+    <control type="group">
+      <left>410</left><top>140</top>
+      <control type="image">
+        <left>0</left><top>0</top><width>1100</width><height>800</height>
+        <texture colordiffuse="FF1D1F22">white.png</texture>
+      </control>
+      <!-- header: folder -->
+      <control type="image">
+        <left>0</left><top>0</top><width>1100</width><height>70</height>
+        <texture colordiffuse="$INFO[Window.Property(focus_color)]">white.png</texture>
+      </control>
+      <control type="label">
+        <left>30</left><top>0</top><width>1040</width><height>70</height>
+        <font>font13</font><textcolor>FFFFFFFF</textcolor><aligny>center</aligny>
+        <label>[B]$INFO[Window.Property(heading)][/B]</label>
+      </control>
+      <!-- the ZIP file that will be made -->
+      <control type="label">
+        <left>30</left><top>80</top><width>1040</width><height>50</height>
+        <font>font12</font><textcolor>FFE0E0E0</textcolor><aligny>center</aligny>
+        <label>$INFO[Window.Property(save_as)]</label>
+      </control>
+
+      <!-- thumbnails that go into the ZIP -->
+      <control type="list" id="3">
+        <left>20</left><top>140</top><width>760</width><height>638</height>
+        <onright>10</onright>
+        <pagecontrol>60</pagecontrol>
+        <scrolltime>200</scrolltime>
+        <itemlayout height="58" width="760">
+          <control type="label">
+            <left>16</left><top>0</top><width>728</width><height>58</height>
+            <font>font12</font><textcolor>FFB4B4B4</textcolor><aligny>center</aligny>
+            <label>$INFO[ListItem.Label]</label>
+          </control>
+        </itemlayout>
+        <focusedlayout height="58" width="760">
+          <control type="image">
+            <left>0</left><top>0</top><width>760</width><height>58</height>
+            <texture colordiffuse="$INFO[Window.Property(focus_color)]">white.png</texture>
+            <visible>Control.HasFocus(3)</visible>
+          </control>
+          <control type="image">
+            <left>0</left><top>0</top><width>760</width><height>58</height>
+            <texture colordiffuse="22FFFFFF">white.png</texture>
+            <visible>!Control.HasFocus(3)</visible>
+          </control>
+          <control type="label">
+            <left>16</left><top>0</top><width>728</width><height>58</height>
+            <font>font12</font><textcolor>FFFFFFFF</textcolor><aligny>center</aligny>
+            <scroll>true</scroll>
+            <label>$INFO[ListItem.Label]</label>
+          </control>
+        </focusedlayout>
+      </control>
+      <control type="scrollbar" id="60">
+        <left>790</left><top>140</top><width>8</width><height>638</height>
+        <texturesliderbackground colordiffuse="FF2C2F33">white.png</texturesliderbackground>
+        <texturesliderbar colordiffuse="FF7A7A7A">white.png</texturesliderbar>
+        <texturesliderbarfocus colordiffuse="$INFO[Window.Property(focus_color)]">white.png</texturesliderbarfocus>
+        <orientation>vertical</orientation>
+        <showonepage>false</showonepage>
+        <onleft>3</onleft><onright>10</onright>
+      </control>
+
+      <!-- Start above Cancel -->
+      <control type="button" id="10">
+        <left>820</left><top>140</top><width>260</width><height>60</height>
+        <font>font12</font><align>center</align><aligny>center</aligny>
+        <textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor>
+        <texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus>
+        <texturenofocus border="6">btn_nf.png</texturenofocus>
+        <label>[B]$INFO[Window.Property(start_label)][/B]</label>
+        <onleft>3</onleft><ondown>11</ondown><onup>11</onup>
+      </control>
+      <control type="button" id="11">
+        <left>820</left><top>210</top><width>260</width><height>60</height>
+        <font>font12</font><align>center</align><aligny>center</aligny>
+        <textcolor>FFFFFFFF</textcolor><focusedcolor>FFFFFFFF</focusedcolor>
+        <texturefocus border="6" colordiffuse="$INFO[Window.Property(focus_color)]">btn_fo.png</texturefocus>
+        <texturenofocus border="6">btn_nf.png</texturenofocus>
+        <label>[B]$ADDON[context.thumbnailfromvideo 30111][/B]</label>
+        <onleft>3</onleft><onup>10</onup><ondown>10</ondown>
+      </control>
+    </control>
+  </controls>
+</window>

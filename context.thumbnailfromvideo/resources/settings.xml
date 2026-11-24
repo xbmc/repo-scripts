@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+  <section id="context.thumbnailfromvideo">
+    <category id="general" label="30000" help="">
+      <group id="1">
+        <setting id="save_location" type="integer" label="30001" help="30076">
+          <level>0</level>
+          <default>1</default>
+          <constraints>
+            <options>
+              <option label="30002">0</option>
+              <option label="30003">1</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="image_format" type="integer" label="30009" help="">
+          <level>0</level>
+          <default>1</default>
+          <constraints>
+            <options>
+              <option label="30010">0</option>
+              <option label="30011">1</option>
+            </options>
+          </constraints>
+          <control type="spinner" format="string"/>
+        </setting>
+        <setting id="capture_width" type="integer" label="30004" help="">
+          <level>0</level>
+          <default>1920</default>
+          <constraints>
+            <minimum>320</minimum>
+            <step>320</step>
+            <maximum>3840</maximum>
+          </constraints>
+          <control type="spinner" format="integer"/>
+        </setting>
+        <setting id="start_percent" type="integer" label="30005" help="">
+          <level>0</level>
+          <default>20</default>
+          <constraints>
+            <minimum>0</minimum>
+            <step>5</step>
+            <maximum>90</maximum>
+          </constraints>
+          <control type="spinner" format="integer"/>
+        </setting>
+        <setting id="auto_crop" type="boolean" label="30008" help="">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+      </group>
+      <group id="2">
+        <!-- shows "Version x.y.z" at normal brightness; the label text (string
+             30012) gets the add-on version at build time. Pressing it does nothing. -->
+        <setting id="version_info" type="action" label="30012" help="">
+          <level>0</level>
+          <data></data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>false</close>
+          </control>
+        </setting>
+        <setting id="author_info" type="action" label="30047" help="">
+          <level>0</level>
+          <data></data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>false</close>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="backup" label="30019" help="">
+      <group id="3">
+        <setting id="folder_zip" type="action" label="30040" help="">
+          <level>0</level>
+          <data>RunScript(special://home/addons/context.thumbnailfromvideo/tools.py,folderzip)</data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+        <setting id="folder_restore" type="action" label="30061" help="">
+          <level>0</level>
+          <data>RunScript(special://home/addons/context.thumbnailfromvideo/tools.py,folderrestore)</data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+      </group>
+      <group id="2">
+        <setting id="clear_cache" type="action" label="30034" help="">
+          <level>0</level>
+          <data>RunScript(special://home/addons/context.thumbnailfromvideo/tools.py,clearcache)</data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+        <setting id="clear_cache_mv" type="action" label="30062" help="">
+          <level>0</level>
+          <data>RunScript(special://home/addons/context.thumbnailfromvideo/tools.py,clearcache_mv)</data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+        <setting id="clear_cache_ep" type="action" label="30065" help="">
+          <level>0</level>
+          <data>RunScript(special://home/addons/context.thumbnailfromvideo/tools.py,clearcache_ep)</data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+        <!-- a string setting so the button can show the open video's file
+             name on its right (the value; set by picker.py while the settings
+             are open, empty otherwise). Pressing it runs the action data. -->
+        <setting id="open_video_name" type="string" label="30068" help="">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <data>RunScript(special://home/addons/context.thumbnailfromvideo/tools.py,clearcache_open)</data>
+            <close>true</close>
+          </control>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>
