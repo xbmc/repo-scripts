@@ -129,11 +129,11 @@ msgid "Features"
 msgstr "Funktioner"
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "Ställ in visningsläget för aviseringarna"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "Visa en \"Stoppknapp\" i stället för en \"Stängknapp\""
 
 msgctxt "#30507"
@@ -149,7 +149,7 @@ msgid "Features"
 msgstr "Funktioner"
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "Standardåtgärd när inget är valt"
 
 msgctxt "#30605"
@@ -157,15 +157,15 @@ msgid "Include already watched episodes"
 msgstr "Inkludera redan visade avsnitt"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "Antal avsnitt innan frågan \"Tittar du fortfarande?\""
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "Antal sekunder som aviseringen ska synas"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "Anpassa den automatiska uppspelningslängden efter avsnittets längd"
 
 msgctxt "#30613"
@@ -193,7 +193,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "Väldigt långa avsnitt  [COLOR gray]> 60 min[/COLOR]"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr ""
 
 msgctxt "#30627"
@@ -201,7 +201,7 @@ msgid "Intros and recaps"
 msgstr ""
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr ""
 
 msgctxt "#30631"

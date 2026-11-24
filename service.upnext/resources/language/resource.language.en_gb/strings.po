@@ -122,6 +122,10 @@ msgctxt "#30056"
 msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
 msgstr ""
 
+msgctxt "#30057"
+msgid "Now finishing"
+msgstr ""
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr ""
@@ -141,11 +145,11 @@ msgid "Features"
 msgstr ""
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr ""
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr ""
 
 msgctxt "#30507"
@@ -153,7 +157,7 @@ msgid "Use OK/Select for playback controls"
 msgstr ""
 
 msgctxt "#30508"
-msgid "Use arrows to seek; hold OK for Up Next buttons"
+msgid "Seek with the arrow keys"
 msgstr ""
 
 msgctxt "#30600"
@@ -165,7 +169,7 @@ msgid "Features"
 msgstr ""
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr ""
 
 msgctxt "#30605"
@@ -173,15 +177,15 @@ msgid "Include already watched episodes"
 msgstr ""
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr ""
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr ""
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr ""
 
 msgctxt "#30613"
@@ -209,7 +213,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr ""
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr ""
 
 msgctxt "#30627"
@@ -217,7 +221,7 @@ msgid "Intros and recaps"
 msgstr ""
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr ""
 
 msgctxt "#30631"
@@ -229,11 +233,11 @@ msgid "Skip recaps automatically"
 msgstr ""
 
 msgctxt "#30635"
-msgid "Ask if still watching after (minutes, 0 disables)"
+msgid "After this many minutes"
 msgstr ""
 
 msgctxt "#30637"
-msgid "Ask if still watching after bedtime"
+msgid "After bedtime"
 msgstr ""
 
 msgctxt "#30639"
@@ -245,15 +249,27 @@ msgid "Bedtime minute"
 msgstr ""
 
 msgctxt "#30643"
-msgid "Mark an episode as watched when moving to the next one early"
+msgid "Mark watched when moving on early"
 msgstr ""
 
 msgctxt "#30645"
-msgid "Continue a partly watched next episode where it was left"
+msgid "Resume the next episode"
 msgstr ""
 
 msgctxt "#30647"
-msgid "Pause the video while an add-on starts the next episode"
+msgid "Pause until the next episode starts"
+msgstr ""
+
+msgctxt "#30649"
+msgid "Binge mode"
+msgstr ""
+
+msgctxt "#30651"
+msgid "Skips intros and recaps, plays the next episode and moves on during the end credits, whatever those settings say."
+msgstr ""
+
+msgctxt "#30653"
+msgid "Are you still watching?"
 msgstr ""
 
 msgctxt "#30700"
@@ -298,4 +314,100 @@ msgstr ""
 
 msgctxt "#30813"
 msgid "Test Skip button"
+msgstr ""
+
+msgctxt "#30900"
+msgid "Fancy shows the next episode over the dimmed video: the show's logo, the episode's details, plot and still. Simple shows a compact popup."
+msgstr ""
+
+msgctxt "#30901"
+msgid "The popup's second button stops playback instead of only closing the popup. Back always closes the popup and keeps the episode playing."
+msgstr ""
+
+msgctxt "#30902"
+msgid "While the popup is open, OK/Select opens Kodi's playback controls. Press a direction key to reach the popup's buttons."
+msgstr ""
+
+msgctxt "#30903"
+msgid "While the popup is open, the arrow keys seek in the episode. The Context Menu action (a long press of OK on some remotes) switches between seeking and the popup's buttons."
+msgstr ""
+
+msgctxt "#30904"
+msgid "What happens when the countdown runs out and no button was pressed."
+msgstr ""
+
+msgctxt "#30905"
+msgid "Also show the popup when playing a playlist, for its next item, including videos that aren't in the library."
+msgstr ""
+
+msgctxt "#30906"
+msgid "Offer the next episode even when it is already watched. Off: watched episodes are skipped."
+msgstr ""
+
+msgctxt "#30907"
+msgid "When you move on before the end of a library episode, with Watch now or during the credits, mark it as watched."
+msgstr ""
+
+msgctxt "#30908"
+msgid "When the next library episode is partly watched, continue it from where you stopped instead of from the beginning."
+msgstr ""
+
+msgctxt "#30909"
+msgid "Pause the current video while an add-on starts the next episode, so a slow source search doesn't play over the end of the episode."
+msgstr ""
+
+msgctxt "#30910"
+msgid "Ask after this many episodes in a row without a button pressed. Watch now and \"Continue watching\" start the count again. 0 never asks."
+msgstr ""
+
+msgctxt "#30911"
+msgid "Ask after this many minutes of watching without a button pressed. 0 never asks."
+msgstr ""
+
+msgctxt "#30912"
+msgid "Ask once a night, at an episode change between bedtime and 6:00 in the morning."
+msgstr ""
+
+msgctxt "#30913"
+msgid "The time from which Up Next asks if you are still watching."
+msgstr ""
+
+msgctxt "#30914"
+msgid "Off: one countdown length for all episodes. On: a length for each episode length."
+msgstr ""
+
+msgctxt "#30915"
+msgid "How many seconds before the end of the episode the popup appears and starts counting down."
+msgstr ""
+
+msgctxt "#30916"
+msgid "When the add-on gives the start of the end credits, move on to the next episode this many seconds into them. Only use it when those times match the video: moving on early can skip post-credits scenes. 0 waits for the end of the episode."
+msgstr ""
+
+msgctxt "#30917"
+msgid "Show a Skip button during intros and recaps that the add-on marks."
+msgstr ""
+
+msgctxt "#30918"
+msgid "Skip marked intros without showing the button."
+msgstr ""
+
+msgctxt "#30919"
+msgid "Skip marked recaps without showing the button."
+msgstr ""
+
+msgctxt "#30920"
+msgid "Turn Up Next off without disabling the add-on."
+msgstr ""
+
+msgctxt "#30921"
+msgid "How much Up Next writes to Kodi's log. Debug helps when reporting a problem."
+msgstr ""
+
+msgctxt "#30922"
+msgid "Jump to 15 seconds before the end of each episode, to see the popup without waiting."
+msgstr ""
+
+msgctxt "#30923"
+msgid "Show this window with an episode from your library, to see how it looks."
 msgstr ""

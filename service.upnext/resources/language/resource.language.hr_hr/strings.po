@@ -129,11 +129,11 @@ msgid "Features"
 msgstr "Značajke"
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "Postavite način prikaza obavijesti"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "Prikaži \"Zaustavi\" gumb umjesto \"Zatvori\" gumba"
 
 msgctxt "#30507"
@@ -149,7 +149,7 @@ msgid "Features"
 msgstr "Značajke"
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "Zadana akcija kada ništa nije odabrano"
 
 msgctxt "#30605"
@@ -157,15 +157,15 @@ msgid "Include already watched episodes"
 msgstr "Uključi već odgledane epizode"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "Broj epizoda prije \"Jeste li još tu?\" upita"
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "Trajanje u sekundama za prikaz obavijesti"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "Prilagodi trajanje automatske reprodukcije duljini epizode"
 
 msgctxt "#30613"
@@ -193,7 +193,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "Vrlo duge epizode  [COLOR gray]> 60 min[/COLOR]"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr ""
 
 msgctxt "#30627"
@@ -201,7 +201,7 @@ msgid "Intros and recaps"
 msgstr ""
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr ""
 
 msgctxt "#30631"

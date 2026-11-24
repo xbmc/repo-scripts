@@ -129,11 +129,11 @@ msgid "Features"
 msgstr ""
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "알림창을 어떻게 보여줄까요?"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "\"그만\" 버튼 대신 \"중지\" 버튼을 보여줍니다."
 
 msgctxt "#30507"
@@ -149,7 +149,7 @@ msgid "Features"
 msgstr ""
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "아무 것도 선택하지 않으면"
 
 msgctxt "#30605"
@@ -157,15 +157,15 @@ msgid "Include already watched episodes"
 msgstr "본 것들도 포함합니다."
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "몇 개의 에피소드를 보고나서 \"계속 볼 것인지\" 물어볼까요?"
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "알림창을 보여줄 시간(초)"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "상영시간에 따라 다르게"
 
 msgctxt "#30613"
@@ -193,7 +193,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "[COLOR gray]60분[/COLOR]이 넘어가는 상당히 긴 것"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr ""
 
 msgctxt "#30627"
@@ -201,7 +201,7 @@ msgid "Intros and recaps"
 msgstr ""
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr ""
 
 msgctxt "#30631"

@@ -12,7 +12,7 @@ This Kodi add-on shows a Netflix-style notification for watching the next episod
 A lot of existing add-ons already integrate with this service out-of-the-box.
 
 ## Settings
-The add-on has various settings to fine-tune the experience, however the default settings should be fine for most.
+The add-on has various settings to fine-tune the experience, however the default settings should be fine for most. Each setting is explained in the help area at the bottom of Kodi's settings window.
 
   * Simple or fancy mode (defaults to fancy mode, but a more simple interface is possible)
   * Optional OK/Select access to playback controls alongside the next-episode popup. Press an arrow first to select Watch now or Close; press Up to return to playback-control focus. If Kodi hides the popup while controls are open, it is restored when the controls close. Normal episode-end advancement remains active.
@@ -23,6 +23,7 @@ The add-on has various settings to fine-tune the experience, however the default
   * With "Enable on playlists", videos outside the library (e.g. files started with "Play from here") get the popup for the next playlist item
   * Library episodes left early with Watch Now or the credits delay are marked as watched (enabled by default)
   * The number of episodes to play automatically before asking the user if they are still there (defaults to 3 episodes)
+  * Binge mode (off by default) turns on what a binge needs in one switch: intros and recaps are skipped, the next episode plays when nothing is selected, and playback moves on 10 seconds into the end credits (or after your own credits delay, if set). It overrides those settings while on and leaves them unchanged, so turning it off restores them. The "Are you still watching?" check still applies. Skipping and the credits timing need an add-on that marks those ranges (`skip_segments` and `notification_offset`); for other videos binge mode only plays the next episode at the end
 
 > NOTE: The add-on settings are found in the Kodi add-ons section, in the *Services* category.
 
@@ -31,6 +32,20 @@ Credits autoplay uses the provider's absolute `notification_offset`; it does not
 For [Addon Integration](https://github.com/im85288/service.upnext/wiki/Integration) and [Skinners](https://github.com/im85288/service.upnext/wiki/Skinners) see the [wiki](https://github.com/im85288/service.upnext/wiki)
 
 ## Releases
+
+### v1.4.1 (2026-11-24)
+- Move the settings to Kodi's current settings format: shorter labels, with an explanation of each setting in the help area, which was always empty before; French labels shortened to match. Reported by @casebtwo (@im85288)
+- Stop waiting as soon as Kodi shuts down while the popup is open, instead of Kodi waiting for the add-on (@im85288)
+- Translate the new settings help texts into French and Simplified Chinese (@casebtwo, @wabisabi926)
+
+### v1.4.0 (2026-11-15)
+- Redesign the default Up Next and Still Watching popups: the video is dimmed behind the show's logo, the next episode with its facts and plot, and its still with the countdown, above the episode now finishing (@im85288)
+- Add a Binge mode setting that skips intros and recaps, plays the next episode and moves on during the end credits, without changing those settings (@im85288)
+- Load the Hindi translation (its folder was named in_hi, which Kodi doesn't read) and fix Romanian and Traditional Chinese label formatting (@im85288)
+- Fix stopping playback on Kodi 22 leaving the stopped video's state behind (an error on every stop), reported by @disizleboss93 (@im85288)
+- Fix the next episode not playing when an add-on opened the current one outside the playlist (with Player.Open, as TMDb Helper does), reported by @disizleboss93 (@im85288)
+- Preview the popups in the developer options with a random episode from your library, since the old test art no longer loads (@im85288)
+- Update French translation (@sch-Caseb)
 
 ### v1.3.7 (2026-11-10)
 - Fix the service failing to start on Xbox (Kodi from the Microsoft Store), reported by @barlafuus83 (@im85288)

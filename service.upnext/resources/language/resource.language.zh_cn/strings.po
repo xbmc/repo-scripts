@@ -122,6 +122,10 @@ msgctxt "#30056"
 msgid "Continue watching in [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR]"
 msgstr "将在 [COLOR FFFF4081]$INFO[Window.Property(remaining_time)][/COLOR] 后继续观看"
 
+msgctxt "#30057"
+msgid "Now finishing"
+msgstr "即将播完"
+
 msgctxt "#30060"
 msgid "[B]UP NEXT DEMO MODE ENABLED[/B]"
 msgstr "[B]“下个播放”演示模式已开启[/B]"
@@ -141,11 +145,11 @@ msgid "Features"
 msgstr "功能"
 
 msgctxt "#30503"
-msgid "Set the display mode for the notifications"
+msgid "Popup style"
 msgstr "设置通知的显示模式"
 
 msgctxt "#30505"
-msgid "Show a \"Stop\" button instead of a \"Close\" button"
+msgid "Show Stop instead of Close"
 msgstr "显示“停止”按钮而不是“关闭”按钮"
 
 msgctxt "#30507"
@@ -153,7 +157,7 @@ msgid "Use OK/Select for playback controls"
 msgstr "确认/选择键可用于播放控制"
 
 msgctxt "#30508"
-msgid "Use arrows to seek; hold OK for Up Next buttons"
+msgid "Seek with the arrow keys"
 msgstr "方向键用于快进快退，长按确认键显示“下个播放”按钮"
 
 msgctxt "#30600"
@@ -165,7 +169,7 @@ msgid "Features"
 msgstr "功能"
 
 msgctxt "#30603"
-msgid "Default action when nothing selected"
+msgid "When the countdown ends"
 msgstr "未作选择时的默认动作"
 
 msgctxt "#30605"
@@ -173,15 +177,15 @@ msgid "Include already watched episodes"
 msgstr "包含已观看的剧集"
 
 msgctxt "#30607"
-msgid "Number of episodes before \"Still there?\" query"
+msgid "After this many episodes"
 msgstr "触发“还在看吗？”询问前的连续播放集数"
 
 msgctxt "#30609"
-msgid "Duration in seconds for notification to be shown"
+msgid "Countdown length"
 msgstr "通知显示的持续时间（秒）"
 
 msgctxt "#30611"
-msgid "Customize autoplay duration by episode length"
+msgid "Vary by episode length"
 msgstr "按剧集长度自定义自动播放时长"
 
 msgctxt "#30613"
@@ -209,7 +213,7 @@ msgid "Very long episodes  [COLOR gray]> 60 mins[/COLOR]"
 msgstr "超长剧集  [COLOR gray]> 60 分钟[/COLOR]"
 
 msgctxt "#30625"
-msgid "Advance during credits after (seconds, 0 disables)"
+msgid "Move on during the credits after"
 msgstr "片尾播放多久后自动切下一集（单位：秒，填 0 关闭）"
 
 msgctxt "#30627"
@@ -217,7 +221,7 @@ msgid "Intros and recaps"
 msgstr "片头与前情提要"
 
 msgctxt "#30629"
-msgid "Show a Skip button when the add-on marks them"
+msgid "Show a Skip button"
 msgstr "插件标记到可跳过片段时显示跳过按钮"
 
 msgctxt "#30631"
@@ -229,11 +233,11 @@ msgid "Skip recaps automatically"
 msgstr "自动跳过前情提要"
 
 msgctxt "#30635"
-msgid "Ask if still watching after (minutes, 0 disables)"
+msgid "After this many minutes"
 msgstr "连续观看多久后询问是否还在看（单位：分钟，填 0 关闭）"
 
 msgctxt "#30637"
-msgid "Ask if still watching after bedtime"
+msgid "After bedtime"
 msgstr "在就寝时间后询问是否还在看"
 
 msgctxt "#30639"
@@ -245,16 +249,28 @@ msgid "Bedtime minute"
 msgstr "就寝分钟"
 
 msgctxt "#30643"
-msgid "Mark an episode as watched when moving to the next one early"
+msgid "Mark watched when moving on early"
 msgstr "提前切换到下一集时将当前集标记为已观看"
 
 msgctxt "#30645"
-msgid "Continue a partly watched next episode where it was left"
+msgid "Resume the next episode"
 msgstr "从上次中断的位置继续播放未看完的下一集"
 
 msgctxt "#30647"
-msgid "Pause the video while an add-on starts the next episode"
+msgid "Pause until the next episode starts"
 msgstr "插件启动下一集时暂停当前视频"
+
+msgctxt "#30649"
+msgid "Binge mode"
+msgstr "连续观看模式"
+
+msgctxt "#30651"
+msgid "Skips intros and recaps, plays the next episode and moves on during the end credits, whatever those settings say."
+msgstr "跳过片头和前情提要，播放下一集，并在片尾字幕期间提前切换，无论相应设置如何。"
+
+msgctxt "#30653"
+msgid "Are you still watching?"
+msgstr "你还在看吗？"
 
 msgctxt "#30700"
 msgid "Expert"
@@ -299,3 +315,99 @@ msgstr "显示“还在看吗？（简约）”弹窗…"
 msgctxt "#30813"
 msgid "Test Skip button"
 msgstr "测试跳过按钮"
+
+msgctxt "#30900"
+msgid "Fancy shows the next episode over the dimmed video: the show's logo, the episode's details, plot and still. Simple shows a compact popup."
+msgstr "华丽模式在变暗的视频画面上显示下一集：剧集标志、剧集详情、剧情简介和剧照。简约模式则显示一个紧凑的弹窗。"
+
+msgctxt "#30901"
+msgid "The popup's second button stops playback instead of only closing the popup. Back always closes the popup and keeps the episode playing."
+msgstr "弹窗上的第二个按钮会停止播放，而不只是关闭弹窗。返回键始终关闭弹窗，并让当前剧集继续播放。"
+
+msgctxt "#30902"
+msgid "While the popup is open, OK/Select opens Kodi's playback controls. Press a direction key to reach the popup's buttons."
+msgstr "弹窗打开时，按 OK/选择键可打开 Kodi 的播放控制界面。按方向键可切换到弹窗的按钮。"
+
+msgctxt "#30903"
+msgid "While the popup is open, the arrow keys seek in the episode. The Context Menu action (a long press of OK on some remotes) switches between seeking and the popup's buttons."
+msgstr "弹窗打开时，方向键可在本集中快进快退。上下文菜单操作（某些遥控器上长按 OK 键）可在快进快退与弹窗按钮之间切换。"
+
+msgctxt "#30904"
+msgid "What happens when the countdown runs out and no button was pressed."
+msgstr "倒计时结束且未按任何按钮时执行的操作。"
+
+msgctxt "#30905"
+msgid "Also show the popup when playing a playlist, for its next item, including videos that aren't in the library."
+msgstr "播放播放列表时也显示弹窗，提示列表中的下一项，包括不在媒体库中的视频。"
+
+msgctxt "#30906"
+msgid "Offer the next episode even when it is already watched. Off: watched episodes are skipped."
+msgstr "即使下一集已观看过也提示播放。关闭时：跳过已观看的剧集。"
+
+msgctxt "#30907"
+msgid "When you move on before the end of a library episode, with Watch now or during the credits, mark it as watched."
+msgstr "在媒体库剧集结束前通过“立即播放”或在片尾字幕期间提前切换时，将其标记为已观看。"
+
+msgctxt "#30908"
+msgid "When the next library episode is partly watched, continue it from where you stopped instead of from the beginning."
+msgstr "当下一集媒体库剧集只观看了一部分时，从上次停止的位置继续播放，而不是从头开始。"
+
+msgctxt "#30909"
+msgid "Pause the current video while an add-on starts the next episode, so a slow source search doesn't play over the end of the episode."
+msgstr "插件启动下一集时暂停当前视频，避免片源搜索缓慢导致播放越过本集结尾。"
+
+msgctxt "#30910"
+msgid "Ask after this many episodes in a row without a button pressed. Watch now and \"Continue watching\" start the count again. 0 never asks."
+msgstr "连续播放这么多集且未按任何按钮后询问。“立即播放”和“继续观看”会重新开始计数。0 表示从不询问。"
+
+msgctxt "#30911"
+msgid "Ask after this many minutes of watching without a button pressed. 0 never asks."
+msgstr "连续观看这么多分钟且未按任何按钮后询问。0 表示从不询问。"
+
+msgctxt "#30912"
+msgid "Ask once a night, at an episode change between bedtime and 6:00 in the morning."
+msgstr "每晚询问一次，在就寝时间到次日早上 6:00 之间的剧集切换时进行。"
+
+msgctxt "#30913"
+msgid "The time from which Up Next asks if you are still watching."
+msgstr "“下个播放”开始询问你是否还在看的时间。"
+
+msgctxt "#30914"
+msgid "Off: one countdown length for all episodes. On: a length for each episode length."
+msgstr "关闭：所有剧集使用同一个倒计时时长。开启：按剧集长度分别设置时长。"
+
+msgctxt "#30915"
+msgid "How many seconds before the end of the episode the popup appears and starts counting down."
+msgstr "在剧集结束前多少秒显示弹窗并开始倒计时。"
+
+msgctxt "#30916"
+msgid "When the add-on gives the start of the end credits, move on to the next episode this many seconds into them. Only use it when those times match the video: moving on early can skip post-credits scenes. 0 waits for the end of the episode."
+msgstr "当插件提供片尾字幕开始时间时，进入片尾这么多秒后切换到下一集。仅当该时间与视频相符时使用：过早切换可能跳过片尾彩蛋。0 表示等待本集播放结束。"
+
+msgctxt "#30917"
+msgid "Show a Skip button during intros and recaps that the add-on marks."
+msgstr "在插件标记的片头和前情提要期间显示“跳过”按钮。"
+
+msgctxt "#30918"
+msgid "Skip marked intros without showing the button."
+msgstr "自动跳过已标记的片头，不显示按钮。"
+
+msgctxt "#30919"
+msgid "Skip marked recaps without showing the button."
+msgstr "自动跳过已标记的前情提要，不显示按钮。"
+
+msgctxt "#30920"
+msgid "Turn Up Next off without disabling the add-on."
+msgstr "关闭“下个播放”功能，但不禁用该插件。"
+
+msgctxt "#30921"
+msgid "How much Up Next writes to Kodi's log. Debug helps when reporting a problem."
+msgstr "“下个播放”写入 Kodi 日志的详细程度。报告问题时使用“调试”有帮助。"
+
+msgctxt "#30922"
+msgid "Jump to 15 seconds before the end of each episode, to see the popup without waiting."
+msgstr "跳转到每集结束前 15 秒，无需等待即可查看弹窗。"
+
+msgctxt "#30923"
+msgid "Show this window with an episode from your library, to see how it looks."
+msgstr "使用媒体库中的一集显示此窗口，以查看其外观。"
