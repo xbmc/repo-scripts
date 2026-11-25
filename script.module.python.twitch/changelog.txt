@@ -1,3 +1,11 @@
+3.0.4
+[fix] helix games: followed games sent a persisted query hash Twitch no longer accepts
+      (PersistedQueryNotFound); send the full query document instead
+
+3.0.3
+[add] usher: optional supported_codecs parameter (e.g. 'h265,h264') threaded through live/vod/clip
+      requests; omitted by default so existing behaviour is unchanged
+
 3.0.0
 [rem] removed support for Kodi versions pre-Nexus v20
 [rem] removed python 2 support
