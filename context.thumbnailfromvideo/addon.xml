@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.thumbnailfromvideo"
+       name="Thumbnail from video"
+       version="1.30.22"
+       provider-name="saturn76-source">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1"/>
+  </requires>
+  <extension point="kodi.context.item">
+    <menu id="kodi.core.main">
+      <item library="context.py">
+        <label>30100</label>
+        <visible>String.IsEqual(ListItem.DBType,musicvideo) | String.IsEqual(ListItem.DBType,episode) | [Window.IsVisible(videos) + String.IsEmpty(ListItem.DBType) + !ListItem.IsFolder + !String.IsEmpty(ListItem.FileNameAndPath) + !String.StartsWith(ListItem.FileNameAndPath,plugin://)]</visible>
+      </item>
+    </menu>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Pick any frame of a video as its thumbnail</summary>
+    <description lang="en_GB">Adds "Thumbnail from video" to the context menu of music videos and TV episodes in the library, and of video files in Videos &gt; Files. The video opens paused with a seek bar and buttons: move to any frame (down to single-frame steps), press "Make thumbnail", and it becomes the thumbnail. Black bars are removed automatically. For library items the image can be saved in Kodi's userdata or next to the video file; for a plain video file it is saved next to the video. The settings can also zip all thumbnail images of the open video's folder into that folder, and restore them from that ZIP.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <news>First release in the Kodi repository:
+- pick any frame (single-frame steps) of a music video, TV episode or plain video file as its thumbnail
+- black bars removed automatically, interlaced (e.g. MPEG-2) frames deinterlaced
+- reopens at the frame the current thumbnail was taken from
+- save as JPG or PNG, next to the video file (library items: or in userdata)
+- settings: back up / restore the thumbnails of a folder (ZIP), clear thumbnail caches</news>
+    <assets>
+      <icon>resources/icon-v3.png</icon>
+      <screenshot>resources/screenshot-v171-01.jpg</screenshot>
+      <screenshot>resources/screenshot-v171-02.jpg</screenshot>
+      <screenshot>resources/screenshot-v171-03.jpg</screenshot>
+    </assets>
+  </extension>
+</addon>

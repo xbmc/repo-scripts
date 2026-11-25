@@ -1,0 +1,258 @@
+# Kodi Media Center language file
+# Addon Name: Thumbnail from video
+# Addon id: context.thumbnailfromvideo
+msgid ""
+msgstr ""
+"Project-Id-Version: context.thumbnailfromvideo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Save captured image to"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Kodi userdata folder"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Next to the video file"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Capture width (pixels)"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Start position (% of video)"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Remove black bars from captured frame"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Image format next to the video file"
+msgstr ""
+
+msgctxt "#30010"
+msgid "PNG (lossless, larger files)"
+msgstr ""
+
+msgctxt "#30011"
+msgid "JPG (smaller files)"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Version 1.30.22"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Author: saturn76-source"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Backup / cache"
+msgstr ""
+
+msgctxt "#30034"
+msgid "Clear thumbnail cache (Videos > Files only)"
+msgstr ""
+
+msgctxt "#30035"
+msgid "Clear Kodi's cached copies of the thumbnails of plain video files (Videos > Files)?[CR]Kodi then reads those thumbnail files again, e.g. after you replaced a -thumb.jpg yourself. Library thumbnails and the image files are not touched."
+msgstr ""
+
+msgctxt "#30062"
+msgid "Clear thumbnail cache (Music videos only)"
+msgstr ""
+
+msgctxt "#30063"
+msgid "Clear Kodi's cached thumbnails of the music videos in the library?[CR]Each music video then shows the -thumb image next to its video file. If there is none, Kodi shows its default picture. Web images, movies, TV episodes and the image files are not touched."
+msgstr ""
+
+msgctxt "#30065"
+msgid "Clear thumbnail cache (TV episodes only)"
+msgstr ""
+
+msgctxt "#30066"
+msgid "Clear Kodi's cached thumbnails of the TV episodes in the library?[CR]Each episode then shows the -thumb image next to its video file. If there is none, Kodi shows its default picture. Web images, music videos, movies and the image files are not touched."
+msgstr ""
+
+msgctxt "#30067"
+msgid "%d TV episodes now use the -thumb image next to the video, %d have no thumbnail (Kodi shows its default)."
+msgstr ""
+
+msgctxt "#30068"
+msgid "Clear thumbnail cache (open video only)"
+msgstr ""
+
+msgctxt "#30069"
+msgid "Clear Kodi's cached thumbnail of the open video?[CR][B]%s[/B][CR]It then shows the -thumb image next to the video file. If there is none, Kodi shows its default picture."
+msgstr ""
+
+msgctxt "#30070"
+msgid "No video is open.[CR]Open the video with \"Thumbnail from video\", then use the Settings button in the picker."
+msgstr ""
+
+msgctxt "#30072"
+msgid "It now uses the -thumb image next to the video."
+msgstr ""
+
+msgctxt "#30073"
+msgid "It has no thumbnail now (Kodi shows its default)."
+msgstr ""
+
+msgctxt "#30064"
+msgid "%d music videos now use the -thumb image next to the video, %d have no thumbnail (Kodi shows its default)."
+msgstr ""
+
+msgctxt "#30036"
+msgid "Clearing thumbnail cache..."
+msgstr ""
+
+msgctxt "#30037"
+msgid "Cleared %d cached thumbnails.[CR]They are loaded again from the image files when shown."
+msgstr ""
+
+msgctxt "#30040"
+msgid "Back up the thumbnails of the open video's folder (ZIP)"
+msgstr ""
+
+msgctxt "#30041"
+msgid "No thumbnail images (-thumb) in this folder"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Saved %d thumbnails to %s"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Could not create the ZIP file in this folder"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Thumbnails backup"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Zipping thumbnails..."
+msgstr ""
+
+msgctxt "#30046"
+msgid "Choose the video folder to back up"
+msgstr ""
+
+msgctxt "#30048"
+msgid "Start backup"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Back up thumbnails of folder:  %s"
+msgstr ""
+
+msgctxt "#30049"
+msgid "Saves %d thumbnails to:  [B]%s[/B]"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Restores %d thumbnails from:  [B]%s[/B]   (replaces %d existing)"
+msgstr ""
+
+msgctxt "#30052"
+msgid "No thumbnail backup ZIP in this folder"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Choose the backup to restore"
+msgstr ""
+
+msgctxt "#30054"
+msgid "This ZIP has no thumbnail images"
+msgstr ""
+
+msgctxt "#30055"
+msgid "Restore thumbnails to folder:  %s"
+msgstr ""
+
+msgctxt "#30056"
+msgid "Start restore"
+msgstr ""
+
+msgctxt "#30057"
+msgid "Restored %d thumbnails"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Could not restore the thumbnails"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Restored %d of %d thumbnails (see the Kodi log)"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Restoring thumbnails..."
+msgstr ""
+
+msgctxt "#30061"
+msgid "Restore the thumbnails of the open video's folder (ZIP)"
+msgstr ""
+
+msgctxt "#30075"
+msgid "Could not save the thumbnail next to the video file (is the folder read-only?)"
+msgstr ""
+
+msgctxt "#30076"
+msgid "For music videos and TV episodes in the library. A plain video file's thumbnail (Videos > Files) is always saved next to the video, where Kodi finds it."
+msgstr ""
+
+msgctxt "#30100"
+msgid "Thumbnail from video"
+msgstr ""
+
+msgctxt "#30111"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30112"
+msgid "Play / Pause"
+msgstr ""
+
+msgctxt "#30113"
+msgid "0.1 s"
+msgstr ""
+
+msgctxt "#30114"
+msgid "Make thumbnail"
+msgstr ""
+
+msgctxt "#30117"
+msgid "Choose thumbnail:"
+msgstr ""
+
+msgctxt "#30118"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30300"
+msgid "Could not find this video in the library"
+msgstr ""
+
+msgctxt "#30301"
+msgid "Playback did not start"
+msgstr ""
+
+msgctxt "#30302"
+msgid "Frame capture failed"
+msgstr ""
+
+msgctxt "#30304"
+msgid "Could not update the library"
+msgstr ""
