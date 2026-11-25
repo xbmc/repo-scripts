@@ -14,6 +14,7 @@ import xbmcplugin
 from . import kodiutil as K
 from . import channels as C
 from . import scheduler
+from . import library
 from .kodiutil import _
 
 BASE = "plugin://script.cablebox42/"
@@ -66,13 +67,13 @@ def run(argv):
             b = sched.block_at(now)
             nb = sched.next_block(now)
             label = "%d  %s" % (ch["number"], ch["name"])
-            on_now = b["t"] if b else ""
+            on_now = library.on_air(b["t"]) if b else ""
             li = xbmcgui.ListItem(label, on_now)
             plot = []
             if b:
-                plot.append(_("Now: %s  (until %s)") % (b["t"], _clock(b["e"])))
+                plot.append(_("Now: %s  (until %s)") % (library.on_air(b["t"]), _clock(b["e"])))
             if nb:
-                plot.append(_("Next: %s  %s") % (_clock(nb["s"]), nb["t"]))
+                plot.append(_("Next: %s  %s") % (_clock(nb["s"]), library.on_air(nb["t"])))
             try:
                 tag = li.getVideoInfoTag()
                 tag.setTitle(label)

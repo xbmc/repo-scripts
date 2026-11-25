@@ -65,7 +65,7 @@ def score(src, title, is_movie, meta, n_titles):
         return 80
     if t == "playlist":
         return 75
-    if t == "network":
+    if t in ("network", "origtitle"):
         return 74                             # the network it aired on beats its genre
     if t == "studio":
         return 70
@@ -105,6 +105,10 @@ def compute(channels, md=None, explain=False):
                    key=lambda c: c["number"])
     meta = _metadata()
     cands = {}          # title -> {cid: score}
+    # (title, cid): the channel matches the title's first genre or its network, so
+    # topping up never takes it away.  Only on channels marked "home_guard" (made by
+    # Build my lineup from now on), so older lineups keep their homes until rebuilt
+    protected = set()
     movies = set()
     explicit = {}
     for ch in progs:
@@ -122,6 +126,8 @@ def compute(channels, md=None, explain=False):
                 if is_movie:
                     movies.add(tl)
                 sc = score(src, tl, is_movie, meta, len(titles))
+                if ch.get("home_guard") and _core_match(src, meta.get(tl, [])):
+                    protected.add((tl, cid))
                 if sc >= EXPLICIT:
                     explicit.setdefault(cid, set()).add(tl)
                 cur = cands.setdefault(tl, {})
@@ -133,7 +139,7 @@ def compute(channels, md=None, explain=False):
     for tl, cs in cands.items():
         home[tl] = max(cs, key=lambda cid: (cs[cid], -order[cid]))
     first = dict(home) if explain else None
-    _balance(home, cands, order, movies, md)
+    _balance(home, cands, order, movies, md, protected)
     allowed = {}
     for tl, cid in home.items():
         allowed.setdefault(cid, set()).add(tl)
@@ -163,9 +169,21 @@ def compute(channels, md=None, explain=False):
     return out
 
 
-def _balance(home, cands, order, movies, md):
+def _core_match(src, genres):
+    """Does this source match the title's network or its first genre?  (A
+    station's studios count as its network: Disney for The Dexter Channel.)"""
+    t = src.get("type")
+    if t in ("network", "origtitle") or (t == "studio" and (src.get("station_extra") or src.get("core"))):
+        return True
+    g = src.get("value") if t == "tvgenre" else src.get("genre") if t == "movies" else None
+    return bool(g and genres and genres[0] == g.lower())
+
+
+def _balance(home, cands, order, movies, md, protected=()):
     """Top up channels that would be left with (almost) nothing, taking the
-    titles whose current home loses the least."""
+    titles whose current home loses the least.  A title never leaves a home
+    that matches its first genre or its network (the three Star Treks stay on
+    the sci-fi channel instead of filling the action channel)."""
     for _round in range(200):
         counts = {}
         for tl, cid in home.items():
@@ -181,7 +199,7 @@ def _balance(home, cands, order, movies, md):
             return
         best = None
         for tl, cs in cands.items():
-            if starving not in cs or home[tl] == starving:
+            if starving not in cs or home[tl] == starving or (tl, home[tl]) in protected:
                 continue
             donor = home[tl]
             if counts.get(donor, 0) <= MIN_SHOWS:

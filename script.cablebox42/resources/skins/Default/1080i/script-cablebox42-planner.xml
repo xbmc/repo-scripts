@@ -27,85 +27,176 @@
             <left>170</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
             <label>$INFO[Window.Property(D0)]</label>
-            <visible>!String.IsEqual(Window.Property(col),0)</visible>
+            <visible>!String.IsEqual(Window.Property(col),0) + String.IsEmpty(Window.Property(S0))</visible>
         </control>
         <control type="label">
             <left>170</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
             <label>[B]$INFO[Window.Property(D0)][/B]</label>
-            <visible>String.IsEqual(Window.Property(col),0)</visible>
+            <visible>String.IsEqual(Window.Property(col),0) + String.IsEmpty(Window.Property(S0))</visible>
+        </control>
+        <control type="label">
+            <left>170</left><top>162</top><width>241</width><height>36</height>
+            <align>center</align><aligny>center</aligny><font>font13</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(S0)]</label>
+            <visible>!String.IsEmpty(Window.Property(S0))</visible>
+        </control>
+        <control type="label">
+            <left>170</left><top>197</top><width>241</width><height>30</height>
+            <align>center</align><aligny>center</aligny><font>font10</font><textcolor>FFB8C4E0</textcolor>
+            <scroll>true</scroll>
+            <label>$INFO[Window.Property(N0)]</label>
+            <visible>!String.IsEmpty(Window.Property(S0))</visible>
         </control>
         <control type="label">
             <left>417</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
             <label>$INFO[Window.Property(D1)]</label>
-            <visible>!String.IsEqual(Window.Property(col),1)</visible>
+            <visible>!String.IsEqual(Window.Property(col),1) + String.IsEmpty(Window.Property(S1))</visible>
         </control>
         <control type="label">
             <left>417</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
             <label>[B]$INFO[Window.Property(D1)][/B]</label>
-            <visible>String.IsEqual(Window.Property(col),1)</visible>
+            <visible>String.IsEqual(Window.Property(col),1) + String.IsEmpty(Window.Property(S1))</visible>
+        </control>
+        <control type="label">
+            <left>417</left><top>162</top><width>241</width><height>36</height>
+            <align>center</align><aligny>center</aligny><font>font13</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(S1)]</label>
+            <visible>!String.IsEmpty(Window.Property(S1))</visible>
+        </control>
+        <control type="label">
+            <left>417</left><top>197</top><width>241</width><height>30</height>
+            <align>center</align><aligny>center</aligny><font>font10</font><textcolor>FFB8C4E0</textcolor>
+            <scroll>true</scroll>
+            <label>$INFO[Window.Property(N1)]</label>
+            <visible>!String.IsEmpty(Window.Property(S1))</visible>
         </control>
         <control type="label">
             <left>664</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
             <label>$INFO[Window.Property(D2)]</label>
-            <visible>!String.IsEqual(Window.Property(col),2)</visible>
+            <visible>!String.IsEqual(Window.Property(col),2) + String.IsEmpty(Window.Property(S2))</visible>
         </control>
         <control type="label">
             <left>664</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
             <label>[B]$INFO[Window.Property(D2)][/B]</label>
-            <visible>String.IsEqual(Window.Property(col),2)</visible>
+            <visible>String.IsEqual(Window.Property(col),2) + String.IsEmpty(Window.Property(S2))</visible>
+        </control>
+        <control type="label">
+            <left>664</left><top>162</top><width>241</width><height>36</height>
+            <align>center</align><aligny>center</aligny><font>font13</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(S2)]</label>
+            <visible>!String.IsEmpty(Window.Property(S2))</visible>
+        </control>
+        <control type="label">
+            <left>664</left><top>197</top><width>241</width><height>30</height>
+            <align>center</align><aligny>center</aligny><font>font10</font><textcolor>FFB8C4E0</textcolor>
+            <scroll>true</scroll>
+            <label>$INFO[Window.Property(N2)]</label>
+            <visible>!String.IsEmpty(Window.Property(S2))</visible>
         </control>
         <control type="label">
             <left>911</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
             <label>$INFO[Window.Property(D3)]</label>
-            <visible>!String.IsEqual(Window.Property(col),3)</visible>
+            <visible>!String.IsEqual(Window.Property(col),3) + String.IsEmpty(Window.Property(S3))</visible>
         </control>
         <control type="label">
             <left>911</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
             <label>[B]$INFO[Window.Property(D3)][/B]</label>
-            <visible>String.IsEqual(Window.Property(col),3)</visible>
+            <visible>String.IsEqual(Window.Property(col),3) + String.IsEmpty(Window.Property(S3))</visible>
+        </control>
+        <control type="label">
+            <left>911</left><top>162</top><width>241</width><height>36</height>
+            <align>center</align><aligny>center</aligny><font>font13</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(S3)]</label>
+            <visible>!String.IsEmpty(Window.Property(S3))</visible>
+        </control>
+        <control type="label">
+            <left>911</left><top>197</top><width>241</width><height>30</height>
+            <align>center</align><aligny>center</aligny><font>font10</font><textcolor>FFB8C4E0</textcolor>
+            <scroll>true</scroll>
+            <label>$INFO[Window.Property(N3)]</label>
+            <visible>!String.IsEmpty(Window.Property(S3))</visible>
         </control>
         <control type="label">
             <left>1158</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
             <label>$INFO[Window.Property(D4)]</label>
-            <visible>!String.IsEqual(Window.Property(col),4)</visible>
+            <visible>!String.IsEqual(Window.Property(col),4) + String.IsEmpty(Window.Property(S4))</visible>
         </control>
         <control type="label">
             <left>1158</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
             <label>[B]$INFO[Window.Property(D4)][/B]</label>
-            <visible>String.IsEqual(Window.Property(col),4)</visible>
+            <visible>String.IsEqual(Window.Property(col),4) + String.IsEmpty(Window.Property(S4))</visible>
+        </control>
+        <control type="label">
+            <left>1158</left><top>162</top><width>241</width><height>36</height>
+            <align>center</align><aligny>center</aligny><font>font13</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(S4)]</label>
+            <visible>!String.IsEmpty(Window.Property(S4))</visible>
+        </control>
+        <control type="label">
+            <left>1158</left><top>197</top><width>241</width><height>30</height>
+            <align>center</align><aligny>center</aligny><font>font10</font><textcolor>FFB8C4E0</textcolor>
+            <scroll>true</scroll>
+            <label>$INFO[Window.Property(N4)]</label>
+            <visible>!String.IsEmpty(Window.Property(S4))</visible>
         </control>
         <control type="label">
             <left>1405</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
             <label>$INFO[Window.Property(D5)]</label>
-            <visible>!String.IsEqual(Window.Property(col),5)</visible>
+            <visible>!String.IsEqual(Window.Property(col),5) + String.IsEmpty(Window.Property(S5))</visible>
         </control>
         <control type="label">
             <left>1405</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
             <label>[B]$INFO[Window.Property(D5)][/B]</label>
-            <visible>String.IsEqual(Window.Property(col),5)</visible>
+            <visible>String.IsEqual(Window.Property(col),5) + String.IsEmpty(Window.Property(S5))</visible>
+        </control>
+        <control type="label">
+            <left>1405</left><top>162</top><width>241</width><height>36</height>
+            <align>center</align><aligny>center</aligny><font>font13</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(S5)]</label>
+            <visible>!String.IsEmpty(Window.Property(S5))</visible>
+        </control>
+        <control type="label">
+            <left>1405</left><top>197</top><width>241</width><height>30</height>
+            <align>center</align><aligny>center</aligny><font>font10</font><textcolor>FFB8C4E0</textcolor>
+            <scroll>true</scroll>
+            <label>$INFO[Window.Property(N5)]</label>
+            <visible>!String.IsEmpty(Window.Property(S5))</visible>
         </control>
         <control type="label">
             <left>1652</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFB8C4E0</textcolor>
             <label>$INFO[Window.Property(D6)]</label>
-            <visible>!String.IsEqual(Window.Property(col),6)</visible>
+            <visible>!String.IsEqual(Window.Property(col),6) + String.IsEmpty(Window.Property(S6))</visible>
         </control>
         <control type="label">
             <left>1652</left><top>172</top><width>241</width><height>50</height>
             <align>center</align><font>font27</font><textcolor>FFFFD24A</textcolor>
             <label>[B]$INFO[Window.Property(D6)][/B]</label>
-            <visible>String.IsEqual(Window.Property(col),6)</visible>
+            <visible>String.IsEqual(Window.Property(col),6) + String.IsEmpty(Window.Property(S6))</visible>
+        </control>
+        <control type="label">
+            <left>1652</left><top>162</top><width>241</width><height>36</height>
+            <align>center</align><aligny>center</aligny><font>font13</font><textcolor>FFB8C4E0</textcolor>
+            <label>$INFO[Window.Property(S6)]</label>
+            <visible>!String.IsEmpty(Window.Property(S6))</visible>
+        </control>
+        <control type="label">
+            <left>1652</left><top>197</top><width>241</width><height>30</height>
+            <align>center</align><aligny>center</aligny><font>font10</font><textcolor>FFB8C4E0</textcolor>
+            <scroll>true</scroll>
+            <label>$INFO[Window.Property(N6)]</label>
+            <visible>!String.IsEmpty(Window.Property(S6))</visible>
         </control>
         <control type="label">
             <left>40</left><top>232</top><width>114</width><height>54</height>

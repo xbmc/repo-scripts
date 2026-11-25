@@ -1,0 +1,15 @@
+Retro-ad lettering (CableBox 42)
+
+The pictures of letters in this folder (sb, sbi, sr, si, fb, fi) are renderings of
+the DejaVu fonts (DejaVu Sans Condensed Bold, Bold Oblique, Book, Oblique;
+DejaVu Serif Bold, Italic), made by tools/retro-ads/make_glyphs.py in the
+CableBox 42 repository. Kodi 21 can't load fonts from a script add-on, so the
+retro-ad cards are lettered with these pictures.
+
+DejaVu fonts: Bitstream Vera Fonts Copyright (c) 2003 by Bitstream, Inc.; DejaVu
+changes are in the public domain. License: https://dejavu-fonts.github.io/License.html
+
+The backgrounds (resources/media/ads) and jingles (resources/media/jingles) were
+drawn and synthesized from scratch by tools/retro-ads/make_bg.py and
+make_jingle.py: no photos, samples or outside art. They are released under the
+Mozilla Public License 2.0 like the rest of CableBox 42.

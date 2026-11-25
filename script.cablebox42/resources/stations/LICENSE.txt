@@ -11,3 +11,13 @@ https://creativecommons.org/publicdomain/zero/1.0/
 
 You may copy, modify and use them for any purpose without asking. The stations are
 fictional; any resemblance to real channels is not intended.
+
+BACKLOT (backlot.png, the full logo, and backlot_bug.png, the corner bug) is
+original artwork made with Gemini, Google's AI image generator, for CableBox 42.
+It is dedicated to the public domain under CC0 1.0 Universal on the same terms as
+the logos above.
+
+Red Thread TV (red_thread_tv.png, the full logo, and red_thread_tv_bug.png, the
+corner bug) is original artwork made with Gemini, Google's AI image generator, on
+2026-11-08 for CableBox 42. It is dedicated to the public domain under CC0 1.0
+Universal on the same terms as the logos above.

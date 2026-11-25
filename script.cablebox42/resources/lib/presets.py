@@ -19,7 +19,7 @@ from .kodiutil import _
 PRIME_START, PRIME_END = "20:00", "23:00"
 OFF_START, OFF_END = "00:00", "05:00"
 TV_TYPES = ("network",)
-ALL_PROGRAM = ("network", "movies", "loop")
+ALL_PROGRAM = ("network", "movies", "loop", "extras", "musicvideos")     # overnight sign-off
 
 
 def _m(hhmm):
@@ -33,11 +33,22 @@ def _hhmm(m):
 
 
 # ------------------------------------------------------------------ overnight
-def set_overnight(chans, start=OFF_START, end=OFF_END):
+def set_overnight(chans, start=OFF_START, end=OFF_END, only_empty=False):
+    """Overnight sign-off on the program channels.  only_empty: channels that
+    already have off-air hours keep them (the viewer's own are never replaced
+    unasked).  Returns how many channels were changed."""
+    n = 0
     for c in chans:
-        if c.get("type") in ALL_PROGRAM:
+        if c.get("type") in ALL_PROGRAM and not (only_empty and c.get("offair")):
             c["offair"] = [{"start": start, "end": end, "days": "all"}]
             c.setdefault("offair_style", "standby")
+            n += 1
+    return n
+
+
+def with_hours(chans):
+    """Program channels that have off-air hours now."""
+    return [c for c in chans if c.get("type") in ALL_PROGRAM and c.get("offair")]
 
 
 def clear_overnight(chans):

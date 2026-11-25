@@ -9,6 +9,96 @@
 <window>
     <defaultcontrol>9000</defaultcontrol>
     <controls>
+        <!-- ============ TV rating box at the start of a programme (tv.rating_tick): 1997 style,
+             top left; top right when the logo bug is in the top-left corner ============ -->
+        <control type="group">
+            <left>96</left><top>54</top><width>212</width><height>124</height>
+            <visible>String.IsEqual(Window.Property(rating),1) + !String.IsEqual(Window.Property(static),1) + !String.IsEqual(Window.Property(osd),1) + !String.IsEqual(Window.Property(bug_corner),tl)</visible>
+            <animation effect="fade" start="0" end="100" time="300">Visible</animation>
+            <animation effect="fade" start="100" end="0" time="300">Hidden</animation>
+            <control type="group">
+                <left>0</left><top>0</top><width>100</width><height>124</height>
+                <control type="image">
+                    <left>0</left><top>0</top><width>100</width><height>124</height>
+                    <texture colordiffuse="FFF2F2F2">white.png</texture>
+                </control>
+                <control type="image">
+                    <left>4</left><top>4</top><width>92</width><height>116</height>
+                    <texture colordiffuse="F0000000">white.png</texture>
+                </control>
+                <control type="label">
+                    <left>4</left><top>6</top><width>92</width><height>40</height>
+                    <font>font27</font><textcolor>FFFFFFFF</textcolor><align>center</align><aligny>center</aligny>
+                    <label>TV</label>
+                </control>
+                <control type="label">
+                    <left>4</left><top>46</top><width>92</width><height>70</height>
+                    <font>font45</font><textcolor>FFFFFFFF</textcolor><align>center</align><aligny>center</aligny>
+                    <label>$INFO[Window.Property(rating_code)]</label>
+                </control>
+            </control>
+            <control type="group">
+                <left>112</left><top>0</top><width>100</width><height>124</height>
+                <visible>String.IsEqual(Window.Property(now_cc),1)</visible>
+                <control type="image">
+                    <left>0</left><top>0</top><width>100</width><height>124</height>
+                    <texture colordiffuse="FFF2F2F2">white.png</texture>
+                </control>
+                <control type="image">
+                    <left>4</left><top>4</top><width>92</width><height>116</height>
+                    <texture colordiffuse="F0000000">white.png</texture>
+                </control>
+                <control type="label">
+                    <left>4</left><top>4</top><width>92</width><height>116</height>
+                    <font>font45</font><textcolor>FFFFFFFF</textcolor><align>center</align><aligny>center</aligny>
+                    <label>CC</label>
+                </control>
+            </control>
+        </control>
+        <control type="group">
+            <left>1612</left><top>54</top><width>212</width><height>124</height>
+            <visible>String.IsEqual(Window.Property(rating),1) + !String.IsEqual(Window.Property(static),1) + !String.IsEqual(Window.Property(osd),1) + String.IsEqual(Window.Property(bug_corner),tl) + !String.IsEqual(Window.Property(osd),1)</visible>
+            <animation effect="fade" start="0" end="100" time="300">Visible</animation>
+            <animation effect="fade" start="100" end="0" time="300">Hidden</animation>
+            <control type="group">
+                <left>0</left><top>0</top><width>100</width><height>124</height>
+                <control type="image">
+                    <left>0</left><top>0</top><width>100</width><height>124</height>
+                    <texture colordiffuse="FFF2F2F2">white.png</texture>
+                </control>
+                <control type="image">
+                    <left>4</left><top>4</top><width>92</width><height>116</height>
+                    <texture colordiffuse="F0000000">white.png</texture>
+                </control>
+                <control type="label">
+                    <left>4</left><top>6</top><width>92</width><height>40</height>
+                    <font>font27</font><textcolor>FFFFFFFF</textcolor><align>center</align><aligny>center</aligny>
+                    <label>TV</label>
+                </control>
+                <control type="label">
+                    <left>4</left><top>46</top><width>92</width><height>70</height>
+                    <font>font45</font><textcolor>FFFFFFFF</textcolor><align>center</align><aligny>center</aligny>
+                    <label>$INFO[Window.Property(rating_code)]</label>
+                </control>
+            </control>
+            <control type="group">
+                <left>112</left><top>0</top><width>100</width><height>124</height>
+                <visible>String.IsEqual(Window.Property(now_cc),1)</visible>
+                <control type="image">
+                    <left>0</left><top>0</top><width>100</width><height>124</height>
+                    <texture colordiffuse="FFF2F2F2">white.png</texture>
+                </control>
+                <control type="image">
+                    <left>4</left><top>4</top><width>92</width><height>116</height>
+                    <texture colordiffuse="F0000000">white.png</texture>
+                </control>
+                <control type="label">
+                    <left>4</left><top>4</top><width>92</width><height>116</height>
+                    <font>font45</font><textcolor>FFFFFFFF</textcolor><align>center</align><aligny>center</aligny>
+                    <label>CC</label>
+                </control>
+            </control>
+        </control>
         <!-- ============ Station logo "bug" (Settings > Viewing): during programmes only ============ -->
         <control type="group" id="350">
             <visible>String.IsEqual(Window.Property(bug),1) + !String.IsEmpty(Window.Property(bug_logo)) + !String.IsEqual(Window.Property(banner),1) + !String.IsEqual(Window.Property(osd),1) + !String.IsEqual(Window.Property(static),1)</visible>
@@ -61,6 +151,49 @@
             <randomize>true</randomize>
             <aspectratio>stretch</aspectratio>
             <visible>String.IsEqual(Window.Property(static),1)</visible>
+        </control>
+
+        <!-- ============ Boombox video caption: the classic music-channel lower third ============
+             Artist, "title", album, label, year - lines without information are hidden and
+             the rest close up (grouplist).  Plain white with a soft shadow, inside the 4:3
+             safe area (x 312-1608).  Set by tv.caption_tick. -->
+        <control type="grouplist" id="460">
+            <left>330</left><top>726</top><width>1180</width><height>240</height>
+            <orientation>vertical</orientation><itemgap>0</itemgap><usecontrolcoords>false</usecontrolcoords>
+            <align>right</align>  <!-- on a vertical grouplist: the lines sit on the bottom edge -->
+            <visible>String.IsEqual(Window.Property(mvcap),1) + !String.IsEqual(Window.Property(banner),1) + !String.IsEqual(Window.Property(static),1)</visible>
+            <animation effect="fade" start="0" end="100" time="400">Visible</animation>
+            <animation effect="fade" start="100" end="0" time="400">Hidden</animation>
+            <control type="label">
+                <width>1180</width><height>52</height>
+                <font>font37</font><textcolor>FFFFFFFF</textcolor><shadowcolor>B0000000</shadowcolor>
+                <label>[B]$INFO[Window.Property(mvc_artist)][/B]</label>
+                <visible>!String.IsEmpty(Window.Property(mvc_artist))</visible>
+            </control>
+            <control type="label">
+                <width>1180</width><height>50</height>
+                <font>font37</font><textcolor>FFFFFFFF</textcolor><shadowcolor>B0000000</shadowcolor>
+                <label>$INFO[Window.Property(mvc_title)]</label>
+                <visible>!String.IsEmpty(Window.Property(mvc_title))</visible>
+            </control>
+            <control type="label">
+                <width>1180</width><height>44</height>
+                <font>font30_title</font><textcolor>FFFFFFFF</textcolor><shadowcolor>B0000000</shadowcolor>
+                <label>[I]$INFO[Window.Property(mvc_album)][/I]</label>
+                <visible>!String.IsEmpty(Window.Property(mvc_album))</visible>
+            </control>
+            <control type="label">
+                <width>1180</width><height>40</height>
+                <font>font27</font><textcolor>FFFFFFFF</textcolor><shadowcolor>B0000000</shadowcolor>
+                <label>$INFO[Window.Property(mvc_label)]</label>
+                <visible>!String.IsEmpty(Window.Property(mvc_label))</visible>
+            </control>
+            <control type="label">
+                <width>1180</width><height>40</height>
+                <font>font27</font><textcolor>FFFFFFFF</textcolor><shadowcolor>B0000000</shadowcolor>
+                <label>$INFO[Window.Property(mvc_year)]</label>
+                <visible>!String.IsEmpty(Window.Property(mvc_year))</visible>
+            </control>
         </control>
 
         <!-- ============ Channel banner (now / next) ============ -->

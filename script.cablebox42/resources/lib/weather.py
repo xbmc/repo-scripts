@@ -6,6 +6,7 @@ Data comes from (in order, configurable in Settings):
   * Open-Meteo (free, no API key) for a city / "lat,lon" you type in.
 """
 import json
+import math
 import os
 import re
 import threading
@@ -24,7 +25,8 @@ import xbmcgui
 from . import kodiutil as K
 from .kodiutil import _
 
-PAGES = ("current", "forecast", "extended", "almanac")
+PAGES = ("current", "observations", "forecast", "map", "extended", "almanac")
+NEAR_PAGES = ("observations", "map")    # only with nearby cities (and their temperatures)
 PAGE_SECS = 10
 REFRESH_SECS = 15 * 60
 NODATA_AFTER = 3.0          # seconds of blank screen before "weather is not set up"
@@ -86,17 +88,25 @@ def icon(value, cond=""):
 COMPASS = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
 
 
-def _clock(ts):
+def _local(ts, off=None):
+    """The time tuple of ts at the forecast's place: off = its UTC offset in seconds
+    (Open-Meteo's utc_offset_seconds); None (Kodi's weather, an old cache): this box's."""
+    if off is None:
+        return time.localtime(ts)
+    return time.gmtime(ts + off)
+
+
+def _clock(ts, off=None):
     try:
         f = xbmc.getRegion("time").replace(":%S", "")
     except Exception:
         f = "%I:%M %p"
-    s = time.strftime(f, time.localtime(ts))
+    s = time.strftime(f, _local(ts, off))
     return s[1:] if s.startswith("0") else s
 
 
-def _hour(ts):
-    s = time.strftime("%I %p", time.localtime(ts))
+def _hour(ts, off=None):
+    s = time.strftime("%I %p", _local(ts, off))
     return s[1:] if s.startswith("0") else s
 
 
@@ -223,6 +233,12 @@ def quality(d):
     return q
 
 
+def has_place():
+    """The weather channel knows where you are: a city typed in, or Kodi's own
+    weather set to a place."""
+    return bool(K.setting("weather_location", "").strip() or kodi_place())
+
+
 def kodi_place():
     """The location Kodi's weather service is set to, cleaned up for geocoding
     ('Springfield, IL (US)' -> 'Springfield, IL')."""
@@ -300,12 +316,16 @@ def parse_open_meteo(raw, name, f):
         pres = _("%.2f in") % (pres * 0.02953)
     elif pres:
         pres = _("%d hPa") % round(pres)
+    # the place's own time: times come as Unix timestamps (timeformat=unixtime), so they're
+    # formatted with its UTC offset, not this box's zone (Leeds watched from Chicago)
+    off = raw.get("utc_offset_seconds")
+    off = int(off) if isinstance(off, (int, float)) else None
     dly = raw.get("daily", {})
     daily = []
     for i, ts in enumerate(dly.get("time", [])):
         dc = int(dly["weather_code"][i] or 3)
         dt, di, _night = WMO.get(dc, ("", "cloudy", "cloudy"))
-        daily.append({"name": time.strftime("%a", time.localtime(ts + 43200)), "ts": ts,
+        daily.append({"name": time.strftime("%a", _local(ts + 43200, off)), "ts": ts,
                       "hi": "%d%s" % (round(dly["temperature_2m_max"][i]), deg),
                       "lo": "%d%s" % (round(dly["temperature_2m_min"][i]), deg),
                       "cond": dt, "icon": ICON % di,
@@ -321,7 +341,7 @@ def parse_open_meteo(raw, name, f):
         if len(hours) >= 6:
             break
         hc = int(hrs["weather_code"][i] or 3)
-        hours.append({"time": _hour(ts), "temp": "%d%s" % (round(hrs["temperature_2m"][i]), deg),
+        hours.append({"time": _hour(ts, off), "temp": "%d%s" % (round(hrs["temperature_2m"][i]), deg),
                       "cond": WMO.get(hc, ("",))[0],
                       "pop": "%d%%" % (hrs.get("precipitation_probability", [0] * 999)[i] or 0)})
     unit = deg + ("F" if f else "C")
@@ -335,8 +355,9 @@ def parse_open_meteo(raw, name, f):
                  "pressure": pres or ""},
          "days": daily[1:6] if len(daily) > 1 else daily, "today": daily[0] if daily else None,
          "hours": hours,
-         "sunrise": _clock(daily[0]["rise"]) if daily and daily[0].get("rise") else "",
-         "sunset": _clock(daily[0]["set"]) if daily and daily[0].get("set") else ""}
+         "sunrise": _clock(daily[0]["rise"], off) if daily and daily[0].get("rise") else "",
+         "sunset": _clock(daily[0]["set"], off) if daily and daily[0].get("set") else "",
+         "utc_offset": off}
     return d
 
 
@@ -345,7 +366,8 @@ def narrative(d):
     out = []
     today = d.get("today") or (d["days"][0] if d.get("days") else None)
     nxt = d["days"][0] if d.get("today") and d.get("days") else (d["days"][1] if len(d.get("days", [])) > 1 else None)
-    hour = time.localtime().tm_hour
+    off = d.get("utc_offset")                # missing in Kodi's data and old caches: this box's time
+    hour = _local(time.time(), off if isinstance(off, (int, float)) else None).tm_hour
     if today:
         cond = (today.get("cond") or d["now"].get("cond") or "").lower()
         pop = today.get("pop", "")
@@ -395,7 +417,264 @@ def fetch():
     return kd or om
 
 
+# ------------------------------------------------------------------ nearby cities and the regional map
+# Natural Earth populated places (public domain), trimmed to places of 50,000 or more
+# by G:\CableBox42\rig\wx_prerender.py, which also draws the map tiles (media/wxmap).
+PLACES_FILE = os.path.join(K.ADDON_PATH, "resources", "weather", "places.json")
+MAP_INDEX = os.path.join(K.ADDON_PATH, "resources", "skins", "Default", "media", "wxmap", "index.json")
+NEAR_RADII = (300, 450, 650, 900)    # km: widened in empty areas
+NEAR_MAX, NEAR_WANT, NEAR_MIN = 8, 6, 3
+NEAR_SELF = 20                       # km: your own city
+NEAR_APART = 25                      # km between two cities picked (no suburbs of the same one)
+_PLACES = []
+_MAP = []
+
+
+def places():
+    if not _PLACES:
+        try:
+            with open(PLACES_FILE, encoding="utf-8") as f:
+                _PLACES.append(json.load(f))
+        except (IOError, OSError, ValueError) as exc:
+            K.log_err("weather places: %s" % exc)
+            _PLACES.append([])
+    return _PLACES[0]
+
+
+def km(lat1, lon1, lat2, lon2):
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    a = math.sin((p2 - p1) / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2
+    return 12742.0 * math.asin(min(1.0, math.sqrt(a)))
+
+
+def nearby(lat, lon, own="", table=None):
+    """[{name, lat, lon, km}] of 6-8 cities of 50,000+ near (lat, lon), nearest first,
+    your own city left out; the radius widens in empty areas.  [] if fewer than 3."""
+    own = (own or "").split(",")[0].strip().lower()
+    rows = []
+    for name, plat, plon, pop, cc in (table if table is not None else places()):
+        if abs(plat - lat) > 9:
+            continue
+        d = km(lat, lon, plat, plon)
+        if d <= NEAR_RADII[-1]:
+            rows.append((d, -pop, name, plat, plon))
+    rows.sort()
+    for radius in NEAR_RADII:
+        picked = []
+        for d, _p, name, plat, plon in rows:
+            if d > radius or len(picked) >= NEAR_MAX:
+                break
+            if d < NEAR_SELF or name.lower() == own:
+                continue
+            if any(km(plat, plon, c["lat"], c["lon"]) < NEAR_APART for c in picked):
+                continue
+            picked.append({"name": name, "lat": plat, "lon": plon, "km": round(d)})
+        if len(picked) >= NEAR_WANT:
+            return picked
+    return picked if len(picked) >= NEAR_MIN else []
+
+
+def from_open_meteo_many(cities, f):
+    """Current temperature and sky for every city in one request (open-meteo takes
+    comma-separated coordinates).  [{name, lat, lon, temp, cond, icon}] or None."""
+    if not cities:
+        return None
+    url = ("https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s"
+           "&current=temperature_2m,weather_code,is_day&timezone=auto%s"
+           % (",".join("%.3f" % c["lat"] for c in cities), ",".join("%.3f" % c["lon"] for c in cities),
+              "&temperature_unit=fahrenheit" if f else ""))
+    try:
+        raw = _get_json(url)
+    except Exception as exc:
+        K.log_err("open-meteo (nearby) failed: %s" % exc)
+        return None
+    if isinstance(raw, dict):
+        raw = [raw]
+    out = []
+    for c, r in zip(cities, raw or []):
+        cur = (r or {}).get("current") or {}
+        if cur.get("temperature_2m") is None:
+            continue
+        text, iday, inight = WMO.get(int(cur.get("weather_code", 3)), ("", "cloudy", "cloudy"))
+        out.append(dict(c, temp=u"%d\u00b0" % round(cur["temperature_2m"]), cond=text,
+                        icon=ICON % (iday if cur.get("is_day", 1) else inight)))
+    return out or None
+
+
+def coordinates():
+    """(lat, lon, name) of the forecast's place for the nearby pages, or None: a city
+    typed in, else (Automatic) the place Kodi's weather is set to, geocoded.  Kodi's
+    weather service only: None (that setting means no Open-Meteo at all)."""
+    src = K.setting_int("weather_source", 0)
+    if src == 1:
+        return None
+    place = K.setting("weather_location", "").strip() or kodi_place()
+    loc = _geocode(place) if place else None
+    if not loc:
+        return None
+    return loc["lat"], loc["lon"], loc.get("name") or place
+
+
+def fetch_nearby():
+    """{lat, lon, name, cities} with temperatures, or None."""
+    where = coordinates()
+    if not where:
+        return None
+    lat, lon, name = where
+    near, (mapc, z) = nearby(lat, lon, name), map_cities(lat, lon, name)
+    both = near + [c for c in mapc if c["name"] not in set(x["name"] for x in near)]
+    obs = from_open_meteo_many(both, fahrenheit())      # one request for both pages
+    if not obs:
+        return None
+    got = dict((c["name"], c) for c in obs)
+    return {"lat": lat, "lon": lon, "name": name,
+            "cities": [got[c["name"]] for c in near if c["name"] in got],
+            "map": [got[c["name"]] for c in mapc if c["name"] in got], "z": z}
+
+
+def remember_nearby(n):
+    c = _cache()
+    c["nearby"] = {"at": time.time(), "data": n, "where": _where()}
+    _save_cache(c)
+
+
+def last_nearby(max_age=STALE_OK):
+    hit = _cache().get("nearby") or {}
+    if hit.get("where", "kodi") != _where():
+        return None
+    if hit.get("data") and time.time() - float(hit.get("at") or 0) < max_age:
+        return hit["data"]
+    return None
+
+
+def map_index():
+    if not _MAP:
+        try:
+            with open(MAP_INDEX) as f:
+                ix = json.load(f)
+            ix["have"] = set((t[0], t[1]) for t in ix.get("tiles", []))
+            _MAP.append(ix)
+        except (IOError, OSError, ValueError) as exc:
+            K.log_err("weather map: %s" % exc)
+            _MAP.append(None)
+    return _MAP[0]
+
+
+MAP_VIEW = (116, 256, 1688, 672)     # the map's area on the 1080p screen: x, y, w, h (skin: the grouplist)
+MAP_COLS, MAP_ROWS = 4, 3            # tile slots in the skin (ids 4101-4112)
+MAP_ZOOM = (0.9, 2.4)                # screen px per tile px (times cos(lat) across)
+MAP_MARGIN = (150, 110)              # room for a city's name and temperature
+MAP_APART = (230, 150)               # two cities' labels closer than this: the later one goes
+MAP_EDGE = (110, 95, 60)             # a city's label stays inside the map: x, top, bottom
+
+
+MAP_RADII = (180, 260, 380, 550)     # km from you to the map's top/bottom edge: a close-in map first
+MAP_CITIES = 8
+
+
+def _zoom(lat, radius, ix, view=MAP_VIEW):
+    """Screen px per tile px for a map whose top/bottom edge is radius km away."""
+    vx, vy, vw, vh = view
+    k = ix["width"] / 360.0
+    ts = ix["tile"]
+    c = max(0.2, math.cos(math.radians(lat)))
+    z = (vh / 2.0 - MAP_MARGIN[1]) / (radius / 111.2 * k)
+    zmin = max(MAP_ZOOM[0], vw / ((MAP_COLS - 1) * ts * c), vh / ((MAP_ROWS - 1) * ts))
+    return max(zmin, min(MAP_ZOOM[1], z))
+
+
+def _project(lat, lon, z, ix, view=MAP_VIEW):
+    vx, vy, vw, vh = view
+    k = ix["width"] / 360.0
+    c = max(0.2, math.cos(math.radians(lat)))
+    X, Y = (lon + 180) * k, (90 - lat) * k
+
+    def screen(wx, wy):
+        return vx + vw / 2.0 + (wx - X) * z * c, vy + vh / 2.0 + (wy - Y) * z
+    return screen
+
+
+def _fits(points, x, y, view=MAP_VIEW):
+    vx, vy, vw, vh = view
+    if not (vx + MAP_EDGE[0] <= x <= vx + vw - MAP_EDGE[0] and vy + MAP_EDGE[1] <= y <= vy + vh - MAP_EDGE[2]):
+        return False
+    return not any(abs(x - qx) < MAP_APART[0] and abs(y - qy) < MAP_APART[1] for qx, qy in points)
+
+
+def map_cities(lat, lon, own="", table=None, ix=None):
+    """(cities, zoom) for the regional map: the biggest places whose labels fit on
+    screen without touching each other or yours, up to 8, on a close-in map first,
+    wider in empty areas.  ([], 0) without the map's tiles or anything near."""
+    ix = ix or map_index()
+    if not ix:
+        return [], 0
+    own = (own or "").split(",")[0].strip().lower()
+    rows = []
+    for name, plat, plon, pop, cc in (table if table is not None else places()):
+        if abs(plat - lat) > 9 or name.lower() == own:
+            continue
+        d = km(lat, lon, plat, plon)
+        if NEAR_SELF <= d <= 1500:
+            rows.append((-pop, name, plat, plon, d))
+    rows.sort()
+    best = ([], 0)
+    for radius in MAP_RADII:
+        z = _zoom(lat, radius, ix)
+        k = ix["width"] / 360.0
+        screen = _project(lat, lon, z, ix)
+        taken = [screen((lon + 180) * k, (90 - lat) * k)]
+        picked = []
+        for _p, name, plat, plon, d in rows:
+            x, y = screen((plon + 180) * k, (90 - plat) * k)
+            if _fits(taken, x, y):
+                taken.append((x, y))
+                picked.append({"name": name, "lat": plat, "lon": plon, "km": round(d)})
+                if len(picked) >= MAP_CITIES:
+                    break
+        if len(picked) > len(best[0]):
+            best = (picked, z)
+        if len(picked) >= NEAR_WANT:
+            break
+    return best if len(best[0]) >= NEAR_MIN else ([], 0)
+
+
+def map_layout(lat, lon, cities, ix, z, view=MAP_VIEW):
+    """Where the tiles and the cities go on screen, centred on (lat, lon), at zoom z
+    (screen px per tile px; map_cities chose it).  Tiles: [(file, x, y, w, h)] (at
+    most MAP_COLS x MAP_ROWS); points: [(city, x, y)].  Equirectangular tiles, drawn
+    narrower by cos(lat) so the map isn't stretched sideways away from the equator."""
+    vx, vy, vw, vh = view
+    k = ix["width"] / 360.0
+    ts = ix["tile"]
+    c = max(0.2, math.cos(math.radians(lat)))
+    sx, sy = z * c, z
+    X, Y = (lon + 180) * k, (90 - lat) * k
+    screen = _project(lat, lon, z, ix, view)
+    tx0, ty0 = int((X - (vw / 2.0) / sx) // ts), int((Y - (vh / 2.0) / sy) // ts)
+    tiles = []
+    for ty in range(ty0, ty0 + MAP_ROWS):
+        for tx in range(tx0, tx0 + MAP_COLS):
+            if (tx, ty) not in ix["have"]:
+                continue
+            x0, y0 = screen(tx * ts, ty * ts)
+            x1, y1 = screen((tx + 1) * ts, (ty + 1) * ts)
+            if x1 < vx or x0 > vx + vw or y1 < vy or y0 > vy + vh:
+                continue
+            tiles.append(("wxmap/%d_%d.png" % (tx, ty), int(round(x0)), int(round(y0)),
+                          int(round(x1)) - int(round(x0)), int(round(y1)) - int(round(y0))))
+    points = []
+    for p in cities:
+        x, y = screen((p["lon"] + 180) * k, (90 - p["lat"]) * k)
+        if p.get("home") or _fits([(qx, qy) for _q, qx, qy in points], x, y, view):
+            points.append((p, int(round(x)), int(round(y))))
+    return tiles, points
+
+
 # ------------------------------------------------------------------ screen
+MAP_TILE_IDS = list(range(4101, 4101 + MAP_COLS * MAP_ROWS))
+MAP_CITY_IDS = list(range(4120, 4129))      # 0: your own city, then up to 8 others
+
+
 class WeatherScreen(object):
     def __init__(self, win):
         self.win = win
@@ -406,6 +685,8 @@ class WeatherScreen(object):
         self.page = 0
         self.tuned_at = 0           # when the weather channel came on screen
         self.nodata_shown = False
+        self.near = None            # nearby cities with temperatures (fetch_nearby)
+        self.page_name = PAGES[0]
 
     def _fetch(self):
         try:
@@ -413,6 +694,16 @@ class WeatherScreen(object):
         except Exception as exc:          # never let the weather take the TV down
             K.log_err("weather fetch: %s" % exc)
             d = None
+        try:
+            n = fetch_nearby()
+        except Exception as exc:
+            K.log_err("weather nearby: %s" % exc)
+            n = None
+        if n:
+            self.near = n
+            remember_nearby(n)
+        elif not self.near:
+            self.near = last_nearby()      # the last good temperatures; none ever: the pages are skipped
         if d:
             self.data = d
             self.fetched_at = time.time()
@@ -430,6 +721,8 @@ class WeatherScreen(object):
             self.nodata_shown = False
             if not self.data:
                 self.data = last_good()     # the last forecast straight away; the fresh one follows
+            if not self.near:
+                self.near = last_nearby()
         if not self.data and not self.nodata_shown and now - self.tuned_at >= NODATA_AFTER:
             self.render()                   # still nothing after a few seconds: say so
         if (force or now - self.fetched_at > REFRESH_SECS) and not self.fetching:
@@ -438,13 +731,28 @@ class WeatherScreen(object):
             t.daemon = True
             t.start()
         if force:
-            self.page = 0
+            self.page_name = PAGES[0]
             self.page_at = now + PAGE_SECS
             self.render()
         elif now >= self.page_at:
-            self.page = (self.page + 1) % len(PAGES)
+            pages = self.pages()
+            i = pages.index(self.page_name) if self.page_name in pages else -1
+            self.page_name = pages[(i + 1) % len(pages)]
             self.page_at = now + PAGE_SECS
             self.render()
+
+    def pages(self):
+        """The page cycle: Latest Observations and the map only when there are nearby
+        cities with temperatures (never a blank page); the map also needs its tiles."""
+        n = self.near
+        out = []
+        for p in PAGES:
+            if p in NEAR_PAGES and not (n and n.get("cities")):
+                continue
+            if p == "map" and not (map_index() and n.get("map") and n.get("z")):
+                continue
+            out.append(p)
+        return out
 
     def render(self):
         try:
@@ -468,9 +776,9 @@ class WeatherScreen(object):
             P("wx_page", "nodata")
             P("wx_location", "")
             P("wx_ticker", _("Weather is not set up yet.   Choose a weather service in Kodi (Settings > "
-                           "Services > Weather) or type your city in CableBox 42 > Settings > Weather."))
+                           "Services > Weather) or type your city in CableBox 42 > Settings > Guide & Weather."))
             return
-        page = PAGES[self.page]
+        page = self.page_name if self.page_name in self.pages() else PAGES[0]
         P("wx_page", page)
         P("wx_location", d.get("location", ""))
         n = d["now"]
@@ -498,6 +806,68 @@ class WeatherScreen(object):
                                                   h["pop"] != "0%" else "") for h in hours))
         P("wx_sun", (_("Sunrise  %s      Sunset  %s") % (d.get("sunrise"), d.get("sunset")))
           if d.get("sunrise") else "")
+        today = d.get("today") or (d["days"][0] if d.get("days") else None) or {}
+        hilo = (_("Today's high %s, low %s") % (today.get("hi"), today.get("lo"))) if today.get("hi") else ""
+        # the ticker runs on every page (the skin's fadelabel keeps scrolling while its text stays the same)
         P("wx_ticker", _("Conditions at %s:   %s   Temperature %s   Humidity %s   Wind %s      %s") % (
             d.get("location", ""), n.get("cond", ""), n.get("temp", ""), n.get("humidity", ""),
-            n.get("wind", ""), "      ".join(narrative(d))))
+            n.get("wind", ""), "      ".join(([hilo] if hilo else []) + narrative(d))))
+        if page == "observations":
+            self.render_observations()
+        elif page == "map":
+            self.render_map(n)
+
+    def render_observations(self):
+        P = self.win.setProperty
+        cities = (self.near or {}).get("cities") or []
+        for i in range(NEAR_MAX):
+            c = cities[i] if i < len(cities) else {}
+            P("wx_o%d_name" % i, c.get("name", ""))
+            P("wx_o%d_temp" % i, c.get("temp", ""))
+            P("wx_o%d_cond" % i, c.get("cond", ""))
+            P("wx_o%d_icon" % i, c.get("icon", "") if c else "")
+
+    def render_map(self, now_info):
+        """Tiles and cities placed from Python into the skin's fixed slots (the map page)."""
+        w = self.win
+        n = self.near or {}
+        ix = map_index()
+        if not (n.get("cities") and ix):
+            return
+        home = {"name": (self.data or {}).get("location") or n.get("name", ""), "lat": n["lat"], "lon": n["lon"],
+                "temp": now_info.get("temp", "").replace("F", "").replace("C", ""),
+                "icon": icon(now_info.get("icon"), now_info.get("cond")), "home": True}
+        if not n.get("z"):
+            return
+        tiles, points = map_layout(n["lat"], n["lon"], [home] + list(n.get("map") or []), ix, n["z"])
+        for i, cid in enumerate(MAP_TILE_IDS):
+            try:
+                ctl = w.getControl(cid)
+                if i < len(tiles):
+                    f, x, y, tw, th = tiles[i]
+                    ctl.setImage(f, False)
+                    ctl.setPosition(x - MAP_VIEW[0], y - MAP_VIEW[1])     # inside the clipping grouplist
+                    ctl.setWidth(tw)
+                    ctl.setHeight(th)
+                    ctl.setVisible(True)
+                else:
+                    ctl.setImage("", False)
+                    ctl.setVisible(False)
+            except Exception as exc:
+                K.log_err("weather map tile: %s" % exc)
+                return
+        for i, cid in enumerate(MAP_CITY_IDS):
+            p = points[i] if i < len(points) else None
+            P = w.setProperty
+            P("wx_m%d" % i, "1" if p else "")
+            if not p:
+                continue
+            c, x, y = p
+            P("wx_m%d_name" % i, c.get("name", ""))
+            P("wx_m%d_temp" % i, c.get("temp", ""))
+            P("wx_m%d_icon" % i, c.get("icon", ""))
+            P("wx_m%d_home" % i, "1" if c.get("home") else "")
+            try:
+                w.getControl(cid).setPosition(x, y)
+            except Exception as exc:
+                K.log_err("weather map city: %s" % exc)

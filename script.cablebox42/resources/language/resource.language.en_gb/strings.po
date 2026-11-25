@@ -12,17 +12,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 # Settings
-msgctxt "#32000"
-msgid "Programming"
-msgstr ""
-
 msgctxt "#32001"
 msgid "Commercials folder"
 msgstr ""
 
-msgctxt "#32002"
-msgid "Bumps / station ID folder"
-msgstr ""
 
 msgctxt "#32003"
 msgid "Guide channel music folder (optional)"
@@ -40,9 +33,6 @@ msgctxt "#32006"
 msgid "Schedule ahead (hours)"
 msgstr ""
 
-msgctxt "#32010"
-msgid "Viewing"
-msgstr ""
 
 msgctxt "#32011"
 msgid "Start on channel (0 = last watched)"
@@ -164,9 +154,6 @@ msgctxt "#32042"
 msgid "Allow repeats on any channel"
 msgstr ""
 
-msgctxt "#32043"
-msgid "Keep my watch progress untouched (resume points, watched)"
-msgstr ""
 
 msgctxt "#32044"
 msgid "Short programmes (under 12 min)"
@@ -188,26 +175,6 @@ msgctxt "#32048"
 msgid "Tools"
 msgstr ""
 
-msgctxt "#32049"
-msgid "Lineup"
-msgstr ""
-
-msgctxt "#32050"
-msgid "Build my lineup automatically..."
-msgstr ""
-
-msgctxt "#32051"
-msgid "Quick setup: sign-off hours, prime time..."
-msgstr ""
-
-msgctxt "#32052"
-msgid "Move shows between channels..."
-msgstr ""
-
-msgctxt "#32053"
-msgid "Maintenance"
-msgstr ""
-
 msgctxt "#32054"
 msgid "Check my videos (commercials, bumps, AV1)..."
 msgstr ""
@@ -216,17 +183,7 @@ msgctxt "#32055"
 msgid "Clean up my 'In progress' list..."
 msgstr ""
 
-msgctxt "#32056"
-msgid "Rebuild schedules..."
-msgstr ""
 
-msgctxt "#32057"
-msgid "Seasons"
-msgstr ""
-
-msgctxt "#32058"
-msgid "Holiday programming"
-msgstr ""
 
 msgctxt "#32059"
 msgid "How much in the weeks before"
@@ -244,48 +201,24 @@ msgctxt "#32062"
 msgid "Lots"
 msgstr ""
 
-msgctxt "#32063"
-msgid "Halloween - October, all-out on the 31st"
-msgstr ""
 
-msgctxt "#32064"
-msgid "Thanksgiving - on the day"
-msgstr ""
 
-msgctxt "#32065"
-msgid "Christmas - from the day after Thanksgiving, all-out Dec 24-25"
-msgstr ""
 
 msgctxt "#32066"
 msgid "On"
 msgstr ""
 
-msgctxt "#32067"
-msgid "Holiday commercials folder (optional)"
-msgstr ""
 
-msgctxt "#32068"
-msgid "Holiday bumps folder (optional)"
-msgstr ""
 
 msgctxt "#32069"
 msgid "Save holiday episodes and movies for their season"
 msgstr ""
 
-msgctxt "#32070"
-msgid "The rest of the year"
-msgstr ""
 
-msgctxt "#32071"
-msgid "Tags (any containing these words, comma separated)"
-msgstr ""
 
-msgctxt "#32072"
-msgid "Genres (comma separated)"
-msgstr ""
 
 msgctxt "#32073"
-msgid "Static between channels"
+msgid "Static plays as"
 msgstr ""
 
 msgctxt "#32074"
@@ -344,21 +277,11 @@ msgctxt "#32087"
 msgid "100%"
 msgstr ""
 
-msgctxt "#32088"
-msgid "Logo folder (images named after the channel, its call letters or number)"
-msgstr ""
 
 msgctxt "#32089"
 msgid "Show the logo in the channel banner"
 msgstr ""
 
-msgctxt "#32090"
-msgid "Stations folder (one folder per channel: logo, bumps, ids, commercials, time-block subfolders)"
-msgstr ""
-
-msgctxt "#32091"
-msgid "Station folders: create, repair and see what each channel uses..."
-msgstr ""
 
 msgctxt "#32092"
 msgid "Start over (factory reset)..."
@@ -477,10 +400,6 @@ msgctxt "#32118"
 msgid "Reading movies"
 msgstr ""
 
-msgctxt "#32119"
-msgid "Looking for studio channels"
-msgstr ""
-
 msgctxt "#32120"
 msgid "Done"
 msgstr ""
@@ -511,10 +430,6 @@ msgstr ""
 
 msgctxt "#32127"
 msgid "%s Movies"
-msgstr ""
-
-msgctxt "#32129"
-msgid "%s Showcase"
 msgstr ""
 
 msgctxt "#32130"
@@ -765,11 +680,6 @@ msgctxt "#32195"
 msgid "I couldn't find any TV shows or movies in your Kodi library.[CR]Scan your media into the library first, or add folder channels in the Channel Manager."
 msgstr ""
 
-
-msgctxt "#32197"
-msgid "Rebuild every channel's schedule from now?[CR]Episode progress is kept."
-msgstr ""
-
 msgctxt "#32198"
 msgid "[B]+ Add a channel[/B]"
 msgstr ""
@@ -914,20 +824,12 @@ msgctxt "#32235"
 msgid "Swap them  (%s goes to %d)"
 msgstr ""
 
-msgctxt "#32236"
-msgid "[B]Close the gaps (renumber 2, 3, 4...)[/B]"
-msgstr ""
-
 msgctxt "#32237"
 msgid "Start numbering at"
 msgstr ""
 
 msgctxt "#32238"
 msgid "Move %s to channel"
-msgstr ""
-
-msgctxt "#32239"
-msgid "Channel %d is already taken."
 msgstr ""
 
 msgctxt "#32240"
@@ -1024,10 +926,6 @@ msgstr ""
 
 msgctxt "#32267"
 msgid "[B]Show everything[/B]"
-msgstr ""
-
-msgctxt "#32268"
-msgid "%3d   %s   [COLOR grey](%s, %d source%s)[/COLOR]"
 msgstr ""
 
 msgctxt "#32269"
@@ -1162,10 +1060,6 @@ msgctxt "#32301"
 msgid "%d shows, %d movies"
 msgstr ""
 
-msgctxt "#32302"
-msgid "Add more programming to %s?"
-msgstr ""
-
 msgctxt "#32303"
 msgid "Same show same time every day"
 msgstr ""
@@ -1232,10 +1126,6 @@ msgstr ""
 
 msgctxt "#32319"
 msgid "Choose folder..."
-msgstr ""
-
-msgctxt "#32320"
-msgid "Delete %d %s?"
 msgstr ""
 
 msgctxt "#32321"
@@ -1490,10 +1380,6 @@ msgctxt "#32384"
 msgid "Your Local Forecast"
 msgstr ""
 
-msgctxt "#32385"
-msgid "Weather is not set up yet.   Choose a weather service in Kodi (Settings > Services > Weather) or type your city in CableBox 42 > Settings > Weather."
-msgstr ""
-
 msgctxt "#32386"
 msgid "Humidity"
 msgstr ""
@@ -1624,10 +1510,6 @@ msgstr ""
 
 msgctxt "#32419"
 msgid "[B]Weekly planner[/B] (%d pinned shows)"
-msgstr ""
-
-msgctxt "#32420"
-msgid "Station ID clips (between programs): %s"
 msgstr ""
 
 msgctxt "#32421"
@@ -1938,26 +1820,6 @@ msgctxt "#32498"
 msgid "%d more shows from this channel's sources air on their own home channels"
 msgstr ""
 
-msgctxt "#32501"
-msgid "Sign channels off overnight, like real TV?[CR][CR]From 12 AM to 5 AM a 'Please stand by' card shows; the guide and weather stay on."
-msgstr ""
-
-msgctxt "#32502"
-msgid "Give channels a prime-time lineup?[CR][CR]From 8 to 11 PM each channel airs its best shows in fixed weekly slots (movie channels: a movie at 8). You can change any of it in the weekly planner."
-msgstr ""
-
-msgctxt "#32503"
-msgid "No, run all night"
-msgstr ""
-
-msgctxt "#32504"
-msgid "Yes (recommended)"
-msgstr ""
-
-msgctxt "#32505"
-msgid "No thanks"
-msgstr ""
-
 msgctxt "#32506"
 msgid "Building prime-time lineups..."
 msgstr ""
@@ -1976,14 +1838,6 @@ msgstr ""
 
 msgctxt "#32510"
 msgid "Remove the automatic prime-time lineups"
-msgstr ""
-
-msgctxt "#32511"
-msgid "Quick setup"
-msgstr ""
-
-msgctxt "#32513"
-msgid "Channels now sign off %s - %s"
 msgstr ""
 
 msgctxt "#32514"
@@ -2042,10 +1896,6 @@ msgctxt "#32530"
 msgid "See every channel's current show and tune straight to it"
 msgstr ""
 
-msgctxt "#32532"
-msgid "Add, edit, rename and renumber channels"
-msgstr ""
-
 msgctxt "#32533"
 msgid "Pin shows to days and times"
 msgstr ""
@@ -2054,16 +1904,8 @@ msgctxt "#32534"
 msgid "Settings and tools"
 msgstr ""
 
-msgctxt "#32535"
-msgid "Commercials, music, weather, picture - plus lineup tools and maintenance"
-msgstr ""
-
 msgctxt "#32536"
 msgid "How everything works"
-msgstr ""
-
-msgctxt "#32537"
-msgid "[B]Set up my channels[/B]"
 msgstr ""
 
 msgctxt "#32538"
@@ -2071,7 +1913,7 @@ msgid "Builds a lineup from your Kodi library in a minute"
 msgstr ""
 
 msgctxt "#32539"
-msgid "Commercials, music, weather, picture"
+msgid "Breaks, holidays, picture, weather"
 msgstr ""
 
 msgctxt "#32540"
@@ -2086,12 +1928,8 @@ msgctxt "#32543"
 msgid "Welcome to CableBox 42"
 msgstr ""
 
-msgctxt "#32544"
-msgid "[B]Set it all up for me[/B]"
-msgstr ""
-
 msgctxt "#32545"
-msgid "Reads your Kodi library and builds a full lineup - channels, guide, weather, overnight sign-off, prime time. About a minute."
+msgid "Builds channels, guide, weather, sign-off and prime time from your Kodi library. About a minute."
 msgstr ""
 
 msgctxt "#32546"
@@ -2162,16 +2000,8 @@ msgctxt "#32568"
 msgid "Station logo (PNG with a transparent background looks best)"
 msgstr ""
 
-msgctxt "#32569"
-msgid "Station logo: %s"
-msgstr ""
-
 msgctxt "#32570"
 msgid "Kodi can't show SVG images.  Convert the logo to PNG (keeping the transparent background) and choose that instead."
-msgstr ""
-
-msgctxt "#32571"
-msgid "Set the logo folder first: Settings > Viewing > Logo folder."
 msgstr ""
 
 msgctxt "#32572"
@@ -2183,11 +2013,7 @@ msgid "Use the same music for the Weather Channel?"
 msgstr ""
 
 msgctxt "#32574"
-msgid "Do you have a folder of background music?[CR][CR]It plays behind the TV Guide and Weather channels - smooth jazz and elevator music are the classic choice. You can add this later in Settings."
-msgstr ""
-
-msgctxt "#32575"
-msgid "Choose another folder"
+msgid "Do you have a folder of background music?[CR][CR]It plays behind the TV Guide and Weather channels - smooth jazz is the classic. You can add it later in Settings."
 msgstr ""
 
 msgctxt "#32576"
@@ -2202,55 +2028,21 @@ msgctxt "#32578"
 msgid "none (your own)"
 msgstr ""
 
-msgctxt "#32579"
-msgid "None - use the channel's own name and logo"
-msgstr ""
-
 msgctxt "#32580"
 msgid "Station for channel %d"
-msgstr ""
-
-msgctxt "#32581"
-msgid "Branding by time of day"
-msgstr ""
-
-msgctxt "#32582"
-msgid "You have a TV Guide on 2 and Retrocast Weather on 25.[CR][CR]Next: Channel manager > Add a channel.  Commercials, bumps and music folders are in Settings, and Settings > Tools > 'Build my lineup automatically' can still build channels for you any time."
-msgstr ""
-
-msgctxt "#32583"
-msgid "Name during this block (e.g. CAM Jr.)"
 msgstr ""
 
 msgctxt "#32584"
 msgid "Choose logo..."
 msgstr ""
 
-msgctxt "#32585"
-msgid "Station: %s"
-msgstr ""
-
-msgctxt "#32586"
-msgid "Branding by time of day: %s"
-msgstr ""
-
-msgctxt "#32587"
-msgid "Rename this channel to %s and use its logo and call letters?"
-msgstr ""
-
 msgctxt "#32588"
 msgid "Logo for %s"
-msgstr ""
-
-msgctxt "#32589"
-msgid "%s (station)"
 msgstr ""
 
 msgctxt "#32590"
 msgid "Stations folder"
 msgstr ""
-
-
 
 msgctxt "#32599"
 msgid "Bumpers and station IDs"
@@ -2261,7 +2053,7 @@ msgid "One folder for every channel"
 msgstr ""
 
 msgctxt "#32601"
-msgid "Choose a folder of bumps / station IDs (short clips played right before the show comes back). All channels share it."
+msgid "A folder of bumps / station IDs (short clips played right before the show comes back), shared by all channels."
 msgstr ""
 
 msgctxt "#32602"
@@ -2269,7 +2061,7 @@ msgid "A folder for each channel"
 msgstr ""
 
 msgctxt "#32603"
-msgid "Choose where (your media drive is best) - CableBox makes a folder per channel with bumps, ids and commercials inside, ready for clips."
+msgid "Choose where (your media drive is best): CableBox makes a folder per channel for bumps, IDs and commercials."
 msgstr ""
 
 msgctxt "#32604"
@@ -2315,7 +2107,6 @@ msgstr ""
 msgctxt "#32614"
 msgid "Start over"
 msgstr ""
-
 
 msgctxt "#32617"
 msgid "Every TV show"
@@ -2377,13 +2168,7 @@ msgctxt "#32940"
 msgid "Remote CC button"
 msgstr ""
 
-msgctxt "#32941"
-msgid "Captions: show programmes in Kodi's full-screen player (needed on most TV boxes)"
-msgstr ""
 
-msgctxt "#32942"
-msgid "Captions: rewind 1 second so embedded subtitles appear"
-msgstr ""
 
 msgctxt "#32943"
 msgid "Automatic (CoreELEC only)"
@@ -2396,8 +2181,6 @@ msgstr ""
 msgctxt "#32945"
 msgid "Never"
 msgstr ""
-
-
 
 msgctxt "#32948"
 msgid "What I set up"
@@ -2415,10 +2198,6 @@ msgctxt "#32951"
 msgid "[B]Next steps[/B]"
 msgstr ""
 
-msgctxt "#32952"
-msgid "  Channel manager > a channel > Branding & clips: logo, bumps, IDs, commercials in use"
-msgstr ""
-
 msgctxt "#32953"
 msgid "  Channel manager > Shows without a good channel: shows nothing picks up, or that only just fit"
 msgstr ""
@@ -2431,10 +2210,6 @@ msgctxt "#32955"
 msgid "  This summary again: Channel manager > Lineup summary"
 msgstr ""
 
-msgctxt "#32956"
-msgid "No logo found. Put a logo.png in the channel's folder, or choose one under Station logo."
-msgstr ""
-
 msgctxt "#32957"
 msgid " There's no logo.png, so the first image in the folder is used."
 msgstr ""
@@ -2445,18 +2220,6 @@ msgstr ""
 
 msgctxt "#32959"
 msgid "  [COLOR grey]built-in station[/COLOR]"
-msgstr ""
-
-msgctxt "#32960"
-msgid "[B]Station folders[/B]  not set up - Settings > Tools > 'Station folders' gives each channel a folder for its own logo, bumps, IDs and commercials."
-msgstr ""
-
-msgctxt "#32961"
-msgid "[B]Shows without a good channel[/B]  [COLOR grey]unplaced or weakly matched[/COLOR]"
-msgstr ""
-
-msgctxt "#32962"
-msgid "[B]Lineup summary[/B]  [COLOR grey]what's set up, and where[/COLOR]"
 msgstr ""
 
 msgctxt "#32963"
@@ -2515,10 +2278,6 @@ msgctxt "#32976"
 msgid "        Program guide for every channel"
 msgstr ""
 
-msgctxt "#32977"
-msgid "        Local forecast (Settings > Weather)"
-msgstr ""
-
 msgctxt "#32978"
 msgid "shows whose genres are too small for a channel of their own"
 msgstr ""
@@ -2527,36 +2286,8 @@ msgctxt "#32979"
 msgid "a share of every genre, in a network-style day"
 msgstr ""
 
-msgctxt "#32980"
-msgid "[B]Branding & clips[/B] (logo, bumps, IDs, commercials in use)"
-msgstr ""
-
-msgctxt "#32981"
-msgid "The image you chose in the channel editor (Station logo)."
-msgstr ""
-
-msgctxt "#32982"
-msgid "The image you chose for this time block."
-msgstr ""
-
 msgctxt "#32983"
 msgid "From the channel's station folder."
-msgstr ""
-
-msgctxt "#32984"
-msgid "From this time block's own folder."
-msgstr ""
-
-msgctxt "#32985"
-msgid "CableBox's built-in station logo. Put a logo.png in the channel's folder to use your own."
-msgstr ""
-
-msgctxt "#32986"
-msgid "Matched by name in the logo folder (Settings > Viewing)."
-msgstr ""
-
-msgctxt "#32987"
-msgid "Switched off in the channel editor (Station logo)."
 msgstr ""
 
 msgctxt "#32988"
@@ -2603,20 +2334,8 @@ msgctxt "#32998"
 msgid "Station folder: not set up"
 msgstr ""
 
-msgctxt "#32999"
-msgid "Select to choose where channel folders go (Settings > Viewing > Stations folder)."
-msgstr ""
-
 msgctxt "#33000"
 msgid "[B]Create or repair this channel's folders[/B]"
-msgstr ""
-
-msgctxt "#33001"
-msgid "Adds what's missing (bumps, ids, commercials, time blocks). Never deletes anything."
-msgstr ""
-
-msgctxt "#33002"
-msgid "%s - branding & clips"
 msgstr ""
 
 msgctxt "#33003"
@@ -2662,7 +2381,6 @@ msgstr ""
 msgctxt "#33013"
 msgid "        %s: %s"
 msgstr ""
-
 
 msgctxt "#33015"
 msgid "Station folder: %s"
@@ -2710,10 +2428,6 @@ msgstr ""
 
 msgctxt "#33026"
 msgid "Which folder belongs to %s?"
-msgstr ""
-
-msgctxt "#33027"
-msgid "Switch %s on for %s?"
 msgstr ""
 
 msgctxt "#33028"
@@ -2904,7 +2618,6 @@ msgctxt "#33074"
 msgid "Shows from the %ss"
 msgstr ""
 
-
 msgctxt "#33076"
 msgid "Put it on a channel..."
 msgstr ""
@@ -2912,7 +2625,6 @@ msgstr ""
 msgctxt "#33077"
 msgid "Don't air it on any channel automatically"
 msgstr ""
-
 
 msgctxt "#33079"
 msgid "Shows without a good channel"
@@ -2998,18 +2710,12 @@ msgctxt "#33099"
 msgid "Keep %s off every channel's automatic programming?[CR][CR]It's hidden on %d channels. Pinned slots in the weekly planner still air it. 'What's on this channel' brings it back."
 msgstr ""
 
-
-
 msgctxt "#33102"
 msgid "Hidden on %s"
 msgstr ""
 
 msgctxt "#33103"
 msgid "It's fine on %s"
-msgstr ""
-
-msgctxt "#33104"
-msgid "Shows without a good channel (unplaced or weak matches)..."
 msgstr ""
 
 # Added in 1.1.0
@@ -3037,15 +2743,5466 @@ msgctxt "#33110"
 msgid "Select to change. Not on any channel %d, weak %d, marked as fine %d. %s"
 msgstr ""
 
-# Added in 1.0.15
-msgctxt "#33014"
-msgid "[B]What goes where[/B]  (in each channel's folder)[CR]  logo.png ............ the channel's logo (transparent PNG looks best)[CR]  bumps/ .............. short clips before the show comes back[CR]  ids/ .................. station IDs, between programmes[CR]  commercials/ ...... this channel's own commercials[CR]  <time block>/ ...... the same again, used only in that block (e.g. CAM Jr.)[CR]A folder is matched by the channel's name, call letters or number ('Channel 7'). A new logo shows within a couple of minutes; new clips go into the breaks CableBox plans from then on (Tools > Rebuild schedules uses them straight away)."
+# Added in 1.2.0 (promos)
+msgctxt "#33111"
+msgid "Promos for what's coming up, in breaks"
 msgstr ""
 
+msgctxt "#33112"
+msgid "How often"
+msgstr ""
+
+msgctxt "#33113"
+msgid "Every break"
+msgstr ""
+
+msgctxt "#33114"
+msgid "About half the breaks"
+msgstr ""
+
+msgctxt "#33115"
+msgid "Now and then"
+msgstr ""
+
+msgctxt "#33116"
+msgid "Promote"
+msgstr ""
+
+msgctxt "#33117"
+msgid "What's on next"
+msgstr ""
+
+msgctxt "#33118"
+msgid "Something later today"
+msgstr ""
+
+
+msgctxt "#33120"
+msgid "The show's theme music"
+msgstr ""
+
+msgctxt "#33121"
+msgid "None (silent)"
+msgstr ""
+
+msgctxt "#33122"
+msgid "Also use short promo clips from a show's Extras folder"
+msgstr ""
+
+msgctxt "#33126"
+msgid "Tomorrow at %s"
+msgstr ""
+
+msgctxt "#33127"
+msgid "Tonight at %s"
+msgstr ""
+
+msgctxt "#33128"
+msgid "Today at %s"
+msgstr ""
+
+msgctxt "#33129"
+msgid "Weeknights at %s"
+msgstr ""
+
+msgctxt "#33130"
+msgid "Weekdays at %s"
+msgstr ""
+
+msgctxt "#33131"
+msgid "Weekends at %s"
+msgstr ""
+
+msgctxt "#33132"
+msgid "Every day at %s"
+msgstr ""
+
+msgctxt "#33134"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#33135"
+msgid "Preview promo"
+msgstr ""
+
+msgctxt "#33138"
+msgid "Turn CableBox's TV off first"
+msgstr ""
+
+msgctxt "#33139"
+msgid "Stop what's playing to show the preview?"
+msgstr ""
+
+msgctxt "#33140"
+msgid "Couldn't make this show's promo (see the Kodi log)"
+msgstr ""
+
+# Added in 1.0.15
 msgctxt "#33075"
-msgid "[B]Remote control[/B]\nCH+ / CH-, Up / Down, Page Up / Down ... change channel\nNumber keys ...................................... go to channel\nLeft ................................................... last channel\nRight ................................................ what's on now\nOK / Info ........................................... channel banner\nMenu / Context ............ captions, sleep timer & more\nBack / Stop ...................................... turn off the TV\n\n[B]Closed captions[/B]\nMain menu > Closed captions, or the Menu button while watching, switches captions\non or off for every programme (like a TV's CC setting).  'Caption options' in that\nmenu picks a track or loads a subtitle file.  To use the remote's subtitle button,\nrun Settings > Tools > Remote CC button once.\n\n[B]Station folders[/B]\nSet a Stations folder (Settings > Viewing) and CableBox keeps one folder per channel,\nnamed after the channel (or its call letters, or 'Channel 7'): logo.png, bumps/,\nids/ and commercials/, plus a folder per time block such as CAM Jr.  Channel\nmanager > channel > Branding & clips shows what the channel really uses and where\nit comes from, and makes or repairs its folders.  Renaming a channel offers to\nrename its folder too.\n\n[B]How the schedule works[/B]\nNothing to compile.  Each channel pulls from your Kodi library (shows, genres,\ndecades, movies, smart playlists) or from folders, and its schedule writes itself\nas time goes by.  'Same show same time every day' channels air a fixed daily\nlineup and series always continue with the next episode.  Time blocks let you put\ncartoons on Saturday mornings or movies in prime time.\n\nEdit a channel and its schedule rebuilds itself from now on - episode progress is kept.\n\n[B]One channel per show[/B]\nEach TV show has one home channel - the one it fits best (your own picks first,\nthen folders/tags/studios, then its main genre).  A show whose genres are too\nsmall for a channel of their own goes on the biggest genre network.  And the same show is never on two channels at the same time.\nSettings > Programming > 'Shows on more than one channel' changes this.\n\n[B]Menu and tools[/B]\nThe menu keeps to the everyday things: Watch TV, What's on now (tune straight to a\nshow), the Channel manager, the Weekly planner, Settings and Help.  Lineup tools\n(build a new lineup, quick setup, move shows) and maintenance (check my videos,\nclean up In progress, rebuild schedules, start over) are on the Tools page in Settings.\n\n[B]Fine-tuning[/B]\nSettings > Tools > 'Move shows between channels': pick a show (say, Good Eats) and tick the channels it\nshould air on.\nUnticking hides it there even if the channel's genre includes it.\nEach channel also has 'What's on this channel' - a checklist of everything it airs.\nChannel manager > 'Shows without a good channel' lists shows no channel picks up\nand shows that only just fit where they are, with the reason, so you can move them.\n\n[B]Studio channels[/B]\nAdd programming > 'A studio / network' makes e.g. a Disney channel from every movie\nand show whose studio contains 'Disney'.  Kodi tags work the same way.\n\n[B]Weekly planner[/B]\nEach channel has a 7-day grid (Channel manager > channel > Weekly planner, or\nWeekly planner in the main menu).  Press OK on a half-hour to pin a show there -\ne.g. Seinfeld, Fridays 8:00 PM, one hour, in order: every week it continues with\nthe next episodes.  Pinned slots always start on time; the automatic scheduler\nfills everything else and never runs into them.  You can also paint off-air\nhours, copy a day to other days, or clear a day (Menu button).\n\n[B]Your watch progress[/B]\nCableBox puts back resume points, watched status and last-played dates after it\nairs something, so surfing doesn't fill your 'In progress' list (Settings >\nViewing).  Settings > Tools > 'Clean up my In progress list' tidies up an older list.\n\n[B]Quick setup[/B]\nSettings > Tools > Quick setup: overnight sign-off (default 12 AM - 5 AM) and automatic\nprime-time lineups (default 8 - 11 PM) for every channel at once.  Prime-time\nslots appear in the weekly planner; edit any of them and it becomes yours.\n\n[B]Holidays[/B]\nHalloween (October, all-out on the 31st), Thanksgiving Day and Christmas (from the day\nafter Thanksgiving, all-out on the 24th and 25th): each channel mixes in its own holiday\nepisodes and movies (Kodi tags first, then genres such as Horror and Mystery, then titles) - a few at\nfirst, more as the day gets closer, all day on the day itself.  Optional holiday\ncommercial and bump folders.  The rest of the year Christmas and Thanksgiving episodes\nare saved for their season.  Settings > Seasons.\n\n[B]Off the air[/B]\nOff-air hours show a 1950s 'Please stand by' test card (or color bars), with an\noptional sign-off clip (anthem, farewell) and sign-on clip from your own folders.\n\n[B]Station IDs[/B]\nGive a channel a folder of station ID clips (\"You're watching...\") and one plays\nbetween programs, right before the next show starts.\n\n[B]Commercials & bumps[/B]\nPoint Settings at a folder of commercials and (optionally) bumps.  Breaks are cut\ninto shows to fill each half hour, like real cable.  Movie channels play commercials\nbetween films.  Without commercials the gap is filled with an 'Up next' card.\n'Check my commercials & bumps' shows which clips can't be used.\n\n[B]Files[/B]\nYour lineup lives in userdata/addon_data/script.cablebox42/channels.json if you\nprefer editing it by hand.\n\n[B]Step-by-step guide[/B]\nHOWTO.md in the add-on's folder, or online:\ngithub.com/SeadogMcGrog/script.cablebox42/blob/main/HOWTO.md\n\n[B]About[/B]\nCableBox 42 is designed, tested and maintained by Seadog McGrog.  Much of the code\nwas written with the help of Claude, an AI assistant made by Anthropic.  Anthropic is\nnot affiliated with this project and has not reviewed or endorsed it.\nInspired by FieldStation42 by Shane Mason (no shared code)."
+msgid "[B]Remote control[/B]\nCH+ / CH-, Up / Down, Page Up / Down ... change channel\nNumber keys ...................................... go to channel\nLeft ................................................... last channel\nRight ................................................ what's on now\nOK / Info ........................................... channel banner\nMenu / Context ............ captions, sleep timer & more\nBack / Stop ...................................... turn off the TV\n\nBack takes you to where you switched the TV on: this menu if you chose Watch TV\nhere, otherwise Kodi.  Menu > CableBox menu turns the TV off and opens this menu\nfrom anywhere; Watch TV turns it back on, on the same channel.\n\n[B]Closed captions[/B]\nMain menu > Closed captions, or the Menu button while watching, switches captions\non or off for every programme (like a TV's CC setting).  'Caption options' in that\nmenu picks a track or loads a subtitle file.  To use the remote's subtitle button,\nrun Settings > On screen > Remote CC button once.\n\n[B]Station folders[/B]\nSet a Stations folder (Settings > Channels) and CableBox keeps one folder per channel,\nnamed after the channel (or its call letters, or 'Channel 7'): logo.png, bumps/,\nids/ and commercials/, plus a folder per time-of-day name such as CAM Jr.  Channel\nmanager > channel > Breaks & clips shows the clips the channel really uses and where\nthey come from; Identity > Station folder makes or repairs its folders.  Renaming a\nchannel offers to rename its folder too.\n\n[B]Stations and your own channels[/B]\nA built-in station (Comedy Corner, Chameleon...) is a brand - name, call letters,\nlogo, names by time of day - plus its shows.  Channel manager > channel > Identity:\n'Make this channel my own' takes the brand away and keeps the name and all the\nprogramming; rename it and give it your own logo.  Any logo of yours (the image you\npicked, the station folder's, the logo folder's) beats a built-in one.\n\n[B]How the schedule works[/B]\nNothing to compile.  Each channel pulls from your Kodi library (shows, genres,\ndecades, movies, smart playlists) or from folders, and its schedule writes itself\nas time goes by.  'Same show same time every day' channels air a fixed daily\nlineup and series always continue with the next episode.  Time blocks let you put\ncartoons on Saturday mornings or movies in prime time.\n\nEdit a channel and the change applies from its next programme - every show keeps its place.\n\n[B]One channel per show[/B]\nEach TV show has one home channel - the one it fits best (your own picks first,\nthen folders/tags/studios, then its main genre).  A show whose genres are too\nsmall for a channel of their own goes on the biggest genre network.  And the same show is never on two channels at the same time.\nSettings > Channels > 'Shows on more than one channel' changes this.\n\n[B]Menu and tools[/B]\nThe menu keeps to the everyday things: Watch TV, What's on now (tune straight to a\nshow), the Channel manager, the Weekly planner, Holidays & events, Settings and\nHelp.  Lineup tools (build my lineup, move shows, sign-off and prime time, station\nfolders) are in the Channel manager; maintenance (check my videos, refresh schedules,\nstart series over, start over) is on the Tools page in Settings.  In Settings, OK\nsaves and Back cancels; a button row there (a tool, Preview a promo) saves what you changed before it, like OK.\nChanges to settings, channels and station clips apply from\neach channel's next programme on their own: what's on stays on, and every show keeps\nits next episode.  Only Tools > Start series over sends shows back to episode one.\n\n[B]Fine-tuning[/B]\nChannel manager > Lineup tools > 'Move shows between channels': pick a show (say, Good Eats)\nand tick the channels it should air on.\nUnticking hides it there even if the channel's genre includes it.\nEach channel also has 'What's on this channel' - a checklist of everything it airs.\nChannel manager > 'Shows without a good channel' lists shows no channel picks up\nand shows that only just fit where they are, with the reason, so you can move them.\n\n[B]Studio channels[/B]\nAdd programming > 'A studio / network' makes e.g. a Disney channel from every movie\nand show whose studio contains 'Disney'.  Kodi tags work the same way.\n\n[B]Weekly planner[/B]\nEach channel has a 7-day grid (Channel manager > channel > Weekly planner, or\nWeekly planner in the main menu).  Press OK on a half-hour to pin a show there -\ne.g. Seinfeld, Fridays 8:00 PM, one hour, in order: every week it continues with\nthe next episodes.  Pinned slots always start on time; the automatic scheduler\nfills everything else and never runs into them.  You can also paint off-air\nhours, copy a day to other days, or clear a day (Menu button).\nRight past Sunday goes to the next week, Left past Monday to the week before;\nholidays and specials show in their own week, with a star on the day.\n\n[B]Your watch progress[/B]\nCableBox puts back resume points, watched status and last-played dates after it\nairs something, so surfing doesn't fill your 'In progress' list (Settings >\nStart-up & library).  'Clean up my In progress list' on the same page tidies up an older list.\n\n[B]Sign-off and prime time for all channels[/B]\nChannel manager > Lineup tools: overnight sign-off (default 12 AM - 5 AM) and automatic\nprime-time lineups (default 8 - 11 PM) for every channel at once.  Channels that\nalready have off-air hours keep them unless you say otherwise.  Prime-time\nslots appear in the weekly planner; edit any of them and it becomes yours.\n\n[B]Holidays[/B]\nHalloween (October, all-out on the 31st), Thanksgiving Day and Christmas (from the day\nafter Thanksgiving, all-out on the 24th and 25th): each channel mixes in its own holiday\nepisodes and movies (Kodi tags first, then genres such as Horror, then titles) - a few at\nfirst, more as the day gets closer, all day on the day itself.  Optional holiday\ncommercial and bump folders.  The rest of the year Christmas and Thanksgiving episodes\nare saved for their season.  Main menu > Holidays & events > Holiday seasons: each\nseason's dates (Canadian Thanksgiving too), how much in the run-up, tags and genres\nticked from your library, extra title words, and Show what matches.  + Add a\nseason adds any holiday, real or made up (Festivus, Bastille Day, Diwali with\nthe dates you type for each year).\n\n[B]Holidays and specials[/B]\nMain menu > Holidays & events > Calendar (also Channel manager > channel >\nSchedule): a month calendar - OK on a day adds a special\nthere, Menu shows them as a list.  The holiday seasons are shaded on it (big days red,\nrun-up plum) and seasons and specials share one list of holidays: When? > A holiday\nfrom my list, and Holiday episodes work for every holiday.\nA special is a marathon or a holiday lineup on a date - 31 December, the 4th Thursday of\nNovember, Good Friday - on one channel or several, all day or for hours you\nchoose, back every year.  It airs instead of the channel's usual schedule for\nthose hours, and breaks promote it in the days before.\n\n[B]Off the air[/B]\nOff-air hours show a 1950s 'Please stand by' test card (or color bars), with an\noptional sign-off clip (anthem, farewell) and sign-on clip from your own folders.\n\n[B]Station IDs[/B]\nGive a channel a folder of station ID clips (\"You're watching...\") and one plays\nbetween programs, right before the next show starts.\n\n[B]Commercials & bumps[/B]\nPoint Settings at a folder of commercials and (optionally) bumps.  Breaks are cut\ninto shows to fill each half hour, like real cable.  Movie channels play commercials\nbetween films.  Without commercials the gap is filled with an 'Up next' card.\nSettings > Tools > 'Check my videos' shows which clips can't be used.\n\n[B]Promos[/B]\nSettings > Breaks > Promos: breaks now and then include a short promo for\nwhat this channel airs next - the episode's still, the show's logo, the episode\ntitle, a short synopsis when one fits, 'Up next' or the day and time, and the show's\ntheme.mp3, all from your own library (nothing in it is changed).  Your own promo\nclips in a station folder's promos/ come first.  Settings > Breaks > Preview a promo\nplays one channel's next promo (or a later one) straight away.\n\n[B]Files[/B]\nYour lineup lives in userdata/addon_data/script.cablebox42/channels.json if you\nprefer editing it by hand.\n\n[B]Step-by-step guide[/B]\nHOWTO.md in the add-on's folder, or online:\ngithub.com/SeadogMcGrog/script.cablebox42/blob/main/HOWTO.md\n\n[B]About[/B]\nCableBox 42 is designed, tested and maintained by Seadog McGrog.  Much of the code\nwas written with the help of Claude, an AI assistant made by Anthropic.  Anthropic is\nnot affiliated with this project and has not reviewed or endorsed it.\nInspired by FieldStation42 by Shane Mason (no shared code)."
 msgstr ""
 
 msgctxt "#33078"
 msgid "Choose where your station folders should go.[CR][CR]CableBox makes one folder per channel, with bumps, ids and commercials inside - drop clips (and a logo.png) in and CableBox picks them up."
+msgstr ""
+
+# Build my lineup: every screen ends in OK or Cancel
+msgctxt "#33200"
+msgid "Cancel setup"
+msgstr ""
+
+msgctxt "#33201"
+msgid "Leave without changing anything."
+msgstr ""
+
+msgctxt "#33202"
+msgid "Choose another"
+msgstr ""
+
+msgctxt "#33203"
+msgid "Sign off overnight"
+msgstr ""
+
+msgctxt "#33204"
+msgid "12 AM - 5 AM a 'Please stand by' card shows; the guide and weather stay on."
+msgstr ""
+
+msgctxt "#33205"
+msgid "Prime-time lineup"
+msgstr ""
+
+msgctxt "#33206"
+msgid "8 - 11 PM: each channel's best shows (movie channels: a movie at 8). Change them in the weekly planner."
+msgstr ""
+
+msgctxt "#33207"
+msgid "Extras (untick what you don't want)"
+msgstr ""
+
+msgctxt "#33208"
+msgid "Add %d channels (%s) after your current ones?"
+msgstr ""
+
+msgctxt "#33209"
+msgid "Replace your %d channels with these %d?"
+msgstr ""
+
+msgctxt "#33210"
+msgid "Set up these %d channels (%s)?"
+msgstr ""
+
+msgctxt "#33211"
+msgid "Overnight sign-off: %s  ·  Prime time: %s"
+msgstr ""
+
+msgctxt "#33212"
+msgid "Channel folders: %s"
+msgstr ""
+
+msgctxt "#33213"
+msgid "Music: %s"
+msgstr ""
+
+msgctxt "#33214"
+msgid "Weather city: %s"
+msgstr ""
+
+msgctxt "#33215"
+msgid "OK"
+msgstr ""
+
+msgctxt "#33216"
+msgid "Your lineup already has all of these channels - nothing to add."
+msgstr ""
+
+msgctxt "#33217"
+msgid "Start watching"
+msgstr ""
+
+msgctxt "#33218"
+msgid "Setup cancelled - nothing changed"
+msgstr ""
+
+# Consistent menus and questions
+msgctxt "#33219"
+msgid "Move %s to %d"
+msgstr ""
+
+msgctxt "#33220"
+msgid "Slide channels %d and up over by one"
+msgstr ""
+
+msgctxt "#33221"
+msgid "Pick another number"
+msgstr ""
+
+msgctxt "#33222"
+msgid "%s has %d source(s) of programming.[CR]Add more?"
+msgstr ""
+
+msgctxt "#33223"
+msgid "Add more"
+msgstr ""
+
+msgctxt "#33224"
+msgid "Channel %d %s added"
+msgstr ""
+
+msgctxt "#33225"
+msgid "Keep"
+msgstr ""
+
+msgctxt "#33226"
+msgid "Discard"
+msgstr ""
+
+msgctxt "#33227"
+msgid "Back to the list"
+msgstr ""
+
+msgctxt "#33228"
+msgid "Pick years"
+msgstr ""
+
+msgctxt "#33229"
+msgid "Any year"
+msgstr ""
+
+msgctxt "#33230"
+msgid "Pick a set"
+msgstr ""
+
+msgctxt "#33231"
+msgid "Any movies"
+msgstr ""
+
+msgctxt "#33232"
+msgid "Its usual settings: %s[CR]Use these, or keep this channel's own?"
+msgstr ""
+
+msgctxt "#33233"
+msgid "Use defaults"
+msgstr ""
+
+msgctxt "#33234"
+msgid "Keep my settings"
+msgstr ""
+
+msgctxt "#33235"
+msgid "Delete %d %s?[CR][CR]Its schedule and pinned shows go with it. Your videos and its station folder are not touched."
+msgstr ""
+
+msgctxt "#33236"
+msgid "Delete"
+msgstr ""
+
+msgctxt "#33237"
+msgid "Use this station"
+msgstr ""
+
+msgctxt "#33239"
+msgid "Replace"
+msgstr ""
+
+msgctxt "#33240"
+msgid "Clear"
+msgstr ""
+
+msgctxt "#33242"
+msgid "Clear them"
+msgstr ""
+
+msgctxt "#33243"
+msgid "Keep it off"
+msgstr ""
+
+msgctxt "#33244"
+msgid "Set it up"
+msgstr ""
+
+msgctxt "#33245"
+msgid "Remove the time block %s?"
+msgstr ""
+
+msgctxt "#33246"
+msgid "Remove the off-air hours %s?"
+msgstr ""
+
+msgctxt "#33247"
+msgid "Remove the off-air hours %s - %s?"
+msgstr ""
+
+msgctxt "#33248"
+msgid "%s added (%s - %s)"
+msgstr ""
+
+msgctxt "#33249"
+msgid "%s not added - it had no programming"
+msgstr ""
+
+msgctxt "#33250"
+msgid "Off the air %s - %s, %s"
+msgstr ""
+
+msgctxt "#33251"
+msgid "Pinned: %s"
+msgstr ""
+
+msgctxt "#33252"
+msgid "Change to %s?"
+msgstr ""
+
+msgctxt "#33253"
+msgid "%s at %s"
+msgstr ""
+
+# Added in 1.2.0 (promo time phrases)
+msgctxt "#33141"
+msgid "Up next"
+msgstr ""
+
+msgctxt "#33142"
+msgid "Monday at %s"
+msgstr ""
+
+msgctxt "#33143"
+msgid "Tuesday at %s"
+msgstr ""
+
+msgctxt "#33144"
+msgid "Wednesday at %s"
+msgstr ""
+
+msgctxt "#33145"
+msgid "Thursday at %s"
+msgstr ""
+
+msgctxt "#33146"
+msgid "Friday at %s"
+msgstr ""
+
+msgctxt "#33147"
+msgid "Saturday at %s"
+msgstr ""
+
+msgctxt "#33148"
+msgid "Sunday at %s"
+msgstr ""
+
+msgctxt "#33149"
+msgid "Mondays at %s"
+msgstr ""
+
+msgctxt "#33150"
+msgid "Tuesdays at %s"
+msgstr ""
+
+msgctxt "#33151"
+msgid "Wednesdays at %s"
+msgstr ""
+
+msgctxt "#33152"
+msgid "Thursdays at %s"
+msgstr ""
+
+msgctxt "#33153"
+msgid "Fridays at %s"
+msgstr ""
+
+msgctxt "#33154"
+msgid "Saturdays at %s"
+msgstr ""
+
+msgctxt "#33155"
+msgid "Sundays at %s"
+msgstr ""
+
+# Added in 1.2.0 (promo style)
+
+msgctxt "#33157"
+msgid "Early-90s cable"
+msgstr ""
+
+msgctxt "#33158"
+msgid "Modern"
+msgstr ""
+
+# Movie extras (Behind the scenes channel, stage 1)
+msgctxt "#33301"
+msgid "Also air extras with unrecognised names"
+msgstr ""
+
+msgctxt "#33302"
+msgid "Check extras..."
+msgstr ""
+
+msgctxt "#33303"
+msgid "deleted, extended or alternate"
+msgstr ""
+
+msgctxt "#33304"
+msgid "bloopers"
+msgstr ""
+
+msgctxt "#33305"
+msgid "trailer or promo"
+msgstr ""
+
+msgctxt "#33306"
+msgid "gallery or storyboards"
+msgstr ""
+
+msgctxt "#33307"
+msgid "demo reel"
+msgstr ""
+
+msgctxt "#33308"
+msgid "newsreel"
+msgstr ""
+
+msgctxt "#33309"
+msgid "music"
+msgstr ""
+
+msgctxt "#33310"
+msgid "short film"
+msgstr ""
+
+msgctxt "#33311"
+msgid "commentary"
+msgstr ""
+
+msgctxt "#33312"
+msgid "disc extra"
+msgstr ""
+
+msgctxt "#33313"
+msgid "under 60 s"
+msgstr ""
+
+msgctxt "#33314"
+msgid "name not recognised"
+msgstr ""
+
+msgctxt "#33315"
+msgid "[B]Summary[/B]"
+msgstr ""
+
+msgctxt "#33316"
+msgid "To change what airs, rename files or put them in a subfolder of Extras named Behind the scenes, Making of, Interviews, Featurettes or Documentaries (those always air).  CableBox never changes your files."
+msgstr ""
+
+msgctxt "#33317"
+msgid "Check extras"
+msgstr ""
+
+msgctxt "#33319"
+msgid "  %d films with extras, %d videos"
+msgstr ""
+
+msgctxt "#33320"
+msgid "  Air: %d videos, %d h %02d min, from %d films"
+msgstr ""
+
+msgctxt "#33321"
+msgid "  Skipped: %d videos"
+msgstr ""
+
+msgctxt "#33322"
+msgid "  Enough for a Behind the scenes channel (2 hours from 5 films): %s"
+msgstr ""
+
+msgctxt "#33323"
+msgid "[B]%s[/B]  [COLOR grey]%d to air, %d min[/COLOR]"
+msgstr ""
+
+msgctxt "#33324"
+msgid "yes"
+msgstr ""
+
+msgctxt "#33325"
+msgid "not yet"
+msgstr ""
+
+msgctxt "#33327"
+msgid "  %d Extras folders are shared by several movies and aren't used."
+msgstr ""
+
+msgctxt "#33328"
+msgid "[B]%s[/B]  [COLOR orange]this Extras folder is shared by several movies, so it isn't used - give each movie its own folder[/COLOR]"
+msgstr ""
+
+msgctxt "#33329"
+msgid "  Air  %s  %s  [COLOR grey]%s[/COLOR]"
+msgstr ""
+
+msgctxt "#33330"
+msgid "  [COLOR grey]Skipped: %s  %s  %s[/COLOR]"
+msgstr ""
+
+msgctxt "#33331"
+msgid "Behind the scenes (movie extras)"
+msgstr ""
+
+msgctxt "#33332"
+msgid "making-of pieces and interviews from your movies' Extras folders"
+msgstr ""
+
+msgctxt "#33333"
+msgid "It can take a few minutes the first time. Otherwise CableBox does it while the TV is off."
+msgstr ""
+
+msgctxt "#33334"
+msgid "Inside %s"
+msgstr ""
+
+msgctxt "#33335"
+msgid "No movie extras to air yet"
+msgstr ""
+
+msgctxt "#33337"
+msgid "Look now"
+msgstr ""
+
+msgctxt "#33338"
+msgid "Looking through your movies' Extras folders..."
+msgstr ""
+
+msgctxt "#33339"
+msgid "CableBox is already looking for extras - try again in a minute."
+msgstr ""
+
+msgctxt "#33340"
+msgid "Stopped - what was found so far is kept"
+msgstr ""
+
+msgctxt "#33341"
+msgid "  Lengths measured: %d of %d"
+msgstr ""
+
+msgctxt "#33342"
+msgid "      the rest are measured in the background while the TV is off, or with Look now"
+msgstr ""
+
+msgctxt "#33343"
+msgid "Looking through Extras folders: %d of %d movies"
+msgstr ""
+
+msgctxt "#33344"
+msgid "Measuring extras: %d of %d"
+msgstr ""
+
+msgctxt "#33345"
+msgid "CableBox does it in the background while the TV is off.[CR]Kodi looks for extras in a folder named Extras next to the movie's file (or inside VIDEO_TS or BDMV)."
+msgstr ""
+
+msgctxt "#33346"
+msgid "None of your movies has an Extras folder.[CR][CR]Kodi looks for extras in a folder named Extras next to the movie's file (or inside VIDEO_TS or BDMV)."
+msgstr ""
+
+msgctxt "#33347"
+msgid "CableBox hasn't looked through your movies' Extras folders yet."
+msgstr ""
+
+msgctxt "#33349"
+msgid "Later"
+msgstr ""
+
+msgctxt "#33350"
+msgid "CableBox measures the rest in the background while the TV is off, or it can look now."
+msgstr ""
+
+msgctxt "#33351"
+msgid "Show the list"
+msgstr ""
+
+msgctxt "#33352"
+msgid "Lengths measured: %d of %d"
+msgstr ""
+
+msgctxt "#33353"
+msgid "Press OK to look for movie extras"
+msgstr ""
+
+msgctxt "#33354"
+msgid "Look for movie extras"
+msgstr ""
+
+msgctxt "#33355"
+msgid "length can't be read"
+msgstr ""
+
+msgctxt "#33356"
+msgid "  [COLOR grey]Not measured yet  %s  %s[/COLOR]"
+msgstr ""
+
+# Behind the scenes screens follow the five kinds (extras-dialogs)
+msgctxt "#33357"
+msgid "Look for movie extras now?"
+msgstr ""
+
+msgctxt "#33358"
+msgid "It can take a few minutes the first time."
+msgstr ""
+
+msgctxt "#33359"
+msgid "Look through your movies' Extras folders now?"
+msgstr ""
+
+msgctxt "#33360"
+msgid "Look for the rest now?"
+msgstr ""
+
+msgctxt "#33361"
+msgid "Add a Behind the scenes channel?"
+msgstr ""
+
+msgctxt "#33362"
+msgid "Your movies have %d h %02d min of extras to air from %d films."
+msgstr ""
+
+msgctxt "#33363"
+msgid "Add channel"
+msgstr ""
+
+msgctxt "#33364"
+msgid "No movie extras to air"
+msgstr ""
+
+msgctxt "#33365"
+msgid "See Settings > Tools > Check extras"
+msgstr ""
+
+msgctxt "#33366"
+msgid "%s has %d h %02d min to air from %d films"
+msgstr ""
+
+msgctxt "#33367"
+msgid "%d h %02d min of movie extras to air from %d films"
+msgstr ""
+
+msgctxt "#33368"
+msgid "No extras to air found - see Settings > Tools > Check extras"
+msgstr ""
+
+msgctxt "#33369"
+msgid "You already have %s on %d. Add another?"
+msgstr ""
+
+msgctxt "#33370"
+msgid "Both channels would air the same movie extras."
+msgstr ""
+
+msgctxt "#33371"
+msgid "Add another"
+msgstr ""
+
+msgctxt "#33372"
+msgid "Use the BACKLOT logo and corner bug?"
+msgstr ""
+
+msgctxt "#33373"
+msgid "Otherwise %s has no logo until you give it one."
+msgstr ""
+
+msgctxt "#33374"
+msgid "Use them"
+msgstr ""
+
+msgctxt "#33375"
+msgid "Movie extras: %d h %02d min to air from %d films"
+msgstr ""
+
+msgctxt "#33376"
+msgid "Movie extras: none to air yet"
+msgstr ""
+
+msgctxt "#33377"
+msgid "Change type"
+msgstr ""
+
+msgctxt "#33378"
+msgid "Its programming sources aren't used by this type - they're kept, not deleted."
+msgstr ""
+
+msgctxt "#33379"
+msgid "CableBox menu"
+msgstr ""
+
+msgctxt "#33380"
+msgid "Up next and later today"
+msgstr ""
+
+msgctxt "#33381"
+msgid "%d music videos (%d from your library, %d more in %s)"
+msgstr ""
+
+msgctxt "#33382"
+msgid "%d music videos from your library"
+msgstr ""
+
+msgctxt "#33383"
+msgid "%d music videos in %s"
+msgstr ""
+
+msgctxt "#33384"
+msgid "%d of %d"
+msgstr ""
+
+msgctxt "#33385"
+msgid "%s Music Videos"
+msgstr ""
+
+msgctxt "#33386"
+msgid "%s fps: %d"
+msgstr ""
+
+msgctxt "#33387"
+msgid "Airing: %d (%d h %02d min)"
+msgstr ""
+
+msgctxt "#33388"
+msgid "Boombox needs at least %d music videos - that folder has fewer"
+msgstr ""
+
+msgctxt "#33389"
+msgid "CableBox reads each file's length, frame rate and tags. Your files are not changed."
+msgstr ""
+
+msgctxt "#33390"
+msgid "Check music videos"
+msgstr ""
+
+msgctxt "#33391"
+msgid "Choose a folder"
+msgstr ""
+
+msgctxt "#33392"
+msgid "Do you have a folder of music videos?"
+msgstr ""
+
+msgctxt "#33393"
+msgid "Every video in it and its subfolders. Name them \"Artist - Title\", e.g. \"a-ha - Take On Me (1985).mkv\""
+msgstr ""
+
+msgctxt "#33394"
+msgid "Frame rates (one per block): %s"
+msgstr ""
+
+msgctxt "#33395"
+msgid "Kodi's music videos"
+msgstr ""
+
+msgctxt "#33396"
+msgid "Looking for music videos"
+msgstr ""
+
+msgctxt "#33397"
+msgid "Music Videos"
+msgstr ""
+
+msgctxt "#33398"
+msgid "Music videos"
+msgstr ""
+
+msgctxt "#33399"
+msgid "Music videos (Kodi's library and/or a folder)"
+msgstr ""
+
+msgctxt "#33400"
+msgid "Music videos (real clock, breaks between videos)"
+msgstr ""
+
+msgctxt "#33401"
+msgid "Music videos folder"
+msgstr ""
+
+msgctxt "#33402"
+msgid "Music videos: %s"
+msgstr ""
+
+msgctxt "#33403"
+msgid "Music videos: %s (%d)"
+msgstr ""
+
+msgctxt "#33404"
+msgid "Music videos: Kodi's library and the folders they're in"
+msgstr ""
+
+msgctxt "#33405"
+msgid "Name them \"Artist - Title\", e.g. \"a-ha - Take On Me (1985).mkv\"."
+msgstr ""
+
+msgctxt "#33406"
+msgid "Not measured yet: %d. CableBox reads them while the TV is off."
+msgstr ""
+
+msgctxt "#33407"
+msgid "Read the %d music videos not measured yet?"
+msgstr ""
+
+msgctxt "#33408"
+msgid "Read them now"
+msgstr ""
+
+msgctxt "#33409"
+msgid "Reading music videos..."
+msgstr ""
+
+msgctxt "#33410"
+msgid "Video captions: %s"
+msgstr ""
+
+msgctxt "#33411"
+msgid "Your library's music videos, plus every other video in the folders they're in"
+msgstr ""
+
+msgctxt "#33412"
+msgid "[B]%d music videos found[/B] (%d from your library, %d more in %s)"
+msgstr ""
+
+msgctxt "#33413"
+msgid "[B]Check music videos[/B] (what airs, what's skipped)"
+msgstr ""
+
+msgctxt "#33414"
+msgid "[B]Couldn't be read[/B]"
+msgstr ""
+
+msgctxt "#33415"
+msgid "[B]Skipped[/B]"
+msgstr ""
+
+msgctxt "#33416"
+msgid "music videos on the real clock, breaks between videos"
+msgstr ""
+
+msgctxt "#33417"
+msgid "no audio track"
+msgstr ""
+
+msgctxt "#33418"
+msgid "shorter than 30 s"
+msgstr ""
+
+msgctxt "#33419"
+msgid "trailer or sample"
+msgstr ""
+
+# Red Thread TV (sorter fixes)
+msgctxt "#33420"
+msgid "Original title in Korean or Chinese"
+msgstr ""
+
+msgctxt "#33421"
+msgid "Korean and Chinese shows (by original title)"
+msgstr ""
+
+msgctxt "#33422"
+msgid "Preview a promo for which channel?"
+msgstr ""
+
+msgctxt "#33423"
+msgid "Preview which promo?"
+msgstr ""
+
+msgctxt "#33424"
+msgid "Later today"
+msgstr ""
+
+msgctxt "#33425"
+msgid "Pick from %d programmes in the next 6 hours"
+msgstr ""
+
+msgctxt "#33426"
+msgid "Nothing on %s in the next 6 hours"
+msgstr ""
+
+msgctxt "#33427"
+msgid "Nothing in the next 6 hours"
+msgstr ""
+
+msgctxt "#33428"
+msgid "Up next: %s"
+msgstr ""
+
+msgctxt "#33429"
+msgid "Developer tools"
+msgstr ""
+
+msgctxt "#33430"
+msgid "No channels with programmes yet"
+msgstr ""
+
+msgctxt "#33431"
+msgid "Refresh schedules (keep my place)"
+msgstr ""
+
+msgctxt "#33432"
+msgid "Start series over..."
+msgstr ""
+
+msgctxt "#33433"
+msgid "Start series over"
+msgstr ""
+
+msgctxt "#33434"
+msgid "All shows"
+msgstr ""
+
+msgctxt "#33435"
+msgid "One channel"
+msgstr ""
+
+msgctxt "#33436"
+msgid "One show"
+msgstr ""
+
+msgctxt "#33437"
+msgid "Every show will start again from its first episode.[CR]Continue?"
+msgstr ""
+
+msgctxt "#33438"
+msgid "Every show on %s will start again from its first episode.[CR]Continue?"
+msgstr ""
+
+msgctxt "#33439"
+msgid "%s will start again from %s.[CR]Continue?"
+msgstr ""
+
+msgctxt "#33440"
+msgid "its first episode"
+msgstr ""
+
+msgctxt "#33441"
+msgid "Start which channel's shows over?"
+msgstr ""
+
+msgctxt "#33442"
+msgid "Start which show over?"
+msgstr ""
+
+msgctxt "#33443"
+msgid "Updating schedules..."
+msgstr ""
+
+msgctxt "#33444"
+msgid "Schedules refreshed"
+msgstr ""
+
+msgctxt "#33445"
+msgid "Series started over"
+msgstr ""
+
+msgctxt "#33446"
+msgid "No TV shows in the library"
+msgstr ""
+
+msgctxt "#33447"
+msgid "The file is missing"
+msgstr ""
+
+msgctxt "#33448"
+msgid "Some planned episodes are missing; schedules updated"
+msgstr ""
+
+msgctxt "#33449"
+msgid "A new show isn't on a channel yet: %s"
+msgstr ""
+
+msgctxt "#33450"
+msgid "%d new shows aren't on a channel yet."
+msgstr ""
+
+
+msgctxt "#33452"
+msgid "When there are no commercials"
+msgstr ""
+
+msgctxt "#33453"
+msgid "Mix in with commercials"
+msgstr ""
+
+msgctxt "#33454"
+msgid "Off"
+msgstr ""
+
+msgctxt "#33455"
+msgid "%s · Channel %d"
+msgstr ""
+
+msgctxt "#33456"
+msgid "What's on tonight?"
+msgstr ""
+
+msgctxt "#33457"
+msgid "Every channel, now and later, scrolling around the clock."
+msgstr ""
+
+msgctxt "#33458"
+msgid "Never miss a show"
+msgstr ""
+
+msgctxt "#33459"
+msgid "What's on now and next on every channel, in one place."
+msgstr ""
+
+msgctxt "#33460"
+msgid "Plan your evening"
+msgstr ""
+
+msgctxt "#33461"
+msgid "Two hours of listings, always up to date."
+msgstr ""
+
+msgctxt "#33462"
+msgid "Your local forecast"
+msgstr ""
+
+msgctxt "#33463"
+msgid "Today's conditions and the days ahead, day and night."
+msgstr ""
+
+msgctxt "#33464"
+msgid "Before you head out"
+msgstr ""
+
+msgctxt "#33465"
+msgid "Check the sky first, any time you like."
+msgstr ""
+
+msgctxt "#33466"
+msgid "Weather, around the clock"
+msgstr ""
+
+msgctxt "#33467"
+msgid "Current conditions and the extended outlook, whenever you tune in."
+msgstr ""
+
+msgctxt "#33468"
+msgid "Tonight's lineup"
+msgstr ""
+
+msgctxt "#33469"
+msgid "Coming up"
+msgstr ""
+
+msgctxt "#33470"
+msgid "%s  %s  ·  Channel %d"
+msgstr ""
+
+msgctxt "#33471"
+msgid "All channels"
+msgstr ""
+
+msgctxt "#33472"
+msgid "Retro ads"
+msgstr ""
+
+msgctxt "#33473"
+msgid "Auto"
+msgstr ""
+
+msgctxt "#33474"
+msgid "General"
+msgstr ""
+
+msgctxt "#33475"
+msgid "Kids"
+msgstr ""
+
+msgctxt "#33476"
+msgid "Sports"
+msgstr ""
+
+msgctxt "#33477"
+msgid "Late night"
+msgstr ""
+
+msgctxt "#33478"
+msgid "Ad flavour"
+msgstr ""
+
+msgctxt "#33479"
+msgid "Ad flavour: %s"
+msgstr ""
+
+msgctxt "#33480"
+msgid "Auto (%s)"
+msgstr ""
+
+msgctxt "#33481"
+msgid "A message from %s"
+msgstr ""
+
+msgctxt "#33482"
+msgid "and this station."
+msgstr ""
+
+msgctxt "#33483"
+msgid "Rated %s"
+msgstr ""
+
+msgctxt "#33484"
+msgid "CRISP-O-MATIC"
+msgstr ""
+
+msgctxt "#33485"
+msgid "Countertop Fryer"
+msgstr ""
+
+msgctxt "#33486"
+msgid "Fries in 4 minutes. Cleans in 4 seconds!"
+msgstr ""
+
+msgctxt "#33487"
+msgid "ONLY"
+msgstr ""
+
+msgctxt "#33488"
+msgid "$19.99"
+msgstr ""
+
+msgctxt "#33489"
+msgid "Order now! %s"
+msgstr ""
+
+msgctxt "#33490"
+msgid "NEVER-DULL"
+msgstr ""
+
+msgctxt "#33491"
+msgid "Knife Set"
+msgstr ""
+
+msgctxt "#33492"
+msgid "Cuts a shoe. Then a tomato!"
+msgstr ""
+
+msgctxt "#33493"
+msgid "3 easy payments of"
+msgstr ""
+
+msgctxt "#33494"
+msgid "$9.99"
+msgstr ""
+
+msgctxt "#33495"
+msgid "SPIN-WIZ"
+msgstr ""
+
+msgctxt "#33496"
+msgid "Salad Spinner"
+msgstr ""
+
+msgctxt "#33497"
+msgid "Salad so dry it's practically toast."
+msgstr ""
+
+msgctxt "#33498"
+msgid "$12.99"
+msgstr ""
+
+msgctxt "#33499"
+msgid "STEAM GENIE"
+msgstr ""
+
+msgctxt "#33500"
+msgid "Garment Steamer"
+msgstr ""
+
+msgctxt "#33501"
+msgid "Wrinkles? Never heard of 'em."
+msgstr ""
+
+msgctxt "#33502"
+msgid "$24.99"
+msgstr ""
+
+msgctxt "#33503"
+msgid "THERMASEAL"
+msgstr ""
+
+msgctxt "#33504"
+msgid "Window Film"
+msgstr ""
+
+msgctxt "#33505"
+msgid "Keep the cold out and the cash in."
+msgstr ""
+
+msgctxt "#33506"
+msgid "$14.99"
+msgstr ""
+
+msgctxt "#33507"
+msgid "LEMON THUNDER"
+msgstr ""
+
+msgctxt "#33508"
+msgid "Dish Soap"
+msgstr ""
+
+msgctxt "#33509"
+msgid "Cuts grease like a summer storm."
+msgstr ""
+
+msgctxt "#33510"
+msgid "At grocers everywhere"
+msgstr ""
+
+msgctxt "#33511"
+msgid "Lemon Thunder Dish Soap"
+msgstr ""
+
+msgctxt "#33512"
+msgid "SUPER GLOW"
+msgstr ""
+
+msgctxt "#33513"
+msgid "Floor Wax"
+msgstr ""
+
+msgctxt "#33514"
+msgid "For a shine that lasts!"
+msgstr ""
+
+msgctxt "#33515"
+msgid "ROSE GLOW"
+msgstr ""
+
+msgctxt "#33516"
+msgid "Beauty Bar, by Sunflower Soap Co."
+msgstr ""
+
+msgctxt "#33517"
+msgid "Pure rose extract. Softer skin by Tuesday."
+msgstr ""
+
+msgctxt "#33518"
+msgid "At fine drugstores"
+msgstr ""
+
+msgctxt "#33519"
+msgid "Rose Glow Beauty Bar"
+msgstr ""
+
+msgctxt "#33520"
+msgid "CLEARSOUND 2000"
+msgstr ""
+
+msgctxt "#33521"
+msgid "Cordless Phone"
+msgstr ""
+
+msgctxt "#33522"
+msgid "Talk from the backyard! Up to 300 feet!"
+msgstr ""
+
+msgctxt "#33523"
+msgid "$59.99"
+msgstr ""
+
+msgctxt "#33524"
+msgid "At electronics stores"
+msgstr ""
+
+msgctxt "#33525"
+msgid "IS YOUR PICTURE FUZZY?"
+msgstr ""
+
+msgctxt "#33526"
+msgid "VideoVault VCR Head Cleaner"
+msgstr ""
+
+msgctxt "#33527"
+msgid "It might not be the weather."
+msgstr ""
+
+msgctxt "#33528"
+msgid "$6.99"
+msgstr ""
+
+msgctxt "#33529"
+msgid "At Video Village"
+msgstr ""
+
+msgctxt "#33530"
+msgid "BRIGHTBEAM"
+msgstr ""
+
+msgctxt "#33531"
+msgid "Flashlight"
+msgstr ""
+
+msgctxt "#33532"
+msgid "Never be in the dark again. Unless you want to."
+msgstr ""
+
+msgctxt "#33533"
+msgid "POP-TOP"
+msgstr ""
+
+msgctxt "#33534"
+msgid "Umbrella"
+msgstr ""
+
+msgctxt "#33535"
+msgid "Opens with one button. Closes with three people."
+msgstr ""
+
+msgctxt "#33536"
+msgid "$8.99"
+msgstr ""
+
+msgctxt "#33537"
+msgid "HAIR AGAIN"
+msgstr ""
+
+msgctxt "#33538"
+msgid "Spray-On Coverage"
+msgstr ""
+
+msgctxt "#33539"
+msgid "Thicker-looking hair in 30 seconds. From across the room."
+msgstr ""
+
+msgctxt "#33540"
+msgid "MOUNTAIN RIDGE"
+msgstr ""
+
+msgctxt "#33541"
+msgid "Aftershave"
+msgstr ""
+
+msgctxt "#33542"
+msgid "Smells like a pine tree that got a promotion."
+msgstr ""
+
+msgctxt "#33543"
+msgid "At fine stores"
+msgstr ""
+
+msgctxt "#33544"
+msgid "Mountain Ridge Aftershave"
+msgstr ""
+
+msgctxt "#33545"
+msgid "AQUA SMILE"
+msgstr ""
+
+msgctxt "#33546"
+msgid "Toothpaste"
+msgstr ""
+
+msgctxt "#33547"
+msgid "Now with tiny blue crystals!"
+msgstr ""
+
+msgctxt "#33548"
+msgid "NEW!"
+msgstr ""
+
+msgctxt "#33549"
+msgid "Ask your dentist. Or don't."
+msgstr ""
+
+msgctxt "#33550"
+msgid "NETWAVE ONLINE"
+msgstr ""
+
+msgctxt "#33551"
+msgid "500 free hours! Look for the disc in your mailbox."
+msgstr ""
+
+msgctxt "#33552"
+msgid "Free trial"
+msgstr ""
+
+msgctxt "#33553"
+msgid "Call %s"
+msgstr ""
+
+msgctxt "#33554"
+msgid "VOLT"
+msgstr ""
+
+msgctxt "#33555"
+msgid "Energy Drink"
+msgstr ""
+
+msgctxt "#33556"
+msgid "Zero to ALL CAPS."
+msgstr ""
+
+msgctxt "#33557"
+msgid "In the cooler aisle"
+msgstr ""
+
+msgctxt "#33558"
+msgid "Volt Energy Drink"
+msgstr ""
+
+msgctxt "#33559"
+msgid "FIZZLE POP"
+msgstr ""
+
+msgctxt "#33560"
+msgid "Soda"
+msgstr ""
+
+msgctxt "#33561"
+msgid "The taste that tickles."
+msgstr ""
+
+msgctxt "#33562"
+msgid "Ice cold, everywhere"
+msgstr ""
+
+msgctxt "#33563"
+msgid "Fizzle Pop Soda"
+msgstr ""
+
+msgctxt "#33564"
+msgid "GRANNY MAE'S"
+msgstr ""
+
+msgctxt "#33565"
+msgid "Frozen Pot Pies"
+msgstr ""
+
+msgctxt "#33566"
+msgid "Like Granny made, if Granny had a microwave."
+msgstr ""
+
+msgctxt "#33567"
+msgid "$1.79"
+msgstr ""
+
+msgctxt "#33568"
+msgid "In your grocer's freezer"
+msgstr ""
+
+msgctxt "#33569"
+msgid "CHEEZ RIDGES"
+msgstr ""
+
+msgctxt "#33570"
+msgid "Ridges so deep you could lose a dime in 'em."
+msgstr ""
+
+msgctxt "#33571"
+msgid "Snack-size or party-size"
+msgstr ""
+
+msgctxt "#33572"
+msgid "Cheez Ridges"
+msgstr ""
+
+msgctxt "#33573"
+msgid "MIDNIGHT MINT"
+msgstr ""
+
+msgctxt "#33574"
+msgid "Gum"
+msgstr ""
+
+msgctxt "#33575"
+msgid "For when your breath has a bigger night than you do."
+msgstr ""
+
+msgctxt "#33576"
+msgid "5 sticks"
+msgstr ""
+
+msgctxt "#33577"
+msgid "25¢"
+msgstr ""
+
+msgctxt "#33578"
+msgid "Midnight Mint Gum"
+msgstr ""
+
+msgctxt "#33579"
+msgid "MUSCLE MIGHTY"
+msgstr ""
+
+msgctxt "#33580"
+msgid "Rub"
+msgstr ""
+
+msgctxt "#33581"
+msgid "Rub it in. Walk it off."
+msgstr ""
+
+msgctxt "#33582"
+msgid "At drugstores"
+msgstr ""
+
+msgctxt "#33583"
+msgid "Muscle Mighty Rub"
+msgstr ""
+
+msgctxt "#33584"
+msgid "CRUNCH COMETS"
+msgstr ""
+
+msgctxt "#33585"
+msgid "Marshmallow planets in every bowl!"
+msgstr ""
+
+msgctxt "#33586"
+msgid "Part of a balanced breakfast"
+msgstr ""
+
+msgctxt "#33587"
+msgid "TURBO TRAX"
+msgstr ""
+
+msgctxt "#33588"
+msgid "Two loops! One jump! Zero brakes!"
+msgstr ""
+
+msgctxt "#33589"
+msgid "$29.99"
+msgstr ""
+
+msgctxt "#33590"
+msgid "Batteries not included"
+msgstr ""
+
+msgctxt "#33591"
+msgid "SQUISHLINGS"
+msgstr ""
+
+msgctxt "#33592"
+msgid "Collect all 24! (Number 24 is very rare.)"
+msgstr ""
+
+msgctxt "#33593"
+msgid "$2.99"
+msgstr ""
+
+msgctxt "#33594"
+msgid "Each sold separately"
+msgstr ""
+
+msgctxt "#33595"
+msgid "ROBO-REX"
+msgstr ""
+
+msgctxt "#33596"
+msgid "He roars! He stomps! He's afraid of the vacuum."
+msgstr ""
+
+msgctxt "#33597"
+msgid "$39.99"
+msgstr ""
+
+msgctxt "#33598"
+msgid "GRAVITY HOPPERS"
+msgstr ""
+
+msgctxt "#33599"
+msgid "Bounce like you're on the moon!"
+msgstr ""
+
+msgctxt "#33600"
+msgid "Helmet sold separately"
+msgstr ""
+
+msgctxt "#33601"
+msgid "GLITTER GOO LAB"
+msgstr ""
+
+msgctxt "#33602"
+msgid "Make your own goo! Clean up your own goo."
+msgstr ""
+
+msgctxt "#33603"
+msgid "Ages 6 and up"
+msgstr ""
+
+msgctxt "#33604"
+msgid "FRUIT ZAPPERS"
+msgstr ""
+
+msgctxt "#33605"
+msgid "Made with real fruit! Somewhere in there!"
+msgstr ""
+
+msgctxt "#33606"
+msgid "In the snack aisle"
+msgstr ""
+
+msgctxt "#33607"
+msgid "SIR TOASTINGTON"
+msgstr ""
+
+msgctxt "#33608"
+msgid "Breakfast with a moustache."
+msgstr ""
+
+msgctxt "#33609"
+msgid "Ask a grown-up to toast"
+msgstr ""
+
+msgctxt "#33610"
+msgid "NO MONEY DOWN!"
+msgstr ""
+
+msgctxt "#33611"
+msgid "If you can sit on it, Earl's got it!"
+msgstr ""
+
+msgctxt "#33612"
+msgid "Route 9 by the water tower"
+msgstr ""
+
+msgctxt "#33613"
+msgid "Big Earl's"
+msgstr ""
+
+msgctxt "#33614"
+msgid "Furniture Barn"
+msgstr ""
+
+msgctxt "#33615"
+msgid "BIGGEST SALE EVER!"
+msgstr ""
+
+msgctxt "#33616"
+msgid "(Again!) This time Earl means it."
+msgstr ""
+
+msgctxt "#33617"
+msgid "BLACK FRIDAY BLOWOUT!"
+msgstr ""
+
+msgctxt "#33618"
+msgid "Recliners at prices that'll recline YOU."
+msgstr ""
+
+msgctxt "#33619"
+msgid "Doors open 5 am"
+msgstr ""
+
+msgctxt "#33620"
+msgid "SPRING CLEARANCE!"
+msgstr ""
+
+msgctxt "#33621"
+msgid "Everything must go, including Earl's patience."
+msgstr ""
+
+msgctxt "#33622"
+msgid "Route 9"
+msgstr ""
+
+msgctxt "#33623"
+msgid "NEW YEAR, NEW COUCH!"
+msgstr ""
+
+msgctxt "#33624"
+msgid "Earl ate too much ham. So are the prices: big!"
+msgstr ""
+
+msgctxt "#33625"
+msgid "ACE DISCOUNT MUFFLER"
+msgstr ""
+
+msgctxt "#33626"
+msgid "We'll quiet your car, not your wallet."
+msgstr ""
+
+msgctxt "#33627"
+msgid "Off Main St."
+msgstr ""
+
+msgctxt "#33628"
+msgid "Ace Discount"
+msgstr ""
+
+msgctxt "#33629"
+msgid "Muffler"
+msgstr ""
+
+msgctxt "#33630"
+msgid "FREE DELIVERY!"
+msgstr ""
+
+msgctxt "#33631"
+msgid "30 minutes or it's free. Sal is very fast."
+msgstr ""
+
+msgctxt "#33632"
+msgid "Sal's"
+msgstr ""
+
+msgctxt "#33633"
+msgid "Pizza Palace"
+msgstr ""
+
+msgctxt "#33634"
+msgid "OVER 200 CARS!"
+msgstr ""
+
+msgctxt "#33635"
+msgid "Zero down. Zero worries. Cupholders extra."
+msgstr ""
+
+msgctxt "#33636"
+msgid "Exit 12"
+msgstr ""
+
+msgctxt "#33637"
+msgid "Lakeside"
+msgstr ""
+
+msgctxt "#33638"
+msgid "Auto Mall"
+msgstr ""
+
+msgctxt "#33639"
+msgid "TWO-FOR-ONE TUESDAYS!"
+msgstr ""
+
+msgctxt "#33640"
+msgid "Shoes sprayed fresh daily."
+msgstr ""
+
+msgctxt "#33641"
+msgid "Lucky Lanes"
+msgstr ""
+
+msgctxt "#33642"
+msgid "Bowling"
+msgstr ""
+
+msgctxt "#33643"
+msgid "NEW PATIENTS WELCOME"
+msgstr ""
+
+msgctxt "#33644"
+msgid "We'll make you smile. We'll ask first."
+msgstr ""
+
+msgctxt "#33645"
+msgid "Sunrise"
+msgstr ""
+
+msgctxt "#33646"
+msgid "Dental"
+msgstr ""
+
+msgctxt "#33647"
+msgid "WALK-INS WELCOME"
+msgstr ""
+
+msgctxt "#33648"
+msgid "Dr. Joe will crack you up."
+msgstr ""
+
+msgctxt "#33649"
+msgid "Dr. Joe's"
+msgstr ""
+
+msgctxt "#33650"
+msgid "Chiropractic"
+msgstr ""
+
+msgctxt "#33651"
+msgid "INJURED?"
+msgstr ""
+
+msgctxt "#33652"
+msgid "Call before you even get up."
+msgstr ""
+
+msgctxt "#33653"
+msgid "Dewey, Settle & Howe"
+msgstr ""
+
+msgctxt "#33654"
+msgid "Attorneys"
+msgstr ""
+
+msgctxt "#33655"
+msgid "NEW RELEASES EVERY TUESDAY"
+msgstr ""
+
+msgctxt "#33656"
+msgid "Late fees forgiven on your birthday."
+msgstr ""
+
+msgctxt "#33657"
+msgid "Next to Sal's"
+msgstr ""
+
+msgctxt "#33658"
+msgid "Video"
+msgstr ""
+
+msgctxt "#33659"
+msgid "Village"
+msgstr ""
+
+msgctxt "#33660"
+msgid "SNOW TIRES MOUNTED WHILE YOU WAIT"
+msgstr ""
+
+msgctxt "#33661"
+msgid "(And wait.) Free coffee!"
+msgstr ""
+
+msgctxt "#33662"
+msgid "Tread Masters"
+msgstr ""
+
+msgctxt "#33663"
+msgid "Tire"
+msgstr ""
+
+msgctxt "#33664"
+msgid "FURNACE ACTING UP?"
+msgstr ""
+
+msgctxt "#33665"
+msgid "We'll make it toasty by suppertime."
+msgstr ""
+
+msgctxt "#33666"
+msgid "Polar Bear"
+msgstr ""
+
+msgctxt "#33667"
+msgid "Heating & Cooling"
+msgstr ""
+
+msgctxt "#33668"
+msgid "AC ON THE FRITZ?"
+msgstr ""
+
+msgctxt "#33669"
+msgid "We'll chill you out."
+msgstr ""
+
+msgctxt "#33670"
+msgid "WE'LL GET THE BUGS OUT"
+msgstr ""
+
+msgctxt "#33671"
+msgid "Hot wax Thursdays!"
+msgstr ""
+
+msgctxt "#33672"
+msgid "Kwik Kleen"
+msgstr ""
+
+msgctxt "#33673"
+msgid "Car Wash"
+msgstr ""
+
+msgctxt "#33674"
+msgid "REAL TREES!"
+msgstr ""
+
+msgctxt "#33675"
+msgid "Real needles! Real everywhere!"
+msgstr ""
+
+msgctxt "#33676"
+msgid "Behind the Kwik Kleen"
+msgstr ""
+
+msgctxt "#33677"
+msgid "Pine Hollow"
+msgstr ""
+
+msgctxt "#33678"
+msgid "Tree Lot"
+msgstr ""
+
+msgctxt "#33679"
+msgid "NEW YEAR, NEW YOU"
+msgstr ""
+
+msgctxt "#33680"
+msgid "Old you welcome too. First month free!"
+msgstr ""
+
+msgctxt "#33681"
+msgid "Iron Paradise"
+msgstr ""
+
+msgctxt "#33682"
+msgid "Gym"
+msgstr ""
+
+msgctxt "#33683"
+msgid "BEAT THE HEAT!"
+msgstr ""
+
+msgctxt "#33684"
+msgid "Above-ground, in-ground, on-sale."
+msgstr ""
+
+msgctxt "#33685"
+msgid "Splash Zone"
+msgstr ""
+
+msgctxt "#33686"
+msgid "Pools & Spas"
+msgstr ""
+
+msgctxt "#33687"
+msgid "BOTTOMLESS COFFEE!"
+msgstr ""
+
+msgctxt "#33688"
+msgid "Pie of the day, every day."
+msgstr ""
+
+msgctxt "#33689"
+msgid "Open 24 hours"
+msgstr ""
+
+msgctxt "#33690"
+msgid "The Rusty Spoon"
+msgstr ""
+
+msgctxt "#33691"
+msgid "Diner"
+msgstr ""
+
+msgctxt "#33692"
+msgid "BACK TO SCHOOL!"
+msgstr ""
+
+msgctxt "#33693"
+msgid "Crayons! Lunchboxes! A whole aisle of folders!"
+msgstr ""
+
+msgctxt "#33694"
+msgid "Kiddie"
+msgstr ""
+
+msgctxt "#33695"
+msgid "Kingdom"
+msgstr ""
+
+msgctxt "#33696"
+msgid "HAYRIDES EVERY WEEKEND"
+msgstr ""
+
+msgctxt "#33697"
+msgid "Pick your own pumpkin. Carve your own fate."
+msgstr ""
+
+msgctxt "#33698"
+msgid "County Rd. 4"
+msgstr ""
+
+msgctxt "#33699"
+msgid "Miller Farm"
+msgstr ""
+
+msgctxt "#33700"
+msgid "Pumpkin Patch"
+msgstr ""
+
+msgctxt "#33701"
+msgid "FREE TOASTER WITH NEW ACCOUNTS"
+msgstr ""
+
+msgctxt "#33702"
+msgid "Keeping your money since before you had any."
+msgstr ""
+
+msgctxt "#33703"
+msgid "Hometown"
+msgstr ""
+
+msgctxt "#33704"
+msgid "Savings & Loan"
+msgstr ""
+
+msgctxt "#33705"
+msgid "Sit up straight."
+msgstr ""
+
+msgctxt "#33706"
+msgid "Your spine has feelings too."
+msgstr ""
+
+msgctxt "#33707"
+msgid "the Council for Sitting Up Straight"
+msgstr ""
+
+msgctxt "#33708"
+msgid "COUNCIL"
+msgstr ""
+
+msgctxt "#33709"
+msgid "FOR"
+msgstr ""
+
+msgctxt "#33710"
+msgid "POSTURE"
+msgstr ""
+
+msgctxt "#33711"
+msgid "Eat a vegetable today."
+msgstr ""
+
+msgctxt "#33712"
+msgid "Ketchup does not count."
+msgstr ""
+
+msgctxt "#33713"
+msgid "the Society of Green Things"
+msgstr ""
+
+msgctxt "#33714"
+msgid "SOCIETY"
+msgstr ""
+
+msgctxt "#33715"
+msgid "OF"
+msgstr ""
+
+msgctxt "#33716"
+msgid "GREENS"
+msgstr ""
+
+msgctxt "#33717"
+msgid "Look both ways."
+msgstr ""
+
+msgctxt "#33718"
+msgid "Then once more, just in case."
+msgstr ""
+
+msgctxt "#33719"
+msgid "the Crosswalk League"
+msgstr ""
+
+msgctxt "#33720"
+msgid "CROSSWALK"
+msgstr ""
+
+msgctxt "#33721"
+msgid "LEAGUE"
+msgstr ""
+
+msgctxt "#33722"
+msgid "Call your mother."
+msgstr ""
+
+msgctxt "#33723"
+msgid "She's not mad. She's just saying."
+msgstr ""
+
+msgctxt "#33724"
+msgid "Mothers United"
+msgstr ""
+
+msgctxt "#33725"
+msgid "MOTHERS"
+msgstr ""
+
+msgctxt "#33726"
+msgid "UNITED"
+msgstr ""
+
+msgctxt "#33727"
+msgid "Your VCR clock is blinking 12:00."
+msgstr ""
+
+msgctxt "#33728"
+msgid "It's okay. We all know."
+msgstr ""
+
+msgctxt "#33729"
+msgid "Friends of the Correct Time"
+msgstr ""
+
+msgctxt "#33730"
+msgid "FRIENDS"
+msgstr ""
+
+msgctxt "#33731"
+msgid "TIME"
+msgstr ""
+
+msgctxt "#33732"
+msgid "It's 10 o'clock."
+msgstr ""
+
+msgctxt "#33733"
+msgid "Do you know where your remote is?"
+msgstr ""
+
+msgctxt "#33734"
+msgid "Couch Cushion Search & Rescue"
+msgstr ""
+
+msgctxt "#33735"
+msgid "COUCH"
+msgstr ""
+
+msgctxt "#33736"
+msgid "RESCUE"
+msgstr ""
+
+msgctxt "#33737"
+msgid "Read a book tonight."
+msgstr ""
+
+msgctxt "#33738"
+msgid "TV will still be here. Probably."
+msgstr ""
+
+msgctxt "#33739"
+msgid "the Library Friends Association"
+msgstr ""
+
+msgctxt "#33740"
+msgid "LIBRARY"
+msgstr ""
+
+msgctxt "#33741"
+msgid "Turn off the lights when you leave a room."
+msgstr ""
+
+msgctxt "#33742"
+msgid "The lights need their rest too."
+msgstr ""
+
+msgctxt "#33743"
+msgid "the Committee for Darker Rooms"
+msgstr ""
+
+msgctxt "#33744"
+msgid "COMMITTEE"
+msgstr ""
+
+msgctxt "#33745"
+msgid "DARKNESS"
+msgstr ""
+
+msgctxt "#33746"
+msgid "Wear a jacket."
+msgstr ""
+
+msgctxt "#33747"
+msgid "It's cold out there. We checked."
+msgstr ""
+
+msgctxt "#33748"
+msgid "your local weather friends"
+msgstr ""
+
+msgctxt "#33749"
+msgid "WEATHER"
+msgstr ""
+
+msgctxt "#33750"
+msgid "Drink some water."
+msgstr ""
+
+msgctxt "#33751"
+msgid "It's hot out. Even the sun is sweating."
+msgstr ""
+
+msgctxt "#33752"
+msgid "Go outside today."
+msgstr ""
+
+msgctxt "#33753"
+msgid "The sun misses you."
+msgstr ""
+
+msgctxt "#33754"
+msgid "the Department of Outdoors"
+msgstr ""
+
+msgctxt "#33755"
+msgid "DEPT."
+msgstr ""
+
+msgctxt "#33756"
+msgid "OUTDOORS"
+msgstr ""
+
+msgctxt "#33757"
+msgid "NOW ON"
+msgstr ""
+
+msgctxt "#33758"
+msgid "VIDEOCASSETTE!"
+msgstr ""
+
+msgctxt "#33759"
+msgid "NOW RENTING AT"
+msgstr ""
+
+msgctxt "#33760"
+msgid "VIDEO VILLAGE"
+msgstr ""
+
+msgctxt "#33761"
+msgid "OWN IT"
+msgstr ""
+
+msgctxt "#33762"
+msgid "TODAY!"
+msgstr ""
+
+msgctxt "#33763"
+msgid "Own it today! Ask for it by name."
+msgstr ""
+
+msgctxt "#33764"
+msgid "Rent it this weekend!"
+msgstr ""
+
+msgctxt "#33765"
+msgid "Now at a video store near you!"
+msgstr ""
+
+msgctxt "#33766"
+msgid "Available wherever videos are sold"
+msgstr ""
+
+msgctxt "#33767"
+msgid "Ask for it by name"
+msgstr ""
+
+msgctxt "#33768"
+msgid "Be the first on your block!"
+msgstr ""
+
+msgctxt "#33769"
+msgid "%s · CH %d"
+msgstr ""
+
+msgctxt "#33770"
+msgid "Your hometown station"
+msgstr ""
+
+msgctxt "#33771"
+msgid "Shining bright every night"
+msgstr ""
+
+msgctxt "#33772"
+msgid "Look ahead to great TV"
+msgstr ""
+
+msgctxt "#33773"
+msgid "Your forecast, around the clock"
+msgstr ""
+
+msgctxt "#33774"
+msgid "Cartoons all day, every day"
+msgstr ""
+
+msgctxt "#33775"
+msgid "Every color of fun"
+msgstr ""
+
+msgctxt "#33776"
+msgid "Fun for the whole family"
+msgstr ""
+
+msgctxt "#33777"
+msgid "See the world from your couch"
+msgstr ""
+
+msgctxt "#33778"
+msgid "Learning never looked so good"
+msgstr ""
+
+msgctxt "#33779"
+msgid "Laughs around the clock"
+msgstr ""
+
+msgctxt "#33780"
+msgid "Every clue, every night"
+msgstr ""
+
+msgctxt "#33781"
+msgid "Saddle up for the classics"
+msgstr ""
+
+msgctxt "#33782"
+msgid "Great stories, beautifully told"
+msgstr ""
+
+msgctxt "#33783"
+msgid "The news, whenever you want it"
+msgstr ""
+
+msgctxt "#33784"
+msgid "Crime and justice, all night long"
+msgstr ""
+
+msgctxt "#33785"
+msgid "Stories that tie hearts together"
+msgstr ""
+
+msgctxt "#33786"
+msgid "Stories straight from the heart"
+msgstr ""
+
+msgctxt "#33787"
+msgid "Turn it up"
+msgstr ""
+
+msgctxt "#33788"
+msgid "Real people. Real TV."
+msgstr ""
+
+msgctxt "#33789"
+msgid "Everybody plays, everybody wins"
+msgstr ""
+
+msgctxt "#33790"
+msgid "Movies, all night long"
+msgstr ""
+
+msgctxt "#33791"
+msgid "The golden age of the movies"
+msgstr ""
+
+msgctxt "#33792"
+msgid "Out of this world"
+msgstr ""
+
+msgctxt "#33793"
+msgid "Turn up the music"
+msgstr ""
+
+msgctxt "#33794"
+msgid "Behind the scenes, all day"
+msgstr ""
+
+msgctxt "#33795"
+msgid "Big fun for little viewers"
+msgstr ""
+
+msgctxt "#33796"
+msgid "Classic TV after dark"
+msgstr ""
+
+msgctxt "#33797"
+msgid "SNACK-O-MATIC"
+msgstr ""
+
+msgctxt "#33798"
+msgid "Popcorn Popper"
+msgstr ""
+
+msgctxt "#33799"
+msgid "Movie night starts here! Pops in 3 minutes!"
+msgstr ""
+
+msgctxt "#33800"
+msgid "$16.99"
+msgstr ""
+
+msgctxt "#33801"
+msgid "CUDDLE CAPE"
+msgstr ""
+
+msgctxt "#33802"
+msgid "Wearable Blanket"
+msgstr ""
+
+msgctxt "#33803"
+msgid "A blanket! With sleeves! Why didn't anyone think of this?"
+msgstr ""
+
+msgctxt "#33804"
+msgid "TURBO TIDY"
+msgstr ""
+
+msgctxt "#33805"
+msgid "Vacuum Cleaner"
+msgstr ""
+
+msgctxt "#33806"
+msgid "Picks up cat hair, cereal and one missing sock!"
+msgstr ""
+
+msgctxt "#33807"
+msgid "$79.99"
+msgstr ""
+
+msgctxt "#33808"
+msgid "At department stores"
+msgstr ""
+
+msgctxt "#33809"
+msgid "SUNNY DAYS"
+msgstr ""
+
+msgctxt "#33810"
+msgid "Orange Juice"
+msgstr ""
+
+msgctxt "#33811"
+msgid "Squeezed from oranges that had a really nice life."
+msgstr ""
+
+msgctxt "#33812"
+msgid "In the dairy case"
+msgstr ""
+
+msgctxt "#33813"
+msgid "RISE & GRIND"
+msgstr ""
+
+msgctxt "#33814"
+msgid "Instant Coffee"
+msgstr ""
+
+msgctxt "#33815"
+msgid "Tastes like coffee. Mostly!"
+msgstr ""
+
+msgctxt "#33816"
+msgid "CROCK-MATE"
+msgstr ""
+
+msgctxt "#33817"
+msgid "Slow Cooker"
+msgstr ""
+
+msgctxt "#33818"
+msgid "Leave in the morning. Come home to supper."
+msgstr ""
+
+msgctxt "#33819"
+msgid "GLEAMO"
+msgstr ""
+
+msgctxt "#33820"
+msgid "Glass Cleaner"
+msgstr ""
+
+msgctxt "#33821"
+msgid "So clear, you'll walk right into it."
+msgstr ""
+
+msgctxt "#33822"
+msgid "SNAP-SHOT 110"
+msgstr ""
+
+msgctxt "#33823"
+msgid "Pocket Camera"
+msgstr ""
+
+msgctxt "#33824"
+msgid "Point! Click! Wait a week for your pictures!"
+msgstr ""
+
+msgctxt "#33825"
+msgid "At camera counters"
+msgstr ""
+
+msgctxt "#33826"
+msgid "JIFFY JERKY"
+msgstr ""
+
+msgctxt "#33827"
+msgid "Beef Jerky"
+msgstr ""
+
+msgctxt "#33828"
+msgid "For the road, the game or the couch."
+msgstr ""
+
+msgctxt "#33829"
+msgid "At the checkout"
+msgstr ""
+
+msgctxt "#33830"
+msgid "BUBBLE BLASTA 3000"
+msgstr ""
+
+msgctxt "#33831"
+msgid "Bubbles the size of your head! (Please don't put your head in.)"
+msgstr ""
+
+msgctxt "#33832"
+msgid "Bubble juice sold separately"
+msgstr ""
+
+msgctxt "#33833"
+msgid "CHOCO-ROCKET PUFFS"
+msgstr ""
+
+msgctxt "#33834"
+msgid "Turns your milk chocolate! Turns your morning awesome!"
+msgstr ""
+
+msgctxt "#33835"
+msgid "SPARKLE PONIES"
+msgstr ""
+
+msgctxt "#33836"
+msgid "Brush their manes! Braid their tails! They never need feeding!"
+msgstr ""
+
+msgctxt "#33837"
+msgid "Each pony sold separately"
+msgstr ""
+
+msgctxt "#33838"
+msgid "MEGABRICK"
+msgstr ""
+
+msgctxt "#33839"
+msgid "500 bricks! Build a castle! Step on one barefoot!"
+msgstr ""
+
+msgctxt "#33840"
+msgid "Ages 5 and up"
+msgstr ""
+
+msgctxt "#33841"
+msgid "ZOOM KART"
+msgstr ""
+
+msgctxt "#33842"
+msgid "Pull it back! Let it go! Look under the couch!"
+msgstr ""
+
+msgctxt "#33843"
+msgid "DOODLE WALL"
+msgstr ""
+
+msgctxt "#33844"
+msgid "Draw it! Shake it! Draw it again!"
+msgstr ""
+
+msgctxt "#33845"
+msgid "$11.99"
+msgstr ""
+
+msgctxt "#33846"
+msgid "Ages 4 and up"
+msgstr ""
+
+msgctxt "#33847"
+msgid "SPACE CADET"
+msgstr ""
+
+msgctxt "#33848"
+msgid "Over and out! Range of one whole backyard!"
+msgstr ""
+
+msgctxt "#33849"
+msgid "$21.99"
+msgstr ""
+
+msgctxt "#33850"
+msgid "GUMMY GALAXY"
+msgstr ""
+
+msgctxt "#33851"
+msgid "Eat the planets! Save Pluto for last!"
+msgstr ""
+
+msgctxt "#33852"
+msgid "GOOPERS"
+msgstr ""
+
+msgctxt "#33853"
+msgid "They glow in the dark! They stick to the ceiling! Ask a grown-up first!"
+msgstr ""
+
+msgctxt "#33854"
+msgid "$3.99"
+msgstr ""
+
+msgctxt "#33855"
+msgid "Each · Collect all 12"
+msgstr ""
+
+msgctxt "#33856"
+msgid "POGO PRO"
+msgstr ""
+
+msgctxt "#33857"
+msgid "Boing your way to the bus stop! (Walking also fine.)"
+msgstr ""
+
+msgctxt "#33858"
+msgid "MIGHTY MACK"
+msgstr ""
+
+msgctxt "#33859"
+msgid "Crushes cardboard! Climbs pillows! Afraid of the cat!"
+msgstr ""
+
+msgctxt "#33860"
+msgid "$34.99"
+msgstr ""
+
+msgctxt "#33861"
+msgid "SNOWBALL SAM"
+msgstr ""
+
+msgctxt "#33862"
+msgid "Build the best snow fort on the block!"
+msgstr ""
+
+msgctxt "#33863"
+msgid "Snow not included"
+msgstr ""
+
+msgctxt "#33864"
+msgid "SUPER SQUIRT"
+msgstr ""
+
+msgctxt "#33865"
+msgid "Soak your big brother from 30 feet!"
+msgstr ""
+
+msgctxt "#33866"
+msgid "PB CRUNCH"
+msgstr ""
+
+msgctxt "#33867"
+msgid "Peanut butter inside! Crunch outside! Lunchbox approved!"
+msgstr ""
+
+msgctxt "#33868"
+msgid "In the cereal aisle"
+msgstr ""
+
+msgctxt "#33869"
+msgid "DINO DIG"
+msgstr ""
+
+msgctxt "#33870"
+msgid "Dig up your own dinosaur! (Dinosaur is plaster.)"
+msgstr ""
+
+msgctxt "#33871"
+msgid "$17.99"
+msgstr ""
+
+msgctxt "#33872"
+msgid "POLAR POPS"
+msgstr ""
+
+msgctxt "#33873"
+msgid "Twelve flavors! Your tongue will be every color!"
+msgstr ""
+
+msgctxt "#33874"
+msgid "CAPTAIN COMET"
+msgstr ""
+
+msgctxt "#33875"
+msgid "He keeps an eye on the closet so you don't have to."
+msgstr ""
+
+msgctxt "#33876"
+msgid "Bulb included"
+msgstr ""
+
+msgctxt "#33877"
+msgid "SATURDAY SKATE 1–4!"
+msgstr ""
+
+msgctxt "#33878"
+msgid "Couples skate! Limbo contest! Birthday parties!"
+msgstr ""
+
+msgctxt "#33879"
+msgid "Behind the Riverside Mall"
+msgstr ""
+
+msgctxt "#33880"
+msgid "Rollerdrome"
+msgstr ""
+
+msgctxt "#33881"
+msgid "Skate Center"
+msgstr ""
+
+msgctxt "#33882"
+msgid "4 TOKENS FOR A DOLLAR!"
+msgstr ""
+
+msgctxt "#33883"
+msgid "A claw machine that ALMOST works!"
+msgstr ""
+
+msgctxt "#33884"
+msgid "Riverside Mall, lower level"
+msgstr ""
+
+msgctxt "#33885"
+msgid "Galaxy"
+msgstr ""
+
+msgctxt "#33886"
+msgid "Arcade"
+msgstr ""
+
+msgctxt "#33887"
+msgid "BIRTHDAY PARTIES!"
+msgstr ""
+
+msgctxt "#33888"
+msgid "With a singing pizza chef! Ask your grown-up!"
+msgstr ""
+
+msgctxt "#33889"
+msgid "Next to Video Village"
+msgstr ""
+
+msgctxt "#33890"
+msgid "Sal's Pizza Palace"
+msgstr ""
+
+msgctxt "#33891"
+msgid "Party Room"
+msgstr ""
+
+msgctxt "#33892"
+msgid "We'll make your dog look fancier than you."
+msgstr ""
+
+msgctxt "#33893"
+msgid "Happy Paws"
+msgstr ""
+
+msgctxt "#33894"
+msgid "Grooming"
+msgstr ""
+
+msgctxt "#33895"
+msgid "OPEN SUNDAYS!"
+msgstr ""
+
+msgctxt "#33896"
+msgid "If we don't have it, you don't need it."
+msgstr ""
+
+msgctxt "#33897"
+msgid "Main Street"
+msgstr ""
+
+msgctxt "#33898"
+msgid "Hardware"
+msgstr ""
+
+msgctxt "#33899"
+msgid "OPEN TILL MIDNIGHT"
+msgstr ""
+
+msgctxt "#33900"
+msgid "Bring quarters. Bring a book."
+msgstr ""
+
+msgctxt "#33901"
+msgid "Lucky Star"
+msgstr ""
+
+msgctxt "#33902"
+msgid "Laundromat"
+msgstr ""
+
+msgctxt "#33903"
+msgid "BUS TRIPS EVERY WEEKEND"
+msgstr ""
+
+msgctxt "#33904"
+msgid "To the lake, the outlet mall and the other lake!"
+msgstr ""
+
+msgctxt "#33905"
+msgid "Golden Years"
+msgstr ""
+
+msgctxt "#33906"
+msgid "Travel"
+msgstr ""
+
+msgctxt "#33907"
+msgid "DOUBLE FEATURE FRIDAYS!"
+msgstr ""
+
+msgctxt "#33908"
+msgid "Bring the whole car!"
+msgstr ""
+
+msgctxt "#33909"
+msgid "Route 9 past Big Earl's"
+msgstr ""
+
+msgctxt "#33910"
+msgid "Starlite"
+msgstr ""
+
+msgctxt "#33911"
+msgid "Drive-In"
+msgstr ""
+
+msgctxt "#33912"
+msgid "Brush your teeth."
+msgstr ""
+
+msgctxt "#33913"
+msgid "Two whole minutes. Yes, the back ones too."
+msgstr ""
+
+msgctxt "#33914"
+msgid "the Tooth Fairy Union"
+msgstr ""
+
+msgctxt "#33915"
+msgid "TOOTH"
+msgstr ""
+
+msgctxt "#33916"
+msgid "FAIRY"
+msgstr ""
+
+msgctxt "#33917"
+msgid "UNION"
+msgstr ""
+
+msgctxt "#33918"
+msgid "Share your toys."
+msgstr ""
+
+msgctxt "#33919"
+msgid "Except your favorite. Okay, that one too."
+msgstr ""
+
+msgctxt "#33920"
+msgid "the Playground Council"
+msgstr ""
+
+msgctxt "#33921"
+msgid "PLAYGROUND"
+msgstr ""
+
+msgctxt "#33922"
+msgid "Wear your helmet."
+msgstr ""
+
+msgctxt "#33923"
+msgid "Your brain is the only one you get."
+msgstr ""
+
+msgctxt "#33924"
+msgid "the Bike Safety Squad"
+msgstr ""
+
+msgctxt "#33925"
+msgid "BIKE"
+msgstr ""
+
+msgctxt "#33926"
+msgid "SAFETY"
+msgstr ""
+
+msgctxt "#33927"
+msgid "SQUAD"
+msgstr ""
+
+msgctxt "#33928"
+msgid "Say please and thank you."
+msgstr ""
+
+msgctxt "#33929"
+msgid "It works on grown-ups too."
+msgstr ""
+
+msgctxt "#33930"
+msgid "the Society of Good Manners"
+msgstr ""
+
+msgctxt "#33931"
+msgid "MANNERS"
+msgstr ""
+
+msgctxt "#33932"
+msgid "Test your smoke detector."
+msgstr ""
+
+msgctxt "#33933"
+msgid "It's beeping for a reason."
+msgstr ""
+
+msgctxt "#33934"
+msgid "the Fire Safety Friends"
+msgstr ""
+
+msgctxt "#33935"
+msgid "FIRE"
+msgstr ""
+
+msgctxt "#33936"
+msgid "Don't forget to change your clocks."
+msgstr ""
+
+msgctxt "#33937"
+msgid "Spring forward, fall back. Or just guess."
+msgstr ""
+
+msgctxt "#33938"
+msgid "WOBBLE BOTS"
+msgstr ""
+
+msgctxt "#33939"
+msgid "They wobble! They wiggle! They never fall down! (Okay, sometimes.)"
+msgstr ""
+
+msgctxt "#33940"
+msgid "RAINBOW ROCKET"
+msgstr ""
+
+msgctxt "#33941"
+msgid "64 colors! Including “Mystery Brown”!"
+msgstr ""
+
+msgctxt "#33942"
+msgid "$4.99"
+msgstr ""
+
+msgctxt "#33943"
+msgid "Ages 3 and up"
+msgstr ""
+
+msgctxt "#33944"
+msgid "KABOOM KAZOO"
+msgstr ""
+
+msgctxt "#33945"
+msgid "Sounds like a duck! Played by YOU!"
+msgstr ""
+
+msgctxt "#33946"
+msgid "Grown-ups: we're sorry"
+msgstr ""
+
+msgctxt "#33947"
+msgid "MEGA MARBLE RUN"
+msgstr ""
+
+msgctxt "#33948"
+msgid "Twist it! Drop it! Watch it go-go-go!"
+msgstr ""
+
+msgctxt "#33949"
+msgid "$22.99"
+msgstr ""
+
+msgctxt "#33950"
+msgid "FLUFFERNUT PUPPY"
+msgstr ""
+
+msgctxt "#33951"
+msgid "He's soft! He's sleepy! He never chews your shoes!"
+msgstr ""
+
+msgctxt "#33952"
+msgid "$15.99"
+msgstr ""
+
+msgctxt "#33953"
+msgid "CHOCO-MOO"
+msgstr ""
+
+msgctxt "#33954"
+msgid "From cows who love chocolate. Probably."
+msgstr ""
+
+msgctxt "#33955"
+msgid "PUZZLE PLANET"
+msgstr ""
+
+msgctxt "#33956"
+msgid "A whole planet in 100 pieces! Find the corners first!"
+msgstr ""
+
+msgctxt "#33957"
+msgid "$7.99"
+msgstr ""
+
+msgctxt "#33958"
+msgid "WIZARD GLOW WAND"
+msgstr ""
+
+msgctxt "#33959"
+msgid "Wave it! It glows! Bedtime is still at eight."
+msgstr ""
+
+msgctxt "#33960"
+msgid "Batteries included"
+msgstr ""
+
+msgctxt "#33961"
+msgid "BOUNCY BLOB"
+msgstr ""
+
+msgctxt "#33962"
+msgid "Bounces higher than your house! (Please play outside.)"
+msgstr ""
+
+msgctxt "#33963"
+msgid "$1.99"
+msgstr ""
+
+msgctxt "#33964"
+msgid "Colors may vary"
+msgstr ""
+
+msgctxt "#33965"
+msgid "LOOP-DE-LOOP"
+msgstr ""
+
+msgctxt "#33966"
+msgid "Drink your milk the long way!"
+msgstr ""
+
+msgctxt "#33967"
+msgid "4 FOR"
+msgstr ""
+
+msgctxt "#33968"
+msgid "Wash your hands."
+msgstr ""
+
+msgctxt "#33969"
+msgid "Soap is your friend. Bubbles are a bonus."
+msgstr ""
+
+msgctxt "#33970"
+msgid "the Clean Hands Club"
+msgstr ""
+
+msgctxt "#33971"
+msgid "CLEAN"
+msgstr ""
+
+msgctxt "#33972"
+msgid "HANDS"
+msgstr ""
+
+msgctxt "#33973"
+msgid "CLUB"
+msgstr ""
+
+msgctxt "#33974"
+msgid "Get some sleep."
+msgstr ""
+
+msgctxt "#33975"
+msgid "Even superheroes go to bed."
+msgstr ""
+
+msgctxt "#33976"
+msgid "the Pillow Patrol"
+msgstr ""
+
+msgctxt "#33977"
+msgid "PILLOW"
+msgstr ""
+
+msgctxt "#33978"
+msgid "PATROL"
+msgstr ""
+
+msgctxt "#33979"
+msgid "Be kind to animals."
+msgstr ""
+
+msgctxt "#33980"
+msgid "Even the grumpy cat."
+msgstr ""
+
+msgctxt "#33981"
+msgid "Friends of Furry Things"
+msgstr ""
+
+msgctxt "#33982"
+msgid "FURRY"
+msgstr ""
+
+msgctxt "#33983"
+msgid "Help clean up."
+msgstr ""
+
+msgctxt "#33984"
+msgid "Your toys won't walk back to the box by themselves."
+msgstr ""
+
+msgctxt "#33985"
+msgid "the Tidy Room Task Force"
+msgstr ""
+
+msgctxt "#33986"
+msgid "TIDY"
+msgstr ""
+
+msgctxt "#33987"
+msgid "ROOM"
+msgstr ""
+
+msgctxt "#33988"
+msgid "TASK FORCE"
+msgstr ""
+
+msgctxt "#33989"
+msgid "and more"
+msgstr ""
+
+msgctxt "#33990"
+msgid "%d h %02d min"
+msgstr ""
+
+msgctxt "#33991"
+msgid "Season %d · Episode %d"
+msgstr ""
+
+msgctxt "#33992"
+msgid "AT"
+msgstr ""
+
+msgctxt "#33993"
+msgid "CH %d · %s"
+msgstr ""
+
+msgctxt "#33994"
+msgid "STARTS IN"
+msgstr ""
+
+msgctxt "#33995"
+msgid "STARTING NOW"
+msgstr ""
+
+msgctxt "#33996"
+msgid "Skip episodes shorter than"
+msgstr ""
+
+msgctxt "#33997"
+msgid "2 min"
+msgstr ""
+
+msgctxt "#33998"
+msgid "5 min"
+msgstr ""
+
+msgctxt "#33999"
+msgid "10 min"
+msgstr ""
+
+msgctxt "#34000"
+msgid "Check skipped episodes"
+msgstr ""
+
+msgctxt "#34001"
+msgid "No episodes are skipped."
+msgstr ""
+
+msgctxt "#34002"
+msgid "Skipped episodes"
+msgstr ""
+
+msgctxt "#34004"
+msgid "%s  %s  (%d:%02d)"
+msgstr ""
+
+msgctxt "#34005"
+msgid "Episodes are only listed after a refresh: Tools > Refresh schedules."
+msgstr ""
+
+msgctxt "#34006"
+msgid "Commercial breaks at chapter marks"
+msgstr ""
+
+msgctxt "#34007"
+msgid "Check chapters"
+msgstr ""
+
+msgctxt "#34008"
+msgid "Always use chapters"
+msgstr ""
+
+msgctxt "#34009"
+msgid "Never use chapters"
+msgstr ""
+
+msgctxt "#34010"
+msgid "Episodes and their breaks"
+msgstr ""
+
+msgctxt "#34011"
+msgid "%s: commercial breaks"
+msgstr ""
+
+msgctxt "#34012"
+msgid "act breaks"
+msgstr ""
+
+msgctxt "#34013"
+msgid "scene chapters"
+msgstr ""
+
+msgctxt "#34014"
+msgid "automatic chapters"
+msgstr ""
+
+msgctxt "#34015"
+msgid "no chapters"
+msgstr ""
+
+msgctxt "#34016"
+msgid "not read yet"
+msgstr ""
+
+msgctxt "#34017"
+msgid "unreadable"
+msgstr ""
+
+msgctxt "#34018"
+msgid "%d act breaks, %d scene, %d automatic, %d none, %d not read yet"
+msgstr ""
+
+msgctxt "#34019"
+msgid "[%s]"
+msgstr ""
+
+msgctxt "#34020"
+msgid "Chapters are read in the background while the TV is off; episodes not read yet get evenly spaced breaks."
+msgstr ""
+
+msgctxt "#34021"
+msgid "No TV shows in the library."
+msgstr ""
+
+msgctxt "#34022"
+msgid "breaks at %s"
+msgstr ""
+
+msgctxt "#34023"
+msgid "credits at %s"
+msgstr ""
+
+msgctxt "#34025"
+msgid "Next at %s"
+msgstr ""
+
+msgctxt "#34026"
+msgid "Chapters read"
+msgstr ""
+
+msgctxt "#34028"
+msgid "Chapters read: %d of %d"
+msgstr ""
+
+msgctxt "#34029"
+msgid "Read now"
+msgstr ""
+
+msgctxt "#34031"
+msgid "CableBox reads them in the background: whenever Kodi is idle, and while the TV is on the episodes airing in the next 6 hours first. Episodes not read yet get evenly spaced breaks."
+msgstr ""
+
+msgctxt "#34032"
+msgid "Reading chapters"
+msgstr ""
+
+msgctxt "#34033"
+msgid "Reading chapters: %d of %d"
+msgstr ""
+
+msgctxt "#34034"
+msgid "Stopped - the chapters read so far are kept"
+msgstr ""
+
+msgctxt "#34035"
+msgid "Chapters read: %d of %d - schedules updated"
+msgstr ""
+
+
+msgctxt "#34036"
+msgid "Color bars with tone"
+msgstr ""
+
+msgctxt "#34037"
+msgid "This concludes our broadcast day"
+msgstr ""
+
+msgctxt "#34038"
+msgid "We return at %s"
+msgstr ""
+
+msgctxt "#34039"
+msgid "Built-in sign-off card"
+msgstr ""
+
+msgctxt "#34040"
+msgid "%s (renamed; its logo and shows)"
+msgstr ""
+
+msgctxt "#34041"
+msgid "Call letters are now %s"
+msgstr ""
+
+msgctxt "#34042"
+msgid "At those times %s would still go by %s, with their logos."
+msgstr ""
+
+msgctxt "#34043"
+msgid "Remove them"
+msgstr ""
+
+msgctxt "#34044"
+msgid "Keep them"
+msgstr ""
+
+msgctxt "#34045"
+msgid "Keep the names %s?"
+msgstr ""
+
+msgctxt "#34047"
+msgid "already on channel %d"
+msgstr ""
+
+msgctxt "#34048"
+msgid "this channel's station"
+msgstr ""
+
+msgctxt "#34049"
+msgid "Name: %s  ·  Call letters: %s"
+msgstr ""
+
+msgctxt "#34050"
+msgid "All of its programming stays."
+msgstr ""
+
+msgctxt "#34052"
+msgid "It no longer goes by %s."
+msgstr ""
+
+msgctxt "#34053"
+msgid "Make it my own"
+msgstr ""
+
+msgctxt "#34054"
+msgid "Make channel %d your own?"
+msgstr ""
+
+msgctxt "#34055"
+msgid "Logo: your own image stays"
+msgstr ""
+
+msgctxt "#34056"
+msgid "Logo: its built-in logo"
+msgstr ""
+
+msgctxt "#34057"
+msgid "Adds: %s"
+msgstr ""
+
+msgctxt "#34058"
+msgid "no programming"
+msgstr ""
+
+msgctxt "#34059"
+msgid "Removes %s's: %s"
+msgstr ""
+
+msgctxt "#34060"
+msgid "Use %s on channel %d?"
+msgstr ""
+
+msgctxt "#34062"
+msgid "%s (station folder)"
+msgstr ""
+
+msgctxt "#34063"
+msgid "%s (built-in)"
+msgstr ""
+
+msgctxt "#34064"
+msgid "A built-in station"
+msgstr ""
+
+msgctxt "#34065"
+msgid "Comedy Corner, Orbit TV, Chameleon... with its name, logo and shows"
+msgstr ""
+
+msgctxt "#34066"
+msgid "My own channel"
+msgstr ""
+
+msgctxt "#34067"
+msgid "Your name, your programming, your logo"
+msgstr ""
+
+msgctxt "#34068"
+msgid "Music videos on the real clock, breaks between videos"
+msgstr ""
+
+msgctxt "#34069"
+msgid "What's on every channel, scrolling"
+msgstr ""
+
+msgctxt "#34070"
+msgid "Behind the scenes"
+msgstr ""
+
+msgctxt "#34071"
+msgid "Making-of pieces and interviews from your movies' Extras folders"
+msgstr ""
+
+msgctxt "#34072"
+msgid "What kind of channel?"
+msgstr ""
+
+msgctxt "#34073"
+msgid "Which station?"
+msgstr ""
+
+msgctxt "#34074"
+msgid "%s is already on channel %d"
+msgstr ""
+
+msgctxt "#34075"
+msgid "%s airs these. Add more?"
+msgstr ""
+
+msgctxt "#34076"
+msgid "Nothing in your library matches %s yet. Choose its programming yourself."
+msgstr ""
+
+msgctxt "#34077"
+msgid "Choose an image"
+msgstr ""
+
+msgctxt "#34078"
+msgid "Give %s a logo now?"
+msgstr ""
+
+msgctxt "#34079"
+msgid "Names by time of day: %s"
+msgstr ""
+
+msgctxt "#34080"
+msgid "Times when the channel goes by another name and logo (CAM Jr. in the morning)."
+msgstr ""
+
+msgctxt "#34081"
+msgid "The channel's own folder for a logo, bumps, station IDs and commercials."
+msgstr ""
+
+msgctxt "#34082"
+msgid "Built-in station: %s"
+msgstr ""
+
+msgctxt "#34083"
+msgid "Use another built-in station, or make this channel your own."
+msgstr ""
+
+msgctxt "#34084"
+msgid "Use a built-in station..."
+msgstr ""
+
+msgctxt "#34085"
+msgid "Gives the channel a built-in station's name, call letters, logo and shows."
+msgstr ""
+
+msgctxt "#34086"
+msgid "Select to choose this channel's own folder of station ID clips."
+msgstr ""
+
+msgctxt "#34087"
+msgid "Select to switch them off."
+msgstr ""
+
+msgctxt "#34088"
+msgid "Which retro ads its house breaks run."
+msgstr ""
+
+msgctxt "#34089"
+msgid "This channel's own commercials, instead of the shared folder in Settings."
+msgstr ""
+
+msgctxt "#34090"
+msgid "This channel's own bumps, instead of the shared folder in Settings."
+msgstr ""
+
+msgctxt "#34091"
+msgid "[B]Identity[/B]"
+msgstr ""
+
+msgctxt "#34092"
+msgid "[B]Programming[/B]"
+msgstr ""
+
+msgctxt "#34093"
+msgid "[B]Breaks & clips[/B]"
+msgstr ""
+
+msgctxt "#34094"
+msgid "[B]Schedule[/B]"
+msgstr ""
+
+msgctxt "#34095"
+msgid "Your videos and its station folder are not touched."
+msgstr ""
+
+msgctxt "#34096"
+msgid "%s - identity"
+msgstr ""
+
+msgctxt "#34097"
+msgid "%s - programming"
+msgstr ""
+
+msgctxt "#34098"
+msgid "%s - breaks & clips"
+msgstr ""
+
+msgctxt "#34099"
+msgid "%s - schedule"
+msgstr ""
+
+msgctxt "#34100"
+msgid "%s's logo goes. Choose your own under Logo."
+msgstr ""
+
+msgctxt "#34101"
+msgid "[B]+ Add a name[/B]"
+msgstr ""
+
+msgctxt "#34102"
+msgid "Names by time of day"
+msgstr ""
+
+msgctxt "#34103"
+msgid "Name at this time of day (e.g. CAM Jr.)"
+msgstr ""
+
+msgctxt "#34104"
+msgid "Remove the name %s?"
+msgstr ""
+
+msgctxt "#34105"
+msgid "The image you chose for this channel."
+msgstr ""
+
+msgctxt "#34106"
+msgid "The image you chose for this time-of-day name."
+msgstr ""
+
+msgctxt "#34107"
+msgid "From this time-of-day name's own folder."
+msgstr ""
+
+msgctxt "#34109"
+msgid "Switched off for this channel. Select to choose a logo."
+msgstr ""
+
+msgctxt "#34110"
+msgid "No logo found. Select to choose an image, or put a logo.png in the channel's folder."
+msgstr ""
+
+msgctxt "#34111"
+msgid "Adds what's missing (bumps, ids, commercials, names by time of day). Never deletes anything."
+msgstr ""
+
+msgctxt "#34112"
+msgid "%s - station folder"
+msgstr ""
+
+msgctxt "#34113"
+msgid "Breaks"
+msgstr ""
+
+msgctxt "#34114"
+msgid "Channels"
+msgstr ""
+
+msgctxt "#34115"
+msgid "Guide & Weather"
+msgstr ""
+
+msgctxt "#34116"
+msgid "Start-up & library"
+msgstr ""
+
+msgctxt "#34117"
+msgid "Network"
+msgstr ""
+
+msgctxt "#34118"
+msgid "Loop"
+msgstr ""
+
+msgctxt "#34119"
+msgid "Guide"
+msgstr ""
+
+msgctxt "#34120"
+msgid "shows"
+msgstr ""
+
+msgctxt "#34121"
+msgid "movies"
+msgstr ""
+
+msgctxt "#34122"
+msgid "[B]Search...[/B]"
+msgstr ""
+
+msgctxt "#34123"
+msgid "CableBox's stations"
+msgstr ""
+
+msgctxt "#34124"
+msgid "Comedy Corner, Orbit TV, Chameleon... each with its name, logo and call letters."
+msgstr ""
+
+msgctxt "#34125"
+msgid "Plain names, I'll brand them myself"
+msgstr ""
+
+msgctxt "#34126"
+msgid "Channel names"
+msgstr ""
+
+msgctxt "#34127"
+msgid "Customise"
+msgstr ""
+
+msgctxt "#34128"
+msgid "%d channels found in your library"
+msgstr ""
+
+msgctxt "#34129"
+msgid "        Local forecast (Settings > Guide & Weather)"
+msgstr ""
+
+msgctxt "#34130"
+msgid "  Channel manager > a channel > Breaks & clips: the commercials, bumps and IDs in use"
+msgstr ""
+
+msgctxt "#34131"
+msgid "[B]Lineup tools[/B]  [COLOR grey]build a lineup, move shows, sign-off, station folders[/COLOR]"
+msgstr ""
+
+msgctxt "#34132"
+msgid "%s, 1 source"
+msgstr ""
+
+msgctxt "#34133"
+msgid "%s, %d sources"
+msgstr ""
+
+msgctxt "#34134"
+msgid "Build my lineup"
+msgstr ""
+
+msgctxt "#34135"
+msgid "Builds channels from your Kodi library: replace your lineup, or add to it."
+msgstr ""
+
+msgctxt "#34136"
+msgid "Pick a show and tick the channels it airs on."
+msgstr ""
+
+msgctxt "#34137"
+msgid "Shows no channel picks up, or that only just fit where they are."
+msgstr ""
+
+msgctxt "#34138"
+msgid "Sign-off and prime time for all channels"
+msgstr ""
+
+msgctxt "#34139"
+msgid "Overnight sign-off hours and prime-time lineups, for every channel at once."
+msgstr ""
+
+msgctxt "#34140"
+msgid "A folder per channel for its logo, bumps, IDs and commercials: create, repair, see what's used."
+msgstr ""
+
+msgctxt "#34141"
+msgid "What's set up, and where."
+msgstr ""
+
+msgctxt "#34142"
+msgid "Lineup tools"
+msgstr ""
+
+msgctxt "#34143"
+msgid "[B]Close the gaps[/B] (renumber in order)"
+msgstr ""
+
+msgctxt "#34144"
+msgid "Channel numbers start at 1"
+msgstr ""
+
+msgctxt "#34145"
+msgid "Matched by name in the logo folder (Settings > Channels)."
+msgstr ""
+
+msgctxt "#34146"
+msgid "Matched by this time-of-day name in the logo folder (Settings > Channels)."
+msgstr ""
+
+msgctxt "#34147"
+msgid "Select to choose where channel folders go (Settings > Channels > Stations folder)."
+msgstr ""
+
+msgctxt "#34148"
+msgid "Set the logo folder first: Settings > Channels > Logo folder."
+msgstr ""
+
+msgctxt "#34149"
+msgid "%s already sign off at times of their own."
+msgstr ""
+
+msgctxt "#34150"
+msgid "Replace theirs"
+msgstr ""
+
+msgctxt "#34151"
+msgid "Only the others"
+msgstr ""
+
+msgctxt "#34152"
+msgid "Replace the off-air hours on %d channels?"
+msgstr ""
+
+msgctxt "#34153"
+msgid "Channels signing off %s - %s: %d"
+msgstr ""
+
+msgctxt "#34154"
+msgid "No channel signs off"
+msgstr ""
+
+msgctxt "#34155"
+msgid "%s would stay on the air around the clock."
+msgstr ""
+
+msgctxt "#34156"
+msgid "Commercial breaks at chapter marks is off (Settings > Breaks)."
+msgstr ""
+
+msgctxt "#34157"
+msgid "[B]Build my lineup[/B]"
+msgstr ""
+
+msgctxt "#34158"
+msgid "Commercials: not set"
+msgstr ""
+
+msgctxt "#34159"
+msgid "A folder of old commercials fills the breaks like real cable TV."
+msgstr ""
+
+msgctxt "#34160"
+msgid "Bumps and station IDs: not set"
+msgstr ""
+
+msgctxt "#34161"
+msgid "Short clips right before the show comes back: one shared folder, or a folder per channel."
+msgstr ""
+
+msgctxt "#34162"
+msgid "Guide and weather music: not set"
+msgstr ""
+
+msgctxt "#34163"
+msgid "Background music for the TV Guide and the Weather Channel."
+msgstr ""
+
+msgctxt "#34164"
+msgid "Music videos: no channel"
+msgstr ""
+
+msgctxt "#34165"
+msgid "A folder of music videos makes a music video channel."
+msgstr ""
+
+msgctxt "#34166"
+msgid "Weather city: not set"
+msgstr ""
+
+msgctxt "#34167"
+msgid "Your city for the Weather Channel's forecast."
+msgstr ""
+
+msgctxt "#34168"
+msgid "Everything is set up"
+msgstr ""
+
+msgctxt "#34169"
+msgid "Finish setting up"
+msgstr ""
+
+msgctxt "#34170"
+msgid "Choose now"
+msgstr ""
+
+msgctxt "#34171"
+msgid "I don't need this (stop showing it)"
+msgstr ""
+
+msgctxt "#34172"
+msgid "Add, edit and renumber channels - plus the lineup tools"
+msgstr ""
+
+msgctxt "#34173"
+msgid "Breaks, holidays, picture, weather - plus maintenance tools"
+msgstr ""
+
+msgctxt "#34174"
+msgid "%d left: %s"
+msgstr ""
+
+msgctxt "#34175"
+msgid "A logo shows in the corner and on the channel banner. You can add one later in the channel editor."
+msgstr ""
+
+msgctxt "#34177"
+msgid "Comedy Channel, Kids TV... the same shows, no logos. Rename them and add logos in the Channel manager."
+msgstr ""
+
+msgctxt "#34178"
+msgid "Shorter than %d min (Settings > Channels > Skip episodes shorter than). Their series go on to the next real episode; the files stay where they are."
+msgstr ""
+
+msgctxt "#34179"
+msgid "Weather is not set up yet.   Choose a weather service in Kodi (Settings > Services > Weather) or type your city in CableBox 42 > Settings > Guide & Weather."
+msgstr ""
+
+msgctxt "#34180"
+msgid "With overnight sign-off (12 AM - 5 AM) and prime-time lineups.[CR]Commercials, bumps and music can wait: the menu shows what's left to set up."
+msgstr ""
+
+msgctxt "#34181"
+msgid "You have a TV Guide on 2 and a Weather Channel on 25.[CR][CR]Next: Channel manager > Add a channel.  The main menu's Finish setting up has the commercials, bumps and music folders, and the Channel manager's Build my lineup can still build channels for you any time."
+msgstr ""
+
+msgctxt "#34182"
+msgid "[B]Station folders[/B]  not set up - Channel manager > Lineup tools > Station folders gives each channel a folder for its own logo, bumps, IDs and commercials."
+msgstr ""
+
+msgctxt "#34183"
+msgid "[B]What goes where[/B]  (in each channel's folder)[CR]  logo.png ............ the channel's logo (transparent PNG looks best)[CR]  bumps/ .............. short clips before the show comes back[CR]  ids/ .................. station IDs, between programmes[CR]  commercials/ ...... this channel's own commercials[CR]  promos/ ............ your own promos for its shows (Settings > Breaks > Promos)[CR]  <time block>/ ...... the same again, used only in that block (e.g. CAM Jr.)[CR]A folder is matched by the channel's name, call letters or number ('Channel 7'). A new logo shows within a couple of minutes; new clips are used from each channel's next programme once you close the Channel manager (or Tools > Refresh schedules)."
+msgstr ""
+
+msgctxt "#34184"
+msgid "CableBox's built-in logo. Any logo of your own replaces it."
+msgstr ""
+
+msgctxt "#34185"
+msgid "[B]Make this channel my own[/B]"
+msgstr ""
+
+msgctxt "#34186"
+msgid "Guide scroll speed"
+msgstr ""
+
+msgctxt "#34187"
+msgid "Slow"
+msgstr ""
+
+msgctxt "#34188"
+msgid "Normal"
+msgstr ""
+
+msgctxt "#34189"
+msgid "Fast"
+msgstr ""
+
+msgctxt "#34190"
+msgid "(CC)"
+msgstr ""
+
+msgctxt "#34191"
+msgid "(Stereo)"
+msgstr ""
+
+msgctxt "#34192"
+msgid "Add a premium channel today!  Call your cable company."
+msgstr ""
+
+msgctxt "#34193"
+msgid "Pay-Per-View: call 555-0142 to order."
+msgstr ""
+
+msgctxt "#34194"
+msgid "Ask about our Movie Lovers package."
+msgstr ""
+
+msgctxt "#34195"
+msgid "Two months of premium channels, half price."
+msgstr ""
+
+msgctxt "#34196"
+msgid "Moving?  Take your cable with you.  Call 555-0199."
+msgstr ""
+
+msgctxt "#34197"
+msgid "Remote not working?  Free replacement at the cable office."
+msgstr ""
+
+msgctxt "#34198"
+msgid "New this month: more channels on the basic tier."
+msgstr ""
+
+msgctxt "#34199"
+msgid "Watch the big fight live on Pay-Per-View."
+msgstr ""
+
+msgctxt "#34200"
+msgid "Cable installation: just $9.95 this month."
+msgstr ""
+
+msgctxt "#34201"
+msgid "Thank you for choosing cable."
+msgstr ""
+
+msgctxt "#34202"
+msgid "Show rating at start of programmes"
+msgstr ""
+
+msgctxt "#34203"
+msgid "Summer reruns"
+msgstr ""
+
+msgctxt "#34204"
+msgid "Broadcast networks"
+msgstr ""
+
+msgctxt "#34205"
+msgid "(R)"
+msgstr ""
+
+msgctxt "#34206"
+msgid "Summer reruns (June to August)"
+msgstr ""
+
+msgctxt "#34207"
+msgid "LATEST OBSERVATIONS"
+msgstr ""
+
+msgctxt "#34208"
+msgid "REGIONAL MAP"
+msgstr ""
+
+msgctxt "#34209"
+msgid "Today's high %s, low %s"
+msgstr ""
+
+msgctxt "#34212"
+msgid "Tonight %s"
+msgstr ""
+
+msgctxt "#34213"
+msgid "Today %s"
+msgstr ""
+
+msgctxt "#34214"
+msgid "Tomorrow %s"
+msgstr ""
+
+msgctxt "#34215"
+msgid "Holidays and specials"
+msgstr ""
+
+msgctxt "#34216"
+msgid "Marathons and holiday programming on dates, back every year."
+msgstr ""
+
+msgctxt "#34217"
+msgid "[B]Holidays and specials[/B] (%d)"
+msgstr ""
+
+msgctxt "#34218"
+msgid "Its schedule, pinned shows and its part in these specials go with it: %s.[CR]Your videos and its station folder are not touched."
+msgstr ""
+
+msgctxt "#34219"
+msgid "Halloween"
+msgstr ""
+
+msgctxt "#34220"
+msgid "Thanksgiving"
+msgstr ""
+
+msgctxt "#34221"
+msgid "Christmas"
+msgstr ""
+
+msgctxt "#34222"
+msgid "New Year's Day"
+msgstr ""
+
+msgctxt "#34223"
+msgid "Valentine's Day"
+msgstr ""
+
+msgctxt "#34224"
+msgid "Easter"
+msgstr ""
+
+msgctxt "#34225"
+msgid "Thanksgiving (US)"
+msgstr ""
+
+msgctxt "#34226"
+msgid "Christmas Eve"
+msgstr ""
+
+msgctxt "#34227"
+msgid "Christmas Day"
+msgstr ""
+
+msgctxt "#34228"
+msgid "New Year's Eve"
+msgstr ""
+
+msgctxt "#34229"
+msgid "Continue where last year's marathon stopped"
+msgstr ""
+
+msgctxt "#34230"
+msgid "in order, continuing each year"
+msgstr ""
+
+msgctxt "#34231"
+msgid "From the first episode"
+msgstr ""
+
+msgctxt "#34232"
+msgid "from the first episode"
+msgstr ""
+
+msgctxt "#34233"
+msgid "Random"
+msgstr ""
+
+msgctxt "#34234"
+msgid "1st"
+msgstr ""
+
+msgctxt "#34235"
+msgid "2nd"
+msgstr ""
+
+msgctxt "#34236"
+msgid "3rd"
+msgstr ""
+
+msgctxt "#34237"
+msgid "4th"
+msgstr ""
+
+msgctxt "#34238"
+msgid "Last"
+msgstr ""
+
+msgctxt "#34239"
+msgid "Every year"
+msgstr ""
+
+msgctxt "#34240"
+msgid "all day"
+msgstr ""
+
+msgctxt "#34241"
+msgid "broadcast day"
+msgstr ""
+
+msgctxt "#34242"
+msgid "When?"
+msgstr ""
+
+msgctxt "#34243"
+msgid "How often?"
+msgstr ""
+
+msgctxt "#34244"
+msgid "Which hours?"
+msgstr ""
+
+msgctxt "#34245"
+msgid "Ends at (earlier than the start: the next morning)"
+msgstr ""
+
+msgctxt "#34246"
+msgid "Remove this channel from the special"
+msgstr ""
+
+msgctxt "#34247"
+msgid "The day after %s"
+msgstr ""
+
+msgctxt "#34248"
+msgid "The day before %s"
+msgstr ""
+
+msgctxt "#34249"
+msgid "Only in %d"
+msgstr ""
+
+msgctxt "#34250"
+msgid "%s episodes"
+msgstr ""
+
+msgctxt "#34251"
+msgid "A date..."
+msgstr ""
+
+msgctxt "#34252"
+msgid "A weekday of a month..."
+msgstr ""
+
+msgctxt "#34253"
+msgid "Easter..."
+msgstr ""
+
+
+msgctxt "#34255"
+msgid "Month"
+msgstr ""
+
+msgctxt "#34256"
+msgid "On the day itself"
+msgstr ""
+
+msgctxt "#34257"
+msgid "The day after"
+msgstr ""
+
+msgctxt "#34258"
+msgid "The day before"
+msgstr ""
+
+msgctxt "#34259"
+msgid "Move by days..."
+msgstr ""
+
+msgctxt "#34260"
+msgid "This year only (%s)"
+msgstr ""
+
+msgctxt "#34261"
+msgid "Next time only (%s)"
+msgstr ""
+
+msgctxt "#34262"
+msgid "All day (midnight to midnight)"
+msgstr ""
+
+msgctxt "#34263"
+msgid "Choose hours..."
+msgstr ""
+
+msgctxt "#34264"
+msgid "What to air?"
+msgstr ""
+
+msgctxt "#34265"
+msgid "Which channel?"
+msgstr ""
+
+msgctxt "#34266"
+msgid "Add special"
+msgstr ""
+
+msgctxt "#34267"
+msgid "%s added"
+msgstr ""
+
+msgctxt "#34268"
+msgid "Change the hours (%s)"
+msgstr ""
+
+msgctxt "#34269"
+msgid "Change what airs (%s)"
+msgstr ""
+
+msgctxt "#34270"
+msgid "Change the order (%s)"
+msgstr ""
+
+msgctxt "#34271"
+msgid "%s %s of %s"
+msgstr ""
+
+msgctxt "#34272"
+msgid "%d days after %s"
+msgstr ""
+
+msgctxt "#34273"
+msgid "%d days before %s"
+msgstr ""
+
+msgctxt "#34274"
+msgid "[B]+ Add a special[/B]"
+msgstr ""
+
+msgctxt "#34275"
+msgid "A marathon or a holiday lineup on a date, back every year"
+msgstr ""
+
+msgctxt "#34276"
+msgid "Holidays and specials - %s"
+msgstr ""
+
+msgctxt "#34277"
+msgid "Which one in the month?"
+msgstr ""
+
+msgctxt "#34278"
+msgid "Weekday"
+msgstr ""
+
+msgctxt "#34279"
+msgid "How many days?"
+msgstr ""
+
+msgctxt "#34280"
+msgid "Broadcast day (%s to %s next morning)"
+msgstr ""
+
+msgctxt "#34281"
+msgid "Choose programming..."
+msgstr ""
+
+msgctxt "#34282"
+msgid "[B]+ Add another channel[/B]"
+msgstr ""
+
+msgctxt "#34283"
+msgid "More programming for this special, on any channel"
+msgstr ""
+
+msgctxt "#34284"
+msgid "[B]Preview the day[/B]"
+msgstr ""
+
+msgctxt "#34285"
+msgid "What will air, channel by channel"
+msgstr ""
+
+msgctxt "#34286"
+msgid "[COLOR red]Remove this special[/COLOR]"
+msgstr ""
+
+msgctxt "#34287"
+msgid "%s has no date coming up."
+msgstr ""
+
+msgctxt "#34288"
+msgid "Nothing to air: the channel's normal programming."
+msgstr ""
+
+msgctxt "#34289"
+msgid "Random picks from: %s"
+msgstr ""
+
+msgctxt "#34290"
+msgid "%d channels"
+msgstr ""
+
+msgctxt "#34291"
+msgid "skips this year"
+msgstr ""
+
+
+msgctxt "#34293"
+msgid "%s episodes of this channel's shows"
+msgstr ""
+
+msgctxt "#34294"
+msgid "%s has no %s episodes.[CR]It will air its normal programming on the day."
+msgstr ""
+
+msgctxt "#34295"
+msgid "%s already has %s in those hours.[CR]Replace it?"
+msgstr ""
+
+msgctxt "#34296"
+msgid "When: %s"
+msgstr ""
+
+msgctxt "#34297"
+msgid "Repeats: %s"
+msgstr ""
+
+msgctxt "#34298"
+msgid "5th"
+msgstr ""
+
+msgctxt "#34299"
+msgid "%d days after Easter"
+msgstr ""
+
+msgctxt "#34300"
+msgid "%d days before Easter"
+msgstr ""
+
+msgctxt "#34301"
+msgid "Easter Sunday"
+msgstr ""
+
+msgctxt "#34302"
+msgid "Good Friday (2 days before)"
+msgstr ""
+
+msgctxt "#34303"
+msgid "Easter Monday (1 day after)"
+msgstr ""
+
+msgctxt "#34304"
+msgid "Days before Easter..."
+msgstr ""
+
+msgctxt "#34305"
+msgid "Days after Easter..."
+msgstr ""
+
+msgctxt "#34306"
+msgid "%d days later"
+msgstr ""
+
+msgctxt "#34307"
+msgid "%d days earlier"
+msgstr ""
+
+msgctxt "#34308"
+msgid "Keep both"
+msgstr ""
+
+msgctxt "#34309"
+msgid "The rest of the day isn't planned yet."
+msgstr ""
+
+msgctxt "#34310"
+msgid "%d movies"
+msgstr ""
+
+msgctxt "#34311"
+msgid "Good Friday"
+msgstr ""
+
+msgctxt "#34312"
+msgid "Easter Monday"
+msgstr ""
+
+msgctxt "#34313"
+msgid "%s is also in %s on %s at the same time."
+msgstr ""
+
+msgctxt "#34314"
+msgid "Next: %s"
+msgstr ""
+
+msgctxt "#34315"
+msgid "Remove %s?[CR]It is the special's only channel: %s is removed too."
+msgstr ""
+
+msgctxt "#34316"
+msgid "Remove %s from %s?"
+msgstr ""
+
+msgctxt "#34317"
+msgid "Remove %s?[CR]Its channels air their normal programming on the day."
+msgstr ""
+
+msgctxt "#34318"
+msgid "Delete %d %s?"
+msgstr ""
+
+msgctxt "#34319"
+msgid "  (instead of %s)"
+msgstr ""
+
+msgctxt "#34320"
+msgid "Edit this special"
+msgstr ""
+
+msgctxt "#34321"
+msgid "Channel removed"
+msgstr ""
+
+msgctxt "#34322"
+msgid "channel removed"
+msgstr ""
+
+msgctxt "#34323"
+msgid "Choose a channel"
+msgstr ""
+
+msgctxt "#34324"
+msgid "Which channel for %s?"
+msgstr ""
+
+msgctxt "#34325"
+msgid "It doesn't air until a channel is chosen."
+msgstr ""
+
+msgctxt "#34326"
+msgid "This week"
+msgstr ""
+
+msgctxt "#34327"
+msgid "Week of %s"
+msgstr ""
+
+msgctxt "#34328"
+msgid "A past week: view only    Back: done"
+msgstr ""
+
+msgctxt "#34329"
+msgid "A past week can't be changed"
+msgstr ""
+
+msgctxt "#34330"
+msgid "%d specials"
+msgstr ""
+
+msgctxt "#34331"
+msgid "Monday, all day"
+msgstr ""
+
+msgctxt "#34332"
+msgid "Tuesday, all day"
+msgstr ""
+
+msgctxt "#34333"
+msgid "Wednesday, all day"
+msgstr ""
+
+msgctxt "#34334"
+msgid "Thursday, all day"
+msgstr ""
+
+msgctxt "#34335"
+msgid "Friday, all day"
+msgstr ""
+
+msgctxt "#34336"
+msgid "Saturday, all day"
+msgstr ""
+
+msgctxt "#34337"
+msgid "Sunday, all day"
+msgstr ""
+
+msgctxt "#34338"
+msgid "Today, all day"
+msgstr ""
+
+msgctxt "#34339"
+msgid "Tomorrow, all day"
+msgstr ""
+
+msgctxt "#34340"
+msgid "%s:  automatic programming"
+msgstr ""
+
+msgctxt "#34341"
+msgid "[B]Month calendar[/B]"
+msgstr ""
+
+msgctxt "#34342"
+msgid "The same specials on a calendar, month by month"
+msgstr ""
+
+msgctxt "#34343"
+msgid "On %s every year"
+msgstr ""
+
+msgctxt "#34344"
+msgid "On the %s every year"
+msgstr ""
+
+msgctxt "#34345"
+msgid "This year only"
+msgstr ""
+
+msgctxt "#34346"
+msgid "OK: open / add    Menu: list    CH+ / CH-: month    Back: done"
+msgstr ""
+
+msgctxt "#34347"
+msgid "%s:  no special  -  press OK to add one"
+msgstr ""
+
+msgctxt "#34348"
+msgid "Show as a list"
+msgstr ""
+
+msgctxt "#34349"
+msgid "A past day can't be changed"
+msgstr ""
+
+msgctxt "#34350"
+msgid "+ Add a special on this day"
+msgstr ""
+
+msgctxt "#34363"
+msgid "Music channel (songs around the clock, no breaks)"
+msgstr ""
+
+msgctxt "#34364"
+msgid "nothing yet"
+msgstr ""
+
+msgctxt "#34365"
+msgid "A genre"
+msgstr ""
+
+msgctxt "#34366"
+msgid "A decade"
+msgstr ""
+
+msgctxt "#34367"
+msgid "An artist"
+msgstr ""
+
+msgctxt "#34368"
+msgid "An album"
+msgstr ""
+
+msgctxt "#34369"
+msgid "A smart playlist"
+msgstr ""
+
+msgctxt "#34370"
+msgid "A music folder"
+msgstr ""
+
+msgctxt "#34371"
+msgid "Songs from"
+msgstr ""
+
+msgctxt "#34372"
+msgid "Your music library has no genres."
+msgstr ""
+
+msgctxt "#34373"
+msgid "%s  (%d songs)"
+msgstr ""
+
+msgctxt "#34374"
+msgid "None of your songs has a year."
+msgstr ""
+
+msgctxt "#34375"
+msgid "The %ss  (%d songs)"
+msgstr ""
+
+msgctxt "#34376"
+msgid "Artist"
+msgstr ""
+
+msgctxt "#34377"
+msgid "Album"
+msgstr ""
+
+msgctxt "#34378"
+msgid "Smart playlist"
+msgstr ""
+
+msgctxt "#34379"
+msgid "Music folder"
+msgstr ""
+
+msgctxt "#34380"
+msgid "Songs from: %s[CR]Add more?"
+msgstr ""
+
+msgctxt "#34381"
+msgid "Looking at the songs..."
+msgstr ""
+
+msgctxt "#34382"
+msgid "%s has only %d songs. A music channel needs at least %d."
+msgstr ""
+
+msgctxt "#34383"
+msgid "[B]+ Add songs[/B]"
+msgstr ""
+
+msgctxt "#34384"
+msgid "Songs on %s"
+msgstr ""
+
+msgctxt "#34385"
+msgid "A music channel needs at least one source of songs. Add another first."
+msgstr ""
+
+msgctxt "#34386"
+msgid "No songs found for %s. Check its sources, or scan your music into Kodi's library."
+msgstr ""
+
+msgctxt "#34387"
+msgid "%d songs: %.1f hours before a song comes round again."
+msgstr ""
+
+msgctxt "#34388"
+msgid "%d artists. Most songs: %s"
+msgstr ""
+
+msgctxt "#34389"
+msgid "%d songs have no artist tag: their file name is shown instead."
+msgstr ""
+
+msgctxt "#34390"
+msgid "Sample rates: %s"
+msgstr ""
+
+msgctxt "#34391"
+msgid "unknown"
+msgstr ""
+
+msgctxt "#34392"
+msgid "A music channel needs at least %d songs."
+msgstr ""
+
+msgctxt "#34393"
+msgid "Songs from: %s"
+msgstr ""
+
+msgctxt "#34394"
+msgid "[B]Check songs[/B] (how many, which artists)"
+msgstr ""
+
+msgctxt "#34395"
+msgid "Genre: %s"
+msgstr ""
+
+msgctxt "#34396"
+msgid "Songs from the %ss"
+msgstr ""
+
+msgctxt "#34397"
+msgid "Artist: %s"
+msgstr ""
+
+msgctxt "#34398"
+msgid "Album: %s"
+msgstr ""
+
+msgctxt "#34399"
+msgid "Music folder: %s"
+msgstr ""
+
+msgctxt "#34400"
+msgid "Track %d of %d"
+msgstr ""
+
+msgctxt "#34401"
+msgid "Track %d"
+msgstr ""
+
+msgctxt "#34402"
+msgid "From the album"
+msgstr ""
+
+msgctxt "#34403"
+msgid "Label"
+msgstr ""
+
+msgctxt "#34404"
+msgid "Written by"
+msgstr ""
+
+msgctxt "#34405"
+msgid "Also on this album"
+msgstr ""
+
+msgctxt "#34406"
+msgid "Formed %s"
+msgstr ""
+
+msgctxt "#34407"
+msgid "Born %s"
+msgstr ""
+
+msgctxt "#34408"
+msgid "Active %s"
+msgstr ""
+
+msgctxt "#34409"
+msgid "The artist"
+msgstr ""
+
+msgctxt "#34410"
+msgid "About %s"
+msgstr ""
+
+msgctxt "#34411"
+msgid "About the artist"
+msgstr ""
+
+msgctxt "#34412"
+msgid "No songs to play"
+msgstr ""
+
+msgctxt "#34413"
+msgid "Channel manager > this channel > Check songs"
+msgstr ""
+
+msgctxt "#34414"
+msgid "Coming up: %s"
+msgstr ""
+
+msgctxt "#34415"
+msgid "Music channel"
+msgstr ""
+
+msgctxt "#34416"
+msgid "Songs around the clock, no breaks"
+msgstr ""
+
+msgctxt "#34417"
+msgid "1 minute"
+msgstr ""
+
+msgctxt "#34418"
+msgid "%s½ hours"
+msgstr ""
+
+msgctxt "#34419"
+msgid "½ hour"
+msgstr ""
+
+msgctxt "#34420"
+msgid "1 hour"
+msgstr ""
+
+msgctxt "#34421"
+msgid "%d hours"
+msgstr ""
+
+msgctxt "#34422"
+msgid "about %s"
+msgstr ""
+
+msgctxt "#34423"
+msgid "%s has 1 %s episode (%s) for %s."
+msgstr ""
+
+msgctxt "#34424"
+msgid "%s has %d %s episodes (%s) for %s."
+msgstr ""
+
+msgctxt "#34425"
+msgid "The rest of the day will be its normal programming."
+msgstr ""
+
+msgctxt "#34426"
+msgid "%s on %s, %s"
+msgstr ""
+
+msgctxt "#34427"
+msgid "This show is pinned on another channel during this special:"
+msgstr ""
+
+msgctxt "#34428"
+msgid "These shows are pinned on other channels during this special:"
+msgstr ""
+
+msgctxt "#34429"
+msgid "Keep all"
+msgstr ""
+
+msgctxt "#34430"
+msgid "Commercials and bumps"
+msgstr ""
+
+msgctxt "#34431"
+msgid "House breaks and retro ads"
+msgstr ""
+
+
+msgctxt "#34433"
+msgid "Look of promos and retro ads"
+msgstr ""
+
+msgctxt "#34434"
+msgid "Music in promos and ads"
+msgstr ""
+
+msgctxt "#34435"
+msgid "Promos"
+msgstr ""
+
+msgctxt "#34436"
+msgid "Preview a promo..."
+msgstr ""
+
+msgctxt "#34437"
+msgid "What airs where"
+msgstr ""
+
+msgctxt "#34438"
+msgid "Folders"
+msgstr ""
+
+msgctxt "#34439"
+msgid "Stations folder (one folder per channel)"
+msgstr ""
+
+msgctxt "#34440"
+msgid "Logo folder (images named like the channel)"
+msgstr ""
+
+msgctxt "#34441"
+msgid "On screen"
+msgstr ""
+
+msgctxt "#34442"
+msgid "Banner, logo and rating"
+msgstr ""
+
+msgctxt "#34443"
+msgid "Changing channels"
+msgstr ""
+
+msgctxt "#34444"
+msgid "Picture"
+msgstr ""
+
+msgctxt "#34445"
+msgid "Captions"
+msgstr ""
+
+msgctxt "#34446"
+msgid "Remote CC button..."
+msgstr ""
+
+msgctxt "#34447"
+msgid "Holidays & events"
+msgstr ""
+
+msgctxt "#34449"
+msgid "Automatic holidays"
+msgstr ""
+
+msgctxt "#34450"
+msgid "Holiday programming (automatic)"
+msgstr ""
+
+msgctxt "#34451"
+msgid "Halloween on"
+msgstr ""
+
+msgctxt "#34452"
+msgid "Halloween: commercials folder"
+msgstr ""
+
+msgctxt "#34453"
+msgid "Halloween: bumps folder"
+msgstr ""
+
+msgctxt "#34454"
+msgid "Halloween: tags (comma separated)"
+msgstr ""
+
+msgctxt "#34455"
+msgid "Halloween: genres (comma separated)"
+msgstr ""
+
+msgctxt "#34456"
+msgid "Thanksgiving on"
+msgstr ""
+
+msgctxt "#34457"
+msgid "Thanksgiving: commercials folder"
+msgstr ""
+
+msgctxt "#34458"
+msgid "Thanksgiving: bumps folder"
+msgstr ""
+
+msgctxt "#34459"
+msgid "Thanksgiving: tags (comma separated)"
+msgstr ""
+
+msgctxt "#34460"
+msgid "Thanksgiving: genres (comma separated)"
+msgstr ""
+
+msgctxt "#34461"
+msgid "Christmas on"
+msgstr ""
+
+msgctxt "#34462"
+msgid "Christmas: commercials folder"
+msgstr ""
+
+msgctxt "#34463"
+msgid "Christmas: bumps folder"
+msgstr ""
+
+msgctxt "#34464"
+msgid "Christmas: tags (comma separated)"
+msgstr ""
+
+msgctxt "#34465"
+msgid "Christmas: genres (comma separated)"
+msgstr ""
+
+msgctxt "#34466"
+msgid "Summer"
+msgstr ""
+
+msgctxt "#34467"
+msgid "Start-up"
+msgstr ""
+
+msgctxt "#34468"
+msgid "Sleep"
+msgstr ""
+
+msgctxt "#34469"
+msgid "Your Kodi library"
+msgstr ""
+
+msgctxt "#34470"
+msgid "Keep my watch progress untouched"
+msgstr ""
+
+msgctxt "#34471"
+msgid "Schedules"
+msgstr ""
+
+msgctxt "#34472"
+msgid "Check"
+msgstr ""
+
+msgctxt "#34473"
+msgid "Reset"
+msgstr ""
+
+msgctxt "#34474"
+msgid "Scheduling"
+msgstr ""
+
+msgctxt "#34475"
+msgid "Playback and captions"
+msgstr ""
+
+msgctxt "#34476"
+msgid "Captions: use Kodi's full-screen player"
+msgstr ""
+
+msgctxt "#34477"
+msgid "Captions: rewind 1 second (embedded subtitles)"
+msgstr ""
+
+msgctxt "#34478"
+msgid "Developer"
+msgstr ""
+
+
+msgctxt "#34481"
+msgid "(no name)"
+msgstr ""
+
+msgctxt "#34482"
+msgid "No run-up"
+msgstr ""
+
+msgctxt "#34483"
+msgid "big day %s"
+msgstr ""
+
+
+msgctxt "#34485"
+msgid "From %s, %s"
+msgstr ""
+
+msgctxt "#34486"
+msgid "Holiday seasons (Holiday programming is off in Settings)"
+msgstr ""
+
+msgctxt "#34487"
+msgid "Holiday seasons"
+msgstr ""
+
+msgctxt "#34488"
+msgid "On / Off: %s"
+msgstr ""
+
+msgctxt "#34489"
+msgid "When"
+msgstr ""
+
+msgctxt "#34490"
+msgid "How much in the run-up: %s"
+msgstr ""
+
+msgctxt "#34491"
+msgid "Same as Settings"
+msgstr ""
+
+msgctxt "#34492"
+msgid "Tags: %s"
+msgstr ""
+
+msgctxt "#34493"
+msgid "Kodi tags containing these words count"
+msgstr ""
+
+msgctxt "#34494"
+msgid "Genres: %s"
+msgstr ""
+
+msgctxt "#34495"
+msgid "Kodi genres containing these words count"
+msgstr ""
+
+msgctxt "#34496"
+msgid "Extra title words: %s"
+msgstr ""
+
+msgctxt "#34497"
+msgid "Episode and movie titles with these words count too"
+msgstr ""
+
+msgctxt "#34498"
+msgid "Show what matches"
+msgstr ""
+
+msgctxt "#34499"
+msgid "How many episodes and films each channel has for it"
+msgstr ""
+
+msgctxt "#34500"
+msgid "Commercials folder: %s"
+msgstr ""
+
+msgctxt "#34501"
+msgid "Optional: plays in its breaks"
+msgstr ""
+
+msgctxt "#34502"
+msgid "Bumps folder: %s"
+msgstr ""
+
+msgctxt "#34503"
+msgid "Save its shows for its season: %s"
+msgstr ""
+
+msgctxt "#34504"
+msgid "Keeps its episodes and films off the air the rest of the year"
+msgstr ""
+
+msgctxt "#34505"
+msgid "Reset to the built-in settings"
+msgstr ""
+
+msgctxt "#34506"
+msgid "How much in the run-up?"
+msgstr ""
+
+msgctxt "#34507"
+msgid "Extra title words for %s (comma separated)"
+msgstr ""
+
+msgctxt "#34508"
+msgid "%s: episodes and films that match: %d. They'll stay off the air the rest of the year."
+msgstr ""
+
+msgctxt "#34509"
+msgid "Save them"
+msgstr ""
+
+msgctxt "#34510"
+msgid "Put %s back as it ships: dates, tags, genres, title words, folders?"
+msgstr ""
+
+msgctxt "#34511"
+msgid "Which Thanksgiving?"
+msgstr ""
+
+msgctxt "#34512"
+msgid "US (4th Thursday of November)"
+msgstr ""
+
+msgctxt "#34513"
+msgid "Canada (2nd Monday of October)"
+msgstr ""
+
+msgctxt "#34514"
+msgid "My own rule..."
+msgstr ""
+
+
+
+
+
+msgctxt "#34519"
+msgid "Run-up starts"
+msgstr ""
+
+
+
+
+
+
+msgctxt "#34525"
+msgid "Any tag containing this word"
+msgstr ""
+
+msgctxt "#34526"
+msgid "Any genre containing this word"
+msgstr ""
+
+msgctxt "#34527"
+msgid "%s: tags"
+msgstr ""
+
+msgctxt "#34528"
+msgid "%s: genres"
+msgstr ""
+
+msgctxt "#34529"
+msgid "Kodi lists none in your library"
+msgstr ""
+
+msgctxt "#34530"
+msgid "Choose another folder..."
+msgstr ""
+
+msgctxt "#34531"
+msgid "Don't use one"
+msgstr ""
+
+msgctxt "#34532"
+msgid "Looking through every channel..."
+msgstr ""
+
+msgctxt "#34533"
+msgid "No channel has anything for %s yet. Tag episodes or movies in Kodi, or add title words."
+msgstr ""
+
+msgctxt "#34534"
+msgid "[B]%d %s[/B]: %d episodes, %d films"
+msgstr ""
+
+msgctxt "#34535"
+msgid "%s: what matches"
+msgstr ""
+
+msgctxt "#34536"
+msgid "Counting..."
+msgstr ""
+
+msgctxt "#34537"
+msgid "The day "
+msgstr ""
+
+msgctxt "#34538"
+msgid "%d days before the big days"
+msgstr ""
+
+msgctxt "#34539"
+msgid "from %s"
+msgstr ""
+
+msgctxt "#34540"
+msgid "big days from %s, %d days"
+msgstr ""
+
+msgctxt "#34541"
+msgid "Run-up %d days, %s"
+msgstr ""
+
+msgctxt "#34542"
+msgid "Any name, any language"
+msgstr ""
+
+msgctxt "#34543"
+msgid "Big days start: %s"
+msgstr ""
+
+msgctxt "#34544"
+msgid "Big days last: %s"
+msgstr ""
+
+msgctxt "#34545"
+msgid "1 day"
+msgstr ""
+
+msgctxt "#34546"
+msgid "%d days"
+msgstr ""
+
+msgctxt "#34547"
+msgid "Run-up: %s"
+msgstr ""
+
+msgctxt "#34548"
+msgid "Big days start"
+msgstr ""
+
+msgctxt "#34549"
+msgid "How many big days?"
+msgstr ""
+
+msgctxt "#34550"
+msgid "Run-up"
+msgstr ""
+
+msgctxt "#34551"
+msgid "Starts some days before the big days..."
+msgstr ""
+
+msgctxt "#34552"
+msgid "Starts on a date..."
+msgstr ""
+
+msgctxt "#34553"
+msgid "How many days before the big days?"
+msgstr ""
+
+msgctxt "#34554"
+msgid "[B]+ Add a season...[/B]"
+msgstr ""
+
+msgctxt "#34555"
+msgid "Any holiday, real or made up: Festivus, Bastille Day, Diwali..."
+msgstr ""
+
+msgctxt "#34556"
+msgid "Move up"
+msgstr ""
+
+msgctxt "#34557"
+msgid "Higher in the list wins when two seasons fall on the same days"
+msgstr ""
+
+msgctxt "#34558"
+msgid "Move down"
+msgstr ""
+
+msgctxt "#34559"
+msgid "Delete this season"
+msgstr ""
+
+msgctxt "#34560"
+msgid "Delete the season %s?"
+msgstr ""
+
+msgctxt "#34561"
+msgid "St. Patrick's Day"
+msgstr ""
+
+msgctxt "#34562"
+msgid "May the 4th"
+msgstr ""
+
+msgctxt "#34563"
+msgid "Towel Day"
+msgstr ""
+
+msgctxt "#34564"
+msgid "Canada Day"
+msgstr ""
+
+msgctxt "#34565"
+msgid "Independence Day"
+msgstr ""
+
+msgctxt "#34566"
+msgid "Bastille Day"
+msgstr ""
+
+msgctxt "#34567"
+msgid "Festivus"
+msgstr ""
+
+msgctxt "#34568"
+msgid "Boxing Day"
+msgstr ""
+
+msgctxt "#34569"
+msgid "Add a season"
+msgstr ""
+
+msgctxt "#34570"
+msgid "My own date..."
+msgstr ""
+
+msgctxt "#34571"
+msgid "Name of the season"
+msgstr ""
+
+msgctxt "#34572"
+msgid "%s: %s.[CR]Next, on its page: the Kodi tags, genres and title words that count as its shows."
+msgstr ""
+
+msgctxt "#34573"
+msgid "Add season"
+msgstr ""
+
+msgctxt "#34574"
+msgid "Dates for each year: none from today on"
+msgstr ""
+
+msgctxt "#34575"
+msgid "Dates for each year: next %s (%d years typed)"
+msgstr ""
+
+msgctxt "#34576"
+msgid "no date for %d"
+msgstr ""
+
+msgctxt "#34577"
+msgid "no date"
+msgstr ""
+
+msgctxt "#34578"
+msgid "Dates for each year"
+msgstr ""
+
+msgctxt "#34579"
+msgid "Type the date of at least one year."
+msgstr ""
+
+msgctxt "#34580"
+msgid "No date this year"
+msgstr ""
+
+msgctxt "#34581"
+msgid "Dates for each year..."
+msgstr ""
+
+msgctxt "#34582"
+msgid "Calendar"
+msgstr ""
+
+msgctxt "#34583"
+msgid "Specials on their days, the seasons shaded"
+msgstr ""
+
+msgctxt "#34584"
+msgid "Add a special"
+msgstr ""
+
+msgctxt "#34585"
+msgid "Holiday seasons (automatic)"
+msgstr ""
+
+msgctxt "#34586"
+msgid "Halloween, Christmas, your own: dates and what counts"
+msgstr ""
+
+msgctxt "#34587"
+msgid "The calendar, specials on exact dates, and the automatic holiday seasons"
+msgstr ""
+
+msgctxt "#34588"
+msgid "Plan something for %s too: a marathon or a lineup on the day?"
+msgstr ""
+
+msgctxt "#34589"
+msgid "Plan a special"
+msgstr ""
+
+msgctxt "#34590"
+msgid "Some"
+msgstr ""
+
+msgctxt "#34591"
+msgid "%s: all day"
+msgstr ""
+
+msgctxt "#34592"
+msgid "%s run-up (%s)"
+msgstr ""
+
+msgctxt "#34593"
+msgid "other channels: %s"
+msgstr ""
+
+msgctxt "#34594"
+msgid "A holiday from my list..."
+msgstr ""
+
+msgctxt "#34595"
+msgid "ready-made"
+msgstr ""
+
+msgctxt "#34596"
+msgid "A holiday from my list"
+msgstr ""
+
+msgctxt "#34597"
+msgid "Holiday episodes of another holiday..."
+msgstr ""
+
+msgctxt "#34598"
+msgid "Holiday episodes of"
+msgstr ""
+
+
+msgctxt "#34600"
+msgid "Sound output stuck - restarting Kodi"
+msgstr ""
+
+msgctxt "#34601"
+msgid "Sound output stuck"
+msgstr ""
+
+msgctxt "#34602"
+msgid "Restart Kodi"
+msgstr ""
+
+msgctxt "#34603"
+msgid "Kodi's sound stopped after a DTS programme and stays off until Kodi restarts."
+msgstr ""
+
+msgctxt "#34604"
+msgid "House breaks"
+msgstr ""
+
+msgctxt "#34605"
+msgid "The menu comes back in a moment"
+msgstr ""
+
+msgctxt "#34606"
+msgid "Checking your changes..."
+msgstr ""
+
+msgctxt "#34607"
+msgid "Updating your channels"
+msgstr ""
+
+msgctxt "#34608"
+msgid "Almost done - this can't be stopped"
+msgstr ""
+
+msgctxt "#34609"
+msgid "The menu comes back when this is done."
+msgstr ""
+
+msgctxt "#34610"
+msgid "Still working - the menu comes back when it's done"
 msgstr ""

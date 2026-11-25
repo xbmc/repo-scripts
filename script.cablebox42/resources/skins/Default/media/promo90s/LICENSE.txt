@@ -1,0 +1,12 @@
+90s promo artwork (this folder)
+
+glyphs/*.png - the promo title lettering - are images of letters rendered from
+Bebas Neue, Copyright (c) 2010 by Dharma Type, licensed under the SIL Open Font
+License, Version 1.1 (https://openfontlicense.org).  Kodi 21 cannot load fonts
+from a script add-on, so CableBox 42 ships the letters as pictures instead of
+the font file.
+
+Everything else here (band, tab, squiggle, triangles, starburst, confetti) was
+drawn for CableBox 42 by .claude/make-promo-art.py in the source repository and
+is dedicated to the public domain under CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/

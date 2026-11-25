@@ -44,6 +44,14 @@ SUB_FILES = ".srt|.ass|.ssa|.sub|.idx|.sup|.smi|.vtt|.txt"
 # seconds into playback: look again this many seconds after each try.
 RETRY_GAPS = (3, 5, 7)
 
+# Captions off must win for the whole programme.  Kodi opens a file with its own
+# saved per-file subtitle setting and, starting partway in, can switch the
+# subtitles on again when its seek settles (seen ~2.6 s after CableBox's check,
+# Windows Kodi 21: a sidecar .srt reopened).  Look again this long after the
+# seek settles - and after any seek CableBox makes.
+GUARD_AT = (1.0, 3.0)
+GUARD_SETTLE_MAX = 8.0     # stop waiting for Kodi's seek to settle after this long
+
 NUDGE_AUTO, NUDGE_ALWAYS, NUDGE_NEVER = 0, 1, 2
 
 
@@ -70,7 +78,7 @@ PAUSE_ORIG = "cc_pause_orig"           # state.json key while the search is open
 
 KEYMAP = "special://profile/keymaps/cablebox42-captions.xml"
 KEYMAP_XML = """<?xml version="1.0" encoding="UTF-8"?>
-<!-- Written by CableBox 42 (Settings > Tools > Remote CC button).
+<!-- Written by CableBox 42 (Settings > On screen > Remote CC button).
      Lets the remote's subtitle button reach CableBox: Kodi normally maps it
      in its own full-screen player only.  Delete this file to undo. -->
 <keymap>
@@ -142,23 +150,26 @@ def _set_setting(sid, value):
 def restore_leftovers():
     """Kodi closed while the subtitle search was open: put its setting back.
     Called when the TV starts and by the service when Kodi starts."""
-    st = K.load_json(K.STATE_FILE, {})
+    st = K.load_state()
     if PAUSE_ORIG not in st:
         return
-    _set_setting(PAUSE_SETTING, bool(st.pop(PAUSE_ORIG)))
-    K.save_json(K.STATE_FILE, st)
+    _set_setting(PAUSE_SETTING, bool(st[PAUSE_ORIG]))
+    K.update_state({PAUSE_ORIG: K.DELETE})
 
 
 class Captions(object):
     def __init__(self, player):
         self.player = player
         restore_leftovers()
-        st = K.load_json(K.STATE_FILE, {})
-        self.on = st.get("cc_on")            # None: never touched -> leave Kodi alone
+        st = K.load_state()
+        # never chosen = off, as the menu says (it used to leave Kodi's per-file
+        # "subtitles on" memory alone: subtitles popped on and went full screen)
+        self.on = st.get("cc_on") is True
         self.lang = st.get("cc_lang", "")
         self.files = {}                       # video path -> subtitle file loaded for it (this session)
         self.picks = {}                       # video path -> {"lang", "name"} of the track chosen for it
         self.pending = None                   # a programme segment just started: apply on the next tick
+        self.checked_at = 0.0                 # when the last programme start's captions were applied
         self.cur = None                       # {"path", "base": (enabled, index), "touched"}
         self.resync = False                   # the programme got paused: put it back on the clock
         self.seen = None                      # (enabled, index) as CableBox last left it
@@ -170,9 +181,12 @@ class Captions(object):
         self.nudge_path = ""
         self.applied = None                   # the track apply() just switched on
         self.muted = set()                    # programmes switched off from outside, captions still on
+        self.allowed = set()                  # programmes switched on from outside, captions off
         self.cand = None                      # an outside change seen once (must hold to count)
         self.quiet_until = 0                  # Kodi settling after CableBox's own change: not the viewer
         self.has_cc = False                   # the programme on now has real captions (banner 'CC')
+        self.guard = None                     # captions off: re-checks after a seek settles
+        self.hid_logged = set()               # programmes whose re-hide is logged already
 
     # ----------------------------------------------------------- what the file has
     def _active_video_player(self):
@@ -257,6 +271,8 @@ class Captions(object):
         if self.nudge_at and now >= self.nudge_at:
             self.nudge_at = 0
             self._nudge()
+        if self.guard:
+            self._guard_tick(now)
         p = self.pending
         if not p:
             self._watch(now)
@@ -271,7 +287,10 @@ class Captions(object):
             self.cur = {"path": p["path"], "base": (enabled, index), "touched": False}
         self.applied = None
         result = self.apply(p["path"])
+        self.checked_at = time.time()        # the TV's black cover waits for this (tv.cover_tick)
         self._snap()
+        if result in ("off", "muted"):
+            self._arm_guard(p["path"], now)
         if result not in ("", "none", "file"):
             self._schedule_nudge(self.applied, 0.2)
         if not p["tries"]:
@@ -314,9 +333,13 @@ class Captions(object):
         if self._playing() != self.cur["path"]:
             return
         tracks, index, enabled = self.tracks()
+        self._learn_base(index)
         state = (enabled, index)
         self.showing = bool(enabled and index is not None)
         self.has_cc = any(not t["forced"] for t in tracks)
+        if enabled and self._kodi_turned_on(tracks, index):
+            self._hide(why="Kodi switched them on")
+            return
         if self.seen is None:
             self.seen = state
             return
@@ -333,15 +356,22 @@ class Captions(object):
         self.seen = state
         path = self.cur["path"]
         t = next((x for x in tracks if x["index"] == index), None) if enabled else None
-        was = self.on
+        # The CC setting only ever changes with CableBox's own CC button and menu
+        # (switch / set_track / set_off / load_file): what CableBox sees Kodi doing -
+        # its per-file "subtitles on" memory coming back, a phone remote, Kodi's menu -
+        # is for this programme only, never the setting (it used to switch CC on)
         if t and enabled:
             self._schedule_nudge(t, 0.3)      # switched on from a phone: same CoreELEC fix
         if t and not t["forced"]:            # a forced track alone is what 'captions off' shows
-            self.on = True
-            self.lang = t["lang"] or self.lang
             self.picks[path] = {"lang": t["lang"], "name": t["name"]}
             self.muted.discard(path)
-            note = _("Captions: %s") % t["label"]
+            if not self.on:
+                self.allowed.add(path)        # left on for this programme; CC stays off
+            self._touch()
+            self.note = _("Captions: %s") % t["label"]
+            K.log("captions switched on outside CableBox: this programme only (CC setting unchanged: %s)"
+                  % self.on, xbmc.LOGINFO)
+            return
         elif self.on:
             # captions are on, like a TV's CC setting: switched off from a phone or
             # Kodi's menu, they stay off for this programme only - CableBox's own
@@ -352,13 +382,87 @@ class Captions(object):
             K.log("captions switched off outside CableBox: this programme only", xbmc.LOGINFO)
             return
         else:
-            self.on = False
-            note = _("Captions off")
-        self._remember()
+            self.allowed.discard(path)        # switched off again outside: off, as the CC setting says
+            self._touch()
+
+    # ----------------------------------------------------------- captions off wins
+    def _off_wanted(self, path):
+        return (self.on is False and path not in self.allowed) or (bool(self.on) and path in self.muted)
+
+    def _kodi_turned_on(self, tracks, index):
+        """Subtitles on screen with captions off that the viewer didn't ask for:
+        on in the first seconds after a seek (Kodi re-applying the file's saved
+        setting as its seek settles), Kodi's own per-file memory (the track the
+        file opened with), or a forced track.  Another track switched on later
+        (a phone remote, Kodi's menu) is the viewer's choice and _watch takes it."""
+        if not self.cur or not self._off_wanted(self.cur["path"]):
+            return False
+        if time.time() < self.quiet_until or self.guard:
+            return True
+        base_on, base_index = self.cur["base"]
+        if base_on and index == base_index:
+            return True
+        t = next((x for x in tracks if x["index"] == index), None)
+        return t is None or t["forced"]
+
+    def _learn_base(self, index):
+        """Kodi often hasn't named the track its per-file memory opened with when the
+        programme starts (subtitles on, current track None): note it once it has."""
+        base_on, base_index = self.cur["base"]
+        if base_on and base_index is None and index is not None:
+            self.cur["base"] = (base_on, index)
+
+    def _arm_guard(self, path, now):
+        """Captions off: look again once Kodi's seek has settled (GUARD_AT)."""
+        self.guard = {"path": path, "t0": now, "checks": None}
+
+    def _guard_tick(self, now):
+        g = self.guard
+        if not self.cur or self.cur["path"] != g["path"] or self._playing() != g["path"] \
+                or not self._off_wanted(g["path"]):
+            self.guard = None
+            return
+        if g["checks"] is None:
+            seeking = xbmc.getCondVisibility("Player.Seeking | Player.Caching")
+            if seeking and now - g["t0"] < GUARD_SETTLE_MAX:
+                return
+            g["checks"] = [now + d for d in GUARD_AT]
+        if now < g["checks"][0]:
+            return
+        g["checks"].pop(0)
+        last = not g["checks"]
+        _tracks, index, enabled = self.tracks()
+        self._learn_base(index)
+        if enabled:
+            self._hide(why="after the seek settled")
+        if last:
+            self.guard = None
+
+    def _hide(self, why):
+        """Captions are off: take Kodi's subtitles off the screen again."""
+        path = self.cur["path"] if self.cur else ""
+        try:
+            self.player.showSubtitles(False)
+        except Exception as exc:
+            K.log_err("captions hide: %s" % exc)
+            return
         self._touch()
-        K.log("captions changed outside CableBox: %s" % note)
-        if was != self.on:
-            self.note = note
+        if path not in self.hid_logged:
+            self.hid_logged.add(path)
+            K.log("Captions off, but Kodi showed subtitles (%s): hidden again | %s"
+                  % (why, self.describe(path, "hide")), xbmc.LOGINFO)
+        _tracks, index, _e = self.tracks()
+        self.seen = (False, index)
+        self.showing = False
+        self.cand = None
+
+    def showing_settled(self, now=None):
+        """Subtitles on screen that CableBox's own choice has left there: only once the
+        programme's captions are applied (not pending) and Kodi has settled.  Right
+        after a start Kodi still reports the file's remembered "subtitles on" (late on
+        CoreELEC), even with CC off: that must never send the picture full screen."""
+        now = time.time() if now is None else now
+        return self.showing and not self.pending and now >= self.quiet_until
 
     def take_note(self):
         n, self.note = self.note, ""
@@ -374,6 +478,8 @@ class Captions(object):
         self.nudge_at = 0
         self.cand = None
         self.has_cc = False
+        self.guard = None
+        self.hid_logged.clear()
         if not cur or not cur.get("touched") or self._playing() != cur["path"]:
             return
         enabled, index = cur["base"]
@@ -403,6 +509,13 @@ class Captions(object):
             K.log("Captions: rewound 1 s so Kodi shows the embedded subtitles (CoreELEC fix)", xbmc.LOGINFO)
         except Exception as exc:
             K.log_err("captions rewind: %s" % exc)
+        self.seeked()
+
+    def seeked(self):
+        """CableBox moved the playing programme (a seek): with captions off, look
+        again once it settles - Kodi may put its subtitles back."""
+        if self.cur and self._off_wanted(self.cur["path"]):
+            self._arm_guard(self.cur["path"], time.time())
 
     def _touch(self):
         if self.cur:
@@ -410,14 +523,12 @@ class Captions(object):
 
     # ----------------------------------------------------------- choices
     def _remember(self):
-        st = K.load_json(K.STATE_FILE, {})
-        st["cc_on"] = self.on
-        st["cc_lang"] = self.lang
-        K.save_json(K.STATE_FILE, st)
+        K.update_state({"cc_on": self.on, "cc_lang": self.lang})
 
     def set_off(self):
         self.on = False
         self.muted.clear()
+        self.allowed.clear()
         self._remember()
         self._touch()
         self.applied = None
@@ -426,7 +537,6 @@ class Captions(object):
         except Exception:
             pass
         self._snap()
-        self._schedule_nudge(self.applied, 0.3)     # a forced track kept on
 
     @staticmethod
     def _full_showing(tracks, index, enabled):
@@ -452,25 +562,10 @@ class Captions(object):
             self._kodi_lang = _lang_key(v)
         return self._kodi_lang
 
-    def _forced_for(self, tracks):
-        """The forced track that stays on with captions off.  Blu-ray rips have
-        one for foreign-language scenes (the German dialogue in a war film, say):
-        part of the programme, like subtitles burned into a broadcast."""
-        forced = [t for t in tracks if t["forced"]]
-        want = self.want_lang()
-        same = [t for t in forced if want and t["lang"] == want]
-        return (same or forced or [None])[0]
-
     def _show_off(self):
-        """Captions off: only a forced track, if the file has one, stays on."""
-        tracks, _i, _e = self.tracks()
-        f = self._forced_for(tracks)
-        if f:
-            self.player.setSubtitleStream(f["index"])
-            self.player.showSubtitles(True)
-            self.applied = f
-        else:
-            self.player.showSubtitles(False)
+        """Captions off: no subtitles at all - forced tracks and subtitle files
+        next to the video too (off means off)."""
+        self.player.showSubtitles(False)
 
     def set_track(self, t):
         if self.cur:
@@ -534,9 +629,9 @@ class Captions(object):
 
     def apply(self, video_path):
         """A programme segment has started: put the viewer's caption choice back."""
-        if self.on is None:
-            return ""
         try:
+            if not self.on and video_path in self.allowed:
+                return ""                     # switched on from outside for this programme: as Kodi has it
             if not self.on or video_path in self.muted:
                 self._touch()
                 self._show_off()
@@ -571,10 +666,12 @@ class Captions(object):
             else:
                 self.on = False
                 self.muted.clear()
+                self.allowed.clear()
                 self._remember()
             return _("Captions off")
         self.on = True
         self.muted.clear()
+        self.allowed.clear()
         self._remember()
         if not here:
             return _("Captions on")
@@ -593,7 +690,7 @@ class Captions(object):
         path = self.cur["path"] if self.cur else None
         # a forced track Kodi switched on by itself isn't captions: first press = on;
         # a programme switched off from a phone: the CC button brings them back
-        if (self.on and path not in self.muted) or (self.on is None and self._full_showing(tracks, cur, enabled)):
+        if self.on and path not in self.muted:
             self.set_off()
             return _("Captions off")
         t = self._best(tracks, self.cur["path"] if self.cur else None)
@@ -673,9 +770,7 @@ class Captions(object):
         before, before_cur, before_on = self.tracks()
         swapped = _get_setting(PAUSE_SETTING) is True
         if swapped:
-            st = K.load_json(K.STATE_FILE, {})
-            st[PAUSE_ORIG] = True                    # put back next start if Kodi closes meanwhile
-            K.save_json(K.STATE_FILE, st)
+            K.update_state({PAUSE_ORIG: True})       # put back next start if Kodi closes meanwhile
             _set_setting(PAUSE_SETTING, False)
         mon = xbmc.Monitor()
         try:
@@ -691,9 +786,7 @@ class Captions(object):
         finally:
             if swapped:
                 _set_setting(PAUSE_SETTING, True)
-                st = K.load_json(K.STATE_FILE, {})
-                st.pop(PAUSE_ORIG, None)
-                K.save_json(K.STATE_FILE, st)
+                K.update_state({PAUSE_ORIG: K.DELETE})
         if xbmc.getCondVisibility("Player.Paused"):  # Kodi paused anyway: carry on, back on the clock
             try:
                 self.player.pause()
@@ -731,18 +824,20 @@ class Captions(object):
 
 # ------------------------------------------------------------------ remote CC button
 def keymap_tool():
-    """Settings > Tools: let the remote's subtitle button reach CableBox, or undo it."""
+    """Settings > On screen: let the remote's subtitle button reach CableBox, or undo it."""
     d = xbmcgui.Dialog()
     title = _("Remote CC button")
     if xbmcvfs.exists(KEYMAP):
-        if d.yesno(title, _("The remote's subtitle button is set up for CableBox.[CR]Remove it?")):
+        if d.yesno(title, _("The remote's subtitle button is set up for CableBox.[CR]Remove it?"),
+                   nolabel=_("Cancel"), yeslabel=_("Remove")):
             xbmcvfs.delete(KEYMAP)
             xbmc.executebuiltin("Action(reloadkeymaps)")
             d.notification(title, _("Removed"), time=2500)
         return
     if not d.yesno(title, _("Kodi only sends the remote's subtitle button to its own full-screen player. "
                             "Add a small keymap so it switches captions on and off in CableBox too?[CR]"
-                            "Elsewhere in Kodi it toggles subtitles of a playing video.")):
+                            "Elsewhere in Kodi it toggles subtitles of a playing video."),
+                   nolabel=_("Cancel"), yeslabel=_("Set it up")):
         return
     folder = "special://profile/keymaps/"
     try:

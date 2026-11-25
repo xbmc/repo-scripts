@@ -23,7 +23,7 @@ def fixed_number(c):
         return NEWS_NUMBER
     return None
 
-TYPES = ("network", "movies", "loop", "guide", "weather")
+TYPES = ("network", "movies", "loop", "guide", "weather", "extras", "musicvideos", "music")
 
 DEFAULTS = {
     "network": {"commercials": True, "midroll": True, "bumps": True, "lineup": "strip", "slot": 30},
@@ -31,6 +31,13 @@ DEFAULTS = {
     "loop": {"commercials": False, "midroll": False, "bumps": False, "lineup": "shuffle", "slot": 0},
     "guide": {"commercials": False, "midroll": False, "bumps": False, "lineup": "shuffle", "slot": 30},
     "weather": {"commercials": False, "midroll": False, "bumps": False, "lineup": "shuffle", "slot": 30},
+    # Behind the scenes: movie Extras in per-film blocks; breaks only between segments
+    "extras": {"commercials": True, "midroll": True, "bumps": True, "lineup": "shuffle", "slot": 30},
+    # Boombox: music videos on the real clock, breaks only between videos, video captions on
+    "musicvideos": {"commercials": True, "midroll": True, "bumps": True, "lineup": "shuffle", "slot": 30,
+                    "mv_captions": True},
+    # Music channels (DMX-style): songs around the clock, no breaks of any kind; never in the wizard
+    "music": {"commercials": False, "midroll": False, "bumps": False, "lineup": "shuffle", "slot": 60},
 }
 
 
@@ -60,8 +67,23 @@ def load():
     return sorted(chans, key=lambda c: c["number"])
 
 
+def signoff_mode(ch):
+    """How the channel signs off at the start of its off-air hours: "card" (the
+    built-in sign-off card, the default), "none", or "folder" (a clip from
+    signoff_path).  Channels from before 1.3 have no signoff_mode: a sign-off
+    folder makes them "folder", otherwise the card.  (Not written on load, so an
+    update doesn't change every channel's config_hash.)"""
+    mode = ch.get("signoff_mode")
+    if mode == "folder" and not ch.get("signoff_path"):
+        return "card"
+    if mode in ("card", "none", "folder"):
+        return mode
+    return "folder" if ch.get("signoff_path") else "card"
+
+
 def save(chans):
-    save_json(CHANNELS_FILE, {"version": 2, "channels": sorted(chans, key=lambda c: c["number"])})
+    keep = [dict((k, v) for k, v in c.items() if not k.startswith("_")) for c in chans]   # wizard-only notes
+    save_json(CHANNELS_FILE, {"version": 2, "channels": sorted(keep, key=lambda c: c["number"])})
 
 
 def config_hash(ch):
@@ -69,7 +91,9 @@ def config_hash(ch):
     # Empty/unset fields are ignored, so adding new options in an update does
     # not throw away every channel's schedule.
     keep = {k: v for k, v in ch.items()
-            if k not in ("name", "number", "callsign", "logo", "station", "brand_blocks") and v not in ([], {}, None, "")}
+            if k not in ("name", "number", "callsign", "logo", "station", "brand_blocks", "mv_captions",
+                         "home_guard")
+            and not k.startswith("_") and v not in ([], {}, None, "")}
     return hashlib.md5(json.dumps(keep, sort_keys=True).encode("utf-8")).hexdigest()[:12]
 
 
@@ -155,30 +179,32 @@ GENRE_RENAMES = {
     "Reality": _("Reality TV"), "Action & Adventure": _("Action Channel"), "Crime": _("Crime & Justice"),
     "Mystery": _("Mystery Channel"), "Western": _("Western Channel"), "Game Show": _("Game Show Channel"),
     "Soap": _("Soap Channel"), "Talk": _("Talk TV"), "News": _("News 42"),
+    # other spellings of a station's genres share its channel
+    "Sitcom": _("Comedy Channel"), "Action": _("Action Channel"), "Game-Show": _("Game Show Channel"),
+    "Educational": _("Documentary 42"),
 }
 
 
-# (Nickelodeon, Cartoon Network and PBS shows go to Chameleon, Animation
-# Station and PES instead - see stations.py)
-STUDIO_BRANDS = ["Disney", "Pixar", "Hanna-Barbera", "Warner Bros. Animation",
-                 "HBO", "BBC", "Amblin", "Lucasfilm", "Marvel", "DreamWorks",
-                 "Studio Ghibli", "Jim Henson", "Rankin/Bass"]
-
-
-def auto_lineup(progress=None, min_shows=5, min_movies=8, max_tv=14, max_movie=6):
+def auto_lineup(progress=None, min_shows=5, min_movies=8, max_tv=14, mv_paths=None):
     """Build a sensible lineup from the Kodi library.
 
-    Returns a list of channel dicts (not saved).
+    Only channels a built-in station brands (its name and logo) are made, plus
+    the TV Guide; anything else (a studio, a movie genre with no station) is the
+    viewer's to add in the Channel manager.
+
+    mv_paths: the music video folder the viewer chose in Build my lineup (when
+    the library has no music videos).  Returns a list of channel dicts (not
+    saved), or None if progress(msg, pct) returned True (the viewer pressed Cancel).
     """
     chans = [new_channel(2, _("TV Guide"), "guide")]
     weather = new_channel(WEATHER_NUMBER, _("Weather Channel"), "weather")
     num = 3
 
     def step(msg, pct):
-        if progress:
-            progress(msg, pct)
+        return bool(progress and progress(msg, pct))
 
-    step(_("Reading TV shows"), 5)
+    if step(_("Reading TV shows"), 5):
+        return None
     shows = library.all_tvshows()
     gcount = Counter()
     for s in shows:
@@ -195,32 +221,27 @@ def auto_lineup(progress=None, min_shows=5, min_movies=8, max_tv=14, max_movie=6
         n = sum(1 for s in shows if set(gs).intersection(s.get("genre", [])))
         sized.append((n, name, gs))
     sized.sort(key=lambda x: -x[0])
+    # only genres a built-in station stands for (Comedy Corner, Orbit TV...)
+    station_genres = set(g for st in stations.STATIONS for g in st["match"].get("genres", []))
     by_name = {}
     for n, name, gs in sized:
-        if n < min_shows or len(by_name) >= max_tv:
+        if n < min_shows or len(by_name) >= max_tv or not station_genres.intersection(gs):
             continue
-        by_name[name] = new_channel(num, name, "network", [{"type": "tvgenre", "value": g} for g in gs])
+        by_name[name] = new_channel(num, name, "network", [{"type": "tvgenre", "value": g} for g in gs],
+                                    _genre=True)
         chans.append(by_name[name])
         num += 1
 
-    covered = set(s["value"] for c in by_name.values() for s in c["sources"])
     make_nets = len(shows) >= 12
-    if make_nets:              # the networks' time blocks air these genres too
-        covered |= set(GENERAL) | set(g for row in NETWORK_DAY if row[4] != "movies" for g in row[4])
-    orphans = sorted(s["title"] for s in shows if not covered.intersection(s.get("genre", [])))
     if shows and not by_name:
         # a small library: no genre has enough shows, so one channel airs them all
         chans.append(new_channel(num, _("Channel %d") % num, "network", [{"type": "alltv"}]))
         num += 1
-    elif orphans:
-        # shows whose genres are all too thin for a channel: onto the biggest
-        # genre network, by name (the channel manager can move them)
-        biggest = next(iter(by_name.values()))
-        biggest["sources"].append({"type": "tvshow", "value": orphans, "orphans": True})
 
     # no automatic decade channels (they only repeated the genre channels);
     # a decade is still a source you can pick in the channel editor
-    step(_("Reading movies"), 60)
+    if step(_("Reading movies"), 60):
+        return None
     movies = library.all_movies()
     mg = Counter()
     for m in movies:
@@ -229,53 +250,135 @@ def auto_lineup(progress=None, min_shows=5, min_movies=8, max_tv=14, max_movie=6
     if len(movies) >= min_movies:
         chans.append(new_channel(num, _("Movie Channel"), "movies", [{"type": "movies"}]))
         num += 1
-    made = 0
+    # movie genres only where a station stands for them (documentaries: The
+    # Exploration Channel); no studio showcases - Disney is The Dexter Channel's
+    movie_genres = set(g for st in stations.STATIONS for g in st["match"].get("movie_genres", []))
     for g, n in mg.most_common():
-        if made >= max_movie or n < min_movies:
+        if n < min_movies or g not in movie_genres:
             continue
         chans.append(new_channel(num, _("%s Movies") % g, "movies", [{"type": "movies", "genre": g}]))
         num += 1
-        made += 1
-    step(_("Looking for studio channels"), 85)
-    try:
-        studio_items = library.all_tvshows_with("studio") + library.all_movies(["title", "studio"])
-    except Exception:
-        studio_items = []
-    made = 0
-    for brand in STUDIO_BRANDS:
-        n = sum(1 for it in studio_items if any(brand.lower() in s.lower() for s in it.get("studio", [])))
-        if n >= min_movies and made < 4:
-            chans.append(new_channel(num, _("%s Showcase") % brand, "network",
-                                     [{"type": "studio", "value": brand, "what": "both"}],
-                                     lineup="shuffle"))
-            num += 1
-            made += 1
     old = [m for m in movies if 0 < int(m.get("year") or 0) < 1990]
     if len(old) >= min_movies:
         chans.append(new_channel(num, _("Classic Movies"), "movies",
                                  [{"type": "movies", "years": [1900, 1989]}]))
         num += 1
+    if step(_("Looking for music videos"), 92):
+        return None
+    mv = music_channel(num, mv_paths)
+    if mv:
+        chans.append(mv)
+        num += 1
     # broadcast networks on the low numbers, right after the guide
     if make_nets:
         chans[1:1] = broadcast_networks(gcount, len(movies))
-    step(_("Done"), 100)
+    if step(_("Done"), 100):
+        return None
     chans.append(weather)
     stations.assign(chans)
     stations.extra_channels(chans, min_shows)
+    without_station(chans)
+    for c in chans:
+        if c.get("type") in ("network", "movies", "loop"):
+            c["home_guard"] = True      # topping up leaves a show's first-genre / network home alone
+    drop_hollow(chans, min_shows)
+    place_orphans(chans, shows, make_nets)
     renumber(chans)
     return chans
 
 
-def renumber(chans):
-    """Number channels 2, 3, 4... in order, keeping weather on 25 and news on 42
-    (and never giving those numbers to anything else while they're there)."""
+def without_station(chans):
+    """Leave out channels no built-in station took (two genre channels for one
+    station, say): Build my lineup only makes channels with a station's name
+    and logo.  The TV Guide and a small library's all-shows channel stay."""
+    import xbmc
+    from .kodiutil import log
+    for c in [c for c in chans if c.get("type") in ("network", "movies") and not c.get("station")
+              and not any(s.get("type") == "alltv" for s in c.get("sources", []))]:
+        chans.remove(c)
+        log("%s: dropped, no built-in station for it" % c["name"], level=xbmc.LOGINFO)
+
+
+def place_orphans(chans, shows, make_nets):
+    """Shows whose genres are all too thin for a channel (or whose channel was
+    dropped): onto the biggest genre network, by name (the channel manager can
+    move them).  With broadcast networks, the genres their time blocks air count
+    as covered: those shows air there."""
+    genre = [c for c in chans if c.get("_genre")]
+    if not genre:
+        return
+    covered = set(s["value"] for c in genre for s in c["sources"] if s.get("type") == "tvgenre")
+    if make_nets:
+        covered |= set(GENERAL) | set(g for row in NETWORK_DAY if row[4] != "movies" for g in row[4])
+    orphans = sorted(s["title"] for s in shows if not covered.intersection(s.get("genre", [])))
+    if orphans:
+        genre[0]["sources"].append({"type": "tvshow", "value": orphans, "orphans": True})
+
+
+def drop_hollow(chans, min_shows=5):
+    """Leave out genre channels that fewer than min_shows shows would call home
+    (their best match once the stations' networks are in): Action & Adventure is
+    listed by many shows but first for almost none.  Their shows go to their
+    next-best channel.  One at a time, emptiest first, since a dropped channel's
+    shows may fill another.  Returns the dropped channels."""
+    import xbmc
+    from . import assign
+    from .kodiutil import log
+    dropped = []
+    while True:
+        genre = [c for c in chans if c.get("_genre")]
+        if len(genre) < 2:          # keep at least one genre channel
+            return dropped
+        renumber(chans)             # for now: home ties go to the lower number
+        # movies count too: The Dexter Channel lives on Disney's movies as well as its shows
+        first = assign.compute(chans, md=assign.MODE_ALL, explain=True)["first"]
+        homes = Counter(first.values())
+        n, _num, worst = min((homes.get(c["id"], 0), -c["number"], c) for c in genre)
+        if n >= min_shows:
+            return dropped
+        chans.remove(worst)
+        dropped.append(worst)
+        log("%s: dropped, %d shows would live here" % (worst.get("generic_name", worst["name"]), n),
+            level=xbmc.LOGINFO)
+
+
+def music_channel(number, paths=None):
+    """Boombox: a music video channel when there are at least MIN_VIDEOS of them
+    (a file count, so nothing is measured).  The survey rides along in
+    "_survey" for Build my lineup's screens; save() leaves it out."""
+    import time
+    import xbmc
+    from . import musicvideos
+    from .kodiutil import log
+    t0 = time.time()
+    try:
+        sv = library.musicvideo_survey(paths)
+    except Exception as exc:
+        log("music video survey failed: %s" % exc)
+        return None
+    log("music videos for Build my lineup: %d (%d in the library) in %.1f s" % (
+        sv["total"], sv["lib"], time.time() - t0), level=xbmc.LOGINFO)
+    if sv["total"] < musicvideos.MIN_VIDEOS:
+        return None
+    src = {"type": "musicvideos"}
+    if paths:
+        src["paths"] = list(paths)
+    ch = new_channel(number, _("Music Videos"), "musicvideos", [src])
+    ch["_survey"] = sv
+    return ch
+
+
+def renumber(chans, start=2):
+    """Number channels 2, 3, 4... (or from `start`) in order, keeping weather on
+    25 and news on 42 (and never giving those numbers to anything else while
+    they're there)."""
     fixed = {}
     for c in chans:
         n = fixed_number(c)
         if n is not None and n not in fixed:
             fixed[n] = c
     taken = set(fixed)
-    num = 2
+    num = max(1, int(start))
     for c in chans:
         if any(c is f for f in fixed.values()):
             c["number"] = fixed_number(c)
