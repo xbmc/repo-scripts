@@ -88,7 +88,7 @@ def _legacy_video(video_id):
     return q
 
 
-def live_request(channel, platform=keys.WEB, headers={}):
+def live_request(channel, platform=keys.WEB, headers={}, supported_codecs=None):
     token = channel_token(channel, platform=platform, headers=headers)
     token = get_access_token(token)
 
@@ -112,6 +112,8 @@ def live_request(channel, platform=keys.WEB, headers={}):
         q.add_param(keys.PLAYLIST_INCLUDE_FRAMERATE, Boolean.TRUE)
         q.add_param(keys.RTQOS, keys.CONTROL)
         q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+        if supported_codecs:
+            q.add_param('supported_codecs', supported_codecs)
         url = '?'.join([q.url, urlencode(q.params)])
         request_dict = {
             'url': url,
@@ -122,7 +124,7 @@ def live_request(channel, platform=keys.WEB, headers={}):
 
 
 @query
-def _live(channel, token, headers={}):
+def _live(channel, token, headers={}, supported_codecs=None):
     signature = token[keys.SIGNATURE]
     access_token = token[keys.VALUE]
 
@@ -139,11 +141,13 @@ def _live(channel, token, headers={}):
     q.add_param(keys.PLAYLIST_INCLUDE_FRAMERATE, Boolean.TRUE)
     q.add_param(keys.RTQOS, keys.CONTROL)
     q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+    if supported_codecs:
+        q.add_param('supported_codecs', supported_codecs)
     return q
 
 
 @m3u8
-def live(channel, platform=keys.WEB, headers={}):
+def live(channel, platform=keys.WEB, headers={}, supported_codecs=None):
     token = channel_token(channel, platform=platform, headers=headers)
     token = get_access_token(token)
     if not token:
@@ -151,10 +155,10 @@ def live(channel, platform=keys.WEB, headers={}):
     elif isinstance(token, dict) and 'error' in token:
         return token
     else:
-        return _live(channel, token, headers=headers)
+        return _live(channel, token, headers=headers, supported_codecs=supported_codecs)
 
 
-def video_request(video_id, platform=keys.WEB, headers={}):
+def video_request(video_id, platform=keys.WEB, headers={}, supported_codecs=None):
     video_id = valid_video_id(video_id)
     if video_id:
         token = vod_token(video_id, platform=platform, headers=headers)
@@ -178,6 +182,8 @@ def video_request(video_id, platform=keys.WEB, headers={}):
             q.add_param(keys.PLAYLIST_INCLUDE_FRAMERATE, Boolean.TRUE)
             q.add_param(keys.RTQOS, keys.CONTROL)
             q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+            if supported_codecs:
+                q.add_param('supported_codecs', supported_codecs)
             q.add_param(keys.BAKING_BREAD, Boolean.TRUE)
             q.add_param(keys.BAKING_BROWNIES, Boolean.TRUE)
             q.add_param(keys.BAKING_BROWNIES_TIMEOUT, 1050)
@@ -193,7 +199,7 @@ def video_request(video_id, platform=keys.WEB, headers={}):
 
 
 @query
-def _vod(video_id, token, headers={}):
+def _vod(video_id, token, headers={}, supported_codecs=None):
     signature = token[keys.SIGNATURE]
     access_token = token[keys.VALUE]
 
@@ -208,6 +214,8 @@ def _vod(video_id, token, headers={}):
     q.add_param(keys.PLAYLIST_INCLUDE_FRAMERATE, Boolean.TRUE)
     q.add_param(keys.RTQOS, keys.CONTROL)
     q.add_param(keys.PLAYER_BACKEND, keys.MEDIAPLAYER)
+    if supported_codecs:
+        q.add_param('supported_codecs', supported_codecs)
     q.add_param(keys.BAKING_BREAD, Boolean.TRUE)
     q.add_param(keys.BAKING_BROWNIES, Boolean.TRUE)
     q.add_param(keys.BAKING_BROWNIES_TIMEOUT, 1050)
@@ -215,7 +223,7 @@ def _vod(video_id, token, headers={}):
 
 
 @m3u8
-def video(video_id, platform=keys.WEB, headers={}):
+def video(video_id, platform=keys.WEB, headers={}, supported_codecs=None):
     video_id = valid_video_id(video_id)
     if video_id:
         token = vod_token(video_id, platform=platform, headers=headers)
@@ -226,7 +234,7 @@ def video(video_id, platform=keys.WEB, headers={}):
         elif isinstance(token, dict) and 'error' in token:
             return token
         else:
-            return _vod(video_id, token, headers=headers)
+            return _vod(video_id, token, headers=headers, supported_codecs=supported_codecs)
     else:
         raise NotImplementedError('Unknown Video Type')
 

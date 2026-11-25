@@ -53,18 +53,17 @@ def _check_follows(username, name, headers={}):
 # undocumented / unsupported
 @query
 def _get_followed(limit=100, headers={}):
+    # Full query document rather than a persisted query: Twitch rotates the persisted
+    # hashes, and the previous one now only answers with PersistedQueryNotFound.
     data = [{
         "operationName": "FollowingGames_CurrentUser",
         "variables": {
             "limit": limit,
             "type": "LIVE"
         },
-        "extensions": {
-            "persistedQuery": {
-                "version": 1,
-                "sha256Hash": "8446d4d234005813dc1f024f487ce95434c3e4202f451dd42777935b5ed035ce"
-            }
-        }
+        "query": "query FollowingGames_CurrentUser($limit: Int!, $type: FollowedGamesType!) {"
+                 " currentUser { followedGames(first: $limit, type: $type) {"
+                 " nodes { id name displayName boxArtURL viewersCount } } } }"
     }]
     q = GQLQry('', headers=headers, data=data, use_token=False)
     return q
