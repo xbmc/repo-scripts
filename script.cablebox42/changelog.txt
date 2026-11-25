@@ -1,3 +1,469 @@
+v1.2.0 (2026-11-25)
+- On from the start: promos in breaks, house ads mixed in with commercials,
+  a show's own Promo / Trailer clips from its Extras folder, and summer reruns
+  on the broadcast networks (1 June to 31 August). Updating from 1.1.1 switches
+  them on too (1.1.1 had none of these settings). Each can be switched off in
+  Settings > Breaks and Settings > Holidays & events
+- Fixed: tuning into some DTS-HD programmes partway in froze the picture and
+  left Kodi without sound until Kodi restarted (also in Kodi's own player
+  afterwards). Kodi 21 can misread the first DTS frame when a file is opened
+  at a position (Planet Earth II S01E03 at 19:05-19:07, every time); CableBox
+  now opens DTS files with passthrough at the start and jumps to the position,
+  which never got stuck (N2: 158 fast channel changes, 65 DTS starts, 40 starts
+  at the bad spots). If Kodi's sound output gets stuck anyway, CableBox notices
+  within a second: with the TV on it restarts Kodi and comes back on the same
+  channel; with the TV off it asks (nothing inside a running Kodi clears it)
+- Fixed: subtitles showing with CC off, the last channel and the Play GUI
+  sounds backup forgotten: two saves of CableBox's state file at once (as when
+  the TV comes on) could leave it empty. Saves now take a lock, change only
+  their own keys, use a temp file of their own, and never write over a file
+  they couldn't read. The Play GUI sounds backup has a file of its own
+- Fixed: a special set to 'From the first episode' failed to plan, and its
+  channel had nothing after the programme on air
+- Fixed: a setting changed in Settings (seen with Promo look) could switch
+  back by itself a moment after OK
+- After Settings, the Channel manager, the weekly planner or holiday seasons,
+  a box in the middle of the screen says 'Updating your channels', what
+  CableBox is doing (checking your changes, working out home channels,
+  updating schedules) and that the menu comes back when it's done, then
+  'Schedules refreshed'; it used to work silently for up to a minute. The
+  update can't be stopped halfway, so Cancel only says so; if nothing has
+  moved for a minute, Cancel gives the screen back and a small bar in the
+  corner shows the update until it's done
+- Fixed: flipping to an episode could squeeze its picture for the credits at
+  once and keep it squeezed: for a moment after a channel change Kodi still
+  reports the previous file's position. The squeeze now waits until this
+  episode's own picture is up and its position is inside the file
+- Fixed: with Closed captions never switched on or off, subtitles could pop up
+  on programmes Kodi remembers subtitles for (and the picture went full
+  screen), although the menu said Off. Captions are now off until you switch
+  them on
+- Fixed: opening CableBox while its menu waited for Settings or a refresh
+  stacked a second menu on top
+- Sign-off and station ID cards: a channel with no logo, tagline or genre no
+  longer shows an empty gold band ('We return at ...' / 'Channel N')
+- Build my lineup: the Welcome and Extras descriptions and the background
+  music question fit their boxes
+- Holidays & events lives in the main menu only; Settings > Holidays & events
+  keeps just the options (on/off, how much, saving shows for their season)
+- Halloween matches only clearly Halloween or horror programmes: the Mystery
+  genre and the words ghost, witch, boo, mummy, scary, creepy, pumpkin and
+  costume party are out (a stored old default 'Horror, Mystery' becomes Horror)
+- Month calendar: on a special's day in a season, the season's shade shows with
+  a gold border
+- Settings > Breaks: 'House breaks' (the long label was cut off at 1080p)
+- New: music channels, like the old DMX and Music Choice cable channels
+  (Channel manager > Add a channel > Music channel; Build my lineup never adds
+  one, and Replace my lineup keeps yours): songs from a genre, decade, artist
+  or album of Kodi's music library, a music smart playlist or a music folder,
+  back to back on the real clock with no breaks, gapless, tuning in mid-song.
+  Never the same artist twice in a row, no song again until all have played.
+  A mostly still screen with the logo, the song, its cover and 'Coming up',
+  and an info panel from the song's tags and Kodi's library facts; the layout
+  moves a few pixels every 3 minutes against burn-in. The guide shows hour
+  blocks with their artists. Your music is only read, never changed
+- New: the guide channel crawls like the 90s preview channel: the grid moves
+  up at a steady speed and never stops (Settings > Guide & Weather > Guide
+  scroll speed: Slow / Normal / Fast), past a title row and one to three ads
+  from the 'cable company' (your own first, from a guide.txt in the guide
+  channel's station folder). Channels show their number and call letters
+  ('3 KEY'); listings add a film's year and rating, (CC) and (Stereo) from the
+  library, dropped before a long title is shrunk. Movies, sports and kids'
+  programmes get cells of their own colour
+- New: a 1997-style rating box ('TV' over 'PG', '14', 'MA'...) in the top-left
+  corner for the first 15 seconds of a show or movie, with a CC box beside it
+  when the programme has captions. Movies get the TV rating they'd have had
+  (PG-13 is TV-14, R is TV-MA); no rating in the library, no box. Top right
+  when the logo bug is top left. Settings > On screen > Show rating at start
+  of programmes (on)
+- New: summer reruns (Settings > Holidays & events > Summer reruns: Off /
+  Broadcast networks / All channels): from 1 June to 31 August each series
+  reruns its current season in order, up to the last episode that aired (the
+  season before when fewer than three have), with (R) in the guide and the
+  banner. In September every series carries on where it stopped in May.
+  Pinned slots air as you set them; holiday rules still apply
+- New: the weather channel's 90s pages: Latest Observations (temperature and
+  sky in 6-8 nearby cities) and a drawn Regional Map with the bigger cities
+  around you (shipped with CableBox, from Natural Earth's public-domain maps;
+  only the temperatures come from Open-Meteo). The ticker adds today's high
+  and low and runs on every page. Sunrise, sunset, hours and day names are
+  the forecast place's own local time
+- New: off-air screen 'Color bars with tone': the colour bars with a steady
+  1 kHz tone, played through Kodi's music player (no refresh-rate switch),
+  stopping as soon as programming resumes or you change channel
+- New: built-in sign-off card at the start of off-air hours ('This concludes
+  our broadcast day', 'We return at 7:00 AM'): 25 seconds, silent, on by
+  default. Channel manager > channel > Schedule > Off-air hours > Sign-off
+  clip: None / Built-in sign-off card / Choose folder... (a clip of your own
+  wins; channels that had a sign-off folder keep it)
+- New: Holiday seasons (main menu > Holidays & events): each season's own
+  page: on or off, its name, its dates as rules like a special's (big days
+  start on a date and last 1-14 days; a run-up some days before or from a
+  date; Canadian Thanksgiving with one choice), how much in the run-up,
+  tags and genres ticked from the library, extra title words, Show what
+  matches, its folders, Save its shows for its season, Reset. The 15 holiday
+  rows in Settings are now on these pages. No change = the same dates as before
+- New: any holiday as a season (Holiday seasons > + Add a season...):
+  ready-made New Year's Day, Valentine's Day, St. Patrick's Day, Easter, May
+  the 4th, Towel Day, Canada Day, Independence Day, Bastille Day, Festivus and
+  Boxing Day, or your own date; big days last 1-14 days; Move up / Move down,
+  Delete. Save its shows for its season starts off for your own. Between two
+  run-ups the holiday that comes first wins (Festivus inside Christmas's)
+- New: Holidays & events in the main menu: Calendar, Add a special, Holiday
+  seasons. The calendar shades each season's big days and run-up, and a day's
+  line says what the season does there (and, on a special's day, what the other
+  channels do); OK on a shaded day opens the season. One list of holidays: a
+  special's When? offers A holiday from my list (yours included), and Holiday
+  episodes of this channel's shows works for every holiday with its own tags.
+  A new season asks Plan something for it too?
+- New: Dates for each year... in the date picker (seasons and specials) for
+  holidays of other calendars: you type each year's date, no date = nothing
+  that year
+- New: Holidays and specials (main menu > Holidays & events, and Channel
+  manager > channel > Schedule): a marathon or a holiday lineup on a date, on one channel or
+  several, all day, a broadcast day (6 AM to 6 AM) or hours you choose, every
+  year or this year only. Dates are rules worked out each year: a date, the
+  n-th or last weekday of a month, Easter plus or minus days, ready-made
+  holidays, each movable by days. A special airs instead of pinned shows,
+  off-air hours, the holiday seasons and summer reruns for its hours; a
+  marathon keeps its own place in the series and continues next year; its
+  shows stay off other channels' automatic programming meanwhile; the guide
+  shows its name. 'Holiday episodes of this channel's shows' for Halloween,
+  Thanksgiving and Christmas. Preview the day. Breaks promote a special in
+  the six days before ('Thursday, all day', 'Tonight at 6:00 PM'). Specials
+  whose channel is removed by Build my lineup are kept as 'channel removed'
+  until you choose a channel for them. It opens on a month calendar (a star
+  on the days with a special; CH+ / CH- change month; OK on a day: its
+  specials and 'Add a special on this day', which offers the weekday rule when
+  the date fits one); Menu switches to the list, and it opens the way you
+  left it. Saving asks once about every show of the special pinned on another
+  channel during its hours (Cancel / Keep all) and opens the special's page at
+  once (the channels are planned again in the background). Holiday episodes
+  air once each on the day, then the channel's normal programming (saving says
+  how much they cover). Movies in a special are features; shorts only fill
+  time, unless picked by name. A This year only special offers no 'continue';
+  a single movie isn't asked for an order. Other channels promote a special
+  with or without house breaks. Holding CH+ / CH- in the calendar stops on
+  the month where you let go
+- New: the weekly planner steps through the weeks: Right past Sunday is the
+  next week, Left past Monday the week before ('This week', 'Week of 23 Nov').
+  Specials show in their own week: a star and the name in the day's heading,
+  their hours as a gold block; OK on it edits the special. Past weeks are
+  view only
+- Changed: a built-in station is a brand (name, call letters, logo, time-of-day
+  names) plus its shows, and the two now come apart. Channel editor > Identity >
+  'Make this channel my own' removes the brand and keeps the channel's name and
+  all its programming (it used to undo a rename and remove the shows, without
+  asking). Choosing another station swaps the old station's brand and shows
+  for the new one's; the question lists everything that changes. Names by time
+  of day and programming you added yourself always stay
+- Changed: any logo of your own beats a built-in station logo: the image you
+  picked, then the station folder's, then the logo folder's (it used to lose
+  to the built-in logo). Renaming a channel updates its call letters unless you
+  typed your own, and asks whether to keep a station's time-of-day names
+- Changed: Add a channel starts with 'What kind of channel?': a built-in
+  station (no name to type; stations you already have are greyed out), my own
+  channel (ends with 'Give it a logo now?'), music videos, TV Guide, Weather
+  (those two only while you have none) or Behind the scenes
+- Changed: the channel editor has four groups: Identity, Programming, Breaks &
+  clips, Schedule. 'Branding by time of day' is now 'Names by time of day'
+- Changed: first setup looks through the library first, then one screen: Start
+  watching / Customise / Cancel. Folders and the weather city wait under
+  'Finish setting up' in the main menu. Customise can give channels plain names
+  (same shows, no stock brands). 'I'll set it up myself' starts with a plain
+  Weather Channel
+- Changed: Settings is regrouped (Breaks, Channels, On screen, Guide & Weather,
+  Holidays & events, Start-up & library, Tools, Advanced), with headings inside
+  each page and shorter labels that name their holiday; no setting loses its
+  value. Tools keeps only maintenance: Plan holidays and specials is the first
+  row of Holidays & events (and in the main menu), Remote CC button is in On
+  screen, Clean up my 'In progress' list in Start-up & library, Preview a promo
+  in Breaks, the corner-logo rows in On screen, the two captions workarounds in
+  Advanced. Lineup tools (Build my lineup, Move shows, Shows without a good channel,
+  Sign-off and prime time for all channels, Station folders) moved from
+  Settings > Tools to Channel manager > Lineup tools
+- Fixed: sign-off tools replaced channels' own off-air hours: Build my lineup
+  now only sets hours on the channels it adds, and 'Sign off overnight on all
+  channels' asks before replacing any
+- Fixed: Rearrange > Close the gaps moved Weather off 25 and News off 42 and
+  accepted 0; the wizard shortcut did nothing with 'Go straight to TV' on;
+  'Start on channel' with a number no channel has started on the first channel
+  instead of the last watched; a second TV Guide or Weather could be added
+- New: retro ads in house breaks: made-up commercials as cards with a short
+  jingle - pitch cards ('Crisp-O-Matic, only $19.99!'), kids' toys and cereal,
+  local businesses (Big Earl's Furniture Barn), public service announcements and
+  'Now on videocassette' for movies really in your library. 119 ads plus the
+  videocassette cards; they fit the time of day, the season and the channel.
+  Settings > Breaks > Retro ads (on by default; only where
+  house breaks run, so your own commercials always win). Channel manager > a
+  channel > Ad flavour: Auto (from its type and genres), General, Kids, Sports,
+  Movies, Late night; a Kids channel only gets ads made for kids. No ad twice in
+  a break or within two hours on a channel. Backgrounds and jingles are original,
+  made by the scripts in tools/retro-ads; text is drawn by Kodi, so it can be
+  translated. Video rental ads (Now on videocassette, Video Village, VideoVault)
+  at most once a break, never in two breaks in a row, and at most 1 in 6 of a
+  General channel's retro ads (1 in 3 on Movies channels, 1 in 4 on the others).
+  Two retro ads a break (four on Movies channels), three in the run of breaks
+  at the end of a show (four on Movies); promos and system ads fill the rest.
+  Nothing a kids' channel shows has a phone number. A long gap at a show's end
+  (a short episode in a long slot) is a series of 2-3 minute breaks with the
+  station ID card between them, each its own break for these rules. Across
+  the whole gap the same show is promoted at most once in 10 minutes and three
+  times in all, each system ad runs once, and a slot with nothing fresh to
+  promote gets a retro ad (up to ten a break there), a system ad or the station
+  ID card instead; before off-air hours 'tomorrow at 5:00' runs at most twice
+  (early, and just before sign-off). retro26 repeated one promo every 1-2 minutes
+- Fixed: shorts packed into one slot got a bare station ID card between them on
+  channels with house breaks; they now get house breaks like any programme
+- Fixed: the Program Guide channel showed no rows (retro10-14 test builds)
+- Fixed: a file the library still lists after it was renamed or deleted (no
+  Clean library since) was planned and found missing only on air. Now it is
+  never planned: the same episode under its new name airs once, and kodi.log
+  says 'Library lists a missing file (run Clean library)'. A file found missing
+  on air: the rest of its slot is planned again at once (the episode's other
+  file, or one stand-in that stays on after each break and when you tune back
+  in). Stand-ins come from the channel's own shows or the missing show's genre,
+  never a show the channel excludes or an unrelated one
+- New Up next card at the end of a show: the next programme's picture, title or
+  clear logo, season and episode (a film's year, rating and running time), episode
+  title, synopsis, start time, channel and a live countdown; on Boombox the block's
+  artists. Nothing on it is cut off; its stripes drift and a glint loops
+- New: commercial breaks at chapter marks (Settings > Breaks, on): an
+  episode with act-break chapters gets its breaks where the broadcast's were.
+  Chapters are read once per file in the background (MKV, MP4) and kept in
+  chapters.json; no chapters, automatic chapters or not read yet: evenly spaced
+  breaks as before. Scene chapters keep the usual breaks, moved to the nearest
+  mark. Tools > Check chapters: verdicts per episode, and Always / Never per show.
+  Chapters are read whenever Kodi is idle, at a pace that follows how fast the
+  drive answers (backing off at once when it's slow, pausing on a busy CPU);
+  with the TV on, the episodes airing in the next 6 hours first, then the rest
+  gently; never while something else plays. The episodes they change are planned
+  again (what's on air stays). Check chapters shows how many are read and has
+  Read now; Settings > Breaks shows the count too
+- New: squeezed credits: at the end of an episode with chapters (a credits
+  chapter, or the last 30 s of a short tag-and-credits chapter) the picture
+  shrinks into a window, still playing with its own sound, and the rest of the
+  screen says what's up next with a live countdown. An episode without chapters
+  (or not read yet) of 15 min or more squeezes for its last 30 s. Episodes only,
+  never before the station signs off or when a pinned slot cuts the show; nothing
+  restarts, and the break follows when the file ends
+- Fixed: a channel change could leave the screen black for 12 s (the static
+  clip ended just as the programme opened, and Kodi closed the programme); a
+  programme that stops within a few seconds of starting is now opened again at
+  once, and a stand-in fills its time if it stops again
+- Fixed: with captions off, a film tuned in partway could show subtitles anyway
+  (Kodi remembered them as on for that file and switched them back on as its
+  seek settled). Captions off now holds for the whole programme, and means no
+  subtitles at all: forced tracks and subtitle files next to the video too. When
+  you tune in partway, the picture stays black for the moment until CableBox has
+  checked the captions, so Kodi's remembered subtitles never flash on screen.
+  The CC setting changes only with CableBox's own CC button and menu: subtitles
+  Kodi switches back on by itself (or a phone remote) never turn captions on for
+  good, only ever for the programme on screen
+- Fixed: on a channel running one show for hours (a marathon), a house break
+  could promote that show twice in a row; it now promotes another channel's show,
+  or shows the station ID card
+- Tuning in mid-programme starts closer to the real clock: CableBox learns how
+  long Kodi takes to open and seek (the median of the last few tune-ins, odd
+  ones left out), and starts that much further in
+- Breaks at chapter marks are exact: the show cuts to the break when its picture
+  reaches the mark (no frame of the next act before the break), and the next act
+  starts exactly at the mark after the break
+- New: Settings > Channels > Skip episodes shorter than (Off / 2 / 5 / 10 min,
+  default 5): an intro, trailer or recap filed as an episode no longer fills a
+  whole slot; its series goes on to the next real episode. Short-form series,
+  short films, pinned slots and episodes of unknown length are left alone.
+  Tools > Check skipped episodes lists them; files are never touched
+- New station ID card at the end of a break: the channel's logo, number badge,
+  name on a gold band and the station's tagline; without a logo the name takes
+  its place. The rays turn and a glint crosses the band while it fills the break
+- Fixed: long channel names were cut off ('The Animation Station Chann...') on
+  promo and house cards, the guide and the standby and off-air screens. A long
+  name now shrinks, then wraps to two lines; another channel's promo says
+  'Name · CH 6' instead of 'Name · Channel 6' when the name is long
+- Fixed: a clip added later to a movie's Extras folder could take hours to reach
+  the Behind the scenes channel. After a library scan or clean, CableBox looks at
+  every Extras folder (once the TV is off) and plans new extras from the
+  channel's next programme
+- Clips get proper names: commercials, bumps, station clips and folder channels
+  use the clip's own NFO <title> (a show folder's tvshow.nfo), else the file name
+  cleaned up - no dots or underscores, no release tags (720p, x264, WEB-DL...) and
+  no bracketed ids like [zNKVcGFvfTA]. Behind the scenes extras use their NFO title
+  too. Broken NFOs are skipped (one log line). NFOs are only read, never written
+- While the TV warms up (and during the static and turn-off), Kodi's player info
+  shows the channel's name instead of the clip's file name
+- On air, titles leave the year out: the guide, the channel banner, 'Up next',
+  promo and house cards, BACKLOT blocks and the home widget say 'The Fugitive',
+  not 'The Fugitive (1993)' (a film's year shows as small text under its title
+  in the banner). Two shows that share a name keep their years ('Doctor Who
+  (1963)' and 'Doctor Who (2005)'); a year that's part of the title ('Fantasia
+  2000') stays. Menus where you pick things keep the years. An episode Kodi has
+  no title for shows the show's name alone, not a bare 'S01E02'
+- Fixed (Windows): commercials, bumps, station clips and folder channels were named
+  by their full path (E:\Kodi\Commercials\...) in Kodi's player info and phone remotes,
+  and a folder channel's programme in the guide and banner
+- House breaks: with no commercials, channels now get short breaks of about a
+  minute inside shows, like cable: promos for the channel's own shows, promos for
+  shows on other channels (the card names the channel, e.g. 'Drama Movies ·
+  Channel 6', with the time in its tab, e.g. 'Tonight at 9:00'; only what's
+  really planned there), ads for the guide and weather channels and tonight's lineup,
+  and a station ID card. At the end of a show, house breaks run back to back and
+  the 'Up next' card, the last thing before the next show, lasts at most about
+  90 seconds. Settings > Breaks > House breaks: When there are no
+  commercials / Mix in with commercials (default: one house ad now and then in
+  normal breaks too) / Off. Promo style and Promo music now apply with promos off
+  too, since house breaks use them
+- After an update, the first start refreshes the schedules (keep my place), so
+  breaks take the new layout from each channel's next programme
+- Breaks run tight: no more second or two of black after every commercial. The
+  next spot, bump or programme part waits in Kodi's playlist, so Kodi cuts
+  straight to it. Breaks are filled completely: commercials picked to fit the
+  break, then your bumps, then the station's 'We'll be right back' card for the
+  last few seconds. A channel with only a few commercials repeats them in a
+  break once every one has aired, never the same spot twice in a row. A few
+  spare seconds start the next programme part that much early instead. New
+  breaks from each channel's next programme on
+- Library changes reach the schedules by themselves: about 30 seconds after Kodi
+  finishes scanning or cleaning the video library, new episodes, movies and shows
+  (on channels whose sources cover them) are planned from each channel's next
+  programme, even with the TV on; removed files leave the plan. A burst of scans
+  gives one refresh; a scan that finds nothing changes nothing
+- New shows that no channel airs are mentioned once in the CableBox menu; OK
+  opens Shows without a good channel
+- A planned file that's gone (deleted, renamed, a share offline) no longer means
+  half a minute of black under Kodi's 'Playback failed' box: a stand-in plays at
+  once (a spot: the next commercial), and every channel with it planned is planned
+  again from its next programme, the show going on with its next episode. The
+  CableBox menu says so once
+- A show whose next-up episode file is deleted, renamed or replaced by a new copy
+  carries on with the episode after it, instead of starting again at S01E01
+- Changes apply by themselves: closing Settings, the Channel manager, the Weekly
+  planner or a tool refreshes the schedules when something they're planned from
+  changed (channels, pins, station clips, commercials, promo and break settings),
+  from each channel's next programme. Picture, sound and other device settings
+  don't. Settings changed from Kodi's own add-on screen apply once the TV is off
+- Tools: 'Rebuild schedules' is now 'Refresh schedules (keep my place)' (no
+  question asked), and 'Start series over...' (all shows, one channel or one show)
+  is the only thing that sends shows back to their first episode
+- Editing a channel (its shows, pins, breaks) or Tools > Rebuild schedules no
+  longer replans from the half hour: what's on air keeps playing, the change
+  applies from the next programme, and every show's next episode stays next
+  (before, episodes already planned were skipped). Promos still to air in the
+  current programme are named again, so 'Up next' is always what's next
+- Each show has one place in its series, kept by its home channel: a show that
+  moves to another channel, or leaves the lineup and comes back, continues with
+  its next episode. Other channels airing it keep their own run. The first start
+  after updating takes every show's place from what has actually aired
+- New station: Red Thread TV (RED), for Korean and Chinese (incl. Taiwanese)
+  dramas. Build my lineup makes it with 5 or more shows from Korean, Chinese or
+  Taiwanese networks (KBS, SBS, tvN, iQiyi, Tencent Video...) or with an original
+  title in Korean, or in Chinese characters (not Japanese). Dramas only: never a
+  show with Animation, Kids, Documentary, Reality, News or Talk as a genre. The
+  dramas no longer land on Curtain Call and Comedy Corner
+- Orbit TV is also the channel for TMDB's 'Sci-Fi & Fantasy', the biggest TV
+  genre on many libraries (it was a plain Sci-Fi Channel); fantasy airs there too
+- Build my lineup makes a genre channel only when 5 or more shows would call it
+  home, so no near-empty Action channel any more; the log names each one left out
+- Topping up a small channel never takes a show away from the channel of its main
+  genre or its network (Star Trek stays on Orbit TV)
+- Build my lineup makes only channels a built-in station brands, with its own
+  name and logo: no studio showcases (Disney, BBC...) and no movie-genre channels
+  besides The Exploration Channel. Make any other channel yourself in the Channel
+  manager
+- The Dexter Channel stands in for the Disney Channel: Disney's and Pixar's shows
+  and movies go there (by studio), and it is made with 5 or more of them even
+  without a Family channel
+- Existing lineups don't change until you run Build my lineup again
+- Boombox TV, the music video channel: Build my lineup offers it with 30 or more
+  music videos - Kodi's own plus every other video in their folders (TheAudioDB
+  only adds what it can match), or a folder it asks for when the library has none
+- Music videos play on the real clock: half-hour blocks, breaks only between
+  videos, the station ID in the last break, promos as on every channel
+- One frame rate per block (23.976 with 24, 29.97 with 30, 25...), so the TV only
+  switches refresh rate between blocks; never the same artist twice in a row; no
+  video repeats before all of its frame rate have played
+- The music-channel caption: artist, "title", album, label, year in the lower
+  left after a video starts and before it ends - from Kodi's library, the file's
+  own tags or its name (Artist - Title (Year)); lines CableBox doesn't know are
+  left out. Channel setting: Video captions On/Off
+- Check music videos (in the channel's settings): what airs, by frame rate, and
+  what's skipped (trailers, samples, under 30 s, no audio track)
+- New channel type 'Music videos' and programming source 'Music videos'; Loop
+  stays for music videos back to back with no clock
+- Boombox TV is now the music video channel (it used to brand a channel with
+  'music' in its name or MTV/CMT shows); existing channels keep their branding
+- Fixed: a music video renamed after the library scan (only the case changed,
+  e.g. '9 to 5' to '9 To 5') couldn't be played; CableBox uses the name on disk
+- New: schedule promos. With Settings > Breaks > Promos on, breaks include
+  a short promo for what the channel airs next ('Up next', 'Tonight at 8:00'),
+  made from your own library: the episode's still (or fanart, landscape,
+  poster), the show's clearlogo (or its title), the episode title, a short
+  synopsis (its outline, or the plot's first sentence, when it fits) and the
+  show's theme.mp3 (or a built-in tune), cut with the card. Your files are only
+  read, never changed, and CableBox never changes your volume.
+- Your own promo clips in a station folder's promos/ come first; optionally,
+  short Promo/Trailer videos in a show's Extras folder air as its promo
+- On by default; with promos off breaks are exactly as before
+- Promote: 'Up next and later today' (the default) - breaks inside a programme
+  promote something later today on the channel ('Tonight at 8:00'), never the
+  same show twice in a row, and the break before the next programme says
+  'Up next' for it. 'What's on next' and 'Something later today' still work as
+  before
+- Fixed: while the TV was on, each Volume press moved the volume two steps and
+  Mute did nothing (CableBox passed the keys on although Kodi already handles them)
+- Promo style: early-90s cable (default) - a sliding magenta band, the show's name
+  in chunky italic letters, a bouncing time tab, squiggles and confetti - or Modern
+- Settings > Breaks > Preview a promo: pick a channel, then Up next or one of
+  its programmes in the next 6 hours; the promo plays full screen exactly as in
+  a break, with 2 seconds of black before it and 1 after (clean for a screen
+  recording), then Settings come back. Nothing is changed: no schedule, break,
+  series or 'How often' count. Back ends it cleanly
+- Developer tools (Settings > Advanced, off by default): 0 0 0 on the remote
+  while watching plays the promo of the channel's next break right now, then
+  the channel again at the live point. Nothing in the schedule changes
+- Build my lineup: every screen ends in OK or Cancel. Nothing is saved until the
+  last screen; Back or Cancel on any step leaves everything as it was ('Setup
+  cancelled - nothing changed'). Back on a three-way question means Cancel, never
+  No (it used to open a file browser on 'Same music for Weather?'). Overnight
+  sign-off and prime time are one list, both ticked. Cancel on 'Looking through
+  your library...' now stops the scan. The last screen: Start watching / Not now
+  / What I set up
+- Every menu and question works the same way: buttons say what they do, Back
+  always cancels, removing anything asks first (time blocks, branding blocks,
+  off-air hours, planner pins), and changing a channel's type asks before
+  resetting its settings. Add a channel: Back on any step adds nothing; a number
+  that's taken offers to move that channel, slide the others over or pick
+  another number
+- The TV's Menu has a 'CableBox menu' row: it turns the TV off (with the
+  turn-off effect) and opens CableBox's menu. Back from the TV returns to where
+  you started it: CableBox's menu if you started it there, otherwise Kodi
+- Station kits can have their own corner bug (a simpler logo for the corner);
+  BACKLOT has one
+- New channel type: Behind the scenes (movie extras). Making-of pieces,
+  documentaries and interviews from your movies' Extras folders, in per-film
+  blocks ('Inside 2001: A Space Odyssey (1968)', the segments in the guide
+  description). Every film gets a turn before any repeats; short ones share a
+  block; breaks only between segments. Add it from Add a channel; named
+  BACKLOT with its own logo and corner bug by default. A film gets up to an
+  hour per turn; the rest of its extras continue on its next turn
+- Look for movie extras (Look now in Check extras, after Add a channel, on
+  BACKLOT's 'No programming' screen, or in the TV's menu): looks through the
+  Extras folders and measures the extras right away, with a progress bar;
+  Cancel keeps what was found so far. It only starts when you choose it (OK on
+  the 'No programming' screen asks first) and always ends by saying how much
+  there is to air. Check extras shows 'Lengths measured: X of Y'
+- Behind the scenes screens work like the rest of CableBox: Back never answers
+  a question; adding a second Behind the scenes channel asks first; a renamed
+  one asks whether to use the BACKLOT logo and corner bug; the channel is saved
+  before CableBox offers to look; after Check extras' list it offers what's
+  next (look for the rest, or add the channel). A Behind the scenes channel's
+  settings show 'Movie extras: X h to air from N films'
+- Settings > Tools > Check extras: every movie's Extras folder (next to the
+  movie, or in VIDEO_TS / BDMV) with each video's title, length and whether it
+  will air on the Behind the scenes channel, and why not. The folders
+  are listed and measured in the background while the TV is off, read-only.
+- Settings > Advanced > Also air extras with unrecognised names (off)
+
 v1.1.1 (2026-11-05)
 - Fixed: after several channel changes the sound could sputter, freeze or stop
   until Kodi was restarted (seen on CoreELEC; HDMI audio could not reopen).
