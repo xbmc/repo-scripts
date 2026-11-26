@@ -39,6 +39,7 @@ from resources.lib.engine.scanctx import (
     _get_season_data,
     _ScanCtx,
 )
+from resources.lib.engine.sets import collection_text
 from resources.lib.providers import imdb_ratings, tmdb, tvdb
 from resources.lib.providers.languages import tmdb_language
 from resources.lib.utils import (
@@ -100,6 +101,10 @@ class _TextSources:
         lang = tmdb_language(self._fallback_lang)
         if p.tmdb is TRANSIENT:
             return TRANSIENT
+        if ctx.media_type.name == "set":
+            # A collection's one answer carries every translation.
+            plots = (p.tmdb or {}).get("plots") or {}
+            return {"plot": collection_text(plots, self._fallback_lang)} if p.tmdb else None
         tmdb_id = p.tmdb_id
         if not tmdb_id:
             return None
@@ -218,7 +223,8 @@ def _text_chain(
 
     Shows and episodes ask TMDB and TVDB in the folder language in the
     text_source_order, then (when the folder has a fallback language that
-    differs) both in the fallback language in the fallback_order. Movies ask TMDB only.
+    differs) both in the fallback language in the fallback_order. Movies ask
+    TMDB only, and so do movie sets (their name is picked in _fetch_set).
     """
     def tmdb_step(fallback: bool) -> tuple[str, Callable[[], Any], bool]:
         return ("tmdb", lambda: sources.tmdb(field, fallback), fallback)
@@ -226,7 +232,7 @@ def _text_chain(
     def tvdb_step(lang: str, fallback: bool) -> tuple[str, Callable[[], Any], bool]:
         return ("tvdb", lambda: sources.tvdb(field, lang), fallback)
 
-    movie = ctx.media_type.name == "movie"
+    movie = ctx.media_type.name in ("movie", "set")
     if movie:
         specs = [tmdb_step(False)]
     elif ctx.text_order == TEXT_TVDB_FIRST or (

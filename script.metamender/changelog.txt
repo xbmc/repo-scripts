@@ -1,6 +1,229 @@
 MetaMender Changelog
 ====================
 
+v1.3.1 (2026-11-26)
+-------------------
+New Features:
+  - With Movie sets ticked, a movie in no set now joins its collection's
+    set, and a collection with no set gets one, also for a single movie.
+    A movie you take out of a set after this version has looked at the
+    set stays out, also after a refresh; one you took out before that is
+    added back once, and taking it out again keeps it out. No set is
+    created while TMDB has not answered for a movie that is in a set. A
+    set whose name has a folder in Kodi's movie set information folder
+    keeps that name.
+
+Improvements:
+  - A library's page says whether it is a movies or a TV shows library
+    and offers only the choices for that kind: no taglines, trailers or
+    movie sets for TV shows, no episode titles or thumbs for movies, and
+    Details and Other art name only what applies. MetaMender tells the
+    kind from what Kodi has scanned into the library; a library with
+    nothing in it yet, or with both kinds, shows every choice and says
+    why. A hidden choice keeps its tick; the library list and the summary
+    leave it out.
+
+Bug Fixes:
+  - Background, Stop and Back in the Update now progress window now
+    respond while a show or season is updated from the Videos window.
+    Every change made Kodi reload the list behind the window, and during
+    a reload Kodi ignores the remote; on a slow device the reloads ran
+    back to back. Update now pauses its changes while you are
+    pressing keys, so the next press reaches the window; when you leave
+    the remote alone it runs at full speed. After Background, browsing
+    the library pauses it the same way.
+  - Runtime is no longer written to a movie or episode whose video file
+    Kodi has read: Kodi shows the file's own length there, so the write
+    was never seen and only reloaded the list. Details says "video file"
+    for such a runtime.
+
+Internal:
+  - No str.removesuffix() or removeprefix(), which Python 3.8 lacks; the
+    official repository's checker assumes Kodi 21 may run 3.8. A test
+    keeps them out.
+
+v1.3.0 (2026-11-24)
+-------------------
+New Features:
+  - Posters, per library: with Posters ticked, MetaMender fills empty
+    movie, show and season posters and refreshes posters from TMDB or
+    fanart.tv while a title is new. It picks a poster in the library's
+    language first (from the chosen Art source, then the other site),
+    then the fallback language, then a poster without text; the best
+    voted TMDB poster or most liked fanart.tv poster wins, and a current
+    poster stays unless a better one clearly leads. A poster without
+    votes or likes never replaces one in the same language that has them;
+    a poster in the library's language replaces one in another language
+    or without text even before anyone rated it.
+  - Episode thumbs, per library: with Episode thumbs ticked, a thumb Kodi
+    grabbed from the video (washed out on HDR files), a broken link or an
+    empty thumb gets TMDB's episode still, or TheTVDB's episode image when
+    TMDB has none.
+  - Local image files (such as those Artwork Dump saved), posters from
+    other websites and art from an NFO file are left alone, and so is a
+    poster changed outside MetaMender after Posters was ticked: it is
+    locked, and Details shows why and can unlock it. A TMDB or fanart.tv
+    poster picked before Posters was ticked may be replaced once; Restore
+    original puts it back. MetaMender writes no image files.
+  - Art source per library: TMDB (the default) or fanart.tv, the site
+    asked first for posters, fanart, clear logos and key art.
+  - English as a last resort for empty art: when neither site has an
+    image in the library's language, the fallback language or without
+    text, empty art (an empty slot, a frame grab, a broken link or a
+    deleted local file) is filled with an English one. English art never
+    replaces art the item already has; art MetaMender filled this way is
+    replaced once a better image appears.
+  - Fanart, per library: with Fanart ticked, the main background image
+    of movies and shows is filled and refreshed from TMDB or fanart.tv
+    while a title is new, preferring one without text, then the
+    library's language, then the fallback language. Only the main
+    fanart is touched, never the extra fanart (fanart1, fanart2...).
+  - Other art, per library: with Other art ticked, clear logos (picked
+    like posters; TMDB's SVG logos, which Kodi cannot show, are
+    skipped), key art (a poster without text) and, from fanart.tv only,
+    landscape, banner, disc art (movies), clear art and character art
+    (shows) are filled and refreshed. fanart.tv's HD logos and clear art
+    come before the SD ones.
+  - Deleted local art files are filled: art that points at a local file
+    that no longer exists (for example one Artwork Dump saved) is filled
+    like empty art, for every ticked art type. Deleting the files is
+    enough; background scans check local files weekly, and opening
+    MetaMender from Program add-ons or Update now checks at once. A share
+    that is offline is never taken for a deleted file. A movie or episode
+    whose video file is gone is left alone until Kodi's library is
+    cleaned; a movie set's art is judged by its art folder alone.
+  - Movie sets, per library: with Movie sets ticked, a set gets TMDB's
+    name for its collection in the library's language (then the fallback
+    language, then English) and its plot like a movie's, and its poster,
+    fanart and other art with those ticks, from TMDB's collection images
+    and fanart.tv's collection art. A set follows the library most of its
+    movies are in; a tie, or movies that do not mostly share one TMDB
+    collection, leave it alone. The name is replaced once; Restore
+    original puts it back, and a name changed outside MetaMender is
+    locked. A set whose movies all have NFO files keeps its name, plot
+    and art.
+  - Duplicate sets merged: a set Kodi creates under a renamed set's old
+    name (a new or refreshed movie, or an NFO with the old name) has its
+    movies moved into the renamed set. A movie you moved yourself is never
+    moved again, a set with a name of its own is never merged, and the
+    emptied set is left for Kodi's library clean to remove. MetaMender
+    otherwise never creates or deletes a set or changes its movies.
+  - Details and Update now on a movie set, from the MetaMender context
+    menu. Details shows the set's name, plot and art with where they came
+    from, Restore original and the lock, the set's TMDB collection, the
+    movies MetaMender moved into it, and why a set is left alone. Update
+    now refreshes the set (not its movies) after merging its duplicates.
+    A movie's Details says when MetaMender moved it between sets.
+  - Optional Personal fanart.tv API key setting.
+  - Season posters: a TMDB season poster that is the same file as one of
+    its show's posters is skipped, and among equally liked fanart.tv
+    season posters the one uploaded together with the show's other
+    seasons' posters is preferred.
+  - Seasons have a Details window, and Update now on a season or show
+    refreshes the season posters too.
+  - Posters, Episode thumbs, Fanart, Other art and Movie sets are off for
+    every library, including libraries set up before this version.
+  - Manual and help at the top of the settings: a window with a QR code
+    and the address of the online manual, to open on a phone or computer.
+
+Bug Fixes:
+  - MetaMender's windows no longer flash grey while a scan or Update now
+    writes to the library: every write made Kodi redraw the list behind
+    the window, and for that moment the theme colours were read from
+    another dialog.
+  - Stop scan takes effect before the next part of the scan asks Kodi for
+    its list of items, which on a large library takes seconds, and a stop
+    that arrives between two parts ends the scan there.
+  - The scan that runs when you open MetaMender from Program add-ons no
+    longer ends at once because of a stop left over from an earlier scan,
+    and it stops when Stop scan is chosen.
+
+v1.2.1 (2026-11-22)
+-------------------
+New Features:
+  - Stop scan in the MetaMender context submenu, shown while a scan runs:
+    the scan stops after the item it is working on, and the next scan
+    carries on from there.
+
+Bug Fixes:
+  - While a scan runs, browsing the movie or TV show list no longer keeps
+    reloading it: Kodi reloads the list after every library change, so a
+    background scan now holds its changes while the Videos window is in
+    use and writes them once nothing has been pressed for a minute or the
+    window is left. Update now still writes straight away.
+
+Internal:
+  - New service/stopscan.py and context_stop.py; the request is the
+    metamender_stop_scan home window property, cleared by the service at
+    the start and end of every cycle. Constants VIDEO_NAV_WINDOW,
+    BROWSE_IDLE_SECONDS (60) and STOP_SCAN_PROPERTY.
+
+v1.2.0 (2026-11-22)
+-------------------
+New Features:
+  - Libraries are included explicitly: the Libraries step of setup and
+    the Libraries entry in the add-on settings list every video source
+    Kodi has, and a library is only worked on once it is ticked. Each
+    included library has its own settings page: language and fallback
+    language, what to fill, rating source, text sources, title to show
+    and age rating country. Ticking a library switches nothing on; its
+    page starts with every field off.
+  - A video source Kodi gains after setup is added as not included and
+    raises one notice (once per library) that opens the library list.
+  - Keep the original title, per library: with show and movie titles ticked,
+    the library's movies and shows get their original title (TMDB's
+    original_title and original_name) in its own language and script
+    instead of the title in the library's language. Episode titles and
+    other text still follow the library's language.
+  - Settings from 1.1 are converted automatically on the first start:
+    each library keeps the choices it had, one notice says so, and
+    nothing in the video library changes. The 1.1 values are copied
+    aside at service start; when Kodi had already dropped them, the
+    libraries 1.1 scanned are included with their languages but nothing
+    switched on, and the notice says the earlier choices could not be
+    read. A 1.1 setting for a folder above a library applies to it.
+  - Back or Cancel on the library list with unsaved changes asks
+    whether to save them.
+  - Setup's lists of options (a language, a country, what to do with a
+    library), its questions and messages, and the Reset tracker question
+    open in MetaMender's own windows instead of Kodi's dialogs, so they
+    look the same in every skin.
+
+Bug Fixes:
+  - Fixed: the service and the add-on failed to start on Kodi builds
+    that run Python 3.9, such as OSMC's Kodi 21 (TypeError: unsupported
+    operand type(s) for |). The certification module's Candidate type
+    alias used an X | None union, which Python evaluates at import and
+    only supports from 3.10.
+  - With script.module.imdbratings 1.1.0, IMDb rating lookups no longer
+    check for a new IMDb dataset and can no longer start its download in
+    the middle of a scan, where Kodi could not stop it at shutdown or
+    when playback starts. The dataset is still refreshed once before each
+    scan, which Kodi can abort. Module 1.0.0 still works as before.
+  - Trailer links only take a TMDB video key that is a YouTube video id;
+    any other key is skipped, so it cannot add parameters to the
+    YouTube add-on call stored in the library.
+  - On Kodi 22, setup offered only "Video add-ons" when Kodi had no
+    video sources of its own (a client sharing another machine's
+    library database), instead of the folders taken from the library.
+    Kodi 22 lists its Video add-ons node as a video source; sources that
+    are no folder are now left out.
+
+Internal:
+  - Library choices are stored per library and read through the
+    library's own settings; the global toggles that used to hold them
+    are gone, together with the strings that labelled them.
+  - Unused entries were removed from strings.po, and the empty-library
+    and summary texts of setup now point at Libraries.
+  - The IMDb adapter uses the module's lookup() and StoreError when the
+    installed module has them (1.1.0), which also tells a failing store
+    apart from "no rating" in one query instead of two; with 1.0.0 it
+    keeps get_rating() plus the dataset_date() check. addon.xml still
+    accepts 1.0.0 until 1.1.0 is in Kodi's official repository.
+  - The Python floor is 3.9: ruff and pyright target it, and
+    tests/test_python_floor.py parses every shipped file with the 3.9
+    grammar and rejects X | Y type unions outside annotations.
+
 v1.1.0 (2026-11-13)
 -------------------
 New Features:

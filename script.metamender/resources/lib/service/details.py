@@ -24,16 +24,28 @@ from typing import TYPE_CHECKING, Any
 
 from resources.lib.data import kodi
 from resources.lib.data.identity import compute_identity
-from resources.lib.data.media_types import EPISODE, MOVIE, TVSHOW, MediaType
-from resources.lib.data.presets import load_preset
-from resources.lib.data.sources import (
-    kodi_ui_language,
-    load_source_config,
-    match_source,
+from resources.lib.data.libraries import LibraryConfig, load_libraries, resolve_country
+from resources.lib.data.media_types import (
+    EPISODE,
+    MOVIE,
+    SEASON,
+    SET,
+    TVSHOW,
+    MediaType,
 )
+from resources.lib.data.presets import load_preset
 from resources.lib.data.tracker import REASON_LOCKED, TrackerDB
+from resources.lib.engine.art import ART_FIELDS, LOCAL, classify, unwrap
 from resources.lib.engine.scan import candidate_fields, item_fields
 from resources.lib.engine.scanctx import holds_written_value
+from resources.lib.engine.sets import (
+    LEFT_DUPLICATE,
+    LEFT_OFF,
+    LEFT_SHARED,
+    SetPlan,
+    describe_set,
+    user_moved,
+)
 from resources.lib.service import actions
 from resources.lib.service.actions import _init_logging
 from resources.lib.service.daemon import (
@@ -50,7 +62,9 @@ if TYPE_CHECKING:
 
 log = get_logger('details')
 
-_DBTYPE_TO_MEDIA_TYPE = {"movie": MOVIE, "episode": EPISODE, "tvshow": TVSHOW}
+_DBTYPE_TO_MEDIA_TYPE = {
+    "movie": MOVIE, "episode": EPISODE, "tvshow": TVSHOW, "season": SEASON, "set": SET,
+}
 # Certifications are scanned for movies and shows only (scan._cert_config).
 _CERT_TYPES = frozenset({"movie", "tvshow"})
 
@@ -73,12 +87,16 @@ def can_restore(
     """An original is kept and Kodi still holds MetaMender's own value.
 
     ``keep`` is the item's get_keep() map; scanctx.holds_written_value
-    decides whether the value is MetaMender's own.
+    decides whether the value is MetaMender's own. A kept local art file is
+    one that no longer exists (an existing one is never replaced), so
+    putting its path back would only break the art again.
     """
     if field in RESTORABLE_EXCLUDED:
         return False
     entry = keep.get(field) or {}
     if not entry.get("has_original"):
+        return False
+    if field in ART_FIELDS and classify(unwrap(str(entry.get("original") or ""))) == LOCAL:
         return False
     return holds_written_value(field, current, fs, entry)
 
@@ -233,6 +251,9 @@ def unlock_field(
         saved = (tracker.set_locked(media_type.name, identity, field, False)
                  and tracker.forget_field_fingerprint(media_type.name, identity, field))
         if saved:
+            # Art locked for "changed outside MetaMender" would otherwise be
+            # judged against the old first-seen URL and lock again.
+            tracker.forget_first_fp(media_type.name, identity, field)
             tracker.commit()
     except sqlite3.Error:
         log.exception("Failed to save the unlock", event="details.error",
@@ -259,13 +280,17 @@ class DetailsView:
 
 
 def _read_identity(
-    tracker: TrackerDB, media_type: MediaType, item: dict[str, Any], kodi_id: int
+    tracker: TrackerDB, media_type: MediaType, item: dict[str, Any], kodi_id: int,
+    show_id_map: dict[int, str],
 ) -> tuple[str, str]:
     """(the key the item's rows are under now, the key the scan uses), found
     the way scan._tracker_identity finds it but without its writes: opening
     the window must change nothing, so a row the next scan would adopt is
     read under its current identity. The two differ only for such a row."""
     identity = compute_identity(item, media_type)
+    if not identity:
+        # A season of a show with no TMDB id: the scan skips it, so it has no row.
+        return "", ""
     own = "{}|{}".format(identity, item.get("file", ""))
     if tracker.get_item(media_type.name, own) is not None:
         return own, own
@@ -280,9 +305,96 @@ def _read_identity(
     if holder is None or holder == kodi_id:
         return identity, identity
     other = kodi.get_item_by_id(media_type, holder)
+    if other and media_type is SEASON:
+        other["show_tmdb_id"] = show_id_map.get(int(other.get("tvshowid", -1)))
     if other and compute_identity(other, media_type) == identity:
         return own, own
     return identity, identity
+
+
+def _enrich_season(item: dict[str, Any]) -> dict[int, str]:
+    """Give a season what Kodi does not: its show's folder (which places it in
+    a library) and TMDB and TheTVDB ids, from the tracker's show maps as the
+    scan does (kodi.get_seasons_for_scan). Returns the TMDB map."""
+    tracker = TrackerDB(_get_db_path())
+    try:
+        show_id_map = tracker.get_show_id_map()
+        show_tvdb_map = tracker.get_show_tvdb_map()
+    finally:
+        tracker.close()
+    show_id = int(item.get("tvshowid", -1))
+    show = kodi.get_item_by_id(TVSHOW, show_id)
+    item["file"] = str((show or {}).get("file") or "")
+    item["show_tmdb_id"] = show_id_map.get(show_id)
+    item["show_tvdb_id"] = show_tvdb_map.get(show_id)
+    return show_id_map
+
+
+def _enrich_set(
+    tracker: TrackerDB, libraries: LibraryConfig, item: dict[str, Any], setid: int,
+) -> tuple[str, str] | None:
+    """Give a set what Kodi does not, from the set planning as the next scan
+    would make it (sets.describe_set): the member file whose library it
+    follows, its age, its collection, why it is left alone and the movies
+    MetaMender moved into it. Returns (the key its rows are under, the key
+    the scan uses), the second "" for a set the scan leaves alone; None
+    when Kodi no longer has the set."""
+    plan = describe_set(setid, libraries, tracker)
+    if plan is None:
+        return None
+    item.update(
+        file=plan.file, premiered=plan.premiered, collection_id=plan.collection_id,
+        set_reason=plan.reason, set_reason_name=_set_reason_name(plan, libraries),
+        set_moves=_moves_into(tracker, setid),
+    )
+    if plan.reason is None and plan.collection_id:
+        identity = compute_identity(item, SET)
+        return identity, identity
+    # Left alone now, a set keeps the history of its time as the managed
+    # set (originals, locks), under the row that records it.
+    return tracker.identities_by_kodi_id(SET.name).get(setid, ""), ""
+
+
+def _set_reason_name(plan: SetPlan, libraries: LibraryConfig) -> str:
+    """What the left-alone reason names: the library without the Movie sets
+    tick, or the set a duplicate merges into or a shared set shares with."""
+    if plan.reason == LEFT_OFF:
+        lib = libraries.for_file(plan.file)
+        return lib.label if lib is not None else ""
+    if plan.reason in (LEFT_DUPLICATE, LEFT_SHARED) and plan.managed_setid is not None:
+        other = kodi.get_item_by_id(SET, plan.managed_setid)
+        return str((other or {}).get("title") or "")
+    return ""
+
+
+def _moves_into(tracker: TrackerDB, setid: int) -> list[dict[str, Any]]:
+    """The movies MetaMender moved into the set, named as Kodi names them
+    now (by their tracker key when Kodi no longer has that movie)."""
+    moves = []
+    for move in tracker.moves_into(setid):
+        movie = kodi.get_item_by_id(MOVIE, int(move.get("kodi_id") or 0)) or {}
+        moves.append({"title": str(movie.get("title") or move["identity"]),
+                      "from_name": move.get("from_name"), "moved_on": move.get("moved_on")})
+    return moves
+
+
+def _add_set_move(tracker: TrackerDB, item: dict[str, Any], movieid: int) -> None:
+    """Put a movie's set move on the item (``set_move``) for its Ids row:
+    moved by MetaMender, or since put in another set by the user. Kodi is
+    asked about the movie's set only when a move is recorded."""
+    move = tracker.get_set_move(compute_identity(item, MOVIE))
+    if move is None:
+        return
+    setid = kodi.get_movie_setid(movieid)
+    if setid is None:
+        return
+    if user_moved(move, movieid, setid):
+        if setid:
+            other = kodi.get_item_by_id(SET, setid)
+            item["set_move"] = {"user": True, "set": str((other or {}).get("title") or "")}
+    elif int(move.get("kodi_id") or 0) == movieid:
+        item["set_move"] = {"user": False, "from_name": move.get("from_name"),
+                            "moved_on": move.get("moved_on")}
 
 
 def certifications_on(media_type: MediaType, enabled_fields: frozenset[str]) -> bool:
@@ -324,6 +436,8 @@ def _shown_fields(
 
 
 def _heading(media_type: MediaType, item: dict[str, Any]) -> str:
+    if media_type.name == "season":
+        return lang(32733).format(item.get("showtitle", ""), item.get("season", 0))
     if media_type.name == "episode":
         return lang(32585).format(
             item.get("showtitle", ""), item.get("season", 0), item.get("episode", 0)
@@ -352,31 +466,57 @@ class DetailsSession:
         if not item:
             return None
         settings = _load_settings()
-        config = load_source_config(_get_sources_config_path())
-        source = match_source(item.get("file", ""), config.get("sources", []))
-        # The scan's language for the folder (scan.run_scan): the folder's
-        # own, else the configured default; with neither, the folder has no
-        # language and text is filled in Kodi's interface language.
-        code = source.get("language") or config.get("default_language") or ""
-        folder = language_name(code) if code else ""
-        text_language = folder or language_name(kodi_ui_language())
+        ui_language = settings["ui_language"]
+        libraries = load_libraries(_get_sources_config_path()) or LibraryConfig()
+        show_id_map: dict[int, str] = {}
+        if self.media_type is SEASON:
+            show_id_map = _enrich_season(item)
         tracker = TrackerDB(_get_db_path())
         try:
-            identity, scan_identity = _read_identity(
-                tracker, self.media_type, item, self.kodi_id)
+            if self.media_type is SET:
+                keys = _enrich_set(tracker, libraries, item, self.kodi_id)
+                if keys is None:
+                    return None
+                identity, scan_identity = keys
+            else:
+                identity, scan_identity = _read_identity(
+                    tracker, self.media_type, item, self.kodi_id, show_id_map)
+            if self.media_type is MOVIE:
+                _add_set_move(tracker, item, self.kodi_id)
             item_row = tracker.get_item(self.media_type.name, identity)
             fs_map = tracker.get_field_status_map(self.media_type.name, identity)
             keep = tracker.get_keep(self.media_type.name, identity)
         finally:
             tracker.close()
         self.identity = identity
-        enabled = settings["enabled_fields"]
-        cert_usable = cert_country_usable(settings.get("cert_country"))
-        managed = managed_fields(self.media_type, enabled, cert_usable, scan_identity)
+        file_path = item.get("file", "")
+        lib = libraries.for_file(file_path)
+        # The item's library settings as the scan uses them. A library that
+        # is not included still shows its fields: what MetaMender wrote
+        # there can be restored. An item in no library has none.
+        code = ""
+        enabled: frozenset[str] = frozenset()
+        cert_country = None
+        if lib is not None:
+            code = libraries.folder_settings(file_path, lib)[1]
+            enabled = lib.fields()
+            cert_country = resolve_country(lib, ui_language)
+        folder = language_name(code) if code else ""
+        text_language = folder or language_name(ui_language)
+        cert_usable = cert_country_usable(cert_country)
+        # A season with no identity (its show has no TMDB id) and a set left
+        # alone are never scanned.
+        managed = managed_fields(self.media_type, enabled, cert_usable, scan_identity) \
+            if scan_identity else []
+        shown = _shown_fields(self.media_type, managed, fs_map, keep)
+        if "runtime" in shown:
+            # The item's runtime is the library's value; Kodi shows the
+            # file's length over it (kodi.file_runtime).
+            item["file_runtime"] = kodi.file_runtime(self.media_type, self.kodi_id)
         rows = build_rows(
             self.media_type, item, item_row, fs_map, keep, date.today().isoformat(),
             language=text_language,
-            fields=_shown_fields(self.media_type, managed, fs_map, keep),
+            fields=shown,
             managed=managed,
             cert_country_missing=certifications_on(self.media_type, enabled) and not cert_usable,
             threshold_days=settings["stale_threshold_days"],
@@ -402,7 +542,7 @@ class DetailsSession:
         return view
 
     def update_now(self) -> None:
-        """The context menu's Update now: one movie or episode, or a show's
+        """The context menu's Update now: one movie, episode or set, or a show's
         refresh with its own progress window. It takes the scan lock and
         reports the result itself."""
         actions.update_now(self.dbtype, str(self.kodi_id))
@@ -487,7 +627,8 @@ def open_details(dbtype: str, dbid: str) -> None:
     Details"). Opening writes nothing; only the window's buttons do.
 
     Args:
-        dbtype: Kodi ListItem.DBTYPE ("movie", "tvshow" or "episode").
+        dbtype: Kodi ListItem.DBTYPE ("movie", "tvshow", "season", "episode"
+            or "set").
         dbid: Kodi database ID as a string (from $INFO[ListItem.DBID]).
     """
     from resources.lib.ui.details_window import show_details_window

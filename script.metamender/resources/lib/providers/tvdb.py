@@ -24,7 +24,7 @@ from __future__ import annotations
 import threading
 from typing import Any, Dict, List, Optional
 
-from resources.lib.constants import TVDB_API_KEY, TVDB_BASE_URL
+from resources.lib.constants import TVDB_API_KEY, TVDB_ARTWORK_BASE_URL, TVDB_BASE_URL
 from resources.lib.providers.http import provider_get, provider_post
 from resources.lib.utils import (
     ApiKeyError,
@@ -153,6 +153,16 @@ def fetch_series(tvdb_id: str, lang: str) -> Optional[Dict[str, Any]]:
     }
 
 
+def _image_url(path: Optional[str]) -> str:
+    """Full URL of a TVDB image. Records carry a site-relative path
+    ("/banners/episodes/..."); an absolute URL passes through unchanged."""
+    if not path:
+        return ""
+    if path.startswith(("http://", "https://")):
+        return path
+    return TVDB_ARTWORK_BASE_URL + path
+
+
 def _episode_records(
     tvdb_id: str, order: str, lang: str
 ) -> Optional[List[Dict[str, Any]]]:
@@ -186,8 +196,9 @@ def fetch_series_episodes(
 ) -> Optional[Dict[str, Dict[str, str]]]:
     """Fetch every episode of a series in `lang`, keyed by TVDB episode id.
 
-    Returns {episode_id: {"title", "plot"}}, or None when TVDB has no such
-    series. Title and plot are the `lang` translation only: TVDB returns null
+    Returns {episode_id: {"title", "plot", "image"}}, or None when TVDB has no
+    such series. "image" is the episode's still as a full URL, "" when it has
+    none. Title and plot are the `lang` translation only: TVDB returns null
     for an episode with no translation in `lang` (verified live, no fallback
     to the original or English text), which becomes "". Records without an id
     are skipped. Raises TransientProviderError when any page
@@ -197,7 +208,11 @@ def fetch_series_episodes(
     if records is None:
         return None
     return {
-        str(ep["id"]): {"title": ep.get("name") or "", "plot": ep.get("overview") or ""}
+        str(ep["id"]): {
+            "title": ep.get("name") or "",
+            "plot": ep.get("overview") or "",
+            "image": _image_url(ep.get("image")),
+        }
         for ep in records if ep.get("id") is not None
     }
 

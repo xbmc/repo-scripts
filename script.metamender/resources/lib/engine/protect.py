@@ -13,6 +13,7 @@ import hashlib
 import json
 from typing import Any
 
+from resources.lib.engine.art import is_placeholder_art
 from resources.lib.engine.textrules import is_empty_text
 
 # Kodi stores ratings as 32-bit floats, so 7.28 comes back as
@@ -51,7 +52,7 @@ def is_blank(value: Any) -> bool:
     if value is None:
         return True
     if isinstance(value, str):
-        return is_empty_text(value)
+        return is_empty_text(value) or is_placeholder_art(value)
     if isinstance(value, (list, tuple, dict)):
         items = value.values() if isinstance(value, dict) else value
         return all(is_blank(v) for v in items)

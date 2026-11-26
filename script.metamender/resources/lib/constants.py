@@ -70,12 +70,36 @@ SCHEMA_VERSION = 5
 # lookups answered they do not have.
 FALLBACK_RECHECK_DAYS = 30
 
+# Days before a local art file found to exist is checked again. A manual scan
+# and Update now check at once.
+LOCAL_ART_RECHECK_DAYS = 7
+
 # Answered re-checks a fallback-language value gets before it is final like
 # any other value. With FALLBACK_RECHECK_DAYS between them, about a year.
 FALLBACK_RECHECKS = 12
 
 # Default refetch schedule in days (attempt 1 -> 7d, attempt 2 -> 30d, attempt 3 -> 90d)
 DEFAULT_REFETCH_SCHEDULE: tuple[int, ...] = (7, 30, 90)
+
+# Kodi's Videos window (WINDOW_VIDEO_NAV). Every JSON-RPC library write makes
+# Kodi reload the active window's list, so a background scan holds its writes
+# while this window is open and the user has pressed something within
+# BROWSE_IDLE_SECONDS: long enough to scroll and read, short enough that a
+# scan still finishes when Kodi is left sitting on the library.
+VIDEO_NAV_WINDOW = 10025
+BROWSE_IDLE_SECONDS = 60
+
+# Update now holds its writes the same way, but only while keys are being
+# pressed. While the list reloads, Kodi's modal busy dialog takes every key
+# press, so on a slow box back-to-back writes left the progress window's
+# buttons unanswered. Kodi resets its idle timer on every key press, including
+# one the busy dialog swallows, so the first press stops the writes and the
+# next one reaches the window; when nothing is pressed nothing waits.
+UPDATE_NOW_IDLE_SECONDS = 2
+
+# Home window property the "Stop scan" context-menu action sets; a background
+# scan checks it before each item and the service clears it per cycle.
+STOP_SCAN_PROPERTY = "metamender_stop_scan"
 
 
 def parse_refetch_schedule(value: str) -> tuple[int, ...]:
@@ -115,11 +139,16 @@ CERT_ITEM_BUDGET_SEC = 60
 
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TVDB_BASE_URL = "https://api4.thetvdb.com/v4"
+TVDB_ARTWORK_BASE_URL = "https://artworks.thetvdb.com"
 # Project key issued to this add-on; TVDB intends project keys to ship
 # inside the client, unlike the user-supplied TMDB key. Kept encoded, as
 # Kodi's repository reviewers ask, so key scanners do not read it off the
 # source; it is not a secret.
 TVDB_API_KEY = base64.b64decode("YWVkNTI5NzliZjc4LTY2YzgtZGUwNC0yNzUwLWZiYmQ5MTcx").decode()[::-1]
+FANART_BASE_URL = "https://webservice.fanart.tv/v3"
+# Project key issued to this add-on by fanart.tv; kept encoded for the same
+# reason as TVDB_API_KEY, and equally not a secret.
+FANART_API_KEY = base64.b64decode("OTc3NGYwMzFmOGQ0ZWNkNjU1MTU3Y2UyMjQ2MGVhZDY=").decode()[::-1]
 
 # Explicit User-Agent for provider API calls: some provider front ends reject
 # a bare urllib UA, while a browser-like UA is reliably accepted.

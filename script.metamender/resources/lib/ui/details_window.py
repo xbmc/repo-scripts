@@ -23,7 +23,7 @@ from resources.lib.ui.details_model import (
     IDS_KEY,
     DetailRow,
 )
-from resources.lib.ui.theme import theme_colours
+from resources.lib.ui.theme import publish_theme
 from resources.lib.utils import get_addon, lang
 
 _XML = "script-metamender-details.xml"
@@ -146,7 +146,6 @@ def header_properties(heading: str, sub: str) -> dict[str, str]:
         "MM.UpdateNow": lang(32588),
         "MM.Close": lang(32589),
     }
-    props.update(theme_colours())
     return props
 
 
@@ -258,5 +257,6 @@ def show_details_window(session: SessionLike, view: ViewLike) -> None:
         props.update(details_properties([first], 0))
     for key, value in props.items():
         window.setProperty(key, value)
+    publish_theme()
     window.doModal()
     del window

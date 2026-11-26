@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The settings' "Manual and help" window (ui/help_window.py), in the message window's
+     style. Inline controls and fonts font10/12/13 only. The QR image is 369 px, a whole
+     number of pixels per module, on its own white square (quiet zone included) so phones
+     read it in every colour scheme. -->
+<window>
+    <zorder>2</zorder>
+    <defaultcontrol always="true">21</defaultcontrol>
+    <controls>
+        <control type="image">
+            <left>0</left><top>0</top><width>1920</width><height>1080</height>
+            <texture colordiffuse="99060607">metamender/white.png</texture>
+            <animation effect="fade" start="0" end="100" time="150">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="150">WindowClose</animation>
+        </control>
+        <control type="group" id="10">
+            <left>460</left><top>150</top><width>1000</width><height>780</height>
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="100" time="200"/>
+                <effect type="zoom" start="96" end="100" center="auto" tween="sine" easing="out" time="200"/>
+            </animation>
+            <animation type="WindowClose" reversible="false">
+                <effect type="zoom" start="100" end="96" center="auto" tween="sine" easing="out" time="150"/>
+                <effect type="fade" start="100" end="0" tween="cubic" easing="out" time="150"/>
+            </animation>
+
+            <control type="image" id="11">
+                <left>0</left><top>0</top><width>1000</width><height>780</height>
+                <texture border="20" colordiffuse="FF1A1D23">metamender/panel.png</texture>
+            </control>
+            <control type="image" id="12">
+                <left>0</left><top>0</top><width>1000</width><height>780</height>
+                <texture border="20" colordiffuse="$INFO[Window(Home).Property(MetaMender.Accent)]">metamender/frame.png</texture>
+            </control>
+
+            <!-- Heading: the heartbeat badge and the title, centred together. -->
+            <control type="grouplist">
+                <left>50</left><top>36</top><width>900</width><height>56</height>
+                <orientation>horizontal</orientation>
+                <align>center</align>
+                <itemgap>16</itemgap>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="group">
+                    <top>6</top><width>44</width><height>44</height>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="$INFO[Window(Home).Property(MetaMender.Accent)]">metamender/badge.png</texture></control>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="FF060607">metamender/pulse.png</texture></control>
+                </control>
+                <control type="label">
+                    <width>auto</width><height>56</height>
+                    <aligny>center</aligny>
+                    <font>font13</font>
+                    <textcolor>$INFO[Window(Home).Property(MetaMender.Accent)]</textcolor>
+                    <label>[B]$INFO[Window.Property(MM.Heading)][/B]</label>
+                </control>
+            </control>
+            <control type="image">
+                <left>100</left><top>102</top><width>800</width><height>3</height>
+                <texture colordiffuse="$INFO[Window(Home).Property(MetaMender.Accent)]">metamender/divider.png</texture>
+                <animation effect="fade" start="70" end="70" time="0" condition="true">Conditional</animation>
+            </control>
+
+            <control type="image" id="20">
+                <left>315</left><top>130</top><width>369</width><height>369</height>
+                <texture>$INFO[Window.Property(MM.Qr)]</texture>
+                <aspectratio>keep</aspectratio>
+            </control>
+            <control type="label">
+                <left>60</left><top>520</top><width>880</width><height>46</height>
+                <align>center</align><aligny>center</aligny>
+                <font>font12</font>
+                <textcolor>FFD5DAE1</textcolor>
+                <label>$INFO[Window.Property(MM.Message)]</label>
+            </control>
+            <control type="label">
+                <left>40</left><top>572</top><width>920</width><height>60</height>
+                <align>center</align><aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>$INFO[Window(Home).Property(MetaMender.Accent)]</textcolor>
+                <label>[B]$INFO[Window.Property(MM.Url)][/B]</label>
+            </control>
+
+            <control type="button" id="21">
+                <left>370</left><top>668</top><width>260</width><height>72</height>
+                <align>center</align><aligny>center</aligny>
+                <font>font13</font>
+                <textcolor>FFF1F3F5</textcolor>
+                <focusedcolor>$INFO[Window(Home).Property(MetaMender.ButtonTextFocused)]</focusedcolor>
+                <pulseonselect>false</pulseonselect>
+                <label>[B]$INFO[Window.Property(MM.Primary)][/B]</label>
+                <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
+                <texturefocus border="20" colordiffuse="$INFO[Window(Home).Property(MetaMender.ButtonFocus)]">metamender/button.png</texturefocus>
+            </control>
+        </control>
+    </controls>
+</window>

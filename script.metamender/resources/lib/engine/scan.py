@@ -18,9 +18,19 @@ Logging:
         - scan.complete (INFO): Scan cycle finished with stats, the
           providers disabled this cycle, and counts of the per-item DEBUG
           outcomes (unknown ids accepted, episodes found by TVDB id)
-        - scan.skip (DEBUG): Item skipped (disabled source, not due, no
-          candidates, or reason="unreachable": the media could not be found,
-          so NFO state is unknown; scan.complete counts these)
+        - scan.season_no_show_id (DEBUG): A season skipped because its
+          show has no TMDB id (yet), so it has no identity
+        - scan.skip (DEBUG): Item skipped (not due, no candidates;
+          reason="excluded": its library or subfolder is not included;
+          reason="unmatched": its file is in no library; reason="unreachable":
+          the media could not be found, so NFO state is unknown;
+          reason="no_fields": its library has nothing switched on;
+          reason="providers_down": every provider its library needs is
+          disabled while another library's still work; scan.complete
+          counts these)
+        - scan.fields_disabled (DEBUG): An item's fields its library no
+          longer manages lost their fingerprint, so they are checked again
+          once switched back on
         - scan.transient (DEBUG): An episode's TMDB path waits because its
           show's ids are not resolved yet (reason="show_unresolved")
         - scan.protected (DEBUG): An answered value was not written because
@@ -33,8 +43,13 @@ Logging:
         - scan.updated (INFO): Item metadata written to Kodi
         - scan.breaker (WARNING): A provider tripped, or every provider the
           enabled fields need is down so the pass stops (scope="all")
-        - scan.tvdb_auth (ERROR): TVDB rejected the add-on's credentials;
-          TVDB is disabled for the cycle, the scan continues
+        - scan.tvdb_auth (ERROR), scan.fanart_auth (WARNING): TheTVDB or
+          fanart.tv rejected the add-on's credentials; that provider is
+          disabled for the cycle, the scan continues
+        - scan.art_gated (DEBUG): An art field is left alone before any fetch
+          (verdict: local, other, changed; see art.art_gate)
+        - scan.local_art (DEBUG): A local art file was checked; state is
+          exists, missing or unreachable (data/localart.py)
         - scan.imdb_lookup_failed (ERROR): The IMDb ratings store raised
           unexpectedly; the rating is transient for that item. Logged with
           the traceback once per scan, at DEBUG after that
@@ -64,33 +79,72 @@ from __future__ import annotations
 import json
 import time
 from collections.abc import Callable
+from dataclasses import dataclass, replace
 from datetime import date
 from typing import Any
 
 import xbmc
+import xbmcgui
 
 from resources.lib.constants import (
+    BROWSE_IDLE_SECONDS,
     DEFAULT_REFETCH_SCHEDULE,
     FALLBACK_RECHECKS,
+    KODI_HOME_WINDOW_ID,
+    LOCAL_ART_RECHECK_DAYS,
+    STOP_SCAN_PROPERTY,
+    UPDATE_NOW_IDLE_SECONDS,
+    VIDEO_NAV_WINDOW,
     parse_refetch_schedule,
 )
 from resources.lib.data import kodi
 from resources.lib.data.identity import compute_identity
 from resources.lib.data.kodi import get_item_by_id
-from resources.lib.data.media_types import MediaType
+from resources.lib.data.libraries import (
+    TITLE_LANGUAGE,
+    TITLE_ORIGINAL,
+    Library,
+    LibraryConfig,
+    scan_settings,
+)
+from resources.lib.data.localart import EXISTS, MISSING, local_art_state
+from resources.lib.data.media_types import SEASON, SET, MediaType
 from resources.lib.data.nfo import NFO, UNREACHABLE, nfo_state
 from resources.lib.data.presets import load_preset
-from resources.lib.data.sources import kodi_ui_language, match_source
+from resources.lib.data.setfolder import folder_for
+from resources.lib.data.sources import kodi_ui_language
 from resources.lib.data.tracker import (
+    REASON_CHANGED_OUTSIDE,
     REASON_FILL_ONLY,
+    REASON_FROM_FILE,
+    REASON_LOCAL_ART,
     REASON_LOCKED,
     REASON_NFO,
     REASON_NOTHING,
+    REASON_OTHER_ART,
+    REASON_SET_FOLDER,
     REASON_UNCHANGED,
     REASON_UNCHECKED,
     REASON_UPDATED,
     TrackerDB,
 )
+from resources.lib.engine.art import (
+    ART_FIELDS,
+    ENGLISH,
+    ENGLISH_SOURCE_SUFFIX,
+    FANART_ONLY_FIELDS,
+    GATE_CHANGED,
+    GATE_LOCAL,
+    LOCAL,
+    TEXT_ART_FIELDS,
+    TMDB_ART_FIELDS,
+    art_gate,
+    classify,
+    is_placeholder_art,
+    name_gate,
+    unwrap,
+)
+from resources.lib.engine.artsources import image_language, resolve_art
 from resources.lib.engine.breaker import CircuitBreaker
 from resources.lib.engine.certchain import (
     DERIVED,
@@ -117,6 +171,8 @@ from resources.lib.engine.chain import TRANSIENT, FieldOutcome
 from resources.lib.engine.fetch import (
     _fetch_episode,
     _fetch_movie_or_show,
+    _fetch_season,
+    _fetch_set,
     _Primary,
 )
 from resources.lib.engine.ids import (
@@ -154,6 +210,7 @@ from resources.lib.engine.scanctx import (
     extract_ids,
     kodi_form,
 )
+from resources.lib.engine.sets import prepare_sets, set_nfo_state
 from resources.lib.engine.text import (
     _resolve_ratings,
     _text_chain,
@@ -181,8 +238,13 @@ def settings_fingerprint(
     sampled, so the inputs are exactly what changes the answer: rating_source
     for ratings; for title and plot the folder's language and fallback
     language ("" when it has none), plus the provider and fallback orders on
-    shows and episodes (movies ask TMDB only); for every other field, one
-    TMDB step, the folder language.
+    shows and episodes (movies and movie sets ask TMDB only), plus the
+    library's title mode for a show's or movie's title (a set's name has no
+    title mode); an episode thumb depends on no setting;
+    art both sites offer on the art source, the folder language and the
+    fallback language, except key art, which has no text and so depends on
+    the art source alone; fanart.tv-only art on the two languages; for every
+    other field, one TMDB step, the folder language.
     """
     if field in RATING_FIELDS:
         inputs: dict[str, Any] = {
@@ -203,9 +265,30 @@ def settings_fingerprint(
             "folder_language": folder_language,
             "fallback_language": fallback_language.strip(),
         }
-        if media_type != "movie":
+        if media_type not in ("movie", "set"):
             inputs["text_source_order"] = settings.get("text_source_order", TEXT_FOLLOW_SCRAPER)
             inputs["fallback_order"] = settings.get("fallback_order", FALLBACK_TVDB_FIRST)
+        # Only another mode is recorded: titles kept in the library's
+        # language keep the fingerprint they were sampled under.
+        title_mode = settings.get("title_mode", TITLE_LANGUAGE)
+        if (field == "title" and media_type not in ("episode", "set")
+                and title_mode != TITLE_LANGUAGE):
+            inputs["title_mode"] = title_mode
+    elif field == "thumb":
+        inputs = {}
+    elif field == "keyart":
+        inputs = {"art_source": settings.get("art_source", "tmdb")}
+    elif field in TMDB_ART_FIELDS:
+        inputs = {
+            "art_source": settings.get("art_source", "tmdb"),
+            "folder_language": folder_language,
+            "fallback_language": fallback_language.strip(),
+        }
+    elif field in FANART_ONLY_FIELDS:
+        inputs = {
+            "folder_language": folder_language,
+            "fallback_language": fallback_language.strip(),
+        }
     else:
         inputs = {"folder_language": folder_language}
     return json.dumps(inputs, sort_keys=True)
@@ -222,6 +305,10 @@ def _make_stats() -> dict[str, Any]:
         # field values not written because an NFO supplied the field.
         "unreachable": 0,
         "protected": 0,
+        # Items skipped because their library, or the subfolder they are in,
+        # is not included; and items whose file is in no library.
+        "excluded": 0,
+        "unmatched": 0,
         # Fields left unchecked because a provider failed transiently, plus
         # items skipped while an id lookup had no answer: Update now tells
         # "could not check" from "nothing changed" by it.
@@ -240,6 +327,16 @@ def _make_stats() -> dict[str, Any]:
         "tvdb_auth_failed": False,
         "tmdb_answered": False,
         "tvdb_answered": False,
+        # fanart.tv rejected the key this cycle / gave a real answer; the
+        # art that needs it waits, so the caller tells the user.
+        "fanart_auth_failed": False,
+        "fanart_answered": False,
+        # Movies the set pass moved out of a duplicate set (engine/sets.py).
+        "moved": 0,
+        # Movies in no set the set pass added to their collection's set, and
+        # the sets it created for that.
+        "joined": 0,
+        "sets_created": 0,
     }
 
 
@@ -264,8 +361,13 @@ def _item_title(item: dict[str, Any], media_type: MediaType) -> str:
     """Build the display title for an item (logging/UI, not the tracker key).
 
     The tracker key is produced separately by compute_identity. Movies and TV
-    shows use the title directly; episodes use "ShowTitle S01E02" format.
+    shows use the title directly; episodes use "ShowTitle S01E02" format and
+    seasons "ShowTitle S01".
     """
+    if media_type is SEASON:
+        return "{showtitle} S{season:02d}".format(
+            showtitle=item.get("showtitle", ""), season=item.get("season", 0),
+        )
     if media_type.name == "episode":
         return "{showtitle} S{season:02d}E{episode:02d}".format(
             showtitle=item.get("showtitle", ""),
@@ -340,6 +442,8 @@ def _plan_writes(
     fs_map: dict[str, dict[str, Any]],
     identity: str,
     fill_only: frozenset[str] = frozenset(),
+    art_fps: dict[str, str] | None = None,
+    missing: frozenset[str] = frozenset(),
 ) -> tuple[dict[str, Any], set[str]]:
     """Split extracted values into (fields to write, fields Kodi already holds).
 
@@ -347,7 +451,12 @@ def _plan_writes(
     a differing value overwrites the current one, an identical value is never
     rewritten. On an NFO-managed item, and for a field in ``fill_only``,
     may_write decides with the field's stored provenance; a field it forbids
-    is in neither result, so it gets no write and no source.
+    is in neither result, so it gets no write and no source. ``art_fps``
+    holds field_keep's written_fp of the art fields, which outlives Reset
+    tracker: _gate_art and _drop_protected_art already let such a field
+    through as MetaMender's own, so it must be writable here too. An art
+    field in ``missing`` holds a local file that no longer exists, which
+    may_write takes as blank.
     """
     to_write: dict[str, Any] = {}
     held: set[str] = set()
@@ -357,7 +466,8 @@ def _plan_writes(
             held.add(f)
             continue
         protected = nfo_managed or f in fill_only
-        if not may_write(protected, current, fs_map.get(f, {}).get("written_value")):
+        written = (art_fps or {}).get(f) or fs_map.get(f, {}).get("written_value")
+        if not may_write(protected, "" if f in missing else current, written):
             log.debug(
                 "Field protected, value left as it is",
                 event="scan.protected", identity=identity, field=f,
@@ -457,11 +567,15 @@ def _resolve_fields(
     fallback_lang: str,
     fields: list[str],
     reopened: set[str],
+    english: set[str],
+    missing: set[str],
 ) -> tuple[dict[str, FieldOutcome], dict[str, Any], dict[str, str | None]]:
     """Per-field verdicts for the non-rating fields.
 
     A field in ``reopened`` runs its chain as if empty, so a fallback step may
-    replace its current value (see _reopened_fallbacks).
+    replace its current value (see _reopened_fallbacks). An art field in
+    ``english`` may take the English last resort (_english_allowed); one in
+    ``missing`` (its local file no longer exists) is picked as if empty.
 
     Returns (outcomes keyed by Kodi field, provider values keyed by TMDB key
     for _extract_fields, winning provider per Kodi field).
@@ -478,9 +592,31 @@ def _resolve_fields(
             # Ratings and certifications have their own producers.
             continue
         key = _KODI_TO_TMDB.get(f, f)
-        if f in _CHAIN_FIELDS:
+        if f == "title" and ctx.media_type is SET:
+            # The collection's name, picked from its translations by
+            # _fetch_set; the library's title mode does not apply.
+            value = None if tmdb_transient else tmdb_data.get("title") or None
+            outcome = FieldOutcome(
+                transient=tmdb_transient, value=value,
+                from_fallback=bool(value and tmdb_data.get("title_from_fallback")),
+            )
+            provider = None if value is None else "tmdb"
+        elif (f == "title" and ctx.media_type.name != "episode"
+                and ctx.title_mode == TITLE_ORIGINAL):
+            # The original title is the same whatever language was asked for,
+            # so it needs no language chain and no fallback.
+            value = None if tmdb_transient else tmdb_data.get("original_title") or None
+            outcome = FieldOutcome(transient=tmdb_transient, value=value, from_fallback=False)
+            provider = None if value is None else "tmdb"
+        elif f in _CHAIN_FIELDS:
             current = None if f in reopened else item.get(f)
             outcome, provider = _text_chain(ctx, text, f, folder_lang, fallback_lang, current)
+        elif f in ART_FIELDS:
+            current_art = "" if f in missing else str(item.get(f) or "")
+            outcome, provider = resolve_art(
+                ctx, text, primary, ids, identity, f, folder_lang, fallback_lang,
+                current_art, f in english,
+            )
         else:
             value = None if tmdb_transient else tmdb_data.get(key)
             outcome = FieldOutcome(transient=tmdb_transient, value=value, from_fallback=False)
@@ -567,6 +703,173 @@ def _field_reason(
     return REASON_NOTHING
 
 
+def _image_languages(language: str, fallback_lang: str) -> tuple[str, ...]:
+    """The languages to ask images in: the folder's, then its fallback when
+    different, then English for the last resort (textless ones always come
+    along)."""
+    codes = [image_language(language)]
+    if fallback_lang.strip():
+        codes.append(image_language(fallback_lang))
+    codes.append(ENGLISH)
+    return tuple(dict.fromkeys(codes))
+
+
+def _english_allowed(
+    field: str,
+    item: dict[str, Any],
+    fs: dict[str, Any],
+    keep_entry: dict[str, Any],
+    missing: set[str],
+) -> bool:
+    """Whether the English last resort may fill this art slot: it holds no
+    art worth keeping (empty, a placeholder, a local file that no longer
+    exists), or Kodi still holds MetaMender's own English pick, which may
+    then move to a better English image or give way to a higher step.
+    English never replaces any other existing art. MetaMender's own is
+    recognised by field_keep's written_fp first, which outlives Reset
+    tracker, as _gate_art does."""
+    if field in missing:
+        return True
+    current = kodi_form(item.get(field) or "")
+    if is_placeholder_art(current):
+        return True
+    if not str(fs.get("source") or "").endswith(ENGLISH_SOURCE_SUFFIX):
+        return False
+    written_fp = keep_entry.get("written_fp") or fs.get("written_value")
+    return written_fp is not None and fingerprint(current) == written_fp
+
+
+def _art_reason(
+    tracker: TrackerDB, media_type: str, identity: str, field: str,
+    fs_map: dict[str, dict[str, Any]], reason: str,
+) -> None:
+    """Record why an art field is left alone, unless already recorded: a
+    gated field is met again on every scan."""
+    if (fs_map.get(field) or {}).get("last_reason") != reason:
+        tracker.record_field_reason(media_type, identity, field, reason)
+
+
+def _gate_art(
+    tracker: TrackerDB,
+    media_type: str,
+    identity: str,
+    item: dict[str, Any],
+    fs_map: dict[str, dict[str, Any]],
+    decisions: dict[str, str],
+    missing: set[str],
+    set_folder: str = "",
+) -> None:
+    """Take the art fields MetaMender may not touch out of ``decisions``
+    (art.art_gate) before anything is fetched, and record why. A field in
+    ``missing`` holds a local file that no longer exists, fair game.
+
+    The URL Kodi holds at MetaMender's first look is stored as first seen,
+    so a poster changed since, and not by MetaMender, is recognised as the
+    user's choice and locked for good. A gated field is never sampled, so
+    it does not settle into FINAL and is met here on every scan. A FINAL
+    field is not looked at: nothing would be fetched for it anyway.
+
+    A movie set's name follows the same first-seen / last-written rule
+    (art.name_gate); its name at first look is also a known name of the
+    collection, so a set Kodi makes under it later counts as a duplicate.
+    """
+    gated = [f for f in sorted(ART_FIELDS & decisions.keys()) if decisions[f] != FINAL]
+    name = media_type == SET.name and decisions.get("title", FINAL) != FINAL
+    if not gated and not name:
+        return
+    keep = tracker.get_keep(media_type, identity)
+    if name:
+        _gate_set_name(tracker, identity, item, fs_map, decisions, keep, set_folder)
+    for f in gated:
+        current = kodi_form(item.get(f) or "")
+        current_fp = fingerprint(current)
+        first_fp = tracker.get_first_fp(media_type, identity, f)
+        if first_fp is None:
+            tracker.set_first_fp(media_type, identity, f, current_fp)
+        written_fp = ((keep.get(f) or {}).get("written_fp")
+                      or (fs_map.get(f) or {}).get("written_value"))
+        verdict = art_gate(f, current, current_fp, first_fp, written_fp, f in missing)
+        if verdict is None:
+            continue
+        del decisions[f]
+        if verdict == GATE_CHANGED:
+            tracker.set_locked(media_type, identity, f, True)
+            reason = REASON_CHANGED_OUTSIDE
+        else:
+            reason = REASON_LOCAL_ART if verdict == GATE_LOCAL else REASON_OTHER_ART
+        _art_reason(tracker, media_type, identity, f, fs_map, reason)
+        log.debug(
+            "Art left as it is", event="scan.art_gated", identity=identity,
+            field=f, verdict=verdict,
+        )
+
+
+def _gate_set_name(
+    tracker: TrackerDB,
+    identity: str,
+    item: dict[str, Any],
+    fs_map: dict[str, dict[str, Any]],
+    decisions: dict[str, str],
+    keep: dict[str, dict[str, Any]],
+    set_folder: str = "",
+) -> None:
+    """_gate_art's rule for a movie set's name: a name changed outside
+    MetaMender since its first look is the user's, locked for good. A name
+    that has a subfolder in the movie set information folder is kept too,
+    but not locked: the set follows TMDB again once the folder is gone."""
+    current = kodi_form(item.get("title") or "")
+    current_fp = fingerprint(current)
+    first_fp = tracker.get_first_fp(SET.name, identity, "title")
+    if first_fp is None:
+        tracker.set_first_fp(SET.name, identity, "title", current_fp)
+        tracker.add_set_names(identity, [current])
+    written_fp = ((keep.get("title") or {}).get("written_fp")
+                  or (fs_map.get("title") or {}).get("written_value"))
+    if name_gate(current_fp, first_fp, written_fp) is None:
+        if current and folder_for(set_folder, [current]) == current:
+            del decisions["title"]
+            _art_reason(tracker, SET.name, identity, "title", fs_map, REASON_SET_FOLDER)
+            log.debug("Set name left as it is", event="scan.art_gated",
+                      identity=identity, field="title", verdict=REASON_SET_FOLDER)
+        return
+    del decisions["title"]
+    tracker.set_locked(SET.name, identity, "title", True)
+    _art_reason(tracker, SET.name, identity, "title", fs_map, REASON_CHANGED_OUTSIDE)
+    log.debug("Set name left as it is", event="scan.art_gated", identity=identity,
+              field="title", verdict=GATE_CHANGED)
+
+
+def _drop_protected_art(
+    tracker: TrackerDB,
+    media_type: str,
+    identity: str,
+    item: dict[str, Any],
+    fs_map: dict[str, dict[str, Any]],
+    decisions: dict[str, str],
+    protected: frozenset[str],
+    reason: str,
+    missing: set[str],
+) -> None:
+    """Take out the ``protected`` art fields (all of them on an NFO item,
+    the fill-only ones in a folder without a language) that _plan_writes
+    would refuse to write (protect.may_write: neither empty nor a
+    placeholder, nor MetaMender's own), so no request is made for them.
+    MetaMender's own is recognised as _gate_art does, by field_keep's
+    written_fp first, which outlives Reset tracker. A local file that no
+    longer exists (``missing``) counts as empty."""
+    fields = [f for f in sorted(ART_FIELDS & protected & decisions.keys())
+              if decisions[f] != FINAL]
+    keep = tracker.get_keep(media_type, identity) if fields else {}
+    for f in fields:
+        current = "" if f in missing else kodi_form(item.get(f) or "")
+        written_fp = ((keep.get(f) or {}).get("written_fp")
+                      or (fs_map.get(f) or {}).get("written_value"))
+        if may_write(True, current, written_fp):
+            continue
+        del decisions[f]
+        _art_reason(tracker, media_type, identity, f, fs_map, reason)
+
+
 def _keep_originals(
     tracker: TrackerDB,
     media_type: str,
@@ -575,6 +878,7 @@ def _keep_originals(
     written: set[str],
     fields_to_write: dict[str, Any],
     fs_map: dict[str, dict[str, Any]],
+    missing: set[str],
 ) -> None:
     """Keep the value each written field held before this scan replaced it,
     unless that value was metamender's own (its fingerprint is the one
@@ -583,17 +887,77 @@ def _keep_originals(
     from before metamender's first write, stays. A scraper's or user's
     value since then replaces it. A field filled from empty keeps "" or []
     by the written value's type, so Restore can clear it. Rating slots get
-    no original: the scraper's slots stay beside metamender's."""
+    no original: the scraper's slots stay beside metamender's. A local file
+    that no longer exists (``missing``) is always kept: MetaMender never
+    writes a local path, so a matching fingerprint is only the record of an
+    earlier refill that found nothing."""
     fields = sorted(written - RATING_FIELDS)
     keep = tracker.get_keep(media_type, identity) if fields else {}
     for f in fields:
         current = kodi_form(item.get(f))
         ours = (keep.get(f) or {}).get("written_fp") or fs_map.get(f, {}).get("written_value")
-        if fingerprint(current) == ours:
+        if f not in missing and fingerprint(current) == ours:
             continue
         if current is None:
             current = [] if isinstance(fields_to_write.get(f), list) else ""
         tracker.keep_original(media_type, identity, f, current)
+
+
+def _checked_recently(check: tuple[str, str] | None, path_fp: str, today: str) -> bool:
+    """The slot's file was found under this same path within
+    LOCAL_ART_RECHECK_DAYS."""
+    if check is None or check[0] != path_fp:
+        return False
+    try:
+        age = date.fromisoformat(today) - date.fromisoformat(check[1])
+    except (TypeError, ValueError):
+        return False
+    return age.days < LOCAL_ART_RECHECK_DAYS
+
+
+def _check_local_art(
+    tracker: TrackerDB,
+    media_type: str,
+    identity: str,
+    item: dict[str, Any],
+    fields: list[str],
+    check_now: bool,
+    today: str,
+) -> tuple[set[str], set[str]]:
+    """Check the local art files of ``fields`` (the ticked, unlocked ones)
+    and return (missing, unreachable).
+
+    A file found to exist is checked again LOCAL_ART_RECHECK_DAYS later under
+    the same path; ``check_now`` (Update now, a manual scan) ignores that.
+    Missing and unreachable answers are not remembered, so they are asked
+    again next scan. Web links are never checked. None of this touches a
+    field's clock: a file on disk is not a provider answer.
+
+    A set has no video of its own (its ``file`` only stands for its library),
+    so its art is judged by the art's folder alone.
+    """
+    missing: set[str] = set()
+    unreachable: set[str] = set()
+    media_path = "" if media_type == SET.name else str(item.get("file") or "")
+    for f in sorted(ART_FIELDS.intersection(fields)):
+        current = kodi_form(item.get(f) or "")
+        path = unwrap(current)
+        if classify(path) != LOCAL:
+            continue
+        path_fp = fingerprint(current)
+        if not check_now and _checked_recently(
+                tracker.get_art_check(media_type, identity, f), path_fp, today):
+            continue
+        state = local_art_state(path, media_path)
+        log.debug("Local art checked", event="scan.local_art", state=state, field=f,
+                  identity=identity)
+        if state == EXISTS:
+            tracker.set_art_check(media_type, identity, f, path_fp, today)
+        elif state == MISSING:
+            missing.add(f)
+        else:
+            unreachable.add(f)
+    return missing, unreachable
 
 
 def _yield_to_playback(ctx: _ScanCtx, monitor: Any, processed: int) -> None:
@@ -615,6 +979,85 @@ def _yield_to_playback(ctx: _ScanCtx, monitor: Any, processed: int) -> None:
         )
 
 
+def _stop_requested() -> bool:
+    """The user chose Stop scan (service/stopscan.py sets the property)."""
+    return xbmcgui.Window(KODI_HOME_WINDOW_ID).getProperty(STOP_SCAN_PROPERTY) == "1"
+
+
+def _browsing(idle_seconds: int) -> bool:
+    # The idle time comes first: it is lock-free, while getCurrentWindowId
+    # takes Kodi's graphics lock and so waits out a list reload.
+    return (xbmc.getGlobalIdleTime() < idle_seconds
+            and xbmcgui.getCurrentWindowId() == VIDEO_NAV_WINDOW)
+
+
+def _hold_while_browsing(media_type: MediaType, monitor: Any,
+                         idle_seconds: int = BROWSE_IDLE_SECONDS) -> None:
+    """Hold the next Kodi write while the user is browsing the video library.
+
+    Kodi reloads the active window's list after every JSON-RPC library write,
+    so writing while the Videos window is in use keeps the list the user is
+    looking at reloading. The hold ends when the user has been idle for
+    ``idle_seconds``, leaves the Videos window, or Kodi quits. A background
+    scan waits BROWSE_IDLE_SECONDS; Update now only UPDATE_NOW_IDLE_SECONDS,
+    long enough for the next key press to reach its progress window.
+    """
+    if monitor is None or not _browsing(idle_seconds):
+        return
+    started = time.monotonic()
+    while (_browsing(idle_seconds) and not monitor.abortRequested()
+           and not _stop_requested()):
+        if monitor.waitForAbort(2):
+            break
+    log.debug(
+        "Write held while browsing",
+        event="scan.browse_hold", media_type=media_type.name,
+        duration_ms=int((time.monotonic() - started) * 1000),
+    )
+
+
+def _set_pass_stop(
+    monitor: Any, reset: bool, stats: dict[str, Any],
+) -> Callable[[], bool]:
+    """The check sets.prepare_sets runs between TMDB lookups: True on
+    shutdown or Stop scan (recorded in ``stats`` as the scan loop does).
+    Update now (``reset``) ignores Stop scan. A lookup writes nothing to the
+    library, so it does not hold while the user browses."""
+    def stop() -> bool:
+        if monitor is not None and monitor.abortRequested():
+            log.info("Scan interrupted by shutdown", event="scan.abort",
+                     media_type=SET.name, processed=0)
+            stats["aborted"] = True
+            return True
+        if not reset and _stop_requested():
+            log.info("Scan stopped by the user", event="scan.stopped",
+                     media_type=SET.name, processed=0)
+            stats["stopped"] = True
+            stats["aborted"] = True
+            return True
+        return False
+    return stop
+
+
+def _before_set_move(
+    monitor: Any, reset: bool, stats: dict[str, Any],
+) -> Callable[[], bool]:
+    """The check sets.prepare_sets runs before moving a movie between sets
+    or into one: False on shutdown or Stop scan (_set_pass_stop), otherwise
+    it holds while the user browses the video library. A move rewrites the
+    library like any scan write. Update now (``reset``) holds only while
+    keys are pressed."""
+    stop = _set_pass_stop(monitor, reset, stats)
+
+    def check() -> bool:
+        # The hold ends on shutdown and on Stop scan too, so both are
+        # checked after it.
+        _hold_while_browsing(
+            SET, monitor, UPDATE_NOW_IDLE_SECONDS if reset else BROWSE_IDLE_SECONDS)
+        return not stop()
+    return check
+
+
 def _cert_config(
     media_type: MediaType,
     enabled_fields: frozenset[str],
@@ -623,9 +1066,10 @@ def _cert_config(
     monitor: Any,
     gate: SiteGate | None,
 ) -> _CertConfig | None:
-    """The pass's certification settings, or None when certifications are off
-    for it. A configured country without a usable preset turns them off for
-    the pass with one ERROR, rather than writing ratings from a wrong system."""
+    """A library's certification settings, or None when certifications are
+    off for it. A configured country without a usable preset turns them off
+    for the library's items with one ERROR, rather than writing ratings from
+    a wrong system."""
     if "mpaa" not in enabled_fields or media_type.name not in ("movie", "tvshow"):
         return None
     country = settings.get("cert_country")
@@ -728,7 +1172,13 @@ def _own_bare(current: str, prefix: str) -> str:
 def candidate_fields(media_type: MediaType, enabled_fields: frozenset[str]) -> list[str]:
     """Fields this pass manages: enabled, backfilled for the media type, and
     known to the providers. An episode's title is enabled as "title", a show's
-    or movie's as "main_title", since they have separate toggles."""
+    or movie's as "main_title", since they have separate toggles. A set's
+    name and plot come with the Movie sets tick alone, its art with that tick
+    and the art's own."""
+    if media_type is SET:
+        if "movie_set" not in enabled_fields:
+            return []
+        return sorted({"plot", "title"} | (enabled_fields & SET.backfill_fields & ART_FIELDS))
     fields = (
         {_TMDB_TO_KODI.get(k, k) for k in _TMDB_TO_KODI}
         & enabled_fields & media_type.backfill_fields
@@ -743,8 +1193,9 @@ def candidate_fields(media_type: MediaType, enabled_fields: frozenset[str]) -> l
 def item_fields(candidates: list[str], media_type: MediaType, identity: str) -> list[str]:
     """The pass's fields for one item. A show or movie keyed on its title
     ("title (year)", no tmdb or imdb id) does not get its title managed: a
-    new title would make it a new tracker item."""
-    if media_type.name == "episode" or identity.startswith(("tmdb:", "imdb:")):
+    new title would make it a new tracker item. A set's identity is its
+    collection, which a new name does not change."""
+    if media_type.name in ("episode", "set") or identity.startswith(("tmdb:", "imdb:")):
         return candidates
     return [f for f in candidates if f != "title"]
 
@@ -752,15 +1203,17 @@ def item_fields(candidates: list[str], media_type: MediaType, identity: str) -> 
 def _needed_providers(media_type: MediaType, candidates: list[str]) -> list[str]:
     """Providers the pass can still make progress with. TMDB always; TVDB
     when a show or episode text field it supplies is managed. The IMDb store
-    has no breaker, so it never stops a pass."""
+    has no breaker, so it never stops a pass. A movie set's text comes from
+    TMDB alone."""
     needed = ["tmdb"]
-    if media_type.name != "movie" and _CHAIN_FIELDS & set(candidates):
+    if media_type.name not in ("movie", "set") and _CHAIN_FIELDS & set(candidates):
         needed.append("tvdb")
     return needed
 
 
 def _tracker_identity(
     tracker: TrackerDB, media_type: MediaType, item: dict[str, Any], kodi_id: Any,
+    show_id_map: dict[int, str] | None = None,
 ) -> str:
     """The tracker key for this Kodi item: compute_identity's, unless another
     Kodi item in the library holds that row.
@@ -772,7 +1225,9 @@ def _tracker_identity(
     The holder is the item whose Kodi id the row records. Whether that item
     still exists is asked from Kodi, and only when the ids differ: after a
     file is replaced or the library rebuilt, the recorded id is gone or
-    names another item, and this item takes the row over.
+    names another item, and this item takes the row over. Kodi gives a
+    season no ids, so the holder season gets its show's TMDB id from
+    ``show_id_map``, as the listing did for this one.
     """
     identity = compute_identity(item, media_type)
     own = "{}|{}".format(identity, item.get("file", ""))
@@ -786,6 +1241,8 @@ def _tracker_identity(
     if holder is None or holder == kodi_id:
         return identity
     other = get_item_by_id(media_type, holder)
+    if other and media_type is SEASON:
+        other["show_tmdb_id"] = (show_id_map or {}).get(int(other.get("tvshowid", -1)))
     if other and compute_identity(other, media_type) == identity:
         log.debug(
             "Duplicate identity, item tracked under its file",
@@ -796,16 +1253,60 @@ def _tracker_identity(
     return identity
 
 
-def _new_items(tracker: TrackerDB, media_type: MediaType) -> list[dict[str, Any]]:
+def scans_seasons(libraries: LibraryConfig) -> bool:
+    """Whether an included library manages a season field (the poster). The
+    callers skip the season pass otherwise, and with it the season listing."""
+    return any(
+        lib.included and candidate_fields(SEASON, lib.fields())
+        for lib in libraries.libraries
+    )
+
+
+def scans_sets(libraries: LibraryConfig) -> bool:
+    """Whether an included library has Movie sets ticked. The callers skip
+    the set pass otherwise, and with it the set and member listings."""
+    return any(
+        lib.included and candidate_fields(SET, lib.fields())
+        for lib in libraries.libraries
+    )
+
+
+def manages_art(media_type: MediaType, libraries: LibraryConfig) -> bool:
+    """Whether an included library manages an art field of the media type.
+    Only then does the pass's listing ask Kodi for the art map, which is
+    the bulk of a large episode listing."""
+    return any(
+        lib.included and ART_FIELDS & set(candidate_fields(media_type, lib.fields()))
+        for lib in libraries.libraries
+    )
+
+
+def _season_items(
+    tracker: TrackerDB, show_id_map: dict[int, str], new_only: bool,
+) -> list[dict[str, Any]]:
+    """The library's seasons with their show's folder and ids
+    (kodi.get_seasons_for_scan); with ``new_only`` those whose Kodi id the
+    tracker does not know yet."""
+    items = kodi.get_seasons_for_scan(show_id_map, show_tvdb_map=tracker.get_show_tvdb_map())
+    if new_only:
+        known = tracker.known_kodi_ids(SEASON.name)
+        items = [i for i in items if i.get(SEASON.kodi_id_field) not in known]
+    return items
+
+
+def _new_items(
+    tracker: TrackerDB, media_type: MediaType, art: bool,
+) -> list[dict[str, Any]]:
     """The library's items whose Kodi id the tracker does not know yet, with
-    full details. An id listed but gone by the details call is skipped."""
+    full details (the art map only with ``art``). An id listed but gone by
+    the details call is skipped."""
     known = tracker.known_kodi_ids(media_type.name)
     listed = kodi.get_all_items(media_type, ids_only=True)
     fresh = [
         i[media_type.kodi_id_field] for i in listed
         if i.get(media_type.kodi_id_field) not in known
     ]
-    items = [d for d in (get_item_by_id(media_type, i) for i in fresh) if d]
+    items = [d for d in (get_item_by_id(media_type, i, art=art) for i in fresh) if d]
     log.info(
         "New library items selected", event="scan.new_items",
         media_type=media_type.name, listed=len(listed), new=len(items),
@@ -813,11 +1314,72 @@ def _new_items(tracker: TrackerDB, media_type: MediaType) -> list[dict[str, Any]
     return items
 
 
+@dataclass(frozen=True)
+class _LibraryPass:
+    """One library's share of a pass: its ctx, its settings as the engine
+    reads them, the fields it manages and the providers those need."""
+
+    ctx: _ScanCtx
+    settings: dict[str, Any]
+    candidates: list[str]
+    needed: list[str]
+
+
+def _library_pass(
+    base: _ScanCtx,
+    lib: Library,
+    settings: dict[str, Any],
+    ui_language: str,
+    monitor: Any,
+    gate: SiteGate,
+) -> _LibraryPass:
+    """The ctx and fields for the items of ``lib``, derived from the pass's
+    base ctx so caches, pacing and the breaker stay shared."""
+    lib_settings = scan_settings(lib, settings, ui_language)
+    fields = lib.fields()
+    ctx = replace(
+        base,
+        enabled_fields=fields,
+        rating_pref=lib_settings["rating_source"],
+        text_order=lib_settings["text_source_order"],
+        fallback_order=lib_settings["fallback_order"],
+        cert=_cert_config(base.media_type, fields, lib_settings, base.breaker, monitor, gate),
+        title_mode=lib.title_mode,
+        art_source=lib_settings["art_source"],
+    )
+    candidates = candidate_fields(base.media_type, fields)
+    if ctx.cert is not None:
+        candidates = sorted(set(candidates) | {"mpaa"})
+    return _LibraryPass(ctx, lib_settings, candidates,
+                        _needed_providers(base.media_type, candidates))
+
+
+def _pass_providers(
+    media_type: MediaType,
+    libraries: LibraryConfig,
+    items: list[dict[str, Any]],
+    reset: bool,
+) -> list[str]:
+    """Providers the pass as a whole can still make progress with: those of
+    every library with items to scan (included, or any on Update now) and
+    fields switched on. The pass stops only when all of them are down."""
+    seen: dict[str, Library] = {}
+    for item in items:
+        lib = libraries.for_file(item.get("file", ""))
+        if lib is not None and (lib.included or reset):
+            seen[lib.path] = lib
+    needed: set[str] = set()
+    for lib in seen.values():
+        candidates = candidate_fields(media_type, lib.fields())
+        if candidates or "mpaa" in lib.fields():
+            needed.update(_needed_providers(media_type, candidates))
+    return sorted(needed)
+
+
 def run_scan(
     media_type: MediaType,
     tracker: TrackerDB,
-    source_config: dict[str, Any],
-    enabled_fields: frozenset[str],
+    libraries: LibraryConfig,
     tmdb_api_key: str,
     settings: dict[str, Any],
     monitor: Any = None,
@@ -828,6 +1390,9 @@ def run_scan(
     new_only: bool = False,
     cert_gate: SiteGate | None = None,
     progress: Callable[[int, dict[str, Any], dict[str, Any]], bool] | None = None,
+    fanart_cache: dict[tuple[str, str], Any] | None = None,
+    show_cache: dict[str, Any] | None = None,
+    only_set: int | None = None,
 ) -> dict[str, int]:
     """Run a single scan cycle for one media type.
 
@@ -837,23 +1402,31 @@ def run_scan(
     sampling facts in the tracker.
 
     Args:
-        media_type: MOVIE, TVSHOW, or EPISODE.
+        media_type: MOVIE, TVSHOW, SEASON or EPISODE. A season is scanned
+            in its show's library, with its show's ids (identity
+            ``tmdb:<show>/Snn``) and its show's tvshow.nfo; its content age
+            is its TMDB air date, kept in the tracker once fetched. A movie
+            set is scanned in the library most of its movies are in, keyed
+            on its TMDB collection (``collection:<id>``); its NFO state is
+            its movies', its content age its newest movie's
+            (engine/sets.py).
         tracker: Open TrackerDB instance.
-        source_config: Loaded source config dict with a "sources" list and
-            optionally "default_language" and "fallback_language"; a source
-            entry may set its own "language" and "fallback_language".
-        enabled_fields: Set of field names the user wants backfilled.
+        libraries: The libraries. Each item is scanned with the fields and
+            options of the library its file is in (an episode by its own
+            file); an item in no library is skipped (stats["unmatched"]).
         tmdb_api_key: TMDB API key.
-        settings: Dict with stale_threshold_days, rate_limit, rating_source,
-            text_source_order, fallback_order, imdb_ready
+        settings: The general settings: stale_threshold_days, rate_limit,
+            cert_sites, optionally refetch_schedule, plus imdb_ready
             (whether the IMDb ratings store is loaded this cycle; an IMDb
-            rating is transient while it is False) and optionally
-            refetch_schedule.
+            rating is transient while it is False), ui_language (Kodi's
+            interface language; read from Kodi when absent) and optionally
+            check_local_art_now (the manual scan: check every local art
+            file now instead of weekly; Update now always does).
         monitor: xbmc.Monitor instance (has abortRequested()), or
             None for tests.
         show_id_map: Dict mapping a show's Kodi id to its show-level TMDB ID.
-            Required for episode scans so fetch_season uses the show
-            ID, not the episode ID. The show TVDB ids come from the tracker.
+            Required for season and episode scans so their TMDB calls use the
+            show ID. The show TVDB ids come from the tracker.
         items: Pre-built list of Kodi items to process. When provided,
             skips the Kodi library query. Useful for targeted scans
             (single item, folder, season) and testing.
@@ -863,11 +1436,12 @@ def run_scan(
             disabled across passes. When None, a fresh per-call breaker
             is created (single-pass / test convenience).
         reset: The "Update now" path. When True every candidate field is
-            treated as due regardless of recorded maturity, the
-            disabled-source gate and the playback yield are skipped (so the
-            action always runs), and a field with history keeps its clock:
-            only what was written is recorded (record_manual_check). A field
-            without history gets a normal first sample.
+            treated as due regardless of recorded maturity, the inclusion
+            gate (library and subfolder) and the playback yield are skipped
+            (so the action always runs; the caller decides whether it may),
+            and a field with history keeps its clock: only what was written
+            is recorded (record_manual_check). A field without history gets
+            a normal first sample.
         new_only: Library-event scan: process only the items whose Kodi id
             the tracker does not hold for this type. Kodi's dateadded is the
             file's date, not when the item entered the library, so it cannot
@@ -876,10 +1450,17 @@ def run_scan(
         progress: Called before each item with its index, the item and the
             live stats dict. Returning False stops the pass before that item
             (stats["stopped"]); an item is never stopped half-way.
+        fanart_cache, show_cache: fanart.tv answers and TMDB show records
+            already fetched. A caller running several passes in one cycle
+            passes the same dicts to each, like ``breaker``, so the show
+            pass and the season pass ask once per show (fanart.tv's terms
+            allow one call per show). A fresh dict each when None.
+        only_set: Update now on a movie set: the set pass merges and scans
+            only the collection of this Kodi setid (sets.prepare_sets).
 
     Returns:
-        Stats dict with processed, skipped, updated, errors, and
-        per-field counts.
+        Stats dict with processed, skipped, updated, errors, excluded,
+        unmatched and per-field counts.
     """
     scan_start = time.perf_counter()
     stats = _make_stats()
@@ -892,16 +1473,16 @@ def run_scan(
         schedule = tuple(raw_schedule)
     else:
         schedule = DEFAULT_REFETCH_SCHEDULE
-    ctx = _ScanCtx(
+    ui_language = str(settings.get("ui_language") or kodi_ui_language())
+    # One gate for every library: its request cap and memo are per cycle.
+    gate = cert_gate or SiteGate(frozenset(settings.get("cert_sites") or ()), breaker, monitor)
+    shared = _ScanCtx(
         media_type=media_type,
         tracker=tracker,
         breaker=breaker,
         pacer=_Pacer(settings.get("rate_limit", 0.25)),
         tmdb_api_key=tmdb_api_key,
-        default_language=source_config.get("default_language") or kodi_ui_language(),
-        default_language_set=bool(source_config.get("default_language")),
-        sources=source_config.get("sources", []),
-        enabled_fields=enabled_fields,
+        enabled_fields=frozenset(),
         show_id_map=show_id_map or {},
         show_tvdb_map=(
             tracker.get_show_tvdb_map() if media_type.name == "episode" else {}
@@ -915,26 +1496,23 @@ def run_scan(
         logged_once=set(),
         counts={"unknown_ids_accepted": 0, "episodes_found_by_tvdb": 0},
         schedule=schedule,
-        rating_pref=settings.get("rating_source", FOLLOW_SCRAPER),
-        text_order=settings.get("text_source_order", TEXT_FOLLOW_SCRAPER),
-        fallback_order=settings.get("fallback_order", FALLBACK_TVDB_FIRST),
-        default_fallback=str(source_config.get("fallback_language") or ""),
+        rating_pref=FOLLOW_SCRAPER,
+        text_order=TEXT_FOLLOW_SCRAPER,
+        fallback_order=FALLBACK_TVDB_FIRST,
         imdb_ready=bool(settings.get("imdb_ready", False)),
-        cert=_cert_config(media_type, enabled_fields, settings, breaker, monitor, cert_gate),
         reset=reset,
         tracked_shows=(
             tracker.get_tracked_show_ids()
             if media_type.name == "episode" else frozenset()
         ),
+        fanart_client_key=str(settings.get("fanart_client_key") or ""),
+        fanart_cache={} if fanart_cache is None else fanart_cache,
+        show_cache={} if show_cache is None else show_cache,
+        set_folder=kodi.movie_set_folder() if media_type is SET else "",
     )
-    candidates = candidate_fields(media_type, enabled_fields)
-    if ctx.cert is not None:
-        candidates = sorted(set(candidates) | {"mpaa"})
-    forgotten = tracker.forget_disabled_fields(media_type.name, candidates)
-    if forgotten:
-        log.debug("Disabled fields will be checked again when enabled",
-                  event="scan.fields_disabled", media_type=media_type.name, rows=forgotten)
-    needed = _needed_providers(media_type, candidates)
+    # Built on a library's first item, so a library the pass never meets
+    # costs nothing (and logs no certification error).
+    passes: dict[str, _LibraryPass] = {}
 
     log.info(
         "Scan starting",
@@ -943,8 +1521,33 @@ def run_scan(
         reset=reset,
     )
 
-    if items is None:
-        items = _new_items(tracker, media_type) if new_only else kodi.get_all_items(media_type)
+    # A stop requested before this pass (the previous pass ended on it, or it
+    # arrived between passes) ends it before Kodi is asked for its item list,
+    # which on a large library takes seconds. Update now ignores the stop.
+    if not reset and _stop_requested():
+        log.info(
+            "Scan stopped by the user",
+            event="scan.stopped",
+            media_type=media_type.name,
+            processed=0,
+        )
+        stats["stopped"] = True
+        stats["aborted"] = True
+        return stats
+
+    if items is None and media_type is SEASON:
+        items = _season_items(tracker, shared.show_id_map, new_only)
+    elif items is None and media_type is SET:
+        items = prepare_sets(shared, libraries, new_only, only_set, stats,
+                             _before_set_move(monitor, reset, stats),
+                             _set_pass_stop(monitor, reset, stats))
+    elif items is None:
+        art = manages_art(media_type, libraries)
+        items = (
+            _new_items(tracker, media_type, art) if new_only
+            else kodi.get_all_items(media_type, art=art)
+        )
+    needed = _pass_providers(media_type, libraries, items, reset)
 
     for index, item in enumerate(items):
         # Check for Kodi shutdown
@@ -955,6 +1558,20 @@ def run_scan(
                 media_type=media_type.name,
                 processed=stats["processed"],
             )
+            stats["aborted"] = True
+            break
+
+        # Stop scan from the context menu: the pass ends before this item and,
+        # like a shutdown, leaves the cycle open so the next scan resumes here.
+        # Update now (reset) is the user's own action and ignores it.
+        if not reset and _stop_requested():
+            log.info(
+                "Scan stopped by the user",
+                event="scan.stopped",
+                media_type=media_type.name,
+                processed=stats["processed"],
+            )
+            stats["stopped"] = True
             stats["aborted"] = True
             break
 
@@ -971,11 +1588,64 @@ def run_scan(
         # Yield: pause while video is playing. The reset path (Update now)
         # skips this so a manual single-item action does not silently block.
         if not reset:
-            _yield_to_playback(ctx, monitor, stats["processed"])
+            _yield_to_playback(shared, monitor, stats["processed"])
 
         title = _item_title(item, media_type)
+        file_path = item.get("file", "")
+        # An item in no library has no settings to scan it with, on Update
+        # now too; it is not tracked, so it leaves no trace.
+        lib = libraries.for_file(file_path)
+        if lib is None:
+            log.debug(
+                "Skipping item in no library",
+                event="scan.skip", reason="unmatched", title=title,
+                media_type=media_type.name, file_path=file_path,
+            )
+            stats["skipped"] += 1
+            stats["unmatched"] += 1
+            continue
+        included_here, folder_language, fallback_lang = libraries.folder_settings(
+            file_path, lib)
+        fallback_lang = fallback_lang.strip()
+
+        # A season is keyed on its show's TMDB id, so without one it has no
+        # identity; it is picked up once its show is resolved.
+        if media_type is SEASON and not compute_identity(item, media_type):
+            log.debug(
+                "Skipping season of a show without a TMDB id",
+                event="scan.season_no_show_id", title=title,
+                tvshowid=item.get("tvshowid"),
+            )
+            stats["skipped"] += 1
+            continue
+
         kodi_id = item.get(media_type.kodi_id_field, 0)
-        identity = _tracker_identity(tracker, media_type, item, kodi_id)
+        # One managed set per collection: its row follows whichever Kodi
+        # set prepare_sets chose.
+        identity = (
+            compute_identity(item, media_type) if media_type is SET
+            else _tracker_identity(tracker, media_type, item, kodi_id, shared.show_id_map)
+        )
+        if media_type is SEASON and not item.get(media_type.date_field):
+            # Kodi has no date on a season: its TMDB air date, once a fetch
+            # found it, is kept as the row's premiered.
+            known = tracker.get_item(media_type.name, identity) or {}
+            item[media_type.date_field] = known.get("premiered") or ""
+
+        # A library or subfolder that is not included is skipped, but its
+        # items count as present, so orphan pruning keeps their history for
+        # when it is included again. Update now bypasses the gate: whether
+        # it may run there is the caller's call.
+        if not reset and not (lib.included and included_here):
+            log.debug(
+                "Skipping item outside the included libraries",
+                event="scan.skip", reason="excluded", title=title,
+                media_type=media_type.name, library=lib.path,
+            )
+            tracker.update_last_seen(media_type.name, identity, date.today().isoformat())
+            stats["skipped"] += 1
+            stats["excluded"] += 1
+            continue
 
         # Resume: skip items already processed in this cycle. The reset path
         # (Update now) bypasses this so a just-scanned item can still be
@@ -986,40 +1656,48 @@ def run_scan(
                 stats["skipped"] += 1
                 continue
 
-        # Match source. The reset path (Update now) bypasses the disabled-source
-        # gate: the user explicitly requested a refresh, so the source setting
-        # must not silently block it.
-        source = match_source(item.get("file", ""), ctx.sources)
-        if not reset and not source.get("enabled", True):
+        lib_pass = passes.get(lib.path)
+        if lib_pass is None:
+            lib_pass = _library_pass(shared, lib, settings, ui_language, monitor, gate)
+            passes[lib.path] = lib_pass
+        ctx = lib_pass.ctx
+        candidates = lib_pass.candidates
+
+        # A library with nothing switched on has nothing to fetch: no id
+        # lookups, no new tracker row. A row it already has stays present
+        # for orphan pruning and drops the fingerprints of its old fields.
+        if not candidates:
             log.debug(
-                "Skipping disabled source",
-                event="scan.skip",
-                title=title,
-                source_path=source.get("path", ""),
+                "Skipping item in a library with no fields",
+                event="scan.skip", reason="no_fields", title=title,
+                media_type=media_type.name, library=lib.path,
             )
+            tracker.forget_item_fields(media_type.name, identity, candidates)
+            tracker.update_last_seen(media_type.name, identity, date.today().isoformat())
             stats["skipped"] += 1
             continue
 
-        language = source.get("language") or ctx.default_language
-        # A source's own fallback_language wins, "" included (no fallback for
-        # that folder even when sources.json sets a default).
-        fallback_lang = str(
-            source.get("fallback_language", ctx.default_fallback) or ""
-        ).strip()
-        fill_only = (
-            frozenset() if source.get("language") or ctx.default_language_set
-            else LANGUAGE_FIELDS
-        )
+        # A folder without a configured language is fetched in Kodi's
+        # interface language, a guess, so its text and its art with text
+        # only fill empty fields. Key art has no text, so it is not held back.
+        language = folder_language or ui_language
+        fill_only = frozenset() if folder_language else LANGUAGE_FIELDS.union(TEXT_ART_FIELDS)
         if fill_only and "language_unconfigured" not in ctx.logged_once:
             ctx.logged_once.add("language_unconfigured")
             log.info(
                 "Folder without a configured language: text fills empty fields only",
                 event="scan.language_unconfigured", language=language,
-                media_type=media_type.name, source_path=item.get("file", ""),
+                media_type=media_type.name, source_path=file_path,
             )
 
-        # Extract external IDs
-        kodi_ids = extract_ids(item)
+        # Extract external IDs; a season has its show's, a set its
+        # collection's TMDB id.
+        if media_type is SEASON:
+            kodi_ids = (item.get("show_tmdb_id"), None, item.get("show_tvdb_id"), None)
+        elif media_type is SET:
+            kodi_ids = (item.get("collection_id"), None, None, None)
+        else:
+            kodi_ids = extract_ids(item)
         # An episode without ids of its own can still be matched by its
         # number under the show (engine/numbermatch.py).
         if not any(kodi_ids) and media_type.name != "episode":
@@ -1047,6 +1725,11 @@ def run_scan(
             date_added=item.get("dateadded", ""),
         )
         tracker.update_last_seen(media_type.name, identity, date.today().isoformat())
+        forgotten = tracker.forget_item_fields(media_type.name, identity, candidates)
+        if forgotten:
+            log.debug("Disabled fields will be checked again when enabled",
+                      event="scan.fields_disabled", media_type=media_type.name,
+                      identity=identity, rows=forgotten)
         stored = tracker.get_item(media_type.name, identity) or {}
 
         # --- Per-field maturity decisions (see maturity.decide_field) ---
@@ -1058,17 +1741,20 @@ def run_scan(
         fields = item_fields(candidates, media_type, identity)
         # A locked field is the user's: never fetched, written or sampled,
         # on Update now and after a settings change too. Its reason is
-        # recorded each scan it would have been considered.
+        # recorded each scan it would have been considered, except art the
+        # scan itself locked: "changed outside MetaMender" says more.
         locked = (tracker.locked_fields(media_type.name, identity) - RATING_FIELDS) & set(fields)
         if locked:
             fields = [f for f in fields if f not in locked]
             for f in sorted(locked):
-                tracker.record_field_reason(media_type.name, identity, f, REASON_LOCKED)
+                if (fs_map.get(f) or {}).get("last_reason") != REASON_CHANGED_OUTSIDE:
+                    tracker.record_field_reason(media_type.name, identity, f, REASON_LOCKED)
         # A field sampled under other settings (or before fingerprints were
         # stored) is re-checked as if never sampled, and re-baselined once it
         # answers. A transient keeps the old fingerprint, so it stays due.
         fps = {
-            f: settings_fingerprint(f, settings, language, media_type.name, fallback_lang)
+            f: settings_fingerprint(f, lib_pass.settings, language, media_type.name,
+                                    fallback_lang)
             for f in fields
         }
         rebaseline = {
@@ -1122,6 +1808,36 @@ def run_scan(
                 decisions[f] = FETCH_NOW
                 refills.add(f)
 
+        # A local art file that no longer exists is fair game like a broken
+        # link; one whose share does not answer waits, untouched and
+        # unsampled. A FINAL field gets one refill for a missing file, like
+        # a blanked one; a refill that found nothing recorded the dead path
+        # as written, so that field is not checked (or fetched) again.
+        art_check = [
+            f for f in fields if f in ART_FIELDS and not (
+                decisions[f] == FINAL
+                and (fs_map.get(f) or {}).get("written_value")
+                == fingerprint(kodi_form(item.get(f) or ""))
+            )
+        ]
+        missing, unreachable = _check_local_art(
+            tracker, media_type.name, identity, item, art_check,
+            reset or bool(settings.get("check_local_art_now")), today,
+        )
+        for f in sorted(missing):
+            if decisions[f] == FINAL:
+                decisions[f] = FETCH_NOW
+                refills.add(f)
+        for f in sorted(unreachable):
+            if decisions[f] != FINAL:
+                del decisions[f]
+                stats["transient"] += 1
+                _art_reason(tracker, media_type.name, identity, f, fs_map, REASON_UNCHECKED)
+
+        _gate_art(tracker, media_type.name, identity, item, fs_map, decisions, missing,
+                  ctx.set_folder)
+        _drop_protected_art(tracker, media_type.name, identity, item, fs_map, decisions,
+                            fill_only, REASON_FILL_ONLY, missing)
         due = any(d == FETCH_NOW for d in decisions.values())
 
         # NFO detection touches the share, so it runs once, and only for an
@@ -1130,7 +1846,13 @@ def run_scan(
         # as it is, ids_checked and cycle flag included, and retried later.
         nfo_managed = False
         if due:
-            state = nfo_state(media_type.name, item.get("file", ""))
+            # A season has no NFO of its own: its show's tvshow.nfo governs
+            # it. Nor has a set: it is NFO-managed when all its movies are.
+            if media_type is SET:
+                state = set_nfo_state(tuple(item.get("member_files") or ()))
+            else:
+                nfo_kind = "tvshow" if media_type is SEASON else media_type.name
+                state = nfo_state(nfo_kind, item.get("file", ""))
             if state == UNREACHABLE:
                 log.debug(
                     "Media unreachable, skipping item",
@@ -1141,6 +1863,10 @@ def run_scan(
                 stats["unreachable"] += 1
                 continue
             nfo_managed = state == NFO
+            if nfo_managed:
+                _drop_protected_art(tracker, media_type.name, identity, item, fs_map,
+                                    decisions, ART_FIELDS, REASON_NFO, missing)
+                due = any(d == FETCH_NOW for d in decisions.values())
 
         ids = _resolve_ids(
             ctx, item, identity, kodi_ids, stored, language,
@@ -1193,19 +1919,47 @@ def run_scan(
             )
             stats["aborted"] = True
             break
-
-        tmdb_lang = tmdb_language(language)
-        fetch_primary = (
-            _fetch_episode if media_type.name == "episode" else _fetch_movie_or_show
-        )
-        primary = fetch_primary(ctx, item, kodi_id, title, identity, ids, tmdb_lang)
+        # Another library of the pass can still make progress: this item
+        # waits for its providers, with nothing recorded.
+        if breaker.all_disabled(lib_pass.needed):
+            log.debug(
+                "Providers of this library are disabled, skipping item",
+                event="scan.skip", reason="providers_down", title=title,
+                media_type=media_type.name, providers=lib_pass.needed,
+            )
+            stats["skipped"] += 1
+            stats["transient"] += 1
+            continue
 
         # Non-final fields are refreshed (overwrite-on-diff); final ones are not.
         nonfinal = [f for f, d in decisions.items() if d != FINAL]
+        if TMDB_ART_FIELDS.intersection(nonfinal):
+            # The primary fetch brings TMDB's posters, backdrops and logos
+            # along; fanart.tv-only art does not need them.
+            ctx = replace(ctx, image_languages=_image_languages(language, fallback_lang))
+        tmdb_lang = tmdb_language(language)
+        fetch_primary = {
+            "episode": _fetch_episode, "season": _fetch_season,
+        }.get(media_type.name, _fetch_movie_or_show)
+        if media_type is SET:
+            primary = _fetch_set(ctx, item, kodi_id, title, identity, ids, tmdb_lang,
+                                 fallback_lang)
+        else:
+            primary = fetch_primary(ctx, item, kodi_id, title, identity, ids, tmdb_lang)
+        if media_type is SEASON:
+            # The fetch may have found the season's first air date.
+            age = content_age_days(item, media_type, today)
+
         reopened = _reopened_fallbacks(item, fs_map, rebaseline)
+        art_due = sorted(ART_FIELDS.intersection(nonfinal))
+        due_keep = tracker.get_keep(media_type.name, identity) if art_due else {}
+        english = {
+            f for f in art_due
+            if _english_allowed(f, item, fs_map.get(f) or {}, due_keep.get(f) or {}, missing)
+        }
         outcomes, values, providers = _resolve_fields(
             ctx, item, identity, primary, ids, language, fallback_lang, nonfinal,
-            reopened,
+            reopened, english, missing,
         )
         cert_value: str | None = None
         cert_kept = False
@@ -1236,10 +1990,26 @@ def run_scan(
         for f in reopened:
             if f in answered and outcomes[f].value is None:
                 extracted[f] = ""
+        art_keep = (
+            tracker.get_keep(media_type.name, identity)
+            if ART_FIELDS & extracted.keys() else {}
+        )
         fields_to_write, held = _plan_writes(
             extracted, item, nfo_managed, fs_map, identity, fill_only,
+            {f: k["written_fp"] for f, k in art_keep.items()
+             if f in ART_FIELDS and k.get("written_fp")},
+            frozenset(missing),
         )
         stats["protected"] += len(extracted) - len(fields_to_write) - len(held)
+        # Kodi shows a video file's own length over the library's runtime, so
+        # a runtime written there would never be seen. The listing carries
+        # the library's value only, so the file is looked up before a write.
+        from_file: set[str] = set()
+        if "runtime" in fields_to_write and kodi.file_runtime(media_type, kodi_id):
+            del fields_to_write["runtime"]
+            from_file.add("runtime")
+            log.debug("Runtime left to the video file's length",
+                      event="scan.runtime_from_file", identity=identity)
 
         ratings_source: str | None = None
         ratings_votes: int | None = None
@@ -1259,11 +2029,21 @@ def run_scan(
             if new_ratings is not None:
                 fields_to_write["ratings"] = new_ratings
 
+        # Update now is the user's own request, so it only holds while keys
+        # are being pressed.
+        if fields_to_write:
+            _hold_while_browsing(
+                media_type, monitor,
+                UPDATE_NOW_IDLE_SECONDS if reset else BROWSE_IDLE_SECONDS)
         written = _write_fields(
             ctx, kodi_id, title, identity, fields_to_write, stats,
         )
+        if media_type is SET and "title" in written:
+            # Kodi's scraper may still file a movie under this name later.
+            tracker.add_set_names(identity, [str(fields_to_write["title"])])
         _keep_originals(
             tracker, media_type.name, identity, item, written, fields_to_write, fs_map,
+            missing,
         )
         # Episodes are keyed on their show's title; keep their rows. A failed
         # re-key is undone in the tracker, so the episodes keep the old key
@@ -1364,7 +2144,7 @@ def run_scan(
                 # A certification is rechecked monthly at any age.
                 mature = f == "mpaa" or (age is not None and age >= threshold)
                 next_due = fallback_recheck_due(None if mature else next_due, today)
-            reason = _field_reason(
+            reason = REASON_FROM_FILE if f in from_file else _field_reason(
                 f, written, held, extracted, nfo_managed, item, cert_kept,
             )
             if reset and int(fs.get("fetch_count") or 0) > 0:
@@ -1396,9 +2176,13 @@ def run_scan(
         tracker.mark_cycle_processed(media_type.name, identity)
         stats["processed"] += 1
 
+    # The last items' last_seen stamps, when they were skipped as excluded.
+    tracker.commit()
     stats["tvdb_auth_failed"] = "tvdb" in breaker.auth_rejected()
     stats["tmdb_answered"] = breaker.answered("tmdb")
     stats["tvdb_answered"] = breaker.answered("tvdb")
+    stats["fanart_auth_failed"] = "fanart" in breaker.auth_rejected()
+    stats["fanart_answered"] = breaker.answered("fanart")
     log.info(
         "Scan complete",
         event="scan.complete",
@@ -1410,8 +2194,10 @@ def run_scan(
         errors=stats["errors"],
         unreachable=stats["unreachable"],
         protected=stats["protected"],
-        unknown_ids_accepted=ctx.counts["unknown_ids_accepted"],
-        episodes_found_by_tvdb=ctx.counts["episodes_found_by_tvdb"],
+        excluded=stats["excluded"],
+        unmatched=stats["unmatched"],
+        unknown_ids_accepted=shared.counts["unknown_ids_accepted"],
+        episodes_found_by_tvdb=shared.counts["episodes_found_by_tvdb"],
         disabled=breaker.disabled(),
         duration_ms=int((time.perf_counter() - scan_start) * 1000),
     )
