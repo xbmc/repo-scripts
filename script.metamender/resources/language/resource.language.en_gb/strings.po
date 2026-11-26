@@ -31,18 +31,6 @@ msgctxt "#32012"
 msgid "API key for The Movie Database (themoviedb.org). Required for metadata lookups."
 msgstr ""
 
-msgctxt "#32025"
-msgid "Source priority"
-msgstr ""
-
-msgctxt "#32026"
-msgid "Rating source"
-msgstr ""
-
-msgctxt "#32027"
-msgid "Which audience ratings to keep up to date, and which one Kodi shows. \"Follow your scraper\" keeps the rating Kodi's scraper chose to show for each item and refreshes it when it comes from TMDB or IMDb; both are kept up to date, and the shown rating never changes source. The other options prefer or use only TMDB or IMDb, and make that rating the one Kodi shows (except for items with an NFO file, which decides that itself)."
-msgstr ""
-
 msgctxt "#32030"
 msgid "Prefer TMDB"
 msgstr ""
@@ -65,74 +53,6 @@ msgctxt "#32100"
 msgid "Backfill"
 msgstr ""
 
-msgctxt "#32101"
-msgid "Fields"
-msgstr ""
-
-msgctxt "#32102"
-msgid "Enable ratings backfill"
-msgstr ""
-
-msgctxt "#32103"
-msgid "Backfill missing or stale ratings and vote counts for movies, TV shows, and episodes."
-msgstr ""
-
-msgctxt "#32104"
-msgid "Enable plots backfill"
-msgstr ""
-
-msgctxt "#32105"
-msgid "Backfill missing plot summaries from TMDB or TheTVDB."
-msgstr ""
-
-msgctxt "#32106"
-msgid "Enable episode title backfill"
-msgstr ""
-
-msgctxt "#32107"
-msgid "Backfill missing episode titles from TMDB or TheTVDB. Generic titles such as \"Episode 3\" count as missing and are never written."
-msgstr ""
-
-msgctxt "#32108"
-msgid "Enable certifications"
-msgstr ""
-
-msgctxt "#32109"
-msgid "Fill and correct age certifications of movies and TV shows from TMDB and the national rating sites (FSK, BBFC, Medieraadet), in the rating system of the country chosen in the Certifications tab."
-msgstr ""
-
-msgctxt "#32110"
-msgid "Enable credits backfill"
-msgstr ""
-
-msgctxt "#32111"
-msgid "Directors and writers, from TMDB."
-msgstr ""
-
-msgctxt "#32112"
-msgid "Enable trailers backfill"
-msgstr ""
-
-msgctxt "#32113"
-msgid "Backfill missing trailer URLs from TMDB."
-msgstr ""
-
-msgctxt "#32114"
-msgid "Enable taglines backfill"
-msgstr ""
-
-msgctxt "#32115"
-msgid "Backfill missing movie taglines from TMDB."
-msgstr ""
-
-msgctxt "#32116"
-msgid "Enable details backfill"
-msgstr ""
-
-msgctxt "#32117"
-msgid "Genre, studio, country, runtime and first aired date, from TMDB."
-msgstr ""
-
 msgctxt "#32120"
 msgid "Freshness"
 msgstr ""
@@ -145,46 +65,14 @@ msgctxt "#32140"
 msgid "Sources"
 msgstr ""
 
-msgctxt "#32141"
-msgid "Folder languages"
-msgstr ""
-
-msgctxt "#32142"
-msgid "Set the language of folders whose titles and plots are in another language than the library language."
-msgstr ""
-
 # --- Certifications (32200-32268) ---
 
 msgctxt "#32200"
 msgid "Certifications"
 msgstr ""
 
-msgctxt "#32201"
-msgid "Certification format"
-msgstr ""
-
-msgctxt "#32202"
-msgid "Country"
-msgstr ""
-
-msgctxt "#32203"
-msgid "The rating system to fill in: its valid ratings, its prefix and how other countries' ratings are converted to it. Automatic uses the region of Kodi's interface language; certifications are skipped when that region has no rating system here."
-msgstr ""
-
-msgctxt "#32204"
-msgid "Override certification prefix"
-msgstr ""
-
-msgctxt "#32205"
-msgid "Use a custom prefix instead of the default for the selected country. Enable this if your Kodi skin expects a specific prefix format."
-msgstr ""
-
 msgctxt "#32206"
 msgid "Custom prefix"
-msgstr ""
-
-msgctxt "#32207"
-msgid "The prefix written before every certification, at most 8 characters (for example \"de:\" or \"Rated \"). Leave empty for no prefix."
 msgstr ""
 
 msgctxt "#32210"
@@ -215,36 +103,8 @@ msgctxt "#32216"
 msgid "Ask the Danish Media Council (Medieraadet) when TMDB has no certification. It rates films only. Its ratings count directly for Denmark and are converted for the other countries."
 msgstr ""
 
-msgctxt "#32220"
-msgid "Correction"
-msgstr ""
-
-msgctxt "#32221"
-msgid "Replace incorrect certifications"
-msgstr ""
-
-msgctxt "#32222"
-msgid "Replace a certification from another country's system, such as \"Rated PG-13\" in a Dutch library. Ratings already in the selected country's system are kept, and ratings from an NFO file are never replaced. When disabled, only empty certifications are filled."
-msgstr ""
-
-msgctxt "#32230"
-msgid "Fallback"
-msgstr ""
-
-msgctxt "#32231"
-msgid "Apply certification when not found"
-msgstr ""
-
-msgctxt "#32232"
-msgid "When no source has a certification for an item after a year of monthly rechecks, write the value below, so the item shows it was checked. When disabled, such items stay empty."
-msgstr ""
-
 msgctxt "#32233"
 msgid "Not-found certification"
-msgstr ""
-
-msgctxt "#32234"
-msgid "The value written when no source has a certification, exactly as entered (no country prefix). Common values: NR, Not Rated, Unrated."
 msgstr ""
 
 # Country names
@@ -283,10 +143,6 @@ msgstr ""
 
 msgctxt "#32268"
 msgid "SE - Mediemyndigheten"
-msgstr ""
-
-msgctxt "#32269"
-msgid "Automatic (Kodi's region)"
 msgstr ""
 
 # --- General (32300-32349) ---
@@ -450,14 +306,6 @@ msgstr ""
 
 # --- Text source settings (32390-32397) ---
 
-msgctxt "#32390"
-msgid "Text source order"
-msgstr ""
-
-msgctxt "#32391"
-msgid "Which provider to ask first for TV show plots and episode titles and plots in the source folder's language. If the first has nothing, the second is asked. \"Follow your scraper\" asks first the provider whose Kodi scraper added the show or episode, so its wording stays; TMDB first when that cannot be told. Movies always use TMDB."
-msgstr ""
-
 msgctxt "#32392"
 msgid "TMDB, then TheTVDB"
 msgstr ""
@@ -466,28 +314,8 @@ msgctxt "#32393"
 msgid "TheTVDB, then TMDB"
 msgstr ""
 
-msgctxt "#32398"
-msgid "Follow your scraper"
-msgstr ""
-
-msgctxt "#32399"
-msgid "Manage show and movie titles"
-msgstr ""
-
-msgctxt "#32400"
-msgid "Replace show and movie titles with the title in the source folder's language from TMDB (and TheTVDB for shows), for example when a Dutch folder was scraped in English. Only a title the provider really has in that language is used; there is no fallback language. Titles from an NFO file are kept, and so are titles of items without a TMDB or IMDb id."
-msgstr ""
-
-msgctxt "#32401"
-msgid "Follow your scraper"
-msgstr ""
-
 msgctxt "#32396"
 msgid "Fallback language order"
-msgstr ""
-
-msgctxt "#32397"
-msgid "Which provider to ask first for TV show and episode text in a folder's fallback language, for folders that have one. Changing it fetches values filled from the fallback again."
 msgstr ""
 
 msgctxt "#32404"
@@ -534,14 +362,6 @@ msgctxt "#32415"
 msgid "TMDB could not be reached, so the key was not checked. It is saved as entered; if it is wrong, the add-on log will say so on the first scan."
 msgstr ""
 
-msgctxt "#32420"
-msgid "Library language"
-msgstr ""
-
-msgctxt "#32421"
-msgid "The language MetaMender fills and refreshes titles, plots and other text in. The optional fallback language is used when a text does not exist in the library language. Folders in another language come next."
-msgstr ""
-
 msgctxt "#32422"
 msgid "Language"
 msgstr ""
@@ -554,32 +374,12 @@ msgctxt "#32424"
 msgid "None"
 msgstr ""
 
-msgctxt "#32425"
-msgid "Folders in another language"
-msgstr ""
-
-msgctxt "#32426"
-msgid "Select a folder whose titles and plots are in another language, then choose its language. Select it again to use the library language. Folders you do not select use the library language."
-msgstr ""
-
 msgctxt "#32427"
-msgid "Kodi has no video sources yet. Add your folders to the library first; you can set their languages later from the add-on settings."
-msgstr ""
-
-msgctxt "#32428"
-msgid "Library language"
-msgstr ""
-
-msgctxt "#32429"
-msgid "Folder languages"
+msgid "Kodi has no video sources yet. Add your folders to the library first, then set them up under Libraries."
 msgstr ""
 
 msgctxt "#32430"
 msgid "What to fill"
-msgstr ""
-
-msgctxt "#32431"
-msgid "Choose what MetaMender may fill in and keep up to date. Values that come from an NFO file are never changed."
 msgstr ""
 
 msgctxt "#32432"
@@ -595,7 +395,7 @@ msgid "Plots"
 msgstr ""
 
 msgctxt "#32435"
-msgid "Movie, show and episode plots in the folder's language."
+msgid "Movie, show and episode plots in the library's language."
 msgstr ""
 
 msgctxt "#32436"
@@ -603,7 +403,7 @@ msgid "Episode titles"
 msgstr ""
 
 msgctxt "#32437"
-msgid "Episode titles in the folder's language."
+msgid "Episode titles in the library's language."
 msgstr ""
 
 msgctxt "#32438"
@@ -611,7 +411,7 @@ msgid "Show and movie titles"
 msgstr ""
 
 msgctxt "#32439"
-msgid "Replace the title with the one in the folder's language."
+msgid "Replace the title with the one in the library's language."
 msgstr ""
 
 msgctxt "#32440"
@@ -643,7 +443,7 @@ msgid "Taglines"
 msgstr ""
 
 msgctxt "#32447"
-msgid "Movie taglines in the folder's language."
+msgid "Movie taglines in the library's language."
 msgstr ""
 
 msgctxt "#32448"
@@ -656,10 +456,6 @@ msgstr ""
 
 msgctxt "#32450"
 msgid "Certification country"
-msgstr ""
-
-msgctxt "#32451"
-msgid "Certifications are written in the rating system of one country. Automatic uses the region of Kodi's interface language."
 msgstr ""
 
 msgctxt "#32452"
@@ -675,7 +471,7 @@ msgid "Summary"
 msgstr ""
 
 msgctxt "#32456"
-msgid "Finish saves these settings and starts the first scan. Everything else can be changed later in the add-on settings, and this wizard can be run again from there."
+msgid "Finish saves these settings and starts the first scan. Library choices can be changed later under Libraries and the general ones in the add-on settings; this wizard can be run again from there."
 msgstr ""
 
 msgctxt "#32457"
@@ -694,20 +490,12 @@ msgctxt "#32460"
 msgid "not checked"
 msgstr ""
 
-msgctxt "#32461"
-msgid "Folder: {0}"
-msgstr ""
-
 msgctxt "#32462"
 msgid "Fill"
 msgstr ""
 
 msgctxt "#32463"
 msgid "Nothing"
-msgstr ""
-
-msgctxt "#32465"
-msgid "The folder languages could not be saved, so nothing was changed. The add-on log has the details."
 msgstr ""
 
 msgctxt "#32466"
@@ -719,7 +507,7 @@ msgid "Run setup wizard"
 msgstr ""
 
 msgctxt "#32468"
-msgid "Walk through the TMDB key, the library and folder languages and what to fill, starting from your current settings."
+msgid "Walk through the TMDB key, the libraries MetaMender looks after and what it does in each, starting from your current settings."
 msgstr ""
 
 msgctxt "#32469"
@@ -1340,7 +1128,7 @@ msgid "Which rating to show"
 msgstr ""
 
 msgctxt "#32631"
-msgid "Kodi shows one audience rating per movie or episode. MetaMender keeps it up to date while new votes come in. Items with an NFO file keep the rating the NFO chose."
+msgid "Stop scan"
 msgstr ""
 
 msgctxt "#32632"
@@ -1372,7 +1160,7 @@ msgid "Where plots and titles come from"
 msgstr ""
 
 msgctxt "#32639"
-msgid "For TV shows and episodes, MetaMender asks TMDB and TheTVDB, one after the other, until one has the text in the folder's language. Movies always come from TMDB."
+msgid "The scan stops after the current item."
 msgstr ""
 
 msgctxt "#32640"
@@ -1413,4 +1201,556 @@ msgstr ""
 
 msgctxt "#32649"
 msgid "Plots and titles"
+msgstr ""
+
+msgctxt "#32650"
+msgid "This library isn't included in MetaMender. Include it under Libraries."
+msgstr ""
+
+msgctxt "#32651"
+msgid "Open Libraries"
+msgstr ""
+
+msgctxt "#32652"
+msgid "MetaMender found a new library, {}. It stays out until you include it."
+msgstr ""
+
+msgctxt "#32653"
+msgid "New library found: {}"
+msgstr ""
+
+msgctxt "#32654"
+msgid "{} items are in no MetaMender library, so they are not being updated."
+msgstr ""
+
+msgctxt "#32655"
+msgid "{} items are in no MetaMender library"
+msgstr ""
+
+msgctxt "#32656"
+msgid "MetaMender now has settings per library. Your settings were copied to each library."
+msgstr ""
+
+msgctxt "#32657"
+msgid "Settings are now per library"
+msgstr ""
+
+msgctxt "#32658"
+msgid "Which libraries MetaMender looks after"
+msgstr ""
+
+msgctxt "#32659"
+msgid "Choose a library to include it or leave it out; for an included one you can also change its settings. Libraries you add to Kodi later stay out until you include them."
+msgstr ""
+
+msgctxt "#32660"
+msgid "Nothing switched on yet"
+msgstr ""
+
+msgctxt "#32661"
+msgid "Not included: MetaMender never touches it"
+msgstr ""
+
+msgctxt "#32662"
+msgid "{0} · {1}"
+msgstr ""
+
+msgctxt "#32663"
+msgid "Include"
+msgstr ""
+
+msgctxt "#32664"
+msgid "Leave out"
+msgstr ""
+
+msgctxt "#32665"
+msgid "Change settings"
+msgstr ""
+
+msgctxt "#32666"
+msgid "What MetaMender does in this library. Nothing is on until you switch it on."
+msgstr ""
+
+msgctxt "#32667"
+msgid "Tick what MetaMender should fill; more choices appear as you tick."
+msgstr ""
+
+msgctxt "#32668"
+msgid "Rating"
+msgstr ""
+
+msgctxt "#32669"
+msgid "Text sources"
+msgstr ""
+
+msgctxt "#32670"
+msgid "Titles"
+msgstr ""
+
+msgctxt "#32671"
+msgid "Age ratings"
+msgstr ""
+
+msgctxt "#32672"
+msgid "Title to show"
+msgstr ""
+
+msgctxt "#32673"
+msgid "In the library's language"
+msgstr ""
+
+msgctxt "#32674"
+msgid "Keep the original title"
+msgstr ""
+
+msgctxt "#32675"
+msgid "MetaMender will not change anything until you include a library and switch something on."
+msgstr ""
+
+msgctxt "#32676"
+msgid "ratings"
+msgstr ""
+
+msgctxt "#32677"
+msgid "plots"
+msgstr ""
+
+msgctxt "#32678"
+msgid "episode titles"
+msgstr ""
+
+msgctxt "#32679"
+msgid "titles"
+msgstr ""
+
+msgctxt "#32680"
+msgid "titles kept original"
+msgstr ""
+
+msgctxt "#32681"
+msgid "age ratings"
+msgstr ""
+
+msgctxt "#32682"
+msgid "age ratings ({0})"
+msgstr ""
+
+msgctxt "#32683"
+msgid "credits"
+msgstr ""
+
+msgctxt "#32684"
+msgid "trailers"
+msgstr ""
+
+msgctxt "#32685"
+msgid "taglines"
+msgstr ""
+
+msgctxt "#32686"
+msgid "details"
+msgstr ""
+
+msgctxt "#32687"
+msgid "Done"
+msgstr ""
+
+msgctxt "#32688"
+msgid "Left out"
+msgstr ""
+
+msgctxt "#32689"
+msgid "Rating prefix"
+msgstr ""
+
+msgctxt "#32690"
+msgid "The country's own"
+msgstr ""
+
+msgctxt "#32691"
+msgid "When no rating is found"
+msgstr ""
+
+msgctxt "#32692"
+msgid "Leave it empty"
+msgstr ""
+
+msgctxt "#32693"
+msgid "Write \"{0}\""
+msgstr ""
+
+msgctxt "#32694"
+msgid "Write a value"
+msgstr ""
+
+msgctxt "#32695"
+msgid "The library settings could not be saved, so nothing was changed. The add-on log has the details."
+msgstr ""
+
+msgctxt "#32696"
+msgid "MetaMender has not moved your settings to libraries yet, so they cannot be changed now. It tries again every few minutes: it waits until Kodi lists your video sources, and retries when your settings could not be copied or saved. Try again later."
+msgstr ""
+
+msgctxt "#32697"
+msgid "MetaMender found new libraries: {}. They stay out until you include them."
+msgstr ""
+
+msgctxt "#32698"
+msgid "New libraries found: {}"
+msgstr ""
+
+msgctxt "#32699"
+msgid "1 item is in no MetaMender library, so it is not being updated."
+msgstr ""
+
+msgctxt "#32700"
+msgid "1 item is in no MetaMender library"
+msgstr ""
+
+msgctxt "#32701"
+msgid "No prefix"
+msgstr ""
+
+msgctxt "#32702"
+msgid "MetaMender could not read the stored library settings. If you continue and save, every library starts afresh: not included, nothing switched on. Continue?"
+msgstr ""
+
+msgctxt "#32703"
+msgid "Libraries"
+msgstr ""
+
+msgctxt "#32704"
+msgid "Open the library list: choose which libraries MetaMender updates and what it fills, which ratings it shows and where plots and titles come from, for each library."
+msgstr ""
+
+msgctxt "#32705"
+msgid "MetaMender now has settings per library. Your earlier choices could not be read, so nothing is switched on yet: open Libraries to choose."
+msgstr ""
+
+msgctxt "#32706"
+msgid "Settings are now per library, nothing switched on"
+msgstr ""
+
+msgctxt "#32707"
+msgid "Libraries converted"
+msgstr ""
+
+msgctxt "#32708"
+msgid "Save your changes?"
+msgstr ""
+
+msgctxt "#32709"
+msgid "fanart.tv"
+msgstr ""
+
+msgctxt "#32710"
+msgid "Personal fanart.tv API key"
+msgstr ""
+
+msgctxt "#32711"
+msgid "Optional. With your own free key from fanart.tv, new images reach you sooner. MetaMender works without it."
+msgstr ""
+
+msgctxt "#32712"
+msgid "Posters"
+msgstr ""
+
+msgctxt "#32713"
+msgid "Fills empty posters and refreshes posters from TMDB or fanart.tv while a title is new. Local image files stay, and so does a poster you change after ticking this."
+msgstr ""
+
+msgctxt "#32714"
+msgid "Episode thumbs"
+msgstr ""
+
+msgctxt "#32715"
+msgid "Replaces thumbs Kodi grabbed from the video, and broken or empty thumbs, with the official episode still."
+msgstr ""
+
+msgctxt "#32716"
+msgid "posters"
+msgstr ""
+
+msgctxt "#32717"
+msgid "episode thumbs"
+msgstr ""
+
+msgctxt "#32718"
+msgid "Poster: {}"
+msgstr ""
+
+msgctxt "#32719"
+msgid "Poster"
+msgstr ""
+
+msgctxt "#32720"
+msgid "Episode thumb"
+msgstr ""
+
+msgctxt "#32721"
+msgid "No image"
+msgstr ""
+
+msgctxt "#32722"
+msgid "Frame grab from the video"
+msgstr ""
+
+msgctxt "#32723"
+msgid "Broken link"
+msgstr ""
+
+msgctxt "#32724"
+msgid "Image from TMDB"
+msgstr ""
+
+msgctxt "#32725"
+msgid "Image from fanart.tv"
+msgstr ""
+
+msgctxt "#32726"
+msgid "Image from another website"
+msgstr ""
+
+msgctxt "#32727"
+msgid "Local image file"
+msgstr ""
+
+msgctxt "#32728"
+msgid "was a frame grab"
+msgstr ""
+
+msgctxt "#32729"
+msgid "was a broken link"
+msgstr ""
+
+msgctxt "#32730"
+msgid "Local image file, left as it is"
+msgstr ""
+
+msgctxt "#32731"
+msgid "Image from another source, left as it is"
+msgstr ""
+
+msgctxt "#32732"
+msgid "Changed outside MetaMender, left as it is"
+msgstr ""
+
+msgctxt "#32733"
+msgid "{} · Season {}"
+msgstr ""
+
+msgctxt "#32734"
+msgid "Art source"
+msgstr ""
+
+msgctxt "#32735"
+msgid "Images from The Movie Database."
+msgstr ""
+
+msgctxt "#32736"
+msgid "Images from fanart.tv. Images in the library's language always come first, from either source."
+msgstr ""
+
+msgctxt "#32737"
+msgid "Manual and help"
+msgstr ""
+
+msgctxt "#32738"
+msgid "Shows a QR code and the address of MetaMender's manual, to open on your phone or computer."
+msgstr ""
+
+msgctxt "#32739"
+msgid "MetaMender manual"
+msgstr ""
+
+msgctxt "#32740"
+msgid "Scan the code with your phone, or open this address:"
+msgstr ""
+
+msgctxt "#32741"
+msgid "{}, without text"
+msgstr ""
+
+msgctxt "#32742"
+msgid "fanart.tv refused your personal API key. Art that needs fanart.tv waits until it works. Check the key in Settings, Providers, or clear it to use MetaMender's own key."
+msgstr ""
+
+msgctxt "#32743"
+msgid "fanart.tv refused MetaMender's key. Art that needs fanart.tv waits until it works again; everything else carries on."
+msgstr ""
+
+msgctxt "#32744"
+msgid "Fanart"
+msgstr ""
+
+msgctxt "#32745"
+msgid "Fills the main background image of movies and shows, and of movie sets with Movie sets ticked, preferring one without text."
+msgstr ""
+
+msgctxt "#32746"
+msgid "Other art"
+msgstr ""
+
+msgctxt "#32747"
+msgid "Fills clear logos, key art, landscape, banner, disc art, clear art and character art."
+msgstr ""
+
+msgctxt "#32748"
+msgid "Movie sets"
+msgstr ""
+
+msgctxt "#32749"
+msgid "Gives movie sets their name and plot in the library's language, and their art with the art ticks."
+msgstr ""
+
+msgctxt "#32750"
+msgid "fanart"
+msgstr ""
+
+msgctxt "#32751"
+msgid "other art"
+msgstr ""
+
+msgctxt "#32752"
+msgid "movie sets"
+msgstr ""
+
+msgctxt "#32753"
+msgid "Art"
+msgstr ""
+
+msgctxt "#32754"
+msgid "{}, in English as a last resort"
+msgstr ""
+
+msgctxt "#32755"
+msgid "Clear logo"
+msgstr ""
+
+msgctxt "#32756"
+msgid "Key art"
+msgstr ""
+
+msgctxt "#32757"
+msgid "Landscape"
+msgstr ""
+
+msgctxt "#32758"
+msgid "Banner"
+msgstr ""
+
+msgctxt "#32759"
+msgid "Disc art"
+msgstr ""
+
+msgctxt "#32760"
+msgid "Clear art"
+msgstr ""
+
+msgctxt "#32761"
+msgid "Character art"
+msgstr ""
+
+msgctxt "#32762"
+msgid "was a local file that no longer exists"
+msgstr ""
+
+msgctxt "#32763"
+msgid "TMDB collection"
+msgstr ""
+
+msgctxt "#32764"
+msgid "Left alone: its movies are split evenly between libraries"
+msgstr ""
+
+msgctxt "#32765"
+msgid "Left alone: none of its movies is in an included library"
+msgstr ""
+
+msgctxt "#32766"
+msgid "Left alone: Movie sets is not ticked for {}"
+msgstr ""
+
+msgctxt "#32767"
+msgid "Left alone: TMDB has no collection for its movies"
+msgstr ""
+
+msgctxt "#32768"
+msgid "Left alone: no TMDB collection holds more than half of its movies"
+msgstr ""
+
+msgctxt "#32769"
+msgid "Merged into {}: Kodi removes this set at its next library clean"
+msgstr ""
+
+msgctxt "#32770"
+msgid "Left alone: the set {} already follows this TMDB collection"
+msgstr ""
+
+msgctxt "#32771"
+msgid "{}: moved here from {} on {}"
+msgstr ""
+
+msgctxt "#32772"
+msgid "Moved by MetaMender from the set {} on {}"
+msgstr ""
+
+msgctxt "#32773"
+msgid "Left in the set {}: you moved it there"
+msgstr ""
+
+msgctxt "#32774"
+msgid "MetaMender leaves this set alone; Details says why"
+msgstr ""
+
+msgctxt "#32775"
+msgid "video file"
+msgstr ""
+
+msgctxt "#32776"
+msgid "Kodi shows the length of the video file itself, so MetaMender leaves the runtime alone."
+msgstr ""
+
+msgctxt "#32777"
+msgid "{} (movies library)"
+msgstr ""
+
+msgctxt "#32778"
+msgid "{} (TV shows library)"
+msgstr ""
+
+msgctxt "#32779"
+msgid "Kodi has nothing from this folder in its library yet, so the options for movies and for TV shows are all shown."
+msgstr ""
+
+msgctxt "#32780"
+msgid "This folder holds both movies and TV shows, so the options for both are shown."
+msgstr ""
+
+msgctxt "#32781"
+msgid "Genre, studio, country and runtime."
+msgstr ""
+
+msgctxt "#32782"
+msgid "Genre, runtime and first aired date."
+msgstr ""
+
+msgctxt "#32783"
+msgid "Fills clear logos, key art, landscape, banner, disc art and clear art."
+msgstr ""
+
+msgctxt "#32784"
+msgid "Fills clear logos, key art, landscape, banner, clear art and character art."
+msgstr ""
+
+msgctxt "#32785"
+msgid "Added to this set by MetaMender on {}"
+msgstr ""
+
+msgctxt "#32786"
+msgid "{}: added here on {}"
+msgstr ""
+
+msgctxt "#32787"
+msgid "Named after your movie set information folder"
 msgstr ""

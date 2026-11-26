@@ -3,6 +3,16 @@
     <section id="script.metamender">
         <!-- Tab 1: Providers -->
         <category id="providers" label="32001">
+            <!-- First, and not a text field, so the dialog opens on it and Left
+                 reaches the category list in one press. -->
+            <group id="help">
+                <setting id="help" type="action" label="32737" help="32738">
+                    <data>RunScript(script.metamender,help)</data>
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+            </group>
             <group id="tmdb" label="32010">
                 <setting id="tmdb_api_key" type="string" label="32011" help="32012">
                     <default></default>
@@ -15,85 +25,22 @@
                     </control>
                 </setting>
             </group>
-            <group id="source_priority" label="32025">
-                <setting id="rating_source" type="integer" label="32026" help="32027">
-                    <default>4</default>
+            <group id="fanart" label="32709">
+                <setting id="fanart_client_key" type="string" label="32710" help="32711">
+                    <default></default>
                     <constraints>
-                        <options>
-                            <option label="32401">4</option>
-                            <option label="32030">0</option>
-                            <option label="32031">1</option>
-                            <option label="32032">2</option>
-                            <option label="32033">3</option>
-                        </options>
+                        <allowempty>true</allowempty>
                     </constraints>
-                    <control type="list" format="string" />
-                </setting>
-                <setting id="text_source_order" type="integer" label="32390" help="32391">
-                    <default>2</default>
-                    <constraints>
-                        <options>
-                            <option label="32398">2</option>
-                            <option label="32392">0</option>
-                            <option label="32393">1</option>
-                        </options>
-                    </constraints>
-                    <control type="list" format="string" />
-                </setting>
-                <setting id="fallback_order" type="integer" label="32396" help="32397">
-                    <level>2</level>
-                    <default>0</default>
-                    <constraints>
-                        <options>
-                            <option label="32393">0</option>
-                            <option label="32392">1</option>
-                        </options>
-                    </constraints>
-                    <control type="list" format="string" />
+                    <control type="edit" format="string">
+                        <heading>32710</heading>
+                        <hidden>true</hidden>
+                    </control>
                 </setting>
             </group>
         </category>
 
         <!-- Tab 2: Backfill -->
         <category id="backfill" label="32100">
-            <group id="fields" label="32101">
-                <setting id="enable_ratings" type="boolean" label="32102" help="32103">
-                    <default>true</default>
-                    <control type="toggle" />
-                </setting>
-                <setting id="enable_plots" type="boolean" label="32104" help="32105">
-                    <default>true</default>
-                    <control type="toggle" />
-                </setting>
-                <setting id="enable_episode_titles" type="boolean" label="32106" help="32107">
-                    <default>false</default>
-                    <control type="toggle" />
-                </setting>
-                <setting id="enable_main_titles" type="boolean" label="32399" help="32400">
-                    <default>false</default>
-                    <control type="toggle" />
-                </setting>
-                <setting id="enable_certifications" type="boolean" label="32108" help="32109">
-                    <default>true</default>
-                    <control type="toggle" />
-                </setting>
-                <setting id="enable_credits" type="boolean" label="32110" help="32111">
-                    <default>false</default>
-                    <control type="toggle" />
-                </setting>
-                <setting id="enable_trailers" type="boolean" label="32112" help="32113">
-                    <default>false</default>
-                    <control type="toggle" />
-                </setting>
-                <setting id="enable_taglines" type="boolean" label="32114" help="32115">
-                    <default>false</default>
-                    <control type="toggle" />
-                </setting>
-                <setting id="enable_details" type="boolean" label="32116" help="32117">
-                    <default>false</default>
-                    <control type="toggle" />
-                </setting>
-            </group>
             <group id="freshness" label="32120">
                 <setting id="stale_threshold_days" type="integer" label="32125" help="32380">
                     <default>365</default>
@@ -125,8 +72,8 @@
                         <close>true</close>
                     </control>
                 </setting>
-                <setting id="configure_sources" type="action" label="32141" help="32142">
-                    <data>RunScript(script.metamender,folders)</data>
+                <setting id="configure_sources" type="action" label="32703" help="32704">
+                    <data>RunScript(script.metamender,libraries)</data>
                     <control type="button" format="action">
                         <close>true</close>
                     </control>
@@ -137,109 +84,30 @@
                     <default>false</default>
                     <control type="toggle" />
                 </setting>
+                <!-- Set once the 1.1 settings became libraries; a missing
+                     sources.json is then never converted again. -->
+                <setting id="libraries_converted" type="boolean" label="32707">
+                    <level>4</level>
+                    <default>false</default>
+                    <control type="toggle" />
+                </setting>
             </group>
         </category>
 
         <!-- Tab 3: Certifications -->
         <category id="certifications" label="32200">
-            <group id="cert_format" label="32201">
-                <setting id="country" type="integer" label="32202" help="32203">
-                    <default>0</default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                    </dependencies>
-                    <constraints>
-                        <options>
-                            <option label="32269">0</option>
-                            <option label="32260">1</option>
-                            <option label="32261">2</option>
-                            <option label="32262">3</option>
-                            <option label="32263">4</option>
-                            <option label="32264">5</option>
-                            <option label="32265">6</option>
-                            <option label="32266">7</option>
-                            <option label="32267">8</option>
-                            <option label="32268">9</option>
-                            <option label="32628">10</option>
-                        </options>
-                    </constraints>
-                    <control type="list" format="string" />
-                </setting>
-                <setting id="override_prefix" type="boolean" label="32204" help="32205">
-                    <level>2</level>
-                    <default>false</default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                    </dependencies>
-                    <control type="toggle" />
-                </setting>
-                <setting id="rating_prefix" type="string" label="32206" help="32207">
-                    <level>2</level>
-                    <default></default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                        <dependency type="visible" setting="override_prefix">true</dependency>
-                    </dependencies>
-                    <constraints>
-                        <allowempty>true</allowempty>
-                    </constraints>
-                    <control type="edit" format="string">
-                        <heading>32206</heading>
-                    </control>
-                </setting>
-            </group>
             <group id="scrapers" label="32210">
                 <setting id="enable_fsk" type="boolean" label="32211" help="32212">
                     <default>true</default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                    </dependencies>
                     <control type="toggle" />
                 </setting>
                 <setting id="enable_bbfc" type="boolean" label="32213" help="32214">
                     <default>true</default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                    </dependencies>
                     <control type="toggle" />
                 </setting>
                 <setting id="enable_medieraadet" type="boolean" label="32215" help="32216">
                     <default>true</default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                    </dependencies>
                     <control type="toggle" />
-                </setting>
-            </group>
-            <group id="correction" label="32220">
-                <setting id="replace_incorrect" type="boolean" label="32221" help="32222">
-                    <default>true</default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                    </dependencies>
-                    <control type="toggle" />
-                </setting>
-            </group>
-            <group id="fallback" label="32230">
-                <setting id="enable_fallback" type="boolean" label="32231" help="32232">
-                    <default>false</default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                    </dependencies>
-                    <control type="toggle" />
-                </setting>
-                <setting id="fallback_rating" type="string" label="32233" help="32234">
-                    <default>NR</default>
-                    <dependencies>
-                        <dependency type="enable" setting="enable_certifications">true</dependency>
-                        <dependency type="visible" setting="enable_fallback">true</dependency>
-                    </dependencies>
-                    <constraints>
-                        <allowempty>false</allowempty>
-                    </constraints>
-                    <control type="edit" format="string">
-                        <heading>32233</heading>
-                    </control>
                 </setting>
             </group>
         </category>

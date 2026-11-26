@@ -14,7 +14,7 @@ from typing import TYPE_CHECKING, Any, cast
 import xbmc
 import xbmcgui
 
-from resources.lib.ui.theme import theme_colours
+from resources.lib.ui.theme import publish_theme
 from resources.lib.utils import get_addon, lang
 
 if TYPE_CHECKING:
@@ -53,7 +53,6 @@ def progress_properties(progress: RefreshProgress, heading: str, now: float) -> 
         "MM.Stop": lang(32480),
         "MM.Background": lang(32481),
     }
-    props.update(theme_colours())
     return props
 
 
@@ -159,6 +158,7 @@ def show_progress_window(progress: RefreshProgress, heading: str, done: threadin
     window = ProgressWindow(_XML, get_addon().getAddonInfo("path"), "Default", "1080i")
     window.progress, window.heading, window.done = progress, heading, done
     window._state = CloseOnce()
+    publish_theme()
     window.doModal()
     result = window.result
     del window

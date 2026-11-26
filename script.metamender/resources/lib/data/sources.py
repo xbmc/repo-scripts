@@ -1,31 +1,30 @@
 """
-Per-source configuration for MetaMender.
-
-Manages which Kodi video sources are enabled for backfill
-and what metadata language to use for each.
+Kodi's video sources and the folders they cover, and the 1.1 sources.json
+(per-folder languages) that the conversion to libraries reads.
 
 Logging:
     Logger: 'sources'
     Key events:
         - sources.load (INFO): Source config loaded
         - sources.discover (INFO): Video sources discovered from Kodi
-        - sources.save (INFO): Source config saved
-        - sources.match (DEBUG): Item matched to a source
+        - sources.content (ERROR): a library's content type could not be read
 """
 from __future__ import annotations
 
-import copy
 import json
 import os
 from collections import Counter
 from collections.abc import Iterable
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from urllib.parse import unquote
 
 import xbmc
 
 from resources.lib.providers.languages import tmdb_language
 from resources.lib.utils import get_logger, log_timing
+
+if TYPE_CHECKING:
+    from resources.lib.data.libraries import LibraryConfig
 
 log = get_logger('sources')
 
@@ -41,11 +40,6 @@ def _default_config() -> dict[str, Any]:
     default_language: without one, a folder no source entry covers has no
     known language (see the scan's fill-only rule)."""
     return {"sources": []}
-
-
-def _default_match() -> dict[str, Any]:
-    """Return a fresh default match result: enabled, with no language."""
-    return {"enabled": True}
 
 
 def kodi_ui_language() -> str:
@@ -102,31 +96,6 @@ def load_source_config(config_path: str) -> dict[str, Any]:
     return config
 
 
-def save_source_config(config_path: str, config: dict[str, Any]) -> bool:
-    """Write source configuration to a JSON file, creating parent
-    directories as needed. False when the file could not be written."""
-    try:
-        parent = os.path.dirname(config_path)
-        if parent:
-            os.makedirs(parent, exist_ok=True)
-        with open(config_path, "w", encoding="utf-8") as fh:
-            json.dump(config, fh, indent=2)
-    except OSError:
-        log.exception(
-            "Failed to save source config",
-            event="sources.save_fail",
-            path=config_path,
-        )
-        return False
-
-    log.info(
-        "Source config saved",
-        event="sources.save",
-        path=config_path,
-    )
-    return True
-
-
 def source_paths(path: str) -> list[str]:
     """The folders a Kodi source covers. A source with several folders is
     reported by Files.GetSources as one `multipath://` URL of URL-encoded
@@ -137,99 +106,17 @@ def source_paths(path: str) -> list[str]:
     return [unquote(part) for part in path[len(_MULTIPATH):].split("/") if part]
 
 
-def apply_folder_languages(
-    config: dict[str, Any],
-    discovered: list[dict[str, str]],
-    default_language: str,
-    fallback_language: str,
-    exceptions: dict[str, tuple[str, str]],
-) -> dict[str, Any]:
-    """A copy of ``config`` with the wizard's languages applied.
-
-    ``exceptions`` maps a discovered source's path (possibly multipath) to
-    (language, fallback language, "" for none). Every folder of a discovered
-    source loses its language unless the source is an exception, in which
-    case each of its folders gets one; `enabled: false` is kept. Entries for
-    folders no discovered source names exactly (hand-written subfolders,
-    removed sources) are left as they are.
-    """
-    out = copy.deepcopy(config)
-    out["default_language"] = default_language
-    if fallback_language:
-        out["fallback_language"] = fallback_language
-    else:
-        out.pop("fallback_language", None)
-
-    wanted: dict[str, tuple[str, str] | None] = {}
-    for source in discovered:
-        raw = source.get("path", "")
-        for folder in source_paths(raw):
-            wanted[folder] = exceptions.get(raw)
-
-    entries: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    for entry in out.get("sources") or []:
-        path = entry.get("path", "")
-        if path not in wanted:
-            entries.append(entry)
-            continue
-        seen.add(path)
-        updated = _with_languages(entry, wanted[path])
-        if updated is not None:
-            entries.append(updated)
-    for folder, langs in wanted.items():
-        if folder not in seen and langs is not None:
-            new_entry = _with_languages({"path": folder}, langs)
-            if new_entry is not None:
-                entries.append(new_entry)
-    out["sources"] = entries
-    return out
+# Paths that are no folder of files: nothing in the library lies under them.
+_NOT_FOLDERS = ("addons://", "plugin://", "videodb://", "http://", "https://")
 
 
-def folder_exceptions(
-    config: dict[str, Any], discovered: list[dict[str, str]],
-) -> dict[str, tuple[str, str]]:
-    """The exceptions apply_folder_languages would need to reproduce
-    ``config``: a discovered source whose folders have an entry with a
-    language, mapped to the first such entry's languages."""
-    by_path = {e.get("path"): e for e in config.get("sources") or []}
-    result: dict[str, tuple[str, str]] = {}
-    for source in discovered:
-        raw = source.get("path", "")
-        for folder in source_paths(raw):
-            entry = by_path.get(folder)
-            if entry and entry.get("language"):
-                result[raw] = (entry["language"], entry.get("fallback_language", ""))
-                break
-    return result
-
-
-def _with_languages(
-    entry: dict[str, Any], langs: tuple[str, str] | None,
-) -> dict[str, Any] | None:
-    """``entry`` with its languages set from ``langs`` (cleared when None),
-    or None when nothing worth keeping is left: only a disabled flag or a
-    language changes how a folder is scanned."""
-    kept: dict[str, Any] = {"path": entry["path"]}
-    if entry.get("enabled") is False:
-        kept["enabled"] = False
-    if langs is not None:
-        language, fallback = langs
-        kept["language"] = language
-        if fallback:
-            kept["fallback_language"] = fallback
-    return kept if len(kept) > 1 else None
-
-
-def discover_sources() -> list[dict[str, str]]:
-    """Discover video sources from Kodi via JSON-RPC.
-
-    Calls Files.GetSources with media="video" and returns a list of
-    dicts with "path" and "label" keys.
-
-    Returns:
-        List of source dicts, or empty list on failure.
-    """
+def discover_sources() -> list[dict[str, str]] | None:
+    """Kodi's video sources ("path" and "label" each), from
+    Files.GetSources, without the ones that are no folder: Kodi 22 lists
+    its Video add-ons node there even when the user has no sources. []
+    when Kodi has none; None when the query failed, which must not be
+    taken for "no sources": the caller would then fall back to
+    library-derived folders and store them as libraries."""
     query = {
         "jsonrpc": "2.0",
         "method": "Files.GetSources",
@@ -241,20 +128,18 @@ def discover_sources() -> list[dict[str, str]]:
         with log_timing(log, "discover_sources"):
             raw = xbmc.executeJSONRPC(json.dumps(query))
             data = json.loads(raw)
+        sources = data["result"].get("sources", [])
+        discovered = [
+            {"path": s.get("file", ""), "label": s.get("label", "")}
+            for s in sources
+            if not s.get("file", "").startswith(_NOT_FOLDERS)
+        ]
     except Exception:
         log.exception(
             "Failed to discover video sources",
             event="sources.discover",
         )
-        return []
-
-    result = data.get("result", {})
-    sources = result.get("sources", [])
-
-    discovered = [
-        {"path": s.get("file", ""), "label": s.get("label", "")}
-        for s in sources
-    ]
+        return None
 
     log.info(
         "Video sources discovered",
@@ -263,9 +148,6 @@ def discover_sources() -> list[dict[str, str]]:
     )
 
     return discovered
-
-
-_NOT_FOLDERS = ("plugin://", "videodb://", "http://", "https://")
 
 
 def _parent(path: str) -> str | None:
@@ -315,50 +197,107 @@ def library_folders(
     return [{"path": r, "label": _folder_label(r)} for r in top]
 
 
-def _library_files(method: str, key: str) -> list[str]:
+def _query_library_files(method: str, key: str) -> list[str] | None:
+    """The file of every item ``method`` lists; None when the query failed."""
     query = {"jsonrpc": "2.0", "method": method,
              "params": {"properties": ["file"]}, "id": 1}
     try:
         data = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
+        items = data["result"].get(key, [])
+        return [item.get("file", "") for item in items]
     except Exception:
         log.exception("Failed to read library paths", event="sources.library", method=method)
-        return []
-    items = data.get("result", {}).get(key, [])
-    return [item.get("file", "") for item in items]
+        return None
 
 
-def discover_folders() -> list[dict[str, str]]:
+def _library_files(method: str, key: str) -> list[str]:
+    return _query_library_files(method, key) or []
+
+
+def discover_folders() -> list[dict[str, str]] | None:
     """The folders the setup screens offer: Kodi's video sources, or, when
     Kodi lists none (a client sharing another machine's library database
-    has no sources of its own), the folders derived from the library."""
+    has no sources of its own), the folders derived from the library.
+    None when a query failed: what was found then is incomplete and must
+    not be stored."""
     sources = discover_sources()
+    if sources is None:
+        return None
     if sources:
         return sources
     with log_timing(log, "library_folders"):
-        folders = library_folders(
-            _library_files("VideoLibrary.GetMovies", "movies"),
-            _library_files("VideoLibrary.GetTVShows", "tvshows"),
-        )
+        movies = _query_library_files("VideoLibrary.GetMovies", "movies")
+        shows = _query_library_files("VideoLibrary.GetTVShows", "tvshows")
+        if movies is None or shows is None:
+            return None
+        folders = library_folders(movies, shows)
     log.info("Library folders derived", event="sources.library", count=len(folders))
     return folders
 
 
-def library_folders_in_use(sources: list[dict[str, Any]]) -> list[str]:
+def library_folders_in_use(libraries: LibraryConfig) -> list[str]:
     """The folders worth watching for being offline: every folder of the
-    video sources (a multipath source split into its folders) that holds
-    library items and that sources.json does not disable. A source without
+    included libraries (a multipath library split into its folders) that
+    holds library items and is not an excluded subfolder. A library without
     library items (a USB stick, a downloads folder) is left out: it being
     gone says nothing about the library."""
     files = (_library_files("VideoLibrary.GetMovies", "movies")
              + _library_files("VideoLibrary.GetTVShows", "tvshows"))
     folders: list[str] = []
-    for source in discover_folders():
-        for folder in source_paths(source.get("path", "")):
+    for lib in libraries.libraries:
+        if not lib.included:
+            continue
+        for folder in source_paths(lib.path):
             if (folder and folder not in folders
-                    and match_source(folder, sources).get("enabled", True)
+                    and libraries.folder_settings(folder, lib)[0]
                     and any(_path_matches(f, folder) for f in files)):
                 folders.append(folder)
     return folders
+
+
+# What a library holds, as library_content tells it.
+CONTENT_MOVIES = "movies"
+CONTENT_TVSHOWS = "tvshows"
+CONTENT_MIXED = "mixed"
+CONTENT_UNKNOWN = ""
+
+
+def _has_items_under(method: str, folder: str) -> bool | None:
+    """Whether ``method`` lists any item under ``folder``; None when the
+    query failed. Kodi's source and derived folders end in a separator,
+    so "startswith" stays on a folder boundary."""
+    query = {"jsonrpc": "2.0", "method": method, "id": 1, "params": {
+        "filter": {"field": "path", "operator": "startswith", "value": folder},
+        "limits": {"end": 1}}}
+    try:
+        data = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
+        return int(data["result"]["limits"]["total"]) > 0
+    except Exception:
+        log.exception("Failed to read a library's content", event="sources.content",
+                      method=method)
+        return None
+
+
+def library_content(path: str) -> str:
+    """Whether the library at ``path`` holds movies, TV shows, both, or
+    nothing Kodi has scanned yet (CONTENT_UNKNOWN, also when a query
+    failed). Kodi keeps each source's content type in its video database
+    but offers it to add-ons through neither JSON-RPC nor Python, so the
+    items under the library's folders stand in for it."""
+    found = set()
+    for folder in source_paths(path):
+        if not folder:
+            continue
+        for method, content in (("VideoLibrary.GetMovies", CONTENT_MOVIES),
+                                ("VideoLibrary.GetTVShows", CONTENT_TVSHOWS)):
+            has = _has_items_under(method, folder)
+            if has is None:
+                return CONTENT_UNKNOWN
+            if has:
+                found.add(content)
+    if len(found) > 1:
+        return CONTENT_MIXED
+    return found.pop() if found else CONTENT_UNKNOWN
 
 
 def _path_matches(file_path: str, source_path: str) -> bool:
@@ -376,47 +315,3 @@ def _path_matches(file_path: str, source_path: str) -> bool:
     if not file_path.startswith(source_path):
         return False
     return source_path[-1] in "/\\" or file_path[len(source_path)] in "/\\"
-
-
-def match_source(
-    file_path: str,
-    sources: list[dict[str, Any]],
-) -> dict[str, Any]:
-    """Match a file path to the most specific configured source.
-
-    Uses longest-prefix matching: the source whose path is the longest
-    prefix of file_path wins.
-
-    Args:
-        file_path: The Kodi file path for a library item.
-        sources: List of source config dicts with at least "path" key.
-
-    Returns:
-        The matching source config dict, or a default dict with
-        enabled=True and no language if no source matches.
-    """
-    best_match: Any = None
-    best_length = 0
-
-    for source in sources:
-        source_path = source.get("path", "")
-        if _path_matches(file_path, source_path) and len(source_path) > best_length:
-            best_match = source
-            best_length = len(source_path)
-
-    if best_match is not None:
-        log.debug(
-            "Item matched to source",
-            event="sources.match",
-            file_path=file_path,
-            source_path=best_match.get("path", ""),
-            language=best_match.get("language", ""),
-        )
-        return best_match
-
-    log.debug(
-        "No source match, using defaults",
-        event="sources.match",
-        file_path=file_path,
-    )
-    return _default_match()

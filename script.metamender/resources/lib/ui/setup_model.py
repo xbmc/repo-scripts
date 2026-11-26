@@ -3,41 +3,53 @@ before Next, and what Finish writes. The window in setup_window is a thin
 view over this module; nothing here talks to Kodi's GUI, so the whole flow
 is unit tested.
 
-The wizard asks what metamender cannot guess (the TMDB key and the
-library's languages), the feature toggles, and the choices whose default
-shapes every item the first scan writes: which rating to show, where show
-and episode text comes from, and whether other countries' certifications
-are replaced. Those three stay in Kodi's add-on settings too; every other
-setting keeps its default and lives only there.
+The wizard asks for the TMDB key, then shows the library list, where each
+library is included or left out and given its own settings on its page,
+then a summary. Finish writes the key to Kodi's add-on settings and the
+libraries to sources.json. The library list also opens on its own from
+the add-on settings (LIBRARIES mode).
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any
+from dataclasses import dataclass, field, replace
+from typing import Any, Optional
 
-from resources.lib.data.presets import country_for_setting
-from resources.lib.data.sources import apply_folder_languages, folder_exceptions
+from resources.lib.data.libraries import (
+    FIELD_TOGGLES,
+    Library,
+    LibraryConfig,
+    add_new_libraries,
+    resolve_country,
+)
+from resources.lib.data.sources import CONTENT_MOVIES, CONTENT_TVSHOWS, CONTENT_UNKNOWN
 from resources.lib.providers.tmdb import KEY_OK, KEY_UNCHECKED
 
-# The field toggles, in settings.xml order.
-FEATURES: tuple[str, ...] = (
-    "enable_ratings", "enable_plots", "enable_episode_titles",
-    "enable_main_titles", "enable_certifications", "enable_credits",
-    "enable_trailers", "enable_taglines", "enable_details",
-)
+# The field toggles in the order the library page lists them.
+TOGGLES: tuple[str, ...] = tuple(FIELD_TOGGLES)
 
-# rating_source values in the order the ratings step lists them, the
-# default first (settings.xml).
+# Toggles that mean something in one kind of library only: the page of a
+# library that holds the other kind hides them, and their ticks stay as
+# they are. A library Kodi has scanned nothing into, or one holding both
+# kinds, shows every toggle.
+MOVIE_TOGGLES: frozenset[str] = frozenset({"trailers", "taglines", "movie_sets"})
+TV_TOGGLES: frozenset[str] = frozenset({"episode_titles", "episode_thumbs"})
+
+# rating_source values in the order the rating picker lists them, the
+# default first.
 RATING_OPTIONS: tuple[int, ...] = (4, 0, 1, 2, 3)
-# text_source_order values in the order the text step lists them.
+# text_source_order values in the order the text picker lists them.
 TEXT_OPTIONS: tuple[int, ...] = (2, 0, 1)
-# The fields text_source_order decides (engine/text.py _text_chain).
-TEXT_FEATURES: tuple[str, ...] = (
-    "enable_plots", "enable_episode_titles", "enable_main_titles",
-)
+# fallback_order values: TheTVDB first, then TMDB first.
+FALLBACK_ORDER_OPTIONS: tuple[int, ...] = (0, 1)
+# The toggles text_source_order decides (engine/text.py _text_chain).
+TEXT_TOGGLES: tuple[str, ...] = ("plots", "episode_titles", "main_titles")
+# The toggles whose art comes from the Art source setting.
+ART_TOGGLES: tuple[str, ...] = ("posters", "fanart", "other_art")
+# art_source values: TMDB, then fanart.tv.
+ART_OPTIONS: tuple[int, ...] = (0, 1)
 
 WIZARD = "wizard"
-FOLDERS = "folders"
+LIBRARIES = "libraries"
 
 
 @dataclass
@@ -46,69 +58,89 @@ class SetupState:
     # KEY_OK or KEY_UNCHECKED once the key step passed; "" before that. A
     # refused key never gets here: the key step keeps it out.
     key_status: str = ""
-    default_language: str = ""
-    # "" for no fallback, here and in each exception.
-    fallback_language: str = ""
-    # Discovered source path (possibly multipath) -> (language, fallback).
-    exceptions: dict[str, tuple[str, str]] = field(default_factory=dict)
-    features: dict[str, bool] = field(default_factory=dict)
-    # The `country` setting's index: 0 is Automatic.
-    country: int = 0
-    rating_source: int = RATING_OPTIONS[0]
-    text_source_order: int = TEXT_OPTIONS[0]
-    replace_incorrect: bool = True
+    libraries: LibraryConfig = field(default_factory=LibraryConfig)
+    # The path of the library whose page is shown; None shows the step.
+    open_library: Optional[str] = None
 
 
 def initial_state(
     settings: dict[str, Any],
-    config: dict[str, Any],
+    libraries: Optional[LibraryConfig],
     discovered: list[dict[str, str]],
     ui_language: str,
 ) -> SetupState:
-    """The state every step opens with: the current values, so a re-run
-    starts where the last setup left off. ``settings`` holds tmdb_api_key,
-    the FEATURES, country, rating_source, text_source_order and
-    replace_incorrect as Kodi reports them; a missing one takes its
-    settings.xml default.
-    A stored key was accepted when it was saved."""
+    """The state every step opens with: the stored libraries with Kodi's
+    current labels, plus every discovered library they do not cover yet,
+    not included. ``settings`` holds tmdb_api_key; a stored key was
+    accepted when it was saved."""
     key = str(settings.get("tmdb_api_key") or "").strip()
-    return SetupState(
-        api_key=key,
-        key_status=KEY_OK if key else "",
-        default_language=str(config.get("default_language") or ui_language),
-        fallback_language=str(config.get("fallback_language") or ""),
-        exceptions=folder_exceptions(config, discovered),
-        features={f: bool(settings.get(f)) for f in FEATURES},
-        country=int(settings.get("country") or 0),
-        rating_source=int(settings.get("rating_source", RATING_OPTIONS[0])),
-        text_source_order=int(settings.get("text_source_order", TEXT_OPTIONS[0])),
-        replace_incorrect=bool(settings.get("replace_incorrect", True)),
-    )
+    labels = {str(s.get("path") or ""): str(s.get("label") or "") for s in discovered}
+    config = LibraryConfig([
+        replace(lib, label=labels.get(lib.path) or lib.label)
+        for lib in (libraries.libraries if libraries is not None else [])
+    ])
+    add_new_libraries(config, discovered, ui_language)
+    return SetupState(api_key=key, key_status=KEY_OK if key else "", libraries=config)
+
+
+def page_toggles(content: str) -> tuple[str, ...]:
+    """The toggles a library page lists for a library holding ``content``
+    (data/sources.library_content), in TOGGLES order."""
+    hidden: frozenset[str] = frozenset()
+    if content == CONTENT_MOVIES:
+        hidden = TV_TOGGLES
+    elif content == CONTENT_TVSHOWS:
+        hidden = MOVIE_TOGGLES
+    return tuple(t for t in TOGGLES if t not in hidden)
+
+
+def shown_toggles(lib: Library, content: str) -> frozenset[str]:
+    """The library's ticks that apply to what it holds."""
+    return lib.toggles & frozenset(page_toggles(content))
+
+
+def page_groups(lib: Library, content: str = CONTENT_UNKNOWN) -> list[str]:
+    """The groups the library's page shows, in order: a group whose
+    toggles are all off, or all hidden, is hidden."""
+    on = shown_toggles(lib, content)
+    groups = ["language", "fields"]
+    if "ratings" in on:
+        groups.append("rating")
+    if any(t in on for t in TEXT_TOGGLES):
+        groups.append("text")
+    if "main_titles" in on:
+        groups.append("titles")
+    if any(t in on for t in ART_TOGGLES):
+        groups.append("art")
+    if "certifications" in on:
+        groups.append("age_ratings")
+    return groups
+
+
+def country_missing(lib: Library, ui_language: str) -> bool:
+    """True when the library writes age ratings but no country applies
+    (Automatic found no preset for its language or Kodi's)."""
+    return "certifications" in lib.toggles and resolve_country(lib, ui_language) is None
+
+
+def changes_nothing(config: LibraryConfig) -> bool:
+    """True when no included library has anything switched on."""
+    return not any(lib.included and lib.toggles for lib in config.libraries)
 
 
 class SetupFlow:
-    """Step order and position. The ratings, text and country steps exist
-    only while the features they configure are ticked, so the step list is
-    recomputed from the state on every move and the position is kept by
-    step name."""
+    """Step order and position. A library's page is not a step: while
+    SetupState.open_library is set the window shows that page in place of
+    the libraries step."""
 
-    def __init__(self, mode: str, ui_language: str) -> None:
+    def __init__(self, mode: str) -> None:
         self.mode = mode
-        self._ui_language = ui_language
-        self.current = FOLDERS if mode == FOLDERS else "key"
+        self.current = LIBRARIES if mode == LIBRARIES else "key"
 
     def steps(self, state: SetupState) -> list[str]:
-        if self.mode == FOLDERS:
-            return [FOLDERS]
-        steps = ["key", "language", FOLDERS, "features"]
-        if state.features.get("enable_ratings"):
-            steps.append("ratings")
-        if any(state.features.get(f) for f in TEXT_FEATURES):
-            steps.append("text")
-        if state.features.get("enable_certifications"):
-            steps.append("country")
-        steps.append("summary")
-        return steps
+        if self.mode == LIBRARIES:
+            return [LIBRARIES]
+        return ["key", LIBRARIES, "summary"]
 
     def index(self, state: SetupState) -> int:
         """1-based position, for "Step N of M"."""
@@ -135,43 +167,24 @@ class SetupFlow:
     def can_advance(self, state: SetupState) -> bool:
         if self.current == "key":
             return bool(state.api_key.strip()) and state.key_status in (KEY_OK, KEY_UNCHECKED)
-        if self.current == "country":
-            return country_for_setting(state.country, self._ui_language) is not None
+        # A list with nothing included is allowed: the summary says that
+        # nothing will change.
         return True
 
     def _position(self, state: SetupState) -> int:
-        steps = self.steps(state)
-        if self.current in steps:
-            return steps.index(self.current)
-        # The current step left the list (its features were unticked): all
-        # conditional steps stand after features, so the summary is the
-        # nearest step that still exists.
-        self.current = steps[-1]
-        return len(steps) - 1
+        return self.steps(state).index(self.current)
 
 
 def settings_to_write(state: SetupState) -> dict[str, Any]:
-    """The add-on settings Finish writes, setup_complete last."""
-    out: dict[str, Any] = {"tmdb_api_key": state.api_key.strip()}
-    out.update({f: bool(state.features.get(f)) for f in FEATURES})
-    out["country"] = state.country
-    # Written even when their step was skipped: the state holds the stored
-    # value then, so nothing changes.
-    out["rating_source"] = state.rating_source
-    out["text_source_order"] = state.text_source_order
-    out["replace_incorrect"] = state.replace_incorrect
-    out["setup_complete"] = True
-    return out
+    """The add-on settings Finish writes, setup_complete last. Finish has
+    saved the libraries, so the 1.1 settings are never converted again."""
+    return {"tmdb_api_key": state.api_key.strip(), "libraries_converted": True,
+            "setup_complete": True}
 
 
-def config_to_write(
-    state: SetupState, config: dict[str, Any], discovered: list[dict[str, str]],
-) -> dict[str, Any]:
-    """The sources.json Finish (or the folder dialog's Save) writes."""
-    return apply_folder_languages(
-        config, discovered, state.default_language, state.fallback_language,
-        state.exceptions,
-    )
+def libraries_to_write(state: SetupState) -> LibraryConfig:
+    """The libraries Finish (or the Libraries dialog's Save) writes."""
+    return LibraryConfig(list(state.libraries.libraries))
 
 
 def mask_key(key: str) -> str:

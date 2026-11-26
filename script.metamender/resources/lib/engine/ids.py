@@ -285,7 +285,7 @@ def _confirmed_by_episodes(
     Kodi here, for this show only.
     """
     try:
-        episodes = kodi.get_all_items(EPISODE, tvshowid=item.get("tvshowid"))
+        episodes = kodi.get_all_items(EPISODE, tvshowid=item.get("tvshowid"), art=False)
     except KodiQueryError:
         # kodi.get_all_items logged it; the next scan asks again.
         return TRANSIENT

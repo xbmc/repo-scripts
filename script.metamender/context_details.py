@@ -1,7 +1,8 @@
 """MetaMender context-menu entry point for "Details" in the context menu's
 MetaMender submenu (declared as a kodi.context.item extension in
 addon.xml). Reads the focused list item's DBTYPE and DBID and opens the
-details window for it (service/details.py).
+details window for it (service/details.py): a movie, show, season, episode
+or movie set.
 """
 from __future__ import annotations
 

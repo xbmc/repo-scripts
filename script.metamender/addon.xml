@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.metamender"
        name="MetaMender"
-       version="1.1.0"
+       version="1.3.1"
        provider-name="Rouzax">
     <requires>
         <import addon="xbmc.python" version="3.0.1" />
@@ -19,38 +19,44 @@
                 <label>32593</label>
                 <item library="context.py">
                     <label>32588</label>
-                    <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)</visible>
+                    <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set)</visible>
                 </item>
                 <item library="context_details.py">
                     <label>32594</label>
-                    <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow)</visible>
+                    <visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set)</visible>
+                </item>
+                <item library="context_stop.py">
+                    <label>32631</label>
+                    <visible>[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set)] + !String.IsEmpty(Window(Home).Property(metamender_scan_lock))</visible>
                 </item>
             </menu>
         </menu>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary lang="en_GB">No gaps. No stale scores. Age ratings you can trust.</summary>
-        <description lang="en_GB">MetaMender quietly improves your video library in the background. It fills in what your scraper left empty (plots, episode titles, credits, taglines, genres and more) from TMDB and TheTVDB, in each folder's own language, with an optional fallback language for empty fields. It keeps scores up to date while new movies and episodes collect votes, from TMDB and IMDb, then leaves them alone once they settle. And it gives movies and TV shows an age rating in your own country's system, for ten countries. Items with an NFO file keep their values, and the Details window in the context menu shows where each value came from, can put an original back and can keep a value as it is. A short setup asks for a free TMDB API key, your library's languages and what to fill; nothing changes before it is finished.</description>
+        <description lang="en_GB">MetaMender quietly improves your video library in the background. It fills in what your scraper left empty (plots, episode titles, credits, taglines, genres and more) from TMDB and TheTVDB, in each folder's own language, with an optional fallback language for empty fields. It keeps scores up to date while new movies and episodes collect votes, from TMDB and IMDb, then leaves them alone once they settle. And it gives movies and TV shows an age rating in your own country's system, for ten countries. If you tick them for a library, it also replaces washed-out frame grabs and broken episode thumbs with the official episode still from TMDB or TheTVDB; fills and refreshes posters, fanart, clear logos, key art and other art in your library's language, from TMDB and fanart.tv (you choose which is asked first; landscape, banner, disc art, clear art and character art come from fanart.tv only), with an English image only for empty art; and gives movie sets TMDB's name, plot and art in your library's language. Local image files stay, and so does art you change afterwards, but art whose local file you deleted is filled, once MetaMender can tell the share it lives on is reachable; a replaced image can be put back from the Details window. Items with an NFO file keep their values, and the Details window in the context menu shows where each value came from, can put an original back and can keep a value as it is. A short setup asks for a free TMDB API key, your library's languages and what to fill; nothing changes before it is finished.</description>
         <platform>all</platform>
         <license>GPL-3.0-only</license>
         <website>https://rouzax.github.io/script.metamender/</website>
         <source>https://github.com/Rouzax/script.metamender</source>
         <forum>https://forum.kodi.tv/showthread.php?tid=389809</forum>
-        <news>v1.1.0 (2026-11-13)
-- Setup now asks which rating Kodi shows: your scraper's, TMDB's or IMDb's
-- Setup now asks where TV show plots and titles come from first
-- Setup asks whether to replace other countries' age ratings
+        <news>v1.3.1 (2026-11-26)
+- Movie sets: movies missing from their collection's set are added, and a collection without a set gets one
+- Movie sets: a movie you took out of its set before this version may be added back once; take it out again and it stays out
+- A library's settings page says whether it holds movies or TV shows and offers only the choices for that kind
+- Background, Stop and Back in the Update now window respond again on slower devices
+- The runtime Kodi reads from your video file is no longer overwritten on every scan
 
-v1.0.1 (2026-11-13)
-- Closes promptly when Kodi quits during Update now
-- Small changes asked for by the official Kodi repository review
+v1.3.0 (2026-11-24)
+- New art ticks per library: Posters, Fanart, Other art (clear logos, key art, banners and more) and Episode thumbs, from TMDB or fanart.tv
+- Washed-out HDR episode thumbs and empty, broken or deleted art get a proper image; your own local files and art you chose are never touched
+- New Movie sets tick: set names in your library's language, with plot and art, and duplicate sets merged
+- Movie sets and seasons get a Details window, and Update now works on a movie set
+- Stop scan stops sooner, and MetaMender's windows no longer flash grey while the library is written
 
-v1.0.0 (2026-11-12)
-- First release: fills missing plots, titles, credits and more in each folder's language
-- Keeps new movies' and episodes' scores up to date while their votes come in
-- Age ratings in your own country's system, for ten countries
-- The Details window shows where every value came from, and lets you restore or keep one
-- Update now refreshes a movie, show, season or episode from the context menu</news>
+v1.2.1 (2026-11-22)
+- Browsing your movies or shows while a scan runs no longer keeps reloading the list: the scan waits until you have not pressed anything for a minute
+- New Stop scan in the MetaMender context menu while a scan runs; the next scan carries on where it stopped</news>
         <assets>
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>

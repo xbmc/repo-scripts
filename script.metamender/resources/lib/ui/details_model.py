@@ -17,13 +17,33 @@ from typing import Any
 
 from resources.lib.data.media_types import MediaType
 from resources.lib.data.tracker import (
+    REASON_CHANGED_OUTSIDE,
     REASON_FILL_ONLY,
+    REASON_FROM_FILE,
+    REASON_LOCAL_ART,
     REASON_LOCKED,
     REASON_NFO,
     REASON_NOTHING,
+    REASON_OTHER_ART,
+    REASON_SET_FOLDER,
     REASON_UNCHANGED,
     REASON_UNCHECKED,
     REASON_UPDATED,
+)
+from resources.lib.engine.art import (
+    ART_FIELDS,
+    BROKEN,
+    EMPTY,
+    ENGLISH_SOURCE_SUFFIX,
+    FRAME_GRAB,
+    LOCAL,
+    TEXT_ART_FIELDS,
+    TEXTLESS_SOURCE_SUFFIX,
+    WEB_FANART,
+    WEB_OTHER,
+    WEB_TMDB,
+    classify,
+    unwrap,
 )
 from resources.lib.engine.maturity import (
     FINAL,
@@ -41,8 +61,17 @@ from resources.lib.engine.scanctx import (
     holds_written_value,
     kodi_form,
 )
+from resources.lib.engine.sets import (
+    LEFT_DUPLICATE,
+    LEFT_NO_COLLECTION,
+    LEFT_NO_MAJORITY,
+    LEFT_NO_MEMBERS,
+    LEFT_OFF,
+    LEFT_SHARED,
+    LEFT_TIE_LIBRARY,
+)
 from resources.lib.service.details import can_restore
-from resources.lib.utils import is_empty, lang
+from resources.lib.utils import is_empty, lang, remove_suffix
 
 GROUP_UPDATED = "updated"
 GROUP_LEFT = "left"
@@ -64,7 +93,9 @@ _FIELD_LABELS = {
     "plot": 32511, "title": 32512, "rating": 32513, "runtime": 32514,
     "director": 32515, "writer": 32516, "genre": 32517, "studio": 32518,
     "country": 32519, "tagline": 32520, "trailer": 32521, "firstaired": 32522,
-    "mpaa": 32523,
+    "mpaa": 32523, "poster": 32719, "thumb": 32720, "fanart": 32744,
+    "clearlogo": 32755, "keyart": 32756, "landscape": 32757, "banner": 32758,
+    "discart": 32759, "clearart": 32760, "characterart": 32761,
 }
 
 # Brand names, not translated. A rating source is a Kodi rating slot name;
@@ -73,9 +104,15 @@ _FIELD_LABELS = {
 _SOURCE_NAMES = {
     "tmdb": "TMDB", "themoviedb": "TMDB", "tvdb": "TheTVDB", "thetvdb": "TheTVDB",
     "imdb": "IMDb", "bbfc": "BBFC", "fsk": "FSK", "medieraadet": "Medieraadet",
+    "fanart": "fanart.tv",
 }
 # "kodi" is a certification Kodi already held, which is the scraper's.
 _SCRAPER_SOURCE = "kodi"
+# "{}, without text": where textless art came from.
+_WITHOUT_TEXT = 32741
+# "{}, in English as a last resort": art filled from English for want of
+# anything in the library's languages or without text.
+_ENGLISH_LAST_RESORT = 32754
 
 # Short month names, January first; then "12 Nov 2026", "12 Nov" and the
 # separator between the header's two parts.
@@ -91,7 +128,22 @@ _WHY = {
     REASON_NOTHING: 32543,
     REASON_UNCHECKED: 32544,
     REASON_LOCKED: 32545,
+    REASON_LOCAL_ART: 32730,
+    REASON_OTHER_ART: 32731,
+    REASON_CHANGED_OUTSIDE: 32732,
+    REASON_SET_FOLDER: 32787,
 }
+# A runtime Kodi takes from the video file: the hint and the Why line.
+_FROM_FILE_HINT = 32775
+_FROM_FILE_WHY = 32776
+# What the art in a slot is, as the Details value line says it (never a URL).
+_ART_TEXT = {
+    EMPTY: 32721, FRAME_GRAB: 32722, BROKEN: 32723, WEB_TMDB: 32724,
+    WEB_FANART: 32725, WEB_OTHER: 32726, LOCAL: 32727,
+}
+_OTHER_ART_TEXT = 32726
+# The art an original was, when it was not a link worth naming.
+_ART_WAS_TEXT = {FRAME_GRAB: 32728, BROKEN: 32729, LOCAL: 32762}
 _NEVER_CHECKED = 32546
 _CHANGED_SINCE = 32576
 _UNLOCKED = 32577
@@ -111,6 +163,22 @@ _UNLOCKED_NO_COUNTRY = 32625
 _TVMAZE_ONLY = 32599
 # How a number match found an id (numbermatch's match note), "matched" key.
 _MATCHED_HOW = {"date": 32597, "title": 32598, "tmdb_list": 32555}
+
+# A movie set's Ids row: its TMDB collection, why the scan leaves it alone
+# (engine/sets.py reasons, "{}" the library or the set named) and the
+# movies MetaMender moved into it; a movie's row: its own move.
+_COLLECTION = 32763
+_SET_LEFT_ALONE = {
+    LEFT_TIE_LIBRARY: 32764, LEFT_NO_MEMBERS: 32765, LEFT_OFF: 32766,
+    LEFT_NO_COLLECTION: 32767, LEFT_NO_MAJORITY: 32768, LEFT_DUPLICATE: 32769,
+    LEFT_SHARED: 32770,
+}
+_MOVED_HERE = 32771
+_MOVED_BY_METAMENDER = 32772
+_MOVED_BY_YOU = 32773
+# The same for a movie that was in no set: MetaMender added it.
+_ADDED_HERE = 32786
+_ADDED_BY_METAMENDER = 32785
 
 
 @dataclass
@@ -161,6 +229,7 @@ def _parse(iso: str | None) -> date | None:
 def _source_name(source: str | None) -> str:
     if not source:
         return ""
+    source = remove_suffix(remove_suffix(source, TEXTLESS_SOURCE_SUFFIX), ENGLISH_SOURCE_SUFFIX)
     if source == _SCRAPER_SOURCE:
         return lang(32534)
     if source.startswith("tmdb-"):
@@ -170,6 +239,8 @@ def _source_name(source: str | None) -> str:
 
 def _value_text(field: str, item: dict[str, Any]) -> str:
     value = item.get(field)
+    if field in ART_FIELDS:
+        return lang(_ART_TEXT.get(classify(str(value or "")), _OTHER_ART_TEXT))
     if field == "rating":
         if is_empty(value):
             return lang(32574)
@@ -252,13 +323,25 @@ def _field_row(
               and blanked(item, field, fs))
     settled = not refill and _settled(field, fs, age, today, threshold)
     checked = count > 0 or reason in (REASON_NOTHING, REASON_UNCHECKED)
-    # An unlock leaves the "locked" reason until the next scan records one,
+    # An unlock leaves the "locked" (or art "changed outside") reason until
+    # the next scan records one,
     # and makes the field due at that scan (details.unlock_field). Kodi then
     # holds the restored original, so this wins over "changed".
-    unlocked = reason == REASON_LOCKED and not locked
+    unlocked = reason in (REASON_LOCKED, REASON_CHANGED_OUTSIDE) and not locked
 
+    # Kodi shows the video file's own length over the library's runtime
+    # (kodi.file_runtime), so MetaMender never writes it there and the row
+    # has no source, original or next check of its own.
+    if not locked and field == "runtime" and (
+            item.get("file_runtime") or reason == REASON_FROM_FILE):
+        shown = {"runtime": item.get("file_runtime") or current}
+        return DetailRow(field, label, GROUP_LEFT, lang(_FROM_FILE_HINT), label,
+                         [("", _value_text(field, shown)), (lang(32531), lang(_FROM_FILE_WHY))],
+                         "", False)
     if locked:
-        group, hint, why = GROUP_LEFT, lang(32548), _WHY[REASON_LOCKED]
+        group, hint = GROUP_LEFT, lang(32548)
+        why = _WHY[REASON_CHANGED_OUTSIDE if reason == REASON_CHANGED_OUTSIDE
+                   else REASON_LOCKED]
     elif not checked:
         group, hint, why = GROUP_WAITING, lang(32551), _NEVER_CHECKED
     elif unlocked:
@@ -275,7 +358,8 @@ def _field_row(
         group, hint, why = GROUP_UPDATED, _source_name(source), 0
     elif reason == REASON_UNCHECKED:
         group, hint, why = GROUP_WAITING, "", _WHY[REASON_UNCHECKED]
-    elif settled or reason in (REASON_UNCHANGED, REASON_NFO, REASON_FILL_ONLY):
+    elif settled or reason in (REASON_UNCHANGED, REASON_NFO, REASON_FILL_ONLY,
+                               REASON_LOCAL_ART, REASON_OTHER_ART, REASON_SET_FOLDER):
         group = GROUP_LEFT
         why = _WHY.get(reason or "", 0)
         if settled and reason == REASON_NOTHING:
@@ -299,7 +383,7 @@ def _field_row(
     elif checked and not changed and not is_empty(current):
         lines.append((lang(32527), lang(32534)))
     if group == GROUP_UPDATED and not rating:
-        lines.append((lang(32528), _replaced_text(entry)))
+        lines.append((lang(32528), _replaced_text(field, entry)))
     if fs.get("fetched_at"):
         lines.append((lang(32529), long_date(fs["fetched_at"])))
     if checked and not locked:
@@ -341,18 +425,33 @@ def _from_text(field: str, source: str | None, fs: dict[str, Any], language: str
         # Another country's rating converted to this system: it is not
         # this country's own decision and is re-checked monthly.
         return lang(_CONVERTED).format(name)
-    if field not in LANGUAGE_FIELDS or source == _SCRAPER_SOURCE:
+    if field in ART_FIELDS and (source or "").endswith(ENGLISH_SOURCE_SUFFIX):
+        return lang(_ENGLISH_LAST_RESORT).format(name)
+    if (field not in LANGUAGE_FIELDS and field not in TEXT_ART_FIELDS) \
+            or source == _SCRAPER_SOURCE:
+        return name
+    if field in TEXT_ART_FIELDS and (source or "").endswith(TEXTLESS_SOURCE_SUFFIX):
+        return lang(_WITHOUT_TEXT).format(name)
+    if field == "fanart":
+        # Fanart with text comes after the textless step whatever its
+        # language, so from_fallback cannot tell the library's language
+        # from the fallback one: no language is named.
         return name
     if fs.get("from_fallback"):
         return lang(32533).format(name)
     return lang(32532).format(name, language) if language else name
 
 
-def _replaced_text(entry: dict[str, Any]) -> str:
+def _replaced_text(field: str, entry: dict[str, Any]) -> str:
     if not entry.get("has_original"):
         return lang(32537)
-    if is_empty(entry.get("original")):
+    original = entry.get("original")
+    if is_empty(original):
         return lang(32536)
+    if field in ART_FIELDS:
+        was = _ART_WAS_TEXT.get(classify(unwrap(str(original))))
+        if was:
+            return lang(was)
     return lang(32535)
 
 
@@ -371,8 +470,45 @@ def _tvmaze_only(item: dict[str, Any]) -> bool:
     return held == {"tvmaze"}
 
 
+def _set_ids_lines(item: dict[str, Any], row: dict[str, Any]) -> list[tuple[str, str]]:
+    """A movie set's Ids lines. The details session puts on the item what
+    the set planning says of it: ``collection_id``, ``set_reason`` with
+    ``set_reason_name`` (the library or set its text names) and
+    ``set_moves`` (title, from_name, moved_on of each movie moved in)."""
+    lines: list[tuple[str, str]] = []
+    collection = item.get("collection_id") or row.get("tmdb_id")
+    if collection:
+        lines.append((lang(_COLLECTION), str(collection)))
+    reason = _SET_LEFT_ALONE.get(str(item.get("set_reason") or ""))
+    if reason:
+        lines.append(("", lang(reason).format(item.get("set_reason_name") or "")))
+    for move in item.get("set_moves") or ():
+        title, moved_on = move.get("title") or "", long_date(move.get("moved_on"))
+        if move.get("from_name"):
+            lines.append(("", lang(_MOVED_HERE).format(title, move["from_name"], moved_on)))
+        else:
+            lines.append(("", lang(_ADDED_HERE).format(title, moved_on)))
+    return lines
+
+
+def _movie_move_line(move: dict[str, Any]) -> tuple[str, str]:
+    """A movie's set move, as the details session puts it on the item
+    (``set_move``): moved or added by MetaMender, or since put in ``set`` by
+    the user. An empty ``from_name`` means the movie was in no set."""
+    if move.get("user"):
+        return "", lang(_MOVED_BY_YOU).format(move.get("set") or "")
+    moved_on = long_date(move.get("moved_on"))
+    if not move.get("from_name"):
+        return "", lang(_ADDED_BY_METAMENDER).format(moved_on)
+    return "", lang(_MOVED_BY_METAMENDER).format(move["from_name"], moved_on)
+
+
 def _ids_row(media_type: MediaType, item: dict[str, Any],
              item_row: dict[str, Any] | None) -> DetailRow:
+    if media_type.name == "set":
+        # A set has no ids of its own; its row's TMDB id is its collection.
+        lines = _set_ids_lines(item, item_row or {}) or [("", lang(32558))]
+        return DetailRow(IDS_KEY, lang(32510), "", "", lang(32510), lines, "")
     kodi_tmdb, kodi_imdb, kodi_tvdb, kodi_unknown = extract_ids(item)
     row = item_row or {}
     number_matched = bool(row.get("number_matched"))
@@ -382,27 +518,38 @@ def _ids_row(media_type: MediaType, item: dict[str, Any],
            if n.get("matched") and n.get("site") in ("tmdb", "tvdb")}
     lines: list[tuple[str, str]] = []
     from_kodi = found = False
-    for name, kodi_id, stored, matchable in (
-        ("TMDB", kodi_tmdb, row.get("tmdb_id"), True),
-        # An `unknown` uniqueid is a TheTVDB id once the scan verified it.
-        ("TheTVDB", kodi_tvdb or (
-            kodi_unknown if kodi_unknown and str(kodi_unknown) == str(row.get("tvdb_id"))
-            else None
-        ), row.get("tvdb_id"), True),
-        ("IMDb", kodi_imdb, row.get("imdb_id"), False),
-    ):
-        if kodi_id:
-            lines.append((name, lang(32553).format(kodi_id)))
-            from_kodi = True
-        elif stored:
-            if matchable and number_matched:
-                text = lang(_MATCHED_HOW.get(how.get(name, ""), 32554))
-            elif not matchable:
-                text = lang(32555)
-            else:
-                text = lang(32556)
-            lines.append((name, text.format(stored)))
-            found = True
+    season = media_type.name == "season"
+    if season:
+        # Kodi gives a season no ids; its show's are the ones that find it,
+        # and the scan keeps them on the season's row.
+        for name, show_id in (
+            ("TMDB", item.get("show_tmdb_id") or row.get("tmdb_id")),
+            ("TheTVDB", item.get("show_tvdb_id") or row.get("tvdb_id")),
+        ):
+            if show_id:
+                lines.append((name, str(show_id)))
+    else:
+        for name, kodi_id, stored, matchable in (
+            ("TMDB", kodi_tmdb, row.get("tmdb_id"), True),
+            # An `unknown` uniqueid is a TheTVDB id once the scan verified it.
+            ("TheTVDB", kodi_tvdb or (
+                kodi_unknown if kodi_unknown and str(kodi_unknown) == str(row.get("tvdb_id"))
+                else None
+            ), row.get("tvdb_id"), True),
+            ("IMDb", kodi_imdb, row.get("imdb_id"), False),
+        ):
+            if kodi_id:
+                lines.append((name, lang(32553).format(kodi_id)))
+                from_kodi = True
+            elif stored:
+                if matchable and number_matched:
+                    text = lang(_MATCHED_HOW.get(how.get(name, ""), 32554))
+                elif not matchable:
+                    text = lang(32555)
+                else:
+                    text = lang(32556)
+                lines.append((name, text.format(stored)))
+                found = True
     if _tvmaze_only(item):
         lines.append(("", lang(_TVMAZE_ONLY)))
     if found:
@@ -428,6 +575,8 @@ def _ids_row(media_type: MediaType, item: dict[str, Any],
                 # the other site's values were used.
                 lines.append((lang(32531), lang(32565).format(_SOURCE_NAMES[site])))
                 rejected = True
+    if item.get("set_move"):
+        lines.append(_movie_move_line(item["set_move"]))
     if not lines:
         lines.append(("", lang(32558)))
 

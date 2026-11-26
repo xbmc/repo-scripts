@@ -32,7 +32,7 @@
             </control>
             <control type="image">
                 <left>0</left><top>0</top><width>1500</width><height>880</height>
-                <texture border="20" colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/frame.png</texture>
+                <texture border="20" colordiffuse="$INFO[Window(Home).Property(MetaMender.Accent)]">metamender/frame.png</texture>
             </control>
 
             <!-- Header: the badge and the item, with one short line under it. -->
@@ -43,14 +43,14 @@
                 <usecontrolcoords>true</usecontrolcoords>
                 <control type="group">
                     <top>6</top><width>44</width><height>44</height>
-                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/badge.png</texture></control>
+                    <control type="image"><width>44</width><height>44</height><texture colordiffuse="$INFO[Window(Home).Property(MetaMender.Accent)]">metamender/badge.png</texture></control>
                     <control type="image"><width>44</width><height>44</height><texture colordiffuse="FF060607">metamender/pulse.png</texture></control>
                 </control>
                 <control type="label">
                     <width>1320</width><height>56</height>
                     <aligny>center</aligny>
                     <font>font13</font>
-                    <textcolor>$INFO[Window.Property(MM.Accent)]</textcolor>
+                    <textcolor>$INFO[Window(Home).Property(MetaMender.Accent)]</textcolor>
                     <label>[B]$INFO[Window.Property(MM.Heading)][/B]</label>
                 </control>
             </control>
@@ -63,7 +63,7 @@
             </control>
             <control type="image">
                 <left>50</left><top>130</top><width>1400</width><height>3</height>
-                <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/divider.png</texture>
+                <texture colordiffuse="$INFO[Window(Home).Property(MetaMender.Accent)]">metamender/divider.png</texture>
                 <animation effect="fade" start="70" end="70" time="0" condition="true">Conditional</animation>
             </control>
 
@@ -86,7 +86,7 @@
                         <visible>!String.IsEmpty(ListItem.Property(heading))</visible>
                         <aligny>center</aligny>
                         <font>font10</font>
-                        <textcolor>$INFO[Window.Property(MM.Accent)]</textcolor>
+                        <textcolor>$INFO[Window(Home).Property(MetaMender.Accent)]</textcolor>
                         <label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
                     </control>
                     <control type="group">
@@ -113,7 +113,7 @@
                         <control type="image">
                             <left>380</left><top>18</top><width>20</width><height>20</height>
                             <visible>!String.IsEmpty(ListItem.Property(locked))</visible>
-                            <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/lock.png</texture>
+                            <texture colordiffuse="$INFO[Window(Home).Property(MetaMender.Accent)]">metamender/lock.png</texture>
                         </control>
                     </control>
                 </itemlayout>
@@ -123,7 +123,7 @@
                         <visible>!String.IsEmpty(ListItem.Property(heading))</visible>
                         <aligny>center</aligny>
                         <font>font10</font>
-                        <textcolor>$INFO[Window.Property(MM.Accent)]</textcolor>
+                        <textcolor>$INFO[Window(Home).Property(MetaMender.Accent)]</textcolor>
                         <label>[B][UPPERCASE]$INFO[ListItem.Label][/UPPERCASE][/B]</label>
                     </control>
                     <!-- The selected row: the button colour while the list has
@@ -137,7 +137,7 @@
                         <control type="image">
                             <left>0</left><top>4</top><width>500</width><height>48</height>
                             <visible>Control.HasFocus(50)</visible>
-                            <texture border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texture>
+                            <texture border="20" colordiffuse="$INFO[Window(Home).Property(MetaMender.ButtonFocus)]">metamender/button.png</texture>
                         </control>
                         <control type="label">
                             <left>20</left><top>4</top><width>300</width><height>48</height>
@@ -151,7 +151,7 @@
                             <left>20</left><top>4</top><width>300</width><height>48</height>
                             <aligny>center</aligny>
                             <font>font12</font>
-                            <textcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</textcolor>
+                            <textcolor>$INFO[Window(Home).Property(MetaMender.ButtonTextFocused)]</textcolor>
                             <visible>Control.HasFocus(50)</visible>
                             <label>[B]$INFO[ListItem.Label][/B]</label>
                         </control>
@@ -167,7 +167,7 @@
                             <left>300</left><top>4</top><width>180</width><height>48</height>
                             <align>right</align><aligny>center</aligny>
                             <font>font10</font>
-                            <textcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</textcolor>
+                            <textcolor>$INFO[Window(Home).Property(MetaMender.ButtonTextFocused)]</textcolor>
                             <visible>Control.HasFocus(50)</visible>
                             <label>$INFO[ListItem.Label2]</label>
                         </control>
@@ -175,12 +175,12 @@
                         <control type="image">
                             <left>380</left><top>18</top><width>20</width><height>20</height>
                             <visible>!String.IsEmpty(ListItem.Property(locked)) + !Control.HasFocus(50)</visible>
-                            <texture colordiffuse="$INFO[Window.Property(MM.Accent)]">metamender/lock.png</texture>
+                            <texture colordiffuse="$INFO[Window(Home).Property(MetaMender.Accent)]">metamender/lock.png</texture>
                         </control>
                         <control type="image">
                             <left>380</left><top>18</top><width>20</width><height>20</height>
                             <visible>!String.IsEmpty(ListItem.Property(locked)) + Control.HasFocus(50)</visible>
-                            <texture colordiffuse="$INFO[Window.Property(MM.ButtonTextFocused)]">metamender/lock.png</texture>
+                            <texture colordiffuse="$INFO[Window(Home).Property(MetaMender.ButtonTextFocused)]">metamender/lock.png</texture>
                         </control>
                     </control>
                 </focusedlayout>
@@ -247,33 +247,33 @@
                     <align>center</align><aligny>center</aligny>
                     <font>font13</font>
                     <textcolor>FFF1F3F5</textcolor>
-                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <focusedcolor>$INFO[Window(Home).Property(MetaMender.ButtonTextFocused)]</focusedcolor>
                     <pulseonselect>false</pulseonselect>
                     <label>$INFO[Window.Property(MM.RowAction)]</label>
                     <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
-                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window(Home).Property(MetaMender.ButtonFocus)]">metamender/button.png</texturefocus>
                 </control>
                 <control type="button" id="32">
                     <width>260</width><height>72</height>
                     <align>center</align><aligny>center</aligny>
                     <font>font13</font>
                     <textcolor>FFF1F3F5</textcolor>
-                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <focusedcolor>$INFO[Window(Home).Property(MetaMender.ButtonTextFocused)]</focusedcolor>
                     <pulseonselect>false</pulseonselect>
                     <label>$INFO[Window.Property(MM.UpdateNow)]</label>
                     <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
-                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window(Home).Property(MetaMender.ButtonFocus)]">metamender/button.png</texturefocus>
                 </control>
                 <control type="button" id="33">
                     <width>260</width><height>72</height>
                     <align>center</align><aligny>center</aligny>
                     <font>font13</font>
                     <textcolor>FFF1F3F5</textcolor>
-                    <focusedcolor>$INFO[Window.Property(MM.ButtonTextFocused)]</focusedcolor>
+                    <focusedcolor>$INFO[Window(Home).Property(MetaMender.ButtonTextFocused)]</focusedcolor>
                     <pulseonselect>false</pulseonselect>
                     <label>$INFO[Window.Property(MM.Close)]</label>
                     <texturenofocus border="20" colordiffuse="FF2A2F38">metamender/button.png</texturenofocus>
-                    <texturefocus border="20" colordiffuse="$INFO[Window.Property(MM.ButtonFocus)]">metamender/button.png</texturefocus>
+                    <texturefocus border="20" colordiffuse="$INFO[Window(Home).Property(MetaMender.ButtonFocus)]">metamender/button.png</texturefocus>
                 </control>
             </control>
         </control>

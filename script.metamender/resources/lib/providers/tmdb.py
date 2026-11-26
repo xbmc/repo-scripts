@@ -16,9 +16,11 @@ Logging:
 """
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from resources.lib.constants import TMDB_BASE_URL
+from resources.lib.engine.art import Poster, tmdb_image_url
 from resources.lib.providers.http import provider_get
 from resources.lib.utils import (
     ApiKeyError,
@@ -28,6 +30,11 @@ from resources.lib.utils import (
 )
 
 log = get_logger('tmdb')
+
+# YouTube video ids are 11 characters from this alphabet. TMDB's video list is
+# community-edited, and the key ends up inside a plugin:// URL, so anything else
+# could add parameters to the YouTube add-on's call.
+_YOUTUBE_ID = re.compile(r"[A-Za-z0-9_-]{11}")
 
 # TMDB uses different certification strings for SE TV vs SE movies.
 # Normalize TV format ("Fran 7 ar") to movie format ("7") so the rest
@@ -79,7 +86,7 @@ def _parse_trailer(videos: dict) -> str | None:
     for video in videos.get("results", []):
         if video.get("type") == "Trailer" and video.get("site") == "YouTube":
             key = video.get("key")
-            if key:
+            if isinstance(key, str) and _YOUTUBE_ID.fullmatch(key):
                 return "plugin://plugin.video.youtube/?action=play_video&videoid={}".format(key)
     return None
 
@@ -119,6 +126,40 @@ def _normalize_certs(certs: dict[str, str]) -> dict[str, str]:
         if country in certs:
             certs[country] = table.get(certs[country], certs[country])
     return certs
+
+
+def _image_params(image_languages: tuple[str, ...]) -> dict[str, str]:
+    """Query parameter asking for posters in these languages plus textless."""
+    return {"include_image_language": ",".join(image_languages + ("null",))}
+
+
+def _parse_posters(posters: list[dict]) -> list[Poster]:
+    """Image candidates from one TMDB images list (posters, backdrops or
+    logos); items without a file are skipped."""
+    return [
+        Poster(
+            url=tmdb_image_url(item["file_path"]),
+            provider="tmdb",
+            lang=item.get("iso_639_1") or None,
+            score=(item.get("vote_average") or 0.0, item.get("vote_count") or 0),
+        )
+        for item in posters
+        if item.get("file_path")
+    ]
+
+
+def _parse_images(images: dict) -> dict[str, list[Poster]]:
+    """Posters, backdrops and logos from a TMDB ``images`` object. Kodi cannot
+    show SVG, which TMDB serves for some logos, so those are dropped."""
+    logos = [
+        item for item in images.get("logos") or []
+        if not str(item.get("file_path") or "").lower().endswith(".svg")
+    ]
+    return {
+        "posters": _parse_posters(images.get("posters") or []),
+        "backdrops": _parse_posters(images.get("backdrops") or []),
+        "logos": _parse_posters(logos),
+    }
 
 
 # =============================================================================
@@ -219,11 +260,15 @@ def fetch_movie(
     tmdb_id: str,
     api_key: str,
     language: str = "en-US",
+    image_languages: tuple[str, ...] = (),
 ) -> dict | None:
     """Fetch full movie metadata from TMDB.
 
     Uses append_to_response to get credits, videos, and release_dates
-    in a single API call. Returns a standardized metadata dict or None
+    in a single API call. With ``image_languages`` it also asks for the
+    movie's images and returns them as "posters", "backdrops" and "logos"
+    (Poster lists: those languages plus textless). "collection_id" is the
+    TMDB collection the movie belongs to, "" when none. Returns a standardized metadata dict or None
     on failure. Raises ApiKeyError on HTTP 401.
     """
     url = "{}/movie/{}".format(TMDB_BASE_URL, tmdb_id)
@@ -232,6 +277,9 @@ def fetch_movie(
         "language": language,
         "append_to_response": "credits,videos,release_dates",
     }
+    if image_languages:
+        params["append_to_response"] += ",images"
+        params.update(_image_params(image_languages))
 
     with log_timing(log, "tmdb.movie", tmdb_id=tmdb_id):
         data = provider_get(
@@ -272,7 +320,10 @@ def fetch_movie(
         ),
         "certifications": certifications,
         "imdb_id": data.get("imdb_id", ""),
+        "collection_id": str((data.get("belongs_to_collection") or {}).get("id") or ""),
     }
+    if image_languages:
+        result.update(_parse_images(data.get("images") or {}))
 
     log.info(
         "Movie metadata fetched",
@@ -294,7 +345,8 @@ def fetch_season(
     """Fetch season metadata from TMDB, returning a list of episode dicts.
 
     Each episode dict contains title, rating, votes, plot, directors,
-    writers, firstaired, and runtime. Returns None on failure.
+    writers, firstaired, runtime, and thumb (the still as a full URL, "" when
+    TMDB has none). Returns None on failure.
     Raises ApiKeyError on HTTP 401.
     """
     url = "{}/tv/{}/season/{}".format(TMDB_BASE_URL, show_tmdb_id, season_number)
@@ -330,6 +382,7 @@ def fetch_season(
             "writers": _parse_writers(crew),
             "firstaired": ep.get("air_date", ""),
             "runtime": ep.get("runtime"),
+            "thumb": tmdb_image_url(ep["still_path"]) if ep.get("still_path") else "",
         })
 
     log.info(
@@ -347,10 +400,14 @@ def fetch_tvshow(
     tmdb_id: str,
     api_key: str,
     language: str = "en-US",
+    image_languages: tuple[str, ...] = (),
 ) -> dict | None:
     """Fetch TV show metadata from TMDB.
 
-    Uses append_to_response to get content_ratings in a single call.
+    Uses append_to_response to get content_ratings in a single call. The
+    result carries "season_air_dates" ({season_number: "YYYY-MM-DD"}, seasons
+    without a date left out); with ``image_languages`` it also carries
+    "posters", "backdrops" and "logos" as fetch_movie does.
     Returns a standardized metadata dict or None on failure.
     Raises ApiKeyError on HTTP 401.
     """
@@ -360,6 +417,9 @@ def fetch_tvshow(
         "language": language,
         "append_to_response": "content_ratings,external_ids",
     }
+    if image_languages:
+        params["append_to_response"] += ",images"
+        params.update(_image_params(image_languages))
 
     with log_timing(log, "tmdb.tvshow", tmdb_id=tmdb_id):
         data = provider_get(
@@ -381,10 +441,18 @@ def fetch_tvshow(
             data.get("name"), data.get("original_name"),
             data.get("original_language"), language,
         ),
+        "original_title": data.get("original_name", ""),
         "genres": [g["name"] for g in data.get("genres", []) if "name" in g],
         "certifications": certifications,
         "imdb_id": data.get("external_ids", {}).get("imdb_id", ""),
+        "season_air_dates": {
+            season["season_number"]: season["air_date"]
+            for season in data.get("seasons") or []
+            if season.get("season_number") is not None and season.get("air_date")
+        },
     }
+    if image_languages:
+        result.update(_parse_images(data.get("images") or {}))
 
     log.info(
         "TV show metadata fetched",
@@ -395,6 +463,124 @@ def fetch_tvshow(
     )
 
     return result
+
+
+def _translations(data: dict) -> tuple[dict[str, str], dict[str, str]]:
+    """Names and plots by language code from a collection's translations,
+    under "xx-YY" and bare "xx" (the first translation of a language wins the
+    bare code). Empty texts are dropped: TMDB leaves a translation's text
+    empty where it equals the English one."""
+    names: dict[str, str] = {}
+    plots: dict[str, str] = {}
+    for item in (data.get("translations") or {}).get("translations") or []:
+        lang, country = item.get("iso_639_1"), item.get("iso_3166_1")
+        if not lang:
+            continue
+        body = item.get("data") or {}
+        for target, text in ((names, body.get("title") or body.get("name")),
+                             (plots, body.get("overview"))):
+            if not text:
+                continue
+            if country:
+                target.setdefault("{}-{}".format(lang, country), text)
+            target.setdefault(lang, text)
+    return names, plots
+
+
+def fetch_collection(
+    collection_id: str, api_key: str, image_languages: tuple[str, ...],
+) -> dict | None:
+    """A movie collection: {"names": {code: name}, "plots": {code: overview},
+    "posters": [...], "backdrops": [...]}, or None on 404.
+
+    One request carries the translations and the images. The answer's own
+    name and overview are the English ones (no ``language`` is sent), so they
+    fill "en", which a translation list omits. Raises ApiKeyError on HTTP 401
+    and TransientProviderError when TMDB could not be reached.
+    """
+    url = "{}/collection/{}".format(TMDB_BASE_URL, collection_id)
+    params = {
+        "api_key": api_key,
+        "append_to_response": "images,translations",
+        **_image_params(image_languages),
+    }
+    with log_timing(log, "tmdb.collection", collection_id=collection_id):
+        data = provider_get(
+            url, logger=log, label="tmdb.collection", params=params, provider="tmdb",
+        )
+    if data is None:
+        return None
+    names, plots = _translations(data)
+    if data.get("name"):
+        names.setdefault("en", data["name"])
+    if data.get("overview"):
+        plots.setdefault("en", data["overview"])
+    images = _parse_images(data.get("images") or {})
+    log.info(
+        "Collection fetched",
+        event="tmdb.collection",
+        collection_id=collection_id,
+        names=len(names),
+        posters=len(images["posters"]),
+        backdrops=len(images["backdrops"]),
+    )
+    return {
+        "names": names, "plots": plots,
+        "posters": images["posters"], "backdrops": images["backdrops"],
+    }
+
+
+def fetch_movie_collection_id(tmdb_id: str, api_key: str) -> str | None:
+    """The TMDB collection a movie belongs to: "" when none, None when TMDB
+    has no such movie. Raises ApiKeyError on HTTP 401 and
+    TransientProviderError when TMDB could not be reached."""
+    url = "{}/movie/{}".format(TMDB_BASE_URL, tmdb_id)
+    with log_timing(log, "tmdb.movie_collection", tmdb_id=tmdb_id):
+        data = provider_get(
+            url, logger=log, label="tmdb.movie_collection",
+            params={"api_key": api_key}, provider="tmdb",
+        )
+    if data is None:
+        return None
+    collection_id = str((data.get("belongs_to_collection") or {}).get("id") or "")
+    log.debug(
+        "Movie collection fetched",
+        event="tmdb.movie_collection",
+        tmdb_id=tmdb_id,
+        collection_id=collection_id,
+    )
+    return collection_id
+
+
+def fetch_season_posters(
+    show_tmdb_id: str,
+    season_number: int,
+    api_key: str,
+    image_languages: tuple[str, ...],
+) -> list[Poster] | None:
+    """Season poster candidates (``image_languages`` plus textless), or None
+    when TMDB has no such season. Raises ApiKeyError on HTTP 401 and
+    TransientProviderError when TMDB could not be reached."""
+    url = "{}/tv/{}/season/{}/images".format(TMDB_BASE_URL, show_tmdb_id, season_number)
+    params = {"api_key": api_key, **_image_params(image_languages)}
+    with log_timing(
+        log, "tmdb.season_posters", tmdb_id=show_tmdb_id, season=season_number,
+    ):
+        data = provider_get(
+            url, logger=log, label="tmdb.season_posters", params=params,
+            provider="tmdb",
+        )
+    if data is None:
+        return None
+    posters = _parse_posters(data.get("posters") or [])
+    log.debug(
+        "Season posters fetched",
+        event="tmdb.season_posters",
+        tmdb_id=show_tmdb_id,
+        season=season_number,
+        posters=len(posters),
+    )
+    return posters
 
 
 def _clean_ids(data: dict[str, Any]) -> dict[str, str]:

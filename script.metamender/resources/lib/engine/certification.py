@@ -13,6 +13,7 @@ from __future__ import annotations
 import re
 import unicodedata
 from collections.abc import Callable
+from typing import Optional
 
 from resources.lib.engine.protect import is_blank
 from resources.lib.utils import TransientProviderError
@@ -122,8 +123,10 @@ def sanitize_prefix(value: str, default: str) -> str:
 
 
 # A site's search result: its titles (localized, original, ...), its year
-# when known, and its bare rating.
-Candidate = tuple[tuple[str, ...], int | None, str]
+# when known, and its bare rating. An alias is evaluated at import, so it
+# spells Optional: `int | None` needs Python 3.10 at runtime, and OSMC's
+# Kodi runs 3.9.
+Candidate = tuple[tuple[str, ...], Optional[int], str]
 
 
 def best_match(

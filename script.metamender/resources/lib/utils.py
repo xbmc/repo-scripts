@@ -44,9 +44,10 @@ from resources.lib.constants import (
 # into its exception messages, so a key reaches log text through error= values
 # and tracebacks. Covers both the query form (api_key=...) and a repr'd params
 # dict ('api_key': '...'). Also covers JSON bodies ({"apikey": "..."}) and
-# bearer tokens ("Authorization: Bearer ..."), which TVDB uses.
+# bearer tokens ("Authorization: Bearer ..."), which TVDB uses. fanart.tv's
+# personal client_key travels as a query parameter and is covered too.
 _SECRET_RE = re.compile(
-    r"""(?i)((?:api_?key(?:=|['"]?\s*:\s*['"]?))|(?:\bbearer\s+))[^&\s'",}]+"""
+    r"""(?i)((?:(?:api|client)_?key(?:=|['"]?\s*:\s*['"]?))|(?:\bbearer\s+))[^&\s'",}]+"""
 )
 
 
@@ -76,6 +77,13 @@ def display_path(path: str) -> str:
     """A path as it may be shown or stored for display: without the
     credentials a source URL can carry."""
     return _URL_CREDENTIALS.sub(r"\1", path)
+
+
+def remove_suffix(text: str, suffix: str) -> str:
+    """``str.removesuffix``, which Python 3.8 lacks."""
+    if suffix and text.endswith(suffix):
+        return text[:-len(suffix)]
+    return text
 
 
 def is_empty(value: Any) -> bool:
@@ -114,6 +122,11 @@ def get_bool_setting(setting_id: str) -> bool:
     return get_setting(setting_id) == 'true'
 
 
+def set_bool_setting(setting_id: str, value: bool) -> None:
+    """Write a boolean setting."""
+    get_addon().setSettingBool(setting_id, value)
+
+
 def is_setup_complete() -> bool:
     """Whether the setup wizard has been finished once. Until it has, no
     scan of any kind runs: without a key and a confirmed language a scan
@@ -150,10 +163,25 @@ class ApiKeyError(Exception):
         super().__init__("Invalid API key for {}".format(provider))
 
 
-class TvdbAuthError(Exception):
+class ProviderAuthError(Exception):
+    """A provider refused our credentials for the rest of the cycle; other
+    providers are unaffected. ``provider`` names it."""
+
+    provider = ""
+
+
+class TvdbAuthError(ProviderAuthError):
     """TheTVDB login failed, or a request was still refused with 401 after one
     fresh login. TVDB is unusable for the rest of the cycle; other providers
     are unaffected."""
+
+    provider = "tvdb"
+
+
+class FanartAuthError(ProviderAuthError):
+    """fanart.tv rejected the API key (HTTP 401)."""
+
+    provider = "fanart"
 
 
 class TransientProviderError(Exception):

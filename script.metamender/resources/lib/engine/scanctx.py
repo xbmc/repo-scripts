@@ -13,6 +13,7 @@ from typing import Any
 from resources.lib.constants import (
     PROVIDER_CIRCUIT_BREAKER_THRESHOLD,
 )
+from resources.lib.data.libraries import TITLE_LANGUAGE
 from resources.lib.data.media_types import MediaType
 from resources.lib.data.presets import Preset
 from resources.lib.data.tracker import TrackerDB
@@ -25,8 +26,8 @@ from resources.lib.engine.protect import fingerprint, is_blank
 from resources.lib.providers import tmdb
 from resources.lib.utils import (
     ApiKeyError,
+    ProviderAuthError,
     TransientProviderError,
-    TvdbAuthError,
     get_logger,
 )
 
@@ -48,6 +49,17 @@ _TMDB_TO_KODI = {
     "runtime": "runtime",
     "firstaired": "firstaired",
     "title": "title",
+    # Art: the URLs engine/artsources.py picks, under the Kodi field names.
+    "poster": "poster",
+    "thumb": "thumb",
+    "fanart": "fanart",
+    "clearlogo": "clearlogo",
+    "keyart": "keyart",
+    "landscape": "landscape",
+    "banner": "banner",
+    "discart": "discart",
+    "clearart": "clearart",
+    "characterart": "characterart",
 }
 
 _KODI_TO_TMDB = {v: k for k, v in _TMDB_TO_KODI.items()}
@@ -204,11 +216,13 @@ class _CertConfig:
 
 @dataclass(frozen=True)
 class _ScanCtx:
-    """Scan-level constants shared across one run_scan cycle.
+    """Constants for the items of one library in one run_scan pass.
 
     Holds everything that does not vary per item, so the per-item helpers take a
-    single ``ctx`` plus the handful of per-item values. Mutable members
-    (breaker, pacer, caches, tracker) are referenced, not copied.
+    single ``ctx`` plus the handful of per-item values. run_scan derives each
+    library's ctx from one base with dataclasses.replace, so the mutable
+    members (breaker, pacer, caches, tracker) are shared by every library of
+    the pass, not copied.
     """
 
     media_type: MediaType
@@ -216,11 +230,6 @@ class _ScanCtx:
     breaker: CircuitBreaker
     pacer: _Pacer
     tmdb_api_key: str
-    default_language: str
-    # Whether sources.json set default_language; without it a folder no
-    # source entry covers has no configured language.
-    default_language_set: bool
-    sources: list[dict[str, Any]]
     enabled_fields: frozenset[str]
     show_id_map: dict[int, str]
     show_tvdb_map: dict[int, str]
@@ -240,9 +249,6 @@ class _ScanCtx:
     rating_pref: int
     text_order: int
     fallback_order: int
-    # sources.json's fallback_language, for folders whose entry sets none;
-    # "" means no fallback.
-    default_fallback: str
     imdb_ready: bool
     # Certification settings for this pass; None when certifications are off
     # or no usable country preset exists (episodes never have one).
@@ -257,6 +263,26 @@ class _ScanCtx:
     # with no ids of its own is skipped before it is tracked, so it never
     # joins checked_shows: its episodes have no route rather than waiting.
     tracked_shows: frozenset[int] = frozenset()
+    # The library's title mode for shows and movies (libraries.TITLE_*).
+    title_mode: str = TITLE_LANGUAGE
+    # The library's art source, "tmdb" or "fanart" (scan_settings).
+    art_source: str = "tmdb"
+    # Bare ISO 639-1 codes the primary TMDB fetch asks posters in: the
+    # folder language, then its fallback when different. Empty when the
+    # item's poster is not being fetched, so no images are requested.
+    image_languages: tuple[str, ...] = ()
+    # The user's personal fanart.tv key; "" when not set.
+    fanart_client_key: str = ""
+    # (kind, id) -> fanart.tv's answer (see artsources). Only real answers
+    # are cached, as in tvdb_cache.
+    fanart_cache: dict[tuple[str, str], Any] = field(default_factory=dict)
+    # Show TMDB id -> its show record, for the season pass's air dates; the
+    # show pass fills it too. Only real answers are cached, as in tvdb_cache.
+    # This and fanart_cache may be shared by every pass of a cycle (run_scan).
+    show_cache: dict[str, Any] = field(default_factory=dict)
+    # Kodi's movie set information folder (kodi.movie_set_folder), read once
+    # per set pass; "" when unset, unreadable, or not a set pass.
+    set_folder: str = ""
 
 
 def _get_season_data(
@@ -287,21 +313,26 @@ def _call_provider(
     """Pace, run a provider fn, and apply circuit-breaker bookkeeping.
 
     Records breaker success on any non-raising return (including None, a real
-    "nothing"). On ApiKeyError re-raises (terminal, TMDB only). On
-    TvdbAuthError disables TVDB for the cycle, logs once, and returns
-    ``TRANSIENT``. On TransientProviderError records a breaker failure, logs
-    the trip once, and returns ``TRANSIENT``. When ``best_effort`` is True
+    "nothing"). On ApiKeyError re-raises (terminal, TMDB only). On a
+    ProviderAuthError (TheTVDB, fanart.tv) disables that provider for the
+    cycle, logs once, and returns ``TRANSIENT``; the scan goes on without
+    it. On TransientProviderError records a breaker failure, logs the trip
+    once, and returns ``TRANSIENT``. When ``best_effort`` is True
     (episode ID enrichment) both TMDB exceptions are logged at scan.error and
     yield ``TRANSIENT`` without touching the breaker.
     """
     ctx.pacer.wait()
     try:
         result = fn()
-    except TvdbAuthError:
-        if ctx.breaker.disable("tvdb", auth=True):
-            log.exception(
-                "TheTVDB rejected the add-on's credentials, TVDB disabled for this cycle",
-                event="scan.tvdb_auth", identity=identity,
+    except ProviderAuthError as exc:
+        name = exc.provider or provider
+        if ctx.breaker.disable(name, auth=True):
+            # TheTVDB's rejection is the add-on's own credentials failing and
+            # the user is told; fanart.tv is optional, its posters wait.
+            emit = log.exception if name == "tvdb" else log.warning
+            emit(
+                "Provider rejected the add-on's credentials, disabled for this cycle",
+                event="scan.{}_auth".format(name), provider=name, identity=identity,
             )
         return TRANSIENT
     except ApiKeyError:
