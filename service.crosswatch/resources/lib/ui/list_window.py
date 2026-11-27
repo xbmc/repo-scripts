@@ -8,6 +8,7 @@ search, filter and row.
 
 from __future__ import annotations
 
+import sys
 from collections.abc import Callable, Collection, Sequence
 from dataclasses import dataclass
 
@@ -43,9 +44,14 @@ class ListState:
     key: str = ""
 
 
+# dataclass's kw_only arrived in Python 3.10; Kodi 21 for Windows bundles 3.8, where the
+# requests are still built with keywords but nothing enforces it.
+KEYWORDS_ONLY: dict[str, bool] = {"kw_only": True} if sys.version_info >= (3, 10) else {}
+
+
 # Keyword-only: the fields grew, and a positional call written for the old order would put
 # a button label into the count without any error.
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True, **KEYWORDS_ONLY)
 class ListRequest:
     heading: str
     rows: tuple[ListRow, ...]
@@ -61,6 +67,8 @@ class ListRequest:
     ticked: tuple[str, ...] = ()
     # Empty hides the extra button, which a pick list offers beside Done.
     extra: str = ""
+    # Only to look at: no ticking, and one Close button where Done would be.
+    read_only: bool = False
 
 
 @dataclass(frozen=True)

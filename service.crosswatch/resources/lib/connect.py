@@ -9,7 +9,7 @@ stage the writes on it, and leaving with Back or Cancel would discard them.
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from typing import Callable
 
 from resources.lib import log as logmod
 from resources.lib import paths, status

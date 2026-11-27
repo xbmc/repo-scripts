@@ -12,9 +12,11 @@ library here returned {"imdb": "None", "tvdb": "None", "tvrage": "None"} for a s
 reach the wire looking like ids, so the receiver routes on them and the no-usable-id gate
 sees an item that is in fact unidentifiable.
 """
+from __future__ import annotations
 
 import re
-from typing import Any
+from dataclasses import dataclass
+from typing import Any, Literal
 from urllib.parse import unquote_to_bytes, urlsplit, urlunsplit
 
 from resources.lib.kodi import KodiApi
@@ -34,7 +36,7 @@ _PARENT_IN_HOSTNAME = frozenset({"zip", "apk", "bluray", "udf", "iso9660", "xbt"
 # What CURL::Encode leaves as is.
 _UNENCODED = frozenset(b"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._!()")
 
-_ITEM_PROPERTIES = ["title", "showtitle", "season", "episode", "year", "tvshowid", "file", "uniqueid"]
+_ITEM_PROPERTIES = ["title", "showtitle", "season", "episode", "year", "tvshowid", "file", "uniqueid", "playcount"]
 
 # Values a scraper leaves behind when it had no id. Compared lowercase. "0" and "-1" are
 # here because no provider issues them and both are common "absent" sentinels.
@@ -111,6 +113,19 @@ def clean_ids(uniqueid: Any) -> dict[str, str]:
     return out
 
 
+# ok: resolved. not_listed: Kodi listed no video player, or no item for it. error: a JSON-RPC
+# call failed. not_library: what plays is no library movie or episode (music, live TV, a PVR
+# recording, a music video, a file Kodi reports as "unknown"). Library sync treats a video
+# play that is not_listed or error as one it can't tell apart from a person's mark.
+ResolveReason = Literal["ok", "not_listed", "error", "not_library"]
+
+
+@dataclass(frozen=True)
+class Resolution:
+    media: MediaItem | None
+    reason: ResolveReason
+
+
 def _int_or_none(value: Any) -> int | None:
     return value if isinstance(value, int) and not isinstance(value, bool) else None
 
@@ -124,23 +139,30 @@ class MediaResolver:
         """Drop memoised show details; a library scan can change them."""
         self._shows.clear()
 
-    def resolve(self) -> MediaItem | None:
+    def resolve(self) -> Resolution:
+        try:
+            return self._resolve()
+        except Exception as exc:
+            _log.warning("service.resolve_failed", error=str(exc))
+            return Resolution(None, "error")
+
+    def _resolve(self) -> Resolution:
         with log_timing(_log, "media.resolve") as timer:
             player_id = self._active_player()
             if player_id is None:
-                return None
+                return Resolution(None, "not_listed")
             timer.mark("active_player")
 
             payload = self._kodi.jsonrpc("Player.GetItem", {"playerid": player_id, "properties": _ITEM_PROPERTIES})
             item = payload.get("item")
             if not isinstance(item, dict):
-                return None
+                return Resolution(None, "not_listed")
             timer.mark("get_item")
 
             media_type = str(item.get("type") or "").strip().lower()
             if media_type not in {"episode", "movie"}:
                 _log.info("media.ignored", media_type=media_type or "unknown")
-                return None
+                return Resolution(None, "not_library")
 
             file_path = strip_credentials(str(item.get("file") or ""))
             is_pkc = file_path.startswith(PKC_PREFIX)
@@ -149,6 +171,7 @@ class MediaResolver:
             library_id = raw_id if raw_id is not None and raw_id >= 0 else None
             source: Source = "plexkodiconnect" if is_pkc else "library"
             rating_key = self._rating_key(file_path) if is_pkc else None
+            playcount = _int_or_none(item.get("playcount"))
 
             if media_type == "episode":
                 tvshowid = _int_or_none(item.get("tvshowid"))
@@ -175,6 +198,7 @@ class MediaResolver:
                     is_pkc=is_pkc,
                     plex_rating_key=rating_key,
                     show_year=show_year,
+                    playcount=playcount,
                 )
             else:
                 media = MediaItem(
@@ -192,6 +216,7 @@ class MediaResolver:
                     source=source,
                     is_pkc=is_pkc,
                     plex_rating_key=rating_key,
+                    playcount=playcount,
                 )
 
         _log.info(
@@ -202,7 +227,7 @@ class MediaResolver:
             source=media.source,
             ids=",".join(sorted(media.show_ids)) or "none",
         )
-        return media
+        return Resolution(media, "ok")
 
     def _active_player(self) -> int | None:
         result = self._kodi.jsonrpc("Player.GetActivePlayers")

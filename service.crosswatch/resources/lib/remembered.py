@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
-from typing import NamedTuple
+from typing import Dict, NamedTuple, Tuple
 
 from resources.lib import log as logmod
 from resources.lib import paths
@@ -55,7 +55,7 @@ _log = logmod.get_logger("config")
 REMEMBERED_SLOTS = 15
 
 # (viewer, playlist) pairs whose playlist holds a show, by answer key.
-Covers = dict[str, tuple[tuple[str, str], ...]]
+Covers = Dict[str, Tuple[Tuple[str, str], ...]]
 
 class Show(NamedTuple):
     title: str
@@ -65,7 +65,7 @@ class Show(NamedTuple):
 
 
 # Library shows by answer key.
-Library = dict[str, Show]
+Library = Dict[str, Show]
 
 
 @dataclass(frozen=True)

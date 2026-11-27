@@ -10,6 +10,7 @@ credited viewer gets their own question, or the household one question with shar
 Skip, Back, the countdown and playback starting send nothing; a score is sent only when one
 is chosen, and 0 only for a deliberate Remove (contract, Ratings).
 """
+from __future__ import annotations
 
 from dataclasses import dataclass, replace
 

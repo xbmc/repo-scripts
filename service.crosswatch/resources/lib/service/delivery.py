@@ -4,9 +4,11 @@
 Pairing, a Link, a pasted URL and Unpair all end as a settings change, and this is what
 turns one into a new delivery path without a Kodi restart.
 """
+from __future__ import annotations
 
 import threading
 from collections.abc import Callable
+from typing import Any, Optional, Tuple
 
 from resources.lib import status
 from resources.lib.config import Settings
@@ -15,15 +17,16 @@ from resources.lib.kodi import KodiApi
 from resources.lib.log import get_logger
 from resources.lib.outbox import Outbox, config_fingerprint
 from resources.lib.people import reconcile
-from resources.lib.reporter import EventSink, HttpReporter, InvalidWebhookUrl, LogReporter, OutboxLane
+from resources.lib.reporter import EventSink, HttpReporter, InvalidWebhookUrl, LibrarySyncReply, LogReporter, OutboxLane
 from resources.lib.routes import Person, RouteFacts
 from resources.lib.storage import PromptMemory, RouteStore, ViewerStore
+from resources.lib.sync.reply import PingTicket
 
 _log = get_logger("service")
 
 # The URL the reporter posts to and the token in its header. None for the URL means
 # unconfigured, whatever the token says.
-Endpoint = tuple[str | None, str]
+Endpoint = Tuple[Optional[str], str]
 
 
 def _endpoint(settings: Settings) -> Endpoint:
@@ -39,7 +42,10 @@ class Delivery:
     Unpair, leaves the store alone, so its watches are still there if the same token returns.
 
     The reporter worker notes the instance name from a ping reply; the service thread writes
-    it into the status setting, because everything that talks to Kodi runs there.
+    it into the status setting, because everything that talks to Kodi runs there. A ping
+    reply's library_sync block goes the same way to on_library_sync, and only while its
+    endpoint, token included, is still the current one: a reply from the old server, or sent
+    under a token since replaced, says nothing about the new connection.
     """
 
     def __init__(
@@ -51,6 +57,7 @@ class Delivery:
         viewers: ViewerStore | None = None,
         memory: PromptMemory | None = None,
         on_renamed: Callable[[str, str], None] | None = None,
+        on_library_sync: LibrarySyncReply | None = None,
     ) -> None:
         self._kodi = kodi
         self._outbox_path = outbox_path
@@ -64,6 +71,8 @@ class Delivery:
         self._memory = memory
         self._on_renamed = on_renamed
         self._route_facts: tuple[Endpoint, RouteFacts] | None = None
+        self._on_library_sync = on_library_sync
+        self._sync_reply: tuple[Endpoint, dict[str, Any] | None, PingTicket | None] | None = None
 
     def changed(self, settings: Settings) -> bool:
         return _endpoint(settings) != self._endpoint
@@ -82,6 +91,7 @@ class Delivery:
                 abort=self._abort,
                 on_instance=lambda instance: self._note_instance(endpoint, instance),
                 on_routes=lambda facts: self._note_routes(endpoint, facts),
+                on_library_sync=lambda block, ticket: self._note_sync_reply(endpoint, block, ticket),
             )
         except InvalidWebhookUrl as exc:
             # Fall back to logging rather than posting somewhere unexpected.
@@ -106,6 +116,12 @@ class Delivery:
     def _note_routes(self, endpoint: Endpoint, facts: RouteFacts) -> None:
         with self._lock:
             self._route_facts = (endpoint, facts)
+
+    def _note_sync_reply(self, endpoint: Endpoint, block: dict[str, Any] | None, ticket: PingTicket | None) -> None:
+        with self._lock:
+            # The newest reply wins: each is judged on its own ticket, so an older one that
+            # was not handed over yet adds nothing.
+            self._sync_reply = (endpoint, block, ticket)
 
     def _apply_people(self, people: tuple[Person, ...]) -> None:
         """Link and rename viewers to match CrossWatch's people (contract 1.6).
@@ -143,6 +159,15 @@ class Delivery:
         with self._lock:
             noted, self._instance = self._instance, None
             routed, self._route_facts = self._route_facts, None
+            synced, self._sync_reply = self._sync_reply, None
+        if synced is not None and self._on_library_sync is not None:
+            endpoint, block, ticket = synced
+            if endpoint == self._endpoint and endpoint[0] is not None:
+                try:
+                    self._on_library_sync(block, ticket)
+                except Exception as exc:
+                    # The instance name and routes below still get written.
+                    _log.warning("service.library_sync_not_handed", error=str(exc))
         if routed is not None and self._routes is not None:
             endpoint, facts = routed
             if endpoint == self._endpoint and endpoint[0] is not None:

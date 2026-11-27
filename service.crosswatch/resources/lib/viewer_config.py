@@ -12,6 +12,7 @@ names come from playlists and prompts.
 
 This runs as a separate script with its own module state, so main() configures logging.
 """
+from __future__ import annotations
 
 from collections.abc import Callable, Sequence
 from dataclasses import replace

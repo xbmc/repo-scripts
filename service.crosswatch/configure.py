@@ -4,6 +4,7 @@
 At the addon root, not under resources/, so that the directory CPythonInvoker puts on
 sys.path is the package root and `from resources.lib...` resolves.
 """
+from __future__ import annotations
 
 import sys
 

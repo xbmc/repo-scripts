@@ -6,27 +6,30 @@ its countdown, when Kodi shuts down, and, when asked, when playback starts. Ever
 logged with its reason, so a question that closed itself can be told apart from one the
 household skipped.
 """
-
 from __future__ import annotations
 
 import threading
-from collections.abc import Callable
-from typing import Any
+from typing import Any, Callable, cast
 
 import xbmcgui
 
 from resources.lib.constants import (
     PROMPT_EVERYONE,
+    WHO_WATCHED_DONE,
     WHO_WATCHED_QUESTION,
     WINDOW_CANCEL,
     WINDOW_CLOSE,
     WINDOW_CLOSES_IN,
+    WINDOW_NO,
     WINDOW_SEARCH,
     WINDOW_VIEWER,
+    WINDOW_YES,
 )
 from resources.lib.log import get_logger
 from resources.lib.ui import list_window as lw
 from resources.lib.ui import rating as rt
+from resources.lib.ui import sync_setup as ss
+from resources.lib.ui import sync_status as st
 from resources.lib.ui import viewers_window as vw
 from resources.lib.ui import who_watched as ww
 
@@ -74,6 +77,10 @@ class CrossWatchDialog(xbmcgui.WindowXMLDialog):
         self._finished = threading.Event()
         self._filled = False
         self._thread: threading.Thread | None = None
+        # Set now as well as in onInit: Kodi works out which controls are visible, and so
+        # which one can take the first focus, before onInit runs.
+        for key, value in properties.items():
+            self.setProperty(key, value)
 
     def fill(self) -> None:
         """Populate the window's controls. Called once, from the first onInit."""
@@ -171,7 +178,7 @@ class WhoWatchedDialog(CrossWatchDialog):
                 "CW.Title": request.title,
                 "CW.Subtitle": request.subtitle,
                 "CW.Poster": request.poster,
-                "CW.Question": localised(WHO_WATCHED_QUESTION),
+                "CW.Question": request.question or localised(WHO_WATCHED_QUESTION),
             },
             request.autoclose_seconds,
             request.close_on_playback,
@@ -263,10 +270,15 @@ BUTTON_NO = 11
 class ConfirmDialog(CrossWatchDialog):
     name = "confirm"
 
-    def prepare(self, heading: str, message: str, localised: Localised) -> None:
+    def prepare(self, heading: str, message: str, localised: Localised, yes: str = "", no: str = "") -> None:
         self.configure(
             localised,
-            {"CW.Heading": heading, "CW.Message": message},
+            {
+                "CW.Heading": heading,
+                "CW.Message": message,
+                "CW.YesLabel": yes or localised(WINDOW_YES),
+                "CW.NoLabel": no or localised(WINDOW_NO),
+            },
             autoclose_seconds=0,
             close_on_playback=False,
             is_playing=lambda: False,
@@ -282,6 +294,102 @@ class ConfirmDialog(CrossWatchDialog):
             self.finish("yes", True)
         elif controlId == BUTTON_NO:
             self.finish("no", False)
+
+
+SYNC_STATUS_XML = "crosswatch-sync-status.xml"
+STATUS_ROWS = 100
+BUTTON_SEND_RATINGS = 10
+BUTTON_STATUS_CLOSE = 11
+
+
+class SyncStatusDialog(CrossWatchDialog):
+    """The result is the chosen row's key, SEND_RATINGS, or "" for Close and Back."""
+
+    name = "sync_status"
+
+    def prepare(self, request: st.StatusRequest, localised: Localised) -> None:
+        self._request = request
+        self.configure(
+            localised,
+            {
+                "CW.Heading": request.heading,
+                "CW.State": request.state,
+                "CW.Tone": request.tone,
+                "CW.Summary": request.summary,
+                # One wrapped paragraph: a line per group would outgrow its space with more viewers.
+                "CW.Counts": "   ".join(request.counts),
+                "CW.NeedsYou": request.needs_you,
+                "CW.Empty": "" if request.rows else request.empty,
+                "CW.Note": request.note,
+                "CW.SendRatings": request.send_ratings,
+            },
+            autoclose_seconds=0,
+            close_on_playback=False,
+            is_playing=lambda: False,
+            wait_for_abort=lambda _: False,
+        )
+        self.result = ""
+
+    def fill(self) -> None:
+        rows: Any = self.getControl(STATUS_ROWS)
+        for row in self._request.rows:
+            item = xbmcgui.ListItem(row.text)
+            item.setProperty("problem", "true" if row.problem else "")
+            rows.addItem(item)
+        self.setFocusId(STATUS_ROWS if self._request.rows else BUTTON_STATUS_CLOSE)
+
+    def onClick(self, controlId: int) -> None:
+        if controlId == STATUS_ROWS and self._request.rows:
+            control: Any = self.getControl(STATUS_ROWS)
+            rows = self._request.rows
+            row = rows[min(max(int(control.getSelectedPosition()), 0), len(rows) - 1)]
+            self.finish("row", row.key)
+        elif controlId == BUTTON_SEND_RATINGS and self._request.send_ratings:
+            self.finish("send_ratings", st.SEND_RATINGS)
+        elif controlId == BUTTON_STATUS_CLOSE:
+            self.finish("close", "")
+
+
+SYNC_SETUP_XML = "crosswatch-sync-setup.xml"
+BUTTON_START = 10
+BUTTON_SETUP_CANCEL = 11
+TOGGLE_RATINGS = 12
+BUTTON_SETUP_CLOSE = 13
+
+
+class SyncSetupDialog(CrossWatchDialog):
+    name = "sync_setup"
+
+    def prepare(self, request: ss.SetupRequest, localised: Localised) -> None:
+        self.configure(
+            localised,
+            {
+                "CW.Heading": request.heading,
+                "CW.Intro": request.intro,
+                "CW.Counts": "[CR]".join(request.counts),
+                "CW.Note": request.note,
+                "CW.Warnings": "[CR]".join(request.warnings),
+                "CW.RatingsLabel": request.ratings_label,
+                "CW.CanStart": "1" if request.can_start else "",
+                "CW.CancelLabel": localised(WINDOW_CANCEL if request.can_start else WINDOW_CLOSE),
+            },
+            autoclose_seconds=0,
+            close_on_playback=False,
+            is_playing=lambda: False,
+            wait_for_abort=lambda _: False,
+        )
+        self.result = ss.SetupResult(start=False)
+
+    def fill(self) -> None:
+        # Cancel first: Start writes the record and starts syncing.
+        self.setFocusId(BUTTON_SETUP_CANCEL if self._window_properties.get("CW.CanStart") else BUTTON_SETUP_CLOSE)
+
+    def onClick(self, controlId: int) -> None:
+        if controlId == BUTTON_START and self._window_properties.get("CW.CanStart"):
+            ratings = cast(xbmcgui.ControlRadioButton, self.getControl(TOGGLE_RATINGS)).isSelected()
+            self.finish("start", ss.SetupResult(start=True, existing_ratings=bool(ratings)))
+        elif controlId in (BUTTON_SETUP_CANCEL, BUTTON_SETUP_CLOSE):
+            self.finish("cancel", ss.SetupResult(start=False))
 
 
 VIEWERS_XML = "crosswatch-viewers.xml"
@@ -399,6 +507,8 @@ class ListDialog(CrossWatchDialog):
             {
                 "CW.Heading": request.heading,
                 "CW.Close": localised(WINDOW_CLOSE),
+                "CW.DoneLabel": localised(WINDOW_CLOSE if request.read_only else WHO_WATCHED_DONE),
+                "CW.ReadOnly": "1" if request.read_only else "",
             },
             autoclose_seconds=0,
             close_on_playback=False,
@@ -446,7 +556,7 @@ class ListDialog(CrossWatchDialog):
         elif controlId == BUTTON_BULK and lw.bulk_label(self._request, len(self._shown)):
             keys = tuple(row.key for row in self._shown)
             self.finish("bulk", lw.ListResult("bulk", self.state(), keys=keys))
-        elif controlId == BUTTON_CLOSE:
+        elif controlId == BUTTON_CLOSE or (controlId == BUTTON_PICK_DONE and self._request.read_only):
             self.finish("close", lw.ListResult("close", self.state()))
 
     def _read_search(self) -> None:

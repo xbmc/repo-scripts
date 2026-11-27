@@ -28,6 +28,8 @@ class WhoWatchedRequest:
     # 0 for none. The question at the end of playback must not park the service thread.
     autoclose_seconds: int = 0
     close_on_playback: bool = False
+    # Empty asks who watched it.
+    question: str = ""
 
 
 def initial(request: WhoWatchedRequest) -> frozenset[str]:

@@ -39,3 +39,23 @@ def routes_path(kodi: KodiApi) -> str:
 
 def log_dir(kodi: KodiApi) -> str:
     return os.path.join(profile_dir(kodi), "logs")
+
+
+def sync_db_path(kodi: KodiApi) -> str:
+    return os.path.join(profile_dir(kodi), "sync.db")
+
+
+def sync_inbox_path(kodi: KodiApi) -> str:
+    return os.path.join(profile_dir(kodi), "sync_inbox.db")
+
+
+def sync_started_path(kodi: KodiApi) -> str:
+    return os.path.join(profile_dir(kodi), "sync_started.json")
+
+
+def sync_requests_path(kodi: KodiApi) -> str:
+    return os.path.join(profile_dir(kodi), "sync_requests.json")
+
+
+def sync_status_path(kodi: KodiApi) -> str:
+    return os.path.join(profile_dir(kodi), "sync_status.json")

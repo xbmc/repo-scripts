@@ -9,15 +9,16 @@ disabled webhook source and for a route with no sink configured.
 Each event is delivered only within two minutes of being handed over, which is the
 contract's retry window measured from the event rather than from the attempt.
 """
+from __future__ import annotations
 
 import http.client
 import json
 import queue
 import threading
 import time
-from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Literal, Protocol
+from dataclasses import replace as dc_replace
+from typing import Any, Callable, Dict, Literal, Optional, Protocol, Union
 from urllib.parse import urlsplit
 
 from resources.lib.constants import (
@@ -33,16 +34,21 @@ from resources.lib.models import Device, PingEvent, PlaybackEvent
 from resources.lib.outbox import Outbox
 from resources.lib.payload import build_payload
 from resources.lib.routes import RouteFacts, parse_routes
+from resources.lib.sync.reply import PingTicket, connection_id
 
 _log = get_logger("reporter")
 
 ALLOWED_SCHEMES = ("http", "https")
 
-Event = PlaybackEvent | PingEvent
+Event = Union[PlaybackEvent, PingEvent]
 
 # accepted: delivered. refused: a decision, not a hiccup, so never worth sending again.
 # unreachable: nothing decided, so a later attempt may still succeed.
 Verdict = Literal["accepted", "refused", "unreachable"]
+
+# A ping reply's library_sync block (None when it had none, or was a 4xx) and the ticket the
+# ping carried.
+LibrarySyncReply = Callable[[Optional[Dict[str, Any]], Optional[PingTicket]], None]
 
 # One attempt's result. foreign: a 3xx or 4xx without CrossWatch's reply shape, such as a
 # reverse proxy's login page. Not retried live, like any 4xx, but it says nothing about the
@@ -179,6 +185,7 @@ class HttpReporter:
         sleeper: Callable[[float], bool] | None = None,
         on_instance: Callable[[str], None] | None = None,
         on_routes: Callable[[RouteFacts], None] | None = None,
+        on_library_sync: LibrarySyncReply | None = None,
     ) -> None:
         target = target_of(url)
         self._scheme = target.scheme
@@ -188,6 +195,7 @@ class HttpReporter:
         self._timeout = timeout
         self._factory = connection_factory or open_connection
         self._safe_url = redact(url)
+        self._connection = connection_id(url)
         self._abort = abort
         self._clock = clock
         # Returns True when the wait was cut short by abort, matching Event.wait.
@@ -198,6 +206,9 @@ class HttpReporter:
         # Likewise with the routes the reply lists, so the viewer list can mark a viewer no
         # route takes.
         self._on_routes = on_routes
+        # Every CrossWatch answer to a ping, ignored ones included: a reply with ignored true
+        # still carries the block, and a 4xx tells library sync the ping got no answer.
+        self._on_library_sync = on_library_sync
         self._headers = {"Content-Type": "application/json"}
         if token:
             # The header only: a token in the query string ends up in proxy and access logs.
@@ -221,13 +232,20 @@ class HttpReporter:
         the next playback's start. Blocking the worker is harmless; nothing waits on it and
         the service thread is a different thread.
         """
+        if isinstance(event, PingEvent) and (event.library_sync is not None or event.ticket is not None):
+            if event.ticket is None or event.ticket.connection != self._connection:
+                # Built for another pairing and still queued when this one replaced it: a
+                # block here would make this device the sync device without Start, and the
+                # reply would be judged against the other server's uploads.
+                event = dc_replace(event, library_sync=None, ticket=None)
         body = json.dumps(build_payload(event, device)).encode("utf-8")
         kind = event_kind(event)
+        ticket = event.ticket if isinstance(event, PingEvent) else None
         if deadline is None:
             deadline = self._clock() + RETRY_BUDGET_SECONDS
         attempts = 0
         while True:
-            outcome = self._attempt(body, kind)
+            outcome = self._attempt(body, kind, ticket)
             attempts += 1
             if outcome != "retry":
                 return outcome == "delivered"
@@ -255,7 +273,7 @@ class HttpReporter:
             return "accepted"
         return "refused" if outcome == "refused" else "unreachable"
 
-    def _attempt(self, body: bytes, kind: str) -> _Outcome:
+    def _attempt(self, body: bytes, kind: str, ticket: PingTicket | None = None) -> _Outcome:
         """One request, judged.
 
         A fresh connection per attempt, closed before returning. Events are a minute or more
@@ -269,14 +287,14 @@ class HttpReporter:
             _log.warning("reporter.failed", url=self._safe_url, event=kind, error=str(exc))
             return "retry"
         try:
-            return self._exchange(connection, body, kind)
+            return self._exchange(connection, body, kind, ticket)
         finally:
             try:
                 connection.close()
             except Exception:
                 pass
 
-    def _exchange(self, connection: Any, body: bytes, kind: str) -> _Outcome:
+    def _exchange(self, connection: Any, body: bytes, kind: str, ticket: PingTicket | None) -> _Outcome:
         try:
             connection.request("POST", self._path, body=body, headers=dict(self._headers))
         except Exception as exc:
@@ -309,8 +327,23 @@ class HttpReporter:
             # A 4xx is a decision, not a hiccup. 401 is a bad token; retrying for two minutes
             # helps nobody and delays every event behind it.
             _log.warning("reporter.rejected", url=self._safe_url, event=kind, status=status)
+            if kind == "ping":
+                self._note_library_sync(None, ticket)
             return "refused"
+        if kind == "ping" and "ok" in parsed:
+            # Before the ignored check: a ping CrossWatch ignores still carries the block.
+            block = parsed.get("library_sync")
+            self._note_library_sync(block if isinstance(block, dict) else None, ticket)
         return self._accepted(kind, status, parsed, body)
+
+    def _note_library_sync(self, block: dict[str, Any] | None, ticket: PingTicket | None) -> None:
+        if self._on_library_sync is None:
+            return
+        try:
+            self._on_library_sync(block, ticket)
+        except Exception as exc:
+            # Library sync never turns a delivery into a failure.
+            _log.warning("reporter.library_sync_not_noted", error=str(exc))
 
     def _accepted(self, kind: str, status: int, parsed: dict[str, Any], body: bytes) -> _Outcome:
         if parsed.get("ignored") is True or parsed.get("activity_recorded") is False:
@@ -424,6 +457,17 @@ class ReporterQueue:
         self._sequence = 0
         self._thread = threading.Thread(target=self._run, name="crosswatch-reporter", daemon=True)
         self._thread.start()
+
+    @property
+    def device(self) -> Device:
+        return self._device
+
+    def set_device(self, device: Device) -> None:
+        """Send as this device from the next event on: its id is a setting that can change.
+
+        Events already queued go out under the new id too; one attribute, so no lock.
+        """
+        self._device = device
 
     def replace(self, sink: EventSink, outbox: OutboxLane | None) -> None:
         """Send from now on to another server, or to none.

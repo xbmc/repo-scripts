@@ -6,6 +6,7 @@ over at the link and again whenever it changes, because the profile name is what
 routes on. Pure, so the service and the
 settings script share it without either importing the other.
 """
+from __future__ import annotations
 
 import unicodedata
 from collections.abc import Collection, Sequence

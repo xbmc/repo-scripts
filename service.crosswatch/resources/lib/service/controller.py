@@ -8,11 +8,15 @@ Everything here runs on the service thread, including the callbacks: Kodi queues
 executes them from Monitor.waitForAbort. There is therefore no concurrency to guard, and no
 locks. Callbacks can however arrive nested: the prompt window's doModal runs them too, in the
 middle of _flush_pending, which is written for that, and so do the rating windows that
-follow a stop. The reporter worker is the only other thread and it touches only its own queue.
+follow a stop. The reporter worker touches only its own queue. Library sync's worker reads
+`snapshot`, which is replaced whole on this thread and never changed in place.
 """
+from __future__ import annotations
 
+import threading
 from collections.abc import Callable
 from dataclasses import replace
+from typing import Any
 
 from resources.lib import identity as identity_mod
 from resources.lib import prompt as prompt_mod
@@ -28,15 +32,21 @@ from resources.lib.constants import (
     PING_INTERVAL_SECONDS,
     PROMPT_AUTOCLOSE_SECONDS,
     RATING_AUTOCLOSE_SECONDS,
+    TICK_SECONDS,
 )
 from resources.lib.kodi import WINDOW_INVALID, KodiApi
 from resources.lib.log import get_logger
-from resources.lib.media import MediaResolver
+from resources.lib.media import MediaResolver, Resolution
 from resources.lib.models import EventKind, MediaItem, PingEvent, PlaybackEvent, Viewer
 from resources.lib.playlist_index import IndexBuilder, PlaylistIndex
 from resources.lib.reporter import EventQueue
 from resources.lib.service.session import PlaybackSession
 from resources.lib.storage import PromptMemory, ViewerStore
+from resources.lib.sync.files import Inbox
+from resources.lib.sync.local import PersonBuffer, RecentPlays, kodi_counts_play, kodi_playcount_percent
+from resources.lib.sync.ownership import EMPTY_SNAPSHOT, IndexSnapshot
+from resources.lib.sync.reply import PingTicket
+from resources.lib.sync.writer import OwnWrites, episode_counts, restore_copies
 from resources.lib.ui.rating import RATE_FAILED, RateRequest, counter_text, question_text
 
 _log = get_logger("service")
@@ -55,6 +65,16 @@ class Controller:
         clock: Callable[[], str],
         monotonic: Callable[[], float],
         ids: Callable[[], str],
+        rebuild_requested: threading.Event | None = None,
+        library_sync_block: Callable[[Settings], tuple[dict[str, Any], PingTicket] | None] | None = None,
+        ping_requested: threading.Event | None = None,
+        recent_plays: RecentPlays | None = None,
+        person_buffer: PersonBuffer | None = None,
+        inbox: Inbox | None = None,
+        on_inbox: Callable[[], None] | None = None,
+        own: OwnWrites | None = None,
+        on_rating_written: Callable[[str, int, int, tuple[str, ...]], None] | None = None,
+        on_window: Callable[[bool], None] | None = None,
     ) -> None:
         self._kodi = kodi
         self._store = viewer_store
@@ -86,6 +106,37 @@ class Controller:
         self._pinged_names: tuple[str, ...] | None = None
         self._shutting_down = False
         self._ratings = rating_mod.RatingQueue()
+        # Set by library sync when the library's shows changed under the index.
+        self._rebuild_requested = rebuild_requested
+        # Library sync decides ownership on its own thread, so it gets an immutable snapshot,
+        # replaced as a whole on this thread and never mutated.
+        self.snapshot: IndexSnapshot = EMPTY_SNAPSHOT
+        # Builds the ping's library_sync block; None leaves it out (sync/ping.py).
+        self._library_sync_block = library_sync_block
+        # Set by library sync when it needs CrossWatch's answer before the next interval.
+        self._ping_requested = ping_requested
+        # Library sync tells playback's own play count from a person's mark by these. Kodi
+        # reads advancedsettings.xml only at its own start, so the threshold is read once.
+        self._plays = recent_plays
+        self._playcount_percent = kodi_playcount_percent(kodi) if recent_plays is not None else 0.0
+        # The item a play skipped as PlexKodiConnect: it has no session, but its stop still
+        # ends the play for library sync.
+        self._skipped_play: tuple[str, int] | None = None
+        # A person's marks, written to the inbox on the tick (sync/local.py).
+        self._person_buffer = person_buffer
+        self._inbox = inbox
+        self._on_inbox = on_inbox
+        # Marks are in the inbox file and the worker hasn't been told yet.
+        self._inbox_untold = False
+        # The rating window's own library writes, so library sync knows them (writer.OwnWrites).
+        self._own = own
+        self._on_rating_written = on_rating_written
+        self._own_writes = 0
+        # True from a rating run's first window until the run returns: library sync neither
+        # writes to Kodi nor scans ratings meanwhile. on_window hears each change on the
+        # service thread as the window opens and closes; library sync runs on its own thread.
+        self.rating_run_open = False
+        self._on_window = on_window
 
     # -- lifecycle ---------------------------------------------------------
 
@@ -96,8 +147,26 @@ class Controller:
             dropped = self._ratings.clear()
             if dropped:
                 _log.info("rating.dropped", reason="settings", count=dropped)
+        previous = self._settings
         self._settings = settings
         self._thresholds = thresholds
+        if previous.sync_enabled != settings.sync_enabled:
+            # Turning sync off releases this device at CrossWatch only through a ping, so it
+            # goes now rather than at the end of the interval.
+            self.ping_now()
+        same_apart_from_sync = (
+            replace(
+                previous,
+                sync_enabled=settings.sync_enabled,
+                sync_settings=settings.sync_settings,
+                sync_request=settings.sync_request,
+            )
+            == settings
+        )
+        if same_apart_from_sync and previous != settings:
+            # Library sync's own settings, and the bump its scripts make after leaving a
+            # request, change nothing the playlist index is built from.
+            return
         self.invalidate_index()
 
     def ping_now(self) -> None:
@@ -126,6 +195,9 @@ class Controller:
         if self._index is not None:
             self._index = self._index.renamed(old, new)
             self._index_viewers = tuple(replace(v, name=new) if v.name == old else v for v in self._index_viewers)
+            # The build time is kept: a rename changes no membership, and a later stamp would
+            # make an index that was already invalidated look current to library sync.
+            self._publish_snapshot(built_at=self.snapshot.built_at)
         self._builder = None
 
     def invalidate_index(self) -> None:
@@ -134,7 +206,18 @@ class Controller:
         self._failures = 0
         self._failed_at = None
         self._media.forget_shows()
+        self.snapshot = replace(self.snapshot, invalidated_at=self._monotonic())
         _log.info("service.index_invalidated")
+
+    def _publish_snapshot(self, built_at: float) -> None:
+        index = self._index
+        self.snapshot = IndexSnapshot(
+            index=index,
+            built_at=built_at,
+            invalidated_at=self.snapshot.invalidated_at,
+            viewers=self._index_viewers,
+            unreadable=tuple(sorted(index.unreadable)) if index is not None else (),
+        )
 
     # -- playback callbacks ------------------------------------------------
 
@@ -149,18 +232,19 @@ class Controller:
         # a stopped session installed: the tick would then sample the new item into it and
         # emit a second stop under the same session_id.
         self._session = None
+        self._skipped_play = None
 
-        try:
-            media = self._media.resolve()
-        except Exception as exc:
-            _log.warning("service.resolve_failed", error=str(exc))
-            return
+        resolution = self._media.resolve()
+        self._note_play_started(resolution)
+        media = resolution.media
         if media is None:
             return
         if media.is_pkc and self._settings.skip_pkc:
             # Skipped before a session exists. A session that never emits would still hold
             # the index build off the idle tick for the whole playback.
             self.pkc_skipped += 1
+            if media.library_id is not None:
+                self._skipped_play = (media.media_type, media.library_id)
             _log.info("service.playback_skipped", reason="plexkodiconnect", count=self.pkc_skipped)
             return
 
@@ -189,18 +273,27 @@ class Controller:
             _log.info("service.event_dropped", kind="seek", reason="no_session")
             return
         session.note_seek()
+        # Sampled here too: a jump to the end followed by Stop within a tick would otherwise
+        # leave library sync judging Kodi's play count from the position before the jump.
+        session.sample(*self._kodi.player_times())
 
     def on_stopped(self, completed: bool) -> None:
         """Park only. Emission happens from the tick, so the callback stays trivial."""
         session = self._session
         self._session = None
         if session is None:
+            skipped, self._skipped_play = self._skipped_play, None
+            if skipped is not None and self._plays is not None:
+                # Kodi raised or will raise its count by its own rule, which the add-on can't
+                # judge without a session, so the one raise is taken for playback's.
+                self._plays.stopped(skipped[0], skipped[1], raised=True, now=self._monotonic())
             _log.info("service.event_dropped", kind="stop", reason="no_session")
             return
         self._park(session, reason="callback", completed=completed)
 
     def on_abort(self) -> None:
         self._shutting_down = True
+        self._flush_marks()
         dropped = self._ratings.clear()
         if dropped:
             _log.info("rating.dropped", reason="shutdown", count=dropped)
@@ -215,6 +308,16 @@ class Controller:
         # Sampled from the monitor, not from on_abort: no tick runs after abort, so a flag
         # set there could never reach the gate.
         self._shutting_down = shutting_down
+        # First, before any early return: a mark must reach the inbox file during playback too.
+        self._flush_marks()
+        if self._plays is not None:
+            if self._kodi.is_playing():
+                self._plays.active()
+            else:
+                self._plays.quiet(self._monotonic())
+        if self._ping_requested is not None and self._ping_requested.is_set():
+            self._ping_requested.clear()
+            self.ping_now()
         self._flush_pending(allow_prompt=True)
         # After the flush, never before: the queue is FIFO and the worker blocks, so a ping
         # submitted first sits in front of the parked stop and can cost it at shutdown.
@@ -242,9 +345,7 @@ class Controller:
             self._park(session, reason="liveness")
             return
         session.sample(*self._kodi.player_times())
-        if session.should_emit_progress(
-            self._monotonic(), self._settings.progress_interval_seconds, self._paused
-        ):
+        if session.should_emit_progress(self._monotonic(), self._settings.progress_interval_seconds, self._paused):
             self._emit("progress", session)
 
     def _tick_idle(self) -> None:
@@ -253,6 +354,9 @@ class Controller:
         A .xsp expansion costs a whole-library query, so it must never land on the start of
         playback, and it must not run long enough in one tick to delay a callback.
         """
+        if self._rebuild_requested is not None and self._rebuild_requested.is_set():
+            self._rebuild_requested.clear()
+            self.invalidate_index()
         if self._builder is None:
             if not self._needs_index():
                 return
@@ -266,6 +370,8 @@ class Controller:
         if built is not None:
             self._index = built
             self._index_viewers = self._building_for
+            # Published degraded too: the snapshot says so, and sync waits for a clean one.
+            self._publish_snapshot(built_at=self._monotonic())
             if built.degraded:
                 # Published, but not current. A degraded viewer has no membership at all
                 # until a build succeeds, so the index stays dirty and the failure backoff
@@ -355,13 +461,63 @@ class Controller:
         ignore_percent_at_end is for.
         """
         self._paused = False
+        ended = completed is True
+        percent = session.percent()
         if completed is None:
-            percent = session.percent()
             completed = percent is not None and percent >= (100.0 - self._thresholds.ignore_percent_at_end)
+        self._note_play_stopped(session, 100.0 if ended else percent, known=reason == "callback")
         if completed:
             session.mark_complete()
         self._pending_stop = session
         _log.debug("service.stop_parked", session_id=session.session_id, reason=reason, completed=completed)
+
+    # -- library sync ------------------------------------------------------
+
+    def _note_play_started(self, resolution: Resolution) -> None:
+        plays = self._plays
+        if plays is None:
+            return
+        now = self._monotonic()
+        media = resolution.media
+        if media is not None and media.library_id is not None:
+            plays.started(media.media_type, media.library_id, media.playcount, now)
+        elif resolution.reason in ("not_listed", "error") and self._kodi.is_playing_video():
+            # A library item may be playing under an id the add-on couldn't read.
+            plays.started(None, None, None, now)
+        else:
+            # Music, live TV or a file outside the library has no library row to announce,
+            # but it ends a video play that couldn't be resolved. A plugin item Kodi finds
+            # by its path in the library announces that row (SaveFileStateJob.cpp:86-97),
+            # which is server-backed and never a person's mark.
+            plays.quiet(now)
+
+    def _note_play_stopped(self, session: PlaybackSession, percent: float | None, *, known: bool) -> None:
+        """Every park reason ends the play. known is a stop callback: only then has Kodi
+        closed the file, judging the position at that moment. For a liveness, superseded or
+        abort park the close may still be coming from a position the add-on never sampled,
+        so the play's one raise stays covered. percent is the last sample, or 100 when Kodi
+        reported the end; a sample trails Kodi's position by up to one tick."""
+        plays = self._plays
+        media = session.media
+        if plays is None or media.library_id is None:
+            return
+        band = TICK_SECONDS * 100_000.0 / session.duration_ms if session.duration_ms else 0.0
+        raised = not known or kodi_counts_play(percent, self._playcount_percent, band)
+        plays.stopped(media.media_type, media.library_id, raised, self._monotonic())
+
+    def _flush_marks(self) -> None:
+        buffer, inbox = self._person_buffer, self._inbox
+        if buffer is None or inbox is None:
+            return
+        try:
+            if buffer.flush(inbox):
+                self._inbox_untold = True
+            if self._inbox_untold and self._on_inbox is not None:
+                self._on_inbox()
+                self._inbox_untold = False
+        except Exception as exc:
+            # Marks not written stay buffered, and the worker is told on the next tick.
+            _log.warning("service.inbox_flush_failed", error=str(exc))
 
     def _flush_pending(self, allow_prompt: bool) -> None:
         session = self._pending_stop
@@ -406,7 +562,11 @@ class Controller:
             )
             if not decision.ask:
                 return ""
-            names = prompt_mod.ask(self._kodi, viewers, session.media, PROMPT_AUTOCLOSE_SECONDS)
+            self._window(True)
+            try:
+                names = prompt_mod.ask(self._kodi, viewers, session.media, PROMPT_AUTOCLOSE_SECONDS)
+            finally:
+                self._window(False)
             if not names:
                 return "declined"
             session.identity = identity_mod.Identity(names, "prompt")
@@ -441,7 +601,22 @@ class Controller:
         # After each watch, a stop flushed because the next item started is not rated: the
         # household is watching that next item.
 
+    def _window(self, open_: bool) -> None:
+        if self._on_window is not None:
+            try:
+                self._on_window(open_)
+            except Exception as exc:
+                _log.warning("service.window_not_told", error=str(exc))
+
     def _run_ratings(self, watches: list[rating_mod.Watch], after_window: bool) -> None:
+        try:
+            self._rate_all(watches, after_window)
+        finally:
+            if self.rating_run_open:
+                self.rating_run_open = False
+                self._window(False)
+
+    def _rate_all(self, watches: list[rating_mod.Watch], after_window: bool) -> None:
         viewers = self._viewers()
         plan = [(w, rating_mod.questions(w, viewers, self._settings.rating_shared)) for w in watches]
         total = sum(len(qs) for _, qs in plan)
@@ -461,6 +636,7 @@ class Controller:
                 return
             subtitle, poster = prompt_mod.header(self._kodi, watch.media)
             scores: list[int] = []
+            rated: list[str] = []
             for question in questions:
                 index += 1
                 request = RateRequest(
@@ -472,6 +648,9 @@ class Controller:
                     autoclose_seconds=RATING_AUTOCLOSE_SECONDS,
                     close_on_playback=True,
                 )
+                if not self.rating_run_open:
+                    self.rating_run_open = True
+                    self._window(True)
                 score = self._kodi.rate(request)
                 after_window = True
                 if score == RATE_FAILED:
@@ -480,13 +659,14 @@ class Controller:
                     return
                 if score is not None:
                     scores.append(score)
+                    rated.extend(question.targets)
                     for target in question.targets or (None,):
                         self._emit_rate(watch, target, score)
                 if self._kodi.is_playing():
-                    self._write_back(watch, scores)
+                    self._write_back(watch, scores, rated)
                     self._abandon(total - index)
                     return
-            self._write_back(watch, scores)
+            self._write_back(watch, scores, rated)
 
     def _abandon(self, left: int) -> None:
         dropped = self._ratings.clear()
@@ -511,7 +691,7 @@ class Controller:
         if not self._queue.submit(event):
             _log.warning("rating.not_queued", session_id=watch.session_id)
 
-    def _write_back(self, watch: rating_mod.Watch, scores: list[int]) -> None:
+    def _write_back(self, watch: rating_mod.Watch, scores: list[int], rated: list[str]) -> None:
         if not self._settings.rating_write_library or not scores:
             return
         media = watch.media
@@ -522,8 +702,42 @@ class Controller:
         if value is None:
             _log.info("rating.library_skipped", media_type=media.media_type, reason="scores_differ")
             return
-        if self._kodi.set_user_rating(media.media_type, media.library_id, value):
+        before = self._episode_counts(media)
+        if media.media_type == "episode" and self._own is not None and before is None:
+            # Without the counts a play count Kodi copies over from another watched copy
+            # couldn't be put back, so the write waits, as the library sync writer's does.
+            _log.info("rating.library_skipped", media_type=media.media_type, reason="counts_unreadable")
+            return
+        written = self._kodi.set_user_rating(media.media_type, media.library_id, value)
+        if written:
             _log.info("rating.library_written", media_type=media.media_type, library_id=media.library_id)
+        if written and before is not None and self._own is not None:
+            # SetEpisodeDetails copies another watched copy's play count onto this episode
+            # first, silently (VideoDatabase.cpp SetDetailsForEpisode); put it back, as the
+            # library sync writer does, under a note so the restore isn't a person's mark.
+            self._own_writes += 1
+            try:
+                restore_copies(self._kodi, self._own, media.library_id, before, f"controller-{self._own_writes}")
+            except Exception as exc:
+                _log.warning("rating.restore_failed", library_id=media.library_id, error=str(exc))
+        if self._on_rating_written is not None:
+            # Told even when Kodi's answer was lost: the write may have landed, and library
+            # sync reads the row back and records only what Kodi holds.
+            ids = {v.name: v.sync_id for v in self._viewers() if v.sync_id}
+            sync_ids = tuple(dict.fromkeys(ids[name] for name in rated if name in ids))
+            try:
+                self._on_rating_written(media.media_type, media.library_id, value, sync_ids)
+            except Exception as exc:
+                _log.warning("rating.sync_not_told", library_id=media.library_id, error=str(exc))
+
+    def _episode_counts(self, media: MediaItem) -> tuple[int, str] | None:
+        if media.media_type != "episode" or media.library_id is None or self._own is None:
+            return None
+        try:
+            return episode_counts(self._kodi, media.library_id)
+        except Exception as exc:
+            _log.warning("rating.counts_failed", library_id=media.library_id, error=str(exc))
+            return None
 
     # -- helpers -----------------------------------------------------------
 
@@ -546,12 +760,15 @@ class Controller:
         recent = self._last_ping_at is not None and (now - self._last_ping_at) < PING_INTERVAL_SECONDS
         if recent and names == self._pinged_names:
             return
+        block, ticket = self._sync_block()
         queued = self._queue.submit(
             PingEvent(
                 event_id=self._ids(),
                 sent_at=self._clock(),
                 viewers=names,
                 pkc_skipped=self.pkc_skipped,
+                library_sync=block,
+                ticket=ticket,
             )
         )
         if not queued:
@@ -562,6 +779,17 @@ class Controller:
         self._last_ping_at = now
         self._pinged_names = names
         _log.info("service.ping", viewers_count=len(names), pkc_skipped=self.pkc_skipped)
+
+    def _sync_block(self) -> tuple[dict[str, Any] | None, PingTicket | None]:
+        if self._library_sync_block is None:
+            return None, None
+        try:
+            built = self._library_sync_block(self._settings)
+        except Exception as exc:
+            # The ping still goes: without a block CrossWatch changes nothing about sync.
+            _log.warning("service.library_sync_block_failed", error=str(exc))
+            return None, None
+        return built if built is not None else (None, None)
 
     @staticmethod
     def _has_usable_id(media: MediaItem) -> bool:

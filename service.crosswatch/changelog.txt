@@ -1,6 +1,135 @@
 CrossWatch for Kodi Changelog
 =============================
 
+v1.1.4 (2026-11-27)
+-------------------
+Bug Fixes:
+  - Fixed: a rating from the rating window on a direct-path
+    PlexKodiConnect or Jellyfin for Kodi item added since the last
+    library read was recorded and sent. _rating_writes now reads the
+    server add-ons' maps again, as _drain_inbox does, and keeps the
+    writes when a map can't be read.
+
+Internal:
+  - Found by the kodi-review bot on xbmc/repo-scripts#2996.
+
+v1.1.3 (2026-11-27)
+-------------------
+Bug Fixes:
+  - Fixed: the add-on did not load on Kodi 21 for Windows and Xbox,
+    which bundle Python 3.8.15 (Omega's BuildDependencies); only the
+    depends builds use 3.11.7. Builtin generics and X | Y in
+    annotations raised TypeError when a module loaded. Every module now
+    starts with "from __future__ import annotations" (ruff
+    required-imports enforces it), module-level aliases use typing
+    names, and the remaining 3.9+ calls (dict | dict,
+    str.removeprefix, dataclass kw_only) are gone or applied only from
+    3.10.
+  - Fixed: after an incomplete library read, library sync ran rating
+    scans back to back until the next full, since a scan over an
+    incomplete read never completes. The scan time is now recorded
+    unless the scan was cut short, and an incomplete read asks for a
+    full, which reads the library again.
+  - Fixed: a hand mark on a PlexKodiConnect or Jellyfin for Kodi item
+    (plugin://) added since the last library read, or a rating from the
+    rating window on any media server item, could be recorded and sent.
+    _drain_one checks the freshly read row's file and _rating_writes
+    skips server-backed rows.
+
+Internal:
+  - pyright checks against Python 3.8 and ruff targets py38. pyright's
+    stubs no longer cover 3.8, so the test suite was also run under
+    Python 3.8.20 (pytest 8.3.5): 2570 passed.
+
+v1.1.2 (2026-11-26)
+-------------------
+Bug Fixes:
+  - Fixed: library sync went round forever when 100 or more hand marks
+    waited for a show the last library read didn't have (a show with
+    many episodes scanned in and marked watched straight away). A full
+    batch asked for another drain at once, and DrainInbox outranks the
+    ReadLibrary those marks wait for. A pass now drains again only when
+    it consumed something other than waiting marks.
+  - Fixed: marks waiting for a show could be lost when the inbox file
+    was busy: they went back in the inbox after the commit that moved
+    inbox_applied past them, and the remove after it deleted them. They
+    now go back first; when that fails, _InboxBusy is raised before the
+    commit and the worker retries the batch after its pause.
+  - Fixed: with CrossWatch unreachable, Kodi's exit could wait the full
+    10 s HTTP timeout, since SyncClient.cancel() can't end a connect in
+    progress. The connect now has its own 2 s timeout
+    (CONNECT_TIMEOUT_SECONDS); the request and reply keep 10 s, and an
+    abort during the connect gets the shutdown timeout.
+
+Internal:
+  - All three were found by the kodi-review bot on
+    xbmc/repo-scripts#2996.
+
+v1.1.1 (2026-11-26)
+-------------------
+Bug Fixes:
+  - Fixed: the add-on did not load on a Kodi 21 built with Python 3.10
+    (Kodi's own builds ship 3.11): typing.Self (playlist_index.py,
+    since 1.0.0) and datetime.UTC (sync/clock.py, sync/screens.py,
+    since 1.1.0) exist only from 3.11. Replaced with the class name and
+    timezone.utc.
+  - Fixed: library sync parsed Kodi's timestamps with
+    datetime.strptime, which in Kodi can raise TypeError after its
+    first use in a session. kodi_to_utc now uses time.strptime, and
+    the status screen's "ago" text the shared parse_utc.
+
+Internal:
+  - pyright checks against Python 3.10 and ruff targets py310, so a
+    name that needs 3.11 fails the gates. The test suite also passed
+    under Python 3.10.21.
+
+v1.1.0 (2026-11-26)
+-------------------
+New Features:
+  - Library sync (#72): each viewer's watched state, play count, last
+    played date, rating and resume point from their services is
+    written into Kodi's library for the items that viewer owns, and a
+    watched mark or rating made by hand in Kodi goes up to that
+    viewer's services. Follows docs/contract-sync.md (v1, CrossWatch
+    0.15.0): the add-on uploads each viewer's state (a full, then
+    deltas), fetches the changes CrossWatch queues, writes them into
+    the library in small batches and acks them, so CrossWatch never
+    connects to Kodi. Playback reporting is unchanged and works with
+    library sync off.
+  - Ownership follows the viewer rules (smart playlists, profiles,
+    remembered answers, the only viewer). An item with several owners
+    syncs for each of them; a hand change on one waits on the status
+    screen ("Whose was this?") until someone answers.
+  - Removals (an unwatch, a cleared rating) are sent and written only
+    with "Send removals made in Kodi" on; otherwise the viewer's record
+    keeps the watch and the rating.
+  - Sync waits during playback, library scans, open questions and
+    unreadable playlists. One device per library, the sync device,
+    syncs; other devices sharing the library keep reporting playback.
+  - New windows: Set up library sync (owners per viewer, Start, the
+    existing ratings option) and Library sync status (state, last
+    upload, problems and questions). New settings category Library
+    sync: sync this library, send removals, when a shared item counts
+    as watched.
+  - Ratings already in Kodi can be sent at the first Start. More than
+    50 rating changes in one check (as after restoring a database
+    backup) are held until confirmed on the status screen.
+  - Items PlexKodiConnect and Jellyfin for Kodi add to the library are
+    left out, with add-on paths and with direct paths (read from the
+    add-on's plex.db or jellyfin.db); Emby for Kodi in add-on mode
+    only.
+
+Internal:
+  - The library is read page by page up to the reported total: Kodi
+    applies LIMIT before it drops rows in locked sources, so a page can
+    come back short or empty with more rows after it.
+  - Each library sync write batch is logged with its duration.
+  - Tested on Kodi 21.3: playback reporting against CrossWatch
+    v0.13.6; library sync against CrossWatch main at 73c53ff7 with its
+    local tracker and a Trakt test account, and at 40d421ce, the code
+    of 0.15.0, with the local tracker. Library sync was not run on
+    Kodi 22 or with PlexKodiConnect.
+
 v1.0.1 (2026-10-20)
 -------------------
 Bug Fixes:

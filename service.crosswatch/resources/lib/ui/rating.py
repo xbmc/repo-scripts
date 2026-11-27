@@ -3,8 +3,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Callable
 
 from resources.lib.constants import RATING_QUESTION_HOUSEHOLD, RATING_QUESTION_NAMED, RATING_WORDS, WINDOW_COUNT_SOME
 

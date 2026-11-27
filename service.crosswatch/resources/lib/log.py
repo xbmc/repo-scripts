@@ -9,6 +9,7 @@ Every value is escaped and redacted on the way out. The webhook token is a query
 and urllib puts whole URLs into exception messages, so one un-redacted error=str(exc) at any
 future call site would otherwise leak a credential at ERROR.
 """
+from __future__ import annotations
 
 import os
 import re
@@ -219,7 +220,7 @@ class StructuredLogger:
         self._name = name
         self._bound = dict(bound or {})
 
-    def bind(self, **fields: Any) -> "StructuredLogger":
+    def bind(self, **fields: Any) -> StructuredLogger:
         return StructuredLogger(self._name, {**self._bound, **fields})
 
     def _emit(self, level: int, event: str, fields: dict[str, Any]) -> None:

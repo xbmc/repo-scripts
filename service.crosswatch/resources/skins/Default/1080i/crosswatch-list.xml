@@ -186,7 +186,7 @@
                 <textcolor>FFF1F3F5</textcolor>
                 <focusedcolor>FFF1F3F5</focusedcolor>
                 <pulseonselect>false</pulseonselect>
-                <label>$ADDON[service.crosswatch 30082]</label>
+                <label>$INFO[Window.Property(CW.DoneLabel)]</label>
                 <texturenofocus border="16">crosswatch/box_accent.png</texturenofocus>
                 <texturefocus border="16">crosswatch/box_accent_focus.png</texturefocus>
                 <onup>100</onup>
@@ -210,6 +210,7 @@
             </control>
             <control type="button" id="21">
                 <left>1020</left><top>740</top><width>170</width><height>72</height>
+                <visible>String.IsEmpty(Window.Property(CW.ReadOnly))</visible>
                 <align>center</align><aligny>center</aligny>
                 <textoffsetx>10</textoffsetx>
                 <font>font30_title</font>
