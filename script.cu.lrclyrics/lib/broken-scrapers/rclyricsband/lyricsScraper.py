@@ -38,7 +38,6 @@ class LyricsFetcher:
             searchdata['search'] = '%s %s' % (artist, title)
             search = requests.post(url, data=searchdata, headers=UserAgent, timeout=10)
             response = search.text
-            print(response)
         except:
             return None
         links = []

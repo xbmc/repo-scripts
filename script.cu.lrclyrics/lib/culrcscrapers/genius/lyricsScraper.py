@@ -29,7 +29,7 @@ class LyricsFetcher:
         lyrics.source = __title__
         lyrics.lrc = __lrc__
         try:
-            headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; rv:77.0) Gecko/20100101 Firefox/77.0'}
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:77.0) Gecko/20100101 Firefox/77.0'}
             url = self.url % (song.artist, song.title)
             req = requests.get(url, headers=headers, timeout=10)
             response = req.json()
@@ -62,7 +62,7 @@ class LyricsFetcher:
         title,url,artist,song = link
         log('%s: search url: %s' % (__title__, url), debug=self.DEBUG)
         try:
-            headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; rv:77.0) Gecko/20100101 Firefox/77.0'}
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:77.0) Gecko/20100101 Firefox/77.0'}
             req = requests.get(url, headers=headers, timeout=10)
             response = req.text
         except:
