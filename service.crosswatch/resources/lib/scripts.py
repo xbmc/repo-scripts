@@ -8,10 +8,13 @@ through Addons.ExecuteAddon as key=value arguments, action=link first.
 Each screen is imported only when chosen: a settings script runs in a fresh interpreter, and
 the viewer dialog should not pay for the pairing code's imports.
 """
+from __future__ import annotations
 
 REMEMBERED = "remembered"
 PAIR = "pair"
 UNPAIR = "unpair"
+SYNC_SETUP = "sync_setup"
+SYNC_STATUS = "sync_status"
 
 
 def dispatch(argv: list[str]) -> None:
@@ -34,6 +37,16 @@ def dispatch(argv: list[str]) -> None:
         from resources.lib.connect import unpair_main
 
         unpair_main()
+        return
+    if SYNC_SETUP in arguments:
+        from resources.lib.sync.screens import main as sync_setup_main
+
+        sync_setup_main()
+        return
+    if SYNC_STATUS in arguments:
+        from resources.lib.sync.screens import status_main
+
+        status_main()
         return
     if REMEMBERED in arguments:
         from resources.lib.remembered import main as remembered_main

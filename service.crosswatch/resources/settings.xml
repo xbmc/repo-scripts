@@ -128,6 +128,50 @@
                 </setting>
             </group>
         </category>
+        <category id="sync" label="30161">
+            <group id="1">
+                <setting id="sync_setup" type="action" label="30168">
+                    <level>0</level>
+                    <data>RunScript(service.crosswatch,sync_setup)</data>
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+                <setting id="sync_status" type="action" label="30191">
+                    <level>0</level>
+                    <data>RunScript(service.crosswatch,sync_status)</data>
+                    <control type="button" format="action">
+                        <close>true</close>
+                    </control>
+                </setting>
+                <setting id="sync_enabled" type="boolean" label="30162">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="sync_send_removals" type="boolean" label="30163">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="sync_shared_rule" type="integer" label="30164">
+                    <level>0</level>
+                    <default>0</default>
+                    <constraints>
+                        <options>
+                            <option label="30165">0</option>
+                            <option label="30166">1</option>
+                        </options>
+                    </constraints>
+                    <control type="spinner" format="string"/>
+                </setting>
+                <setting id="sync_request" type="integer" label="30167">
+                    <level>4</level>
+                    <default>0</default>
+                    <control type="edit" format="integer"/>
+                </setting>
+            </group>
+        </category>
         <category id="advanced" label="30020">
             <group id="1">
                 <setting id="progress_interval_seconds" type="integer" label="30021">

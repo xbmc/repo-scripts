@@ -21,6 +21,8 @@ from resources.lib.log import get_logger
 if TYPE_CHECKING:
     from resources.lib.ui.list_window import ListRequest, ListResult, ListState
     from resources.lib.ui.rating import RateRequest
+    from resources.lib.ui.sync_setup import SetupRequest, SetupResult
+    from resources.lib.ui.sync_status import StatusRequest
     from resources.lib.ui.viewers_window import ViewersRequest, ViewersResult
     from resources.lib.ui.who_watched import WhoWatchedRequest
 
@@ -43,6 +45,7 @@ class KodiApi(Protocol):
     def translate(self, path: str) -> str: ...
     def read_text(self, path: str, max_bytes: int = MAX_SETTINGS_FILE_BYTES) -> str | None: ...
     def is_playing(self) -> bool: ...
+    def is_playing_video(self) -> bool: ...
     def player_times(self) -> tuple[int | None, int | None]: ...
     def topmost_dialog_id(self) -> int: ...
     def who_watched(self, request: WhoWatchedRequest) -> tuple[str, ...] | None: ...
@@ -52,6 +55,10 @@ class KodiApi(Protocol):
     def list_window(self, request: ListRequest, state: ListState) -> ListResult: ...
     def remembered_window(self, request: ListRequest, state: ListState) -> ListResult: ...
     def viewers_window(self, request: ViewersRequest, key: str) -> ViewersResult: ...
+    def sync_setup_window(self, request: SetupRequest) -> SetupResult | None: ...
+    def busy(self, on: bool) -> None: ...
+    def sync_status_window(self, request: StatusRequest) -> str | None: ...
+    def choice_window(self, heading: str, message: str, yes: str, no: str) -> bool | None: ...
     def text_input(self, heading: str, default: str = "") -> str: ...
     def confirm(self, heading: str, message: str, autoclose: int = 0) -> bool: ...
     def notify(self, heading: str, message: str) -> None: ...
@@ -139,6 +146,12 @@ class KodiRuntime:
     def is_playing(self) -> bool:
         try:
             return bool(self._player.isPlaying())
+        except Exception:
+            return False
+
+    def is_playing_video(self) -> bool:
+        try:
+            return bool(self._player.isPlayingVideo())
         except Exception:
             return False
 
@@ -231,10 +244,57 @@ class KodiRuntime:
             self.jsonrpc(method, {key: library_id, "userrating": value})
         except Exception as exc:
             _log.warning(
-                "rating.library_write_failed", media_type=media_type, library_id=library_id, error_type=type(exc).__name__
+                "rating.library_write_failed",
+                media_type=media_type,
+                library_id=library_id,
+                error_type=type(exc).__name__,
             )
             return False
         return True
+
+    def sync_setup_window(self, request: SetupRequest) -> SetupResult | None:
+        """Start or Cancel on the library sync setup screen; None when the window failed."""
+
+        def make(path: str) -> Any:
+            from resources.lib.ui import window
+
+            dialog = window.SyncSetupDialog(window.SYNC_SETUP_XML, path, "Default", "1080i")
+            dialog.prepare(request, self.localised)
+            return dialog
+
+        dialog = self._modal("sync_setup", make)
+        return None if dialog is None else dialog.result
+
+    def sync_status_window(self, request: StatusRequest) -> str | None:
+        """The chosen row's key or SEND_RATINGS; "" for Close and Back, None when the window failed."""
+
+        def make(path: str) -> Any:
+            from resources.lib.ui import window
+
+            dialog = window.SyncStatusDialog(window.SYNC_STATUS_XML, path, "Default", "1080i")
+            dialog.prepare(request, self.localised)
+            return dialog
+
+        dialog = self._modal("sync_status", make)
+        return None if dialog is None else dialog.result
+
+    def choice_window(self, heading: str, message: str, yes: str, no: str) -> bool | None:
+        """The confirm window with its own button labels: True for yes, False for no, and None
+        for Back or a failed window, which leave the question open."""
+
+        def make(path: str) -> Any:
+            from resources.lib.ui import window
+
+            dialog = window.ConfirmDialog(window.CONFIRM_XML, path, "Default", "1080i")
+            dialog.prepare(heading, message, self.localised, yes, no)
+            return dialog
+
+        dialog = self._modal("confirm", make)
+        return None if dialog is None else dialog.result
+
+    def busy(self, on: bool) -> None:
+        """Kodi's own busy spinner, for a settings script reading the library."""
+        self._xbmc.executebuiltin("ActivateWindow(busydialognocancel)" if on else "Dialog.Close(busydialognocancel)")
 
     def confirm_window(self, heading: str, message: str) -> bool:
         """True only for Yes; No, Back and a failed window all leave things as they are."""
@@ -256,7 +316,8 @@ class KodiRuntime:
         def make(path: str) -> Any:
             from resources.lib.ui import window
 
-            dialog = window.PickListDialog(window.LIST_XML, path, "Default", "1080i")
+            kind = window.ListDialog if request.read_only else window.PickListDialog
+            dialog = kind(window.LIST_XML, path, "Default", "1080i")
             dialog.prepare(request, state, self.localised)
             return dialog
 

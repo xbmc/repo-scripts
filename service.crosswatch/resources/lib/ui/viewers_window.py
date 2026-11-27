@@ -11,6 +11,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 
 from resources.lib.ui import panel
+from resources.lib.ui.list_window import KEYWORDS_ONLY
 from resources.lib.ui.panel import PanelLine
 
 # Text slots below the route line. The XML has one set of controls per slot;
@@ -35,7 +36,7 @@ class ViewerRow:
         return self.route == ROUTE_REFUSED or any(line.warn for line in self.lines)
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True, **KEYWORDS_ONLY)
 class ViewersRequest:
     heading: str
     count: str
@@ -61,7 +62,7 @@ def properties(row: ViewerRow, request: ViewersRequest) -> dict[str, str]:
         "linked": "true" if row.linked else "",
         "route_text": route_text.get(row.route, ""),
     }
-    return props | panel.slot_properties(row.lines, request.more, PANEL_SLOTS)
+    return {**props, **panel.slot_properties(row.lines, request.more, PANEL_SLOTS)}
 
 
 def start_position(rows: Sequence[ViewerRow], key: str) -> int:

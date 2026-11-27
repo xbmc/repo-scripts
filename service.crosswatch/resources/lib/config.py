@@ -5,7 +5,6 @@ The token is stored separately from the webhook URL and travels only in the
 X-CrossWatch-Token header, so the credential never exists inside a URL that a logging path,
 a proxy log or an error message could reach.
 """
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -13,6 +12,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from resources.lib.constants import DEFAULT_INDEX_TTL_SECONDS, DEFAULT_PROGRESS_INTERVAL_SECONDS
 from resources.lib.kodi import KodiApi
+from resources.lib.sync.settings import SharedRule, SyncSettings
 
 KEY_BASE_URL = "webhook_base_url"
 KEY_TOKEN = "webhook_token"
@@ -27,9 +27,17 @@ KEY_RATING_ASK = "rating_ask"
 KEY_RATING_WHEN = "rating_when"
 KEY_RATING_SHARED = "rating_shared"
 KEY_RATING_WRITE_LIBRARY = "rating_write_library"
+KEY_SYNC_ENABLED = "sync_enabled"
+KEY_SYNC_SEND_REMOVALS = "sync_send_removals"
+KEY_SYNC_SHARED_RULE = "sync_shared_rule"
+# Bumped by the settings scripts after they leave a library sync request, so the service's
+# settings reload notices it.
+KEY_SYNC_REQUEST = "sync_request"
 
 # The "Ask for a rating" choice, by its position in settings.xml: Off, Films, Episodes, both.
 _RATING_KINDS = {1: frozenset({"movie"}), 2: frozenset({"episode"}), 3: frozenset({"movie", "episode"})}
+# The shared-item rule, by its position in settings.xml.
+_SHARED_RULES: dict[int, SharedRule] = {0: "everyone", 1: "anyone"}
 
 
 @dataclass(frozen=True)
@@ -47,6 +55,10 @@ class Settings:
     rating_at_end: bool = False
     rating_shared: bool = False
     rating_write_library: bool = False
+    # The device switch the ping reports to CrossWatch; Start turns it on.
+    sync_enabled: bool = False
+    sync_settings: SyncSettings = SyncSettings()
+    sync_request: int = 0
 
     def webhook_url(self) -> str | None:
         """The endpoint, never carrying the token. None until both halves are set."""
@@ -120,4 +132,10 @@ def read_settings(kodi: KodiApi) -> Settings:
         rating_at_end=_int(kodi, KEY_RATING_WHEN, 0) == 1,
         rating_shared=_bool(kodi, KEY_RATING_SHARED, False),
         rating_write_library=_bool(kodi, KEY_RATING_WRITE_LIBRARY, False),
+        sync_enabled=_bool(kodi, KEY_SYNC_ENABLED, False),
+        sync_settings=SyncSettings(
+            send_removals=_bool(kodi, KEY_SYNC_SEND_REMOVALS, False),
+            shared_rule=_SHARED_RULES.get(_int(kodi, KEY_SYNC_SHARED_RULE, 0), "everyone"),
+        ),
+        sync_request=_int(kodi, KEY_SYNC_REQUEST, 0),
     )

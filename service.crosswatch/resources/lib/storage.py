@@ -7,6 +7,7 @@ lists, so they cannot drift from its route usernames, is people.py's job.
 Neither reads nor writes raise. A write sits on the stop path, so a full disk must cost an
 attribution rather than a watch.
 """
+from __future__ import annotations
 
 import contextlib
 import json
@@ -172,6 +173,9 @@ def _write_json(path: str, value: Any) -> bool:
 class JsonViewerStore:
     def __init__(self, path: str) -> None:
         self._path = path
+        # Sync ids of removed viewers, by name. Kept beside viewers.json rather than in it,
+        # so viewers.json stays the list older versions of the add-on read.
+        self._retired_path = os.path.join(os.path.dirname(path), "sync_ids.json")
 
     def locked(self) -> AbstractContextManager[None]:
         """Around a read of the list, the change, and its save: the service and the
@@ -190,26 +194,60 @@ class JsonViewerStore:
             if not name:
                 continue
             pid = row.get("person_id")
+            sid = row.get("sync_id")
             out.append(
                 Viewer(
                     name=name,
                     playlists=tuple(str(p) for p in row.get("playlists") or []),
                     profiles=tuple(str(p) for p in row.get("profiles") or []),
                     person_id=pid if isinstance(pid, str) and pid else None,
+                    sync_id=sid if isinstance(sid, str) else "",
                 )
             )
         return out
 
     def save(self, viewers: list[Viewer]) -> None:
-        # person_id is written only when set, so an unlinked viewer's row is the same shape the
-        # add-on wrote before the link existed.
+        # person_id and sync_id are written only when set, so a row without them is the same
+        # shape the add-on wrote before they existed.
         rows = []
         for v in viewers:
             row: dict[str, object] = {"name": v.name, "playlists": list(v.playlists), "profiles": list(v.profiles)}
             if v.person_id:
                 row["person_id"] = v.person_id
+            if v.sync_id:
+                row["sync_id"] = v.sync_id
             rows.append(row)
+        self._retire_dropped(viewers)
         _write_json(self._path, rows)
+
+    def retired_id(self, name: str) -> str | None:
+        """The sync id a removed viewer of this name had, so adding them back continues
+        their sync state instead of starting a stranger CrossWatch has never seen."""
+        retired = _read_json(self._retired_path, {})
+        if not isinstance(retired, dict):
+            return None
+        wanted = name.casefold()
+        for key, value in retired.items():
+            if str(key).casefold() == wanted and isinstance(value, str) and value:
+                return value
+        return None
+
+    def _retire_dropped(self, viewers: list[Viewer]) -> None:
+        # Done here, on every save, rather than in the Viewers screen: delivery's people
+        # reconcile saves the list too, and a removal by any path must keep the id.
+        kept = {v.sync_id for v in viewers if v.sync_id}
+        dropped = {v.name: v.sync_id for v in self.viewers() if v.sync_id and v.sync_id not in kept}
+        if not dropped:
+            return
+        retired = _read_json(self._retired_path, None)
+        if retired is None and not os.path.exists(self._retired_path):
+            retired = {}
+        if not isinstance(retired, dict):
+            # Unreadable, not empty: writing over it would lose every id retired before.
+            _log.warning("storage.retired_ids_unreadable", dropped=len(dropped))
+            return
+        retired.update(dropped)
+        _write_json(self._retired_path, retired)
 
 
 @dataclass(frozen=True)

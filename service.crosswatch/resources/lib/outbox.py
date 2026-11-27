@@ -10,6 +10,7 @@ original event_id and sent_at, and a fingerprint of the token it was meant for, 
 token itself. A duplicate caused by a crash between acceptance and removal is harmless: the
 receiving sinks dedupe or set an idempotent watched flag.
 """
+from __future__ import annotations
 
 import hashlib
 import json

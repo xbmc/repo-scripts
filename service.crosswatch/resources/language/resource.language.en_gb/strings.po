@@ -498,3 +498,339 @@ msgstr ""
 msgctxt "#30160"
 msgid "CrossWatch treats %s as the same as the viewer %s. Remove that viewer first, or rename the profile in CrossWatch."
 msgstr ""
+
+msgctxt "#30161"
+msgid "Library sync"
+msgstr ""
+
+msgctxt "#30162"
+msgid "Sync this library with CrossWatch"
+msgstr ""
+
+msgctxt "#30163"
+msgid "Send removals made in Kodi"
+msgstr ""
+
+msgctxt "#30164"
+msgid "A shared item counts as watched when"
+msgstr ""
+
+msgctxt "#30165"
+msgid "Every owner watched it"
+msgstr ""
+
+msgctxt "#30166"
+msgid "Any owner watched it"
+msgstr ""
+
+msgctxt "#30167"
+msgid "Library sync request"
+msgstr ""
+
+msgctxt "#30168"
+msgid "Set up library sync"
+msgstr ""
+
+msgctxt "#30169"
+msgid "Start library sync"
+msgstr ""
+
+msgctxt "#30170"
+msgid "Start library sync again"
+msgstr ""
+
+msgctxt "#30171"
+msgid "This device will sync this library with CrossWatch. Other devices keep reporting playback."
+msgstr ""
+
+msgctxt "#30172"
+msgid "This device will sync this library again. Nothing is sent from Kodi's history this time: each viewer's record carries on."
+msgstr ""
+
+msgctxt "#30173"
+msgid "What Kodi shows as watched goes up as its owner's history. Shared items start empty; your services fill them in."
+msgstr ""
+
+msgctxt "#30174"
+msgid "Shared"
+msgstr ""
+
+msgctxt "#30175"
+msgid "No owner"
+msgstr ""
+
+msgctxt "#30176"
+msgid "(left alone)"
+msgstr ""
+
+msgctxt "#30177"
+msgid "{count} shows"
+msgstr ""
+
+msgctxt "#30178"
+msgid "{count} films"
+msgstr ""
+
+msgctxt "#30179"
+msgid "Also send Kodi's existing ratings where CrossWatch has none"
+msgstr ""
+
+msgctxt "#30180"
+msgid "Don't copy this device's id to another device."
+msgstr ""
+
+msgctxt "#30181"
+msgid "Trakt for Kodi is installed: play counts it writes into Kodi are sent as this household's own marks."
+msgstr ""
+
+msgctxt "#30182"
+msgid "The paired address is http: history and the token travel unencrypted."
+msgstr ""
+
+msgctxt "#30183"
+msgid "Couldn't read the playlists: {names}"
+msgstr ""
+
+msgctxt "#30184"
+msgid "Library sync needs every playlist to decide who owns what. Fix the playlist, then open this again."
+msgstr ""
+
+msgctxt "#30185"
+msgid "Start"
+msgstr ""
+
+msgctxt "#30186"
+msgid "Pair with CrossWatch first, then set up library sync."
+msgstr ""
+
+msgctxt "#30187"
+msgid "Couldn't read the video library. Try again when Kodi isn't scanning."
+msgstr ""
+
+msgctxt "#30188"
+msgid "Library sync started."
+msgstr ""
+
+msgctxt "#30189"
+msgid "Add the household's viewers first, then set up library sync."
+msgstr ""
+
+msgctxt "#30190"
+msgid "Couldn't start library sync: the add-on's data couldn't be saved. Try again; if it keeps failing, check the free space on this device."
+msgstr ""
+
+msgctxt "#30191"
+msgid "Library sync status"
+msgstr ""
+
+msgctxt "#30192"
+msgid "Up to date"
+msgstr ""
+
+msgctxt "#30193"
+msgid "Syncing"
+msgstr ""
+
+msgctxt "#30194"
+msgid "Waiting: something is playing"
+msgstr ""
+
+msgctxt "#30195"
+msgid "Waiting: Kodi is updating the library"
+msgstr ""
+
+msgctxt "#30196"
+msgid "Waiting: reading the viewers' playlists"
+msgstr ""
+
+msgctxt "#30197"
+msgid "Waiting for CrossWatch"
+msgstr ""
+
+msgctxt "#30198"
+msgid "Library sync is off. Turn it on with Set up library sync."
+msgstr ""
+
+msgctxt "#30199"
+msgid "Stopped: the sync record is missing or unreadable. Run Set up library sync again."
+msgstr ""
+
+msgctxt "#30200"
+msgid "Stopped: CrossWatch refused this device's token. Pair again."
+msgstr ""
+
+msgctxt "#30201"
+msgid "Stopped: the paired CrossWatch has no library sync, or the paired address has the wrong path. Update CrossWatch or pair again, then restart Kodi."
+msgstr ""
+
+msgctxt "#30202"
+msgid "Paused: library sync was turned off. Run Set up library sync to start again."
+msgstr ""
+
+msgctxt "#30203"
+msgid "Paused: this device's id changed, and CrossWatch still has the old one as the sync device. Set the old id back, then run Set up library sync."
+msgstr ""
+
+msgctxt "#30204"
+msgid "Last upload {when} · {count} changes waiting"
+msgstr ""
+
+msgctxt "#30205"
+msgid "never"
+msgstr ""
+
+msgctxt "#30206"
+msgid "just now"
+msgstr ""
+
+msgctxt "#30207"
+msgid "{count} min ago"
+msgstr ""
+
+msgctxt "#30208"
+msgid "{count} h ago"
+msgstr ""
+
+msgctxt "#30209"
+msgid "{count} days ago"
+msgstr ""
+
+msgctxt "#30210"
+msgid "Needs you"
+msgstr ""
+
+msgctxt "#30211"
+msgid "Nothing needs you."
+msgstr ""
+
+msgctxt "#30212"
+msgid "Whose was this? {title}, marked watched"
+msgstr ""
+
+msgctxt "#30213"
+msgid "Whose was this? {title}, rated"
+msgstr ""
+
+msgctxt "#30214"
+msgid "{count} shows and films have no owner and are left alone"
+msgstr ""
+
+msgctxt "#30215"
+msgid "{count} ratings changed at once"
+msgstr ""
+
+msgctxt "#30216"
+msgid "Another device syncs this library. Only one device per library can; turn library sync off on one of them."
+msgstr ""
+
+msgctxt "#30217"
+msgid "This device has no id. Set one in the add-on settings, or leave it blank to generate one."
+msgstr ""
+
+msgctxt "#30218"
+msgid "Couldn't read the playlists: {names}. Their viewers' items have no owner until they're fixed."
+msgstr ""
+
+msgctxt "#30219"
+msgid "{name} has no sync user in CrossWatch. Check that viewer's library sync setup in CrossWatch."
+msgstr ""
+
+msgctxt "#30220"
+msgid "CrossWatch refused {name}'s library as too large to sync."
+msgstr ""
+
+msgctxt "#30221"
+msgid "CrossWatch refused {name}'s changes. Its log says why."
+msgstr ""
+
+msgctxt "#30222"
+msgid "CrossWatch was busy with {name}'s changes; they go up later."
+msgstr ""
+
+msgctxt "#30223"
+msgid "{name}'s first sync came more than a day after setup, so Kodi's history wasn't sent for {name}."
+msgstr ""
+
+msgctxt "#30224"
+msgid "{count} marks made while sync couldn't keep up were dropped. Make them again if they matter."
+msgstr ""
+
+msgctxt "#30225"
+msgid "The paired address changed. Run Set up library sync to sync with the new one."
+msgstr ""
+
+msgctxt "#30226"
+msgid "Watched marks made by hand on other devices aren't sent; make them on this device."
+msgstr ""
+
+msgctxt "#30227"
+msgid "Send existing ratings"
+msgstr ""
+
+msgctxt "#30228"
+msgid "Kodi's existing ratings will be sent where CrossWatch has none."
+msgstr ""
+
+msgctxt "#30229"
+msgid "That's usually an add-on or a library import, not a person. Send them to CrossWatch as this household's ratings?"
+msgstr ""
+
+msgctxt "#30230"
+msgid "Send"
+msgstr ""
+
+msgctxt "#30231"
+msgid "Don't send"
+msgstr ""
+
+msgctxt "#30232"
+msgid "Shows and films with no owner"
+msgstr ""
+
+msgctxt "#30233"
+msgid "1 title"
+msgstr ""
+
+msgctxt "#30234"
+msgid "%s titles"
+msgstr ""
+
+msgctxt "#30235"
+msgid "A removed viewer"
+msgstr ""
+
+msgctxt "#30236"
+msgid "Send them?"
+msgstr ""
+
+msgctxt "#30237"
+msgid "Syncing {name} hit a problem ({error}); it tries again."
+msgstr ""
+
+msgctxt "#30238"
+msgid "Marked watched on this device"
+msgstr ""
+
+msgctxt "#30239"
+msgid "Rated on this device"
+msgstr ""
+
+msgctxt "#30240"
+msgid "Whose rating was this?"
+msgstr ""
+
+msgctxt "#30241"
+msgid "Paused: another device syncs this library. Turn library sync off there, then run Set up library sync here."
+msgstr ""
+
+msgctxt "#30242"
+msgid "Waiting: CrossWatch syncs none of this Kodi's viewers. Check their sync in CrossWatch."
+msgstr ""
+
+msgctxt "#30243"
+msgid "Waiting: can't read which items PlexKodiConnect or Jellyfin for Kodi manages. Sync goes on once it can."
+msgstr ""
+
+msgctxt "#30244"
+msgid "Couldn't read which items PlexKodiConnect or Jellyfin for Kodi manages, so nothing can be counted. Try again in a minute."
+msgstr ""

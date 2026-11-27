@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 """Domain objects. These are what the addon reasons about; payload.py turns them into JSON."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Any, Literal
+
+from resources.lib.sync.reply import PingTicket
 
 MediaType = Literal["episode", "movie"]
 EventKind = Literal["start", "pause", "resume", "progress", "stop", "rate"]
@@ -23,6 +24,9 @@ class Viewer:
     # link through playlist and profile edits and through renames. A linked viewer's name is
     # the person's exact spelling.
     person_id: str | None = None
+    # The id library sync knows this viewer by. Assigned once by the service and never
+    # changed, renames included: CrossWatch keys the viewer's sync state on it.
+    sync_id: str = ""
 
 
 @dataclass(frozen=True)
@@ -56,6 +60,8 @@ class MediaItem:
     # The show's own year, from the library. Not year: during playback Kodi reports the
     # episode's year there, which changes from season to season.
     show_year: int | None = None
+    # The play count when playback started, so library sync can tell playback's own raise.
+    playcount: int | None = None
 
 
 @dataclass(frozen=True)
@@ -95,3 +101,7 @@ class PingEvent:
     # act on it. Proposed to the CrossWatch maintainer, not yet agreed: if declined, drop
     # this field and the single line in payload.py that emits it. Nothing else reads it.
     pkc_skipped: int = 0
+    # Present once Start ran for the current pairing (sync/ping.py), absent before.
+    library_sync: dict[str, Any] | None = None
+    # Not on the wire: what the ping knew when it was built, handed back with its reply.
+    ticket: PingTicket | None = None
