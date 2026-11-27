@@ -31,7 +31,7 @@ class LyricsFetcher:
         title = re.sub("[^a-zA-Z0-9]+", "+", song.title).lower()
         #get hidden value 
         try:
-            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
             req = requests.get(self.jsurl, headers=headers, timeout=10)
             response = req.text
         except:
@@ -43,7 +43,7 @@ class LyricsFetcher:
             return None
         #get result list
         try:
-            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
             req = requests.get(self.url % (artist, title, tag), headers=headers, timeout=10)
             response = req.text
         except:
@@ -63,7 +63,7 @@ class LyricsFetcher:
         if url == '':
             return None
         try:
-            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
             req = requests.get(url, headers=headers, timeout=10)
             response = req.text
         except:

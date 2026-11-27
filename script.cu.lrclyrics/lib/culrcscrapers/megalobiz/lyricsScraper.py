@@ -38,7 +38,7 @@ class LyricsFetcher:
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-        # find the token file in the header. not sure if the order of the .js files changes over time...
+        # find the token file in the header. search all .js files for "API_APP_KEY" and "https://api.megalobiz.com/api/v1"
         try:
             response = requests.get(self.MAIN_URL, timeout=10)
             result = response.text
@@ -46,16 +46,18 @@ class LyricsFetcher:
             return None
         soup = BeautifulSoup(result, 'html.parser')
         js_urls = [script['src'] for script in soup.find_all('script') if script.has_attr('src')]
-        #currently the fifth link in the header is the one we need
-        try:
-            response = requests.get(self.TOKEN_URL % js_urls[4], timeout=10)
-            result = response.text
-        except:
-            return None
-        tokencode = re.search('api/v1",[a-z]="(.*?)",', result, flags=re.DOTALL)
-        if tokencode:
-            token = 'Bearer %s' % tokencode.group(1)
-        else:
+        tokencode = ''
+        for jurl in js_urls:
+            try:
+                response = requests.get(self.TOKEN_URL % jurl, timeout=3) # we fetch many files, keep timeout short
+                result = response.text
+            except:
+                return None
+            tokencode = re.search('api/v1",[a-z]="(.*?)",', result, flags=re.DOTALL)
+            if tokencode:
+                token = 'Bearer %s' % tokencode.group(1)
+                break
+        if not tokencode:
             return None
         headers = {"Authorization": token}
         # get the lyrics list
@@ -103,6 +105,7 @@ class LyricsFetcher:
                     links.append((artistname + ' - ' + songtitle, lyr, artistname, songtitle))
         if len(links) == 0:
             return None
+
         elif len(links) > 1:
             lyrics.list = links
         # get the lyrics

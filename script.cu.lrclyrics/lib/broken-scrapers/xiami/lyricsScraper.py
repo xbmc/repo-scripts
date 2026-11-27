@@ -37,7 +37,7 @@ class LyricsFetcher:
         keyword = "%s %s" % (song.title, song.artist)
         url = self.LIST_URL % (urllib.parse.quote(keyword))
         try:
-            response = self.session.get(url, headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'})
+            response = self.session.get(url, headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'}, timeout=10)
             result = response.text
         except:
             log( "%s: %s::%s (%d) [%s]" % (
@@ -67,7 +67,7 @@ class LyricsFetcher:
     def get_lyrics_from_list(self, link):
         title,id,artist,song = link
         try:
-            response = self.session.get(self.SONG_URL % (id), headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'})
+            response = self.session.get(self.SONG_URL % (id), headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'}, timeout=10)
             result = response.text
             data = json.loads(result)
             if 'data' in data and 'trackList' in data['data'] and data['data']['trackList'] and 'lyric' in data['data']['trackList'][0] and data['data']['trackList'][0]['lyric']:
@@ -81,7 +81,7 @@ class LyricsFetcher:
                    ))
             return
         try:
-            response = self.session.get(url, headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'})
+            response = self.session.get(url, headers={'User-Agent': UserAgent, 'Referer': 'https://www.xiami.com/play'}, timeout=10)
             lyrics = response.content
         except:
             log( "%s: %s::%s (%d) [%s]" % (

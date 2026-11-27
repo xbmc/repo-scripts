@@ -142,7 +142,7 @@ class LyricsFetcher:
 
         try:
             url = self.LIST_URL %(ttpClient.EncodeArtTit(artist.replace(' ','').lower()), ttpClient.EncodeArtTit(title.replace(' ','').lower()))
-            f = urllib.request.urlopen(url)
+            f = urllib.request.urlopen(url, timeout=10)
             Page = f.read().decode('utf-8')
         except:
             log("%s: %s::%s (%d) [%s]" % (
@@ -177,7 +177,7 @@ class LyricsFetcher:
             log('%s: search url: %s' % (__title__, url))
             header = {'User-Agent':UserAgent}
             req = urllib.request.Request(url, headers=header)
-            f = urllib.request.urlopen(req)
+            f = urllib.request.urlopen(req, timeout=10)
             Page = f.read().decode('utf-8')
         except:
             log("%s: %s::%s (%d) [%s]" % (

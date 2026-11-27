@@ -6,6 +6,7 @@ scraper by smory
 '''
 
 import hashlib
+import difflib
 import math
 import requests
 import time
@@ -47,7 +48,7 @@ class LyricsFetcher:
     def search(self, artist, title):
         term = urllib.parse.quote((artist if artist else '') + '+' + (title if title else ''))
         try:
-            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
             req = requests.get(self.searchUrl % term, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
             searchResponse = req.text
         except:
@@ -58,19 +59,21 @@ class LyricsFetcher:
         links = []
         i = 0
         for result in searchResult:
-            a = []
-            a.append(result[2] + (' ' + self.getAlbumName(self.base_url + result[0]) if i < 6 else '')) # title from server + album nane
-            a.append(self.base_url + result[0]) # url with lyrics
-            a.append(artist)
-            a.append(title)
-            a.append(result[1]) # id of the side part containing this song lyrics
-            links.append(a)
-            i += 1
+            artistname, songtitle = result[2].split(' - ')
+            if (difflib.SequenceMatcher(None, artist.lower(), artistname.lower()).ratio() > 0.8) and (difflib.SequenceMatcher(None, title.lower(), songtitle.lower()).ratio() > 0.8):
+                a = []
+                a.append(result[2] + (' ' + self.getAlbumName(self.base_url + result[0]) if i < 6 else '')) # title from server + album nane
+                a.append(self.base_url + result[0]) # url with lyrics
+                a.append(artist)
+                a.append(title)
+                a.append(result[1]) # id of the side part containing this song lyrics
+                links.append(a)
+                i += 1
         return links
     
     def findLyrics(self, url, index):
         try:
-            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
             req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
             res = req.text
         except:
@@ -91,7 +94,7 @@ class LyricsFetcher:
         
     def getAlbumName(self, url):
         try:
-            headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
+            headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
             req = requests.get(url, headers=headers, cookies={'lastvisitts': self.cookie}, timeout=10)
             res = req.text
         except:

@@ -31,7 +31,7 @@ class LyricsFetcher:
         lyrics.lrc = __lrc__
         try:
             url = self.BASE_URL % (song.title, song.artist)
-            data = urllib.request.urlopen(url).read().decode('utf-8')
+            data = urllib.request.urlopen(url, timeout=10).read().decode('utf-8')
             songmatch = re.search('song-title.*?<em>(.*?)</em>', data, flags=re.DOTALL)
             track = songmatch.group(1)
             artistmatch = re.search('artist-title.*?<em>(.*?)</em>', data, flags=re.DOTALL)
@@ -39,7 +39,7 @@ class LyricsFetcher:
             urlmatch = re.search("down-lrc-btn.*?':'(.*?)'", data, flags=re.DOTALL)
             found_url = urlmatch.group(1)
             if (difflib.SequenceMatcher(None, song.artist.lower(), name.lower()).ratio() > 0.8) and (difflib.SequenceMatcher(None, song.title.lower(), track.lower()).ratio() > 0.8):
-                lyr = urllib.request.urlopen(self.LRC_URL % found_url).read()
+                lyr = urllib.request.urlopen(self.LRC_URL % found_url, timeout=10).read()
             else:
                 return
         except:
