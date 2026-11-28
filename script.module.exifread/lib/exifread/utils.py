@@ -3,69 +3,51 @@ Misc utilities.
 """
 
 from fractions import Fraction
+from typing import Optional, Tuple
 
 
-def ord_(dta):
-    if isinstance(dta, str):
-        return ord(dta)
-    return dta
-
-
-def make_string(seq):
+def _degrees_to_decimal(degrees: float, minutes: float, seconds: float) -> float:
     """
-    Don't throw an exception when given an out of range character.
+    Converts coordinates from a degrees minutes seconds format to a decimal degrees format.
+    Reference: https://en.wikipedia.org/wiki/Geographic_coordinate_conversion
     """
-    string = ''
-    for c in seq:
-        # Screen out non-printing characters
-        try:
-            if 32 <= c and c < 256:
-                string += chr(c)
-        except TypeError:
-            pass
-        # If no printing chars
-    if not string:
-        return str(seq)
-    return string
+    return degrees + minutes / 60 + seconds / 3600
 
 
-def make_string_uc(seq):
+def get_gps_coords(tags: dict) -> Optional[Tuple[float, float]]:
     """
-    Special version to deal with the code in the first 8 bytes of a user comment.
-    First 8 bytes gives coding system e.g. ASCII vs. JIS vs Unicode.
+    Extract tuple of latitude and longitude values in decimal degrees format from EXIF tags.
+    Return None if no GPS coordinates are found.
+    Handles regular and serialized Exif tags.
     """
-    seq = seq[8:]
-    # Of course, this is only correct if ASCII, and the standard explicitly
-    # allows JIS and Unicode.
-    return make_string(seq)
+    gps = {
+        "lat_coord": "GPS GPSLatitude",
+        "lat_ref": "GPS GPSLatitudeRef",
+        "lng_coord": "GPS GPSLongitude",
+        "lng_ref": "GPS GPSLongitudeRef",
+    }
 
+    # Verify if required keys are a subset of provided tags
+    if not set(gps.values()) <= tags.keys():
+        return None
 
-def get_gps_coords(tags):
+    # If tags have not been converted to native Python types, do it
+    if not isinstance(tags[gps["lat_coord"]], list):
+        tags[gps["lat_coord"]] = [c.decimal() for c in tags[gps["lat_coord"]].values]
+        tags[gps["lng_coord"]] = [c.decimal() for c in tags[gps["lng_coord"]].values]
+        tags[gps["lat_ref"]] = tags[gps["lat_ref"]].values
+        tags[gps["lng_ref"]] = tags[gps["lng_ref"]].values
 
-    lng_ref_tag_name = "GPS GPSLongitudeRef"
-    lng_tag_name = "GPS GPSLongitude"
-    lat_ref_tag_name = "GPS GPSLatitudeRef"
-    lat_tag_name = "GPS GPSLatitude"
+    lat = _degrees_to_decimal(*tags[gps["lat_coord"]])
+    if tags[gps["lat_ref"]] == "S":
+        lat *= -1
 
-    # Check if these tags are present
-    gps_tags = [lng_ref_tag_name,lng_tag_name,lat_tag_name,lat_tag_name]
-    for tag in gps_tags:
-        if not tag in tags.keys():
-            return None
+    lng = _degrees_to_decimal(*tags[gps["lng_coord"]])
+    if tags[gps["lng_ref"]] == "W":
+        lng *= -1
 
-    lng_ref_val = tags[lng_ref_tag_name].values
-    lng_coord_val = [c.decimal() for c in tags[lng_tag_name].values]
+    return lat, lng
 
-    lat_ref_val = tags[lat_ref_tag_name].values
-    lat_coord_val = [c.decimal() for c in tags[lat_tag_name].values]
-
-    lng_coord = sum([c/60**i for i,c in enumerate(lng_coord_val)])
-    lng_coord *= (-1)**(lng_ref_val=="W")
-
-    lat_coord = sum([c/60**i for i,c in enumerate(lat_coord_val)])
-    lat_coord *= (-1)**(lat_ref_val=="S")
-
-    return (lat_coord, lng_coord)
 
 class Ratio(Fraction):
     """
@@ -73,8 +55,11 @@ class Ratio(Fraction):
     common denominator for printing.
     """
 
+    _numerator: Optional[int]
+    _denominator: Optional[int]
+
     # We're immutable, so use __new__ not __init__
-    def __new__(cls, numerator=0, denominator=None):
+    def __new__(cls, numerator: int = 0, denominator: Optional[int] = None):
         try:
             self = super(Ratio, cls).__new__(cls, numerator, denominator)
         except ZeroDivisionError:
@@ -82,18 +67,17 @@ class Ratio(Fraction):
             self._numerator = numerator
             self._denominator = denominator
         return self
-    __new__.doc = Fraction.__new__.__doc__
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self)
 
     @property
-    def num(self):
+    def num(self) -> int:
         return self.numerator
 
     @property
-    def den(self):
+    def den(self) -> int:
         return self.denominator
 
-    def decimal(self):
+    def decimal(self) -> float:
         return float(self)
